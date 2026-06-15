@@ -1,0 +1,218 @@
+<div style="background-color: #f0fdf4; border-radius: 12px; border: 1px solid rgb(187, 247, 208); box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 6px -1px; color: #166534; font-family: sans-serif; margin: 20px auto; max-width: 100%; padding: 20px;">
+  <h2 style="border-bottom: 2px solid rgb(34, 197, 94); color: #14532d; font-size: 24px; margin-bottom: 20px; margin-top: 0px; padding-bottom: 10px; text-align: center;">Fixed Deposit &amp; Compound Interest Calculator</h2>
+  
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 5px;">Principal Amount (Initial Investment):</label>
+    <input id="principal" oninput="calculateFinance()" style="background-color: white; border-radius: 6px; border: 1px solid rgb(134, 239, 172); box-sizing: border-box; color: #14532d; font-size: 16px; padding: 10px; width: 100%;" type="number" value="10000" />
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 5px;">Annual Interest Rate (%):</label>
+    <input id="interestRate" oninput="calculateFinance()" style="background-color: white; border-radius: 6px; border: 1px solid rgb(134, 239, 172); box-sizing: border-box; color: #14532d; font-size: 16px; padding: 10px; width: 100%;" type="number" value="7.1" />
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 5px;">Time Period (Years):</label>
+    <input id="years" oninput="calculateFinance()" style="background-color: white; border-radius: 6px; border: 1px solid rgb(134, 239, 172); box-sizing: border-box; color: #14532d; font-size: 16px; padding: 10px; width: 100%;" type="number" value="5" />
+  </div>
+
+  <div style="background-color: white; border-radius: 8px; border: 1px solid rgb(134, 239, 172); padding: 15px; text-align: center;">
+    <span style="color: #166534; display: block; font-size: 16px; margin-bottom: 5px;">Estimated Maturity Value:</span>
+    <span id="financeResult" style="color: #15803d; font-size: 26px; font-weight: bold;">14,091.10</span>
+  </div>
+  
+  <p style="font-size: 12px; color: #166534; text-align: center; margin-top: 15px; opacity: 0.8;">*This tool assumes quarterly compounding, which is the standard for most bank term deposits. Actual bank payouts may vary slightly based on taxation and specific bank policies.</p>
+</div>
+
+<script>
+function calculateFinance() {
+  var p = parseFloat(document.getElementById('principal').value);
+  var r = parseFloat(document.getElementById('interestRate').value);
+  var t = parseFloat(document.getElementById('years').value);
+  
+  if (isNaN(p) || isNaN(r) || isNaN(t) || p <= 0 || r <= 0 || t <= 0) {
+    document.getElementById('financeResult').innerText = "0.00";
+    return;
+  }
+  
+  // Standard quarterly compounding (4 times a year)
+  var n = 4; 
+  var amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
+  
+  document.getElementById('financeResult').innerText = amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+</script>
+
+<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 15px;">
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px;">Understanding Compound Interest and Fixed Deposits</h2>
+
+<p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
+
+<p>Compound interest is a process where the interest you earn starts earning its own interest. Unlike simple interest, which is only calculated on your original deposit, compound interest calculates returns on your starting balance plus any interest already added to the account. In this guide, we will explain how this math works, look at the historical background of the concept, and show you how to use the calculator above to plan your savings.</p>
+
+<h3 style="color: #166534; margin-top: 30px;">How the Process Works in a Bank</h3>
+
+<p>When you open a fixed deposit, the growth usually follows a set schedule:</p>
+
+<ul style="margin-left: 20px;">
+  <li style="margin-bottom: 10px;"><strong>The First Cycle:</strong> During the first period (usually three months), the bank pays interest based only on the money you deposited.</li>
+  <li style="margin-bottom: 10px;"><strong>The Next Cycles:</strong> In the following period, the bank calculates interest on your original deposit plus the interest you earned in the first cycle.</li>
+  <li style="margin-bottom: 10px;"><strong>The Long-Term Effect:</strong> Because your balance gets slightly bigger every cycle, the amount of interest you earn also increases. The longer you leave the money alone, the faster it grows.</li>
+</ul>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">The Math Behind the Calculator</h2>
+
+<p>The interactive tool at the top of this page uses the standard algebraic formula for compound interest. Here is what the formula looks like:</p>
+
+<div style="background-color: #f8fafc; border-left: 5px solid #16a34a; padding: 20px; margin: 20px 0; font-size: 18px; text-align: center; font-weight: bold; color: #0f172a;">
+  Final Amount = P &times; (1 + r/n)<sup>nt</sup>
+</div>
+
+<p>Here is a simple breakdown of what each letter means:</p>
+
+<ul style="margin-left: 20px; line-height: 1.8;">
+  <li><strong>P (Principal):</strong> Your starting investment.</li>
+  <li><strong>r (Annual Interest Rate):</strong> The yearly rate expressed as a decimal. If the bank offers 7%, you use 0.07 in the math.</li>
+  <li><strong>n (Compounding Frequency):</strong> How many times a year the bank adds interest to your balance. Most fixed deposits compound quarterly, meaning n = 4. Daily compounding means n = 365.</li>
+  <li><strong>t (Time):</strong> The number of years you plan to leave the money in the account.</li>
+</ul>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">Tracking the Growth Over Time</h2>
+
+<p>To really see how compound interest works, it helps to look at a long-term projection. The table below compares simple interest to compound interest on a 10,000 initial investment at an 8% annual rate.</p>
+
+<div style="overflow-x: auto; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px;">
+  <table style="border-collapse: collapse; width: 100%; min-width: 600px; text-align: left; background-color: white;">
+    <thead>
+      <tr style="background-color: #14532d; color: white;">
+        <th style="padding: 15px; border: 1px solid #cce7d0;">Years</th>
+        <th style="padding: 15px; border: 1px solid #cce7d0;">Principal</th>
+        <th style="padding: 15px; border: 1px solid #cce7d0;">Simple Interest Balance</th>
+        <th style="padding: 15px; border: 1px solid #cce7d0;">Compound Interest Balance</th>
+        <th style="padding: 15px; border: 1px solid #cce7d0;">Difference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background-color: #f8fafc;">
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">5 Years</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">10,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">14,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">14,693</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0; color: #15803d;">+ 693</td>
+      </tr>
+      <tr>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">10 Years</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">10,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">18,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">21,589</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0; color: #15803d;">+ 3,589</td>
+      </tr>
+      <tr style="background-color: #f8fafc;">
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">20 Years</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">10,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">26,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">46,609</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0; color: #15803d;">+ 20,609</td>
+      </tr>
+      <tr>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">30 Years</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">10,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">34,000</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0;">100,626</td>
+        <td style="padding: 12px; border: 1px solid #e2e8f0; color: #15803d;">+ 66,626</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 style="color: #166534;">Looking at a 20-Year Balance</h3>
+
+<p>When money is left to grow for decades, the interest earned can eventually become larger than the original deposit. The chart below shows an account left alone for 20 years at a 7.5% annual rate.</p>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin: 30px 0; background: #f0fdf4; padding: 30px; border-radius: 12px; border: 1px solid #bbf7d0;">
+  <h4 style="text-align:center; color:#14532d; margin-top: 0; font-size: 18px;">Balance After 20 Years (7.5% Rate)</h4>
+  
+  <svg viewBox="0 0 36 36" style="width: 250px; height: 250px; transform: rotate(-90deg); margin: 20px 0;">
+    <!-- Total outline -->
+    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22c55e" stroke-width="6" />
+    <!-- Principal portion -->
+    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#14532d" stroke-width="6" stroke-dasharray="22.6, 100" />
+  </svg>
+  
+  <div style="margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-size: 16px;">
+     <div style="display: flex; align-items: center; gap: 8px;">
+         <span style="display:inline-block; width:20px; height:20px; background-color:#14532d; border-radius: 4px;"></span> 
+         Original Investment (22.6%)
+     </div>
+     <div style="display: flex; align-items: center; gap: 8px;">
+         <span style="display:inline-block; width:20px; height:20px; background-color:#22c55e; border-radius: 4px;"></span> 
+         Interest Earned (77.4%)
+     </div>
+  </div>
+</div>
+
+<p>By the end of the 20-year period, most of the account balance is made up of interest rather than the initial deposit.</p>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">A Brief History of Compound Interest</h2>
+
+<p>The math behind interest has been around for a very long time.</p>
+
+<p>Historians have found clay tablets from ancient Babylon (around 2000 BCE) showing that merchants used basic compounding to calculate loans for grain and silver. They even had math problems for students to figure out how long a debt would take to double.</p>
+
+<p>In 1613, an English mathematician named Richard Witt published a book that included detailed compound interest tables. Before his tables were published, working out the math for a 10-year loan was a slow manual process. His work made it easier for early banks and insurance companies to standardize their rates.</p>
+
+<p>Later, in 1683, Swiss mathematician Jacob Bernoulli studied what would happen if a bank compounded interest continuously—every single day, hour, and second. He found that the balance doesn't grow to infinity. Instead, it hits a mathematical limit. His calculations led to the discovery of the constant <em>e</em> (roughly 2.718), a number still used today in both finance and physics.</p>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">Using the Formula in Other Fields</h2>
+
+<p>The math behind compound interest is essentially the math of exponential growth. This means the same formula is used in several different fields outside of personal finance.</p>
+
+<h3 style="color: #166534;">1. Business and Data Analysis</h3>
+<p>Financial analysts use a metric called Compound Annual Growth Rate (CAGR) to measure business revenue. Since a company's sales might go up 20% one year and down 5% the next, CAGR provides a single, smoothed-out average growth rate over a set period.</p>
+
+<h3 style="color: #166534;">2. Biology and Population Studies</h3>
+<p>Scientists tracking the spread of a virus or the growth of bacteria use continuous compounding models. The math helps them predict future population numbers based on current growth rates.</p>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">Frequently Asked Questions</h2>
+
+<p><strong>1. How is compound interest different from simple interest?</strong><br>
+Simple interest is calculated only on the starting amount you deposited. Compound interest is calculated on your starting amount plus any interest that the bank has already paid into your account.</p>
+
+<p><strong>2. How often do fixed deposits compound?</strong><br>
+This varies by location and bank policy. Many term deposits compound quarterly (every three months). Other high-yield accounts may compound monthly or daily. Check the specific terms of your account.</p>
+
+<p><strong>3. What does APY mean?</strong><br>
+APY means Annual Percentage Yield. While the interest rate is the base number the bank quotes, the APY shows the actual percentage your money will grow in a year when compounding frequency is factored in.</p>
+
+<p><strong>4. Is the interest from a fixed deposit taxed?</strong><br>
+In most countries, interest earned on savings and fixed deposits is considered taxable income. Some banks will automatically deduct tax if your earnings go over a certain limit.</p>
+
+<p><strong>5. What is the Rule of 72?</strong><br>
+The Rule of 72 is a mental math trick to estimate how long an investment takes to double. You divide 72 by your interest rate. For example, at a 6% interest rate, your money doubles in about 12 years (72 ÷ 6 = 12).</p>
+
+<p><strong>6. Can I lose the principal money in a fixed deposit?</strong><br>
+Fixed deposits are generally very safe. The main risk is inflation. If the cost of living increases faster than your interest rate, the actual buying power of your savings will decrease over time.</p>
+
+<p><strong>7. Should I withdraw my interest payments?</strong><br>
+If you need the money for living expenses, you can have the interest paid out regularly. However, if your goal is long-term growth, it is better to leave the interest in the account so it can compound.</p>
+
+<p><strong>8. Can I close a fixed deposit before it matures?</strong><br>
+Yes, you can usually withdraw your money early. But banks typically charge an early withdrawal penalty, which usually means lowering the interest rate you earned during the time the money was in the account.</p>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">External Resources</h2>
+
+<p>To read more about interest rates and financial planning, here are several helpful resources:</p>
+
+<ul style="margin-left: 20px;">
+  <li style="margin-bottom: 8px;"><strong>Investopedia:</strong> A simple guide explaining <a href="https://www.investopedia.com/terms/c/compoundinterest.asp" target="_blank" rel="noopener noreferrer" style="color: #15803d; text-decoration: none;">compound interest mechanics</a>.</li>
+  <li style="margin-bottom: 8px;"><strong>Khan Academy:</strong> Free videos teaching the <a href="https://www.khanacademy.org/economics-finance-domain/core-finance/interest-tutorial" target="_blank" rel="noopener noreferrer" style="color: #15803d; text-decoration: none;">math behind interest</a>.</li>
+  <li style="margin-bottom: 8px;"><strong>The World Bank:</strong> Track current <a href="https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG" target="_blank" rel="noopener noreferrer" style="color: #15803d; text-decoration: none;">inflation data</a>.</li>
+  <li style="margin-bottom: 8px;"><strong>Reserve Bank of India (RBI):</strong> Check policy and <a href="https://www.rbi.org.in/" target="_blank" rel="noopener noreferrer" style="color: #15803d; text-decoration: none;">bank deposit rates</a>.</li>
+</ul>
+
+<h2 style="color: #14532d; border-bottom: 2px solid #22c55e; padding-bottom: 10px; margin-top: 40px;">Conclusion</h2>
+
+<p>Compound interest is a practical mathematical concept used in personal finance, banking, and data science. Understanding how it works can make long-term financial planning much easier. By leaving your savings in an account to grow over several years, a fixed deposit can provide a predictable and safe return. You can use the calculator at the top of this page to test different amounts, compare interest rates, and see how time affects your final balance.</p>
+
+</div>
