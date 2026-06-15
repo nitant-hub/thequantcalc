@@ -13,23 +13,44 @@ title: Home - Professional Quantitative Calculation Tools
 <hr style="border: 0; border-top: 1px solid var(--border-color); margin-bottom: 2rem;">
 
 <div class="tools-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-  {% for post in site.posts %}
-    <div class="tool-card" style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow);">
-      <div style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.75rem;">
-          <i class="fa-solid fa-square-poll-vertical"></i>
-      </div>
-      <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">
-          <a href="{{ post.url }}" style="color: var(--text-color); text-decoration: none; font-weight: 600;">{{ post.title }}</a>
-      </h3>
-      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">{{ post.description | default: "Click to launch this interactive analysis module." }}</p>
-      <a href="{{ post.url }}" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--primary-color); text-decoration: none; font-weight: 600;">
-          Launch Engine &rarr;
-      </a>
+  
+  <div class="tool-card" style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow);">
+    <div style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.75rem;">
+        <i class="fa-solid fa-square-poll-vertical"></i>
     </div>
-  {% empty %}
-    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted); border: 1px dashed var(--border-color); border-radius: 8px;">
-        <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary-color);"></i>
-        <p>Your modular tools configuration is scanning for your tool posts files...</p>
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">
+        <a href="/tools/matrix-calculator" style="color: var(--text-color); text-decoration: none; font-weight: 600;">Matrix Calculator</a>
+    </h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Run complex matrix multiplication, determinants, and linear algebra operations instantly.</p>
+    <a href="/tools/matrix-calculator" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--primary-color); text-decoration: none; font-weight: 600;">
+        Launch Engine &rarr;
+    </a>
+  </div>
+
+  <div class="tool-card" style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow);">
+    <div style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.75rem;">
+        <i class="fa-solid fa-chart-line"></i>
     </div>
-  {% endfor %}
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">
+        <a href="/tools/compound-interest" style="color: var(--text-color); text-decoration: none; font-weight: 600;">Compound Interest Engine</a>
+    </h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Forecast financial growth curves with precision using multi-tier compounding variables.</p>
+    <a href="/tools/compound-interest" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--primary-color); text-decoration: none; font-weight: 600;">
+        Launch Engine &rarr;
+    </a>
+  </div>
+
+  <div class="tool-card" style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow);">
+    <div style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.75rem;">
+        <i class="fa-solid fa-scale-balanced"></i>
+    </div>
+    <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">
+        <a href="/tools/risk-evaluator" style="color: var(--text-color); text-decoration: none; font-weight: 600;">Risk Assessment Evaluator</a>
+    </h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Analyze statistical variance allocations and maximum drawback limits for financial models.</p>
+    <a href="/tools/risk-evaluator" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--primary-color); text-decoration: none; font-weight: 600;">
+        Launch Engine &rarr;
+    </a>
+  </div>
+
 </div>
