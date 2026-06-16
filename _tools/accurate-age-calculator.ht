@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Accurate Age Calculator
-categories: tools
-tags: [calculator, age]
+title: "Accurate Age Calculator"
+schema_type: calculator
+categories: Math
+description: "Calculate your exact age in years, months, and days. Fast, free, and highly accurate multi-disciplinary tool."
 ---
 
 <div>
