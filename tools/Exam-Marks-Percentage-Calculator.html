@@ -98,7 +98,10 @@
 
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
         @media (max-width: 480px) { .sidebar { margin: 0 1rem; } }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        
+        /* Sidebar Title with 1.37 line height and Yellow border */
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid #fbbf24; padding-bottom: 0.5rem; font-weight: 700; line-height: 1.37; }
+        
         .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
         .sidebar-list a:hover { color: #7c3aed; }
@@ -112,7 +115,9 @@
         }
         @media (max-width: 480px) { .calc-container { border-radius: 0; border-left: none; border-right: none; } }
 
-        .calc-container h2 { text-align: center; font-size: 1.4rem; color: #38bdf8; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; }
+        /* Calc Title with 1.37 line height and Sky Blue border */
+        .calc-container h2 { text-align: center; font-size: 1.4rem; color: #38bdf8; margin-bottom: 1.5rem; border-bottom: 2px solid #38bdf8; padding-bottom: 1rem; line-height: 1.37; }
+        
         .input-group { margin-bottom: 1.25rem; }
         .input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
         .input-group input {
@@ -133,18 +138,39 @@
         .pro-article {
             background: var(--bg-surface);
             border-radius: 16px; border: 1px solid var(--border-color);
-            padding: 2rem; color: var(--text-main); line-height: 1.8; font-size: 1.05rem;
+            padding: 2rem; color: var(--text-main); font-size: 1.05rem;
+            line-height: 1.31; /* Base body text line-height */
         }
         @media (max-width: 480px) { .pro-article { border-radius: 0; border-left: none; border-right: none; padding: 1.5rem; } }
 
-        .pro-article h2 { font-size: 1.6rem; font-weight: 800; margin: 2.5rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border-color); }
+        /* All Headings Line Height 1.37 & Attractive Borders */
+        .pro-article h2 { 
+            font-size: 1.6rem; font-weight: 800; margin: 2.5rem 0 1rem 0; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 2px solid #38bdf8; /* Sky Blue Border */
+            line-height: 1.37; 
+        }
         .pro-article h2:first-child { margin-top: 0; }
-        .pro-article h3 { font-size: 1.35rem; font-weight: 700; margin: 2rem 0 1rem 0; }
-        .pro-article h4 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem 0; }
-        .pro-article p { margin-bottom: 1.25rem; color: var(--text-muted); }
+        
+        .pro-article h3 { 
+            font-size: 1.35rem; font-weight: 700; margin: 2rem 0 1rem 0; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 2px solid #a78bfa; /* Light Purple Border */
+            line-height: 1.37;
+        }
+        
+        .pro-article h4 { 
+            font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem 0; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 2px solid #34d399; /* Mint Green Border */
+            line-height: 1.37;
+        }
+
+        /* Body Text Line Height 1.31 */
+        .pro-article p { margin-bottom: 1.25rem; color: var(--text-muted); line-height: 1.31; }
         .pro-article strong { color: var(--text-main); }
-        .pro-article ul, .pro-article ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-muted); }
-        .pro-article li { margin-bottom: 0.5rem; }
+        .pro-article ul, .pro-article ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-muted); line-height: 1.31; }
+        .pro-article li { margin-bottom: 0.5rem; line-height: 1.31; }
         
         .formula-box {
             background: var(--bg-primary); border: 1px solid var(--border-color); border-left: 4px solid #38bdf8;
@@ -387,7 +413,7 @@
                 </ul>
 
                 <h3 style="margin-top: 2.5rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.31;">
                     Engine infrastructure optimization complete. All tools process data locally inside your web browser.
                 </p>
             </aside>
