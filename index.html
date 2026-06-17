@@ -95,7 +95,20 @@
         }
 
         .main-body { display: flex; flex-direction: column; gap: 2rem; }
-        .tool-section { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        
+        /* Updated Mobile-Optimized Tool Sections */
+        .tool-section { 
+            background: var(--bg-surface); 
+            padding: 0.75rem; /* Slimmer layout spacing for modern mobile view */
+            border-radius: 16px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
+        }
+        
+        @media (min-width: 768px) {
+            .tool-section { padding: 1.75rem; }
+        }
+        
         .section-title { font-size: 1.3rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; font-weight: 700; }
         
         .grid-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
@@ -149,10 +162,13 @@
         <div class="layout-grid">
             
             <main class="main-body">
-                <section class="tool-section">
-    <h2 class="section-title">🧮 Interactive Calculator</h2>
-    <iframe src="calculator/index.html" width="100%" height="600" style="border: none; border-radius: 8px;"></iframe>
-</section>
+                
+                <section class="tool-section" style="padding-left: 4px; padding-right: 4px;">
+                    <h2 class="section-title" style="padding-left: 12px;">🧮 Interactive Calculator</h2>
+                    <div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
+                        <iframe src="calculator/index.html" style="width: 100%; max-width: 480px; height: 580px; border: none; border-radius: 8px; display: block;"></iframe>
+                    </div>
+                </section>
 
                 <section class="tool-section" id="finance">
                     <h2 class="section-title">📈 Finance Tools</h2>
@@ -169,8 +185,6 @@
                         <a href="/tools/cosmic-weight.html" class="tool-card">Cosmic Weight Calculator</a>
                     </div>
                 </section>
-
-                
                 
             </main>
 
