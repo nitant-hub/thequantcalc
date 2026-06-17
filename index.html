@@ -77,12 +77,30 @@
             position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
             background: var(--bg-surface); border-left: 1px solid var(--border-color);
             padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001;
         }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
         .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
+
+        /* NEW: Close Button inside Menu */
+        .close-menu-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            line-height: 1;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .close-menu-btn:hover {
+            color: var(--text-main);
+        }
 
         /* Wrapper Setup */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
@@ -220,6 +238,8 @@
         </div>
 
         <nav class="nav-menu" id="navMenu">
+            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
+
             <div class="category-label">Quick Links</div>
             <a href="#">🏠 Home Base</a>
             <div class="category-label">Tools Directory</div>
@@ -240,12 +260,7 @@
                     </div>
                 </section>
 
-                
-                
-                
-                
-                
-                                <div id="home-only-features" style="display: none; width: 100%; margin-top: 1.5rem;">
+                <div id="home-only-features" style="display: none; width: 100%; margin-top: 1.5rem;">
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 0 1rem;">
                         <div style="background: #eff6ff; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; text-align: center;">
                             <div style="font-size: 24px; font-weight: 800; color: #1e40af;">100+</div>
@@ -266,8 +281,7 @@
                     </div>
                 </div>
 
-
-           <section class="tool-section" id="finance">
+                <section class="tool-section" id="finance">
                     <h2 class="section-title">📈 Finance Tools</h2>
                     <div class="grid-links">
                         <a href="/tools/Compound-Interest-Calculator.html" class="tool-card">Compound Interest Calculator</a>
@@ -346,11 +360,18 @@
         // 3. Make the mobile menu open and close
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn'); // NEW: Select Close Button
         
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isActive = navMenu.classList.toggle('active');
             menuBtn.setAttribute('aria-expanded', isActive);
+        });
+
+        // NEW: Close Menu when ❌ is clicked
+        closeMenuBtn.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
         });
 
         document.addEventListener('click', (e) => {
@@ -370,8 +391,6 @@
         }
 
         themeToggle.addEventListener('click', () => {
-            let newTheme = 'light';
-            
             if (htmlEl.getAttribute('data-theme') === 'dark') {
                 htmlEl.setAttribute('data-theme', 'light');
                 themeToggle.textContent = '🌙';
@@ -380,13 +399,6 @@
                 htmlEl.setAttribute('data-theme', 'dark');
                 themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
-                newTheme = 'dark';
-            }
-
-            // Tell the new features box to change colors too!
-            const featuresFrame = document.getElementById('features-frame');
-            if (featuresFrame && featuresFrame.contentWindow) {
-                featuresFrame.contentWindow.postMessage({ type: 'theme-change', theme: newTheme }, '*');
             }
         });
 
