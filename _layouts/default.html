@@ -23,7 +23,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --header-bg: rgba(255, 255, 255, 0.9);
+            --header-bg: rgba(255, 255, 255, 0.95);
             --header-height: 70px;
         }
 
@@ -33,11 +33,17 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
-            --header-bg: rgba(15, 23, 42, 0.9);
+            --header-bg: rgba(15, 23, 42, 0.95);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.3s, color 0.3s; }
         
+        /* Forces the browser to recognize the whole page as scrollable */
+        html, body {
+            overflow-x: hidden;
+            height: auto; 
+        }
+
         body { 
             background-color: var(--bg-primary); 
             color: var(--text-main); 
@@ -47,7 +53,7 @@
             padding-top: var(--header-height); 
         }
 
-        /* Fixed Header Base Config */
+        /* Base Header Rules */
         header {
             position: fixed !important; 
             top: 0 !important; 
@@ -62,14 +68,8 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; 
-            transform: translateY(0) !important; 
-        }
-
-        /* 👑 The Master Override Class: Forces Tablet & Desktop Browsers to Hide Header */
-        header.header-hidden {
-            transform: translateY(-100%) !important;
-            box-shadow: none !important;
+            transition: transform 0.3s ease-in-out !important; 
+            transform: translateY(0); /* Default state */
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
@@ -148,7 +148,7 @@
     </footer>
 
     <script>
-        // 1. Menu Drawer Logic
+        // 1. Menu Logic
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
@@ -169,35 +169,35 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
 
-        // 3. High-Performance Multi-Device Auto-Hide Engine
-        let lastScroll = 0;
+        // 3. BRUTE FORCE AUTO-HIDE ENGINE
         const header = document.getElementById('mainHeader');
+        let lastScroll = 0;
 
-        window.addEventListener('scroll', () => {
-            // Support all variants of desktop/tablet scrolling containers
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        function forceHeaderScroll() {
+            // Check window, body, and document (catches all device quirks)
+            const currentScroll = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-            // Security check: if the slide-out menu drawer is open, do not hide header
+            // Don't hide if menu is open
             if (navMenu.classList.contains('active')) return;
 
-            // If user scrolls back to the very top, instantly show header
-            if (currentScroll <= 15) {
-                header.classList.remove('header-hidden');
-                lastScroll = currentScroll;
-                return;
-            }
-
-            // Universal direction tracking
-            if (currentScroll > lastScroll && currentScroll > 60) {
-                // Scrolling Down -> Hide Header everywhere
-                header.classList.add('header-hidden');
+            if (currentScroll <= 20) {
+                // Force Show at very top
+                header.style.setProperty('transform', 'translateY(0)', 'important');
+            } else if (currentScroll > lastScroll && currentScroll > 60) {
+                // Force Hide when scrolling down
+                header.style.setProperty('transform', 'translateY(-100%)', 'important');
             } else if (currentScroll < lastScroll) {
-                // Scrolling Up -> Show Header everywhere
-                header.classList.remove('header-hidden');
+                // Force Show when scrolling up
+                header.style.setProperty('transform', 'translateY(0)', 'important');
             }
             
             lastScroll = currentScroll;
-        }, { passive: true });
+        }
+
+        // Attach listener to multiple targets so it CANNOT fail to detect scroll
+        window.addEventListener('scroll', forceHeaderScroll, { passive: true });
+        document.body.addEventListener('scroll', forceHeaderScroll, { passive: true });
+        document.addEventListener('scroll', forceHeaderScroll, { passive: true });
     </script>
 </body>
 </html>
