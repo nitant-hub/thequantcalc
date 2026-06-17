@@ -38,7 +38,6 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.3s, color 0.3s; }
         
-        /* Forces the browser to recognize the whole page as scrollable */
         html, body {
             overflow-x: hidden;
             height: auto; 
@@ -53,7 +52,7 @@
             padding-top: var(--header-height); 
         }
 
-        /* Base Header Rules */
+        /* Fixed Header Configuration */
         header {
             position: fixed !important; 
             top: 0 !important; 
@@ -68,8 +67,9 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            transition: transform 0.3s ease-in-out !important; 
-            transform: translateY(0); /* Default state */
+            transition: transform 0.25s ease-in-out !important; 
+            transform: translateY(0); 
+            will-change: transform;
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
@@ -148,12 +148,12 @@
     </footer>
 
     <script>
-        // 1. Menu Logic
+        // 1. Navigation Sidebar Drawer Menu Logic
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-        // 2. Dark Mode Engine
+        // 2. Night Mode Engine
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         
@@ -169,35 +169,54 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
 
-        // 3. BRUTE FORCE AUTO-HIDE ENGINE
+        // 3. LAYOUT-AGNOSTIC AUTO-HIDE HEADER ENGINE
         const header = document.getElementById('mainHeader');
         let lastScroll = 0;
 
-        function forceHeaderScroll() {
-            // Check window, body, and document (catches all device quirks)
-            const currentScroll = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-            // Don't hide if menu is open
+        function handleUniversalScroll(e) {
             if (navMenu.classList.contains('active')) return;
 
-            if (currentScroll <= 20) {
-                // Force Show at very top
+            // Detect scroll location regardless of whether the window OR an inner column layout div is scrolling
+            let currentScroll = 0;
+            if (e.target === document || e.target === window || e.target === document.documentElement) {
+                currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            } else if (e.target && e.target.scrollTop !== undefined) {
+                currentScroll = e.target.scrollTop;
+            } else {
+                return;
+            }
+
+            if (currentScroll <= 15) {
                 header.style.setProperty('transform', 'translateY(0)', 'important');
-            } else if (currentScroll > lastScroll && currentScroll > 60) {
-                // Force Hide when scrolling down
+                return;
+            }
+
+            if (currentScroll > lastScroll && currentScroll > 50) {
+                // Scrolling down -> Hide
                 header.style.setProperty('transform', 'translateY(-100%)', 'important');
             } else if (currentScroll < lastScroll) {
-                // Force Show when scrolling up
+                // Scrolling up -> Show
                 header.style.setProperty('transform', 'translateY(0)', 'important');
             }
-            
             lastScroll = currentScroll;
         }
 
-        // Attach listener to multiple targets so it CANNOT fail to detect scroll
-        window.addEventListener('scroll', forceHeaderScroll, { passive: true });
-        document.body.addEventListener('scroll', forceHeaderScroll, { passive: true });
-        document.addEventListener('scroll', forceHeaderScroll, { passive: true });
+        // The Magic Setting: "true" turns on Event Capturing. 
+        // This forces JavaScript to catch scroll actions happening inside your 3-column frames.
+        window.addEventListener('scroll', handleUniversalScroll, true);
+
+        // Backup Engine: Directly monitors desktop mouse wheels / trackpad gesture vectors
+        window.addEventListener('wheel', (e) => {
+            if (navMenu.classList.contains('active')) return;
+            
+            if (e.deltaY > 15) {
+                // Wheel moving down
+                header.style.setProperty('transform', 'translateY(-100%)', 'important');
+            } else if (e.deltaY < -15) {
+                // Wheel moving up
+                header.style.setProperty('transform', 'translateY(0)', 'important');
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>
