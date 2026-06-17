@@ -16,22 +16,14 @@
     </script>
 
     <style>
+        /* BASE THEME VARIABLES */
         :root {
             --bg-primary: #f8fafc;
             --bg-surface: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            
-            /* High-visibility electric blue gradient for elements */
             --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%); 
-            
-            /* ENHANCED: Deep Premium Sapphire/Navy Gradient (Professional & Modern) */
-            --header-bg: linear-gradient(135deg, #0b1329 0%, #1e3a8a 100%); 
-            --header-text: #ffffff;
-            --header-text-muted: #94a3b8;
-            --header-border: rgba(255, 255, 255, 0.08);
-            --header-shadow: 0 4px 30px rgba(15, 23, 42, 0.15);
             --header-height: 70px;
         }
 
@@ -41,16 +33,16 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
-            
-            /* ENHANCED: Cyber Midnight Obsidian Gradient */
-            --header-bg: linear-gradient(135deg, #020617 0%, #0f172a 100%); 
-            --header-text: #f8fafc;
-            --header-text-muted: #64748b;
-            --header-border: rgba(56, 189, 248, 0.15); 
-            --header-shadow: 0 4px 35px rgba(0, 0, 0, 0.5);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.3s, color 0.3s; }
+        /* GLOBAL RESET */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            transition: background-color 0.3s, color 0.3s; 
+        }
         
         html, body {
             overflow-x: hidden;
@@ -66,25 +58,29 @@
             padding-top: var(--header-height); 
         }
 
-        /* ATTRACTIVE & MODERN FIXED HEADER */
-        header {
-            position: fixed; 
-            top: 0; 
-            left: 0;
-            width: 100%;
-            height: var(--header-height);
-            z-index: 9999; 
+        /* * FORCED HEADER STYLES 
+         * Using #mainHeader and !important to prevent other CSS from making it white
+         */
+        header#mainHeader {
+            position: fixed !important; 
+            top: 0 !important; 
+            left: 0 !important;
+            width: 100% !important;
+            height: var(--header-height) !important;
+            z-index: 9999 !important; 
             
-            background: var(--header-bg); 
-            border-bottom: 1px solid var(--header-border);
-            box-shadow: var(--header-shadow);
+            /* The deep professional blue gradient */
+            background: linear-gradient(135deg, #0b1329 0%, #1e3a8a 100%) !important; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 4px 25px rgba(15, 23, 42, 0.3) !important;
             
-            padding: 0 1.5rem;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
+            padding: 0 1.5rem !important;
+            display: flex !important; 
+            justify-content: space-between !important; 
+            align-items: center !important;
         }
 
+        /* BRANDING */
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
         .logo-symbol {
             background: var(--accent-gradient); 
@@ -100,29 +96,33 @@
             box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
         
-        /* White text for better legibility against the new deep dark background colors */
-        .brand-title {
-            font-size: 1.45rem; 
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #ffffff;
+        /* Forced white text for the brand title */
+        #mainHeader .brand-title {
+            font-size: 1.45rem !important; 
+            font-weight: 800 !important;
+            letter-spacing: -0.5px !important;
+            color: #ffffff !important;
+            background: none !important;
+            -webkit-text-fill-color: #ffffff !important;
         }
 
+        /* NAVIGATION ACTIONS */
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
         
-        .theme-toggle { 
+        /* Forced white icons in the header */
+        #mainHeader .theme-toggle { 
             background: none; 
             border: none; 
             font-size: 1.3rem; 
             cursor: pointer; 
-            color: var(--header-text); 
+            color: #ffffff !important; 
             padding: 5px; 
             transition: transform 0.2s, opacity 0.2s; 
         }
-        .theme-toggle:hover { transform: scale(1.1); opacity: 0.9; }
+        #mainHeader .theme-toggle:hover { transform: scale(1.1); opacity: 0.9; }
 
-        /* FIXED INTERACTIVE HAMBURGER BUTTON STYLE */
-        .menu-btn { 
+        /* HAMBURGER MENU */
+        #mainHeader .menu-btn { 
             background: none; 
             border: none; 
             cursor: pointer; 
@@ -132,25 +132,20 @@
             z-index: 10001; 
             padding: 5px;
         }
-        .menu-btn span { 
+        #mainHeader .menu-btn span { 
             width: 25px; 
             height: 3px; 
-            background-color: var(--header-text); 
+            background-color: #ffffff !important; /* Forced white lines */
             border-radius: 2px; 
             transition: transform 0.3s ease, opacity 0.3s ease; 
         }
         
-        /* Cross (X) Animation states when open */
-        .menu-btn.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-btn.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
+        /* Hamburger Animation */
+        #mainHeader .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        #mainHeader .menu-btn.active span:nth-child(2) { opacity: 0; }
+        #mainHeader .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         
+        /* SIDE SLIDE MENU */
         .nav-menu {
             position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
             background: var(--bg-surface); border-left: 1px solid var(--border-color);
@@ -163,8 +158,10 @@
         .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-top: 1rem; }
 
+        /* CONTENT WRAPPER */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
 
+        /* FOOTER */
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
@@ -197,9 +194,9 @@
         </nav>
     </header>
 
-    <div class="wrapper">
+    <main class="wrapper">
         {{ content }} 
-    </div>
+    </main>
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
@@ -212,7 +209,7 @@
     </footer>
 
     <script>
-        // FIXED Menu & Hamburger Animation Handler
+        // Menu & Hamburger Animation Handler
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         if(menuBtn && navMenu) {
