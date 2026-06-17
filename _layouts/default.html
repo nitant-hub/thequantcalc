@@ -52,16 +52,16 @@
             padding-top: var(--header-height); 
         }
 
-        /* Bulletproof Header Setup
-           Controlled via a custom CSS Variable to eliminate specificity wars 
+        /* FIXED HEADER - NO TRANSFORMS
+           We animate the 'top' property directly. It cannot be ignored by the browser. 
         */
         header {
             position: fixed !important; 
-            top: 0 !important; 
+            top: 0 !important; /* This is what we will animate */
             left: 0 !important;
             width: 100% !important;
             height: var(--header-height) !important;
-            z-index: 99999 !important; /* Forces it above any complex dashboard sidebars */
+            z-index: 99999 !important; 
             background: var(--header-bg) !important; 
             backdrop-filter: blur(15px) !important;
             border-bottom: 1px solid var(--border-color) !important;
@@ -69,10 +69,7 @@
             display: flex !important; 
             justify-content: space-between !important; 
             align-items: center !important;
-            /* Inline variable tracking defaults to 0% if not set */
-            transform: translateY(var(--header-transform, 0%)) !important; 
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important; 
-            will-change: transform;
+            transition: top 0.3s ease-in-out !important; /* Strict top transition */
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
@@ -151,99 +148,53 @@
     </footer>
 
     <script>
-        // Safe UI Initialization Wrapper
-        try {
-            const menuBtn = document.getElementById('menuBtn');
-            const navMenu = document.getElementById('navMenu');
-            if(menuBtn && navMenu) {
-                menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
-            }
-
-            const themeToggle = document.getElementById('themeToggle');
-            const htmlEl = document.documentElement;
-            if(themeToggle) {
-                if (localStorage.getItem('theme') === 'dark') {
-                    htmlEl.setAttribute('data-theme', 'dark');
-                    themeToggle.textContent = '☀️';
-                }
-                themeToggle.addEventListener('click', () => {
-                    const isDark = htmlEl.getAttribute('data-theme') === 'dark';
-                    htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
-                    themeToggle.textContent = isDark ? '🌙' : '☀️';
-                    localStorage.setItem('theme', isDark ? 'light' : 'dark');
-                });
-            }
-        } catch (e) {
-            console.error("UI standard features encountered an error initialization:", e);
+        // UI Initialization
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        if(menuBtn && navMenu) {
+            menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
         }
 
-        // UNBREAKABLE INTERACTION ENGINE FOR HEADERS
-        (function() {
-            try {
-                const header = document.getElementById('mainHeader');
-                if (!header) return;
-
-                let lastScrollY = 0;
-                let touchStartY = 0;
-
-                const hideHeader = () => header.style.setProperty('--header-transform', '-100%');
-                const showHeader = () => header.style.setProperty('--header-transform', '0%');
-
-                // 1. Capture All Scroll Vectors (Phase 1 Event Capture - cannot be blocked by inner divs)
-                window.addEventListener('scroll', function(e) {
-                    const target = e.target;
-                    let currentScroll = 0;
-
-                    if (target === document || target === window || target === document.documentElement) {
-                        currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                    } else if (target && target.scrollTop !== undefined) {
-                        currentScroll = target.scrollTop;
-                    }
-
-                    if (currentScroll <= 20) {
-                        showHeader();
-                    } else if (currentScroll > lastScrollY && currentScroll > 60) {
-                        hideHeader();
-                    } else if (currentScroll < lastScrollY) {
-                        showHeader();
-                    }
-                    lastScrollY = currentScroll;
-                }, true); // True guarantees execution before child container scripts intercept it
-
-                // 2. Capture Desktop & Laptop Hardware Wheel Actions (Phase 1 Capture)
-                window.addEventListener('wheel', function(e) {
-                    if (e.deltaY > 10) {
-                        hideHeader(); // Wheel turning down
-                    } else if (e.deltaY < -10) {
-                        showHeader(); // Wheel turning up
-                    }
-                }, true);
-
-                // 3. Capture Tablet Native Display Swipes (Phase 1 Capture)
-                window.addEventListener('touchstart', function(e) {
-                    if (e.touches && e.touches[0]) {
-                        touchStartY = e.touches[0].clientY;
-                    }
-                }, true);
-
-                window.addEventListener('touchmove', function(e) {
-                    if (!e.touches || !e.touches[0]) return;
-                    const currentTouchY = e.touches[0].clientY;
-                    const displacementY = touchStartY - currentTouchY;
-
-                    if (displacementY > 15) {
-                        hideHeader(); // Swiped upwards
-                        touchStartY = currentTouchY;
-                    } else if (displacementY < -15) {
-                        showHeader(); // Swiped downwards
-                        touchStartY = currentTouchY;
-                    }
-                }, true);
-
-            } catch (err) {
-                console.error("Scroll engine recovery active:", err);
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+        if(themeToggle) {
+            if (localStorage.getItem('theme') === 'dark') {
+                htmlEl.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
             }
-        })();
+            themeToggle.addEventListener('click', () => {
+                const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+                htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+                themeToggle.textContent = isDark ? '🌙' : '☀️';
+                localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            });
+        }
+
+        // RAW JAVASCRIPT SCROLL - MODIFYING TOP VALUE DIRECTLY
+        const header = document.getElementById('mainHeader');
+        let lastScrollY = window.scrollY || 0;
+
+        window.addEventListener('scroll', () => {
+            // Get exact scroll position
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+            // Don't hide if menu is open or at very top
+            if (navMenu.classList.contains('active') || currentScroll <= 10) {
+                header.style.setProperty('top', '0px', 'important');
+                lastScrollY = currentScroll;
+                return;
+            }
+
+            if (currentScroll > lastScrollY && currentScroll > 60) {
+                // Scrolling down -> Push header exactly -100px off screen
+                header.style.setProperty('top', '-100px', 'important');
+            } else if (currentScroll < lastScrollY) {
+                // Scrolling up -> Bring it back to 0px
+                header.style.setProperty('top', '0px', 'important');
+            }
+            
+            lastScrollY = currentScroll;
+        }, { passive: true });
     </script>
 </body>
 </html>
