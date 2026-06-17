@@ -1,263 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>thequantcals | Free Advanced Calculators & Generators</title>
+---
+layout: default
+title: Free Advanced Calculators & Generators
+---
+
+<div class="layout-grid">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "thequantcals",
-      "url": "https://thequantcals.com",
-      "description": "Premium collection of calculators and tools for finance, health, and mathematics."
-    }
-    </script>
+    <main class="main-body">
+        <section class="tool-section" id="calculators">
+            <h2 class="section-title">🧮 All Calculators & Tools</h2>
+            <div class="grid-links">
+                
+                {% for tool in site.pages %}
+                  {% if tool.path contains 'tools/' %}
+                    <a href="{{ tool.url }}" class="tool-card">{{ tool.title }}</a>
+                  {% endif %}
+                {% endfor %}
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Compound Interest Calc", "url": "https://thequantcals.com/_tools/compound-interest.html" },
-        { "@type": "ListItem", "position": 2, "name": "Loan EMI Calculator", "url": "https://thequantcals.com/_tools/loan-emi.html" }
-      ]
-    }
-    </script>
+            </div>
+        </section>
+    </main>
 
-    <style>
-        /* Modern UI Design System & Theme Colors */
-        :root {
-            --bg-primary: #f4f6f9;
-            --bg-surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --card-hover-shadow: rgba(99, 102, 241, 0.15);
-            --header-bg: rgba(255, 255, 255, 0.85);
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-surface: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --card-hover-shadow: rgba(0, 0, 0, 0.3);
-            --header-bg: rgba(15, 23, 42, 0.85);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-
-        /* App Header Hook */
-        header {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--header-bg); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.85rem 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol {
-            background: var(--accent-gradient); width: 38px; height: 38px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.3rem;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-        }
-        .brand-title {
-            font-size: 1.45rem; font-weight: 800; letter-spacing: -0.5px;
-            background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        
-        /* Night Mode Toggle Style */
-        .theme-toggle {
-            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-main);
-            padding: 4px; display: flex; align-items: center; justify-content: center;
-        }
-
-        /* Responsive Hamburger Icon */
-        .menu-btn {
-            background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
-        }
-        .menu-btn span { width: 24px; height: 3px; background-color: var(--text-main); border-radius: 2px; }
-        
-        /* Slide-out Panel Links */
-        .nav-menu {
-            position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
-            background: var(--bg-surface); border-left: 1px solid var(--border-color);
-            padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05);
-        }
-        .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-        .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
-
-        /* Grid Layout Setup */
-        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
-        
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 992px) {
-            .layout-grid { grid-template-columns: 2.5fr 1fr; }
-        }
-
-        /* Tool Cards Container */
-        .main-body { display: flex; flex-direction: column; gap: 2rem; }
-        .tool-section { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        .section-title { font-size: 1.3rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; font-weight: 700; }
-        
-        .grid-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-        .tool-card {
-            padding: 1.25rem; border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none;
-            color: var(--text-main); font-weight: 600; background: var(--bg-primary); display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .tool-card:hover { 
-            transform: translateY(-2px); 
-            border-color: #2563eb; 
-            box-shadow: 0 10px 15px -3px var(--card-hover-shadow);
-        }
-
-        /* Sidebar Elements */
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
-        .sidebar-list a:hover { color: #7c3aed; }
-        
-        /* Footer & Policies Layout */
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
-        .footer-links a:hover { color: var(--text-main); text-decoration: underline; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <a href="#" class="brand">
-            <div class="logo-symbol">𝘘</div>
-            <div class="brand-title">thequantcals</div>
-        </a>
-        
-        <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-
-        <nav class="nav-menu" id="navMenu">
-            <div class="category-label">Quick Links</div>
-            <a href="#">🏠 Home Base</a>
-            <div class="category-label">Tools Directory</div>
-            <a href="#finance">📈 Finance Tools</a>
-            <a href="#math">📐 Mathematics</a>
-            <a href="#generators">⚡ Automation Generators</a>
-        </nav>
-    </header>
-
-    <div class="wrapper">
-        <div class="layout-grid">
+    <aside class="sidebar">
+        <h3>🔥 Popular Tools</h3>
+        <ul class="sidebar-list">
             
-            <main class="main-body">
-                <section class="tool-section" id="finance">
-                    <h2 class="section-title">📈 Finance Calculators</h2>
-                    <div class="grid-links">
-                        <a href="_tools/compound-interest.html" class="tool-card">Compound Interest Calc</a>
-                        <a href="_tools/loan-emi.html" class="tool-card">Loan EMI Calculator</a>
-                        <a href="_tools/sip-calc.html" class="tool-card">SIP Calculator</a>
-                    </div>
-                </section>
+            {% for tool in site.pages %}
+              {% if tool.path contains 'tools/' %}
+                <li><a href="{{ tool.url }}">⭐ {{ tool.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+            
+        </ul>
 
-                <section class="tool-section" id="math">
-                    <h2 class="section-title">📐 Math Tools</h2>
-                    <div class="grid-links">
-                        <a href="_tools/matrix-calc.html" class="tool-card">Matrix Calculator</a>
-                        <a href="_tools/percentage-calc.html" class="tool-card">Percentage Calculator</a>
-                    </div>
-                </section>
+        <h3 style="margin-top: 2.5rem;">System Status</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+            Engine infrastructure optimization complete. All data processing executes locally inside your web client.
+        </p>
+    </aside>
 
-                <section class="tool-section" id="generators">
-                    <h2 class="section-title">⚡ Generators</h2>
-                    <div class="grid-links">
-                        <a href="_tools/password-generator.html" class="tool-card">Secure Password Gen</a>
-                        <a href="_tools/qr-generator.html" class="tool-card">QR Code Generator</a>
-                    </div>
-                </section>
-            </main>
-
-            <aside class="sidebar">
-                <h3>🔥 Popular Tools</h3>
-                <ul class="sidebar-list">
-                    <li><a href="_tools/compound-interest.html">⭐ Compound Interest Calculator</a></li>
-                    <li><a href="_tools/password-generator.html">⭐ Secure Password Generator</a></li>
-                    <li><a href="_tools/sip-calc.html">⭐ SIP Calculator</a></li>
-                </ul>
-
-                <h3 style="margin-top: 2.5rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                    Engine infrastructure optimization complete for the current calendar cycle. All data processing executes locally inside your web client.
-                </p>
-            </aside>
-
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 thequantcals. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-service.html">Terms of Service</a>
-            <a href="disclaimer.html">Disclaimer</a>
-            <a href="contact.html">Contact Us</a>
-        </div>
-    </footer>
-
-    <script>
-        // Menu Toggle Handling Drawer
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && e.target !== menuBtn) {
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Smart LocalStorage Dark Mode Engine
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlEl = document.documentElement;
-        
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlEl.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') {
-                htmlEl.setAttribute('data-theme', 'light');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
-</body>
-</html>
+</div>
