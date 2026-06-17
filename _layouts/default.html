@@ -59,7 +59,7 @@
             left: 0 !important;
             width: 100% !important;
             height: var(--header-height) !important;
-            z-index: 1000 !important;
+            z-index: 2000 !important; /* Extremely high to sit above any sidebars */
             background: var(--header-bg); 
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-color);
@@ -67,8 +67,9 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            transition: transform 0.25s ease-in-out !important; 
-            transform: translateY(0); 
+            /* Using a high-priority hardware transition */
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important; 
+            transform: translateY(0) !important; 
             will-change: transform;
         }
 
@@ -85,7 +86,7 @@
         .nav-actions { display: flex; align-items: center; gap: 1rem; }
         .theme-toggle { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-main); padding: 5px; }
 
-        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 2100; }
         .menu-btn span { width: 25px; height: 3px; background-color: var(--text-main); border-radius: 2px; transition: 0.3s; }
         
         .nav-menu {
@@ -93,7 +94,7 @@
             background: var(--bg-surface); border-left: 1px solid var(--border-color);
             padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.5rem;
             transition: right 0.3s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.05);
-            z-index: 999;
+            z-index: 2050;
         }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.1rem; }
@@ -148,12 +149,12 @@
     </footer>
 
     <script>
-        // 1. Navigation Sidebar Drawer Menu Logic
+        // 1. Sidebar Drawer Menu
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-        // 2. Night Mode Engine
+        // 2. Theme Toggle Config
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         
@@ -169,54 +170,59 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
 
-        // 3. LAYOUT-AGNOSTIC AUTO-HIDE HEADER ENGINE
+        // 3. PHYSICAL INTERACTION INPUT TRACKER (FORCES HIDE REGARDLESS OF CSS LAYOUTS)
         const header = document.getElementById('mainHeader');
-        let lastScroll = 0;
+        let touchStartY = 0;
 
-        function handleUniversalScroll(e) {
-            if (navMenu.classList.contains('active')) return;
-
-            // Detect scroll location regardless of whether the window OR an inner column layout div is scrolling
-            let currentScroll = 0;
-            if (e.target === document || e.target === window || e.target === document.documentElement) {
-                currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            } else if (e.target && e.target.scrollTop !== undefined) {
-                currentScroll = e.target.scrollTop;
-            } else {
-                return;
-            }
-
-            if (currentScroll <= 15) {
-                header.style.setProperty('transform', 'translateY(0)', 'important');
-                return;
-            }
-
-            if (currentScroll > lastScroll && currentScroll > 50) {
-                // Scrolling down -> Hide
-                header.style.setProperty('transform', 'translateY(-100%)', 'important');
-            } else if (currentScroll < lastScroll) {
-                // Scrolling up -> Show
-                header.style.setProperty('transform', 'translateY(0)', 'important');
-            }
-            lastScroll = currentScroll;
+        // Force Header State Functions Using Script Injection Overrides
+        function hideHeader() {
+            header.style.setProperty('transform', 'translateY(-100%)', 'important');
+        }
+        function showHeader() {
+            header.style.setProperty('transform', 'translateY(0)', 'important');
         }
 
-        // The Magic Setting: "true" turns on Event Capturing. 
-        // This forces JavaScript to catch scroll actions happening inside your 3-column frames.
-        window.addEventListener('scroll', handleUniversalScroll, true);
-
-        // Backup Engine: Directly monitors desktop mouse wheels / trackpad gesture vectors
+        // A. Capture Desktop Mouse Wheels & Laptop Trackpad Scrolling Actions Globally
         window.addEventListener('wheel', (e) => {
             if (navMenu.classList.contains('active')) return;
             
-            if (e.deltaY > 15) {
-                // Wheel moving down
-                header.style.setProperty('transform', 'translateY(-100%)', 'important');
-            } else if (e.deltaY < -15) {
-                // Wheel moving up
-                header.style.setProperty('transform', 'translateY(0)', 'important');
+            if (e.deltaY > 5) {
+                // Moving Down
+                hideHeader();
+            } else if (e.deltaY < -5) {
+                // Moving Up
+                showHeader();
             }
         }, { passive: true });
+
+        // B. Capture Tablet & Hybrid Screen Direct Finger Gesture Swipes Globally
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (navMenu.classList.contains('active')) return;
+            
+            const touchEndY = e.touches[0].clientY;
+            const displacementY = touchStartY - touchEndY;
+
+            if (displacementY > 8) {
+                // Finger swiped UP -> Page content goes up -> Hide Header
+                hideHeader();
+            } else if (displacementY < -8) {
+                // Finger swiped DOWN -> Page content goes down -> Show Header
+                showHeader();
+            }
+            touchStartY = touchEndY;
+        }, { passive: true });
+
+        // C. Clean Safeguard: Show header instantly if any container goes near the top
+        const resetTrigger = () => {
+            const topPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            if (topPos <= 10) showHeader();
+        };
+        window.addEventListener('scroll', resetTrigger, { passive: true });
+        document.addEventListener('scroll', resetTrigger, { passive: true });
     </script>
 </body>
 </html>
