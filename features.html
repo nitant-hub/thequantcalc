@@ -1,0 +1,69 @@
+<div id="home-only-features" style="display: none;">
+  
+  <div class="pro-header-module">
+    <div class="pro-grid-compact">
+      <div class="feat-card col-tools">
+        <div class="highlight-txt">100+</div>
+        <div class="label-txt">Online Tools</div>
+        <div class="sub-txt">All in one platform</div>
+      </div>
+
+      <div class="feat-card col-fast">
+        <div class="highlight-txt">Fast</div>
+        <div class="label-txt">PERFORMANCE</div>
+      </div>
+
+      <div class="feat-card col-client">
+        <div class="highlight-txt">100%</div>
+        <div class="label-txt">CLIENT-SIDE</div>
+      </div>
+
+      <div class="feat-card col-free">
+        <div class="highlight-txt">Free</div>
+        <div class="label-txt">FOREVER</div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* --- MODULE CONTAINER --- */
+    .pro-header-module {
+      margin: 20px 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* --- ✨ SLIM GRID STYLES --- */
+    .pro-grid-compact { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .feat-card { border-radius: 12px; padding: 10px 14px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid rgba(0,0,0,0.02); }
+    .feat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06); }
+    .feat-card .highlight-txt { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 0px; letter-spacing: -0.5px; }
+    .feat-card .label-txt { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-top: 3px; }
+    .feat-card .sub-txt { font-size: 9px; font-weight: 600; margin-top: 1px; opacity: 0.85; text-transform: capitalize; }
+
+    /* Color Types */
+    .col-tools { background-color: #eff6ff; color: #1e40af; }
+    .col-tools .label-txt { color: #1e3a8a; }
+    .col-tools .sub-txt { color: #3b82f6; }
+    .col-fast { background-color: #ecfdf5; color: #065f46; }
+    .col-fast .label-txt { color: #047857; }
+    .col-client { background-color: #f5f3ff; color: #5b21b6; }
+    .col-client .label-txt { color: #4c1d95; }
+    .col-free { background-color: #fffbeb; color: #92400e; }
+    .col-free .label-txt { color: #78350f; }
+
+    /* --- 📱 MOBILE ADJUSTMENTS --- */
+    @media (max-width: 600px) {
+      .pro-grid-compact { gap: 8px; }
+      .feat-card { padding: 8px 10px; border-radius: 10px; }
+      .feat-card .highlight-txt { font-size: 20px; }
+      .feat-card .label-txt { font-size: 9.5px; letter-spacing: 0.5px;}
+      .feat-card .sub-txt { font-size: 8px; }
+    }
+  </style>
+</div>
+
+<script>
+  if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+    document.getElementById("home-only-features").style.display = "block";
+  }
+</script>
