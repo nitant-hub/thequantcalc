@@ -1,0 +1,292 @@
+<div class="swipe-box-container">
+  <div class="swipe-title">👉 Swipe to try similar tools</div>
+  <div class="carousel-wrapper">
+    <button class="nav-arrow left-arrow" id="leftArrow" aria-label="Scroll left">&#10094;</button>
+    
+    <div class="track-window">
+      <div class="swipe-track" id="autoSwipeTrack">
+        <div class="loading-text">Scanning database...</div>
+      </div>
+    </div>
+
+    <button class="nav-arrow right-arrow" id="rightArrow" aria-label="Scroll right">&#10095;</button>
+  </div>
+</div>
+
+<style>
+  .swipe-box-container {
+    margin-top: 40px;
+    padding: 10px 0;
+    user-select: none;
+  }
+  .swipe-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  .carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .track-window {
+    overflow: hidden;
+    width: 100%;
+    padding: 5px 0;
+  }
+  .swipe-track {
+    display: flex;
+    gap: 15px;
+    cursor: grab;
+    touch-action: pan-y; 
+    will-change: transform; 
+  }
+  .swipe-track:active {
+    cursor: grabbing;
+  }
+  .automated-card {
+    flex: 0 0 220px;
+    background: #ffffff;
+    border: 2px solid #eee;
+    padding: 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #003366;
+    font-weight: bold;
+    font-size: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    -webkit-user-drag: none; 
+  }
+  .automated-card:hover {
+    border-color: #3182ce;
+  }
+  .loading-text {
+    color: #888;
+    font-style: italic;
+  }
+
+  /* --- ARROW BUTTON STYLES --- */
+  .nav-arrow {
+    position: absolute;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    color: #003366;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.2s, transform 0.1s;
+  }
+  .nav-arrow:hover {
+    background: #f0f8ff;
+    transform: scale(1.05);
+  }
+  .nav-arrow:active {
+    transform: scale(0.95);
+  }
+  .left-arrow { left: -15px; }
+  .right-arrow { right: -15px; }
+
+  /* Hide arrows automatically on phones/tablets */
+  @media (max-width: 768px) {
+    .nav-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async function() {
+    const track = document.getElementById('autoSwipeTrack');
+    const currentUrl = window.location.pathname;
+    
+    // Auto-detect category
+    let categoryKeyword = "";
+    if (currentUrl.includes("finance")) categoryKeyword = "finance";
+    else if (currentUrl.includes("health")) categoryKeyword = "health";
+    else if (currentUrl.includes("math")) categoryKeyword = "math";
+
+    try {
+      // 🚀 PERFECTIONIST FIX: Check local device memory first
+      let xmlText = sessionStorage.getItem('cachedSitemap');
+      
+      // If it is not in memory, download it and save it instantly
+      if (!xmlText) {
+        const response = await fetch('/sitemap-pages.xml');
+        xmlText = await response.text();
+        sessionStorage.setItem('cachedSitemap', xmlText);
+      }
+      
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+      const urls = xmlDoc.getElementsByTagName("loc");
+      
+      let matchedLinks = [];
+
+      for (let i = 0; i < urls.length; i++) {
+        let fullUrl = urls[i].textContent;
+        let pagePath = new URL(fullUrl).pathname;
+
+        if (pagePath !== currentUrl && pagePath.includes(categoryKeyword)) {
+          let rawName = pagePath.replace("/p/", "").replace(".html", "");
+          let cleanName = rawName.replace(/finance-|health-|math-/i, "").replace(/-/g, " ");
+          
+          // 🧠 SMART DICTIONARY
+          const acronyms = ["EMI", "ROI", "CAGR", "SIP", "PPF", "GST", "NPV", "IRR", "FD", "RD", "BMI", "BMR", "TDS", "EPF"];
+          
+          let displayTitle = cleanName.split(' ').map(word => {
+            let upperWord = word.toUpperCase();
+            if (acronyms.includes(upperWord)) {
+              return upperWord; 
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          }).join(' ');
+          
+          matchedLinks.push({ path: pagePath, title: displayTitle });
+        }
+      }
+
+      // Shuffle and slice to 15 cards
+      matchedLinks = matchedLinks.sort(() => 0.5 - Math.random()).slice(0, 15);
+
+      let finalHtml = '';
+      matchedLinks.forEach(link => {
+        finalHtml += `<a href="${link.path}" class="automated-card" draggable="false">🛠️ ${link.title}</a>`;
+      });
+
+      track.innerHTML = finalHtml || '<div class="loading-text">No similar tools found.</div>';
+      setupUniversalControls(track);
+
+    } catch (error) {
+      track.innerHTML = '<div class="loading-text">More utilities available on homepage.</div>';
+    }
+  });
+
+  // ADVANCED UNIVERSAL ENGINE 
+  function setupUniversalControls(track) {
+    let isDragging = false;
+    let hasDragged = false; 
+    let startX = 0, currentPos = 0, prevPos = 0, velocity = 0, lastX = 0, lastTime = 0, animationId;
+
+    const leftArrow = document.getElementById('leftArrow');
+    const rightArrow = document.getElementById('rightArrow');
+
+    const getX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
+
+    const startDrag = (e) => {
+      isDragging = true;
+      hasDragged = false; 
+      cancelAnimationFrame(animationId);
+      track.style.transition = 'none'; 
+      startX = getX(e);
+      lastX = startX;
+      lastTime = performance.now();
+      track.style.cursor = 'grabbing';
+    };
+
+    const moveDrag = (e) => {
+      if (!isDragging) return;
+      
+      let currentX = getX(e);
+      
+      if (Math.abs(currentX - startX) > 5) {
+        hasDragged = true; 
+        if (!e.touches) e.preventDefault(); 
+      }
+
+      let currentTime = performance.now();
+      let timeElapsed = currentTime - lastTime;
+      
+      if (timeElapsed > 0) velocity = (currentX - lastX) / timeElapsed;
+
+      currentPos = prevPos + (currentX - startX);
+      track.style.transform = `translateX(${currentPos}px)`;
+
+      lastX = currentX;
+      lastTime = currentTime;
+    };
+
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.style.cursor = 'grab';
+      prevPos = currentPos;
+      startMomentumGlide();
+    };
+
+    // TOUCH EVENTS
+    track.addEventListener('touchstart', startDrag, { passive: true });
+    track.addEventListener('touchmove', moveDrag, { passive: false });
+    track.addEventListener('touchend', endDrag);
+
+    // MOUSE EVENTS
+    track.addEventListener('mousedown', startDrag);
+    track.addEventListener('mousemove', moveDrag);
+    track.addEventListener('mouseup', endDrag);
+    track.addEventListener('mouseleave', endDrag);
+
+    // CLICK PREVENTION
+    track.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
+    // ARROW BUTTON LOGIC
+    const scrollByArrow = (distance) => {
+      cancelAnimationFrame(animationId);
+      const maxScroll = track.scrollWidth - track.parentElement.clientWidth;
+      
+      currentPos += distance;
+      
+      if (currentPos > 0) currentPos = 0;
+      if (currentPos < -maxScroll) currentPos = -maxScroll;
+      
+      track.style.transition = 'transform 0.3s ease-out';
+      track.style.transform = `translateX(${currentPos}px)`;
+      prevPos = currentPos;
+    };
+
+    if (leftArrow && rightArrow) {
+      leftArrow.addEventListener('click', () => scrollByArrow(300)); 
+      rightArrow.addEventListener('click', () => scrollByArrow(-300)); 
+    }
+
+    function startMomentumGlide() {
+      const maxScroll = track.scrollWidth - track.parentElement.clientWidth;
+      const friction = 0.95; 
+
+      function animate() {
+        velocity *= friction; 
+        currentPos += velocity * 16; 
+        
+        if (currentPos > 0) { currentPos = 0; velocity = 0; } 
+        else if (currentPos < -maxScroll) {
+          if (maxScroll < 0) currentPos = 0; else currentPos = -maxScroll;
+          velocity = 0;
+        }
+
+        track.style.transform = `translateX(${currentPos}px)`;
+        prevPos = currentPos;
+
+        if (Math.abs(velocity) > 0.05) animationId = requestAnimationFrame(animate);
+      }
+      
+      if (Math.abs(velocity) > 0.1) animate();
+      else {
+          if (currentPos > 0) currentPos = 0;
+          if (maxScroll >= 0 && currentPos < -maxScroll) currentPos = -maxScroll;
+          track.style.transform = `translateX(${currentPos}px)`;
+          prevPos = currentPos;
+      }
+    }
+  }
+</script>
