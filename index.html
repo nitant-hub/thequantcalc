@@ -25,7 +25,6 @@
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --card-hover-shadow: rgba(99, 102, 241, 0.15);
-            --header-bg: rgba(255, 255, 255, 0.85);
         }
 
         [data-theme="dark"] {
@@ -35,16 +34,17 @@
             --text-muted: #94a3b8;
             --border-color: #334155;
             --card-hover-shadow: rgba(0, 0, 0, 0.3);
-            --header-bg: rgba(15, 23, 42, 0.85);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
+        /* Dark Gradient Header */
         header {
             position: sticky; top: 0; z-index: 1000;
-            background: var(--header-bg); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
+            border-bottom: 1px solid rgba(99, 179, 255, 0.25);
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
             padding: 0.85rem 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
         }
@@ -57,20 +57,21 @@
         }
         .brand-title {
             font-size: 1.45rem; font-weight: 800; letter-spacing: -0.5px;
-            background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
         
         .theme-toggle {
-            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-main);
+            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; /* Forced white for visibility */
             padding: 4px; display: flex; align-items: center; justify-content: center;
         }
 
         .menu-btn {
             background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
         }
-        .menu-btn span { width: 24px; height: 3px; background-color: var(--text-main); border-radius: 2px; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; /* Forced white for visibility */ border-radius: 2px; }
         
         .nav-menu {
             position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
@@ -80,6 +81,7 @@
         }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+        .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
 
         /* Wrapper Setup */
@@ -108,10 +110,9 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
         }
         
-        /* FIX: Calculator container section setup with ZERO left/right padding on mobile */
         .calculator-fullscreen-section {
             background: var(--bg-surface);
-            padding: 1.25rem 0px; /* Completely removes side spaces inside white card */
+            padding: 1.25rem 0px; 
             border-radius: 16px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
@@ -164,13 +165,13 @@
 
     <header>
         <a href="#" class="brand">
-            <div class="logo-symbol">&sum;</div>
+            <div class="logo-symbol" aria-hidden="true">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
+            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>
@@ -241,20 +242,25 @@
     </footer>
 
     <script>
-        // FIX: Autoscale engine to break internal layout constraints on mobile views
+        // Autoscale engine for iframe
         function adjustCalculatorScale() {
             const frame = document.getElementById('calc-frame');
             if (!frame) return;
             const width = window.innerWidth;
             if (width < 480) {
-                // Forces the inner embedded elements to expand dynamically to fill width
-                frame.style.width = "100vw";
+                frame.style.width = "100%"; // Fixed to prevent horizontal scroll issues on mobile
                 frame.style.transform = "scale(1)"; 
             } else {
                 frame.style.width = "100%";
             }
         }
-        window.addEventListener('resize', adjustCalculatorScale);
+        
+        // Use a simple debounce for resize to improve performance
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(adjustCalculatorScale, 100);
+        });
         window.addEventListener('load', adjustCalculatorScale);
 
         // Menu Toggle Handling Drawer
@@ -263,12 +269,14 @@
         
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            navMenu.classList.toggle('active');
+            const isActive = navMenu.classList.toggle('active');
+            menuBtn.setAttribute('aria-expanded', isActive);
         });
 
         document.addEventListener('click', (e) => {
             if (!navMenu.contains(e.target) && e.target !== menuBtn) {
                 navMenu.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
             }
         });
 
