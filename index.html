@@ -64,14 +64,14 @@
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
         
         .theme-toggle {
-            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; /* Forced white for visibility */
+            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff;
             padding: 4px; display: flex; align-items: center; justify-content: center;
         }
 
         .menu-btn {
             background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
         }
-        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; /* Forced white for visibility */ border-radius: 2px; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
         .nav-menu {
             position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
@@ -159,6 +159,49 @@
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
         .footer-links a:hover { color: var(--text-main); text-underline-offset: 4px; text-decoration: underline; }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        @media (max-width: 480px) {
+            .back-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 42px;
+                height: 42px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -241,6 +284,12 @@
         </div>
     </footer>
 
+    <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
     <script>
         // Autoscale engine for iframe
         function adjustCalculatorScale() {
@@ -248,7 +297,7 @@
             if (!frame) return;
             const width = window.innerWidth;
             if (width < 480) {
-                frame.style.width = "100%"; // Fixed to prevent horizontal scroll issues on mobile
+                frame.style.width = "100%";
                 frame.style.transform = "scale(1)"; 
             } else {
                 frame.style.width = "100%";
@@ -299,6 +348,24 @@
                 themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
             }
+        });
+
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
