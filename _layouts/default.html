@@ -5,24 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | thequantcals</title>
     
-    <!-- 1. Global SEO Structured Data (Schema Markup) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "thequantcals",
       "url": "https://thequantcals.com",
-      "description": "A premium web platform offering advanced calculators, generators, and tools for finance, math, and analytics.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://thequantcals.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "description": "A premium web platform offering advanced calculators, generators, and tools for finance, math, and analytics."
     }
     </script>
 
     <style>
-        /* Modern CSS UI Variables for Theme Toggling */
         :root {
             --bg-primary: #f8fafc;
             --bg-surface: #ffffff;
@@ -30,7 +23,8 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --header-bg: rgba(255, 255, 255, 0.8);
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --header-height: 65px; /* Define header height */
         }
 
         [data-theme="dark"] {
@@ -39,19 +33,35 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
-            --header-bg: rgba(15, 23, 42, 0.8);
+            --header-bg: rgba(15, 23, 42, 0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.3s, color 0.3s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            padding-top: var(--header-height); /* Prevents content from hiding behind sticky header */
+        }
 
-        /* Navigation Header */
+        /* Fixed Header */
         header {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--header-bg); backdrop-filter: blur(12px);
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            z-index: 1000;
+            background: var(--header-bg); 
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.75rem 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 1.5rem;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
@@ -66,19 +76,11 @@
 
         .nav-actions { display: flex; align-items: center; gap: 1rem; }
         
-        /* Night Mode Toggle Button */
-        .theme-toggle {
-            background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-main);
-            padding: 5px; border-radius: 5px;
-        }
+        .theme-toggle { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-main); padding: 5px; }
 
-        /* Hamburger Menu Icon */
-        .menu-btn {
-            background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
-        }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 25px; height: 3px; background-color: var(--text-main); border-radius: 2px; transition: 0.3s; }
         
-        /* Slide-out Navigation Drawer */
         .nav-menu {
             position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
             background: var(--bg-surface); border-left: 1px solid var(--border-color);
@@ -89,10 +91,8 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.1rem; }
         .nav-menu .category-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-top: 1rem; }
 
-        /* Layout Structure */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
 
-        /* Footer & Policies */
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; }
@@ -126,7 +126,6 @@
     </header>
 
     <div class="wrapper">
-        <!-- Jekyll dynamically injects index.html or tool files here -->
         {{ content }} 
     </div>
 
@@ -141,14 +140,10 @@
     </footer>
 
     <script>
-        // Interactive Drawer Menu
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
-        menuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+        menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-        // Smart Night Mode Engine
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         
@@ -158,15 +153,10 @@
         }
 
         themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') {
-                htmlEl.setAttribute('data-theme', 'light');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
+            const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+            htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeToggle.textContent = isDark ? '🌙' : '☀️';
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
     </script>
 </body>
