@@ -26,12 +26,12 @@
             /* High-visibility electric blue gradient for elements */
             --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%); 
             
-            /* ATTRACTIVE & PROFESSIONAL LIGHT THEME HEADER (Deep Premium Navy Gradient) */
-            --header-bg: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
+            /* ENHANCED: Deep Premium Sapphire/Navy Gradient (Professional & Modern) */
+            --header-bg: linear-gradient(135deg, #0b1329 0%, #1e3a8a 100%); 
             --header-text: #ffffff;
             --header-text-muted: #94a3b8;
-            --header-border: rgba(255, 255, 255, 0.1);
-            --header-shadow: 0 4px 25px rgba(15, 23, 42, 0.2);
+            --header-border: rgba(255, 255, 255, 0.08);
+            --header-shadow: 0 4px 30px rgba(15, 23, 42, 0.15);
             --header-height: 70px;
         }
 
@@ -42,12 +42,12 @@
             --text-muted: #94a3b8;
             --border-color: #334155;
             
-            /* ATTRACTIVE & PROFESSIONAL DARK THEME HEADER (Cyber Midnight Obsidian) */
+            /* ENHANCED: Cyber Midnight Obsidian Gradient */
             --header-bg: linear-gradient(135deg, #020617 0%, #0f172a 100%); 
             --header-text: #f8fafc;
             --header-text-muted: #64748b;
-            --header-border: rgba(56, 189, 248, 0.15); /* Techy subtle cyan glow link */
-            --header-shadow: 0 4px 35px rgba(0, 0, 0, 0.6);
+            --header-border: rgba(56, 189, 248, 0.15); 
+            --header-shadow: 0 4px 35px rgba(0, 0, 0, 0.5);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.3s, color 0.3s; }
@@ -66,7 +66,7 @@
             padding-top: var(--header-height); 
         }
 
-        /* ATTRACTIVE & MODERN FIXED HEADER CODE */
+        /* ATTRACTIVE & MODERN FIXED HEADER */
         header {
             position: fixed; 
             top: 0; 
@@ -75,7 +75,6 @@
             height: var(--header-height);
             z-index: 9999; 
             
-            /* Applying the deep professional color gradient */
             background: var(--header-bg); 
             border-bottom: 1px solid var(--header-border);
             box-shadow: var(--header-shadow);
@@ -100,18 +99,17 @@
             font-size: 1.3rem;
             box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
+        
+        /* White text for better legibility against the new deep dark background colors */
         .brand-title {
             font-size: 1.45rem; 
             font-weight: 800;
             letter-spacing: -0.5px;
-            background: var(--accent-gradient); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
         
-        /* Interactive controls adapted perfectly for the colored dark header background */
         .theme-toggle { 
             background: none; 
             border: none; 
@@ -123,13 +121,34 @@
         }
         .theme-toggle:hover { transform: scale(1.1); opacity: 0.9; }
 
-        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 10001; }
+        /* FIXED INTERACTIVE HAMBURGER BUTTON STYLE */
+        .menu-btn { 
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px; 
+            z-index: 10001; 
+            padding: 5px;
+        }
         .menu-btn span { 
             width: 25px; 
             height: 3px; 
-            background-color: var(--header-text); /* Dynamically stays white/light text against the colorful backdrop */
+            background-color: var(--header-text); 
             border-radius: 2px; 
-            transition: 0.3s; 
+            transition: transform 0.3s ease, opacity 0.3s ease; 
+        }
+        
+        /* Cross (X) Animation states when open */
+        .menu-btn.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-btn.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
         }
         
         .nav-menu {
@@ -193,11 +212,14 @@
     </footer>
 
     <script>
-        // Menu Handler
+        // FIXED Menu & Hamburger Animation Handler
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         if(menuBtn && navMenu) {
-            menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
         }
 
         // Theme Switcher Engine
