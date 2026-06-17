@@ -240,6 +240,10 @@
                     </div>
                 </section>
 
+                <div id="home-only-features" style="display: none; width: 100%; margin-top: 1.5rem;">
+                    <iframe id="features-frame" src="features.html" style="width: 100%; height: 210px; border: none; display: block; overflow: hidden;" scrolling="no"></iframe>
+                </div>
+
                 <section class="tool-section" id="finance">
                     <h2 class="section-title">📈 Finance Tools</h2>
                     <div class="grid-links">
@@ -291,7 +295,12 @@
     </button>
 
     <script>
-        // Autoscale engine for iframe
+        // 1. Show the features box only on the home page
+        if (window.location.pathname === "/" || window.location.pathname === "/index.html" || window.location.pathname === "") {
+            document.getElementById("home-only-features").style.display = "block";
+        }
+
+        // 2. Fix calculator size for mobile phones
         function adjustCalculatorScale() {
             const frame = document.getElementById('calc-frame');
             if (!frame) return;
@@ -304,7 +313,6 @@
             }
         }
         
-        // Use a simple debounce for resize to improve performance
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
@@ -312,7 +320,7 @@
         });
         window.addEventListener('load', adjustCalculatorScale);
 
-        // Menu Toggle Handling Drawer
+        // 3. Make the mobile menu open and close
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         
@@ -329,7 +337,7 @@
             }
         });
 
-        // Smart LocalStorage Dark Mode Engine
+        // 4. Dark Mode and Light Mode Button
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         
@@ -339,6 +347,8 @@
         }
 
         themeToggle.addEventListener('click', () => {
+            let newTheme = 'light';
+            
             if (htmlEl.getAttribute('data-theme') === 'dark') {
                 htmlEl.setAttribute('data-theme', 'light');
                 themeToggle.textContent = '🌙';
@@ -347,10 +357,17 @@
                 htmlEl.setAttribute('data-theme', 'dark');
                 themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
+                newTheme = 'dark';
+            }
+
+            // Tell the new features box to change colors too!
+            const featuresFrame = document.getElementById('features-frame');
+            if (featuresFrame && featuresFrame.contentWindow) {
+                featuresFrame.contentWindow.postMessage({ type: 'theme-change', theme: newTheme }, '*');
             }
         });
 
-        // Back to Top functionality
+        // 5. Back to Top Button
         const backToTopBtn = document.getElementById('backToTopBtn');
 
         window.addEventListener('scroll', () => {
