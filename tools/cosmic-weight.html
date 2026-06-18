@@ -1,228 +1,510 @@
----
-layout: default
-title: "Cosmos Weight Calculator"
-schema_type: calculator
-categories:  Physics 
-description: "Calculate Cosmos Weight On Different Planets Free."
----
-
-<div style="background-color: #0f172a; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px; color: white; font-family: sans-serif; margin: 20px auto; max-width: 100%; padding: 20px;">
-  <h2 style="color: #38bdf8; font-size: 24px; margin-bottom: 20px; margin-top: 0px; text-align: center;"><span></span><span></span>Cosmic Weight Calculator</h2>
-  
-  <div style="margin-bottom: 15px;">
-    <label style="display: block; font-size: 16px; margin-bottom: 5px;">Enter your weight on Earth (kg):</label>
-    <input id="earthWeight" oninput="calculateWeight()" style="background-color: #1e293b; border-radius: 6px; border: 1px solid rgb(51, 65, 85); box-sizing: border-box; color: white; font-size: 16px; padding: 10px; width: 100%;" type="number" value="60" />
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <label style="display: block; font-size: 16px; margin-bottom: 5px;">Select a Celestial Body:</label>
-    <select id="celestialBody" onchange="calculateWeight()" style="background-color: #1e293b; border-radius: 6px; border: 1px solid rgb(51, 65, 85); box-sizing: border-box; color: white; font-size: 16px; padding: 10px; width: 100%;">
-      <option value="0.166">The Moon (Low Gravity)</option>
-      <option value="0.38">Mars (The Red Planet)</option>
-      <option value="0.91">Venus (Earth's Twin)</option>
-      <option value="2.34">Jupiter (Gas Giant)</option>
-      <option value="1.06">Saturn (Ringed Planet)</option>
-      <option value="140000000000">A Neutron Star (Extreme Gravity!)</option>
-    </select>
-  </div>
-
-  <div style="background-color: #1e293b; border-radius: 8px; padding: 15px; text-align: center;">
-    <span style="color: #94a3b8; display: block; font-size: 16px; margin-bottom: 5px;">Your Cosmic Weight:</span>
-    <span id="cosmicResult" style="color: #4ade80; font-size: 28px; font-weight: bold;">9.96 kg</span>
-  </div>
-</div>
-
-<script>
-function calculateWeight() {
-  var earthW = parseFloat(document.getElementById('earthWeight').value);
-  var gravityMultiplier = parseFloat(document.getElementById('celestialBody').value);
-  
-  if (isNaN(earthW) || earthW <= 0) {
-    document.getElementById('cosmicResult').innerText = "0 kg";
-    return;
-  }
-  
-  var finalWeight = earthW * gravityMultiplier;
-  
-  if (finalWeight >= 1000000) {
-    document.getElementById('cosmicResult').innerText = finalWeight.toExponential(2) + " kg";
-  } else {
-    document.getElementById('cosmicResult').innerText = finalWeight.toFixed(2) + " kg";
-  }
-}
-</script>
-
-<h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: #222222; font-size: 26px; margin-top: 40px; padding-bottom: 8px;">The Mechanics of Gravity: Why Your Weight Changes in Space</h2>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Have you ever stepped on a scale and thought about how gravity affects the number you see? Of course, changing planets isn't possible, but it shows how much gravity affects weight.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">If you use the calculator above, you'll notice a significant difference. A person who weighs 70 kg on Earth drops to 26 kg just by measuring their weight on the surface of Mars. But here is the interesting part: your physical body hasn't changed at all. You didn't lose any muscle, bone, or water. So, what exactly is happening here?</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">To understand this, we need to take a look at how the universe actually works. Whether you're a student trying to understand physics, a data enthusiast looking for patterns, or just someone curious about the stars, let's understand how gravity works across the solar system.</p>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">The Distinction: Mass vs. Weight</h3>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Most of us use the words "mass" and "weight" as if they mean the exact same thing. In our daily lives, that’s perfectly fine. But out in space? Understanding the difference is important in physics. Let's look at the distinction:</p>
-
-<ul style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li style="margin-bottom: 12px;"><strong>What is Mass?</strong> Mass refers to the physical material that makes up an object. It represents all the matter inside you—every single atom and molecule. No matter where you are in the universe (Earth, the Moon, or deep space), that amount of physical matter remains exactly the same. Your mass never changes.</li>
-  <li style="margin-bottom: 12px;"><strong>What is Weight?</strong> Weight is not about the physical matter. Weight is the measure of how strongly gravity pulls on that matter. If a planet's gravity is weak, the gravitational pull is low (low weight). If the gravity is strong, the pull is much higher (high weight).</li>
-</ul>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">The Mathematics of Gravity</h3>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">When scientists and data analysts look at the universe, they use math to predict how things will behave. For example, if a data researcher wants to predict how much rocket fuel is needed based on the weight of a spacecraft, they might use a common statistical tool called a linear regression model. In a textbook, it may look complicated at first:</p>
-
-<div style="background: rgb(248, 250, 252); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 16px; margin: 20px 0px; overflow-x: auto; padding: 15px;">
-  y = β<sub>0</sub> + β<sub>1</sub>x + ε
-</div>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;"><strong>Plain English Translation:</strong> The symbols may look unfamiliar, but the idea is straightforward. This formula simply says: <em>"My Prediction (y) = A starting baseline (β<sub>0</sub>) + (The rate of change (β<sub>1</sub>) multiplied by my input (x)) + A margin for error (ε)."</em> It is a standard way to map data points.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">But when it comes to gravity itself, we use Sir Isaac Newton's Universal Law of Gravitation. Over 300 years ago, Newton established that every object in the universe pulls on every other object. Here is the equation:</p>
-
-<div style="background: rgb(248, 250, 252); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 16px; margin: 20px 0px; overflow-x: auto; padding: 15px;">
-  F = G × (m<sub>1</sub>m<sub>2</sub> / r<sup>2</sup>)
-</div>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Let's simplify the equation and see what these variables mean:</p>
-<ul style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li><strong>F (Force):</strong> This is your actual weight—the force pulling you down to the ground.</li>
-  <li><strong>G (Gravity Constant):</strong> A universal baseline number that dictates gravitational strength.</li>
-  <li><strong>m<sub>1</sub> (Mass 1):</strong> This is your body mass.</li>
-  <li><strong>m<sub>2</sub> (Mass 2):</strong> This is the mass of the planet (like Earth, Mars, or Jupiter).</li>
-  <li><strong>r<sup>2</sup> (Distance):</strong> This is the distance from the center of the planet's core to the surface.</li>
-</ul>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">When looking at the equation, the relationship becomes easier to understand. If you stand on a giant planet like Jupiter (m<sub>2</sub> is very large), the planet pulls on you with more force, increasing your weight. If you stand on a smaller body like the Moon (m<sub>2</sub> is small), the pull is weak, and you feel much lighter.</p>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">Planetary Data: A Side-by-Side Comparison</h3>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">The table below shows the data that aerospace engineers use to calculate rocket launches. Notice how a planet's total mass directly correlates to its surface gravity.</p>
-
-<div style="border-radius: 8px; border: 1px solid rgb(226, 232, 240); margin: 25px 0px; overflow-x: auto; width: 100%;">
-  <table style="border-collapse: collapse; color: #333333; font-size: 15px; min-width: 600px; text-align: left; width: 100%;">
-    <thead>
-      <tr style="background-color: #0f172a; color: white;">
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Planet / Moon</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Planet's Total Mass (kg)</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Distance to Core (km)</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Gravity (m/s²)</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Weight Multiplier</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background-color: white; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">Earth</td>
-        <td style="padding: 12px 15px;">5.97 × 10<sup>24</sup></td>
-        <td style="padding: 12px 15px;">6,371</td>
-        <td style="padding: 12px 15px;">9.81</td>
-        <td style="padding: 12px 15px;">1.00x</td>
-      </tr>
-      <tr style="background-color: #f8fafc; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">The Moon</td>
-        <td style="padding: 12px 15px;">0.073 × 10<sup>24</sup></td>
-        <td style="padding: 12px 15px;">1,737</td>
-        <td style="padding: 12px 15px;">1.62</td>
-        <td style="padding: 12px 15px;">0.16x</td>
-      </tr>
-      <tr style="background-color: white; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">Mars</td>
-        <td style="padding: 12px 15px;">0.642 × 10<sup>24</sup></td>
-        <td style="padding: 12px 15px;">3,389</td>
-        <td style="padding: 12px 15px;">3.71</td>
-        <td style="padding: 12px 15px;">0.38x</td>
-      </tr>
-      <tr style="background-color: #f8fafc; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">Jupiter</td>
-        <td style="padding: 12px 15px;">1898 × 10<sup>24</sup></td>
-        <td style="padding: 12px 15px;">69,911</td>
-        <td style="padding: 12px 15px;">24.79</td>
-        <td style="padding: 12px 15px;">2.53x</td>
-      </tr>
-      <tr style="background-color: white;">
-        <td style="font-weight: bold; padding: 12px 15px;">Saturn</td>
-        <td style="padding: 12px 15px;">568 × 10<sup>24</sup></td>
-        <td style="padding: 12px 15px;">58,232</td>
-        <td style="padding: 12px 15px;">10.44</td>
-        <td style="padding: 12px 15px;">1.06x</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">A Visual Guide to Your Cosmic Weight</h3>
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">If a person steps on a scale on Earth and it reads exactly 100 kg, the circles below represent what that exact same scale would read if they stood on Mars or Jupiter.</p>
-
-<div style="background: rgb(248, 250, 252); border-radius: 12px; border: 1px solid rgb(226, 232, 240); margin: 30px 0px; padding: 20px; text-align: center;">
-  <svg height="100%" style="max-width: 300px;" viewbox="0 0 400 400" width="100%">
-    <circle cx="200" cy="200" fill="#fca5a5" r="180">
-    <circle cx="200" cy="200" fill="#38bdf8" r="100">
-    <circle cx="200" cy="200" fill="#fb923c" r="38">
-    <circle cx="200" cy="200" fill="#cbd5e1" r="16">
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos Weight Calculator | thequantcals</title>
     
-    <text fill="#7f1d1d" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="45">Jupiter: Scale reads 253 kg</text>
-    <text fill="#0c4a6e" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="130">Earth: Scale reads 100 kg</text>
-    <text fill="#7c2d12" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="200" y="195">Mars: Scale reads 38 kg</text>
-  </circle></circle></circle></circle></svg>
-  <p style="color: #64748b; font-size: 13px; margin-top: 15px;"><em>Visualizing the shift in a 100kg Earth weight across our solar system.</em></p>
-</div>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "thequantcals",
+      "url": "https://thequantcals.com",
+      "description": "Calculate your Cosmic Weight on different planets for free."
+    }
+    </script>
 
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">Real-World Applications in Space Engineering</h3>
+    <style>
+        /* Modern UI Design System & Theme Colors */
+        :root {
+            --bg-primary: #f4f6f9;
+            --bg-surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --header-height: 55px; 
+        }
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">These calculations are a core part of space engineering. When space agencies like NASA or ISRO launch rovers to Mars, engineers must write computer code that tells the spacecraft exactly how hard to fire its landing rockets. If the system assumes Earth's gravity (9.81 m/s²) instead of Martian gravity (3.71 m/s²), the rockets will overcompensate, preventing the rover from landing safely.</p>
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-surface: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Understanding gravity is also vital for human health. Astronauts on the International Space Station (ISS) live in a state of continuous free-fall, meaning they don't use their muscles to fight gravity. Over time, their bones weaken and their muscles atrophy. Developing solutions for low-gravity environments is essential for future planetary exploration.</p>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-<hr style="border-color: rgb(226, 232, 240) currentcolor currentcolor; border-image: initial; border-style: solid none none; border-top: 2px solid #e2e8f0; border-width: 2px 0px 0px; border: 0px; margin: 40px 0px;" />
+        /* Typography - Strict Line Heights Enforced */
+        h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
+        p, li, label, span, td, th, option, select, input, button { line-height: 1.33 !important; }
 
-<h3 style="color: #333333; font-size: 24px; margin-bottom: 20px;">Frequently Asked Questions (FAQ)</h3>
+        /* Header - GUARANTEED FIXED POSITION */
+        header#siteHeader {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
+            background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
+            border-bottom: 1px solid rgba(99, 179, 255, 0.25);
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
 
-<div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/FAQPage">
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">1. Why is Jupiter's gravity so strong?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity correlates with mass, Jupiter's gravitational pull is about 2.5 times stronger than Earth's. Movement would be much more difficult due to the stronger gravity.</p>
+        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
+        
+        /* Mobile Menu */
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
+        .nav-menu.active { right: 0; }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
+
+        /* --- THE GRID & TABLET FIX (768px Breakpoint) --- */
+        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        
+        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        
+        /* BREADCRUMB SLIM SPACING */
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 500; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* --- DEEP SEMI-3D CALCULATOR UI (EXCLUDED FROM NEW HEADING STYLES) --- */
+        .calculator-card {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 16px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin: 0 auto 25px auto;
+            max-width: 100%;
+            color: #f8fafc;
+        }
+
+        .calc-input-group { margin-bottom: 18px; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: #cbd5e1; }
+        
+        .calc-input {
+            background-color: #0b1120;
+            color: #f8fafc;
+            border: 1px solid #334155;
+            border-bottom: 1px solid #475569;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02);
+            border-radius: 8px;
+            padding: 12px 15px;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        .calc-input:focus {
+            border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 3px 6px rgba(0,0,0,0.6);
+        }
+
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+
+        .result-box {
+            background: linear-gradient(145deg, #1e293b, #111827); border-radius: 12px;
+            border: 1px solid #334155; border-top: 1px solid #475569;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.05);
+            padding: 25px; text-align: center; position: relative; overflow: hidden; margin-top: 10px;
+        }
+        .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-gradient); }
+
+        /* --- STYLED CONTENT HEADINGS (ATTRACTIVE COLORED BORDERS) --- */
+        .content-section h2 {
+            font-size: 26px;
+            color: var(--text-main);
+            margin-top: 45px;
+            margin-bottom: 20px;
+            padding-left: 14px;
+            padding-bottom: 8px;
+            border-left: 5px solid #3b82f6; /* Vibrant Blue Left */
+            border-bottom: 2px solid #dbeafe; /* Very Light Blue Bottom */
+        }
+        
+        .content-section h3 {
+            font-size: 22px;
+            color: var(--text-main);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-left: 12px;
+            padding-bottom: 6px;
+            border-left: 5px solid #8b5cf6; /* Elegant Purple Left */
+            border-bottom: 2px solid #ede9fe; /* Very Light Purple Bottom */
+        }
+
+        .content-section h4 {
+            font-size: 18px;
+            color: var(--text-main);
+            margin-top: 25px;
+            margin-bottom: 12px;
+            padding-left: 10px;
+            padding-bottom: 5px;
+            border-left: 4px solid #10b981; /* Fresh Emerald Left */
+            border-bottom: 2px solid #d1fae5; /* Very Light Emerald Bottom */
+        }
+
+        /* Dark Mode Adjustments for the Headings */
+        [data-theme="dark"] .content-section h2 { border-bottom: 2px solid rgba(59, 130, 246, 0.2); }
+        [data-theme="dark"] .content-section h3 { border-bottom: 2px solid rgba(139, 92, 246, 0.2); }
+        [data-theme="dark"] .content-section h4 { border-bottom: 2px solid rgba(16, 185, 129, 0.2); }
+
+        /* --- MOBILE & MISC STYLES --- */
+        @media (max-width: 767px) {
+            .sidebar { display: none; }
+            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
+            .main-body { padding: 1.25rem 1rem; } 
+            .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
+            .calculator-card { padding: 20px 15px; }
+            .input-grid { grid-template-columns: 1fr; gap: 15px; }
+            .content-section h2 { font-size: 22px; margin-top: 35px; }
+            .content-section h3 { font-size: 20px; }
+        }
+
+        @media (min-width: 768px) { 
+            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } 
+            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
+        }
+
+        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+        .sidebar-list a:hover { color: #7c3aed; }
+        
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
+
+        .data-table-wrapper { overflow-x: auto; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
+        .data-table { border-collapse: collapse; width: 100%; min-width: 600px; text-align: left; background-color: var(--bg-surface); color: var(--text-main); }
+        .data-table th { padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-primary); font-weight: 700; }
+        .data-table td { padding: 12px; border: 1px solid var(--border-color); }
+        .data-table tr:nth-child(even) { background-color: var(--bg-primary); }
+    </style>
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+    </script>
+</head>
+<body>
+
+    <header id="siteHeader">
+        <a href="/" class="brand">
+            <div class="logo-symbol">&sum;</div>
+            <div class="brand-title">thequantcals</div>
+        </a>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <button id="closeMenuBtn" class="close-menu-btn">×</button>
+            <a href="/">🏠 Home Base</a>
+            <a href="/#finance">📈 Finance Tools</a>
+            <a href="/#physics">🚀 Physics Tools</a>
+        </nav>
+    </header>
+
+    <div class="wrapper">
+        
+        <div class="breadcrumb">
+            <a href="/">home</a> / <a href="/#physics">physics</a> / cosmos weight calculator
+        </div>
+
+        <div class="layout-grid">
+            
+            <main class="main-body">
+
+                <div class="calculator-card">
+                  <h2 style="border-bottom: 2px solid rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Cosmic Weight Calculator</h2>
+                  
+                  <div class="input-grid">
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="earthWeight">Enter your weight on Earth (kg):</label>
+                        <input id="earthWeight" class="calc-input" oninput="calculateWeight()" type="number" value="60" />
+                      </div>
+
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="celestialBody">Select a Celestial Body:</label>
+                        <select id="celestialBody" class="calc-input" onchange="calculateWeight()">
+                          <option value="0.166">The Moon (Low Gravity)</option>
+                          <option value="0.38">Mars (The Red Planet)</option>
+                          <option value="0.91">Venus (Earth's Twin)</option>
+                          <option value="2.34">Jupiter (Gas Giant)</option>
+                          <option value="1.06">Saturn (Ringed Planet)</option>
+                          <option value="140000000000">A Neutron Star (Extreme Gravity!)</option>
+                        </select>
+                      </div>
+                  </div>
+
+                  <div id="resultBox" class="result-box">
+                    <div class="result-accent-line"></div>
+                    <span style="color: #94a3b8; display: block; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Your Cosmic Weight</span>
+                    <span id="cosmicResult" style="color: #4ade80; font-size: 32px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">9.96 kg</span>
+                  </div>
+                </div>
+
+                <script>
+                function calculateWeight() {
+                  var earthW = parseFloat(document.getElementById('earthWeight').value);
+                  var gravityMultiplier = parseFloat(document.getElementById('celestialBody').value);
+                  
+                  if (isNaN(earthW) || earthW <= 0) {
+                    document.getElementById('cosmicResult').innerText = "0 kg";
+                    return;
+                  }
+                  
+                  var finalWeight = earthW * gravityMultiplier;
+                  
+                  if (finalWeight >= 1000000) {
+                    document.getElementById('cosmicResult').innerText = finalWeight.toExponential(2) + " kg";
+                  } else {
+                    document.getElementById('cosmicResult').innerText = finalWeight.toFixed(2) + " kg";
+                  }
+                }
+
+                // Initialize default value on load
+                window.addEventListener('DOMContentLoaded', calculateWeight);
+                </script>
+
+                <div class="content-section">
+                    
+                    <h2>The Mechanics of Gravity: Why Your Weight Changes in Space</h2>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">Have you ever stepped on a scale and thought about how gravity affects the number you see? Of course, changing planets isn't possible, but it shows how much gravity affects weight.</p>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">If you use the calculator above, you'll notice a significant difference. A person who weighs 70 kg on Earth drops to 26 kg just by measuring their weight on the surface of Mars. But here is the interesting part: your physical body hasn't changed at all. You didn't lose any muscle, bone, or water. So, what exactly is happening here?</p>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">To understand this, we need to take a look at how the universe actually works. Whether you're a student trying to understand physics, a data enthusiast looking for patterns, or just someone curious about the stars, let's understand how gravity works across the solar system.</p>
+
+                    <h3>The Distinction: Mass vs. Weight</h3>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">Most of us use the words "mass" and "weight" as if they mean the exact same thing. In our daily lives, that’s perfectly fine. But out in space? Understanding the difference is important in physics. Let's look at the distinction:</p>
+
+                    <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                      <li style="margin-bottom: 12px;"><strong>What is Mass?</strong> Mass refers to the physical material that makes up an object. It represents all the matter inside you—every single atom and molecule. No matter where you are in the universe (Earth, the Moon, or deep space), that amount of physical matter remains exactly the same. Your mass never changes.</li>
+                      <li style="margin-bottom: 12px;"><strong>What is Weight?</strong> Weight is not about the physical matter. Weight is the measure of how strongly gravity pulls on that matter. If a planet's gravity is weak, the gravitational pull is low (low weight). If the gravity is strong, the pull is much higher (high weight).</li>
+                    </ul>
+
+                    <h3>The Mathematics of Gravity</h3>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">When scientists and data analysts look at the universe, they use math to predict how things will behave. For example, if a data researcher wants to predict how much rocket fuel is needed based on the weight of a spacecraft, they might use a common statistical tool called a linear regression model. In a textbook, it may look complicated at first:</p>
+
+                    <div style="background: var(--bg-primary); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 18px; font-weight: bold; margin: 20px 0px; overflow-x: auto; padding: 15px; text-align: center; color: var(--text-main);">
+                      y = &beta;<sub>0</sub> + &beta;<sub>1</sub>x + &epsilon;
+                    </div>
+
+                    <p style="color: var(--text-muted); font-size: 16px;"><strong>Plain English Translation:</strong> The symbols may look unfamiliar, but the idea is straightforward. This formula simply says: <em>"My Prediction (y) = A starting baseline (&beta;<sub>0</sub>) + (The rate of change (&beta;<sub>1</sub>) multiplied by my input (x)) + A margin for error (&epsilon;)."</em> It is a standard way to map data points.</p>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">But when it comes to gravity itself, we use Sir Isaac Newton's Universal Law of Gravitation. Over 300 years ago, Newton established that every object in the universe pulls on every other object. Here is the equation:</p>
+
+                    <div style="background: var(--bg-primary); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 18px; font-weight: bold; margin: 20px 0px; overflow-x: auto; padding: 15px; text-align: center; color: var(--text-main);">
+                      F = G &times; (m<sub>1</sub>m<sub>2</sub> / r<sup>2</sup>)
+                    </div>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">Let's simplify the equation and see what these variables mean:</p>
+                    <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                      <li><strong>F (Force):</strong> This is your actual weight—the force pulling you down to the ground.</li>
+                      <li><strong>G (Gravity Constant):</strong> A universal baseline number that dictates gravitational strength.</li>
+                      <li><strong>m<sub>1</sub> (Mass 1):</strong> This is your body mass.</li>
+                      <li><strong>m<sub>2</sub> (Mass 2):</strong> This is the mass of the planet (like Earth, Mars, or Jupiter).</li>
+                      <li><strong>r<sup>2</sup> (Distance):</strong> This is the distance from the center of the planet's core to the surface.</li>
+                    </ul>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">When looking at the equation, the relationship becomes easier to understand. If you stand on a giant planet like Jupiter (m<sub>2</sub> is very large), the planet pulls on you with more force, increasing your weight. If you stand on a smaller body like the Moon (m<sub>2</sub> is small), the pull is weak, and you feel much lighter.</p>
+
+                    <h3>Planetary Data: A Side-by-Side Comparison</h3>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">The table below shows the data that aerospace engineers use to calculate rocket launches. Notice how a planet's total mass directly correlates to its surface gravity.</p>
+
+                    <div class="data-table-wrapper">
+                      <table class="data-table">
+                        <thead>
+                          <tr>
+                            <th>Planet / Moon</th>
+                            <th>Planet's Total Mass (kg)</th>
+                            <th>Distance to Core (km)</th>
+                            <th>Gravity (m/s²)</th>
+                            <th>Weight Multiplier</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="font-weight: bold;">Earth</td>
+                            <td>5.97 &times; 10<sup>24</sup></td>
+                            <td>6,371</td>
+                            <td>9.81</td>
+                            <td>1.00x</td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold;">The Moon</td>
+                            <td>0.073 &times; 10<sup>24</sup></td>
+                            <td>1,737</td>
+                            <td>1.62</td>
+                            <td>0.16x</td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold;">Mars</td>
+                            <td>0.642 &times; 10<sup>24</sup></td>
+                            <td>3,389</td>
+                            <td>3.71</td>
+                            <td>0.38x</td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold;">Jupiter</td>
+                            <td>1898 &times; 10<sup>24</sup></td>
+                            <td>69,911</td>
+                            <td>24.79</td>
+                            <td>2.53x</td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold;">Saturn</td>
+                            <td>568 &times; 10<sup>24</sup></td>
+                            <td>58,232</td>
+                            <td>10.44</td>
+                            <td>1.06x</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <h3>A Visual Guide to Your Cosmic Weight</h3>
+                    <p style="color: var(--text-muted); font-size: 16px;">If a person steps on a scale on Earth and it reads exactly 100 kg, the circles below represent what that exact same scale would read if they stood on Mars or Jupiter.</p>
+
+                    <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 30px 0px; padding: 20px; text-align: center;">
+                      <svg height="100%" style="max-width: 300px;" viewbox="0 0 400 400" width="100%">
+                        <circle cx="200" cy="200" fill="#fca5a5" r="180"></circle>
+                        <circle cx="200" cy="200" fill="#38bdf8" r="100"></circle>
+                        <circle cx="200" cy="200" fill="#fb923c" r="38"></circle>
+                        <circle cx="200" cy="200" fill="#cbd5e1" r="16"></circle>
+                        
+                        <text fill="#7f1d1d" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="45">Jupiter: Scale reads 253 kg</text>
+                        <text fill="#0c4a6e" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="130">Earth: Scale reads 100 kg</text>
+                        <text fill="#7c2d12" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="200" y="195">Mars: Scale reads 38 kg</text>
+                      </svg>
+                      <p style="color: var(--text-muted); font-size: 13px; margin-top: 15px;"><em>Visualizing the shift in a 100kg Earth weight across our solar system.</em></p>
+                    </div>
+
+                    <h3>Real-World Applications in Space Engineering</h3>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">These calculations are a core part of space engineering. When space agencies like NASA or ISRO launch rovers to Mars, engineers must write computer code that tells the spacecraft exactly how hard to fire its landing rockets. If the system assumes Earth's gravity (9.81 m/s²) instead of Martian gravity (3.71 m/s²), the rockets will overcompensate, preventing the rover from landing safely.</p>
+
+                    <p style="color: var(--text-muted); font-size: 16px;">Understanding gravity is also vital for human health. Astronauts on the International Space Station (ISS) live in a state of continuous free-fall, meaning they don't use their muscles to fight gravity. Over time, their bones weaken and their muscles atrophy. Developing solutions for low-gravity environments is essential for future planetary exploration.</p>
+
+                    <hr style="border-top: 2px solid var(--border-color); border-width: 2px 0px 0px; margin: 40px 0px;" />
+
+                    <h2>Frequently Asked Questions (FAQ)</h2>
+
+                    <div itemscope itemtype="https://schema.org/FAQPage">
+
+                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                        <h4 itemprop="name">1. Why is Jupiter's gravity so strong?</h4>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                          <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity correlates with mass, Jupiter's gravitational pull is about 2.5 times stronger than Earth's. Movement would be much more difficult due to the stronger gravity.</p>
+                        </div>
+                      </div>
+
+                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                        <h4 itemprop="name">2. Would I weigh less if I stood on top of Mount Everest?</h4>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                          <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Technically, yes. Gravity gets weaker the further away you get from the center of the Earth. At the peak of Mount Everest, you are physically further from the Earth's core. You would weigh slightly less up there, though the difference is so small you would need a scientific scale to measure it.</p>
+                        </div>
+                      </div>
+
+                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                        <h4 itemprop="name">3. Why do astronauts float if gravity still exists in space?</h4>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                          <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Gravity still has a strong presence where the International Space Station orbits. The reason astronauts float is because the station is moving horizontally at 17,500 mph. They are constantly falling toward Earth, but moving forward so fast that they keep missing the ground. This continuous free-fall creates the effect of weightlessness.</p>
+                        </div>
+                      </div>
+
+                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                        <h4 itemprop="name">4. What is a Neutron Star?</h4>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                          <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">A neutron star is the collapsed core of a massive star. Imagine taking the entire mass of our Sun and compressing it into a sphere the size of a small city. Because it is incredibly dense, its surface gravity is billions of times stronger than Earth's. The gravitational forces would be far beyond human survival limits.</p>
+                        </div>
+                      </div>
+
+                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                        <h4 itemprop="name">5. Does my weight change if I go to Venus?</h4>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                          <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Yes, slightly. Venus is often called Earth's twin sister because it is similar in size. Since its mass is slightly less than Earth's, its gravity is about 91% of ours. So, if you weigh 100 kg on Earth, you would weigh about 91 kg on Venus. However, your mass would remain unchanged.</p>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <hr style="border-top: 2px solid var(--border-color); border-width: 2px 0px 0px; margin: 40px 0px;" />
+
+                    <h2>External Resources for Planetary Science</h2>
+                    <p style="color: var(--text-muted); font-size: 16px;">To read more about planetary data and orbital mechanics, refer to these scientific resources:</p>
+                    <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                      <li><a href="https://solarsystem.nasa.gov/" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">NASA's Solar System Exploration</a>: Data on orbital paths, planetary models, and current space missions.</li>
+                      <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">The NASA Planetary Fact Sheet</a>: A primary dataset for the mass, radius, and gravity metrics of bodies in our solar system.</li>
+                      <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Relativity_and_gravity" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">ESA: Relativity and Gravity</a>: Literature from the European Space Agency explaining the broader mechanics of gravity and physics.</li>
+                    </ul>
+
+                </div>
+
+            </main>
+
+            <aside class="sidebar">
+                <h3>🔥 Popular Tools</h3>
+                <ul class="sidebar-list">
+                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
+                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
+                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">All tools process locally in your browser.</p>
+            </aside>
+
+        </div>
     </div>
-  </div>
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">2. Would I weigh less if I stood on top of Mount Everest?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Technically, yes. Gravity gets weaker the further away you get from the center of the Earth. At the peak of Mount Everest, you are physically further from the Earth's core. You would weigh slightly less up there, though the difference is so small you would need a scientific scale to measure it.</p>
-    </div>
-  </div>
+    <footer>
+        <p>&copy; 2026 thequantcals. All rights reserved.</p>
+    </footer>
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">3. Why do astronauts float if gravity still exists in space?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Gravity still has a strong presence where the International Space Station orbits. The reason astronauts float is because the station is moving horizontally at 17,500 mph. They are constantly falling toward Earth, but moving forward so fast that they keep missing the ground. This continuous free-fall creates the effect of weightlessness.</p>
-    </div>
-  </div>
+    <script>
+        // Core Theme & Layout Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
+        themeToggle.addEventListener('click', () => {
+            if (htmlEl.getAttribute('data-theme') === 'dark') { 
+                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
+            } else { 
+                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
+            }
+        });
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">4. What is a Neutron Star?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">A neutron star is the collapsed core of a massive star. Imagine taking the entire mass of our Sun and compressing it into a sphere the size of a small city. Because it is incredibly dense, its surface gravity is billions of times stronger than Earth's. The gravitational forces would be far beyond human survival limits.</p>
-    </div>
-  </div>
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        menuBtn.addEventListener('click', () => navMenu.classList.add('active'));
+        closeMenuBtn.addEventListener('click', () => navMenu.classList.remove('active'));
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">5. Does my weight change if I go to Venus?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Yes, slightly. Venus is often called Earth's twin sister because it is similar in size. Since its mass is slightly less than Earth's, its gravity is about 91% of ours. So, if you weigh 100 kg on Earth, you would weigh about 91 kg on Venus. However, your mass would remain unchanged.</p>
-    </div>
-  </div>
-
-</div>
-
-<hr style="border-color: rgb(226, 232, 240) currentcolor currentcolor; border-image: initial; border-style: solid none none; border-top: 2px solid #e2e8f0; border-width: 2px 0px 0px; border: 0px; margin: 40px 0px;" />
-
-<h3 style="color: #333333; font-size: 22px; margin-bottom: 15px;">External Resources for Planetary Science</h3>
-<p style="color: #444444; font-size: 16px; line-height: 1.6;">To read more about planetary data and orbital mechanics, refer to these scientific resources:</p>
-<ul style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li><a href="https://solarsystem.nasa.gov/" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">NASA's Solar System Exploration</a>: Data on orbital paths, planetary models, and current space missions.</li>
-  <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">The NASA Planetary Fact Sheet</a>: A primary dataset for the mass, radius, and gravity metrics of bodies in our solar system.</li>
-  <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Relativity_and_gravity" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">ESA: Relativity and Gravity</a>: Literature from the European Space Agency explaining the broader mechanics of gravity and physics.</li>
-</ul>
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
+            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
+            else { mainHeader.style.transform = 'translateY(0)'; }
+            lastScrollY = currentScrollY;
+        });
+    </script>
+</body>
+</html>
