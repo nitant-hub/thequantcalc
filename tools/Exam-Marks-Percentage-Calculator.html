@@ -5,18 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Marks Percentage Calculator | thequantcals</title>
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "thequantcals",
-      "url": "https://thequantcals.com",
-      "description": "Calculate your Exam Marks Percentage Free."
-    }
-    </script>
-
     <style>
-        /* Modern UI Design System & Theme Colors */
         :root {
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
@@ -24,7 +13,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --header-height: 55px; /* Slim Header */
+            --header-height: 55px; 
         }
 
         [data-theme="dark"] {
@@ -38,230 +27,90 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Dark Gradient Header */
-        header {
-            position: fixed; 
-            top: 0; left: 0; width: 100%; 
-            height: var(--header-height);
-            z-index: 10000;
+        /* Header */
+        header#siteHeader {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
-            padding: 0 1.5rem;
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.3s ease-in-out;
         }
 
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol {
-            background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-        }
-        .brand-title {
-            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
+        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
-        .nav-menu {
-            position: fixed; top: 0; right: -300px; width: 300px; height: 100vh;
-            background: var(--bg-surface); border-left: 1px solid var(--border-color);
-            padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001;
-        }
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; z-index: 10001; }
         .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-        .nav-menu a:hover { color: #2563eb; }
-        .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
-        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s; }
-        .close-menu-btn:hover { color: var(--text-main); }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
 
-        /* Wrapper Setup */
-        .wrapper { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; flex: 1; }
-        /* FIXED: Reduced top margin from 1rem to 0.25rem on mobile to eliminate top red space */
-        @media (max-width: 480px) { .wrapper { padding: 0; margin: 0.25rem auto 1rem auto; } }
-        
-                .layout-grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 2rem; 
-            align-items: start; /* ADD THIS LINE */
-        }
+        /* GRID STRUCTURE - 768px fixes tablet view */
+        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
 
-
-        /* Breadcrumb CSS */
-        .breadcrumb-nav { padding: 0 0 1.25rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
-        /* FIXED: Reduced padding strictly for mobile screens to eliminate bottom red space */
-        @media (max-width: 480px) { 
-            .breadcrumb-nav { padding: 0.25rem 1rem 0.5rem 1rem; } 
-        }
-        
-        .breadcrumb-nav a { color: #0275d8; text-decoration: none; transition: color 0.2s; }
-        .breadcrumb-nav a:hover { text-decoration: underline; }
-        .breadcrumb-nav .separator { margin: 0 0.3rem; color: var(--text-muted); }
-        .breadcrumb-nav .current-page { color: #0275d8; }
-
-        /* Calculator Specific Styles */
-        .calc-container { background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); padding: 2rem; margin-bottom: 2rem; }
-        @media (max-width: 480px) { .calc-container { border-radius: 0; border-left: none; border-right: none; } }
-        .calc-container h2 { text-align: center; font-size: 1.4rem; color: #38bdf8; margin-bottom: 1.5rem; border-bottom: 2px solid #38bdf8; padding-bottom: 1rem; }
-        .input-group { margin-bottom: 1.25rem; }
-        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
-        .input-group input { width: 100%; padding: 12px; font-size: 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; transition: border-color 0.2s; }
-        .input-group input:focus { outline: none; border-color: #38bdf8; }
-        .result-box { background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1.5rem; }
-        .result-label { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
-        .result-value { font-size: 2.2rem; font-weight: 800; color: #38bdf8; }
-
-        /* Professional Article Styles */
-        .pro-article { background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-color); padding: 2rem; line-height: 1.5; }
-        @media (max-width: 480px) { .pro-article { border-radius: 0; border-left: none; border-right: none; padding: 1.5rem; } }
-        .pro-article h2 { font-size: 1.6rem; border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin: 2rem 0 1rem 0; }
-        .pro-article h3 { font-size: 1.35rem; border-bottom: 2px solid #a78bfa; padding-bottom: 0.5rem; margin: 1.5rem 0 1rem 0; }
-        .pro-article h4 { font-size: 1.15rem; border-bottom: 2px solid #34d399; padding-bottom: 0.5rem; margin: 1.5rem 0 0.5rem 0; }
-        .pro-article p { margin-bottom: 1.25rem; color: var(--text-muted); }
-        .pro-article ul, .pro-article ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-muted); }
-        .formula-box { background: var(--bg-primary); border: 1px solid var(--border-color); border-left: 4px solid #38bdf8; padding: 1.25rem; font-family: monospace; font-size: 1.1rem; font-weight: bold; text-align: center; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-        .chart-box { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; margin: 2rem 0; }
-
-        /* Sidebar & Footer */
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        @media (max-width: 480px) { .sidebar { margin: 0 1rem; } }
         .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
         .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
-        .sidebar-list a:hover { color: #7c3aed; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
-        .footer-links a:hover { color: var(--text-main); text-underline-offset: 4px; text-decoration: underline; }
-
-        /* Back to Top Button */
-        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; z-index: 999; }
-        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
-        @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
+        @media (min-width: 768px) { 
+            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; }
+            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
+        }
+        @media (max-width: 767px) {
+            .sidebar { display: none; }
+        }
+        
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <header id="siteHeader">
         <a href="/" class="brand">
-            <div class="logo-symbol" aria-hidden="true">&sum;</div>
+            <div class="logo-symbol">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
-        
         <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         </div>
-
         <nav class="nav-menu" id="navMenu">
-            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
-            <div class="category-label">Quick Links</div>
             <a href="/">🏠 Home Base</a>
-            <div class="category-label">Tools Directory</div>
             <a href="/#finance">📈 Finance Tools</a>
-            <a href="/#math">📐 Mathematics</a>
         </nav>
     </header>
 
     <div class="wrapper">
         <div class="layout-grid">
             
-            <main>
-                <nav aria-label="breadcrumb" class="breadcrumb-nav">
-                    <a href="/">home</a> 
-                    <span class="separator">/</span>
-                    <a href="/#math">math</a>
-                    <span class="separator">/</span>
-                    <span class="current-page">exam marks percentage calculator</span>
-                </nav>
-
-                <div class="calc-container">
-                    <h2>Exam Marks & Percentage Calculator</h2>
-                    
-                    <div class="input-group">
-                        <label>Marks Obtained:</label>
-                        <input id="marksObtained" oninput="getPercentage()" type="number" placeholder="Enter marks you scored" />
-                    </div>
-
-                    <div class="input-group">
-                        <label>Maximum/Total Marks:</label>
-                        <input id="maxMarks" oninput="getPercentage()" type="number" placeholder="Enter total possible marks" />
-                    </div>
-
-                    <div class="result-box">
-                        <span class="result-label">Your Percentage:</span>
-                        <span id="percentResult" class="result-value">0.00%</span>
-                    </div>
+            <main class="main-body">
+                <div class="breadcrumb">
+                    <a href="/">home</a> / <a href="/#math">math</a> / exam marks percentage calculator
                 </div>
 
-                <div class="pro-article">
-                    <h2 style="margin-top: 0;">How to Calculate Your Exam Percentage</h2>
-                    <p>Most students need to calculate their percentage at some point, whether it's for exam results, college admissions, or scholarship applications. Many admission forms and job applications ask applicants to provide their percentage score.</p>
-                    <p>The <strong>marks percentage calculator</strong> above does the math for you instantly. If you're curious about how the calculation works, here's the simple formula behind it, along with a few practical examples.</p>
+                <div style="background: var(--bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
+                    <h2 style="color: #2563eb; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        Exam Marks & Percentage Calculator
+                    </h2>
+                    <div style="text-align: left; max-width: 500px; margin: 0 auto;">
+                        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Marks Obtained:</label>
+                        <input type="number" id="marksObtained" placeholder="Enter marks you scored" style="width: 100%; padding: 0.75rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main);">
 
-                    <h3>Percentage Formula with Examples</h3>
-                    <p>You can calculate your percentage yourself using a simple math formula. You only need two numbers: the marks you earned, and the total marks possible. Here is the standard <strong>marks to percentage formula</strong>:</p>
-
-                    <div class="formula-box">
-                        Percentage = (Marks Obtained &divide; Total Marks) &times; 100
+                        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Maximum/Total Marks:</label>
+                        <input type="number" id="totalMarks" placeholder="Enter total possible marks" style="width: 100%; padding: 0.75rem; margin-bottom: 2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main);">
                     </div>
-
-                    <h4>Example 1: Percentage of 420 out of 500</h4>
-                    <p>If your exams consisted of 5 subjects worth 100 marks each, your total maximum marks would be 500. Let's say you scored exactly 420 marks. To find the percentage:</p>
-                    <ul>
-                        <li>Step 1: Divide 420 by 500 (420 &divide; 500 = 0.84)</li>
-                        <li>Step 2: Multiply 0.84 by 100</li>
-                        <li><strong>Result: 84%</strong></li>
-                    </ul>
-
-                    <h4>Example 2: Percentage of 350 out of 600</h4>
-                    <p>If your board requires you to take 6 subjects worth 100 marks each, your total possible score is 600. If you obtained 350 marks in total, the math looks like this:</p>
-                    <ul>
-                        <li>Step 1: Divide 350 by 600 (350 &divide; 600 = 0.5833)</li>
-                        <li>Step 2: Multiply 0.5833 by 100</li>
-                        <li><strong>Result: 58.33%</strong></li>
-                    </ul>
-
-                    <h4>How to Calculate Percentage of 5 Subjects</h4>
-                    <p>If you just got your mark sheet and want to find your total percentage across 5 subjects, follow these steps:</p>
-                    <ol>
-                        <li>Check the maximum marks for each subject (usually 100).</li>
-                        <li>Add the maximum marks together (100 + 100 + 100 + 100 + 100 = 500 total).</li>
-                        <li>Add up the marks you actually scored in all 5 subjects (e.g., 75 + 82 + 68 + 90 + 71 = 386).</li>
-                        <li>Divide your score by the total marks (386 &divide; 500 = 0.772).</li>
-                        <li>Multiply by 100 to get your final percentage (77.2%).</li>
-                    </ol>
-
-                    <h3>State and Central Board Calculations</h3>
-                    <h4>How to Calculate Percentage in CBSE</h4>
-                    <p>The Central Board of Secondary Education (CBSE) often issues a CGPA (Cumulative Grade Point Average) instead of a straight percentage. If an admission form asks for a percentage, you have to convert it.</p>
-                    <p>The official CBSE standard rule is to multiply your CGPA by <strong>9.5</strong>. For example, if your report card shows a CGPA of 8.4, you just multiply 8.4 by 9.5 to get 79.80%.</p>
-
-                    <h4>How to Calculate Percentage in Bihar Board (BSEB)</h4>
-                    <p>The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
-                    <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB generally places you in the "1st Division" category.</p>
-
-                    <h3>Visualizing Your Score</h3>
-                    <div class="chart-box">
-                        <svg height="100%" style="max-width: 250px;" viewBox="0 0 400 400" width="100%">
-                            <circle cx="200" cy="200" fill="var(--border-color)" r="160"></circle>
-                            <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#38bdf8"></path>
-                            <circle cx="200" cy="200" fill="var(--bg-primary)" r="100"></circle>
-                            <text fill="var(--text-main)" font-family="sans-serif" font-size="36" font-weight="bold" text-anchor="middle" x="200" y="210">84%</text>
-                        </svg>
-                        <p style="font-size: 0.9rem; margin-top: 15px; margin-bottom: 0;"><em>A visual representation of an 84% score. The blue area shows the marks earned.</em></p>
+                    <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Your Percentage:</p>
+                        <h1 id="resultPercentage" style="color: #2563eb; font-size: 2.5rem;">0.00%</h1>
                     </div>
                 </div>
             </main>
@@ -270,13 +119,10 @@
                 <h3>🔥 Popular Tools</h3>
                 <ul class="sidebar-list">
                     <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
-                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
+                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
                 </ul>
-
-                <h3 style="margin-top: 2.5rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                    Engine infrastructure optimization complete. All tools process data locally inside your web browser.
-                </p>
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">All tools process locally in your browser.</p>
             </aside>
 
         </div>
@@ -284,118 +130,42 @@
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="/privacy-policy.html">Privacy Policy</a>
-            <a href="/terms-of-service.html">Terms of Service</a>
-            <a href="/disclaimer.html">Disclaimer</a>
-            <a href="/contact.html">Contact Us</a>
-        </div>
     </footer>
 
-    <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-
     <script>
-        // Percentage Calculator Script
-        function getPercentage() {
-            var obtained = parseFloat(document.getElementById('marksObtained').value);
-            var max = parseFloat(document.getElementById('maxMarks').value);
-            
-            if (isNaN(obtained) || isNaN(max) || max <= 0 || obtained < 0) {
-                document.getElementById('percentResult').innerText = "0.00%";
-                return;
+        // Calculator Logic
+        const obtainedInput = document.getElementById('marksObtained');
+        const totalInput = document.getElementById('totalMarks');
+        const resultDisplay = document.getElementById('resultPercentage');
+
+        function calculatePercentage() {
+            const obtained = parseFloat(obtainedInput.value);
+            const total = parseFloat(totalInput.value);
+            if (!isNaN(obtained) && !isNaN(total) && total > 0) {
+                resultDisplay.textContent = ((obtained / total) * 100).toFixed(2) + '%';
+            } else {
+                resultDisplay.textContent = '0.00%';
             }
-            if (obtained > max) {
-                document.getElementById('percentResult').innerText = "Exceeds Max!";
-                document.getElementById('percentResult').style.fontSize = "1.8rem";
-                return;
-            }
-            
-            document.getElementById('percentResult').style.fontSize = "2.2rem";
-            var score = (obtained / max) * 100;
-            document.getElementById('percentResult').innerText = score.toFixed(2) + "%";
         }
+        obtainedInput.addEventListener('input', calculatePercentage);
+        totalInput.addEventListener('input', calculatePercentage);
 
-        // Mobile Menu Script
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isActive = navMenu.classList.toggle('active');
-            menuBtn.setAttribute('aria-expanded', isActive);
-        });
-
-        closeMenuBtn.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            menuBtn.setAttribute('aria-expanded', 'false');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && e.target !== menuBtn) {
-                navMenu.classList.remove('active');
-                menuBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        // Dark Mode Script
+        // Theme Toggle Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
-        
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlEl.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-
+        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
         themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') {
-                htmlEl.setAttribute('data-theme', 'light');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
+            if (htmlEl.getAttribute('data-theme') === 'dark') { 
+                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
+            } else { 
+                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
             }
         });
 
-        // Back to Top Button Script
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Smart Header Scroll Hide/Show Script (Adjusted for 55px)
-        const mainHeader = document.getElementById('siteHeader');
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            if (currentScrollY <= 0) {
-                mainHeader.style.transform = 'translateY(0)';
-                return;
-            }
-
-            if (currentScrollY > lastScrollY && currentScrollY > 55) {
-                mainHeader.style.transform = 'translateY(-100%)';
-            } else {
-                mainHeader.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollY = currentScrollY;
-        });
+        // Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
     </script>
 </body>
 </html>
