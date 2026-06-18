@@ -53,12 +53,12 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* --- SPLIT GRID LAYOUT --- */
+        /* --- CONDITIONAL GRID LAYOUT --- */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
         
         .layout-grid { 
             display: grid; 
-            grid-template-columns: 1fr; /* Default: Single column for mobile */
+            grid-template-columns: 1fr; /* ALWAYS single column on mobile, AND single column on tool pages */
             gap: 2rem; 
         }
 
@@ -74,9 +74,10 @@
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* Desktop / Split View Rules */
+        /* Desktop View Rules */
         @media (min-width: 992px) { 
-            .layout-grid { 
+            /* ONLY apply the split grid if the 'has-sidebar' class is present (Homepage) */
+            .layout-grid.has-sidebar { 
                 grid-template-columns: 3fr 1fr; /* 75% Main, 25% Sidebar */
                 align-items: start;
             }
@@ -129,12 +130,14 @@
     </header>
 
     <div class="wrapper">
-        <div class="layout-grid">
+        
+        <div class="layout-grid {% if page.url == '/' or page.url == '/index.html' %}has-sidebar{% endif %}">
             
             <main class="main-body">
                 {{ content }}
             </main>
 
+            {% if page.url == "/" or page.url == "/index.html" %}
             <aside class="sidebar">
                 <h3>🔥 Popular Tools</h3>
                 <ul class="sidebar-list">
@@ -147,6 +150,7 @@
                     Engine infrastructure optimization complete. Tools process data locally inside your web browser.
                 </p>
             </aside>
+            {% endif %}
 
         </div>
     </div>
@@ -162,7 +166,7 @@
     </footer>
 
     <script>
-        // 1. Theme Logic
+        // Theme Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { themeToggle.textContent = '☀️'; }
@@ -179,7 +183,7 @@
             }
         });
 
-        // 2. Mobile Menu Logic
+        // Mobile Menu Logic
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -193,23 +197,22 @@
             navMenu.classList.remove('active'); 
         });
 
-        // 3. Smart Header Hide/Show (Accounts for Slim Header)
+        // Smart Header Hide/Show
         const mainHeader = document.getElementById('siteHeader');
         let lastScrollY = window.scrollY;
         
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             
-            // Safeguard for mobile elastic scrolling at the top
             if (currentScrollY <= 0) { 
                 mainHeader.style.transform = 'translateY(0)'; 
                 return; 
             }
             
             if (currentScrollY > lastScrollY && currentScrollY > 55) { 
-                mainHeader.style.transform = 'translateY(-100%)'; // Hide on scroll down
+                mainHeader.style.transform = 'translateY(-100%)'; 
             } else { 
-                mainHeader.style.transform = 'translateY(0)';     // Show on scroll up
+                mainHeader.style.transform = 'translateY(0)';     
             }
             lastScrollY = currentScrollY;
         });
