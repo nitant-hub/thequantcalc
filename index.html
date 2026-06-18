@@ -39,14 +39,22 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* Dark Gradient Header */
+        /* --- UPDATED: Dark Gradient Header --- */
         header {
-            position: sticky; top: 0; z-index: 1000;
+            position: fixed; /* Changed from sticky to fixed */
+            width: 100%;     /* Ensure it stretches full width */
+            top: 0; z-index: 1000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
             padding: 0.85rem 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.3s ease-in-out; /* Added for smooth sliding */
+        }
+
+        /* --- NEW: Class to hide the header --- */
+        .header-hidden {
+            transform: translateY(-100%);
         }
 
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
@@ -84,7 +92,7 @@
         .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
 
-        /* NEW: Close Button inside Menu */
+        /* Close Button inside Menu */
         .close-menu-btn {
             position: absolute;
             top: 1.5rem;
@@ -360,7 +368,7 @@
         // 3. Make the mobile menu open and close
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn'); // NEW: Select Close Button
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
         
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -368,7 +376,6 @@
             menuBtn.setAttribute('aria-expanded', isActive);
         });
 
-        // NEW: Close Menu when ❌ is clicked
         closeMenuBtn.addEventListener('click', () => {
             navMenu.classList.remove('active');
             menuBtn.setAttribute('aria-expanded', 'false');
@@ -418,6 +425,24 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // --- NEW: 6. Smart Header Scroll Hide/Show ---
+        let lastScrollTop = 0;
+        const mainHeader = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // If scrolling down AND passed the header height, hide it
+            if (scrollTop > lastScrollTop && scrollTop > 70) {
+                mainHeader.classList.add('header-hidden');
+            } else {
+                // If scrolling up, show it
+                mainHeader.classList.remove('header-hidden');
+            }
+            
+            lastScrollTop = scrollTop; // Reset current scroll position
         });
     </script>
 </body>
