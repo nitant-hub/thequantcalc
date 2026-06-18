@@ -64,22 +64,25 @@
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
         /* --- THE GRID & TABLET FIX (768px Breakpoint) --- */
-        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        /* Reduced top margin for a slimmer look on desktop too */
+        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         
         .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
         
-        /* BREADCRUMB MOVED OUTSIDE CSS */
-        .breadcrumb { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-muted); font-weight: 500; }
+        /* BREADCRUMB SLIM SPACING */
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 500; }
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        /* MOBILE SPACING ADJUSTMENTS */
+        /* ULTRA-SLIM MOBILE SPACING ADJUSTMENTS */
         @media (max-width: 767px) {
             .sidebar { display: none; }
-            .wrapper { margin: 1.25rem auto; padding: 0 0.75rem; }
+            /* Drops top margin to just 0.5rem (8px) for maximum compactness */
+            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 1rem; } 
-            .breadcrumb { margin-bottom: 0.85rem; font-size: 0.85rem; padding-left: 0.25rem; }
+            /* Squeezes the gap between breadcrumb and calculator card */
+            .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
         }
 
         @media (min-width: 768px) { 
