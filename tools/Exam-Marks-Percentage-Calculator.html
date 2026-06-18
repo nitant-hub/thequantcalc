@@ -24,7 +24,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --card-hover-shadow: rgba(99, 102, 241, 0.15);
+            --header-height: 55px; /* Slim Header */
         }
 
         [data-theme="dark"] {
@@ -33,44 +33,40 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
-            --card-hover-shadow: rgba(0, 0, 0, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
         /* Dark Gradient Header */
         header {
-            position: sticky; top: 0; z-index: 1000;
+            position: fixed; 
+            top: 0; left: 0; width: 100%; 
+            height: var(--header-height);
+            z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
-            padding: 0.85rem 1.5rem;
+            padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.3s ease-in-out;
         }
 
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
         .logo-symbol {
-            background: var(--accent-gradient); width: 38px; height: 38px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.3rem;
+            background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem;
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
         }
         .brand-title {
-            font-size: 1.45rem; font-weight: 800; letter-spacing: -0.5px;
+            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px;
             background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        
-        .theme-toggle {
-            background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff;
-            padding: 4px; display: flex; align-items: center; justify-content: center;
-        }
-
-        .menu-btn {
-            background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
-        }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; display: flex; align-items: center; justify-content: center; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
         .nav-menu {
@@ -83,118 +79,61 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
         .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
-
-        .close-menu-btn {
-            position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s;
-        }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s; }
         .close-menu-btn:hover { color: var(--text-main); }
 
         /* Wrapper Setup */
-        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        .wrapper { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; flex: 1; }
         @media (max-width: 480px) { .wrapper { padding: 0; margin: 1rem auto; } }
         
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 992px) { .layout-grid { grid-template-columns: 2.5fr 1fr; } }
 
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        @media (max-width: 480px) { .sidebar { margin: 0 1rem; } }
-        
-        /* Sidebar Title with 1.37 line height and Yellow border */
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid #fbbf24; padding-bottom: 0.5rem; font-weight: 700; line-height: 1.37; }
-        
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
-        .sidebar-list a:hover { color: #7c3aed; }
+        /* Breadcrumb CSS */
+        .breadcrumb-nav { padding: 0 0 1.5rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
+        .breadcrumb-nav a { color: #0275d8; text-decoration: none; transition: color 0.2s; }
+        .breadcrumb-nav a:hover { text-decoration: underline; }
+        .breadcrumb-nav .separator { margin: 0 0.3rem; color: var(--text-muted); }
+        .breadcrumb-nav .current-page { color: #0275d8; }
 
-        /* --- Calculator Specific Styles --- */
-        .calc-container {
-            background: var(--bg-surface);
-            border-radius: 16px; border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-            padding: 2rem; margin-bottom: 2rem;
-        }
+        /* Calculator Specific Styles */
+        .calc-container { background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); padding: 2rem; margin-bottom: 2rem; }
         @media (max-width: 480px) { .calc-container { border-radius: 0; border-left: none; border-right: none; } }
-
-        /* Calc Title with 1.37 line height and Sky Blue border */
-        .calc-container h2 { text-align: center; font-size: 1.4rem; color: #38bdf8; margin-bottom: 1.5rem; border-bottom: 2px solid #38bdf8; padding-bottom: 1rem; line-height: 1.37; }
-        
+        .calc-container h2 { text-align: center; font-size: 1.4rem; color: #38bdf8; margin-bottom: 1.5rem; border-bottom: 2px solid #38bdf8; padding-bottom: 1rem; }
         .input-group { margin-bottom: 1.25rem; }
         .input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
-        .input-group input {
-            width: 100%; padding: 12px; font-size: 1rem;
-            background-color: var(--bg-primary); border: 1px solid var(--border-color);
-            color: var(--text-main); border-radius: 8px; transition: border-color 0.2s;
-        }
+        .input-group input { width: 100%; padding: 12px; font-size: 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; transition: border-color 0.2s; }
         .input-group input:focus { outline: none; border-color: #38bdf8; }
-        
-        .result-box {
-            background-color: var(--bg-primary); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1.5rem;
-        }
+        .result-box { background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1.5rem; }
         .result-label { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
         .result-value { font-size: 2.2rem; font-weight: 800; color: #38bdf8; }
 
-        /* --- Professional Article Styles --- */
-        .pro-article {
-            background: var(--bg-surface);
-            border-radius: 16px; border: 1px solid var(--border-color);
-            padding: 2rem; color: var(--text-main); font-size: 1.05rem;
-            line-height: 1.31; /* Base body text line-height */
-        }
+        /* Professional Article Styles */
+        .pro-article { background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-color); padding: 2rem; line-height: 1.5; }
         @media (max-width: 480px) { .pro-article { border-radius: 0; border-left: none; border-right: none; padding: 1.5rem; } }
+        .pro-article h2 { font-size: 1.6rem; border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin: 2rem 0 1rem 0; }
+        .pro-article h3 { font-size: 1.35rem; border-bottom: 2px solid #a78bfa; padding-bottom: 0.5rem; margin: 1.5rem 0 1rem 0; }
+        .pro-article h4 { font-size: 1.15rem; border-bottom: 2px solid #34d399; padding-bottom: 0.5rem; margin: 1.5rem 0 0.5rem 0; }
+        .pro-article p { margin-bottom: 1.25rem; color: var(--text-muted); }
+        .pro-article ul, .pro-article ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-muted); }
+        .formula-box { background: var(--bg-primary); border: 1px solid var(--border-color); border-left: 4px solid #38bdf8; padding: 1.25rem; font-family: monospace; font-size: 1.1rem; font-weight: bold; text-align: center; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+        .chart-box { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; margin: 2rem 0; }
 
-        /* All Headings Line Height 1.37 & Attractive Borders */
-        .pro-article h2 { 
-            font-size: 1.6rem; font-weight: 800; margin: 2.5rem 0 1rem 0; 
-            padding-bottom: 0.5rem; 
-            border-bottom: 2px solid #38bdf8; /* Sky Blue Border */
-            line-height: 1.37; 
-        }
-        .pro-article h2:first-child { margin-top: 0; }
+        /* Sidebar & Footer */
+        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
+        @media (max-width: 480px) { .sidebar { margin: 0 1rem; } }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
+        .sidebar-list a:hover { color: #7c3aed; }
         
-        .pro-article h3 { 
-            font-size: 1.35rem; font-weight: 700; margin: 2rem 0 1rem 0; 
-            padding-bottom: 0.5rem; 
-            border-bottom: 2px solid #a78bfa; /* Light Purple Border */
-            line-height: 1.37;
-        }
-        
-        .pro-article h4 { 
-            font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem 0; 
-            padding-bottom: 0.5rem; 
-            border-bottom: 2px solid #34d399; /* Mint Green Border */
-            line-height: 1.37;
-        }
-
-        /* Body Text Line Height 1.31 */
-        .pro-article p { margin-bottom: 1.25rem; color: var(--text-muted); line-height: 1.31; }
-        .pro-article strong { color: var(--text-main); }
-        .pro-article ul, .pro-article ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-muted); line-height: 1.31; }
-        .pro-article li { margin-bottom: 0.5rem; line-height: 1.31; }
-        
-        .formula-box {
-            background: var(--bg-primary); border: 1px solid var(--border-color); border-left: 4px solid #38bdf8;
-            padding: 1.25rem; font-family: monospace; font-size: 1.1rem; font-weight: bold;
-            color: var(--text-main); text-align: center; border-radius: 0 8px 8px 0; margin: 1.5rem 0; overflow-x: auto;
-        }
-
-        .chart-box {
-            background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px;
-            padding: 2rem; text-align: center; margin: 2rem 0;
-        }
-
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
         .footer-links a:hover { color: var(--text-main); text-underline-offset: 4px; text-decoration: underline; }
 
         /* Back to Top Button */
-        .back-to-top {
-            position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient);
-            color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden;
-            transform: translateY(20px); transition: all 0.3s ease; z-index: 999;
-        }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; z-index: 999; }
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
         @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
@@ -202,7 +141,7 @@
 </head>
 <body>
 
-    <header>
+    <header id="siteHeader">
         <a href="/" class="brand">
             <div class="logo-symbol" aria-hidden="true">&sum;</div>
             <div class="brand-title">thequantcals</div>
@@ -229,6 +168,14 @@
         <div class="layout-grid">
             
             <main>
+                <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                    <a href="/">home</a> 
+                    <span class="separator">/</span>
+                    <a href="/#math">math</a>
+                    <span class="separator">/</span>
+                    <span class="current-page">exam marks percentage calculator</span>
+                </nav>
+
                 <div class="calc-container">
                     <h2>Exam Marks & Percentage Calculator</h2>
                     
@@ -248,29 +195,8 @@
                     </div>
                 </div>
 
-                <script>
-                function getPercentage() {
-                    var obtained = parseFloat(document.getElementById('marksObtained').value);
-                    var max = parseFloat(document.getElementById('maxMarks').value);
-                    
-                    if (isNaN(obtained) || isNaN(max) || max <= 0 || obtained < 0) {
-                        document.getElementById('percentResult').innerText = "0.00%";
-                        return;
-                    }
-                    if (obtained > max) {
-                        document.getElementById('percentResult').innerText = "Exceeds Max Marks!";
-                        document.getElementById('percentResult').style.fontSize = "1.5rem";
-                        return;
-                    }
-                    
-                    document.getElementById('percentResult').style.fontSize = "2.2rem";
-                    var score = (obtained / max) * 100;
-                    document.getElementById('percentResult').innerText = score.toFixed(2) + "%";
-                }
-                </script>
-
                 <div class="pro-article">
-                    <h2>How to Calculate Your Exam Percentage</h2>
+                    <h2 style="margin-top: 0;">How to Calculate Your Exam Percentage</h2>
                     <p>Most students need to calculate their percentage at some point, whether it's for exam results, college admissions, or scholarship applications. Many admission forms and job applications ask applicants to provide their percentage score.</p>
                     <p>The <strong>marks percentage calculator</strong> above does the math for you instantly. If you're curious about how the calculation works, here's the simple formula behind it, along with a few practical examples.</p>
 
@@ -280,8 +206,6 @@
                     <div class="formula-box">
                         Percentage = (Marks Obtained &divide; Total Marks) &times; 100
                     </div>
-
-                    <p>Below are a few common scenarios students run into when checking their exam results.</p>
 
                     <h4>Example 1: Percentage of 420 out of 500</h4>
                     <p>If your exams consisted of 5 subjects worth 100 marks each, your total maximum marks would be 500. Let's say you scored exactly 420 marks. To find the percentage:</p>
@@ -310,8 +234,6 @@
                     </ol>
 
                     <h3>State and Central Board Calculations</h3>
-                    <p>Depending on where you study, the way your final results are presented can vary. Here is a quick guide on how to calculate your scores based on your specific education board.</p>
-
                     <h4>How to Calculate Percentage in CBSE</h4>
                     <p>The Central Board of Secondary Education (CBSE) often issues a CGPA (Cumulative Grade Point Average) instead of a straight percentage. If an admission form asks for a percentage, you have to convert it.</p>
                     <p>The official CBSE standard rule is to multiply your CGPA by <strong>9.5</strong>. For example, if your report card shows a CGPA of 8.4, you just multiply 8.4 by 9.5 to get 79.80%.</p>
@@ -321,8 +243,6 @@
                     <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB generally places you in the "1st Division" category.</p>
 
                     <h3>Visualizing Your Score</h3>
-                    <p>The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
-
                     <div class="chart-box">
                         <svg height="100%" style="max-width: 250px;" viewBox="0 0 400 400" width="100%">
                             <circle cx="200" cy="200" fill="var(--border-color)" r="160"></circle>
@@ -332,77 +252,7 @@
                         </svg>
                         <p style="font-size: 0.9rem; margin-top: 15px; margin-bottom: 0;"><em>A visual representation of an 84% score. The blue area shows the marks earned.</em></p>
                     </div>
-
-                    <h3>When You May Need to Know Your Percentage</h3>
-                    <p><strong>1. College Admissions</strong><br />
-                    When applying for higher education, universities set a minimum cut-off percentage for admission. For example, a science college might require at least 60% in your 12th-grade board exams just to accept your application form. Knowing your exact score ensures you apply for the right courses without wasting time or application fees.</p>
-
-                    <p><strong>2. Sarkari Exams and Government Jobs</strong><br />
-                    If you are preparing for government recruitment exams like the SSC, Railway Recruitment Board, or state-level police exams, always check the eligibility criteria before submitting your application. In competitive exams, even a small difference in marks can affect eligibility, so organizations often ask for the exact percentage. Entering the wrong decimal point on a Sarkari result portal can lead to your application being rejected during document verification.</p>
-
-                    <hr style="border-top: 2px solid var(--border-color); border-bottom: none; border-left: none; border-right: none; margin: 2.5rem 0;" />
-
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-
-                    <div itemscope itemtype="https://schema.org/FAQPage">
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">1. What is the difference between percentage and CGPA?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">A percentage is a score out of 100 that shows your exact academic performance. A CGPA (Cumulative Grade Point Average) is a grading system that averages your performance on a scale of 1 to 10. CGPA gives you a broad grade, while a percentage gives you a precise number.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">2. How do I calculate my percentage from marks?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">Divide the total marks you earned by the maximum possible marks, and then multiply that number by 100. Or, you can simply type your numbers into the <strong>exam percentage calculator</strong> at the top of this page.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">3. What is the difference between percentage and percentile?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">A percentage is your personal score out of 100. A percentile shows how you ranked against everyone else who took the test. For example, being in the 90th percentile means you scored better than 90% of the other students.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">4. Can I round up my percentage for a job application?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">No, it is highly recommended not to do this. For example, if a government job requires a minimum of 60%, and you score 59.9%, you do not meet the criteria. Always enter the exact decimal you earned to avoid issues during document verification.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">5. What if my board uses a "Best of 5" rule?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">If your school officially allows the "Best of 5" rule (even if you took 6 subjects), you only add up the marks of your five highest-scoring subjects. Your Total Maximum Marks would then be 500 instead of 600.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">6. How do I find my total marks if I only know my percentage?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">You can reverse the math. Divide your percentage by 100, and then multiply that number by the maximum possible marks. The result is the marks you obtained.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">7. Do all universities use the CGPA multiplier of 9.5?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">No, 9.5 is the standard for the CBSE board. State boards or specific universities might have a different formula (like multiplying by 10). Always check the back of your official mark sheet, as the correct formula is usually printed there.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="margin-top: 0;">8. Is this calculator accurate for all state boards?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">Yes. Basic percentage math is universal. As long as you know your total marks obtained and the maximum marks possible, this calculator will give you an exact, reliable result.</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                
             </main>
 
             <aside class="sidebar">
@@ -413,7 +263,7 @@
                 </ul>
 
                 <h3 style="margin-top: 2.5rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.31;">
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
                     Engine infrastructure optimization complete. All tools process data locally inside your web browser.
                 </p>
             </aside>
@@ -438,7 +288,27 @@
     </button>
 
     <script>
-        // Menu Toggle Handling Drawer
+        // Percentage Calculator Script
+        function getPercentage() {
+            var obtained = parseFloat(document.getElementById('marksObtained').value);
+            var max = parseFloat(document.getElementById('maxMarks').value);
+            
+            if (isNaN(obtained) || isNaN(max) || max <= 0 || obtained < 0) {
+                document.getElementById('percentResult').innerText = "0.00%";
+                return;
+            }
+            if (obtained > max) {
+                document.getElementById('percentResult').innerText = "Exceeds Max!";
+                document.getElementById('percentResult').style.fontSize = "1.8rem";
+                return;
+            }
+            
+            document.getElementById('percentResult').style.fontSize = "2.2rem";
+            var score = (obtained / max) * 100;
+            document.getElementById('percentResult').innerText = score.toFixed(2) + "%";
+        }
+
+        // Mobile Menu Script
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -461,7 +331,7 @@
             }
         });
 
-        // Smart LocalStorage Dark Mode Engine
+        // Dark Mode Script
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         
@@ -482,7 +352,7 @@
             }
         });
 
-        // Back to Top Button
+        // Back to Top Button Script
         const backToTopBtn = document.getElementById('backToTopBtn');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -493,6 +363,27 @@
         });
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smart Header Scroll Hide/Show Script (Adjusted for 55px)
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY <= 0) {
+                mainHeader.style.transform = 'translateY(0)';
+                return;
+            }
+
+            if (currentScrollY > lastScrollY && currentScrollY > 55) {
+                mainHeader.style.transform = 'translateY(-100%)';
+            } else {
+                mainHeader.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollY = currentScrollY;
         });
     </script>
 </body>
