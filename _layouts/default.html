@@ -159,6 +159,33 @@
 
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
 
+        /* BREADCRUMB CSS ADDED HERE */
+        .breadcrumb-nav {
+            padding: 0 0 1.5rem 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .breadcrumb-nav a {
+            color: #3b82f6;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb-nav .separator {
+            margin: 0 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .breadcrumb-nav .current-page {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
         footer {
             background: var(--bg-surface);
             border-top: 1px solid var(--border-color);
@@ -197,6 +224,15 @@
     </header>
 
     <main class="wrapper">
+        
+        {% if page.url != "/" and page.url != "/index.html" %}
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <a href="/">Home</a> 
+            <span class="separator">/</span>
+            <span class="current-page">{{ page.title }}</span>
+        </nav>
+        {% endif %}
+
         {{ content }}
     </main>
 
