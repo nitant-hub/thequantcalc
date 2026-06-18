@@ -3,27 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | thequantcals</title>
+    <title>{{ page.title | default: "thequantcals" }} | Free Advanced Calculators</title>
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "thequantcals",
-      "url": "https://thequantcals.com",
-      "description": "A premium web platform offering advanced calculators, generators, and tools for finance, math, and analytics."
-    }
-    </script>
-
     <style>
+        /* Modern UI Design System & Theme Colors */
         :root {
-            --bg-primary: #f8fafc;
+            --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
-            --text-main: #0f172a;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
-            /* SLIM HEADER HEIGHT */
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --header-height: 55px; 
         }
 
@@ -35,133 +25,131 @@
             --border-color: #334155;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        html, body { overflow-x: hidden; height: auto; }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding-top: var(--header-height);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* --- GUARANTEED FIXED & SCROLLING HEADER --- */
-        header#mainHeader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: var(--header-height);
-            z-index: 9999;
+        /* Header - Smart Scroll & Slim */
+        header#siteHeader {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow: 0 2px 0 rgba(99, 179, 255, 0.15), 0 4px 30px rgba(10, 20, 80, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
             transition: transform 0.3s ease-in-out;
         }
 
-        header#mainHeader::before { content: ''; position: absolute; top: -40px; left: 30%; width: 200px; height: 120px; background: radial-gradient(ellipse, rgba(56, 189, 248, 0.12) 0%, transparent 70%); pointer-events: none; }
-        header#mainHeader::after { content: ''; position: absolute; top: -20px; right: 15%; width: 150px; height: 90px; background: radial-gradient(ellipse, rgba(99, 102, 241, 0.1) 0%, transparent 70%); pointer-events: none; }
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
+        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; position: relative; z-index: 1; }
-
-        .logo-symbol {
-            background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-            width: 32px; height: 32px; border-radius: 8px; /* Slimmer Logo */
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;
-            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45), 0 0 0 1px rgba(255,255,255,0.1);
-        }
-
-        .brand-title {
-            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; /* Slimmer Title */
-            background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        .nav-actions { display: flex; align-items: center; gap: 1rem; position: relative; z-index: 1; }
-
-        .theme-toggle { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; font-size: 1.1rem; cursor: pointer; color: #ffffff; padding: 6px 9px; line-height: 1; transition: background 0.2s, transform 0.2s; }
-        .theme-toggle:hover { background: rgba(255,255,255,0.18); transform: scale(1.08); }
-
-        .menu-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 10001; padding: 8px 10px; transition: background 0.2s; }
-        .menu-btn:hover { background: rgba(255,255,255,0.18); }
-        .menu-btn span { display: block; width: 22px; height: 2.5px; background-color: #ffffff; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
-        .menu-btn.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-        .menu-btn.active span:nth-child(2) { opacity: 0; }
-        .menu-btn.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; }
+        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
+        
+        /* Mobile Nav Menu */
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10001; box-shadow: -10px 0 30px rgba(0,0,0,0.05); }
         .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.1rem; transition: color 0.2s; }
-        .nav-menu a:hover { color: #2563eb; }
-        .nav-menu .category-label { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-top: 1rem; }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
+        /* --- SPLIT GRID LAYOUT --- */
+        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        
+        .layout-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; /* Default: Single column for mobile */
+            gap: 2rem; 
+        }
 
-        /* --- BREADCRUMB CSS --- */
-        .breadcrumb-nav { padding: 0.5rem 0 1.5rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
-        .breadcrumb-nav a { color: #0275d8; text-decoration: none; transition: color 0.2s; }
-        .breadcrumb-nav a:hover { text-decoration: underline; }
-        .breadcrumb-nav .separator { margin: 0 0.3rem; color: var(--text-muted); }
-        .breadcrumb-nav .current-page { color: #0275d8; }
+        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
 
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        /* Sidebar Base Styles */
+        .sidebar { 
+            background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; 
+            border: 1px solid var(--border-color); height: fit-content; 
+        }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+        .sidebar-list a:hover { color: #7c3aed; }
+
+        /* Desktop / Split View Rules */
+        @media (min-width: 992px) { 
+            .layout-grid { 
+                grid-template-columns: 3fr 1fr; /* 75% Main, 25% Sidebar */
+                align-items: start;
+            }
+            .sidebar { 
+                position: sticky; 
+                top: calc(var(--header-height) + 2rem); 
+                display: block; 
+            }
+        }
+
+        /* Mobile View Rules */
+        @media (max-width: 991px) {
+            .sidebar { 
+                display: none; /* Hides sidebar entirely on mobile */
+            }
+        }
+        
+        /* Footer */
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
         .footer-links a:hover { color: var(--text-main); text-decoration: underline; }
     </style>
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+    </script>
 </head>
 <body>
 
-    <header id="mainHeader">
+    <header id="siteHeader">
         <a href="/" class="brand">
-            <div class="logo-symbol">∑</div>
+            <div class="logo-symbol">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
-
+        
         <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-            <button class="menu-btn" id="menuBtn" aria-label="Toggle Navigation">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
+            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
 
         <nav class="nav-menu" id="navMenu">
-            <div class="category-label">Tools Categories</div>
-            <a href="/#finance">📈 Finance Calculators</a>
-            <a href="/#math">📐 Math Tools</a>
-            <a href="/#generators">⚡ Generators</a>
-            <hr style="border: 0; border-top: 1px solid var(--border-color);">
-            <a href="/">Home</a>
-            <a href="/about.html">About Us</a>
+            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
+            <a href="/">🏠 Home Base</a>
+            <a href="/#finance">📈 Finance Tools</a>
+            <a href="/#math">📐 Mathematics</a>
         </nav>
     </header>
 
-    <main class="wrapper">
-        {% if page.url != "/" and page.url != "/index.html" %}
-        <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <a href="/">home</a> 
-            {% if page.category %}
-            <span class="separator">/</span>
-            <a href="/#{{ page.category | downcase }}">{{ page.category | downcase }}</a>
-            {% endif %}
-            <span class="separator">/</span>
-            <span class="current-page">{{ page.title | downcase }}</span>
-        </nav>
-        {% endif %}
-        
-        {{ content }}
-    </main>
+    <div class="wrapper">
+        <div class="layout-grid">
+            
+            <main class="main-body">
+                {{ content }}
+            </main>
+
+            <aside class="sidebar">
+                <h3>🔥 Popular Tools</h3>
+                <ul class="sidebar-list">
+                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
+                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                    Engine infrastructure optimization complete. Tools process data locally inside your web browser.
+                </p>
+            </aside>
+
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
@@ -174,58 +162,55 @@
     </footer>
 
     <script>
-        // Menu Toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        if (menuBtn && navMenu) {
-            menuBtn.addEventListener('click', () => {
-                menuBtn.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            navMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    menuBtn.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-        }
-
-        // Theme Toggle
+        // 1. Theme Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
-        if (themeToggle) {
-            if (localStorage.getItem('theme') === 'dark') {
-                htmlEl.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
+        if (localStorage.getItem('theme') === 'dark') { themeToggle.textContent = '☀️'; }
+        
+        themeToggle.addEventListener('click', () => {
+            if (htmlEl.getAttribute('data-theme') === 'dark') { 
+                htmlEl.setAttribute('data-theme', 'light'); 
+                themeToggle.textContent = '🌙'; 
+                localStorage.setItem('theme', 'light'); 
+            } else { 
+                htmlEl.setAttribute('data-theme', 'dark'); 
+                themeToggle.textContent = '☀️'; 
+                localStorage.setItem('theme', 'dark'); 
             }
-            themeToggle.addEventListener('click', () => {
-                const isDark = htmlEl.getAttribute('data-theme') === 'dark';
-                htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
-                themeToggle.textContent = isDark ? '🌙' : '☀️';
-                localStorage.setItem('theme', isDark ? 'light' : 'dark');
-            });
-        }
+        });
 
-        // --- SMART HEADER SCROLL HIDE/SHOW FOR ALL PAGES ---
-        const mainHeader = document.getElementById('mainHeader');
+        // 2. Mobile Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        menuBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            navMenu.classList.toggle('active'); 
+        });
+        
+        closeMenuBtn.addEventListener('click', () => { 
+            navMenu.classList.remove('active'); 
+        });
+
+        // 3. Smart Header Hide/Show (Accounts for Slim Header)
+        const mainHeader = document.getElementById('siteHeader');
         let lastScrollY = window.scrollY;
-
+        
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             
-            // Safeguard against mobile scroll bouncing at the top
-            if (currentScrollY <= 0) {
-                mainHeader.style.transform = 'translateY(0)';
-                return;
-            }
-
-            // Hide when scrolling down past 55px, show when scrolling up
-            if (currentScrollY > lastScrollY && currentScrollY > 55) {
-                mainHeader.style.transform = 'translateY(-100%)';
-            } else {
-                mainHeader.style.transform = 'translateY(0)';
+            // Safeguard for mobile elastic scrolling at the top
+            if (currentScrollY <= 0) { 
+                mainHeader.style.transform = 'translateY(0)'; 
+                return; 
             }
             
+            if (currentScrollY > lastScrollY && currentScrollY > 55) { 
+                mainHeader.style.transform = 'translateY(-100%)'; // Hide on scroll down
+            } else { 
+                mainHeader.style.transform = 'translateY(0)';     // Show on scroll up
+            }
             lastScrollY = currentScrollY;
         });
     </script>
