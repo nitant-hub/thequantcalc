@@ -1,265 +1,514 @@
----
-layout: default
-title: "Accurate Age Calculator"
-schema_type: calculator
-categories: Math
-description: "Calculate your exact age in years, months, and days. Fast, free, and highly accurate multi-disciplinary tool."
----
-
-<div>
-  (Your existing calculator code starts here...)
-</div>
-
-<div style="background-color: #f8fafc; border-radius: 12px; border: 1px solid rgb(226, 232, 240); box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 6px -1px; color: #1e293b; font-family: sans-serif; margin: 20px auto; max-width: 100%; padding: 20px;">
-  <h2 style="border-bottom: 2px solid rgb(59, 130, 246); color: #0f172a; font-size: 24px; margin-bottom: 20px; margin-top: 0px; padding-bottom: 10px; text-align: center;"><span></span>Accurate Age Calculator</h2>
-  
-  <div style="margin-bottom: 15px;">
-    <label style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 5px;">Select Your Date of Birth:</label>
-    <input id="birthDate" style="background-color: white; border-radius: 6px; border: 1px solid rgb(203, 213, 225); box-sizing: border-box; color: #1e293b; font-size: 16px; padding: 10px; width: 100%;" type="date" />
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <label style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 5px;">Calculate Age As Of (Target Date):</label>
-    <input id="targetDate" style="background-color: white; border-radius: 6px; border: 1px solid rgb(203, 213, 225); box-sizing: border-box; color: #1e293b; font-size: 16px; padding: 10px; width: 100%;" type="date" />
-  </div>
-
-  <div style="margin-bottom: 15px; text-align: center;">
-    <button onclick="checkAge()" style="background-color: #3b82f6; border-color: currentcolor; border-image: initial; border-radius: 6px; border-style: none; border-width: medium; border: none; color: white; cursor: pointer; font-size: 16px; font-weight: bold; padding: 12px 24px; width: 100%;">Calculate Age</button>
-  </div>
-
-  <div id="ageResultBox" style="background-color: #eff6ff; border-radius: 8px; border: 1px solid rgb(191, 219, 254); display: none; padding: 15px; text-align: center;">
-    <span style="color: #64748b; display: block; font-size: 16px; margin-bottom: 5px;">Your Exact Age:</span>
-    <span id="ageResult" style="color: #1d4ed8; font-size: 22px; font-weight: bold;"></span>
-  </div>
-</div>
-
-<script>
-// Automatically set target date to today's date
-document.getElementById('targetDate').valueAsDate = new Date();
-
-function checkAge() {
-  var dobInput = document.getElementById('birthDate').value;
-  var targetInput = document.getElementById('targetDate').value;
-  
-  if (!dobInput || !targetInput) {
-    alert("Please select both dates.");
-    return;
-  }
-  
-  var dob = new Date(dobInput);
-  var target = new Date(targetInput);
-  
-  if (dob > target) {
-    alert("Date of birth cannot be later than the target date!");
-    return;
-  }
-  
-  var totalMonths = (target.getFullYear() - dob.getFullYear()) * 12 + (target.getMonth() - dob.getMonth());
-  if (target.getDate() < dob.getDate()) {
-    totalMonths--;
-  }
-  
-  var years = Math.floor(totalMonths / 12);
-  var months = totalMonths % 12;
-  
-  // Calculate remaining days
-  var tempDob = new Date(dobInput);
-  tempDob.setFullYear(dob.getFullYear() + years);
-  tempDob.setMonth(dob.getMonth() + months);
-  
-  var diffTime = Math.abs(target - tempDob);
-  var days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-  // Handle boundary error case where days equal days in month
-  if (target.getDate() == dob.getDate()) { days = 0; }
-
-  document.getElementById('ageResult').innerText = years + " Years, " + months + " Months, and " + days + " Days";
-  document.getElementById('ageResultBox').style.display = "block";
-}
-</script>
-
-<h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: #222222; font-size: 26px; margin-top: 40px; padding-bottom: 8px;">How an Age Calculator Really Works</h2>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Most people think they know their age. If someone asks, you simply state the number of years you have been alive. However, in legal documentation, competitive exams, and academic research, guessing that you are "around 25 years old" is not going to cut it. Sometimes you need your exact age, not just an estimate.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">The tool provided above is not just doing simple subtraction. It calculates age accurately by handling leap years and different month lengths automatically. By comparing your date of birth against a specific target date, it accounts for calendar shifts to give you an accurate output in years, months, and days.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">To fully understand why this process requires an automated calculation rather than simple mental math, we need to take a quick look at the history of our calendar, how the basic math is structured, and the real-world situations where missing a single day can change a person's eligibility.</p>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">A Brief History: Why the Calendar is Uneven</h3>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">The reason counting days gets complicated is a story that goes back thousands of years. Early civilizations tried to track time by observing the cycles of the moon, which resulted in lunar calendars. The problem is that the Earth does not complete its orbit around the Sun in a perfectly round number of days. A true solar year takes approximately 365.24219 days.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">In 45 BCE, Julius Caesar realized the old calendars were failing, so he introduced the Julian calendar. This system established a 365-day year and added a "leap year" every four years to absorb that extra quarter of a day. This made the calendar much more accurate, but it was still slightly off. The Julian year was exactly 365.25 days long, which is 11 minutes and 14 seconds longer than the actual time it takes the Earth to orbit the Sun.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">By the 16th century, those extra 11 minutes per year had piled up. The calendar had drifted out of sync with the seasons by a full 10 days. In 1582, Pope Gregory XIII implemented a correction to the calendar, creating the <strong>Gregorian calendar</strong>, which is the calendar system used in most countries today.</p>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">How the Calculator Works</h3>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">When a web developer writes a program to figure out the difference between two dates, they have to teach the computer to follow the rules of the Gregorian system. If you try to calculate your exact age manually on a piece of paper, you have to follow these calculation steps.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">The basic formula is straightforward:</p>
-
-<div style="background: rgb(248, 250, 252); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 16px; margin: 20px 0px; overflow-x: auto; padding: 15px;">
-  A = T<sub>d</sub> - B<sub>d</sub>
-</div>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">Let's explain the variables in this basic formula so they are easy to understand:</p>
-<ul style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li><strong>A (Age):</strong> The final result you are looking for.</li>
-  <li><strong>T<sub>d</sub> (Target Date):</strong> The future date you are measuring against (for example, the cut-off date for a job application).</li>
-  <li><strong>B<sub>d</sub> (Birth Date):</strong> The day you were born.</li>
-</ul>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">However, simple subtraction falls apart quickly because months do not have equal days. Subtracting March 15 from May 10 means you have to "borrow" days, similar to how you borrow numbers in basic grade-school math. If the target day is smaller than your birth day, the program has to subtract one from the total month count and add the exact number of days from the previous month. This means the calculator must know exactly how many days were in that specific historical month.</p>
-
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">On top of that, the tool must check for leap years. The math for finding a leap year follows three simple rules:</p>
-<ol style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li style="margin-bottom: 8px;">If the year can be evenly divided by 4, it is a leap year (like the year 2024).</li>
-  <li style="margin-bottom: 8px;">Unless the year can also be evenly divided by 100. In that case, it is NOT a leap year (like the year 1900).</li>
-  <li style="margin-bottom: 8px;">Unless the year can also be evenly divided by 400. In that case, it IS a leap year (like the year 2000).</li>
-</ol>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">Calendar Data: Month Length Variations</h3>
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">To show why the math can get messy, take a look at the table below. This shows the fixed day counts that the script references when "borrowing" days to find your exact age.</p>
-
-<div style="border-radius: 8px; border: 1px solid rgb(226, 232, 240); margin: 25px 0px; overflow-x: auto; width: 100%;">
-  <table style="border-collapse: collapse; color: #333333; font-size: 15px; min-width: 600px; text-align: left; width: 100%; white-space: nowrap;">
-    <thead>
-      <tr style="background-color: #0f172a; color: white;">
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Month Index</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Month Name</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Days (Standard Year)</th>
-        <th style="border-bottom: 2px solid rgb(56, 189, 248); padding: 12px 15px;">Days (Leap Year)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background-color: white; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">01</td>
-        <td style="padding: 12px 15px;">January, March, May, July, August, October, December</td>
-        <td style="padding: 12px 15px;">31</td>
-        <td style="padding: 12px 15px;">31</td>
-      </tr>
-      <tr style="background-color: #f8fafc; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">02</td>
-        <td style="padding: 12px 15px;">April, June, September, November</td>
-        <td style="padding: 12px 15px;">30</td>
-        <td style="padding: 12px 15px;">30</td>
-      </tr>
-      <tr style="background-color: white; border-bottom: 1px solid rgb(226, 232, 240);">
-        <td style="font-weight: bold; padding: 12px 15px;">03</td>
-        <td style="padding: 12px 15px;">February</td>
-        <td style="padding: 12px 15px; color: #ef4444; font-weight: bold;">28</td>
-        <td style="padding: 12px 15px; color: #22c55e; font-weight: bold;">29</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">Visualizing the Solar Year</h3>
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">To understand why we need leap year adjustments in the first place, look at this breakdown of the actual solar year. The fractional extra time shown in red is what the calculator is constantly adjusting for in the background.</p>
-
-<div style="background: rgb(248, 250, 252); border-radius: 12px; border: 1px solid rgb(226, 232, 240); margin: 30px 0px; padding: 20px; text-align: center;">
-  <svg height="100%" style="max-width: 320px;" viewBox="0 0 400 400" width="100%">
-    <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
-    <circle cx="200" cy="200" fill="#3b82f6" r="160" stroke-dasharray="1000 1000" stroke-width="0"></circle>
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accurate Age Calculator | thequantcals</title>
     
-    <path d="M 200 200 L 200 40 A 160 160 0 0 1 215 40.7 Z" fill="#ef4444"></path>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "thequantcals",
+      "url": "https://thequantcals.com",
+      "description": "Calculate your exact age in years, months, and days. Fast, free, and highly accurate multi-disciplinary tool."
+    }
+    </script>
 
-    <circle cx="200" cy="200" fill="#f8fafc" r="100"></circle>
+    <style>
+        /* Modern UI Design System & Theme Colors */
+        :root {
+            --bg-primary: #f4f6f9;
+            --bg-surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --header-height: 55px; 
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-surface: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
+
+        /* Typography - Strict Line Heights Enforced */
+        h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
+        p, li, label, span, td, th, option, select, input, button { line-height: 1.33 !important; }
+
+        /* Header - GUARANTEED FIXED POSITION */
+        header#siteHeader {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
+            background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
+            border-bottom: 1px solid rgba(99, 179, 255, 0.25);
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
+        
+        /* Mobile Menu */
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
+        .nav-menu.active { right: 0; }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
+
+        /* --- THE GRID & TABLET FIX (768px Breakpoint) --- */
+        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        
+        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        
+        /* BREADCRUMB SLIM SPACING */
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 500; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* --- DEEP SEMI-3D CALCULATOR UI --- */
+        /* Always remains deep/dark to stand out from description */
+        .calculator-card {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 16px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin: 0 auto 25px auto;
+            max-width: 100%;
+            color: #f8fafc;
+        }
+
+        .calc-input-group { margin-bottom: 18px; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: #cbd5e1; }
+        
+        .calc-input {
+            background-color: #0b1120;
+            color: #f8fafc;
+            border: 1px solid #334155;
+            border-bottom: 1px solid #475569;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02);
+            border-radius: 8px;
+            padding: 12px 15px;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        /* Fix calendar icon color on dark input */
+        .calc-input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .calc-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+        .calc-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 3px 6px rgba(0,0,0,0.6);
+        }
+
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+
+        .calc-btn {
+            background: var(--accent-gradient); color: white; border: none; border-radius: 8px; padding: 14px 24px;
+            font-size: 16px; font-weight: 700; width: 100%; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+            transition: transform 0.2s, box-shadow 0.2s; margin-top: 5px;
+        }
+        .calc-btn:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        .result-box {
+            background: linear-gradient(145deg, #1e293b, #111827);
+            border-radius: 12px;
+            border: 1px solid #334155; border-top: 1px solid #475569;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.05);
+            padding: 25px; text-align: center; position: relative; overflow: hidden; margin-top: 25px; display: none;
+        }
+
+        .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-gradient); }
+
+        /* ULTRA-SLIM MOBILE SPACING ADJUSTMENTS */
+        @media (max-width: 767px) {
+            .sidebar { display: none; }
+            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
+            .main-body { padding: 1.25rem 1rem; } 
+            .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
+            .calculator-card { padding: 20px 15px; }
+            .input-grid { grid-template-columns: 1fr; gap: 15px; }
+        }
+
+        @media (min-width: 768px) { 
+            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } 
+            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
+        }
+
+        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+        .sidebar-list a:hover { color: #7c3aed; }
+        
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
+
+        /* Data Table Responsive Design */
+        .data-table-wrapper { overflow-x: auto; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
+        .data-table { border-collapse: collapse; width: 100%; min-width: 600px; text-align: left; background-color: var(--bg-surface); color: var(--text-main); }
+        .data-table th { padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-primary); font-weight: 700; }
+        .data-table td { padding: 12px; border: 1px solid var(--border-color); }
+        .data-table tr:nth-child(even) { background-color: var(--bg-primary); }
+    </style>
     
-    <text fill="#0f172a" font-family="sans-serif" font-size="18" font-weight="bold" text-anchor="middle" x="200" y="195">365 Days</text>
-    <text fill="#64748b" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="220">+ 0.24219 Days</text>
-    
-    <line x1="220" y1="35" x2="260" y2="20" stroke="#ef4444" stroke-width="2"></line>
-    <text fill="#ef4444" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="start" x="265" y="20">Fractional Remainder</text>
-  </svg>
-  <p style="color: #64748b; font-size: 13px; margin-top: 15px;"><em>A simple look at a True Solar Year (365.24219 Days). The red fraction creates the need for leap years.</em></p>
-</div>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+    </script>
+</head>
+<body>
 
-<h3 style="color: #333333; font-size: 22px; margin-top: 30px;">Everyday Uses for Accurate Age Calculation</h3>
+    <header id="siteHeader">
+        <a href="/" class="brand">
+            <div class="logo-symbol">&sum;</div>
+            <div class="brand-title">thequantcals</div>
+        </a>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <button id="closeMenuBtn" class="close-menu-btn">×</button>
+            <a href="/">🏠 Home Base</a>
+            <a href="/#finance">📈 Finance Tools</a>
+            <a href="/#math">📐 Mathematics</a>
+        </nav>
+    </header>
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;">While it is fun to know exactly how many days you have been alive, accurate age calculation is important in many fields.</p>
+    <div class="wrapper">
+        
+        <div class="breadcrumb">
+            <a href="/">home</a> / <a href="/#math">math</a> / accurate age calculator
+        </div>
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;"><strong>1. Government Exams and Sarkari Recruitment</strong><br />
-If you regularly check recruitment notifications from major organizations—such as the Staff Selection Commission (SSC), the Bihar Public Service Commission (BPSC), or the Central Reserve Police Force (CRPF)—they all have strict age limits. A notification might state: <em>"Candidate must be between 18 and 25 years of age as of August 1, 2026."</em> If your manual math is off by a single day, your application will be rejected by the system. Using an online calculator ensures your eligibility is perfect before you spend time filling out forms.</p>
+        <div class="layout-grid">
+            
+            <main class="main-body">
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;"><strong>2. University Admissions and Fellowships</strong><br />
-Students applying for advanced degrees at premier institutions like the Indian Institute of Science (IISc) or IITs often need to qualify for fellowships. For example, the Council of Scientific & Industrial Research (CSIR) sets an upper age limit for the Junior Research Fellowship (JRF), usually calculated up to a specific cutoff date. Candidates must know their exact age to ensure their funding applications will be accepted.</p>
+                <div class="calculator-card">
+                  <h2 style="border-bottom: 2px solid rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Accurate Age Calculator</h2>
+                  
+                  <div class="input-grid">
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="birthDate">Select Your Date of Birth:</label>
+                        <input id="birthDate" class="calc-input" type="date" />
+                      </div>
 
-<p style="color: #444444; font-size: 16px; line-height: 1.8;"><strong>3. Healthcare and Pediatrics</strong><br />
-In the medical field, doctors do not track a baby's growth by years. Medical professionals record vaccine schedules and physical development in specific weeks and days. To keep medical records accurate, pediatric clinics rely on exact date-to-date calculations to know when a child is ready for their next checkup.</p>
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="targetDate">Calculate Age As Of (Target Date):</label>
+                        <input id="targetDate" class="calc-input" type="date" />
+                      </div>
+                  </div>
 
-<hr style="border-color: rgb(226, 232, 240) currentcolor currentcolor; border-image: initial; border-style: solid none none; border-top: 2px solid #e2e8f0; border-width: 2px 0px 0px; border: 0px; margin: 40px 0px;" />
+                  <div style="text-align: center;">
+                    <button class="calc-btn" onclick="checkAge()">Calculate Age</button>
+                  </div>
 
-<h3 style="color: #333333; font-size: 24px; margin-bottom: 20px;">Frequently Asked Questions (FAQ)</h3>
+                  <div id="ageResultBox" class="result-box">
+                    <div class="result-accent-line"></div>
+                    <span style="color: #94a3b8; display: block; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Your Exact Age</span>
+                    <span id="ageResult" style="color: #38bdf8; font-size: 32px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5);"></span>
+                  </div>
+                </div>
 
-<div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/FAQPage">
+                <script>
+                // Automatically set target date to today's date
+                document.getElementById('targetDate').valueAsDate = new Date();
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">1. Why should I use a calculator instead of counting manually?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">It's easy to make mistakes when counting manually, especially when dealing with months that have 28, 30, or 31 days. A programmed calculator uses the calendar built into your device to ensure the answer is exact, saving you from simple math errors.</p>
+                function checkAge() {
+                  var dobInput = document.getElementById('birthDate').value;
+                  var targetInput = document.getElementById('targetDate').value;
+                  
+                  if (!dobInput || !targetInput) {
+                    alert("Please select both dates.");
+                    return;
+                  }
+                  
+                  var dob = new Date(dobInput);
+                  var target = new Date(targetInput);
+                  
+                  if (dob > target) {
+                    alert("Date of birth cannot be later than the target date!");
+                    return;
+                  }
+                  
+                  var totalMonths = (target.getFullYear() - dob.getFullYear()) * 12 + (target.getMonth() - dob.getMonth());
+                  if (target.getDate() < dob.getDate()) {
+                    totalMonths--;
+                  }
+                  
+                  var years = Math.floor(totalMonths / 12);
+                  var months = totalMonths % 12;
+                  
+                  // Calculate remaining days
+                  var tempDob = new Date(dobInput);
+                  tempDob.setFullYear(dob.getFullYear() + years);
+                  tempDob.setMonth(dob.getMonth() + months);
+                  
+                  var diffTime = Math.abs(target - tempDob);
+                  var days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  
+                  // Handle boundary error case where days equal days in month
+                  if (target.getDate() == dob.getDate()) { days = 0; }
+
+                  document.getElementById('ageResult').innerText = years + " Years, " + months + " Months, and " + days + " Days";
+                  document.getElementById('ageResultBox').style.display = "block";
+                }
+                </script>
+
+                <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 20px; padding-bottom: 8px;">How an Age Calculator Really Works</h2>
+
+                <p style="color: var(--text-muted); font-size: 16px;">Most people think they know their age. If someone asks, you simply state the number of years you have been alive. However, in legal documentation, competitive exams, and academic research, guessing that you are "around 25 years old" is not going to cut it. Sometimes you need your exact age, not just an estimate.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">The tool provided above is not just doing simple subtraction. It calculates age accurately by handling leap years and different month lengths automatically. By comparing your date of birth against a specific target date, it accounts for calendar shifts to give you an accurate output in years, months, and days.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">To fully understand why this process requires an automated calculation rather than simple mental math, we need to take a quick look at the history of our calendar, how the basic math is structured, and the real-world situations where missing a single day can change a person's eligibility.</p>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">A Brief History: Why the Calendar is Uneven</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px;">The reason counting days gets complicated is a story that goes back thousands of years. Early civilizations tried to track time by observing the cycles of the moon, which resulted in lunar calendars. The problem is that the Earth does not complete its orbit around the Sun in a perfectly round number of days. A true solar year takes approximately 365.24219 days.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">In 45 BCE, Julius Caesar realized the old calendars were failing, so he introduced the Julian calendar. This system established a 365-day year and added a "leap year" every four years to absorb that extra quarter of a day. This made the calendar much more accurate, but it was still slightly off. The Julian year was exactly 365.25 days long, which is 11 minutes and 14 seconds longer than the actual time it takes the Earth to orbit the Sun.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">By the 16th century, those extra 11 minutes per year had piled up. The calendar had drifted out of sync with the seasons by a full 10 days. In 1582, Pope Gregory XIII implemented a correction to the calendar, creating the <strong>Gregorian calendar</strong>, which is the calendar system used in most countries today.</p>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">How the Calculator Works</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px;">When a web developer writes a program to figure out the difference between two dates, they have to teach the computer to follow the rules of the Gregorian system. If you try to calculate your exact age manually on a piece of paper, you have to follow these calculation steps.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">The basic formula is straightforward:</p>
+
+                <div style="background: var(--bg-primary); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 18px; font-weight: bold; margin: 20px 0px; overflow-x: auto; padding: 15px; text-align: center; color: var(--text-main);">
+                  A = T<sub>d</sub> - B<sub>d</sub>
+                </div>
+
+                <p style="color: var(--text-muted); font-size: 16px;">Let's explain the variables in this basic formula so they are easy to understand:</p>
+                <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                  <li><strong>A (Age):</strong> The final result you are looking for.</li>
+                  <li><strong>T<sub>d</sub> (Target Date):</strong> The future date you are measuring against (for example, the cut-off date for a job application).</li>
+                  <li><strong>B<sub>d</sub> (Birth Date):</strong> The day you were born.</li>
+                </ul>
+
+                <p style="color: var(--text-muted); font-size: 16px;">However, simple subtraction falls apart quickly because months do not have equal days. Subtracting March 15 from May 10 means you have to "borrow" days, similar to how you borrow numbers in basic grade-school math. If the target day is smaller than your birth day, the program has to subtract one from the total month count and add the exact number of days from the previous month. This means the calculator must know exactly how many days were in that specific historical month.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;">On top of that, the tool must check for leap years. The math for finding a leap year follows three simple rules:</p>
+                <ol style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                  <li style="margin-bottom: 8px;">If the year can be evenly divided by 4, it is a leap year (like the year 2024).</li>
+                  <li style="margin-bottom: 8px;">Unless the year can also be evenly divided by 100. In that case, it is NOT a leap year (like the year 1900).</li>
+                  <li style="margin-bottom: 8px;">Unless the year can also be evenly divided by 400. In that case, it IS a leap year (like the year 2000).</li>
+                </ol>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">Calendar Data: Month Length Variations</h3>
+                <p style="color: var(--text-muted); font-size: 16px;">To show why the math can get messy, take a look at the table below. This shows the fixed day counts that the script references when "borrowing" days to find your exact age.</p>
+
+                <div class="data-table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Month Index</th>
+                        <th>Month Name</th>
+                        <th>Days (Standard Year)</th>
+                        <th>Days (Leap Year)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: bold;">01</td>
+                        <td>January, March, May, July, August, October, December</td>
+                        <td>31</td>
+                        <td>31</td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: bold;">02</td>
+                        <td>April, June, September, November</td>
+                        <td>30</td>
+                        <td>30</td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: bold;">03</td>
+                        <td>February</td>
+                        <td style="color: #ef4444; font-weight: bold;">28</td>
+                        <td style="color: #22c55e; font-weight: bold;">29</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">Visualizing the Solar Year</h3>
+                <p style="color: var(--text-muted); font-size: 16px;">To understand why we need leap year adjustments in the first place, look at this breakdown of the actual solar year. The fractional extra time shown in red is what the calculator is constantly adjusting for in the background.</p>
+
+                <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 30px 0px; padding: 20px; text-align: center;">
+                  <svg height="100%" style="max-width: 320px;" viewBox="0 0 400 400" width="100%">
+                    <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
+                    <circle cx="200" cy="200" fill="#3b82f6" r="160" stroke-dasharray="1000 1000" stroke-width="0"></circle>
+                    <path d="M 200 200 L 200 40 A 160 160 0 0 1 215 40.7 Z" fill="#ef4444"></path>
+                    <circle cx="200" cy="200" fill="#f8fafc" r="100"></circle>
+                    <text fill="#0f172a" font-family="sans-serif" font-size="18" font-weight="bold" text-anchor="middle" x="200" y="195">365 Days</text>
+                    <text fill="#64748b" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="220">+ 0.24219 Days</text>
+                    <line x1="220" y1="35" x2="260" y2="20" stroke="#ef4444" stroke-width="2"></line>
+                    <text fill="#ef4444" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="start" x="265" y="20">Fractional Remainder</text>
+                  </svg>
+                  <p style="color: var(--text-muted); font-size: 13px; margin-top: 15px;"><em>A simple look at a True Solar Year (365.24219 Days). The red fraction creates the need for leap years.</em></p>
+                </div>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">Everyday Uses for Accurate Age Calculation</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px;">While it is fun to know exactly how many days you have been alive, accurate age calculation is important in many fields.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;"><strong>1. Government Exams and Sarkari Recruitment</strong><br />
+                If you regularly check recruitment notifications from major organizations—such as the Staff Selection Commission (SSC), the Bihar Public Service Commission (BPSC), or the Central Reserve Police Force (CRPF)—they all have strict age limits. A notification might state: <em>"Candidate must be between 18 and 25 years of age as of August 1, 2026."</em> If your manual math is off by a single day, your application will be rejected by the system. Using an online calculator ensures your eligibility is perfect before you spend time filling out forms.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;"><strong>2. University Admissions and Fellowships</strong><br />
+                Students applying for advanced degrees at premier institutions like the Indian Institute of Science (IISc) or IITs often need to qualify for fellowships. For example, the Council of Scientific & Industrial Research (CSIR) sets an upper age limit for the Junior Research Fellowship (JRF), usually calculated up to a specific cutoff date. Candidates must know their exact age to ensure their funding applications will be accepted.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px;"><strong>3. Healthcare and Pediatrics</strong><br />
+                In the medical field, doctors do not track a baby's growth by years. Medical professionals record vaccine schedules and physical development in specific weeks and days. To keep medical records accurate, pediatric clinics rely on exact date-to-date calculations to know when a child is ready for their next checkup.</p>
+
+                <hr style="border-top: 2px solid var(--border-color); border-width: 2px 0px 0px; margin: 40px 0px;" />
+
+                <h3 style="color: var(--text-main); font-size: 24px; margin-bottom: 20px;">Frequently Asked Questions (FAQ)</h3>
+
+                <div itemscope itemtype="https://schema.org/FAQPage">
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">1. Why should I use a calculator instead of counting manually?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">It's easy to make mistakes when counting manually, especially when dealing with months that have 28, 30, or 31 days. A programmed calculator uses the calendar built into your device to ensure the answer is exact, saving you from simple math errors.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">2. What does "Calculate Age As Of (Target Date)" mean?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">The target date is simply the day you want to check your age on. By default, it is set to today. However, if an exam form requires your age as of January 1st of the upcoming year, you can change the target date to see exactly how old you will be on that future day.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">3. How does the tool account for leap years?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">The tool runs on built-in calendar logic. It already knows that February 2024 had 29 days, and February 2023 had 28 days, automatically factoring those days into the final calculation.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">4. Is this calculator suitable for finding historical ages?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">It is highly accurate for dates after the year 1582, which is when the modern calendar started being used. However, calculating the exact age of historical figures from the Roman era requires adjusting for the older Julian calendar, and this tool isn't built to convert older calendar dates.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">5. Do different cultures calculate age differently?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Yes. This tool uses the standard international method, where age begins at zero upon birth. Some traditional systems, such as the East Asian age reckoning, consider a child to be one year old at birth and add a year every Lunar New Year, regardless of the actual birth date.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">6. Can I enter a target date in the past?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Yes. You can select any target date, past or future, as long as it happens after your date of birth. This is useful for finding out exactly how old you were when a specific life event took place.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">7. Why does my age differ depending on the time of day?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">This specific tool calculates age based on whole calendar days, ignoring timezones and hours. A person born at 11:59 PM is considered the same age as a person born at 12:01 AM on the same exact date.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">8. Is this acceptable for checking government exam eligibility?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Absolutely. The rules used in this code match the date-verification systems used by government job portals. If a website asks for your age as of a specific cut-off date, putting that exact date into the target field here will give you an accurate result.</p>
+                    </div>
+                  </div>
+
+                </div>
+
+                <hr style="border-top: 2px solid var(--border-color); border-width: 2px 0px 0px; margin: 40px 0px;" />
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-bottom: 15px;">Resources for Calendar Research</h3>
+                <p style="color: var(--text-muted); font-size: 16px;">If you want to read more about time measurements and calendar history, check out these trusted links:</p>
+                <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
+                  <li><a href="https://www.nist.gov/pml/time-and-frequency-division/popular-links/walk-through-time/walk-through-time-calendars" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">NIST: A Walk Through Time - Calendars</a>: Read about how calendars evolved over the centuries.</li>
+                  <li><a href="https://www.timeanddate.com/date/leapyear.html" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">TimeAndDate: The Rules of Leap Years</a>: A simple guide to the math behind adding leap days.</li>
+                  <li><a href="https://aa.usno.navy.mil/faq/calendars" style="color: #2563eb; font-weight: bold; text-decoration: none;" target="_blank">U.S. Naval Observatory: Calendar Systems</a>: A deeper look at the differences between the Julian and Gregorian systems.</li>
+                </ul>
+
+            </main>
+
+            <aside class="sidebar">
+                <h3>🔥 Popular Tools</h3>
+                <ul class="sidebar-list">
+                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
+                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
+                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">All tools process locally in your browser.</p>
+            </aside>
+
+        </div>
     </div>
-  </div>
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">2. What does "Calculate Age As Of (Target Date)" mean?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">The target date is simply the day you want to check your age on. By default, it is set to today. However, if an exam form requires your age as of January 1st of the upcoming year, you can change the target date to see exactly how old you will be on that future day.</p>
-    </div>
-  </div>
+    <footer>
+        <p>&copy; 2026 thequantcals. All rights reserved.</p>
+    </footer>
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">3. How does the tool account for leap years?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">The tool runs on built-in calendar logic. It already knows that February 2024 had 29 days, and February 2023 had 28 days, automatically factoring those days into the final calculation.</p>
-    </div>
-  </div>
+    <script>
+        // Core Theme & Layout Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
+        themeToggle.addEventListener('click', () => {
+            if (htmlEl.getAttribute('data-theme') === 'dark') { 
+                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
+            } else { 
+                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
+            }
+        });
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">4. Is this calculator suitable for finding historical ages?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">It is highly accurate for dates after the year 1582, which is when the modern calendar started being used. However, calculating the exact age of historical figures from the Roman era requires adjusting for the older Julian calendar, and this tool isn't built to convert older calendar dates.</p>
-    </div>
-  </div>
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        menuBtn.addEventListener('click', () => navMenu.classList.add('active'));
+        closeMenuBtn.addEventListener('click', () => navMenu.classList.remove('active'));
 
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">5. Do different cultures calculate age differently?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Yes. This tool uses the standard international method, where age begins at zero upon birth. Some traditional systems, such as the East Asian age reckoning, consider a child to be one year old at birth and add a year every Lunar New Year, regardless of the actual birth date.</p>
-    </div>
-  </div>
-
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">6. Can I enter a target date in the past?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Yes. You can select any target date, past or future, as long as it happens after your date of birth. This is useful for finding out exactly how old you were when a specific life event took place.</p>
-    </div>
-  </div>
-
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">7. Why does my age differ depending on the time of day?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">This specific tool calculates age based on whole calendar days, ignoring timezones and hours. A person born at 11:59 PM is considered the same age as a person born at 12:01 AM on the same exact date.</p>
-    </div>
-  </div>
-
-  <div itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-    <h4 itemprop="name" style="color: #0f172a; font-size: 18px; margin-bottom: 8px;">8. Is this acceptable for checking government exam eligibility?</h4>
-    <div itemprop="acceptedAnswer" itemscope="" itemtype="https://schema.org/Answer">
-      <p itemprop="text" style="color: #444444; font-size: 15px; line-height: 1.6; margin-top: 0px;">Absolutely. The rules used in this code match the date-verification systems used by government job portals. If a website asks for your age as of a specific cut-off date, putting that exact date into the target field here will give you an accurate result.</p>
-    </div>
-  </div>
-
-</div>
-
-<hr style="border-color: rgb(226, 232, 240) currentcolor currentcolor; border-image: initial; border-style: solid none none; border-top: 2px solid #e2e8f0; border-width: 2px 0px 0px; border: 0px; margin: 40px 0px;" />
-
-<h3 style="color: #333333; font-size: 22px; margin-bottom: 15px;">Resources for Calendar Research</h3>
-<p style="color: #444444; font-size: 16px; line-height: 1.6;">If you want to read more about time measurements and calendar history, check out these trusted links:</p>
-<ul style="color: #444444; font-size: 16px; line-height: 1.8; margin-left: 20px;">
-  <li><a href="https://www.nist.gov/pml/time-and-frequency-division/popular-links/walk-through-time/walk-through-time-calendars" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">NIST: A Walk Through Time - Calendars</a>: Read about how calendars evolved over the centuries.</li>
-  <li><a href="https://www.timeanddate.com/date/leapyear.html" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">TimeAndDate: The Rules of Leap Years</a>: A simple guide to the math behind adding leap days.</li>
-  <li><a href="https://aa.usno.navy.mil/faq/calendars" style="color: #0284c7; font-weight: bold; text-decoration: none;" target="_blank">U.S. Naval Observatory: Calendar Systems</a>: A deeper look at the differences between the Julian and Gregorian systems.</li>
-</ul>
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
+            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
+            else { mainHeader.style.transform = 'translateY(0)'; }
+            lastScrollY = currentScrollY;
+        });
+    </script>
+</body>
+</html>
