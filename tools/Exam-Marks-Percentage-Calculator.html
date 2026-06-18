@@ -24,7 +24,6 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --card-hover-shadow: rgba(99, 102, 241, 0.15);
             --header-height: 55px; 
         }
 
@@ -34,13 +33,12 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
-            --card-hover-shadow: rgba(0, 0, 0, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Dark Gradient Header - GUARANTEED FIXED POSITION */
+        /* Header - GUARANTEED FIXED POSITION */
         header#siteHeader {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
@@ -55,63 +53,40 @@
         .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
+        /* Mobile Menu */
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
         .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-        .nav-menu a:hover { color: #2563eb; }
-        .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
-        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s; }
-        .close-menu-btn:hover { color: var(--text-main); }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* Wrapper & Layout Grid - WITH 768px TABLET FIX */
+        /* --- THE GRID & TABLET FIX (768px Breakpoint) --- */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        @media (max-width: 480px) { .wrapper { padding: 0; margin: 1rem auto; } }
-        
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         
-        /* THIS MEDIA QUERY FIXES THE TABLET ISSUE */
         @media (min-width: 768px) { 
             .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } 
-            .sidebar { position: sticky; top: calc(var(--header-height) + 2rem); display: block; }
+            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
         }
         @media (max-width: 767px) {
             .sidebar { display: none; }
         }
 
-        .main-body { display: flex; flex-direction: column; gap: 2rem; }
+        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
         
-        .tool-section { background: var(--bg-surface); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        @media (min-width: 768px) { .tool-section { padding: 2rem; } }
-
-        /* Sidebar Styling */
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
         .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
         .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
         
-        /* Footer & Back to Top */
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
-        .footer-links a:hover { color: var(--text-main); text-underline-offset: 4px; text-decoration: underline; }
-
-        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; z-index: 999; }
-        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
-        @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
-
-        /* Calculator Specific Styles */
-        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); padding: 0 1rem; }
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-muted); }
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-        .calc-input { width: 100%; padding: 0.85rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main); font-size: 1rem; outline: none; transition: border-color 0.2s; }
-        .calc-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .calc-label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: var(--text-main); }
     </style>
     
     <script>
@@ -122,22 +97,16 @@
 
     <header id="siteHeader">
         <a href="/" class="brand">
-            <div class="logo-symbol" aria-hidden="true">&sum;</div>
+            <div class="logo-symbol">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
-        
         <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         </div>
-
         <nav class="nav-menu" id="navMenu">
-            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
-            <div class="category-label">Quick Links</div>
+            <button id="closeMenuBtn" class="close-menu-btn">×</button>
             <a href="/">🏠 Home Base</a>
-            <div class="category-label">Tools Directory</div>
             <a href="/#finance">📈 Finance Tools</a>
             <a href="/#math">📐 Mathematics</a>
         </nav>
@@ -152,26 +121,184 @@
                     <a href="/">home</a> / <a href="/#math">math</a> / exam marks percentage calculator
                 </div>
 
-                <section class="tool-section">
-                    <h2 style="color: #2563eb; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; text-align: center;">
-                        Exam Marks & Percentage Calculator
-                    </h2>
+                <div style="background-color: #0f172a; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px; color: white; font-family: sans-serif; margin: 20px auto; max-width: 100%; padding: 20px;">
+                  <h2 style="border-bottom: 2px solid rgb(51, 65, 85); color: #38bdf8; font-size: 24px; margin-bottom: 20px; margin-top: 0px; padding-bottom: 10px; text-align: center;"><span></span>Exam Marks &amp; Percentage Calculator</h2>
+                  
+                  <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-size: 16px; margin-bottom: 5px;">Marks Obtained:</label>
+                    <input id="marksObtained" oninput="getPercentage()" style="background-color: #1e293b; border-radius: 6px; border: 1px solid rgb(51, 65, 85); box-sizing: border-box; color: white; font-size: 16px; padding: 10px; width: 100%;" type="number" />
+                  </div>
 
-                    <div style="max-width: 500px; margin: 0 auto;">
-                        <label class="calc-label" for="marksObtained">Marks Obtained:</label>
-                        <input type="number" id="marksObtained" class="calc-input" placeholder="Enter marks you scored">
+                  <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 16px; margin-bottom: 5px;">Maximum/Total Marks:</label>
+                    <input id="maxMarks" oninput="getPercentage()" style="background-color: #1e293b; border-radius: 6px; border: 1px solid rgb(51, 65, 85); box-sizing: border-box; color: white; font-size: 16px; padding: 10px; width: 100%;" type="number" />
+                  </div>
 
-                        <label class="calc-label" for="totalMarks">Maximum/Total Marks:</label>
-                        <input type="number" id="totalMarks" class="calc-input" placeholder="Enter total possible marks" style="margin-bottom: 2rem;">
+                  <div style="background-color: #1e293b; border-radius: 8px; padding: 15px; text-align: center;">
+                    <span style="color: #94a3b8; display: block; font-size: 16px; margin-bottom: 5px;">Your Percentage:</span>
+                    <span id="percentResult" style="color: #38bdf8; font-size: 28px; font-weight: bold;">0.00%</span>
+                  </div>
+                </div>
+
+                <script>
+                function getPercentage() {
+                  var obtained = parseFloat(document.getElementById('marksObtained').value);
+                  var max = parseFloat(document.getElementById('maxMarks').value);
+                  
+                  if (isNaN(obtained) || isNaN(max) || max <= 0 || obtained < 0) {
+                    document.getElementById('percentResult').innerText = "0.00%";
+                    return;
+                  }
+                  
+                  if (obtained > max) {
+                    document.getElementById('percentResult').innerText = "Score exceeds Max Marks";
+                    return;
+                  }
+                  
+                  var score = (obtained / max) * 100;
+                  document.getElementById('percentResult').innerText = score.toFixed(2) + "%";
+                }
+                </script>
+
+                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">How to Calculate Your Exam Percentage</h2>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">Most students need to calculate their percentage at some point, whether it's for exam results, college admissions, or scholarship applications. Many admission forms and job applications ask applicants to provide their percentage score.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">The <strong>marks percentage calculator</strong> above does the math for you instantly. If you're curious about how the calculation works, here's the simple formula behind it, along with a few practical examples.</p>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">Percentage Formula with Examples</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">You can calculate your percentage yourself using a simple math formula. You only need two numbers: the marks you earned, and the total marks possible. Here is the standard <strong>marks to percentage formula</strong>:</p>
+
+                <div style="background: var(--bg-primary); border-left: 4px solid rgb(56, 189, 248); font-family: monospace; font-size: 18px; font-weight: bold; margin: 20px 0px; overflow-x: auto; padding: 15px; text-align: center; color: var(--text-main);">
+                  Percentage = (Marks Obtained &divide; Total Marks) &times; 100
+                </div>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">Below are a few common scenarios students run into when checking their exam results.</p>
+
+                <h4 style="color: var(--text-main); font-size: 18px; margin-top: 20px;">Example 1: Percentage of 420 out of 500</h4>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">If your exams consisted of 5 subjects worth 100 marks each, your total maximum marks would be 500. Let's say you scored exactly 420 marks. To find the percentage:</p>
+                <ul style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-left: 20px;">
+                  <li>Step 1: Divide 420 by 500 (420 &divide; 500 = 0.84)</li>
+                  <li>Step 2: Multiply 0.84 by 100</li>
+                  <li><strong>Result: 84%</strong></li>
+                </ul>
+
+                <h4 style="color: var(--text-main); font-size: 18px; margin-top: 20px;">Example 2: Percentage of 350 out of 600</h4>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">If your board requires you to take 6 subjects worth 100 marks each, your total possible score is 600. If you obtained 350 marks in total, the math looks like this:</p>
+                <ul style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-left: 20px;">
+                  <li>Step 1: Divide 350 by 600 (350 &divide; 600 = 0.5833)</li>
+                  <li>Step 2: Multiply 0.5833 by 100</li>
+                  <li><strong>Result: 58.33%</strong></li>
+                </ul>
+
+                <h4 style="color: var(--text-main); font-size: 18px; margin-top: 20px;">How to Calculate Percentage of 5 Subjects</h4>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">If you just got your mark sheet and want to find your total percentage across 5 subjects, follow these steps:</p>
+                <ol style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-left: 20px;">
+                  <li>Check the maximum marks for each subject (usually 100).</li>
+                  <li>Add the maximum marks together (100 + 100 + 100 + 100 + 100 = 500 total).</li>
+                  <li>Add up the marks you actually scored in all 5 subjects (e.g., 75 + 82 + 68 + 90 + 71 = 386).</li>
+                  <li>Divide your score by the total marks (386 &divide; 500 = 0.772).</li>
+                  <li>Multiply by 100 to get your final percentage (77.2%).</li>
+                </ol>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">State and Central Board Calculations</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">Depending on where you study, the way your final results are presented can vary. Here is a quick guide on how to calculate your scores based on your specific education board.</p>
+
+                <h4 style="color: var(--text-main); font-size: 18px; margin-top: 20px;">How to Calculate Percentage in CBSE</h4>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">The Central Board of Secondary Education (CBSE) often issues a CGPA (Cumulative Grade Point Average) instead of a straight percentage. If an admission form asks for a percentage, you have to convert it.</p>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">The official CBSE standard rule is to multiply your CGPA by <strong>9.5</strong>. For example, if your report card shows a CGPA of 8.4, you just multiply 8.4 by 9.5 to get 79.80%.</p>
+
+                <h4 style="color: var(--text-main); font-size: 18px; margin-top: 20px;">How to Calculate Percentage in Bihar Board (BSEB)</h4>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB generally places you in the "1st Division" category.</p>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">Visualizing Your Score</h3>
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;">The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
+
+                <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 30px 0px; padding: 20px; text-align: center;">
+                  <svg height="100%" style="max-width: 250px;" viewBox="0 0 400 400" width="100%">
+                    <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
+                    <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#38bdf8"></path>
+                    <circle cx="200" cy="200" fill="#f8fafc" r="100"></circle>
+                    <text fill="#0f172a" font-family="sans-serif" font-size="36" font-weight="bold" text-anchor="middle" x="200" y="210">84%</text>
+                  </svg>
+                  <p style="color: var(--text-muted); font-size: 13px; margin-top: 15px;"><em>A visual representation of an 84% score. The blue area shows the marks earned.</em></p>
+                </div>
+
+                <h3 style="color: var(--text-main); font-size: 22px; margin-top: 30px;">When You May Need to Know Your Percentage</h3>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;"><strong>1. College Admissions</strong><br />
+                When applying for higher education, universities set a minimum cut-off percentage for admission. For example, a science college might require at least 60% in your 12th-grade board exams just to accept your application form. Knowing your exact score ensures you apply for the right courses without wasting time or application fees.</p>
+
+                <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8;"><strong>2. Sarkari Exams and Government Jobs</strong><br />
+                If you are preparing for government recruitment exams like the SSC, Railway Recruitment Board, or state-level police exams, always check the eligibility criteria before submitting your application. In competitive exams, even a small difference in marks can affect eligibility, so organizations often ask for the exact percentage. Entering the wrong decimal point on a Sarkari result portal can lead to your application being rejected during document verification.</p>
+
+                <hr style="border-top: 2px solid var(--border-color); border-width: 2px 0px 0px; margin: 40px 0px;" />
+
+                <h3 style="color: var(--text-main); font-size: 24px; margin-bottom: 20px;">Frequently Asked Questions (FAQ)</h3>
+
+                <div itemscope itemtype="https://schema.org/FAQPage">
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">1. What is the difference between percentage and CGPA?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">A percentage is a score out of 100 that shows your exact academic performance. A CGPA (Cumulative Grade Point Average) is a grading system that averages your performance on a scale of 1 to 10. CGPA gives you a broad grade, while a percentage gives you a precise number.</p>
                     </div>
+                  </div>
 
-                    <div style="background: var(--bg-primary); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
-                        <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Your Percentage:</p>
-                        <h1 id="resultPercentage" style="color: #2563eb; font-size: 3.5rem; font-weight: 800; line-height: 1;">0.00%</h1>
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">2. How do I calculate my percentage from marks?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">Divide the total marks you earned by the maximum possible marks, and then multiply that number by 100. Or, you can simply type your numbers into the <strong>exam percentage calculator</strong> at the top of this page.</p>
                     </div>
-                </section>
+                  </div>
 
-            </main>
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">3. What is the difference between percentage and percentile?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">A percentage is your personal score out of 100. A percentile shows how you ranked against everyone else who took the test. For example, being in the 90th percentile means you scored better than 90% of the other students.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">4. Can I round up my percentage for a job application?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">No, it is highly recommended not to do this. For example, if a government job requires a minimum of 60%, and you score 59.9%, you do not meet the criteria. Always enter the exact decimal you earned to avoid issues during document verification.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">5. What if my board uses a "Best of 5" rule?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">If your school officially allows the "Best of 5" rule (even if you took 6 subjects), you only add up the marks of your five highest-scoring subjects. Your Total Maximum Marks would then be 500 instead of 600.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">6. How do I find my total marks if I only know my percentage?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">You can reverse the math. Divide your percentage by 100, and then multiply that number by the maximum possible marks. The result is the marks you obtained.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">7. Do all universities use the CGPA multiplier of 9.5?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">No, 9.5 is the standard for the CBSE board. State boards or specific universities might have a different formula (like multiplying by 10). Always check the back of your official mark sheet, as the correct formula is usually printed there.</p>
+                    </div>
+                  </div>
+
+                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">8. Is this calculator accurate for all state boards?</h4>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-top: 0px;">Yes. Basic percentage math is universal. As long as you know your total marks obtained and the maximum marks possible, this <strong>student percentage calculator</strong> will give you an exact, reliable result.</p>
+                    </div>
+                  </div>
+
+                </div>
+                </main>
 
             <aside class="sidebar">
                 <h3>🔥 Popular Tools</h3>
@@ -180,11 +307,8 @@
                     <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
                     <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
                 </ul>
-
-                <h3 style="margin-top: 2.5rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                    Engine infrastructure optimization complete. All tools process data locally inside your web browser.
-                </p>
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">All tools process locally in your browser.</p>
             </aside>
 
         </div>
@@ -192,108 +316,37 @@
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="/privacy-policy.html">Privacy Policy</a>
-            <a href="/terms-of-service.html">Terms of Service</a>
-            <a href="/disclaimer.html">Disclaimer</a>
-            <a href="/contact.html">Contact Us</a>
-        </div>
     </footer>
 
-    <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-
     <script>
-        // 1. Calculator Logic
-        const obtainedInput = document.getElementById('marksObtained');
-        const totalInput = document.getElementById('totalMarks');
-        const resultDisplay = document.getElementById('resultPercentage');
-
-        function calculatePercentage() {
-            const obtained = parseFloat(obtainedInput.value);
-            const total = parseFloat(totalInput.value);
-
-            if (!isNaN(obtained) && !isNaN(total) && total > 0) {
-                const percentage = (obtained / total) * 100;
-                resultDisplay.textContent = percentage.toFixed(2) + '%';
-            } else {
-                resultDisplay.textContent = '0.00%';
-            }
-        }
-
-        obtainedInput.addEventListener('input', calculatePercentage);
-        totalInput.addEventListener('input', calculatePercentage);
-
-        // 2. Mobile Menu Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        
-        menuBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            const isActive = navMenu.classList.toggle('active'); 
-            menuBtn.setAttribute('aria-expanded', isActive); 
-        });
-        
-        closeMenuBtn.addEventListener('click', () => { 
-            navMenu.classList.remove('active'); 
-            menuBtn.setAttribute('aria-expanded', 'false'); 
-        });
-        
-        document.addEventListener('click', (e) => { 
-            if (!navMenu.contains(e.target) && e.target !== menuBtn) { 
-                navMenu.classList.remove('active'); 
-                menuBtn.setAttribute('aria-expanded', 'false'); 
-            } 
-        });
-
-        // 3. Dark Mode Logic
+        // Core Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
-        
         themeToggle.addEventListener('click', () => {
             if (htmlEl.getAttribute('data-theme') === 'dark') { 
-                htmlEl.setAttribute('data-theme', 'light'); 
-                themeToggle.textContent = '🌙'; 
-                localStorage.setItem('theme', 'light'); 
+                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
             } else { 
-                htmlEl.setAttribute('data-theme', 'dark'); 
-                themeToggle.textContent = '☀️'; 
-                localStorage.setItem('theme', 'dark'); 
+                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
             }
         });
 
-        // 4. Back to Top Button Logic
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => { 
-            if (window.scrollY > 300) { backToTopBtn.classList.add('show'); } 
-            else { backToTopBtn.classList.remove('show'); } 
-        });
-        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        menuBtn.addEventListener('click', () => navMenu.classList.add('active'));
+        closeMenuBtn.addEventListener('click', () => navMenu.classList.remove('active'));
 
-        // 5. Smart Header Hide/Show Logic
         const mainHeader = document.getElementById('siteHeader');
         let lastScrollY = window.scrollY;
-
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
-            
-            if (currentScrollY <= 0) {
-                mainHeader.style.transform = 'translateY(0)';
-                return;
-            }
-
-            if (currentScrollY > lastScrollY && currentScrollY > 55) {
-                mainHeader.style.transform = 'translateY(-100%)'; 
-            } else {
-                mainHeader.style.transform = 'translateY(0)';     
-            }
+            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
+            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
+            else { mainHeader.style.transform = 'translateY(0)'; }
             lastScrollY = currentScrollY;
         });
     </script>
 </body>
 </html>
+
