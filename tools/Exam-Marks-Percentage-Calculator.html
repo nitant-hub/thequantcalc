@@ -84,13 +84,19 @@
 
         /* Wrapper Setup */
         .wrapper { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; flex: 1; }
-        @media (max-width: 480px) { .wrapper { padding: 0; margin: 1rem auto; } }
+        /* FIXED: Reduced top margin from 1rem to 0.25rem on mobile to eliminate top red space */
+        @media (max-width: 480px) { .wrapper { padding: 0; margin: 0.25rem auto 1rem auto; } }
         
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 992px) { .layout-grid { grid-template-columns: 2.5fr 1fr; } }
 
         /* Breadcrumb CSS */
-        .breadcrumb-nav { padding: 0 0 1.5rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
+        .breadcrumb-nav { padding: 0 0 1.25rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
+        /* FIXED: Reduced padding strictly for mobile screens to eliminate bottom red space */
+        @media (max-width: 480px) { 
+            .breadcrumb-nav { padding: 0.25rem 1rem 0.5rem 1rem; } 
+        }
+        
         .breadcrumb-nav a { color: #0275d8; text-decoration: none; transition: color 0.2s; }
         .breadcrumb-nav a:hover { text-decoration: underline; }
         .breadcrumb-nav .separator { margin: 0 0.3rem; color: var(--text-muted); }
