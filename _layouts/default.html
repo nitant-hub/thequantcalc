@@ -70,6 +70,13 @@
             justify-content: space-between;
             align-items: center;
             overflow: hidden;
+            /* Added transition for smooth hiding/showing */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Added class to hide the header */
+        .header-hidden {
+            transform: translateY(-100%);
         }
 
         header#mainHeader::before {
@@ -279,6 +286,24 @@
                 localStorage.setItem('theme', isDark ? 'light' : 'dark');
             });
         }
+
+        // --- NEW: Smart Header Scroll Hide/Show ---
+        let lastScrollTop = 0;
+        const mainHeader = document.getElementById('mainHeader');
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // If scrolling down AND passed the header height, hide it
+            if (scrollTop > lastScrollTop && scrollTop > 70) {
+                mainHeader.classList.add('header-hidden');
+            } else {
+                // If scrolling up, show it
+                mainHeader.classList.remove('header-hidden');
+            }
+            
+            lastScrollTop = scrollTop; // Reset current scroll position
+        });
     </script>
 </body>
 </html>
