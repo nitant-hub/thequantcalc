@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Marks Percentage Calculator | thequantcals</title>
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "thequantcals",
+      "url": "https://thequantcals.com",
+      "description": "Calculate your exam marks and percentage instantly with our free online tool."
+    }
+    </script>
+
     <style>
+        /* Modern UI Design System & Theme Colors */
         :root {
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
@@ -13,6 +24,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --card-hover-shadow: rgba(99, 102, 241, 0.15);
             --header-height: 55px; 
         }
 
@@ -22,70 +34,112 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
+            --card-hover-shadow: rgba(0, 0, 0, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Header */
+        /* Dark Gradient Header - GUARANTEED FIXED POSITION */
         header#siteHeader {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.3s ease-in-out;
         }
 
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
+        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
         .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; display: flex; align-items: center; justify-content: center; }
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; z-index: 10001; }
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
         .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
+        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+        .nav-menu a:hover { color: #2563eb; }
+        .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
+        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s; }
+        .close-menu-btn:hover { color: var(--text-main); }
 
-        /* GRID STRUCTURE - 768px fixes tablet view */
+        /* Wrapper & Layout Grid - WITH 768px TABLET FIX */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
-
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+        @media (max-width: 480px) { .wrapper { padding: 0; margin: 1rem auto; } }
         
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        
+        /* THIS MEDIA QUERY FIXES THE TABLET ISSUE */
         @media (min-width: 768px) { 
-            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; }
-            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
+            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } 
+            .sidebar { position: sticky; top: calc(var(--header-height) + 2rem); display: block; }
         }
         @media (max-width: 767px) {
             .sidebar { display: none; }
         }
+
+        .main-body { display: flex; flex-direction: column; gap: 2rem; }
         
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
-        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); }
+        .tool-section { background: var(--bg-surface); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        @media (min-width: 768px) { .tool-section { padding: 2rem; } }
+
+        /* Sidebar Styling */
+        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
+        .sidebar-list a:hover { color: #7c3aed; }
+        
+        /* Footer & Back to Top */
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
+        .footer-links a:hover { color: var(--text-main); text-underline-offset: 4px; text-decoration: underline; }
+
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; z-index: 999; }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
+        @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
+
+        /* Calculator Specific Styles */
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); padding: 0 1rem; }
         .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .calc-input { width: 100%; padding: 0.85rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main); font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        .calc-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .calc-label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: var(--text-main); }
     </style>
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+    </script>
 </head>
 <body>
 
     <header id="siteHeader">
         <a href="/" class="brand">
-            <div class="logo-symbol">&sum;</div>
+            <div class="logo-symbol" aria-hidden="true">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
+        
         <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle">🌙</button>
-            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
+            <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
+
         <nav class="nav-menu" id="navMenu">
+            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
+            <div class="category-label">Quick Links</div>
             <a href="/">🏠 Home Base</a>
+            <div class="category-label">Tools Directory</div>
             <a href="/#finance">📈 Finance Tools</a>
+            <a href="/#math">📐 Mathematics</a>
         </nav>
     </header>
 
@@ -93,36 +147,44 @@
         <div class="layout-grid">
             
             <main class="main-body">
+                
                 <div class="breadcrumb">
                     <a href="/">home</a> / <a href="/#math">math</a> / exam marks percentage calculator
                 </div>
 
-                <div style="background: var(--bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
-                    <h2 style="color: #2563eb; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                <section class="tool-section">
+                    <h2 style="color: #2563eb; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; text-align: center;">
                         Exam Marks & Percentage Calculator
                     </h2>
-                    <div style="text-align: left; max-width: 500px; margin: 0 auto;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Marks Obtained:</label>
-                        <input type="number" id="marksObtained" placeholder="Enter marks you scored" style="width: 100%; padding: 0.75rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main);">
 
-                        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Maximum/Total Marks:</label>
-                        <input type="number" id="totalMarks" placeholder="Enter total possible marks" style="width: 100%; padding: 0.75rem; margin-bottom: 2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-main);">
+                    <div style="max-width: 500px; margin: 0 auto;">
+                        <label class="calc-label" for="marksObtained">Marks Obtained:</label>
+                        <input type="number" id="marksObtained" class="calc-input" placeholder="Enter marks you scored">
+
+                        <label class="calc-label" for="totalMarks">Maximum/Total Marks:</label>
+                        <input type="number" id="totalMarks" class="calc-input" placeholder="Enter total possible marks" style="margin-bottom: 2rem;">
                     </div>
-                    <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Your Percentage:</p>
-                        <h1 id="resultPercentage" style="color: #2563eb; font-size: 2.5rem;">0.00%</h1>
+
+                    <div style="background: var(--bg-primary); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Your Percentage:</p>
+                        <h1 id="resultPercentage" style="color: #2563eb; font-size: 3.5rem; font-weight: 800; line-height: 1;">0.00%</h1>
                     </div>
-                </div>
+                </section>
+
             </main>
 
             <aside class="sidebar">
                 <h3>🔥 Popular Tools</h3>
                 <ul class="sidebar-list">
                     <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
+                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
                     <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
                 </ul>
-                <h3 style="margin-top: 2rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">All tools process locally in your browser.</p>
+
+                <h3 style="margin-top: 2.5rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                    Engine infrastructure optimization complete. All tools process data locally inside your web browser.
+                </p>
             </aside>
 
         </div>
@@ -130,10 +192,22 @@
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-of-service.html">Terms of Service</a>
+            <a href="/disclaimer.html">Disclaimer</a>
+            <a href="/contact.html">Contact Us</a>
+        </div>
     </footer>
 
+    <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
     <script>
-        // Calculator Logic
+        // 1. Calculator Logic
         const obtainedInput = document.getElementById('marksObtained');
         const totalInput = document.getElementById('totalMarks');
         const resultDisplay = document.getElementById('resultPercentage');
@@ -141,31 +215,85 @@
         function calculatePercentage() {
             const obtained = parseFloat(obtainedInput.value);
             const total = parseFloat(totalInput.value);
+
             if (!isNaN(obtained) && !isNaN(total) && total > 0) {
-                resultDisplay.textContent = ((obtained / total) * 100).toFixed(2) + '%';
+                const percentage = (obtained / total) * 100;
+                resultDisplay.textContent = percentage.toFixed(2) + '%';
             } else {
                 resultDisplay.textContent = '0.00%';
             }
         }
+
         obtainedInput.addEventListener('input', calculatePercentage);
         totalInput.addEventListener('input', calculatePercentage);
 
-        // Theme Toggle Logic
+        // 2. Mobile Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        menuBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            const isActive = navMenu.classList.toggle('active'); 
+            menuBtn.setAttribute('aria-expanded', isActive); 
+        });
+        
+        closeMenuBtn.addEventListener('click', () => { 
+            navMenu.classList.remove('active'); 
+            menuBtn.setAttribute('aria-expanded', 'false'); 
+        });
+        
+        document.addEventListener('click', (e) => { 
+            if (!navMenu.contains(e.target) && e.target !== menuBtn) { 
+                navMenu.classList.remove('active'); 
+                menuBtn.setAttribute('aria-expanded', 'false'); 
+            } 
+        });
+
+        // 3. Dark Mode Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
+        
         themeToggle.addEventListener('click', () => {
             if (htmlEl.getAttribute('data-theme') === 'dark') { 
-                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
+                htmlEl.setAttribute('data-theme', 'light'); 
+                themeToggle.textContent = '🌙'; 
+                localStorage.setItem('theme', 'light'); 
             } else { 
-                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
+                htmlEl.setAttribute('data-theme', 'dark'); 
+                themeToggle.textContent = '☀️'; 
+                localStorage.setItem('theme', 'dark'); 
             }
         });
 
-        // Menu Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+        // 4. Back to Top Button Logic
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => { 
+            if (window.scrollY > 300) { backToTopBtn.classList.add('show'); } 
+            else { backToTopBtn.classList.remove('show'); } 
+        });
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // 5. Smart Header Hide/Show Logic
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY <= 0) {
+                mainHeader.style.transform = 'translateY(0)';
+                return;
+            }
+
+            if (currentScrollY > lastScrollY && currentScrollY > 55) {
+                mainHeader.style.transform = 'translateY(-100%)'; 
+            } else {
+                mainHeader.style.transform = 'translateY(0)';     
+            }
+            lastScrollY = currentScrollY;
+        });
     </script>
 </body>
 </html>
