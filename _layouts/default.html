@@ -23,7 +23,8 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
-            --header-height: 70px;
+            /* SLIM HEADER HEIGHT */
+            --header-height: 55px; 
         }
 
         [data-theme="dark"] {
@@ -35,10 +36,7 @@
         }
 
         *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         html, body { overflow-x: hidden; height: auto; }
@@ -53,6 +51,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        /* --- GUARANTEED FIXED & SCROLLING HEADER --- */
         header#mainHeader {
             position: fixed;
             top: 0; left: 0;
@@ -61,104 +60,47 @@
             z-index: 9999;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow:
-                0 2px 0 rgba(99, 179, 255, 0.15),
-                0 4px 30px rgba(10, 20, 80, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.07);
+            box-shadow: 0 2px 0 rgba(99, 179, 255, 0.15), 0 4px 30px rgba(10, 20, 80, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.07);
             padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             overflow: hidden;
-            /* Added transition for smooth hiding/showing */
             transition: transform 0.3s ease-in-out;
         }
 
-        /* Added class to hide the header */
-        .header-hidden {
-            transform: translateY(-100%);
-        }
+        header#mainHeader::before { content: ''; position: absolute; top: -40px; left: 30%; width: 200px; height: 120px; background: radial-gradient(ellipse, rgba(56, 189, 248, 0.12) 0%, transparent 70%); pointer-events: none; }
+        header#mainHeader::after { content: ''; position: absolute; top: -20px; right: 15%; width: 150px; height: 90px; background: radial-gradient(ellipse, rgba(99, 102, 241, 0.1) 0%, transparent 70%); pointer-events: none; }
 
-        header#mainHeader::before {
-            content: '';
-            position: absolute;
-            top: -40px; left: 30%;
-            width: 200px; height: 120px;
-            background: radial-gradient(ellipse, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        header#mainHeader::after {
-            content: '';
-            position: absolute;
-            top: -20px; right: 15%;
-            width: 150px; height: 90px;
-            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .brand {
-            display: flex; align-items: center; gap: 0.6rem;
-            text-decoration: none; position: relative; z-index: 1;
-        }
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; position: relative; z-index: 1; }
 
         .logo-symbol {
             background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-            width: 38px; height: 38px; border-radius: 10px;
+            width: 32px; height: 32px; border-radius: 8px; /* Slimmer Logo */
             display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 1.3rem; flex-shrink: 0;
+            color: white; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;
             box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45), 0 0 0 1px rgba(255,255,255,0.1);
         }
 
         .brand-title {
-            font-size: 1.45rem; font-weight: 800; letter-spacing: -0.5px;
+            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; /* Slimmer Title */
             background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
-        .nav-actions {
-            display: flex; align-items: center; gap: 1rem;
-            position: relative; z-index: 1;
-        }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; position: relative; z-index: 1; }
 
-        .theme-toggle {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 8px; font-size: 1.1rem; cursor: pointer;
-            color: #ffffff; padding: 6px 9px; line-height: 1;
-            transition: background 0.2s, transform 0.2s;
-        }
+        .theme-toggle { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; font-size: 1.1rem; cursor: pointer; color: #ffffff; padding: 6px 9px; line-height: 1; transition: background 0.2s, transform 0.2s; }
         .theme-toggle:hover { background: rgba(255,255,255,0.18); transform: scale(1.08); }
 
-        .menu-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 8px; cursor: pointer;
-            display: flex; flex-direction: column; gap: 5px;
-            z-index: 10001; padding: 8px 10px; transition: background 0.2s;
-        }
+        .menu-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 10001; padding: 8px 10px; transition: background 0.2s; }
         .menu-btn:hover { background: rgba(255,255,255,0.18); }
-        .menu-btn span {
-            display: block; width: 22px; height: 2.5px;
-            background-color: #ffffff; border-radius: 2px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
+        .menu-btn span { display: block; width: 22px; height: 2.5px; background-color: #ffffff; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
         .menu-btn.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
         .menu-btn.active span:nth-child(2) { opacity: 0; }
         .menu-btn.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-        .nav-menu {
-            position: fixed; top: 0; right: -300px;
-            width: 300px; height: 100vh;
-            background: var(--bg-surface);
-            border-left: 1px solid var(--border-color);
-            padding: 5rem 2rem 2rem 2rem;
-            display: flex; flex-direction: column; gap: 1.5rem;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000;
-        }
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.1rem; transition: color 0.2s; }
         .nav-menu a:hover { color: #2563eb; }
@@ -167,36 +109,13 @@
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
 
         /* --- BREADCRUMB CSS --- */
-        .breadcrumb-nav {
-            padding: 0.5rem 0 1.5rem 0;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .breadcrumb-nav a {
-            color: #0275d8; /* Blue link color similar to example */
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .breadcrumb-nav a:hover {
-            text-decoration: underline;
-        }
-        .breadcrumb-nav .separator {
-            margin: 0 0.3rem;
-            color: var(--text-muted);
-        }
-        .breadcrumb-nav .current-page {
-            color: #0275d8; 
-        }
-        /* ------------------------ */
+        .breadcrumb-nav { padding: 0.5rem 0 1.5rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
+        .breadcrumb-nav a { color: #0275d8; text-decoration: none; transition: color 0.2s; }
+        .breadcrumb-nav a:hover { text-decoration: underline; }
+        .breadcrumb-nav .separator { margin: 0 0.3rem; color: var(--text-muted); }
+        .breadcrumb-nav .current-page { color: #0275d8; }
 
-        footer {
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
-            padding: 2rem; text-align: center;
-            font-size: 0.9rem; color: var(--text-muted);
-        }
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
         .footer-links a:hover { color: var(--text-main); text-decoration: underline; }
@@ -229,20 +148,18 @@
     </header>
 
     <main class="wrapper">
-        
         {% if page.url != "/" and page.url != "/index.html" %}
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <a href="/">home</a> 
-            
             {% if page.category %}
             <span class="separator">/</span>
             <a href="/#{{ page.category | downcase }}">{{ page.category | downcase }}</a>
             {% endif %}
-
             <span class="separator">/</span>
             <span class="current-page">{{ page.title | downcase }}</span>
         </nav>
         {% endif %}
+        
         {{ content }}
     </main>
 
@@ -257,6 +174,7 @@
     </footer>
 
     <script>
+        // Menu Toggle
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         if (menuBtn && navMenu) {
@@ -272,6 +190,7 @@
             });
         }
 
+        // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (themeToggle) {
@@ -287,22 +206,27 @@
             });
         }
 
-        // --- NEW: Smart Header Scroll Hide/Show ---
-        let lastScrollTop = 0;
+        // --- SMART HEADER SCROLL HIDE/SHOW FOR ALL PAGES ---
         const mainHeader = document.getElementById('mainHeader');
+        let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const currentScrollY = window.scrollY;
             
-            // If scrolling down AND passed the header height, hide it
-            if (scrollTop > lastScrollTop && scrollTop > 70) {
-                mainHeader.classList.add('header-hidden');
+            // Safeguard against mobile scroll bouncing at the top
+            if (currentScrollY <= 0) {
+                mainHeader.style.transform = 'translateY(0)';
+                return;
+            }
+
+            // Hide when scrolling down past 55px, show when scrolling up
+            if (currentScrollY > lastScrollY && currentScrollY > 55) {
+                mainHeader.style.transform = 'translateY(-100%)';
             } else {
-                // If scrolling up, show it
-                mainHeader.classList.remove('header-hidden');
+                mainHeader.style.transform = 'translateY(0)';
             }
             
-            lastScrollTop = scrollTop; // Reset current scroll position
+            lastScrollY = currentScrollY;
         });
     </script>
 </body>
