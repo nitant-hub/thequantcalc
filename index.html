@@ -25,6 +25,7 @@
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --card-hover-shadow: rgba(99, 102, 241, 0.15);
+            --header-height: 70px;
         }
 
         [data-theme="dark"] {
@@ -37,24 +38,22 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* --- UPDATED: Dark Gradient Header --- */
+        /* Dark Gradient Header - GUARANTEED FIXED POSITION */
         header {
-            position: fixed; /* Changed from sticky to fixed */
-            width: 100%;     /* Ensure it stretches full width */
-            top: 0; z-index: 1000;
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: var(--header-height);
+            z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
-            padding: 0.85rem 1.5rem;
+            padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.3s ease-in-out; /* Added for smooth sliding */
-        }
-
-        /* --- NEW: Class to hide the header --- */
-        .header-hidden {
-            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out; /* Crucial for smooth sliding */
         }
 
         .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
@@ -94,65 +93,33 @@
 
         /* Close Button inside Menu */
         .close-menu-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            line-height: 1;
-            padding: 5px;
-            transition: color 0.2s;
+            position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem;
+            color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s;
         }
-        .close-menu-btn:hover {
-            color: var(--text-main);
-        }
+        .close-menu-btn:hover { color: var(--text-main); }
 
         /* Wrapper Setup */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        @media (max-width: 480px) {
-            .wrapper { padding: 0; margin: 1rem auto; } 
-        }
+        @media (max-width: 480px) { .wrapper { padding: 0; margin: 1rem auto; } }
         
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 992px) {
-            .layout-grid { grid-template-columns: 2.5fr 1fr; }
-        }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 992px) { .layout-grid { grid-template-columns: 2.5fr 1fr; } }
 
         .main-body { display: flex; flex-direction: column; gap: 2rem; }
         
         .tool-section { 
-            background: var(--bg-surface); 
-            padding: 1.25rem;
-            border-radius: 16px; 
-            border: 1px solid var(--border-color); 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
+            background: var(--bg-surface); padding: 1.25rem; border-radius: 16px; 
+            border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
         }
         
         .calculator-fullscreen-section {
-            background: var(--bg-surface);
-            padding: 1.25rem 0px; 
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-            overflow: hidden;
+            background: var(--bg-surface); padding: 1.25rem 0px; border-radius: 16px;
+            border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden;
         }
 
         @media (max-width: 480px) {
-            .calculator-fullscreen-section {
-                border-radius: 0; 
-                border-left: none;
-                border-right: none;
-            }
+            .calculator-fullscreen-section { border-radius: 0; border-left: none; border-right: none; }
         }
-        
         @media (min-width: 768px) {
             .tool-section { padding: 1.75rem; }
             .calculator-fullscreen-section { padding: 1.75rem; }
@@ -165,17 +132,10 @@
             padding: 1.25rem; border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none;
             color: var(--text-main); font-weight: 600; background: var(--bg-primary); display: flex; flex-direction: column; justify-content: space-between;
         }
-        .tool-card:hover { 
-            transform: translateY(-2px); 
-            border-color: #2563eb; 
-            box-shadow: 0 10px 15px -3px var(--card-hover-shadow);
-        }
+        .tool-card:hover { transform: translateY(-2px); border-color: #2563eb; box-shadow: 0 10px 15px -3px var(--card-hover-shadow); }
 
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        @media (max-width: 480px) {
-            .sidebar { margin: 0 1rem; } 
-            .tool-section { margin: 0 1rem; } 
-        }
+        @media (max-width: 480px) { .sidebar { margin: 0 1rem; } .tool-section { margin: 0 1rem; } }
         .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
         .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; display: block; }
@@ -188,51 +148,19 @@
 
         /* Back to Top Button */
         .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 48px;
-            height: 48px;
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            z-index: 999;
+            position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: var(--accent-gradient);
+            color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; z-index: 999;
         }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
-        }
-
-        @media (max-width: 480px) {
-            .back-to-top {
-                bottom: 1.5rem;
-                right: 1.5rem;
-                width: 42px;
-                height: 42px;
-            }
-        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
+        @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
     </style>
 </head>
 <body>
 
-    <header>
+    <header id="siteHeader">
         <a href="#" class="brand">
             <div class="logo-symbol" aria-hidden="true">&sum;</div>
             <div class="brand-title">thequantcals</div>
@@ -247,7 +175,6 @@
 
         <nav class="nav-menu" id="navMenu">
             <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
-
             <div class="category-label">Quick Links</div>
             <a href="#">🏠 Home Base</a>
             <div class="category-label">Tools Directory</div>
@@ -340,12 +267,12 @@
     </button>
 
     <script>
-        // 1. Show the features box only on the home page
+        // 1. Show features box
         if (window.location.pathname === "/" || window.location.pathname === "/index.html" || window.location.pathname === "") {
             document.getElementById("home-only-features").style.display = "block";
         }
 
-        // 2. Fix calculator size for mobile phones
+        // 2. Fix calculator size for mobile
         function adjustCalculatorScale() {
             const frame = document.getElementById('calc-frame');
             if (!frame) return;
@@ -357,92 +284,53 @@
                 frame.style.width = "100%";
             }
         }
-        
         let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(adjustCalculatorScale, 100);
-        });
+        window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(adjustCalculatorScale, 100); });
         window.addEventListener('load', adjustCalculatorScale);
 
-        // 3. Make the mobile menu open and close
+        // 3. Mobile Menu
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
-        
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isActive = navMenu.classList.toggle('active');
-            menuBtn.setAttribute('aria-expanded', isActive);
-        });
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); const isActive = navMenu.classList.toggle('active'); menuBtn.setAttribute('aria-expanded', isActive); });
+        closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); menuBtn.setAttribute('aria-expanded', 'false'); });
+        document.addEventListener('click', (e) => { if (!navMenu.contains(e.target) && e.target !== menuBtn) { navMenu.classList.remove('active'); menuBtn.setAttribute('aria-expanded', 'false'); } });
 
-        closeMenuBtn.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            menuBtn.setAttribute('aria-expanded', 'false');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && e.target !== menuBtn) {
-                navMenu.classList.remove('active');
-                menuBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        // 4. Dark Mode and Light Mode Button
+        // 4. Dark Mode
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
-        
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlEl.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-
+        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
         themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') {
-                htmlEl.setAttribute('data-theme', 'light');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
+            if (htmlEl.getAttribute('data-theme') === 'dark') { htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); } 
+            else { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); }
         });
 
         // 5. Back to Top Button
         const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => { if (window.scrollY > 300) { backToTopBtn.classList.add('show'); } else { backToTopBtn.classList.remove('show'); } });
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // 6. GUARANTEED SMART HEADER HIDE/SHOW
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // --- NEW: 6. Smart Header Scroll Hide/Show ---
-        let lastScrollTop = 0;
-        const mainHeader = document.querySelector('header');
-
-        window.addEventListener('scroll', () => {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const currentScrollY = window.scrollY;
             
-            // If scrolling down AND passed the header height, hide it
-            if (scrollTop > lastScrollTop && scrollTop > 70) {
-                mainHeader.classList.add('header-hidden');
+            // Safeguard: Do nothing if scrolling past the very top (mobile rubber-banding fix)
+            if (currentScrollY <= 0) {
+                mainHeader.style.transform = 'translateY(0)';
+                return;
+            }
+
+            // If scrolling down AND passed the header height
+            if (currentScrollY > lastScrollY && currentScrollY > 70) {
+                mainHeader.style.transform = 'translateY(-100%)'; // Hide
             } else {
-                // If scrolling up, show it
-                mainHeader.classList.remove('header-hidden');
+                mainHeader.style.transform = 'translateY(0)';     // Show
             }
             
-            lastScrollTop = scrollTop; // Reset current scroll position
+            lastScrollY = currentScrollY;
         });
     </script>
 </body>
