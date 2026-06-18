@@ -53,12 +53,12 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* --- CONDITIONAL GRID LAYOUT --- */
+        /* --- GLOBAL GRID LAYOUT --- */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
         
         .layout-grid { 
             display: grid; 
-            grid-template-columns: 1fr; /* ALWAYS single column on mobile, AND single column on tool pages */
+            grid-template-columns: 1fr; /* Default: Single column on mobile */
             gap: 2rem; 
         }
 
@@ -76,8 +76,8 @@
 
         /* Desktop View Rules */
         @media (min-width: 992px) { 
-            /* ONLY apply the split grid if the 'has-sidebar' class is present (Homepage) */
-            .layout-grid.has-sidebar { 
+            /* ALWAYS apply the split grid on Desktop */
+            .layout-grid { 
                 grid-template-columns: 3fr 1fr; /* 75% Main, 25% Sidebar */
                 align-items: start;
             }
@@ -130,14 +130,12 @@
     </header>
 
     <div class="wrapper">
-        
-        <div class="layout-grid {% if page.url == '/' or page.url == '/index.html' %}has-sidebar{% endif %}">
+        <div class="layout-grid">
             
             <main class="main-body">
                 {{ content }}
             </main>
 
-            {% if page.url == "/" or page.url == "/index.html" %}
             <aside class="sidebar">
                 <h3>🔥 Popular Tools</h3>
                 <ul class="sidebar-list">
@@ -150,7 +148,6 @@
                     Engine infrastructure optimization complete. Tools process data locally inside your web browser.
                 </p>
             </aside>
-            {% endif %}
 
         </div>
     </div>
