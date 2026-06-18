@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compound Interest Calculator | thequantcals</title>
+    <title>Fixed Deposit & Compound Interest Calculator | thequantcals</title>
     
     <script type="application/ld+json">
     {
@@ -35,12 +35,12 @@
             --border-color: #334155;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Typography - Strict Line Heights */
+        /* Typography - Strict Line Heights Enforced */
         h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
-        p, li, label, span, td, th { line-height: 1.33 !important; }
+        p, li, label, span, td, th, option, select, input { line-height: 1.33 !important; }
 
         /* Header - GUARANTEED FIXED POSITION */
         header#siteHeader {
@@ -78,12 +78,73 @@
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
+        /* --- PREMIUM MODERN CALCULATOR UI --- */
+        .calculator-card {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin: 0 auto 25px auto;
+            max-width: 100%;
+        }
+        
+        [data-theme="dark"] .calculator-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            border-color: #334155;
+        }
+
+        .calc-input-group { margin-bottom: 18px; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: var(--text-main); }
+        
+        .calc-input {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .calc-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        .result-box {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .result-accent-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-gradient);
+        }
+
         /* ULTRA-SLIM MOBILE SPACING ADJUSTMENTS */
         @media (max-width: 767px) {
             .sidebar { display: none; }
             .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 1rem; } 
             .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
+            .calculator-card { padding: 20px 15px; }
+            .input-grid { grid-template-columns: 1fr; gap: 15px; }
         }
 
         @media (min-width: 768px) { 
@@ -134,7 +195,7 @@
         
         <!-- BREADCRUMB -->
         <div class="breadcrumb">
-            <a href="/">home</a> / <a href="/#finance">finance</a> / compound interest calculator
+            <a href="/">home</a> / <a href="/#finance">finance</a> / fixed deposit calculator
         </div>
 
         <div class="layout-grid">
@@ -142,36 +203,43 @@
             <!-- MAIN CONTENT AREA -->
             <main class="main-body">
 
-                <!-- SEMI-3D MODERN PROFESSIONAL CALCULATOR CARD -->
-                <div style="background: linear-gradient(145deg, #1e293b, #0f172a); border-radius: 16px; border: 1px solid #334155; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05); color: white; font-family: sans-serif; margin: 0 auto 20px auto; max-width: 100%; padding: 25px;">
+                <!-- MODERN RESPONSIVE CALCULATOR UI -->
+                <div class="calculator-card">
+                  <h2 style="border-bottom: 2px solid var(--border-color); color: #2563eb; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; font-weight: 700;">Fixed Deposit & Compound Interest</h2>
                   
-                  <h2 style="border-bottom: 2px solid rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fixed Deposit &amp; Compound Interest Calculator</h2>
-                  
-                  <div style="margin-bottom: 18px;">
-                    <label style="display: block; font-size: 15px; margin-bottom: 8px; color: #cbd5e1; font-weight: 500;">Principal Amount (Initial Investment):</label>
-                    <input id="principal" oninput="calculateFinance()" style="background-color: #0b1120; border-radius: 8px; border: 1px solid #334155; border-bottom: 1px solid #475569; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02); box-sizing: border-box; color: #f8fafc; font-size: 16px; padding: 12px 15px; width: 100%; outline: none; transition: border-color 0.2s;" type="number" value="10000" />
+                  <div class="calc-input-group">
+                    <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
+                    <input id="principal" class="calc-input" oninput="calculateFinance()" type="number" value="10000" />
                   </div>
 
-                  <div style="margin-bottom: 18px;">
-                    <label style="display: block; font-size: 15px; margin-bottom: 8px; color: #cbd5e1; font-weight: 500;">Annual Interest Rate (%):</label>
-                    <input id="interestRate" oninput="calculateFinance()" style="background-color: #0b1120; border-radius: 8px; border: 1px solid #334155; border-bottom: 1px solid #475569; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02); box-sizing: border-box; color: #f8fafc; font-size: 16px; padding: 12px 15px; width: 100%; outline: none; transition: border-color 0.2s;" type="number" value="7.1" />
+                  <div class="input-grid">
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="interestRate">Annual Interest Rate (%):</label>
+                        <input id="interestRate" class="calc-input" oninput="calculateFinance()" type="number" value="7.1" />
+                      </div>
+
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="years">Time Period (Years):</label>
+                        <input id="years" class="calc-input" oninput="calculateFinance()" type="number" value="5" />
+                      </div>
                   </div>
 
-                  <div style="margin-bottom: 25px;">
-                    <label style="display: block; font-size: 15px; margin-bottom: 8px; color: #cbd5e1; font-weight: 500;">Time Period (Years):</label>
-                    <input id="years" oninput="calculateFinance()" style="background-color: #0b1120; border-radius: 8px; border: 1px solid #334155; border-bottom: 1px solid #475569; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02); box-sizing: border-box; color: #f8fafc; font-size: 16px; padding: 12px 15px; width: 100%; outline: none; transition: border-color 0.2s;" type="number" value="5" />
+                  <div class="calc-input-group" style="margin-bottom: 25px;">
+                    <label class="calc-label" for="compounding">Compounding Frequency:</label>
+                    <select id="compounding" class="calc-input" onchange="calculateFinance()">
+                        <option value="1">Yearly (12 Months)</option>
+                        <option value="2">Half-Yearly (6 Months)</option>
+                        <option value="4" selected>Quarterly (3 Months)</option>
+                    </select>
                   </div>
 
-                  <!-- SEMI-3D RESULT BOX -->
-                  <div style="background: linear-gradient(145deg, #1e293b, #111827); border-radius: 12px; border: 1px solid #334155; border-top: 1px solid #475569; box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.05); padding: 20px; text-align: center; position: relative; overflow: hidden;">
-                    <!-- Accent glow line -->
-                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #38bdf8, transparent);"></div>
-                    
-                    <span style="color: #94a3b8; display: block; font-size: 15px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Estimated Maturity Value</span>
-                    <span id="financeResult" style="color: #38bdf8; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">14,213.63</span>
+                  <div class="result-box">
+                    <div class="result-accent-line"></div>
+                    <span style="color: var(--text-muted); display: block; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Estimated Maturity Value</span>
+                    <span id="financeResult" style="color: #2563eb; font-size: 36px; font-weight: 800;">14,213.63</span>
                   </div>
                   
-                  <p style="font-size: 12px; color: #64748b; text-align: center; margin-top: 20px; opacity: 0.9;">*This tool assumes quarterly compounding, which is the standard for most bank term deposits. Actual bank payouts may vary slightly based on taxation and specific bank policies.</p>
+                  <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 20px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
                 </div>
 
                 <script>
@@ -179,14 +247,14 @@
                   var p = parseFloat(document.getElementById('principal').value);
                   var r = parseFloat(document.getElementById('interestRate').value);
                   var t = parseFloat(document.getElementById('years').value);
+                  var n = parseFloat(document.getElementById('compounding').value);
                   
-                  if (isNaN(p) || isNaN(r) || isNaN(t) || p <= 0 || r <= 0 || t <= 0) {
+                  if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r <= 0 || t <= 0) {
                     document.getElementById('financeResult').innerText = "0.00";
                     return;
                   }
                   
-                  // Standard quarterly compounding (4 times a year)
-                  var n = 4; 
+                  // Dynamic Compound Formula A = P (1 + r/n)^(nt)
                   var amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
                   
                   document.getElementById('financeResult').innerText = amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -196,8 +264,8 @@
                 window.addEventListener('DOMContentLoaded', calculateFinance);
                 </script>
 
-                <!-- PAGE CONTENT (Line heights handled globally by CSS) -->
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 20px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
+                <!-- PAGE CONTENT -->
+                <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 20px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
 
                 <p style="color: var(--text-muted); font-size: 16px;">When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
 
@@ -208,12 +276,12 @@
                 <p style="color: var(--text-muted); font-size: 16px;">When you open a fixed deposit, the growth usually follows a set schedule:</p>
 
                 <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
-                  <li style="margin-bottom: 10px;"><strong>The First Cycle:</strong> During the first period (usually three months), the bank pays interest based only on the money you deposited.</li>
+                  <li style="margin-bottom: 10px;"><strong>The First Cycle:</strong> During the first period, the bank pays interest based only on the money you deposited.</li>
                   <li style="margin-bottom: 10px;"><strong>The Next Cycles:</strong> In the following period, the bank calculates interest on your original deposit plus the interest you earned in the first cycle.</li>
                   <li style="margin-bottom: 10px;"><strong>The Long-Term Effect:</strong> Because your balance gets slightly bigger every cycle, the amount of interest you earn also increases. The longer you leave the money alone, the faster it grows.</li>
                 </ul>
 
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">The Math Behind the Calculator</h2>
+                <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">The Math Behind the Calculator</h2>
 
                 <p style="color: var(--text-muted); font-size: 16px;">The interactive tool at the top of this page uses the standard algebraic formula for compound interest. Here is what the formula looks like:</p>
 
@@ -226,11 +294,11 @@
                 <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
                   <li><strong>P (Principal):</strong> Your starting investment.</li>
                   <li><strong>r (Annual Interest Rate):</strong> The yearly rate expressed as a decimal. If the bank offers 7%, you use 0.07 in the math.</li>
-                  <li><strong>n (Compounding Frequency):</strong> How many times a year the bank adds interest to your balance. Most fixed deposits compound quarterly, meaning n = 4. Daily compounding means n = 365.</li>
+                  <li><strong>n (Compounding Frequency):</strong> How many times a year the bank adds interest to your balance. The calculator above lets you choose between Yearly (n=1), Half-Yearly (n=2), and Quarterly (n=4).</li>
                   <li><strong>t (Time):</strong> The number of years you plan to leave the money in the account.</li>
                 </ul>
 
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">Tracking the Growth Over Time</h2>
+                <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">Tracking the Growth Over Time</h2>
 
                 <p style="color: var(--text-muted); font-size: 16px;">To really see how compound interest works, it helps to look at a long-term projection. The table below compares simple interest to compound interest on a $10,000 initial investment at an 8% annual rate.</p>
 
@@ -287,7 +355,7 @@
                   
                   <svg viewBox="0 0 36 36" style="width: 200px; height: 200px; transform: rotate(-90deg); margin: 20px 0;">
                     <!-- Total outline -->
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#38bdf8" stroke-width="6" />
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#2563eb" stroke-width="6" />
                     <!-- Principal portion -->
                     <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0f172a" stroke-width="6" stroke-dasharray="22.6, 100" />
                   </svg>
@@ -298,7 +366,7 @@
                          Original Investment (22.6%)
                      </div>
                      <div style="display: flex; align-items: center; gap: 8px;">
-                         <span style="display:inline-block; width:16px; height:16px; background-color:#38bdf8; border-radius: 4px;"></span> 
+                         <span style="display:inline-block; width:16px; height:16px; background-color:#2563eb; border-radius: 4px;"></span> 
                          Interest Earned (77.4%)
                      </div>
                   </div>
@@ -306,17 +374,7 @@
 
                 <p style="color: var(--text-muted); font-size: 16px;">By the end of the 20-year period, most of the account balance is made up of interest rather than the initial deposit.</p>
 
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">A Brief History of Compound Interest</h2>
-
-                <p style="color: var(--text-muted); font-size: 16px;">The math behind interest has been around for a very long time.</p>
-
-                <p style="color: var(--text-muted); font-size: 16px;">Historians have found clay tablets from ancient Babylon (around 2000 BCE) showing that merchants used basic compounding to calculate loans for grain and silver. They even had math problems for students to figure out how long a debt would take to double.</p>
-
-                <p style="color: var(--text-muted); font-size: 16px;">In 1613, an English mathematician named Richard Witt published a book that included detailed compound interest tables. Before his tables were published, working out the math for a 10-year loan was a slow manual process. His work made it easier for early banks and insurance companies to standardize their rates.</p>
-
-                <p style="color: var(--text-muted); font-size: 16px;">Later, in 1683, Swiss mathematician Jacob Bernoulli studied what would happen if a bank compounded interest continuously—every single day, hour, and second. He found that the balance doesn't grow to infinity. Instead, it hits a mathematical limit. His calculations led to the discovery of the constant <em>e</em> (roughly 2.718), a number still used today in both finance and physics.</p>
-
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">Using the Formula in Other Fields</h2>
+                <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">Using the Formula in Other Fields</h2>
 
                 <p style="color: var(--text-muted); font-size: 16px;">The math behind compound interest is essentially the math of exponential growth. This means the same formula is used in several different fields outside of personal finance.</p>
 
@@ -354,56 +412,20 @@
                   </div>
 
                   <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">4. Is the interest from a fixed deposit taxed?</h4>
-                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">In most countries, interest earned on savings and fixed deposits is considered taxable income. Some banks will automatically deduct tax if your earnings go over a certain limit.</p>
-                    </div>
-                  </div>
-
-                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">5. What is the Rule of 72?</h4>
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">4. What is the Rule of 72?</h4>
                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                       <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">The Rule of 72 is a mental math trick to estimate how long an investment takes to double. You divide 72 by your interest rate. For example, at a 6% interest rate, your money doubles in about 12 years (72 &divide; 6 = 12).</p>
                     </div>
                   </div>
 
                   <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">6. Can I lose the principal money in a fixed deposit?</h4>
-                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Fixed deposits are generally very safe. The main risk is inflation. If the cost of living increases faster than your interest rate, the actual buying power of your savings will decrease over time.</p>
-                    </div>
-                  </div>
-
-                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">7. Should I withdraw my interest payments?</h4>
+                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">5. Should I withdraw my interest payments?</h4>
                     <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                       <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">If you need the money for living expenses, you can have the interest paid out regularly. However, if your goal is long-term growth, it is better to leave the interest in the account so it can compound.</p>
                     </div>
                   </div>
 
-                  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 20px;">
-                    <h4 itemprop="name" style="color: var(--text-main); font-size: 18px; margin-bottom: 8px;">8. Can I close a fixed deposit before it matures?</h4>
-                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                      <p itemprop="text" style="color: var(--text-muted); font-size: 15px; margin-top: 0px;">Yes, you can usually withdraw your money early. But banks typically charge an early withdrawal penalty, which usually means lowering the interest rate you earned during the time the money was in the account.</p>
-                    </div>
-                  </div>
-
                 </div>
-
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">External Resources</h2>
-
-                <p style="color: var(--text-muted); font-size: 16px;">To read more about interest rates and financial planning, here are several helpful resources:</p>
-
-                <ul style="color: var(--text-muted); font-size: 16px; margin-left: 20px;">
-                  <li style="margin-bottom: 8px;"><strong>Investopedia:</strong> A simple guide explaining <a href="https://www.investopedia.com/terms/c/compoundinterest.asp" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">compound interest mechanics</a>.</li>
-                  <li style="margin-bottom: 8px;"><strong>Khan Academy:</strong> Free videos teaching the <a href="https://www.khanacademy.org/economics-finance-domain/core-finance/interest-tutorial" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">math behind interest</a>.</li>
-                  <li style="margin-bottom: 8px;"><strong>The World Bank:</strong> Track current <a href="https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">inflation data</a>.</li>
-                  <li style="margin-bottom: 8px;"><strong>Reserve Bank of India (RBI):</strong> Check policy and <a href="https://www.rbi.org.in/" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: none;">bank deposit rates</a>.</li>
-                </ul>
-
-                <h2 style="border-bottom: 2px solid rgb(238, 238, 238); color: var(--text-main); font-size: 26px; margin-top: 40px; padding-bottom: 8px;">Conclusion</h2>
-
-                <p style="color: var(--text-muted); font-size: 16px;">Compound interest is a practical mathematical concept used in personal finance, banking, and data science. Understanding how it works can make long-term financial planning much easier. By leaving your savings in an account to grow over several years, a fixed deposit can provide a predictable and safe return. You can use the calculator at the top of this page to test different amounts, compare interest rates, and see how time affects your final balance.</p>
 
             </main>
 
@@ -416,7 +438,7 @@
                     <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
                 </ul>
                 <h3 style="margin-top: 2rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">All tools process locally in your browser.</p>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5 !important;">All tools process locally in your browser.</p>
             </aside>
 
         </div>
@@ -427,7 +449,7 @@
     </footer>
 
     <script>
-        // Core Logic
+        // Core Theme & Layout Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
