@@ -159,17 +159,16 @@
 
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
 
-        /* BREADCRUMB CSS ADDED HERE */
+        /* --- BREADCRUMB CSS --- */
         .breadcrumb-nav {
-            padding: 0 0 1.5rem 0;
+            padding: 0.5rem 0 1.5rem 0;
             font-size: 0.95rem;
-            color: var(--text-muted);
             display: flex;
             align-items: center;
             flex-wrap: wrap;
         }
         .breadcrumb-nav a {
-            color: #3b82f6;
+            color: #0275d8; /* Blue link color similar to example */
             text-decoration: none;
             transition: color 0.2s;
         }
@@ -177,14 +176,13 @@
             text-decoration: underline;
         }
         .breadcrumb-nav .separator {
-            margin: 0 0.5rem;
+            margin: 0 0.3rem;
             color: var(--text-muted);
-            font-size: 0.85rem;
         }
         .breadcrumb-nav .current-page {
-            color: var(--text-main);
-            font-weight: 500;
+            color: #0275d8; 
         }
+        /* ------------------------ */
 
         footer {
             background: var(--bg-surface);
@@ -227,12 +225,17 @@
         
         {% if page.url != "/" and page.url != "/index.html" %}
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <a href="/">Home</a> 
+            <a href="/">home</a> 
+            
+            {% if page.category %}
             <span class="separator">/</span>
-            <span class="current-page">{{ page.title }}</span>
+            <a href="/#{{ page.category | downcase }}">{{ page.category | downcase }}</a>
+            {% endif %}
+
+            <span class="separator">/</span>
+            <span class="current-page">{{ page.title | downcase }}</span>
         </nav>
         {% endif %}
-
         {{ content }}
     </main>
 
