@@ -87,8 +87,13 @@
         /* FIXED: Reduced top margin from 1rem to 0.25rem on mobile to eliminate top red space */
         @media (max-width: 480px) { .wrapper { padding: 0; margin: 0.25rem auto 1rem auto; } }
         
-        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 992px) { .layout-grid { grid-template-columns: 2.5fr 1fr; } }
+                .layout-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 2rem; 
+            align-items: start; /* ADD THIS LINE */
+        }
+
 
         /* Breadcrumb CSS */
         .breadcrumb-nav { padding: 0 0 1.25rem 0; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; }
