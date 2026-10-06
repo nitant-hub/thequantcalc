@@ -10,7 +10,31 @@
             margin: 0;
             padding: 10px;
             background: transparent;
-        }
+        }. /* --- BIG BOLD MATH SYMBOLS --- */
+.bc-btn[aria-label="Divide"],
+.bc-btn[aria-label="Multiply"],
+.bc-btn[aria-label="Subtract"],
+.bc-btn[aria-label="Add"],
+.bc-btn[aria-label="Calculate Equals"],
+.bc-btn[aria-label="Modulo or Percent"],
+.bc-btn[aria-label="Percent"],
+.bc-btn[aria-label="Modulo"] {
+    font-size: 18px !important;
+}
+
+@media (max-width: 600px) {
+    .bc-btn[aria-label="Divide"],
+    .bc-btn[aria-label="Multiply"],
+    .bc-btn[aria-label="Subtract"],
+    .bc-btn[aria-label="Add"],
+    .bc-btn[aria-label="Calculate Equals"],
+    .bc-btn[aria-label="Modulo or Percent"],
+    .bc-btn[aria-label="Percent"],
+    .bc-btn[aria-label="Modulo"] {
+        font-size: 16px !important; /* Increases mobile size from 8px to 16px */
+    }
+}
+
     </style>
 </head>
 <body>
