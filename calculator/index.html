@@ -933,5 +933,27 @@
             };
         })();
     </script>
+    
+    <script>
+        // --- ADDED: Dynamic Resizing Communication ---
+        function sendHeightToParent() {
+            const calcWidget = document.getElementById('blogger-calc-widget');
+            if (calcWidget) {
+                // Get the exact height of the calculator (+20px for padding)
+                const calcHeight = calcWidget.offsetHeight + 20; 
+                window.parent.postMessage({ frameHeight: calcHeight }, '*');
+            }
+        }
+
+        // Send height when the calculator initially loads
+        window.addEventListener('load', sendHeightToParent);
+
+        // Send height whenever a top tab is clicked (to shrink or grow it)
+        document.querySelectorAll('.bc-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setTimeout(sendHeightToParent, 50); // Wait a fraction of a second for CSS to change
+            });
+        });
+    </script>
 </body>
 </html>
