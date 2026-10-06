@@ -141,11 +141,33 @@
             </main>
 
             <aside class="sidebar">
-                <h3>🔥 Popular Tools</h3>
-                <ul class="sidebar-list">
-                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
-                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
-                </ul>
+                {% assign tool_pages = site.pages | where_exp: "item", "item.url contains '/tools/' and item.title" %}
+                {% assign categorized = tool_pages | where_exp: "item", "item.category != nil and item.category != ''" | group_by: "category" %}
+
+                {% for cat in categorized %}
+                    <h3 style="{% unless forloop.first %}margin-top: 2rem;{% endunless %} text-transform: capitalize;">
+                        {{ cat.name }} Tools
+                    </h3>
+                    <ul class="sidebar-list">
+                        {% for tool in cat.items %}
+                            <li>
+                                <a href="{{ tool.url }}">⭐ {{ tool.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+
+                {% assign uncategorized = tool_pages | where_exp: "item", "item.category == nil or item.category == ''" %}
+                {% if uncategorized.size > 0 %}
+                    <h3 style="{% if categorized.size > 0 %}margin-top: 2rem;{% endif %}">🔥 Popular Tools</h3>
+                    <ul class="sidebar-list">
+                        {% for tool in uncategorized %}
+                            <li>
+                                <a href="{{ tool.url }}">⭐ {{ tool.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 
                 <h3 style="margin-top: 2rem;">System Status</h3>
                 <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
@@ -179,7 +201,7 @@
                 localStorage.setItem('theme', 'light'); 
             } else { 
                 htmlEl.setAttribute('data-theme', 'dark'); 
-                themeToggle.textContent = '☀️'; 
+                themeToggle.textContent = '☀️️'; 
                 localStorage.setItem('theme', 'dark'); 
             }
         });
