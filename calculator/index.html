@@ -10,31 +10,7 @@
             margin: 0;
             padding: 10px;
             background: transparent;
-        }. /* --- BIG BOLD MATH SYMBOLS --- */
-.bc-btn[aria-label="Divide"],
-.bc-btn[aria-label="Multiply"],
-.bc-btn[aria-label="Subtract"],
-.bc-btn[aria-label="Add"],
-.bc-btn[aria-label="Calculate Equals"],
-.bc-btn[aria-label="Modulo or Percent"],
-.bc-btn[aria-label="Percent"],
-.bc-btn[aria-label="Modulo"] {
-    font-size: 18px !important;
-}
-
-@media (max-width: 600px) {
-    .bc-btn[aria-label="Divide"],
-    .bc-btn[aria-label="Multiply"],
-    .bc-btn[aria-label="Subtract"],
-    .bc-btn[aria-label="Add"],
-    .bc-btn[aria-label="Calculate Equals"],
-    .bc-btn[aria-label="Modulo or Percent"],
-    .bc-btn[aria-label="Percent"],
-    .bc-btn[aria-label="Modulo"] {
-        font-size: 16px !important; /* Increases mobile size from 8px to 16px */
-    }
-}
-
+        }
     </style>
 </head>
 <body>
@@ -205,6 +181,18 @@
         .hist-entry strong { color: #1e3a8a; font-weight: 900 !important;}
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 20px; font-weight: 900;}
 
+        /* --- BIG BOLD MATH SYMBOLS --- */
+        .bc-btn[aria-label="Divide"],
+        .bc-btn[aria-label="Multiply"],
+        .bc-btn[aria-label="Subtract"],
+        .bc-btn[aria-label="Add"],
+        .bc-btn[aria-label="Calculate Equals"],
+        .bc-btn[aria-label="Modulo or Percent"],
+        .bc-btn[aria-label="Percent"],
+        .bc-btn[aria-label="Modulo"] {
+            font-size: 20px !important;
+        }
+
         /* --- MICROMETRIC RESPONSIVE ENGINE --- */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 6px; border-radius: 10px; box-shadow: 6px 6px 12px rgba(15, 23, 42, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.9); border-width: 2px;} 
@@ -236,6 +224,18 @@
             .bc-toggle-group { height: 28px !important; font-size: 8px !important; padding: 0 1px; border-radius: 4px; overflow: hidden;}
             .bc-toggle-group label { gap: 1px; }
             .bc-toggle-group input[type="radio"] { transform: scale(0.7); margin: 0; }
+            
+            /* Big Math Symbols on Mobile */
+            .bc-btn[aria-label="Divide"],
+            .bc-btn[aria-label="Multiply"],
+            .bc-btn[aria-label="Subtract"],
+            .bc-btn[aria-label="Add"],
+            .bc-btn[aria-label="Calculate Equals"],
+            .bc-btn[aria-label="Modulo or Percent"],
+            .bc-btn[aria-label="Percent"],
+            .bc-btn[aria-label="Modulo"] {
+                font-size: 18px !important; 
+            }
         }
     </style>
 
