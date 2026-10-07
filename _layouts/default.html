@@ -32,22 +32,25 @@
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            padding: 0 1rem; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
         .logo-symbol { background: var(--accent-gradient); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
         .brand-title { font-size: 1.1rem; font-weight: 800; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Desktop Tabs */
+        /* Header category links (visible on mobile AND desktop) */
         .desktop-nav { 
-            display: none; 
+            display: flex; 
             align-items: stretch; 
             height: 100%; 
             margin-left: auto;
-            margin-right: 1rem;
-            background: rgba(0, 0, 0, 0.2);
+            margin-right: 0.5rem;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+        .desktop-nav::-webkit-scrollbar { display: none; }
         .desktop-nav > a { 
             text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem; 
             text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center; 
@@ -56,7 +59,7 @@
         }
         .desktop-nav > a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
 
-        /* "More" dropdown */
+        /* "More" dropdown (desktop only) */
         .more-wrap { position: relative; display: flex; align-items: stretch; }
         .more-btn {
             background: rgba(15, 30, 70, 0.6); color: #fff; border: none;
@@ -109,7 +112,7 @@
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* Desktop view (also Chrome "Desktop site"): header links + More, no hamburger */
+        /* Desktop view (also Chrome "Desktop site"): links + More, no hamburger */
         @media (min-width: 768px) { 
             .layout-grid { 
                 grid-template-columns: 2.5fr 1fr; 
@@ -120,15 +123,19 @@
                 top: calc(var(--header-height) + 2rem); 
                 display: block; 
             }
-            .desktop-nav { display: flex !important; } 
+            .desktop-nav { overflow: visible; margin-right: 1rem; background: rgba(0, 0, 0, 0.2); }
             .menu-btn, .nav-menu { display: none !important; } 
         }
 
-        /* Mobile view: hamburger only */
+        /* Mobile view: compact links + hamburger */
         @media (max-width: 767px) {
             .sidebar { display: none; }
-            .desktop-nav { display: none !important; } 
-            .menu-btn { display: flex !important; } 
+            .more-wrap { display: none; }
+            .menu-btn { display: flex !important; }
+            .desktop-nav { justify-content: flex-end; }
+            .desktop-nav > a { font-size: 0.68rem; padding: 0 0.55rem; }
+            .brand-title { font-size: 0.95rem; }
+            header#siteHeader { padding: 0 0.7rem; }
         }
         
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
@@ -146,10 +153,10 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop Navigation: 3 categories + More -->
+        <!-- Header links: shown on mobile and desktop -->
         <nav class="desktop-nav">
-            <a href="/#finance">Financial</a>
-            <a href="/#math">Mathematics</a>
+            <a href="/#finance">Finance</a>
+            <a href="/#math">Math</a>
             <a href="/#utility">Utility</a>
             <div class="more-wrap">
                 <button class="more-btn" id="moreBtn" type="button">More &#9662;</button>
