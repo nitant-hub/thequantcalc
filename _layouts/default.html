@@ -39,7 +39,7 @@
         .logo-symbol { background: var(--accent-gradient); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
         .brand-title { font-size: 1.1rem; font-weight: 800; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Desktop Tabs - Calculator.net Style */
+        /* Desktop Tabs */
         .desktop-nav { 
             display: none; 
             align-items: stretch; 
@@ -48,13 +48,33 @@
             margin-right: 1rem;
             background: rgba(0, 0, 0, 0.2);
         }
-        .desktop-nav a { 
+        .desktop-nav > a { 
             text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem; 
             text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center; 
             background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
             white-space: nowrap;
         }
-        .desktop-nav a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+        .desktop-nav > a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+
+        /* "More" dropdown */
+        .more-wrap { position: relative; display: flex; align-items: stretch; }
+        .more-btn {
+            background: rgba(15, 30, 70, 0.6); color: #fff; border: none;
+            border-top: 3px solid transparent; padding: 0 1rem; cursor: pointer;
+            font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+        }
+        .more-btn:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+        .more-menu {
+            display: none; position: absolute; top: 100%; right: 0; min-width: 180px;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); flex-direction: column;
+        }
+        .more-menu.open { display: flex; }
+        .more-menu a {
+            text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            padding: 0.8rem 1rem; white-space: nowrap;
+        }
+        .more-menu a:hover { background: var(--bg-primary); }
 
         .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
         .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #ffffff; }
@@ -68,7 +88,7 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* --- GLOBAL GRID LAYOUT (Restored Vertical Sidebar) --- */
+        /* --- GLOBAL GRID LAYOUT --- */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
         
         .layout-grid { 
@@ -89,7 +109,7 @@
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* Desktop View Rules: Split columns & show header tabs */
+        /* Desktop view (also Chrome "Desktop site"): header links + More, no hamburger */
         @media (min-width: 768px) { 
             .layout-grid { 
                 grid-template-columns: 2.5fr 1fr; 
@@ -101,10 +121,10 @@
                 display: block; 
             }
             .desktop-nav { display: flex !important; } 
-            .menu-btn { display: none !important; } 
+            .menu-btn, .nav-menu { display: none !important; } 
         }
 
-        /* Mobile View Rules: Hide sidebar & show hamburger */
+        /* Mobile view: hamburger only */
         @media (max-width: 767px) {
             .sidebar { display: none; }
             .desktop-nav { display: none !important; } 
@@ -126,12 +146,20 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop Navigation Tabs -->
+        <!-- Desktop Navigation: 3 categories + More -->
         <nav class="desktop-nav">
-            <a href="/">Home</a>
             <a href="/#finance">Financial</a>
             <a href="/#math">Mathematics</a>
             <a href="/#utility">Utility</a>
+            <div class="more-wrap">
+                <button class="more-btn" id="moreBtn" type="button">More &#9662;</button>
+                <div class="more-menu" id="moreMenu">
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                </div>
+            </div>
         </nav>
         
         <div class="nav-actions">
@@ -147,6 +175,10 @@
             <a href="/">🏠 Home Base</a>
             <a href="/#finance">📈 Finance Tools</a>
             <a href="/#math">📐 Mathematics</a>
+            <a href="/#utility">🧰 Utility</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy Policy</a>
         </nav>
     </header>
 
@@ -193,7 +225,7 @@
                 localStorage.setItem('theme', 'light'); 
             } else { 
                 htmlEl.setAttribute('data-theme', 'dark'); 
-                themeToggle.textContent = '☀'; 
+                themeToggle.textContent = '☀️'; 
                 localStorage.setItem('theme', 'dark'); 
             }
         });
@@ -201,9 +233,23 @@
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const moreBtn = document.getElementById('moreBtn');
+        const moreMenu = document.getElementById('moreMenu');
         
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); });
         closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); });
+
+        moreBtn.addEventListener('click', (e) => { e.stopPropagation(); moreMenu.classList.toggle('open'); });
+        navMenu.addEventListener('click', (e) => { e.stopPropagation(); });
+
+        document.addEventListener('click', () => {
+            moreMenu.classList.remove('open');
+            navMenu.classList.remove('active');
+        });
+        window.addEventListener('resize', () => {
+            moreMenu.classList.remove('open');
+            navMenu.classList.remove('active');
+        });
     </script>
 </body>
 </html>
