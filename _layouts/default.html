@@ -35,7 +35,7 @@
             padding: 0 1rem; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
         .logo-symbol { background: var(--accent-gradient); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
         .brand-title { font-size: 1.1rem; font-weight: 800; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
@@ -52,38 +52,59 @@
             text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem; 
             text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center; 
             background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
+            white-space: nowrap;
         }
         .desktop-nav a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
 
-        .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
+        .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
         .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #ffffff; }
         
         /* Mobile Hamburger Menu */
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; z-index: 10001; }
+        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; z-index: 10001; box-shadow: -10px 0 30px rgba(0,0,0,0.05); }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* Layout Grid */
+        /* --- GLOBAL GRID LAYOUT (Restored Vertical Sidebar) --- */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; }
+        
+        .layout-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 2rem; 
+        }
 
-        /* Media Queries (Desktop vs Mobile Switch) */
+        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
+
+        /* Sidebar Base Styles */
+        .sidebar { 
+            background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; 
+            border: 1px solid var(--border-color); height: fit-content; 
+        }
+        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
+        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+        .sidebar-list a:hover { color: #7c3aed; }
+
+        /* Desktop View Rules: Split columns & show header tabs */
         @media (min-width: 768px) { 
-            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; }
-            .sidebar { position: sticky; top: calc(var(--header-height) + 2rem); display: block; }
+            .layout-grid { 
+                grid-template-columns: 2.5fr 1fr; 
+                align-items: start;
+            }
+            .sidebar { 
+                position: sticky; 
+                top: calc(var(--header-height) + 2rem); 
+                display: block; 
+            }
             .desktop-nav { display: flex !important; } 
             .menu-btn { display: none !important; } 
         }
 
+        /* Mobile View Rules: Hide sidebar & show hamburger */
         @media (max-width: 767px) {
             .sidebar { display: none; }
             .desktop-nav { display: none !important; } 
@@ -131,6 +152,7 @@
 
     <div class="wrapper">
         <div class="layout-grid">
+            
             <main class="main-body">
                 {{ content }}
             </main>
@@ -138,13 +160,20 @@
             <aside class="sidebar">
                 <h3>Financial Tools</h3>
                 <ul class="sidebar-list">
-                    <li><a href="#">Compound Interest</a></li>
+                    <li><a href="#">Compound Interest Calculator</a></li>
                 </ul>
                 <h3 style="margin-top: 2rem;">Math Tools</h3>
                 <ul class="sidebar-list">
-                    <li><a href="#">Age Calculator</a></li>
+                    <li><a href="#">Accurate Age Calculator</a></li>
+                    <li><a href="#">Exam Marks Percentage</a></li>
                 </ul>
+                
+                <h3 style="margin-top: 2rem;">System Status</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                    Tools process data locally inside your web browser.
+                </p>
             </aside>
+
         </div>
     </div>
 
