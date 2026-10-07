@@ -6,7 +6,6 @@
     <title>{{ page.title | default: "thequantcals" }}</title>
     
     <style>
-        /* Modern UI Design System & Theme Colors */
         :root {
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
@@ -28,27 +27,38 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Header - Smart Scroll & Slim */
+        /* Header Layout */
         header#siteHeader {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1rem;
             display: flex; justify-content: space-between; align-items: center;
             transition: transform 0.3s ease-in-out;
         }
 
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
-        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
+        .logo-symbol { background: var(--accent-gradient); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- Calculator.net Style Desktop Tabs --- */
-        .desktop-nav { display: none; align-items: stretch; height: 100%; gap: 2px; background: rgba(0, 0, 0, 0.2); }
+        /* --- Calculator.net Style Tabs (Desktop Only) --- */
+        .desktop-nav { 
+            display: none; /* Hidden by default on mobile */
+            align-items: stretch; 
+            height: 100%; 
+            gap: 2px; 
+            background: rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            justify-content: flex-end;
+            margin: 0 1rem;
+        }
+
         .desktop-nav a { 
             text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.85rem; 
             text-transform: uppercase; padding: 0 1.25rem; display: flex; align-items: center; 
             background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
             transition: background 0.2s, color 0.2s; 
+            flex-shrink: 0;
         }
         .desktop-nav a:hover, .desktop-nav a.active { 
             background: #1e3a8a; 
@@ -56,9 +66,10 @@
             border-top-color: #3b82f6; 
         }
 
-        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+        .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #ffffff; padding: 4px; }
         
+        /* Hamburger Menu (Mobile Only) */
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
@@ -89,7 +100,7 @@
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* Desktop & Tablet View Rules (>= 768px) */
+        /* --- RESPONSIVE SWITCH (Desktop vs Mobile) --- */
         @media (min-width: 768px) { 
             .layout-grid { 
                 grid-template-columns: 2.5fr 1fr; 
@@ -100,13 +111,14 @@
                 top: calc(var(--header-height) + 2rem); 
                 display: block; 
             }
-            .menu-btn { display: none; }
+            /* Desktop Mode: Show tabs, Hide hamburger menu */
             .desktop-nav { display: flex; }
+            .menu-btn { display: none; }
         }
 
-        /* Mobile View Rules (< 768px) */
         @media (max-width: 767px) {
             .sidebar { display: none; }
+            /* Mobile Mode: Hide tabs, Show hamburger menu */
             .desktop-nav { display: none; }
             .menu-btn { display: flex; }
         }
@@ -130,7 +142,7 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Calculator.net Style Desktop Tabs -->
+        <!-- Desktop Category Tabs (Hidden on mobile, appears in header on desktop view) -->
         <nav class="desktop-nav">
             <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
             {% assign tool_pages = site.pages | where_exp: "item", "item.url contains '/tools/' and item.title" %}
@@ -145,6 +157,7 @@
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
+            <!-- Hamburger Menu Trigger (Visible on mobile, disappears when desktop mode is checked) -->
             <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
@@ -211,6 +224,17 @@
         
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); });
         closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); });
+
+        const mainHeader = document.getElementById('siteHeader');
+        let lastScrollY = window.scrollY;
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
+            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
+            else { mainHeader.style.transform = 'translateY(0)'; }
+            lastScrollY = currentScrollY;
+        });
     </script>
 </body>
 </html>
