@@ -42,23 +42,23 @@
         .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
         .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- Desktop Header Nav & Dropdown Styles --- */
-        .desktop-nav { display: none; align-items: center; gap: 1.5rem; }
-        .desktop-nav a { text-decoration: none; color: #ffffff; font-weight: 500; font-size: 0.95rem; opacity: 0.9; transition: opacity 0.2s; }
-        .desktop-nav a:hover { opacity: 1; color: #93c5fd; }
-        
-        .desktop-dropdown { position: relative; display: inline-block; }
-        .desktop-dropbtn { background: none; border: none; color: #ffffff; font-size: 0.95rem; font-weight: 500; cursor: pointer; opacity: 0.9; padding: 0; font-family: inherit; }
-        .desktop-dropbtn:hover { opacity: 1; color: #93c5fd; }
-        .desktop-dropdown-content { display: none; position: absolute; right: 0; background-color: var(--bg-surface); min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.15); border: 1px solid var(--border-color); border-radius: 8px; z-index: 1001; padding: 0.5rem 0; }
-        .desktop-dropdown-content a { color: var(--text-main) !important; padding: 0.5rem 1rem; display: block; font-size: 0.9rem; }
-        .desktop-dropdown-content a:hover { background-color: var(--bg-primary); color: #2563eb !important; }
-        .desktop-dropdown:hover .desktop-dropdown-content { display: block; }
+        /* --- Calculator.net Style Desktop Tabs --- */
+        .desktop-nav { display: none; align-items: stretch; height: 100%; gap: 2px; background: rgba(0, 0, 0, 0.2); }
+        .desktop-nav a { 
+            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.85rem; 
+            text-transform: uppercase; padding: 0 1.25rem; display: flex; align-items: center; 
+            background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
+            transition: background 0.2s, color 0.2s; 
+        }
+        .desktop-nav a:hover, .desktop-nav a.active { 
+            background: #1e3a8a; 
+            color: #ffffff; 
+            border-top-color: #3b82f6; 
+        }
 
         .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
         .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
         
-        /* Menu button visibility rules controlled by media queries below */
         .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
         .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
         
@@ -100,20 +100,14 @@
                 top: calc(var(--header-height) + 2rem); 
                 display: block; 
             }
-            /* Hide hamburger menu on desktop */
             .menu-btn { display: none; }
-            /* Show desktop category nav bar */
             .desktop-nav { display: flex; }
         }
 
         /* Mobile View Rules (< 768px) */
         @media (max-width: 767px) {
-            .sidebar { 
-                display: none; 
-            }
-            /* Hide desktop nav on mobile */
+            .sidebar { display: none; }
             .desktop-nav { display: none; }
-            /* Show hamburger menu on mobile */
             .menu-btn { display: flex; }
         }
         
@@ -122,10 +116,6 @@
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
         .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
         .footer-links a:hover { color: var(--text-main); text-decoration: underline; }
-        
-        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); }
-        .breadcrumb a { color: #2563eb; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
     </style>
     
     <script>
@@ -140,34 +130,17 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop Navigation Bar (Shows up to 3 categories, then a More dropdown) -->
+        <!-- Calculator.net Style Desktop Tabs -->
         <nav class="desktop-nav">
-            <a href="/">Home</a>
+            <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
             {% assign tool_pages = site.pages | where_exp: "item", "item.url contains '/tools/' and item.title" %}
             {% assign categorized = tool_pages | where_exp: "item", "item.category != nil and item.category != ''" | group_by: "category" %}
             
-            {% assign cat_count = 0 %}
             {% for cat in categorized %}
-                {% assign cat_count = cat_count | plus: 1 %}
-                {% if cat_count <= 3 %}
-                    <a href="/#{{ cat.name | slugify }}">{{ cat.name | capitalize }}</a>
-                {% endif %}
+                <a href="/#{{ cat.name | slugify }}" {% if page.category == cat.name %}class="active"{% endif %}>
+                    {{ cat.name }}
+                </a>
             {% endfor %}
-            
-            {% if categorized.size > 3 %}
-                <div class="desktop-dropdown">
-                    <button class="desktop-dropbtn">More ▾</button>
-                    <div class="desktop-dropdown-content">
-                        {% assign sub_count = 0 %}
-                        {% for cat in categorized %}
-                            {% assign sub_count = sub_count | plus: 1 %}
-                            {% if sub_count > 3 %}
-                                <a href="/#{{ cat.name | slugify }}">{{ cat.name | capitalize }}</a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
         </nav>
         
         <div class="nav-actions">
@@ -177,7 +150,7 @@
             </button>
         </div>
 
-        <!-- Mobile Nav Menu Drawer (Remains active on mobile view) -->
+        <!-- Mobile Nav Menu Drawer -->
         <nav class="nav-menu" id="navMenu">
             <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
             <a href="/">🏠 Home Base</a>
@@ -188,7 +161,6 @@
 
     <div class="wrapper">
         <div class="layout-grid">
-            
             <main class="main-body">
                 {{ content }}
             </main>
@@ -200,31 +172,11 @@
                     </h3>
                     <ul class="sidebar-list">
                         {% for tool in cat.items %}
-                            <li>
-                                <a href="{{ tool.url }}">⭐ {{ tool.title }}</a>
-                            </li>
+                            <li><a href="{{ tool.url }}">⭐ {{ tool.title }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endfor %}
-
-                {% assign uncategorized = tool_pages | where_exp: "item", "item.category == nil or item.category == ''" %}
-                {% if uncategorized.size > 0 %}
-                    <h3 style="{% if categorized.size > 0 %}margin-top: 2rem;{% endif %}">🔥 Popular Tools</h3>
-                    <ul class="sidebar-list">
-                        {% for tool in uncategorized %}
-                            <li>
-                                <a href="{{ tool.url }}">⭐ {{ tool.title }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                
-                <h3 style="margin-top: 2rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                    Engine infrastructure optimization complete. Tools process data locally inside your web browser.
-                </p>
             </aside>
-
         </div>
     </div>
 
@@ -233,13 +185,10 @@
         <div class="footer-links">
             <a href="/privacy-policy.html">Privacy Policy</a>
             <a href="/terms-of-service.html">Terms of Service</a>
-            <a href="/disclaimer.html">Disclaimer</a>
-            <a href="/contact.html">Contact Us</a>
         </div>
     </footer>
 
     <script>
-        // Theme Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { themeToggle.textContent = '☀️'; }
@@ -256,31 +205,12 @@
             }
         });
 
-        // Mobile Menu Logic
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         
-        menuBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            navMenu.classList.toggle('active'); 
-        });
-        
-        closeMenuBtn.addEventListener('click', () => { 
-            navMenu.classList.remove('active'); 
-        });
-
-        // Smart Header Hide/Show
-        const mainHeader = document.getElementById('siteHeader');
-        let lastScrollY = window.scrollY;
-        
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
-            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
-            else { mainHeader.style.transform = 'translateY(0)'; }
-            lastScrollY = currentScrollY;
-        });
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); });
+        closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); });
     </script>
 </body>
 </html>
