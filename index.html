@@ -16,7 +16,6 @@
     </script>
 
     <style>
-        /* Modern UI Design System & Theme Colors */
         :root {
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
@@ -25,7 +24,6 @@
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --card-hover-shadow: rgba(99, 102, 241, 0.15);
-            /* UPDATED: Slimmer Header Height */
             --header-height: 55px; 
         }
 
@@ -38,10 +36,11 @@
             --card-hover-shadow: rgba(0, 0, 0, 0.3);
         }
 
+        html { scroll-padding-top: 70px; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Dark Gradient Header - GUARANTEED FIXED POSITION */
+        /* Header */
         header {
             position: fixed; 
             top: 0; 
@@ -52,14 +51,13 @@
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
-            padding: 0 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.3s ease-in-out; /* Crucial for smooth sliding */
+            padding: 0 1rem;
+            display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; flex-shrink: 0; }
         
-        /* UPDATED: Smaller logo symbol to fit slim header */
         .logo-symbol {
             background: var(--accent-gradient); 
             width: 32px; 
@@ -70,7 +68,6 @@
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
         }
         
-        /* UPDATED: Smaller brand title to fit slim header */
         .brand-title {
             font-size: 1.25rem; 
             font-weight: 800; letter-spacing: -0.5px;
@@ -78,7 +75,46 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+        /* Header category links (mobile + desktop) */
+        .header-nav {
+            display: flex;
+            align-items: stretch;
+            height: 100%;
+            margin-left: auto;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .header-nav::-webkit-scrollbar { display: none; }
+        .header-nav > a {
+            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.7rem;
+            text-transform: uppercase; padding: 0 0.6rem; display: flex; align-items: center;
+            background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent;
+            white-space: nowrap;
+        }
+        .header-nav > a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+
+        /* "More" dropdown (desktop only) */
+        .more-wrap { position: relative; display: none; align-items: stretch; }
+        .more-btn {
+            background: rgba(15, 30, 70, 0.6); color: #fff; border: none;
+            border-top: 3px solid transparent; padding: 0 1rem; cursor: pointer;
+            font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+        }
+        .more-btn:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+        .more-menu {
+            display: none; position: absolute; top: 100%; right: 0; min-width: 190px;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); flex-direction: column;
+        }
+        .more-menu.open { display: flex; }
+        .more-menu a {
+            text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            padding: 0.8rem 1rem; white-space: nowrap;
+        }
+        .more-menu a:hover { background: var(--bg-primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
         
         .theme-toggle {
             background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff;
@@ -101,7 +137,6 @@
         .nav-menu a:hover { color: #2563eb; }
         .nav-menu .category-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; margin-top: 0.5rem; }
 
-        /* Close Button inside Menu */
         .close-menu-btn {
             position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem;
             color: var(--text-muted); cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s;
@@ -166,15 +201,47 @@
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); }
         @media (max-width: 480px) { .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; } }
+
+        /* Desktop view (also Chrome "Desktop site"): links + More, NO hamburger */
+        @media (min-width: 768px) {
+            header { padding: 0 1.5rem; }
+            .header-nav { overflow: visible; margin-right: 1rem; background: rgba(0, 0, 0, 0.2); }
+            .header-nav > a { font-size: 0.8rem; padding: 0 1rem; }
+            .more-wrap { display: flex; }
+            .menu-btn, .nav-menu { display: none !important; }
+        }
+
+        /* Mobile view: compact links + hamburger */
+        @media (max-width: 767px) {
+            .brand-title { font-size: 1rem; }
+            .logo-symbol { width: 28px; height: 28px; font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
 
     <header id="siteHeader">
-        <a href="#" class="brand">
+        <a href="/" class="brand">
             <div class="logo-symbol" aria-hidden="true">&sum;</div>
             <div class="brand-title">thequantcals</div>
         </a>
+
+        <!-- Header links: mobile + desktop -->
+        <nav class="header-nav">
+            <a href="#finance">Finance</a>
+            <a href="#math">Math</a>
+            <a href="#math">Utility</a>
+            <div class="more-wrap">
+                <button class="more-btn" id="moreBtn" type="button">More &#9662;</button>
+                <div class="more-menu" id="moreMenu">
+                    <a href="/">Home</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="disclaimer.html">Disclaimer</a>
+                    <a href="contact.html">Contact Us</a>
+                </div>
+            </div>
+        </nav>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
@@ -183,13 +250,20 @@
             </button>
         </div>
 
+        <!-- Mobile slide-out menu -->
         <nav class="nav-menu" id="navMenu">
             <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
             <div class="category-label">Quick Links</div>
-            <a href="#">🏠 Home Base</a>
+            <a href="/">🏠 Home Base</a>
             <div class="category-label">Tools Directory</div>
             <a href="#finance">📈 Finance Tools</a>
             <a href="#math">📐 Mathematics</a>
+            <a href="#math">🧰 Utility</a>
+            <div class="category-label">More</div>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="disclaimer.html">Disclaimer</a>
+            <a href="contact.html">Contact Us</a>
         </nav>
     </header>
 
@@ -298,13 +372,22 @@
         window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(adjustCalculatorScale, 100); });
         window.addEventListener('load', adjustCalculatorScale);
 
-        // 3. Mobile Menu
+        // 3. Menus (mobile hamburger + desktop "More")
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const moreBtn = document.getElementById('moreBtn');
+        const moreMenu = document.getElementById('moreMenu');
+
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); const isActive = navMenu.classList.toggle('active'); menuBtn.setAttribute('aria-expanded', isActive); });
         closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); menuBtn.setAttribute('aria-expanded', 'false'); });
-        document.addEventListener('click', (e) => { if (!navMenu.contains(e.target) && e.target !== menuBtn) { navMenu.classList.remove('active'); menuBtn.setAttribute('aria-expanded', 'false'); } });
+        moreBtn.addEventListener('click', (e) => { e.stopPropagation(); moreMenu.classList.toggle('open'); });
+
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && e.target !== menuBtn) { navMenu.classList.remove('active'); menuBtn.setAttribute('aria-expanded', 'false'); }
+            moreMenu.classList.remove('open');
+        });
+        window.addEventListener('resize', () => { moreMenu.classList.remove('open'); navMenu.classList.remove('active'); });
 
         // 4. Dark Mode
         const themeToggle = document.getElementById('themeToggle');
@@ -320,35 +403,29 @@
         window.addEventListener('scroll', () => { if (window.scrollY > 300) { backToTopBtn.classList.add('show'); } else { backToTopBtn.classList.remove('show'); } });
         backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-        // 6. GUARANTEED SMART HEADER HIDE/SHOW (UPDATED FOR SLIM HEADER)
+        // 6. Smart header hide/show on scroll
         const mainHeader = document.getElementById('siteHeader');
         let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
-            
-            // Safeguard: Do nothing if scrolling past the very top (mobile rubber-banding fix)
             if (currentScrollY <= 0) {
                 mainHeader.style.transform = 'translateY(0)';
                 return;
             }
-
-            // If scrolling down AND passed the new slim header height (55px)
             if (currentScrollY > lastScrollY && currentScrollY > 55) {
-                mainHeader.style.transform = 'translateY(-100%)'; // Hide
+                mainHeader.style.transform = 'translateY(-100%)';
             } else {
-                mainHeader.style.transform = 'translateY(0)';     // Show
+                mainHeader.style.transform = 'translateY(0)';
             }
-            
             lastScrollY = currentScrollY;
         });
 
-        // 7. Dynamic Iframe Resizing (Listens for calculator height)
+        // 7. Dynamic iframe resizing
         window.addEventListener('message', function(e) {
             if (e.data && e.data.frameHeight) {
                 const frame = document.getElementById('calc-frame');
                 if (frame) {
-                    // Adds a 20px buffer to prevent scrollbars from appearing
                     frame.style.height = (e.data.frameHeight + 20) + 'px';
                 }
             }
