@@ -34,7 +34,6 @@
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
             box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1rem;
             display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.3s ease-in-out;
         }
 
         .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
@@ -43,22 +42,22 @@
 
         /* --- Calculator.net Style Tabs (Desktop Only) --- */
         .desktop-nav { 
-            display: none; /* Hidden by default on mobile */
+            display: none; /* Hidden on mobile */
             align-items: stretch; 
             height: 100%; 
             gap: 2px; 
             background: rgba(0, 0, 0, 0.2);
-            flex-grow: 1;
-            justify-content: flex-end;
-            margin: 0 1rem;
+            margin-left: auto;
+            margin-right: 1.5rem;
+            overflow-x: auto;
         }
 
         .desktop-nav a { 
-            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.85rem; 
-            text-transform: uppercase; padding: 0 1.25rem; display: flex; align-items: center; 
+            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem; 
+            text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center; 
             background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
+            white-space: nowrap;
             transition: background 0.2s, color 0.2s; 
-            flex-shrink: 0;
         }
         .desktop-nav a:hover, .desktop-nav a.active { 
             background: #1e3a8a; 
@@ -100,7 +99,7 @@
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* --- RESPONSIVE SWITCH (Desktop vs Mobile) --- */
+        /* --- RESPONSIVE SWITCH --- */
         @media (min-width: 768px) { 
             .layout-grid { 
                 grid-template-columns: 2.5fr 1fr; 
@@ -111,14 +110,14 @@
                 top: calc(var(--header-height) + 2rem); 
                 display: block; 
             }
-            /* Desktop Mode: Show tabs, Hide hamburger menu */
+            /* Desktop View: Show calculator tabs, hide hamburger */
             .desktop-nav { display: flex; }
             .menu-btn { display: none; }
         }
 
         @media (max-width: 767px) {
             .sidebar { display: none; }
-            /* Mobile Mode: Hide tabs, Show hamburger menu */
+            /* Mobile View: Hide calculator tabs, show hamburger */
             .desktop-nav { display: none; }
             .menu-btn { display: flex; }
         }
@@ -142,22 +141,29 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop Category Tabs (Hidden on mobile, appears in header on desktop view) -->
+        <!-- Desktop Category Tabs -->
         <nav class="desktop-nav">
             <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
+            
             {% assign tool_pages = site.pages | where_exp: "item", "item.url contains '/tools/' and item.title" %}
             {% assign categorized = tool_pages | where_exp: "item", "item.category != nil and item.category != ''" | group_by: "category" %}
             
-            {% for cat in categorized %}
-                <a href="/#{{ cat.name | slugify }}" {% if page.category == cat.name %}class="active"{% endif %}>
-                    {{ cat.name }}
-                </a>
-            {% endfor %}
+            {% if categorized.size > 0 %}
+                {% for cat in categorized %}
+                    <a href="/#{{ cat.name | slugify }}" {% if page.category == cat.name %}class="active"{% endif %}>
+                        {{ cat.name }}
+                    </a>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback tabs so you can see them immediately before setting up front matter -->
+                <a href="/#finance">Financial</a>
+                <a href="/#math">Mathematics</a>
+                <a href="/#utility">Utility</a>
+            {% endif %}
         </nav>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <!-- Hamburger Menu Trigger (Visible on mobile, disappears when desktop mode is checked) -->
             <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
@@ -224,17 +230,6 @@
         
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); });
         closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); });
-
-        const mainHeader = document.getElementById('siteHeader');
-        let lastScrollY = window.scrollY;
-        
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
-            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
-            else { mainHeader.style.transform = 'translateY(0)'; }
-            lastScrollY = currentScrollY;
-        });
     </script>
 </body>
 </html>
