@@ -23,10 +23,16 @@ header{position:fixed;top:0;left:0;width:100%;height:var(--hh);z-index:10000;bac
 .hn>a,.more-btn{text-decoration:none;color:#fff;font-weight:700;font-size:.8rem;text-transform:uppercase;padding:0 1rem;display:flex;align-items:center;background:rgba(15,30,70,.6);border:none;border-top:3px solid transparent;white-space:nowrap;cursor:pointer}
 .hn>a:hover,.more-btn:hover,.hn>a.on{background:#1e3a8a;border-top-color:#3b82f6}
 .mw{position:relative;display:flex;align-items:stretch}
-.mm{display:none;position:absolute;top:100%;right:0;min-width:190px;background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 25px rgba(0,0,0,.2);flex-direction:column}
+
+/* More menu: all tools, category-wise */
+.mm{display:none;position:absolute;top:100%;right:0;width:300px;max-width:92vw;max-height:70vh;overflow-y:auto;background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 25px rgba(0,0,0,.25);flex-direction:column;padding:.4rem 0}
 .mm.open{display:flex}
-.mm a{text-decoration:none;color:var(--text);font-weight:600;font-size:.9rem;padding:.85rem 1rem;white-space:nowrap}
-.mm a:hover{background:var(--bg)}
+.mm a{text-decoration:none;color:var(--text)}
+.mm a.mc{display:block;padding:.7rem 1rem .25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:var(--muted);border-top:1px solid var(--border)}
+.mm a.mc:first-child{border-top:none}
+.mm a.mc:hover{color:#2563eb}
+.mm a.t{padding:.5rem 1rem .5rem 1.4rem;font-weight:600;font-size:.9rem}
+.mm a.t:hover{background:var(--bg);color:#2563eb}
 
 .acts{display:flex;align-items:center;gap:1rem;flex-shrink:0}
 .tt{background:none;border:none;font-size:1.3rem;cursor:pointer;color:#fff;padding:4px}
@@ -217,6 +223,7 @@ footer a{color:var(--muted);text-decoration:none}
     var ex=[]; tools.forEach(function(t){if(FIRST.indexOf(t.cat)<0&&ex.indexOf(t.cat)<0)ex.push(t.cat)});
     return FIRST.concat(ex.sort());
   }
+  function toolsOf(c){return tools.filter(function(t){return t.cat===c}).sort(function(a,b){return a.name.localeCompare(b.name)})}
   function label(c){return pretty(c)}
   function short(c){return SHORT[c]||pretty(c)}
   function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||short(c))+'</a>'}
@@ -224,10 +231,14 @@ footer a{color:var(--muted);text-decoration:none}
   function render(){
     var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur=(m&&cs.indexOf(m[1])>-1)?m[1]:'';
 
-    /* desktop header: first 3 categories + More (Home + other categories) */
-    var h='', more='<a href="#/">Home</a>';
+    /* desktop header: first 3 categories + More (ALL tools, category-wise) */
+    var h='', more='';
     FIRST.forEach(function(c){h+=link(c,cur)});
-    cs.slice(3).forEach(function(c){more+=link(c,cur)});
+    cs.forEach(function(c){
+      var list=toolsOf(c); if(!list.length)return;
+      more+='<a class="mc" href="#/'+c+'">'+esc(label(c))+'</a>';
+      list.forEach(function(t){more+='<a class="t" href="'+esc(t.url)+'">'+esc(t.name)+'</a>'});
+    });
     h+='<div class="mw"><button class="more-btn" id="moreBtn" type="button">More &#9662;</button><div class="mm" id="moreMenu">'+more+'</div></div>';
     document.getElementById('hn').innerHTML=h;
 
@@ -246,7 +257,7 @@ footer a{color:var(--muted);text-decoration:none}
       document.title='thequantcals | Free Advanced Calculators & Generators';
       var hs='';
       cs.forEach(function(c){
-        var list=tools.filter(function(t){return t.cat===c}).sort(function(a,b){return a.name.localeCompare(b.name)});
+        var list=toolsOf(c);
         if(!list.length)return;
         hs+='<section class="card" id="'+c+'"><h2 class="st">'+(ICON[c]||'🗂️')+' <a href="#/'+c+'" style="color:inherit;text-decoration:none">'+esc(label(c))+' Tools</a></h2><div class="links">';
         list.forEach(function(t){hs+='<a class="tool" href="'+esc(t.url)+'">'+esc(t.name)+'</a>'});
@@ -260,13 +271,13 @@ footer a{color:var(--muted);text-decoration:none}
       document.getElementById('ch1').textContent=label(cur)+' Calculators';
       document.getElementById('cintro').textContent='The following is a complete list of our '+label(cur).toLowerCase()+' calculators.';
       var groups={}, order=[];
-      tools.filter(function(t){return t.cat===cur}).forEach(function(t){
+      toolsOf(cur).forEach(function(t){
         if(!groups[t.group]){groups[t.group]=[];order.push(t.group)} groups[t.group].push(t);
       });
       var o='';
       order.forEach(function(g){
         o+='<section><h2>'+esc(g)+'</h2><ul>';
-        groups[g].sort(function(a,b){return a.name.localeCompare(b.name)}).forEach(function(t){o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
+        groups[g].forEach(function(t){o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
         o+='</ul></section>';
       });
       document.getElementById('cols').innerHTML=o;
