@@ -27,118 +27,78 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Header Setup */
+        /* Header */
         header#siteHeader {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
             border-bottom: 1px solid rgba(99, 179, 255, 0.25);
+            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6);
             padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
         }
 
-        .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
-        .logo-symbol { background: var(--accent-gradient); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
-        .brand-title { font-size: 1.1rem; font-weight: 800; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; flex-shrink: 0; }
+        .logo-symbol { background: var(--accent-gradient); width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .brand-title { font-size: 1.15rem; font-weight: 800; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Header category links (visible on mobile AND desktop) */
-        .desktop-nav { 
-            display: flex; 
-            align-items: stretch; 
-            height: 100%; 
-            margin-left: auto;
-            margin-right: 0.5rem;
-            min-width: 0;
-            overflow-x: auto;
-            scrollbar-width: none;
+        /* Desktop header links: hidden on mobile */
+        .desktop-nav { display: none; align-items: stretch; height: 100%; margin-left: auto; background: rgba(0, 0, 0, 0.2); }
+        .desktop-nav a {
+            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem;
+            text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center;
+            background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; white-space: nowrap;
         }
-        .desktop-nav::-webkit-scrollbar { display: none; }
-        .desktop-nav > a { 
-            text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.8rem; 
-            text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center; 
-            background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; 
-            white-space: nowrap;
-        }
-        .desktop-nav > a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+        .desktop-nav a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
 
-        /* "More" dropdown (desktop only) */
-        .more-wrap { position: relative; display: flex; align-items: stretch; }
-        .more-btn {
-            background: rgba(15, 30, 70, 0.6); color: #fff; border: none;
-            border-top: 3px solid transparent; padding: 0 1rem; cursor: pointer;
-            font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
-        }
-        .more-btn:hover { background: #1e3a8a; border-top-color: #3b82f6; }
-        .more-menu {
-            display: none; position: absolute; top: 100%; right: 0; min-width: 180px;
-            background: var(--bg-surface); border: 1px solid var(--border-color);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); flex-direction: column;
-        }
-        .more-menu.open { display: flex; }
-        .more-menu a {
-            text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
-            padding: 0.8rem 1rem; white-space: nowrap;
-        }
-        .more-menu a:hover { background: var(--bg-primary); }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .theme-toggle { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #ffffff; padding: 4px; }
 
-        .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
-        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #ffffff; }
-        
-        /* Mobile Hamburger Menu */
-        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
-        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
-        
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; z-index: 10001; box-shadow: -10px 0 30px rgba(0,0,0,0.05); }
+        /* Hamburger: visible on mobile */
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 6px; }
+        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; display: block; }
+
+        .nav-menu {
+            position: fixed; top: 0; right: -300px; width: 280px; max-width: 85%; height: 100vh;
+            background: var(--bg-surface); border-left: 1px solid var(--border-color);
+            padding: 4.5rem 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.1rem;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10001;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.15); overflow-y: auto;
+        }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
-        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
+        .nav-menu a:hover { color: #2563eb; }
+        .nav-menu .lbl { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; }
+        .close-menu-btn { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; }
 
-        /* --- GLOBAL GRID LAYOUT --- */
+        /* Layout grid */
         .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        
-        .layout-grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 2rem; 
-        }
+        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; min-width: 0; }
 
-        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
-
-        /* Sidebar Base Styles */
-        .sidebar { 
-            background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; 
-            border: 1px solid var(--border-color); height: fit-content; 
-        }
+        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
         .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
         .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
         .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
         .sidebar-list a:hover { color: #7c3aed; }
 
-        /* Desktop view (also Chrome "Desktop site"): links + More, no hamburger */
-        @media (min-width: 768px) { 
-            .layout-grid { 
-                grid-template-columns: 2.5fr 1fr; 
-                align-items: start;
-            }
-            .sidebar { 
-                position: sticky; 
-                top: calc(var(--header-height) + 2rem); 
-                display: block; 
-            }
-            .desktop-nav { overflow: visible; margin-right: 1rem; background: rgba(0, 0, 0, 0.2); }
-            .menu-btn, .nav-menu { display: none !important; } 
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; font-size: 0.9rem; }
+        footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
+        footer a { color: var(--text-muted); text-decoration: none; }
+
+        /* DESKTOP (also Chrome "Desktop site"): header links + More, NO hamburger */
+        @media (min-width: 768px) {
+            header#siteHeader { padding: 0 1.5rem; }
+            .desktop-nav { display: flex; margin-right: 1rem; }
+            .menu-btn, .nav-menu { display: none !important; }
+            .brand-title { font-size: 1.25rem; }
+            .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; }
+            .sidebar { position: sticky; top: calc(var(--header-height) + 2rem); }
         }
 
-        /* Mobile view: compact links + hamburger */
+        /* MOBILE: hamburger only, no sidebar */
         @media (max-width: 767px) {
             .sidebar { display: none; }
-            .more-wrap { display: none; }
-            .menu-btn { display: flex !important; }
-            .desktop-nav { justify-content: flex-end; }
-            .desktop-nav > a { font-size: 0.68rem; padding: 0 0.55rem; }
-            .brand-title { font-size: 0.95rem; }
-            header#siteHeader { padding: 0 0.7rem; }
+            .wrapper { padding: 0 0.5rem; }
         }
-        
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
     </style>
     
     <script>
@@ -153,41 +113,34 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Header links: shown on mobile and desktop -->
+        <!-- Desktop only -->
         <nav class="desktop-nav">
-            <a href="/#finance">Finance</a>
-            <a href="/#math">Math</a>
-            <a href="/#utility">Utility</a>
-            <div class="more-wrap">
-                <button class="more-btn" id="moreBtn" type="button">More &#9662;</button>
-                <div class="more-menu" id="moreMenu">
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                    <a href="/contact">Contact</a>
-                    <a href="/privacy-policy">Privacy Policy</a>
-                </div>
-            </div>
+            <a href="/#/financial">Finance</a>
+            <a href="/#/math">Math</a>
+            <a href="/#/utility">Utility</a>
+            <a href="/#/all">More</a>
         </nav>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
+            <!-- Mobile only -->
             <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
-
-        <!-- Mobile Slide-out Menu -->
-        <nav class="nav-menu" id="navMenu">
-            <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
-            <a href="/">🏠 Home Base</a>
-            <a href="/#finance">📈 Finance Tools</a>
-            <a href="/#math">📐 Mathematics</a>
-            <a href="/#utility">🧰 Utility</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-            <a href="/privacy-policy">Privacy Policy</a>
-        </nav>
     </header>
+
+    <!-- Mobile slide-out menu -->
+    <nav class="nav-menu" id="navMenu">
+        <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
+        <div class="lbl">Menu</div>
+        <a href="/">🏠 Home</a>
+        <a href="/#/financial">📈 Financial</a>
+        <a href="/#/math">📐 Math</a>
+        <a href="/#/utility">🧰 Utility</a>
+        <span id="extraCats" style="display:contents"></span>
+        <a href="/#/all">📋 All Calculators</a>
+    </nav>
 
     <div class="wrapper">
         <div class="layout-grid">
@@ -197,19 +150,16 @@
             </main>
 
             <aside class="sidebar">
-                <h3>Financial Tools</h3>
+                <h3>🔥 Popular Tools</h3>
                 <ul class="sidebar-list">
-                    <li><a href="#">Compound Interest Calculator</a></li>
-                </ul>
-                <h3 style="margin-top: 2rem;">Math Tools</h3>
-                <ul class="sidebar-list">
-                    <li><a href="#">Accurate Age Calculator</a></li>
-                    <li><a href="#">Exam Marks Percentage</a></li>
+                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
+                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
+                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
                 </ul>
                 
                 <h3 style="margin-top: 2rem;">System Status</h3>
                 <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                    Tools process data locally inside your web browser.
+                    All tools process locally in your browser.
                 </p>
             </aside>
 
@@ -218,45 +168,56 @@
 
     <footer>
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
+        <nav>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/terms-of-service.html">Terms of Service</a>
+            <a href="/disclaimer.html">Disclaimer</a>
+            <a href="/contact.html">Contact Us</a>
+        </nav>
     </footer>
 
     <script>
+        /* Dark mode */
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { themeToggle.textContent = '☀️'; }
-        
         themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') { 
-                htmlEl.setAttribute('data-theme', 'light'); 
-                themeToggle.textContent = '🌙'; 
-                localStorage.setItem('theme', 'light'); 
-            } else { 
-                htmlEl.setAttribute('data-theme', 'dark'); 
-                themeToggle.textContent = '☀️'; 
-                localStorage.setItem('theme', 'dark'); 
+            if (htmlEl.getAttribute('data-theme') === 'dark') {
+                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light');
+            } else {
+                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark');
             }
         });
 
-        const menuBtn = document.getElementById('menuBtn');
+        /* Hamburger menu (mobile) */
         const navMenu = document.getElementById('navMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const moreBtn = document.getElementById('moreBtn');
-        const moreMenu = document.getElementById('moreMenu');
-        
-        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); });
-        closeMenuBtn.addEventListener('click', () => { navMenu.classList.remove('active'); });
-
-        moreBtn.addEventListener('click', (e) => { e.stopPropagation(); moreMenu.classList.toggle('open'); });
-        navMenu.addEventListener('click', (e) => { e.stopPropagation(); });
-
-        document.addEventListener('click', () => {
-            moreMenu.classList.remove('open');
-            navMenu.classList.remove('active');
+        document.addEventListener('click', (e) => {
+            const t = e.target;
+            if (t.closest('#menuBtn')) { navMenu.classList.toggle('active'); return; }
+            if (t.closest('#closeMenuBtn') || t.closest('#navMenu a') || !t.closest('#navMenu')) { navMenu.classList.remove('active'); }
         });
-        window.addEventListener('resize', () => {
-            moreMenu.classList.remove('open');
-            navMenu.classList.remove('active');
-        });
+        window.addEventListener('resize', () => navMenu.classList.remove('active'));
+
+        /* New categories (created from new folders in /tools) appear in the hamburger menu automatically */
+        try {
+            const FIRST = ['financial', 'math', 'utility'];
+            const c = JSON.parse(localStorage.getItem('qc_tree'));
+            if (c && c.p) {
+                const ex = [];
+                c.p.forEach(p => {
+                    const m = p.match(/^tools\/([^\/]+)\/.+\.html$/i);
+                    if (!m) return;
+                    let k = m[1].toLowerCase(); if (k === 'finance') k = 'financial';
+                    if (FIRST.indexOf(k) < 0 && ex.indexOf(k) < 0) ex.push(k);
+                });
+                let h = '';
+                ex.sort().forEach(k => {
+                    const name = k.replace(/[-_]+/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase());
+                    h += '<a href="/#/' + k + '">🗂️ ' + name + '</a>';
+                });
+                document.getElementById('extraCats').innerHTML = h;
+            }
+        } catch (e) {}
     </script>
 </body>
 </html>
