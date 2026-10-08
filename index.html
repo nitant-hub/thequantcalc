@@ -140,7 +140,7 @@ footer a{color:var(--muted);text-decoration:none}
 </main>
 
 <aside>
-  <!-- Shown only on category pages (hidden on the home page) -->
+  <!-- Shown only on a single category page (hidden on home and All Calculators) -->
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   <div class="box"><h3>Popular Tools</h3><div>
     <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
@@ -235,11 +235,12 @@ footer a{color:var(--muted);text-decoration:none}
     ml+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>📋 All Calculators</a>';
     document.getElementById('menuLinks').innerHTML=ml;
 
-    /* sidebar categories: hidden on the home page so categories don't show twice */
+    /* sidebar Categories box: only on a single category page,
+       hidden on home and on All Calculators so categories never show twice */
     var s=''; cs.forEach(function(c){s+=link(c,cur,label(c))});
-    s+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>All Calculators</a>';
+    s+='<a href="#/all">All Calculators</a>';
     document.getElementById('sideCats').innerHTML=s;
-    document.getElementById('catBox').style.display=cur?'':'none';
+    document.getElementById('catBox').style.display=(cur&&cur!=='all')?'':'none';
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
     if(!cur){
