@@ -20,19 +20,8 @@ header{position:fixed;top:0;left:0;width:100%;height:var(--hh);z-index:10000;bac
 
 /* Desktop header links: hidden on mobile */
 .hn{display:none;align-items:stretch;height:100%;margin-left:auto;background:rgba(0,0,0,.2)}
-.hn>a,.more-btn{text-decoration:none;color:#fff;font-weight:700;font-size:.8rem;text-transform:uppercase;padding:0 1rem;display:flex;align-items:center;background:rgba(15,30,70,.6);border:none;border-top:3px solid transparent;white-space:nowrap;cursor:pointer}
-.hn>a:hover,.more-btn:hover,.hn>a.on{background:#1e3a8a;border-top-color:#3b82f6}
-.mw{position:relative;display:flex;align-items:stretch}
-
-/* More menu: all tools, category-wise */
-.mm{display:none;position:absolute;top:100%;right:0;width:300px;max-width:92vw;max-height:70vh;overflow-y:auto;background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 25px rgba(0,0,0,.25);flex-direction:column;padding:.4rem 0}
-.mm.open{display:flex}
-.mm a{text-decoration:none;color:var(--text)}
-.mm a.mc{display:block;padding:.7rem 1rem .25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:var(--muted);border-top:1px solid var(--border)}
-.mm a.mc:first-child{border-top:none}
-.mm a.mc:hover{color:#2563eb}
-.mm a.t{padding:.5rem 1rem .5rem 1.4rem;font-weight:600;font-size:.9rem}
-.mm a.t:hover{background:var(--bg);color:#2563eb}
+.hn>a{text-decoration:none;color:#fff;font-weight:700;font-size:.8rem;text-transform:uppercase;padding:0 1rem;display:flex;align-items:center;background:rgba(15,30,70,.6);border-top:3px solid transparent;white-space:nowrap}
+.hn>a:hover,.hn>a.on{background:#1e3a8a;border-top-color:#3b82f6}
 
 .acts{display:flex;align-items:center;gap:1rem;flex-shrink:0}
 .tt{background:none;border:none;font-size:1.3rem;cursor:pointer;color:#fff;padding:4px}
@@ -64,9 +53,11 @@ h1{font-size:1.7rem;color:var(--link);margin:.4rem 0}
 .sr input{width:100%;padding:.6rem;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);margin-bottom:1.2rem}
 .cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem 2rem;align-items:start}
 .cols h2{font-size:1.1rem;margin-bottom:.5rem}
+.cols h2 a{color:var(--text);text-decoration:none}
+.cols h2 a:hover{color:var(--link)}
 .cols ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
-.cols a{color:var(--link)}
-.cols a:hover{text-decoration:none}
+.cols li a{color:var(--link)}
+.cols li a:hover{text-decoration:none}
 .none{display:none;color:var(--muted)}
 .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .box h3{background:#2f6aa5;color:#fff;font-size:1rem;padding:.6rem .9rem}
@@ -136,7 +127,7 @@ footer a{color:var(--muted);text-decoration:none}
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
-  <!-- CATEGORY VIEW -->
+  <!-- CATEGORY / ALL VIEW -->
   <div id="catView" class="card" style="display:none">
     <div class="crumb" id="crumb"></div>
     <h1 id="ch1"></h1>
@@ -229,26 +220,23 @@ footer a{color:var(--muted);text-decoration:none}
   function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||short(c))+'</a>'}
 
   function render(){
-    var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur=(m&&cs.indexOf(m[1])>-1)?m[1]:'';
+    var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur='';
+    if(m&&(m[1]==='all'||cs.indexOf(m[1])>-1))cur=m[1];
 
-    /* desktop header: first 3 categories + More (ALL tools, category-wise) */
-    var h='', more='';
-    FIRST.forEach(function(c){h+=link(c,cur)});
-    cs.forEach(function(c){
-      var list=toolsOf(c); if(!list.length)return;
-      more+='<a class="mc" href="#/'+c+'">'+esc(label(c))+'</a>';
-      list.forEach(function(t){more+='<a class="t" href="'+esc(t.url)+'">'+esc(t.name)+'</a>'});
-    });
-    h+='<div class="mw"><button class="more-btn" id="moreBtn" type="button">More &#9662;</button><div class="mm" id="moreMenu">'+more+'</div></div>';
+    /* desktop header: first 3 categories + More (opens the All Calculators page) */
+    var h=''; FIRST.forEach(function(c){h+=link(c,cur)});
+    h+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>More</a>';
     document.getElementById('hn').innerHTML=h;
 
-    /* mobile hamburger menu: Home + ALL categories */
+    /* mobile hamburger menu: Home + ALL categories + All Calculators */
     var ml='<a href="#/"'+(cur?'':' class="on"')+'>🏠 Home</a>';
     cs.forEach(function(c){ml+=link(c,cur,(ICON[c]||'🗂️')+' '+label(c))});
+    ml+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>📋 All Calculators</a>';
     document.getElementById('menuLinks').innerHTML=ml;
 
     /* sidebar categories */
     var s=''; cs.forEach(function(c){s+=link(c,cur,label(c))});
+    s+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>All Calculators</a>';
     document.getElementById('sideCats').innerHTML=s;
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
@@ -264,7 +252,24 @@ footer a{color:var(--muted);text-decoration:none}
         hs+='</div></section>';
       });
       document.getElementById('homeSections').innerHTML=hs;
+    } else if(cur==='all'){
+      /* ALL CALCULATORS page: every tool, grouped by category */
+      home.style.display='none'; cv.style.display='block';
+      document.title='All Calculators | thequantcals';
+      document.getElementById('crumb').innerHTML='<a href="#/">home</a> / all calculators';
+      document.getElementById('ch1').textContent='All Calculators';
+      document.getElementById('cintro').textContent='The following is a complete list of all our calculators by category.';
+      var o='';
+      cs.forEach(function(c){
+        var list=toolsOf(c); if(!list.length)return;
+        o+='<section><h2><a href="#/'+c+'">'+(ICON[c]||'🗂️')+' '+esc(label(c))+'</a></h2><ul>';
+        list.forEach(function(t){o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
+        o+='</ul></section>';
+      });
+      document.getElementById('cols').innerHTML=o;
+      document.getElementById('q').value=''; document.getElementById('none').style.display='none';
     } else {
+      /* single category page */
       home.style.display='none'; cv.style.display='block';
       document.title=label(cur)+' Calculators | thequantcals';
       document.getElementById('crumb').innerHTML='<a href="#/">home</a> / '+esc(cur);
@@ -274,18 +279,18 @@ footer a{color:var(--muted);text-decoration:none}
       toolsOf(cur).forEach(function(t){
         if(!groups[t.group]){groups[t.group]=[];order.push(t.group)} groups[t.group].push(t);
       });
-      var o='';
+      var o2='';
       order.forEach(function(g){
-        o+='<section><h2>'+esc(g)+'</h2><ul>';
-        groups[g].forEach(function(t){o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
-        o+='</ul></section>';
+        o2+='<section><h2>'+esc(g)+'</h2><ul>';
+        groups[g].forEach(function(t){o2+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
+        o2+='</ul></section>';
       });
-      document.getElementById('cols').innerHTML=o;
+      document.getElementById('cols').innerHTML=o2;
       document.getElementById('q').value=''; document.getElementById('none').style.display='none';
     }
   }
 
-  /* search inside category */
+  /* search inside a category / all page */
   document.getElementById('q').oninput=function(){
     var v=this.value.toLowerCase(), shown=0;
     document.querySelectorAll('#cols section').forEach(function(sec){
@@ -296,18 +301,14 @@ footer a{color:var(--muted);text-decoration:none}
     document.getElementById('none').style.display=shown?'none':'block';
   };
 
-  /* Menus: hamburger (mobile) + More dropdown (desktop) */
+  /* Hamburger menu (mobile) */
   var navMenu=document.getElementById('navMenu');
   document.addEventListener('click',function(e){
-    var t=e.target, mm=document.getElementById('moreMenu');
+    var t=e.target;
     if(t.closest('#menuBtn')){navMenu.classList.toggle('active');return}
     if(t.closest('#closeMenu')||t.closest('#navMenu a')||!t.closest('#navMenu')){navMenu.classList.remove('active')}
-    if(mm){ if(t.id==='moreBtn'){mm.classList.toggle('open')} else {mm.classList.remove('open')} }
   });
-  window.addEventListener('resize',function(){
-    navMenu.classList.remove('active');
-    var mm=document.getElementById('moreMenu'); if(mm)mm.classList.remove('open');
-  });
+  window.addEventListener('resize',function(){navMenu.classList.remove('active')});
 
   window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
   render();
