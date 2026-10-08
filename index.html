@@ -140,7 +140,8 @@ footer a{color:var(--muted);text-decoration:none}
 </main>
 
 <aside>
-  <div class="box"><h3>Categories</h3><div id="sideCats"></div></div>
+  <!-- Shown only on category pages (hidden on the home page) -->
+  <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   <div class="box"><h3>Popular Tools</h3><div>
     <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
     <a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a>
@@ -234,10 +235,11 @@ footer a{color:var(--muted);text-decoration:none}
     ml+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>📋 All Calculators</a>';
     document.getElementById('menuLinks').innerHTML=ml;
 
-    /* sidebar categories */
+    /* sidebar categories: hidden on the home page so categories don't show twice */
     var s=''; cs.forEach(function(c){s+=link(c,cur,label(c))});
     s+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>All Calculators</a>';
     document.getElementById('sideCats').innerHTML=s;
+    document.getElementById('catBox').style.display=cur?'':'none';
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
     if(!cur){
