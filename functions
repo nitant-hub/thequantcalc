@@ -1,0 +1,142 @@
+function qcHeader() {
+  if (window.__qcHeader) return;
+  window.__qcHeader = 1;
+
+  var FIRST = ['financial', 'math', 'utility'];
+
+  var css = `
+  body { padding-top: 55px !important; }
+  #qcHead { position: fixed; top: 0; left: 0; width: 100%; height: 55px; z-index: 100000;
+    background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
+    border-bottom: 1px solid rgba(99,179,255,.25); box-shadow: 0 4px 30px rgba(10,20,80,.6);
+    padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; gap: .5rem;
+    font-family: 'Segoe UI', system-ui, sans-serif; }
+  #qcHead * { box-sizing: border-box; font-family: inherit; }
+  #qcHead .qb { display: flex; align-items: center; gap: .6rem; text-decoration: none; flex-shrink: 0; }
+  #qcHead .ql { background: linear-gradient(135deg,#2563eb,#7c3aed); width: 30px; height: 30px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
+  #qcHead .qt { font-size: 1.15rem; font-weight: 800; background: linear-gradient(90deg,#e0f2fe,#c7d2fe);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  #qcHead .qn { display: none; align-items: stretch; height: 100%; margin-left: auto; background: rgba(0,0,0,.2); }
+  #qcHead .qn a { text-decoration: none; color: #fff; font-weight: 700; font-size: .8rem; text-transform: uppercase;
+    padding: 0 1rem; display: flex; align-items: center; background: rgba(15,30,70,.6);
+    border-top: 3px solid transparent; white-space: nowrap; }
+  #qcHead .qn a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+  #qcHead .qa { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+  #qcHead .qtt { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #fff; padding: 4px; }
+  #qcHead .qm { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 6px; }
+  #qcHead .qm span { width: 24px; height: 3px; background: #fff; border-radius: 2px; display: block; }
+  #qcMenu { position: fixed; top: 0; right: -300px; width: 280px; max-width: 85%; height: 100vh;
+    background: #fff; color: #1e293b; border-left: 1px solid #e2e8f0; padding: 4.5rem 1.5rem 2rem;
+    display: flex; flex-direction: column; gap: 1.1rem; transition: right .3s; z-index: 100001;
+    box-shadow: -10px 0 30px rgba(0,0,0,.15); overflow-y: auto; font-family: 'Segoe UI', system-ui, sans-serif; }
+  [data-theme="dark"] #qcMenu { background: #1e293b; color: #f8fafc; border-color: #334155; }
+  #qcMenu.open { right: 0; }
+  #qcMenu a { text-decoration: none; color: inherit; font-weight: 600; font-size: 1.05rem; }
+  #qcMenu a:hover { color: #2563eb; }
+  #qcMenu .qx { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 2rem;
+    color: #64748b; cursor: pointer; line-height: 1; }
+  @media (min-width: 768px) {
+    #qcHead { padding: 0 1.5rem; }
+    #qcHead .qn { display: flex; margin-right: 1rem; }
+    #qcHead .qm, #qcMenu { display: none !important; }
+    #qcHead .qt { font-size: 1.25rem; }
+  }`;
+
+  function hideOld() {
+    var sel = 'header, nav, #siteHeader, .site-header, .navbar, #navMenu, .nav-menu, .desktop-nav';
+    document.querySelectorAll(sel).forEach(function (el) {
+      if (el.closest('#qcHead') || el.closest('#qcMenu')) return;
+      var pos = getComputedStyle(el).position;
+      if (pos === 'fixed' || pos === 'sticky' || el.id === 'siteHeader') {
+        el.style.setProperty('display', 'none', 'important');
+      }
+    });
+    document.querySelectorAll('.menu-btn, #menuBtn, #closeMenuBtn').forEach(function (el) {
+      if (el.closest('#qcHead') || el.closest('#qcMenu')) return;
+      el.style.setProperty('display', 'none', 'important');
+    });
+  }
+
+  function init() {
+    var st = document.createElement('style');
+    st.textContent = css;
+    document.head.appendChild(st);
+
+    var head = document.createElement('header');
+    head.id = 'qcHead';
+    head.innerHTML =
+      '<a href="/" class="qb"><div class="ql">&sum;</div><div class="qt">thequantcals</div></a>' +
+      '<nav class="qn">' +
+        '<a href="/#/financial">Finance</a><a href="/#/math">Math</a><a href="/#/utility">Utility</a><a href="/#/all">More</a>' +
+      '</nav>' +
+      '<div class="qa"><button class="qtt" id="qcTheme" aria-label="Toggle Night Mode">🌙</button>' +
+      '<button class="qm" id="qcBtn" aria-label="Open Menu"><span></span><span></span><span></span></button></div>';
+
+    var menu = document.createElement('div');
+    menu.id = 'qcMenu';
+    menu.innerHTML =
+      '<button class="qx" id="qcClose" aria-label="Close Menu">×</button>' +
+      '<a href="/">🏠 Home</a><a href="/#/financial">📈 Financial</a><a href="/#/math">📐 Math</a><a href="/#/utility">🧰 Utility</a>' +
+      '<span id="qcExtra" style="display:contents"></span>' +
+      '<a href="/#/all">📋 All Calculators</a>';
+
+    document.body.insertBefore(menu, document.body.firstChild);
+    document.body.insertBefore(head, document.body.firstChild);
+
+    hideOld();
+    window.addEventListener('load', hideOld);
+    setTimeout(hideOld, 300);
+    setTimeout(hideOld, 1200);
+
+    try {
+      var c = JSON.parse(localStorage.getItem('qc_tree')), ex = [];
+      if (c && c.p) {
+        c.p.forEach(function (p) {
+          var m = p.match(/^tools\/([^\/]+)\/.+\.html$/i);
+          if (!m) return;
+          var k = m[1].toLowerCase(); if (k === 'finance') k = 'financial';
+          if (FIRST.indexOf(k) < 0 && ex.indexOf(k) < 0) ex.push(k);
+        });
+        var h = '';
+        ex.sort().forEach(function (k) {
+          var name = k.replace(/[-_]+/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+          h += '<a href="/#/' + k + '">🗂️ ' + name + '</a>';
+        });
+        document.getElementById('qcExtra').innerHTML = h;
+      }
+    } catch (e) {}
+
+    var root = document.documentElement, tt = document.getElementById('qcTheme');
+    if (localStorage.getItem('theme') === 'dark') { root.setAttribute('data-theme', 'dark'); tt.textContent = '☀️'; }
+    tt.onclick = function () {
+      var d = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', d ? 'light' : 'dark');
+      tt.textContent = d ? '🌙' : '☀️';
+      localStorage.setItem('theme', d ? 'light' : 'dark');
+    };
+
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t.closest('#qcBtn')) { menu.classList.toggle('open'); return; }
+      if (t.closest('#qcClose') || t.closest('#qcMenu a') || !t.closest('#qcMenu')) menu.classList.remove('open');
+    });
+    window.addEventListener('resize', function () { menu.classList.remove('open'); });
+  }
+
+  if (document.body) init(); else document.addEventListener('DOMContentLoaded', init);
+}
+
+export async function onRequest(context) {
+  const response = await context.next();
+  const type = response.headers.get('content-type') || '';
+  if (!type.includes('text/html')) return response;
+
+  return new HTMLRewriter()
+    .on('body', {
+      element(el) {
+        el.append('<script>(' + qcHeader.toString() + ')();</script>', { html: true });
+      }
+    })
+    .transform(response);
+}
