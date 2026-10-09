@@ -4,7 +4,7 @@
   const isHomePage = !isToolPage;
 
   function setupNavigation() {
-    // 1. Clean old injected elements
+    // 1. Clean existing headers/drawers to prevent duplication
     const oldHeader = document.getElementById("siteDynamicHeader");
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
@@ -12,7 +12,7 @@
     const oldSidebar = document.getElementById("dynDesktopSidebar");
     if (oldSidebar) oldSidebar.remove();
 
-    // 2. CSS Rules
+    // 2. Responsive CSS Injection
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -169,7 +169,7 @@
         position: fixed !important;
         top: 0 !important;
         right: -310px !important;
-        width: 280px !important;
+        width: 285px !important;
         height: 100vh !important;
         background: #ffffff !important;
         border-left: 1px solid #e2e8f0 !important;
@@ -241,7 +241,7 @@
         display: block !important;
       }
 
-      /* Desktop Layout: Only 2 Splits (Left Sidebar, Right Content) */
+      /* Desktop Layout: 2-Column Split (Left Sidebar, Right Content) */
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
@@ -254,7 +254,8 @@
 
         .dyn-two-column-layout {
           display: flex !important;
-          flex-direction: row-reverse !important; /* Moves Sidebar to Left, Content to Right */
+          flex-direction: row-reverse !important; /* Forces Sidebar to Left, Tool content to Right */
+          flex-wrap: wrap !important;
           justify-content: center !important;
           align-items: flex-start !important;
           gap: 2rem !important;
@@ -272,13 +273,17 @@
         }
       }
 
-      /* Ensure footer remains full-width at the bottom and never splits into columns */
-      footer, .footer, [class*="footer"], #footer, .dyn-copyright-footer {
+      /* Force Copyright Footer to Stay Full-Width at the Bottom */
+      .dyn-copyright-footer,
+      footer,
+      .footer {
         width: 100% !important;
-        clear: both !important;
+        flex-basis: 100% !important;
+        order: 9999 !important;
         display: block !important;
+        clear: both !important;
         text-align: center !important;
-        margin-top: 3rem !important;
+        margin-top: 3.5rem !important;
         padding: 1.5rem 0 !important;
       }
 
@@ -311,14 +316,14 @@
         color: #f8fafc !important;
       }
 
-      /* Homepage Search Placement (Below Interactive Calculator) */
+      /* Desktop: Search Directly Below Interactive Calculator on Homepage */
       .dyn-search-below-calc {
         max-width: 640px !important;
         margin: 1.5rem auto !important;
         padding: 0 1rem !important;
       }
 
-      /* Autocomplete Dropdown List */
+      /* Dropdown Autocomplete Menu */
       .dyn-search-dropdown {
         position: absolute !important;
         top: 100% !important;
@@ -370,7 +375,7 @@
       { name: "UTILITY", path: "/#utility", slug: "utility", icon: "🧰" }
     ];
 
-    // Desktop Nav Items
+    // Top Desktop links
     const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentPath.includes(c.slug) ? "is-active" : "";
@@ -378,7 +383,7 @@
       })
       .join("") + `<a href="${targetMoreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
-    // Mobile Drawer Items
+    // Mobile Drawer links
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
       .join("") + `<a href="${targetMoreUrl}"><span>📋</span> All Calculators</a>`;
@@ -411,6 +416,7 @@
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <div class="dyn-drawer-title">MENU</div>
         
+        <!-- Slot where search lives on mobile[span_5](start_span)[span_5](end_span) -->
         <div id="drawerSearchSlot" style="margin-bottom:0.8rem;"></div>
 
         <a href="/"><span>🏠</span> Home</a>
@@ -420,36 +426,21 @@
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // 4. Create the Single Shared Search Bar
+    // 4. Create the Moving Search Wrapper
     const searchWrapper = document.createElement("div");
-    searchWrapper.id = "dynSharedSearchWrapper";
+    searchWrapper.id = "dynMovingSearchWrapper";
     searchWrapper.className = "dyn-search-wrapper";
     searchWrapper.innerHTML = `
-      <input type="text" class="dyn-search-input" id="dynSearchInput" placeholder="🔍 Search calculators..." autocomplete="off">
-      <div class="dyn-search-dropdown" id="dynSearchDropdown"></div>
+      <input type="text" class="dyn-search-input" id="dynSearchInputField" placeholder="🔍 Search calculators..." autocomplete="off">
+      <div class="dyn-search-dropdown" id="dynSearchDropdownList"></div>
     `;
 
-    // Relocate Search between Mobile Drawer, Left Sidebar, and Homepage
-    function relocateSearchOption() {
+    // Dynamic relocation function
+    function relocateSearchElement() {
       const isDesktop = window.innerWidth >= 768;
 
-      // Fix footer placement: Keep copyright footer at the bottom outside any column flex
-      const allElements = Array.from(document.querySelectorAll("div, footer, p, span"));
-      const copyrightEl = allElements.find((el) => {
-        const t = el.textContent.trim().toLowerCase();
-        return t.includes("all rights reserved") && t.includes("thequantcals") && el.children.length <= 2;
-      });
-
-      if (copyrightEl) {
-        copyrightEl.classList.add("dyn-copyright-footer");
-        if (copyrightEl.parentElement && copyrightEl.parentElement.classList.contains("dyn-two-column-layout")) {
-          // Move footer outside the 2-column container to the very bottom
-          copyrightEl.parentElement.parentElement.appendChild(copyrightEl);
-        }
-      }
-
       if (!isDesktop) {
-        // MOBILE: Inside drawer menu
+        // MOBILE (<768px): Move search into Hamburger Drawer under "MENU[span_6](start_span)"[span_6](end_span)
         searchWrapper.classList.remove("dyn-search-below-calc");
         searchWrapper.style.marginBottom = "0.8rem";
         const drawerSlot = document.getElementById("drawerSearchSlot");
@@ -457,34 +448,11 @@
           drawerSlot.appendChild(searchWrapper);
         }
       } else {
-        // DESKTOP:
-        if (isToolPage) {
-          // TOOL PAGES: 2-column layout (Sidebar Left, Tool Content Right)
-          const allHeadings = Array.from(document.querySelectorAll("h1, h2, h3, h4, div, span, p, b"));
-          const popHeader = allHeadings.find((el) => {
-            const t = el.textContent.trim().toLowerCase();
-            return t.includes("popular tools") || t.includes("popular");
-          });
-
-          if (popHeader) {
-            let sidebarCard = popHeader.closest(".sidebar, aside, .card, div");
-            if (sidebarCard && sidebarCard.parentElement) {
-              const flexParent = sidebarCard.parentElement;
-              flexParent.classList.add("dyn-two-column-layout");
-              sidebarCard.classList.add("dyn-sidebar-card");
-
-              searchWrapper.classList.remove("dyn-search-below-calc");
-              searchWrapper.style.marginBottom = "1.2rem";
-
-              // Insert search at the very top of that sidebar, above Popular Tools
-              if (sidebarCard.firstChild !== searchWrapper) {
-                sidebarCard.insertBefore(searchWrapper, sidebarCard.firstChild);
-              }
-            }
-          }
-        } else {
-          // HOMEPAGE: Search directly below Interactive Calculator
+        // DESKTOP (>=768px):
+        if (isHomePage) {
+          // 1. On Home Page: Move search below Interactive Calculator[span_7](start_span)[span_7](end_span)
           searchWrapper.classList.add("dyn-search-below-calc");
+          searchWrapper.style.marginBottom = "1.5rem";
 
           const allHeadings = Array.from(document.querySelectorAll("h1, h2, h3, h4, div, span, p"));
           const calcTitle = allHeadings.find((el) => {
@@ -507,17 +475,55 @@
               }
             }
           }
+        } else {
+          // 2. On Remaining (Tool) Pages: Move search to Sidebar above Popular Tools[span_8](start_span)[span_8](end_span)
+          searchWrapper.classList.remove("dyn-search-below-calc");
+          searchWrapper.style.marginBottom = "1.2rem";
+
+          const allHeadings = Array.from(document.querySelectorAll("h1, h2, h3, h4, div, span, p, b"));
+          const popHeader = allHeadings.find((el) => {
+            const t = el.textContent.trim().toLowerCase();
+            return t.includes("popular tools") || t.includes("popular");
+          });
+
+          if (popHeader) {
+            let sidebarCard = popHeader.closest(".sidebar, aside, .card, div");
+            if (sidebarCard && sidebarCard.parentElement) {
+              const flexParent = sidebarCard.parentElement;
+              // Clean 2-column split (Sidebar on the Left)[span_9](start_span)[span_9](end_span)
+              flexParent.classList.add("dyn-two-column-layout");
+              sidebarCard.classList.add("dyn-sidebar-card");
+
+              if (sidebarCard.firstChild !== searchWrapper) {
+                sidebarCard.insertBefore(searchWrapper, sidebarCard.firstChild);
+              }
+            }
+          }
+        }
+      }
+
+      // Safeguard: Ensure the Copyright footer stays at the very bottom outside any column flex[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)
+      const allElements = Array.from(document.querySelectorAll("div, footer, p, span"));
+      const copyrightEl = allElements.find((el) => {
+        const t = el.textContent.trim().toLowerCase();
+        return t.includes("all rights reserved") && t.includes("thequantcals") && el.children.length <= 2;
+      });
+
+      if (copyrightEl) {
+        copyrightEl.classList.add("dyn-copyright-footer");
+        if (copyrightEl.parentElement && copyrightEl.parentElement.classList.contains("dyn-two-column-layout")) {
+          copyrightEl.parentElement.parentElement.appendChild(copyrightEl);
         }
       }
     }
 
-    relocateSearchOption();
-    window.addEventListener("resize", relocateSearchOption);
+    relocateSearchElement();
+    window.addEventListener("resize", relocateSearchElement);
 
     let attempts = 0;
     const interval = setInterval(() => {
       attempts++;
-      relocateSearchOption();
+      relocateSearchElement();
       if (attempts > 15) clearInterval(interval);
     }, 150);
 
@@ -547,7 +553,7 @@
       };
     }
 
-    // 7. Base Tools + Autocomplete Filter
+    // 7. Base Tools + Autocomplete Engine
     const baseTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
       { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
@@ -578,8 +584,8 @@
       })
       .catch(() => {});
 
-    const searchInput = document.getElementById("dynSearchInput");
-    const searchDropdown = document.getElementById("dynSearchDropdown");
+    const searchInput = document.getElementById("dynSearchInputField");
+    const searchDropdown = document.getElementById("dynSearchDropdownList");
 
     if (searchInput && searchDropdown) {
       searchInput.addEventListener("input", (e) => {
