@@ -4,7 +4,7 @@
   const isHomePage = !isToolPage;
 
   function setupNavigation() {
-    // 1. Remove duplicate injected headers/drawers/sidebars
+    // 1. Clean old injected elements
     const oldHeader = document.getElementById("siteDynamicHeader");
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
@@ -12,7 +12,7 @@
     const oldSidebar = document.getElementById("dynDesktopSidebar");
     if (oldSidebar) oldSidebar.remove();
 
-    // 2. CSS: Clean 2-column layout (Sidebar Left, Tool Right)
+    // 2. CSS Rules
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -30,7 +30,7 @@
         margin: 0 !important;
       }
 
-      /* Fixed Top Header */
+      /* Fixed Top Navigation Bar */
       header#siteDynamicHeader {
         position: fixed !important;
         top: 0 !important;
@@ -241,7 +241,7 @@
         display: block !important;
       }
 
-      /* DESKTOP 2-COLUMN SPLIT (Sidebar Left, Tool Content Right) */
+      /* Desktop Layout: Only 2 Splits (Left Sidebar, Right Content) */
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
@@ -254,13 +254,13 @@
 
         .dyn-two-column-layout {
           display: flex !important;
-          flex-direction: row-reverse !important; /* Puts Popular Tools sidebar on the left */
+          flex-direction: row-reverse !important; /* Moves Sidebar to Left, Content to Right */
           justify-content: center !important;
           align-items: flex-start !important;
-          gap: 2.2rem !important;
+          gap: 2rem !important;
           max-width: 1200px !important;
           margin: 0 auto !important;
-          padding: 1.5rem !important;
+          padding: 1.5rem 1rem !important;
           width: 100% !important;
         }
 
@@ -268,10 +268,21 @@
           width: 260px !important;
           min-width: 260px !important;
           flex-shrink: 0 !important;
+          margin: 0 !important;
         }
       }
 
-      /* Unified Search Input Styling */
+      /* Ensure footer remains full-width at the bottom and never splits into columns */
+      footer, .footer, [class*="footer"], #footer, .dyn-copyright-footer {
+        width: 100% !important;
+        clear: both !important;
+        display: block !important;
+        text-align: center !important;
+        margin-top: 3rem !important;
+        padding: 1.5rem 0 !important;
+      }
+
+      /* Search Box Styling */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -300,7 +311,7 @@
         color: #f8fafc !important;
       }
 
-      /* Homepage Search Placement (Below Calculator) */
+      /* Homepage Search Placement (Below Interactive Calculator) */
       .dyn-search-below-calc {
         max-width: 640px !important;
         margin: 1.5rem auto !important;
@@ -359,7 +370,7 @@
       { name: "UTILITY", path: "/#utility", slug: "utility", icon: "🧰" }
     ];
 
-    // Top Desktop links
+    // Desktop Nav Items
     const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentPath.includes(c.slug) ? "is-active" : "";
@@ -367,7 +378,7 @@
       })
       .join("") + `<a href="${targetMoreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
-    // Mobile Drawer links[span_8](start_span)[span_8](end_span)
+    // Mobile Drawer Items
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
       .join("") + `<a href="${targetMoreUrl}"><span>📋</span> All Calculators</a>`;
@@ -395,7 +406,7 @@
 
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       
-      <!-- MOBILE DRAWER[span_9](start_span)[span_9](end_span) -->
+      <!-- MOBILE DRAWER -->
       <aside class="dyn-drawer-menu" id="dynDrawer">
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <div class="dyn-drawer-title">MENU</div>
@@ -418,12 +429,27 @@
       <div class="dyn-search-dropdown" id="dynSearchDropdown"></div>
     `;
 
-    // Relocate Search between Mobile Drawer, 2-Column Tool Sidebar, and Homepage
+    // Relocate Search between Mobile Drawer, Left Sidebar, and Homepage
     function relocateSearchOption() {
       const isDesktop = window.innerWidth >= 768;
 
+      // Fix footer placement: Keep copyright footer at the bottom outside any column flex
+      const allElements = Array.from(document.querySelectorAll("div, footer, p, span"));
+      const copyrightEl = allElements.find((el) => {
+        const t = el.textContent.trim().toLowerCase();
+        return t.includes("all rights reserved") && t.includes("thequantcals") && el.children.length <= 2;
+      });
+
+      if (copyrightEl) {
+        copyrightEl.classList.add("dyn-copyright-footer");
+        if (copyrightEl.parentElement && copyrightEl.parentElement.classList.contains("dyn-two-column-layout")) {
+          // Move footer outside the 2-column container to the very bottom
+          copyrightEl.parentElement.parentElement.appendChild(copyrightEl);
+        }
+      }
+
       if (!isDesktop) {
-        // MOBILE: Inside the drawer menu[span_10](start_span)[span_10](end_span)
+        // MOBILE: Inside drawer menu
         searchWrapper.classList.remove("dyn-search-below-calc");
         searchWrapper.style.marginBottom = "0.8rem";
         const drawerSlot = document.getElementById("drawerSearchSlot");
@@ -433,7 +459,7 @@
       } else {
         // DESKTOP:
         if (isToolPage) {
-          // TOOL PAGES: Put Search directly ABOVE Popular Tools inside the Sidebar[span_11](start_span)[span_11](end_span)
+          // TOOL PAGES: 2-column layout (Sidebar Left, Tool Content Right)
           const allHeadings = Array.from(document.querySelectorAll("h1, h2, h3, h4, div, span, p, b"));
           const popHeader = allHeadings.find((el) => {
             const t = el.textContent.trim().toLowerCase();
@@ -441,25 +467,23 @@
           });
 
           if (popHeader) {
-            // Find sidebar card
             let sidebarCard = popHeader.closest(".sidebar, aside, .card, div");
             if (sidebarCard && sidebarCard.parentElement) {
               const flexParent = sidebarCard.parentElement;
-              // Clean 2-column layout (Sidebar Left, Tool Right)
               flexParent.classList.add("dyn-two-column-layout");
               sidebarCard.classList.add("dyn-sidebar-card");
 
               searchWrapper.classList.remove("dyn-search-below-calc");
               searchWrapper.style.marginBottom = "1.2rem";
 
-              // Insert search at the very top of that sidebar, above Popular Tools[span_12](start_span)[span_12](end_span)
+              // Insert search at the very top of that sidebar, above Popular Tools
               if (sidebarCard.firstChild !== searchWrapper) {
                 sidebarCard.insertBefore(searchWrapper, sidebarCard.firstChild);
               }
             }
           }
         } else {
-          // HOMEPAGE: Search directly BELOW Interactive Calculator[span_13](start_span)[span_13](end_span)
+          // HOMEPAGE: Search directly below Interactive Calculator
           searchWrapper.classList.add("dyn-search-below-calc");
 
           const allHeadings = Array.from(document.querySelectorAll("h1, h2, h3, h4, div, span, p"));
@@ -490,7 +514,6 @@
     relocateSearchOption();
     window.addEventListener("resize", relocateSearchOption);
 
-    // Watch for dynamically rendered containers
     let attempts = 0;
     const interval = setInterval(() => {
       attempts++;
