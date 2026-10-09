@@ -47,7 +47,7 @@
             text-transform: uppercase; padding: 0 1rem; display: flex; align-items: center;
             background: rgba(15, 30, 70, 0.6); border-top: 3px solid transparent; white-space: nowrap;
         }
-        .desktop-nav a:hover { background: #1e3a8a; border-top-color: #3b82f6; }
+        .desktop-nav a:hover, .desktop-nav a.on { background: #1e3a8a; border-top-color: #3b82f6; }
 
         .nav-actions { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
         .theme-toggle { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #ffffff; padding: 4px; }
@@ -65,7 +65,7 @@
         }
         .nav-menu.active { right: 0; }
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
-        .nav-menu a:hover { color: #2563eb; }
+        .nav-menu a:hover, .nav-menu a.on { color: #2563eb; }
         .nav-menu .lbl { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; }
         .close-menu-btn { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; }
 
@@ -113,33 +113,23 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop only -->
-        <nav class="desktop-nav">
-            <a href="/#/financial">Finance</a>
-            <a href="/#/math">Math</a>
-            <a href="/#/utility">Utility</a>
-            <a href="/#/all">More</a>
-        </nav>
+        <!-- Desktop navigation links (populated dynamically) -->
+        <nav class="desktop-nav" id="desktopNav"></nav>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <!-- Mobile only -->
+            <!-- Mobile hamburger button -->
             <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <!-- Mobile slide-out menu -->
+    <!-- Mobile slide-out menu (populated dynamically) -->
     <nav class="nav-menu" id="navMenu">
         <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
         <div class="lbl">Menu</div>
-        <a href="/">🏠 Home</a>
-        <a href="/#/financial">📈 Financial</a>
-        <a href="/#/math">📐 Math</a>
-        <a href="/#/utility">🧰 Utility</a>
-        <span id="extraCats" style="display:contents"></span>
-        <a href="/#/all">📋 All Calculators</a>
+        <div id="mobileMenuLinks" style="display:flex;flex-direction:column;gap:1.1rem"></div>
     </nav>
 
     <div class="wrapper">
@@ -189,7 +179,7 @@
             }
         });
 
-        /* Hamburger menu (mobile) */
+        /* Hamburger menu toggling */
         const navMenu = document.getElementById('navMenu');
         document.addEventListener('click', (e) => {
             const t = e.target;
@@ -198,26 +188,55 @@
         });
         window.addEventListener('resize', () => navMenu.classList.remove('active'));
 
-        /* New categories (created from new folders in /tools) appear in the hamburger menu automatically */
-        try {
+        /* Universal Dynamic Header & Mobile Navigation Builder */
+        (function() {
             const FIRST = ['financial', 'math', 'utility'];
-            const c = JSON.parse(localStorage.getItem('qc_tree'));
-            if (c && c.p) {
-                const ex = [];
-                c.p.forEach(p => {
-                    const m = p.match(/^tools\/([^\/]+)\/.+\.html$/i);
-                    if (!m) return;
-                    let k = m[1].toLowerCase(); if (k === 'finance') k = 'financial';
-                    if (FIRST.indexOf(k) < 0 && ex.indexOf(k) < 0) ex.push(k);
-                });
-                let h = '';
-                ex.sort().forEach(k => {
-                    const name = k.replace(/[-_]+/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase());
-                    h += '<a href="/#/' + k + '">🗂️ ' + name + '</a>';
-                });
-                document.getElementById('extraCats').innerHTML = h;
+            const SHORT = { financial: 'Finance' };
+            const ICON = { financial: '📈', math: '📐', utility: '🧰' };
+            
+            function pretty(s) {
+                return s.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
             }
-        } catch (e) {}
+
+            // Extract categories from cached tree or fallback to defaults
+            let cats = [...FIRST];
+            try {
+                const cached = JSON.parse(localStorage.getItem('qc_tree'));
+                if (cached && cached.p) {
+                    const ex = [];
+                    cached.p.forEach(p => {
+                        const m = p.match(/^tools\/([^\/]+)\/.+\.html$/i);
+                        if (!m) return;
+                        let k = m[1].toLowerCase();
+                        if (k === 'finance') k = 'financial';
+                        if (!FIRST.includes(k) && !ex.includes(k)) ex.push(k);
+                    });
+                    ex.sort().forEach(k => cats.push(k));
+                }
+            } catch (e) {}
+
+            // Determine current view/path to highlight active links if applicable
+            const currentPath = window.location.pathname;
+
+            // Build Desktop Nav (First 3 categories + More)
+            let desktopHtml = '';
+            FIRST.forEach(c => {
+                const label = SHORT[c] || pretty(c);
+                desktopHtml += `<a href="/#/${c}">${label}</a>`;
+            });
+            desktopHtml += `<a href="/#/all">More</a>`;
+            document.getElementById('desktopNav').innerHTML = desktopHtml;
+
+            // Build Mobile Slide-out Menu (Home + All categories + All Calculators)
+            let mobileHtml = `<a href="/">🏠 Home</a>`;
+            cats.forEach(c => {
+                const icon = ICON[c] || '🗂️';
+                const label = pretty(c);
+                mobileHtml += `<a href="/#/${c}">${icon} ${label}</a>`;
+            });
+            mobileHtml += `<a href="/#/all">📋 All Calculators</a>`;
+            document.getElementById('mobileMenuLinks').innerHTML = mobileHtml;
+        })();
     </script>
 </body>
 </html>
