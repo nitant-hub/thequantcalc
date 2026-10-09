@@ -5,10 +5,8 @@
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
     if (oldDrawer) oldDrawer.remove();
-    const oldModal = document.getElementById("dynToolsModal");
-    if (oldModal) oldModal.remove();
 
-    // 2. Inject CSS
+    // 2. Inject Responsive CSS
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -66,7 +64,7 @@
       .dyn-desktop-nav {
         display: none;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.5rem;
         height: 100%;
         margin-left: auto;
         margin-right: 1.2rem;
@@ -93,8 +91,8 @@
         background: rgba(30, 58, 138, 0.45) !important;
       }
 
-      /* Modern "More" button with distinct color */
-      .dyn-more-btn {
+      /* Direct-link "More" badge in modern styling */
+      .dyn-more-link {
         background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.25)) !important;
         border: 1px solid rgba(56, 189, 248, 0.5) !important;
         color: #38bdf8 !important;
@@ -102,19 +100,20 @@
         font-size: 0.82rem !important;
         padding: 0.35rem 0.85rem !important;
         border-radius: 20px !important;
-        cursor: pointer !important;
-        display: flex !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
         align-items: center !important;
         gap: 0.3rem !important;
+        height: auto !important;
         transition: all 0.2s ease !important;
       }
-      .dyn-more-btn:hover {
+      .dyn-more-link:hover {
         background: linear-gradient(135deg, #0284c7, #4f46e5) !important;
         color: #ffffff !important;
         box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4) !important;
       }
 
-      /* Header actions (Theme & Hamburger) */
+      /* Right controls */
       .dyn-right-controls {
         display: flex !important;
         align-items: center !important;
@@ -167,12 +166,11 @@
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6) !important;
         z-index: 1000000 !important;
         box-sizing: border-box !important;
-        overflow-y: auto !important;
       }
       .dyn-drawer-menu.open {
         right: 0 !important;
       }
-      .dyn-drawer-menu a, .dyn-drawer-more-btn {
+      .dyn-drawer-menu a {
         text-decoration: none !important;
         color: #e2e8f0 !important;
         font-weight: 600 !important;
@@ -182,14 +180,8 @@
         display: flex !important;
         align-items: center !important;
         gap: 0.6rem !important;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-family: inherit;
-        width: 100%;
-        text-align: left;
       }
-      .dyn-drawer-menu a:hover, .dyn-drawer-more-btn:hover {
+      .dyn-drawer-menu a:hover {
         background: rgba(56, 189, 248, 0.15) !important;
         color: #38bdf8 !important;
       }
@@ -207,7 +199,7 @@
       .dyn-backdrop-overlay {
         position: fixed !important;
         inset: 0 !important;
-        background: rgba(0, 0, 0, 0.6) !important;
+        background: rgba(0, 0, 0, 0.55) !important;
         z-index: 999998 !important;
         display: none !important;
       }
@@ -215,162 +207,46 @@
         display: block !important;
       }
 
-      /* ALL TOOLS MODAL POPUP */
-      .dyn-tools-modal {
-        position: fixed !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) scale(0.95) !important;
-        width: 90% !important;
-        max-width: 650px !important;
-        max-height: 80vh !important;
-        background: #0b132b !important;
-        border: 1px solid rgba(56, 189, 248, 0.35) !important;
-        border-radius: 14px !important;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8) !important;
-        padding: 1.5rem !important;
-        z-index: 1000005 !important;
-        display: none !important;
-        overflow-y: auto !important;
-        color: #fff !important;
-        box-sizing: border-box !important;
-        transition: transform 0.2s ease !important;
-      }
-      .dyn-tools-modal.open {
-        display: block !important;
-        transform: translate(-50%, -50%) scale(1) !important;
-      }
-      .dyn-modal-header {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        padding-bottom: 0.8rem !important;
-        margin-bottom: 1rem !important;
-      }
-      .dyn-modal-title {
-        font-size: 1.2rem !important;
-        font-weight: 700 !important;
-        color: #38bdf8 !important;
-      }
-      .dyn-modal-close {
-        background: none !important;
-        border: none !important;
-        color: #94a3b8 !important;
-        font-size: 1.8rem !important;
-        cursor: pointer !important;
-        line-height: 1 !important;
-      }
-      .dyn-modal-section {
-        margin-bottom: 1.2rem !important;
-      }
-      .dyn-modal-cat-name {
-        font-size: 0.95rem !important;
-        font-weight: 700 !important;
-        color: #94a3b8 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
-        margin-bottom: 0.5rem !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.4rem !important;
-      }
-      .dyn-modal-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
-        gap: 0.6rem !important;
-      }
-      .dyn-modal-tool-link {
-        display: block !important;
-        padding: 0.6rem 0.8rem !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 8px !important;
-        color: #e2e8f0 !important;
-        text-decoration: none !important;
-        font-size: 0.88rem !important;
-        font-weight: 500 !important;
-        transition: 0.2s !important;
-      }
-      .dyn-modal-tool-link:hover {
-        background: rgba(56, 189, 248, 0.2) !important;
-        color: #38bdf8 !important;
-        border-color: rgba(56, 189, 248, 0.4) !important;
-      }
-
-      /* Desktop View (>= 768px): Show top bar, hide hamburger */
+      /* Desktop View: Show Header items, hide mobile menu */
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
         }
         .dyn-hamburger-btn,
-        .dyn-drawer-menu {
+        .dyn-drawer-menu,
+        .dyn-backdrop-overlay {
           display: none !important;
         }
       }
     `;
     document.head.appendChild(style);
 
-    // 3. Default Categories and Tools Directory (Used if homepage is offline)
-    const categorizedTools = [
-      {
-        category: "Mathematics",
-        slug: "math",
-        icon: "📐",
-        tools: [
-          { name: "Exam Marks Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
-          { name: "Percentage Calculator", url: "/#math" }
-        ]
-      },
-      {
-        category: "Finance",
-        slug: "finance",
-        icon: "📈",
-        tools: [
-          { name: "Compound Interest", url: "/tools/Compound-Interest-Calculator.html" },
-          { name: "SIP Calculator", url: "/#finance" }
-        ]
-      },
-      {
-        category: "Utility",
-        slug: "utility",
-        icon: "🧰",
-        tools: [
-          { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" }
-        ]
-      }
+    // 3. Category definitions
+    // Set your all-tools destination URL here (e.g. '/#all' or '/all-tools.html')
+    const allToolsPageUrl = "/#all";
+
+    const categories = [
+      { name: "Mathematics", path: "/#math", slug: "math", icon: "📐" },
+      { name: "Finance", path: "/#finance", slug: "finance", icon: "📈" },
+      { name: "Utility", path: "/#utility", slug: "utility", icon: "🧰" }
     ];
 
     const currentUrl = window.location.href.toLowerCase();
 
-    // 4. Render Desktop Header Links (Top 3)
-    const desktopLinksHtml = categorizedTools
-      .slice(0, 3)
+    // Generate desktop category links + More direct link
+    const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
-        return `<a href="/#${c.slug}" class="${isActive}">${c.category}</a>`;
+        return `<a href="${c.path}" class="${isActive}">${c.name}</a>`;
       })
-      .join("");
+      .join("") + `<a href="${allToolsPageUrl}" class="dyn-more-link">More ▾</a>`;
 
-    // 5. Render Modal Tool Grid
-    function buildModalHtml(catList) {
-      return catList
-        .map(
-          (cat) => `
-          <div class="dyn-modal-section">
-            <div class="dyn-modal-cat-name">${cat.icon || "📁"} ${cat.category}</div>
-            <div class="dyn-modal-grid">
-              ${cat.tools
-                .map((t) => `<a href="${t.url}" class="dyn-modal-tool-link">${t.name}</a>`)
-                .join("")}
-            </div>
-          </div>
-        `
-        )
-        .join("");
-    }
+    // Generate mobile drawer links
+    const mobileLinksHtml = categories
+      .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name}</a>`)
+      .join("") + `<a href="${allToolsPageUrl}" style="color:#38bdf8;"><span>✨</span> All Tools & Categories</a>`;
 
-    // 6. Build Navigation Markup
+    // 4. Mount Header and Drawer
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
@@ -379,10 +255,9 @@
           <span class="dyn-brand-text">thequantcals</span>
         </a>
 
-        <!-- Desktop Navigation: 3 Categories + Modern 'More' button -->
-        <nav class="dyn-desktop-nav" id="dynDesktopNav">
+        <!-- Desktop Navigation: 3 categories + direct link More button -->
+        <nav class="dyn-desktop-nav">
           ${desktopLinksHtml}
-          <button class="dyn-more-btn" id="dynMoreModalBtn" type="button">More ▾</button>
         </nav>
 
         <div class="dyn-right-controls">
@@ -394,70 +269,26 @@
       </header>
 
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
-
-      <!-- Mobile Drawer -->
       <aside class="dyn-drawer-menu" id="dynDrawer">
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <a href="/">🏠 Home Base</a>
-        <a href="/#finance">📈 Finance</a>
-        <a href="/#math">📐 Math</a>
-        <a href="/#utility">🧰 Utility</a>
-        <button class="dyn-drawer-more-btn" id="dynDrawerMoreBtn" type="button">
-          <span style="color:#38bdf8;">✨</span> Browse All Tools
-        </button>
+        ${mobileLinksHtml}
       </aside>
-
-      <!-- Popup Modal: All Tools by Category -->
-      <div class="dyn-tools-modal" id="dynToolsModal">
-        <div class="dyn-modal-header">
-          <div class="dyn-modal-title">Explore All Tools</div>
-          <button class="dyn-modal-close" id="dynModalCloseBtn">&times;</button>
-        </div>
-        <div id="dynModalContent">
-          ${buildModalHtml(categorizedTools)}
-        </div>
-      </div>
     `;
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // 7. Interactive Bindings: Drawer & Modal
+    // 5. Drawer open/close interaction
     const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
     const closeBtn = document.getElementById("dynCloseBtn");
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
 
-    const moreModalBtn = document.getElementById("dynMoreModalBtn");
-    const drawerMoreBtn = document.getElementById("dynDrawerMoreBtn");
-    const toolsModal = document.getElementById("dynToolsModal");
-    const modalCloseBtn = document.getElementById("dynModalCloseBtn");
+    if (hamburgerBtn) hamburgerBtn.onclick = () => { drawer.classList.add("open"); overlay.classList.add("open"); };
+    if (closeBtn) closeBtn.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
+    if (overlay) overlay.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
 
-    function openModal() {
-      drawer.classList.remove("open");
-      toolsModal.classList.add("open");
-      overlay.classList.add("open");
-    }
-
-    function closeModal() {
-      toolsModal.classList.remove("open");
-      drawer.classList.remove("open");
-      overlay.classList.remove("open");
-    }
-
-    if (moreModalBtn) moreModalBtn.onclick = openModal;
-    if (drawerMoreBtn) drawerMoreBtn.onclick = openModal;
-    if (modalCloseBtn) modalCloseBtn.onclick = closeModal;
-
-    if (hamburgerBtn) {
-      hamburgerBtn.onclick = () => {
-        drawer.classList.add("open");
-        overlay.classList.add("open");
-      };
-    }
-    if (closeBtn) closeBtn.onclick = closeModal;
-    if (overlay) overlay.onclick = closeModal;
-
-    // 8. Theme Toggle (Dark / Light)
+    // 6. Theme Toggle (Dark / Light)
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
@@ -472,40 +303,6 @@
         themeBtn.textContent = isDark ? "🌙" : "☀️";
       };
     }
-
-    // 9. Auto-detect any extra tools from the homepage dynamically
-    fetch("/")
-      .then((res) => (res.ok ? res.text() : ""))
-      .then((html) => {
-        if (!html) return;
-        const parser = new DOMParser();
-        const homeDoc = parser.parseFromString(html, "text/html");
-
-        // Parse tool cards or links directly from the homepage if available
-        const foundTools = [];
-        homeDoc.querySelectorAll('a[href*="/tools/"]').forEach((a) => {
-          const name = a.textContent.trim().replace(/^[^a-zA-Z0-9]+/, "");
-          const href = a.getAttribute("href");
-          if (name && href && !foundTools.some((t) => t.url === href)) {
-            foundTools.push({ name, url: href });
-          }
-        });
-
-        if (foundTools.length > 0) {
-          // Merge discovered tools into the utility/extra group
-          categorizedTools.push({
-            category: "More Calculators",
-            slug: "more",
-            icon: "✨",
-            tools: foundTools
-          });
-          const modalContent = document.getElementById("dynModalContent");
-          if (modalContent) {
-            modalContent.innerHTML = buildModalHtml(categorizedTools);
-          }
-        }
-      })
-      .catch(() => {});
   }
 
   if (document.readyState === "loading") {
