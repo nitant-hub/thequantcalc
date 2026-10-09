@@ -1,31 +1,21 @@
 (function () {
   function setupNavigation() {
-    // 1. Remove any old static header left inside the tool HTML
-    const existingHeader = document.getElementById("siteHeader");
-    if (existingHeader && !existingHeader.dataset.dynamicNav) {
-      existingHeader.remove();
-    }
-    const existingDrawer = document.getElementById("navMenu");
-    if (existingDrawer) {
-      existingDrawer.remove();
-    }
+    // 1. Remove duplicate old headers if present
+    const oldHeader = document.getElementById("siteDynamicHeader");
+    if (oldHeader) oldHeader.remove();
+    const oldDrawer = document.getElementById("dynDrawer");
+    if (oldDrawer) oldDrawer.remove();
 
-    // Prevent duplicate injection if script runs twice
-    if (document.querySelector('header[data-dynamic-nav="true"]')) return;
-
-    // 2. Inject responsive CSS
+    // 2. Inject CSS
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
       :root {
         --nav-header-height: 56px;
       }
-
       body {
         padding-top: var(--nav-header-height) !important;
       }
-
-      /* Fixed Header across all tools */
       header#siteDynamicHeader {
         position: fixed !important;
         top: 0 !important;
@@ -39,13 +29,10 @@
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
-        padding: 0 1.25rem !important;
+        padding: 0 1.2rem !important;
         box-sizing: border-box !important;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        transform: none !important;
       }
-
-      /* Logo / Brand */
       .dyn-brand {
         display: flex !important;
         align-items: center !important;
@@ -73,16 +60,16 @@
         -webkit-text-fill-color: transparent !important;
       }
 
-      /* Desktop Header Categories: Visible on desktop, hidden on mobile */
+      /* Desktop navigation items */
       .dyn-desktop-nav {
         display: none;
         align-items: center;
         gap: 0.4rem;
         height: 100%;
         margin-left: auto;
-        margin-right: 1.25rem;
+        margin-right: 1.2rem;
       }
-      .dyn-desktop-nav a {
+      .dyn-desktop-nav a, .dyn-more-btn {
         text-decoration: none !important;
         font-size: 0.88rem !important;
         font-weight: 600 !important;
@@ -92,9 +79,13 @@
         align-items: center !important;
         padding: 0 0.85rem !important;
         border-bottom: 3px solid transparent !important;
+        background: transparent;
+        border-top: none; border-left: none; border-right: none;
+        cursor: pointer;
         transition: 0.2s ease !important;
+        font-family: inherit;
       }
-      .dyn-desktop-nav a:hover {
+      .dyn-desktop-nav a:hover, .dyn-more-btn:hover {
         color: #ffffff !important;
         background: rgba(255, 255, 255, 0.08) !important;
       }
@@ -104,7 +95,47 @@
         background: rgba(30, 58, 138, 0.45) !important;
       }
 
-      /* Right Controls (Theme + Hamburger) */
+      /* More Options Dropdown */
+      .dyn-dropdown-wrap {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .dyn-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 190px;
+        background: #0b132b;
+        border: 1px solid rgba(99, 179, 255, 0.25);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        padding: 0.5rem 0;
+        z-index: 1000001;
+      }
+      .dyn-dropdown-menu.show {
+        display: block;
+      }
+      .dyn-dropdown-menu a {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        padding: 0.65rem 1rem !important;
+        color: #cbd5e1 !important;
+        text-decoration: none !important;
+        font-size: 0.88rem !important;
+        font-weight: 500 !important;
+        height: auto !important;
+        border: none !important;
+      }
+      .dyn-dropdown-menu a:hover {
+        background: rgba(56, 189, 248, 0.15) !important;
+        color: #38bdf8 !important;
+      }
+
+      /* Right actions */
       .dyn-right-controls {
         display: flex !important;
         align-items: center !important;
@@ -123,8 +154,6 @@
         align-items: center !important;
         justify-content: center !important;
       }
-
-      /* Hamburger Menu Button: Visible on mobile, hidden on desktop */
       .dyn-hamburger-btn {
         background: none !important;
         border: none !important;
@@ -142,7 +171,7 @@
         display: block !important;
       }
 
-      /* Mobile Drawer Menu */
+      /* Mobile Drawer */
       .dyn-drawer-menu {
         position: fixed !important;
         top: 0 !important;
@@ -174,8 +203,7 @@
         align-items: center !important;
         gap: 0.6rem !important;
       }
-      .dyn-drawer-menu a:hover,
-      .dyn-drawer-menu a.is-active {
+      .dyn-drawer-menu a:hover {
         background: rgba(56, 189, 248, 0.15) !important;
         color: #38bdf8 !important;
       }
@@ -190,8 +218,6 @@
         cursor: pointer !important;
         line-height: 1 !important;
       }
-
-      /* Mobile Overlay */
       .dyn-backdrop-overlay {
         position: fixed !important;
         inset: 0 !important;
@@ -203,8 +229,7 @@
         display: block !important;
       }
 
-      /* Desktop View Breakpoint (>= 768px):
-         Hamburger disappears, Categories appear in header */
+      /* Desktop View: Show Header items, hide hamburger */
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
@@ -218,51 +243,72 @@
     `;
     document.head.appendChild(style);
 
-    // 3. Category definitions
-    const categories = [
-      { name: "Finance Tools", path: "/#finance", icon: "📈", slug: "finance" },
-      { name: "Mathematics", path: "/#math", icon: "📐", slug: "math" },
-      { name: "Utility Tools", path: "/#utility", icon: "🧰", slug: "utility" },
-      { name: "All Tools", path: "/#all", icon: "📋", slug: "all" }
+    // 3. Clean Categories List (excludes policy pages)
+    let categories = [
+      { name: "Finance", path: "/#finance", slug: "finance", icon: "📈" },
+      { name: "Math", path: "/#math", slug: "math", icon: "📐" },
+      { name: "Utility", path: "/#utility", slug: "utility", icon: "🧰" }
     ];
 
     const currentUrl = window.location.href.toLowerCase();
 
-    function renderDesktopHtml(list) {
-      return list
-        .map((cat) => {
-          const isActive = currentUrl.includes(cat.slug) ? "is-active" : "";
-          return `<a href="${cat.path}" class="${isActive}">${cat.name}</a>`;
+    function renderNavElements(cats) {
+      const top3 = cats.slice(0, 3);
+      const remaining = cats.slice(3);
+
+      const top3Html = top3
+        .map((c) => {
+          const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
+          return `<a href="${c.path}" class="${isActive}">${c.name}</a>`;
         })
         .join("");
+
+      let moreHtml = "";
+      if (remaining.length > 0 || cats.length >= 3) {
+        const dropdownLinks = remaining
+          .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name}</a>`)
+          .join("");
+
+        moreHtml = `
+          <div class="dyn-dropdown-wrap">
+            <button class="dyn-more-btn" id="dynMoreToggleBtn" type="button">More Options ▾</button>
+            <div class="dyn-dropdown-menu" id="dynDropdownMenu">
+              ${dropdownLinks}
+              <a href="/#all"><span>📋</span> All Tools</a>
+            </div>
+          </div>
+        `;
+      }
+
+      const mobileHtml = cats
+        .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name}</a>`)
+        .join("") + `<a href="/#all"><span>📋</span> All Tools</a>`;
+
+      return {
+        desktop: top3Html + moreHtml,
+        mobile: mobileHtml
+      };
     }
 
-    function renderMobileHtml(list) {
-      return list
-        .map((cat) => {
-          const isActive = currentUrl.includes(cat.slug) ? "is-active" : "";
-          return `<a href="${cat.path}" class="${isActive}"><span>${cat.icon}</span> ${cat.name}</a>`;
-        })
-        .join("");
-    }
+    const initialNav = renderNavElements(categories);
 
-    // 4. Build markup
+    // 4. Construct Header Markup
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
-      <header id="siteDynamicHeader" data-dynamic-nav="true">
+      <header id="siteDynamicHeader">
         <a href="/" class="dyn-brand">
           <div class="dyn-logo-symbol">&sum;</div>
           <span class="dyn-brand-text">thequantcals</span>
         </a>
 
-        <!-- Desktop Navigation Categories -->
+        <!-- Desktop Navigation: 3 Categories + More Options -->
         <nav class="dyn-desktop-nav" id="dynDesktopNav">
-          ${renderDesktopHtml(categories)}
+          ${initialNav.desktop}
         </nav>
 
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
-          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation Menu">
+          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation">
             <span></span><span></span><span></span>
           </button>
         </div>
@@ -273,57 +319,55 @@
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <a href="/">🏠 Home Base</a>
         <div id="dynMobileLinksBox">
-          ${renderMobileHtml(categories)}
+          ${initialNav.mobile}
         </div>
       </aside>
     `;
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // 5. Drawer open/close interaction
+    // 5. Events: Mobile Drawer and "More Options" Dropdown
     const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
     const closeBtn = document.getElementById("dynCloseBtn");
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
 
-    const openMenu = () => {
-      drawer.classList.add("open");
-      overlay.classList.add("open");
-    };
-    const closeMenu = () => {
-      drawer.classList.remove("open");
-      overlay.classList.remove("open");
-    };
+    function setupDropdownEvent() {
+      const moreBtn = document.getElementById("dynMoreToggleBtn");
+      const dropMenu = document.getElementById("dynDropdownMenu");
+      if (moreBtn && dropMenu) {
+        moreBtn.onclick = function (e) {
+          e.stopPropagation();
+          dropMenu.classList.toggle("show");
+        };
+        document.addEventListener("click", function () {
+          dropMenu.classList.remove("show");
+        });
+      }
+    }
+    setupDropdownEvent();
 
-    if (hamburgerBtn) hamburgerBtn.addEventListener("click", openMenu);
-    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
-    if (overlay) overlay.addEventListener("click", closeMenu);
+    if (hamburgerBtn) hamburgerBtn.onclick = () => { drawer.classList.add("open"); overlay.classList.add("open"); };
+    if (closeBtn) closeBtn.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
+    if (overlay) overlay.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
 
-    // 6. Sync theme toggle (Dark / Light)
+    // 6. Theme Toggle (Dark/Light)
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
-
     if (localStorage.getItem("theme") === "dark") {
       rootEl.setAttribute("data-theme", "dark");
       if (themeBtn) themeBtn.textContent = "☀️";
     }
-
     if (themeBtn) {
-      themeBtn.addEventListener("click", () => {
+      themeBtn.onclick = () => {
         const isDark = rootEl.getAttribute("data-theme") === "dark";
-        if (isDark) {
-          rootEl.setAttribute("data-theme", "light");
-          localStorage.setItem("theme", "light");
-          themeBtn.textContent = "🌙";
-        } else {
-          rootEl.setAttribute("data-theme", "dark");
-          localStorage.setItem("theme", "dark");
-          themeBtn.textContent = "☀️";
-        }
-      });
+        rootEl.setAttribute("data-theme", isDark ? "light" : "dark");
+        localStorage.setItem("theme", isDark ? "light" : "dark");
+        themeBtn.textContent = isDark ? "🌙" : "☀️";
+      };
     }
 
-    // 7. Auto-fetch any newer categories from index.html in the background
+    // 7. Auto-fetch categories from homepage while ignoring policy pages
     fetch("/")
       .then((res) => (res.ok ? res.text() : ""))
       .then((html) => {
@@ -332,10 +376,18 @@
         const homeDoc = parser.parseFromString(html, "text/html");
         const found = [];
 
+        // Blacklist keywords for policies, terms, disclaimer, contact
+        const ignored = ["privacy", "policy", "terms", "service", "disclaimer", "contact", "about", "dmca"];
+
         homeDoc.querySelectorAll('nav a, a[href*="/#"]').forEach((a) => {
           const rawText = a.textContent.replace(/[^\w\s]/gi, "").trim();
-          const href = a.getAttribute("href");
-          if (rawText && href && !found.some((item) => item.name.toLowerCase() === rawText.toLowerCase())) {
+          const href = a.getAttribute("href") || "";
+          const lower = (rawText + " " + href).toLowerCase();
+
+          // Check that it's NOT a policy/legal link
+          const isPolicy = ignored.some((word) => lower.includes(word));
+
+          if (rawText && !isPolicy && !found.some((x) => x.name.toLowerCase() === rawText.toLowerCase())) {
             found.push({
               name: rawText,
               slug: rawText.toLowerCase().replace(/\s+/g, "-"),
@@ -345,11 +397,13 @@
           }
         });
 
-        if (found.length > 0) {
+        if (found.length >= 3) {
+          const rendered = renderNavElements(found);
           const dNav = document.getElementById("dynDesktopNav");
           const mBox = document.getElementById("dynMobileLinksBox");
-          if (dNav) dNav.innerHTML = renderDesktopHtml(found);
-          if (mBox) mBox.innerHTML = renderMobileHtml(found);
+          if (dNav) dNav.innerHTML = rendered.desktop;
+          if (mBox) mBox.innerHTML = rendered.mobile;
+          setupDropdownEvent();
         }
       })
       .catch(() => {});
