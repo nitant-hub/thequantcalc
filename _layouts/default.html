@@ -113,7 +113,7 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop navigation links (populated dynamically) -->
+        <!-- Desktop navigation links -->
         <nav class="desktop-nav" id="desktopNav"></nav>
         
         <div class="nav-actions">
@@ -125,7 +125,7 @@
         </div>
     </header>
 
-    <!-- Mobile slide-out menu (populated dynamically) -->
+    <!-- Mobile slide-out menu -->
     <nav class="nav-menu" id="navMenu">
         <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
         <div class="lbl">Menu</div>
@@ -188,7 +188,7 @@
         });
         window.addEventListener('resize', () => navMenu.classList.remove('active'));
 
-        /* Universal Dynamic Header & Mobile Navigation Builder */
+        /* Universal Navigation Builder with Fallbacks */
         (function() {
             const FIRST = ['financial', 'math', 'utility'];
             const SHORT = { financial: 'Finance' };
@@ -198,7 +198,6 @@
                 return s.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
             }
 
-            // Extract categories from cached tree or fallback to defaults
             let cats = [...FIRST];
             try {
                 const cached = JSON.parse(localStorage.getItem('qc_tree'));
@@ -215,10 +214,7 @@
                 }
             } catch (e) {}
 
-            // Determine current view/path to highlight active links if applicable
-            const currentPath = window.location.pathname;
-
-            // Build Desktop Nav (First 3 categories + More)
+            // Build Desktop Nav (Finance, Math, Utility, More)
             let desktopHtml = '';
             FIRST.forEach(c => {
                 const label = SHORT[c] || pretty(c);
@@ -227,7 +223,7 @@
             desktopHtml += `<a href="/#/all">More</a>`;
             document.getElementById('desktopNav').innerHTML = desktopHtml;
 
-            // Build Mobile Slide-out Menu (Home + All categories + All Calculators)
+            // Build Mobile Slide-out Menu
             let mobileHtml = `<a href="/">🏠 Home</a>`;
             cats.forEach(c => {
                 const icon = ICON[c] || '🗂️';
