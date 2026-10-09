@@ -1,12 +1,12 @@
 (function () {
-  const isToolsDirectoryView = window.location.search.includes("view=all-tools") || window.location.hash === "#all-tools";
-
   function setupNavigation() {
+    // 1. Remove duplicate elements if re-run
     const oldHeader = document.getElementById("siteDynamicHeader");
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
     if (oldDrawer) oldDrawer.remove();
 
+    // 2. Responsive CSS
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -59,6 +59,8 @@
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
       }
+
+      /* Desktop navigation items */
       .dyn-desktop-nav {
         display: none;
         align-items: center;
@@ -78,6 +80,7 @@
         padding: 0 0.85rem !important;
         border-bottom: 3px solid transparent !important;
         transition: 0.2s ease !important;
+        text-transform: uppercase;
       }
       .dyn-desktop-nav a:hover {
         color: #ffffff !important;
@@ -88,27 +91,31 @@
         border-bottom: 3px solid #38bdf8 !important;
         background: rgba(30, 58, 138, 0.45) !important;
       }
-      .dyn-more-link {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.25)) !important;
-        border: 1px solid rgba(56, 189, 248, 0.5) !important;
-        color: #38bdf8 !important;
+
+      /* Exact Homepage-Style "MORE" Button */
+      .dyn-more-btn {
+        background: #1e3a8a !important;
+        border: 1px solid rgba(96, 165, 250, 0.4) !important;
+        color: #ffffff !important;
         font-weight: 700 !important;
         font-size: 0.82rem !important;
         padding: 0.35rem 0.85rem !important;
-        border-radius: 20px !important;
+        border-radius: 6px !important;
         text-decoration: none !important;
         display: inline-flex !important;
         align-items: center !important;
         gap: 0.3rem !important;
         height: auto !important;
         cursor: pointer !important;
+        text-transform: uppercase;
         transition: all 0.2s ease !important;
       }
-      .dyn-more-link:hover {
-        background: linear-gradient(135deg, #0284c7, #4f46e5) !important;
-        color: #ffffff !important;
-        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4) !important;
+      .dyn-more-btn:hover {
+        background: #2563eb !important;
+        border-color: #93c5fd !important;
       }
+
+      /* Controls */
       .dyn-right-controls {
         display: flex !important;
         align-items: center !important;
@@ -143,6 +150,8 @@
         border-radius: 2px !important;
         display: block !important;
       }
+
+      /* Mobile Drawer */
       .dyn-drawer-menu {
         position: fixed !important;
         top: 0 !important;
@@ -200,71 +209,6 @@
         display: block !important;
       }
 
-      /* Photo 1 Layout Replication Styles */
-      .dyn-photo1-container {
-        max-width: 950px;
-        margin: 1.5rem auto;
-        padding: 0 1.2rem;
-        box-sizing: border-box;
-      }
-      .dyn-photo1-crumb {
-        color: #2563eb;
-        font-size: 0.85rem;
-        margin-bottom: 0.4rem;
-        font-family: inherit;
-      }
-      .dyn-photo1-title {
-        font-size: 1.7rem;
-        font-weight: 800;
-        color: #1e40af;
-        margin-bottom: 0.2rem;
-      }
-      .dyn-photo1-desc {
-        color: #64748b;
-        font-size: 0.9rem;
-        margin-bottom: 1.2rem;
-      }
-      .dyn-photo1-search {
-        width: 100%;
-        padding: 0.65rem 1rem;
-        border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        margin-bottom: 1.8rem;
-        box-sizing: border-box;
-        outline: none;
-      }
-      .dyn-photo1-search:focus {
-        border-color: #3b82f6;
-      }
-      .dyn-photo1-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 2rem 1.5rem;
-      }
-      .dyn-photo1-col h3 {
-        font-size: 1.05rem;
-        font-weight: 700;
-        margin-bottom: 0.6rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .dyn-photo1-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
-      }
-      .dyn-photo1-link {
-        color: #2563eb;
-        text-decoration: underline;
-        font-size: 0.92rem;
-        transition: 0.2s;
-      }
-      .dyn-photo1-link:hover {
-        color: #1d4ed8;
-      }
-
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
@@ -278,25 +222,25 @@
     `;
     document.head.appendChild(style);
 
-    const allToolsUrl = "/?view=all-tools";
     const categories = [
-      { name: "Finance", path: "/#finance", slug: "finance" },
-      { name: "Math", path: "/#math", slug: "math" },
-      { name: "Utility", path: "/#utility", slug: "utility" }
+      { name: "FINANCE", path: "/#finance", slug: "finance" },
+      { name: "MATH", path: "/#math", slug: "math" },
+      { name: "UTILITY", path: "/#utility", slug: "utility" }
     ];
 
     const currentUrl = window.location.href.toLowerCase();
 
+    // Top categories + MORE button pointing to /#more
     const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
         return `<a href="${c.path}" class="${isActive}">${c.name}</a>`;
       })
-      .join("") + `<a href="${allToolsUrl}" class="dyn-more-link">More ▾</a>`;
+      .join("") + `<a href="/#more" class="dyn-more-btn" id="dynMoreLinkBtn">MORE</a>`;
 
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}">${c.name}</a>`)
-      .join("") + `<a href="${allToolsUrl}" style="color:#38bdf8;">✨ All Calculators</a>`;
+      .join("") + `<a href="/#more" style="color:#38bdf8;">✨ MORE (ALL TOOLS)</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -305,11 +249,9 @@
           <div class="dyn-logo-icon">&sum;</div>
           <span class="dyn-brand-text">thequantcals</span>
         </a>
-
         <nav class="dyn-desktop-nav">
           ${desktopLinksHtml}
         </nav>
-
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
           <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation">
@@ -317,7 +259,6 @@
           </button>
         </div>
       </header>
-
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
@@ -328,6 +269,16 @@
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
+    // If clicked while already on the homepage, trigger the native MORE action directly
+    const moreBtn = document.getElementById("dynMoreLinkBtn");
+    if (moreBtn && (window.location.pathname === "/" || window.location.pathname.endsWith("/index.html"))) {
+      moreBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        triggerHomeMoreView();
+      });
+    }
+
+    // Drawer events
     const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
     const closeBtn = document.getElementById("dynCloseBtn");
     const drawer = document.getElementById("dynDrawer");
@@ -337,6 +288,7 @@
     if (closeBtn) closeBtn.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
     if (overlay) overlay.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
 
+    // Theme toggle
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
@@ -353,97 +305,38 @@
     }
   }
 
-  // BUILD PHOTO 1 DIRECTORY DYNAMICALLY WHEN VIEWING "ALL TOOLS"
-  if (isToolsDirectoryView) {
-    document.title = "All Calculators | thequantcals";
+  // Helper: Triggers the exact homepage action that shows Photo 1
+  function triggerHomeMoreView() {
+    // 1. Look for native homepage MORE buttons
+    const candidates = Array.from(document.querySelectorAll("header a, header button, nav a, nav button, button, a"));
+    const nativeMore = candidates.find((el) => {
+      if (el.id === "dynMoreLinkBtn") return false;
+      const t = el.textContent.trim().toUpperCase();
+      return t === "MORE" || t === "MORE ▾";
+    });
 
-    fetch("/")
-      .then((res) => (res.ok ? res.text() : ""))
-      .then((html) => {
-        if (!html) return;
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
+    if (nativeMore) {
+      nativeMore.click();
+      return;
+    }
 
-        // Collect all categories and links from homepage
-        const headings = doc.querySelectorAll("h2, h3");
-        const categoryMap = [];
-        const ignored = ["interactive", "popular", "status", "system"];
+    // 2. Fallback: hide the interactive calculator widget directly and show all categories
+    document.querySelectorAll("section, div").forEach((el) => {
+      const text = (el.textContent || "").toLowerCase();
+      if (text.includes("interactive calculator") && el.querySelector("table, .calculator-keypad, input")) {
+        el.style.display = "none";
+      }
+    });
+  }
 
-        headings.forEach((h) => {
-          const title = h.textContent.trim();
-          const lower = title.toLowerCase();
-          if (!title || ignored.some((w) => lower.includes(w))) return;
-
-          let container = h.parentElement;
-          if (container && container.querySelectorAll("a").length === 0) {
-            container = container.parentElement;
-          }
-
-          if (container) {
-            const links = container.querySelectorAll('a[href*="/tools/"], a[href*="calculator"]');
-            const catTools = [];
-
-            links.forEach((a) => {
-              const name = a.textContent.trim().replace(/^[^a-zA-Z0-9]+/, "");
-              const href = a.getAttribute("href");
-              if (name && href && !catTools.some((t) => t.url === href)) {
-                catTools.push({ name, url: href });
-              }
-            });
-
-            if (catTools.length > 0) {
-              categoryMap.push({ title, tools: catTools });
-            }
-          }
-        });
-
-        // Generate columns layout matching Photo 1
-        let colsHtml = "";
-        categoryMap.forEach((col) => {
-          colsHtml += `
-            <div class="dyn-photo1-col">
-              <h3>${col.title}</h3>
-              <div class="dyn-photo1-links">
-                ${col.tools.map((t) => `<a href="${t.url}" class="dyn-photo1-link">${t.name}</a>`).join("")}
-              </div>
-            </div>
-          `;
-        });
-
-        const viewContainer = document.createElement("div");
-        viewContainer.className = "dyn-photo1-container";
-        viewContainer.innerHTML = `
-          <div class="dyn-photo1-crumb">home / all calculators</div>
-          <h1 class="dyn-photo1-title">All Calculators</h1>
-          <p class="dyn-photo1-desc">The following is a complete list of all our calculators by category.</p>
-          <input type="text" id="dynPhoto1SearchInput" class="dyn-photo1-search" placeholder="Search calculators">
-          <div class="dyn-photo1-grid" id="dynPhoto1Grid">
-            ${colsHtml}
-          </div>
-        `;
-
-        // Strip homepage widgets completely
-        Array.from(document.body.children).forEach((child) => {
-          if (child.id !== "siteDynamicHeader" && child.id !== "dynDrawer" && child.id !== "dynOverlay") {
-            child.remove();
-          }
-        });
-
-        document.body.appendChild(viewContainer);
-
-        // Instant filter search logic
-        const searchInput = document.getElementById("dynPhoto1SearchInput");
-        if (searchInput) {
-          searchInput.addEventListener("input", (e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll(".dyn-photo1-link").forEach((link) => {
-              const match = link.textContent.toLowerCase().includes(query);
-              link.style.display = match ? "inline" : "none";
-            });
-          });
-        }
-      })
-      .catch(() => {});
+  // If arriving at the homepage with #more, auto-trigger the view immediately
+  if (window.location.hash === "#more" || window.location.search.includes("view=more")) {
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(triggerHomeMoreView, 60);
+    });
+    window.addEventListener("load", () => {
+      setTimeout(triggerHomeMoreView, 120);
+    });
   }
 
   if (document.readyState === "loading") {
