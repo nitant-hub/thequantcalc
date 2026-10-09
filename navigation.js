@@ -1,12 +1,14 @@
 (function () {
+  const isAllToolsView = window.location.pathname.endsWith("/all-tools.html") || 
+                         window.location.search.includes("view=all-tools") ||
+                         window.location.hash === "#all-tools-page";
+
   function setupNavigation() {
-    // 1. Clean up duplicate elements if re-run
     const oldHeader = document.getElementById("siteDynamicHeader");
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
     if (oldDrawer) oldDrawer.remove();
 
-    // 2. Inject Responsive CSS
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -60,7 +62,6 @@
         -webkit-text-fill-color: transparent !important;
       }
 
-      /* Desktop navigation items */
       .dyn-desktop-nav {
         display: none;
         align-items: center;
@@ -91,7 +92,6 @@
         background: rgba(30, 58, 138, 0.45) !important;
       }
 
-      /* Direct-link "More" badge in modern styling */
       .dyn-more-link {
         background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.25)) !important;
         border: 1px solid rgba(56, 189, 248, 0.5) !important;
@@ -105,6 +105,7 @@
         align-items: center !important;
         gap: 0.3rem !important;
         height: auto !important;
+        cursor: pointer !important;
         transition: all 0.2s ease !important;
       }
       .dyn-more-link:hover {
@@ -113,7 +114,6 @@
         box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4) !important;
       }
 
-      /* Right controls */
       .dyn-right-controls {
         display: flex !important;
         align-items: center !important;
@@ -149,7 +149,6 @@
         display: block !important;
       }
 
-      /* Mobile Drawer */
       .dyn-drawer-menu {
         position: fixed !important;
         top: 0 !important;
@@ -207,7 +206,67 @@
         display: block !important;
       }
 
-      /* Desktop View: Show Header items, hide mobile menu */
+      /* Clean All-Tools Page styling */
+      .tools-page-wrapper {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        box-sizing: border-box;
+      }
+      .tools-page-header {
+        margin-bottom: 2rem;
+      }
+      .tools-page-header h1 {
+        font-size: 1.85rem;
+        font-weight: 800;
+        margin-bottom: 0.4rem;
+        color: var(--text-main, #1e293b);
+      }
+      .tools-page-header p {
+        color: var(--text-muted, #64748b);
+        font-size: 1rem;
+      }
+      .tools-cat-box {
+        background: var(--bg-surface, #ffffff);
+        border: 1px solid var(--border-color, #e2e8f0);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      }
+      .tools-cat-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color, #e2e8f0);
+        padding-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .tools-cat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.75rem;
+      }
+      .tools-item-card {
+        padding: 0.85rem 1rem;
+        background: var(--bg-primary, #f8fafc);
+        border: 1px solid var(--border-color, #e2e8f0);
+        border-radius: 8px;
+        color: var(--text-main, #1e293b);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: block;
+        transition: all 0.2s ease;
+      }
+      .tools-item-card:hover {
+        border-color: #38bdf8;
+        color: #0284c7;
+        transform: translateY(-2px);
+      }
+
       @media (min-width: 768px) {
         .dyn-desktop-nav {
           display: flex !important;
@@ -221,19 +280,15 @@
     `;
     document.head.appendChild(style);
 
-    // 3. Category definitions
-    // Set your all-tools destination URL here (e.g. '/#all' or '/all-tools.html')
-    const allToolsPageUrl = "/#all";
-
+    const allToolsPageUrl = "/?view=all-tools";
     const categories = [
-      { name: "Mathematics", path: "/#math", slug: "math", icon: "📐" },
-      { name: "Finance", path: "/#finance", slug: "finance", icon: "📈" },
-      { name: "Utility", path: "/#utility", slug: "utility", icon: "🧰" }
+      { name: "Finance", path: "/#finance", slug: "finance" },
+      { name: "Math", path: "/#math", slug: "math" },
+      { name: "Utility", path: "/#utility", slug: "utility" }
     ];
 
     const currentUrl = window.location.href.toLowerCase();
 
-    // Generate desktop category links + More direct link
     const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
@@ -241,12 +296,10 @@
       })
       .join("") + `<a href="${allToolsPageUrl}" class="dyn-more-link">More ▾</a>`;
 
-    // Generate mobile drawer links
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name}</a>`)
-      .join("") + `<a href="${allToolsPageUrl}" style="color:#38bdf8;"><span>✨</span> All Tools & Categories</a>`;
+      .map((c) => `<a href="${c.path}">${c.name}</a>`)
+      .join("") + `<a href="${allToolsPageUrl}" style="color:#38bdf8;">✨ All Tools & Categories</a>`;
 
-    // 4. Mount Header and Drawer
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
@@ -255,7 +308,6 @@
           <span class="dyn-brand-text">thequantcals</span>
         </a>
 
-        <!-- Desktop Navigation: 3 categories + direct link More button -->
         <nav class="dyn-desktop-nav">
           ${desktopLinksHtml}
         </nav>
@@ -278,7 +330,6 @@
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // 5. Drawer open/close interaction
     const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
     const closeBtn = document.getElementById("dynCloseBtn");
     const drawer = document.getElementById("dynDrawer");
@@ -288,7 +339,6 @@
     if (closeBtn) closeBtn.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
     if (overlay) overlay.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
 
-    // 6. Theme Toggle (Dark / Light)
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
@@ -303,6 +353,91 @@
         themeBtn.textContent = isDark ? "🌙" : "☀️";
       };
     }
+  }
+
+  // AUTOMATIC DISCOVERY OF ANY EXISTING AND NEW CATEGORY & TOOLS
+  if (isAllToolsView) {
+    document.title = "All Tools & Categories | thequantcals";
+
+    fetch("/")
+      .then((res) => (res.ok ? res.text() : ""))
+      .then((html) => {
+        if (!html) return;
+        const parser = new DOMParser();
+        const homeDoc = parser.parseFromString(html, "text/html");
+
+        // Select all headings that define categories (h2/h3)
+        const headings = homeDoc.querySelectorAll("h2, h3, [data-category-title]");
+        const discoveredCategories = [];
+        const ignored = ["interactive", "popular", "status", "system", "features", "faqs"];
+
+        headings.forEach((h) => {
+          const title = h.textContent.trim();
+          const lowerTitle = title.toLowerCase();
+
+          // Exclude widgets, calculators, and system blocks
+          if (!title || ignored.some((word) => lowerTitle.includes(word))) return;
+
+          // Look for container holding tool links under this category heading
+          let container = h.parentElement;
+          if (container && container.querySelectorAll("a").length === 0) {
+            container = container.parentElement;
+          }
+
+          if (container) {
+            const links = container.querySelectorAll('a[href*="/tools/"], a[href*="calculator"]');
+            const catTools = [];
+
+            links.forEach((a) => {
+              const name = a.textContent.trim().replace(/^[^a-zA-Z0-9]+/, "");
+              const href = a.getAttribute("href");
+              if (name && href && !catTools.some((t) => t.url === href)) {
+                catTools.push({ name, url: href });
+              }
+            });
+
+            if (catTools.length > 0) {
+              discoveredCategories.push({
+                category: title,
+                tools: catTools
+              });
+            }
+          }
+        });
+
+        // Build HTML for all discovered categories
+        let groupsHtml = "";
+        discoveredCategories.forEach((cat) => {
+          groupsHtml += `
+            <div class="tools-cat-box">
+              <h2 class="tools-cat-title">${cat.category}</h2>
+              <div class="tools-cat-grid">
+                ${cat.tools.map((t) => `<a href="${t.url}" class="tools-item-card">${t.name}</a>`).join("")}
+              </div>
+            </div>
+          `;
+        });
+
+        const pageContainer = document.createElement("div");
+        pageContainer.className = "tools-page-wrapper";
+        pageContainer.innerHTML = `
+          <div class="tools-page-header">
+            <h1>All Tools & Categories</h1>
+            <p>Browse all available tools grouped by category.</p>
+          </div>
+          ${groupsHtml}
+        `;
+
+        // Strip homepage widgets and render only the clean category list
+        Array.from(document.body.children).forEach((child) => {
+          if (child.id !== "siteDynamicHeader" && child.id !== "dynDrawer" && child.id !== "dynOverlay") {
+            child.remove();
+          }
+        });
+
+        document.body.appendChild(pageContainer);
+      })
+      .catch(() => {});
   }
 
   if (document.readyState === "loading") {
