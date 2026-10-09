@@ -70,9 +70,13 @@
         .close-menu-btn { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; }
 
         /* Layout grid */
-        .wrapper { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .main-body { display: flex; flex-direction: column; gap: 2rem; width: 100%; min-width: 0; }
+        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 500; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
 
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
         .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
@@ -84,7 +88,13 @@
         footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
         footer a { color: var(--text-muted); text-decoration: none; }
 
-        /* DESKTOP (also Chrome "Desktop site"): header links + More, NO hamburger */
+        @media (max-width: 767px) {
+            .sidebar { display: none; }
+            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
+            .main-body { padding: 1.25rem 1rem; } 
+            .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
+        }
+
         @media (min-width: 768px) {
             header#siteHeader { padding: 0 1.5rem; }
             .desktop-nav { display: flex; margin-right: 1rem; }
@@ -92,12 +102,6 @@
             .brand-title { font-size: 1.25rem; }
             .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; }
             .sidebar { position: sticky; top: calc(var(--header-height) + 2rem); }
-        }
-
-        /* MOBILE: hamburger only, no sidebar */
-        @media (max-width: 767px) {
-            .sidebar { display: none; }
-            .wrapper { padding: 0 0.5rem; }
         }
     </style>
     
@@ -113,19 +117,16 @@
             <div class="brand-title">thequantcals</div>
         </a>
 
-        <!-- Desktop navigation links -->
         <nav class="desktop-nav" id="desktopNav"></nav>
         
         <div class="nav-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Night Mode">🌙</button>
-            <!-- Mobile hamburger button -->
             <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <!-- Mobile slide-out menu -->
     <nav class="nav-menu" id="navMenu">
         <button id="closeMenuBtn" class="close-menu-btn" aria-label="Close Menu">×</button>
         <div class="lbl">Menu</div>
@@ -167,7 +168,6 @@
     </footer>
 
     <script>
-        /* Dark mode */
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { themeToggle.textContent = '☀️'; }
@@ -179,7 +179,6 @@
             }
         });
 
-        /* Hamburger menu toggling */
         const navMenu = document.getElementById('navMenu');
         document.addEventListener('click', (e) => {
             const t = e.target;
@@ -188,7 +187,6 @@
         });
         window.addEventListener('resize', () => navMenu.classList.remove('active'));
 
-        /* Universal Navigation Builder with Fallbacks */
         (function() {
             const FIRST = ['financial', 'math', 'utility'];
             const SHORT = { financial: 'Finance' };
@@ -214,7 +212,6 @@
                 }
             } catch (e) {}
 
-            // Build Desktop Nav (Finance, Math, Utility, More)
             let desktopHtml = '';
             FIRST.forEach(c => {
                 const label = SHORT[c] || pretty(c);
@@ -223,7 +220,6 @@
             desktopHtml += `<a href="/#/all">More</a>`;
             document.getElementById('desktopNav').innerHTML = desktopHtml;
 
-            // Build Mobile Slide-out Menu
             let mobileHtml = `<a href="/">🏠 Home</a>`;
             cats.forEach(c => {
                 const icon = ICON[c] || '🗂️';
