@@ -1,12 +1,12 @@
 (function () {
   function setupNavigation() {
-    // 1. Remove duplicate elements if re-run
+    // 1. Clean up duplicate elements if re-run
     const oldHeader = document.getElementById("siteDynamicHeader");
     if (oldHeader) oldHeader.remove();
     const oldDrawer = document.getElementById("dynDrawer");
     if (oldDrawer) oldDrawer.remove();
 
-    // 2. Responsive CSS
+    // 2. Responsive CSS Injection
     const style = document.createElement("style");
     style.id = "injectedNavigationStyles";
     style.textContent = `
@@ -60,7 +60,7 @@
         -webkit-text-fill-color: transparent !important;
       }
 
-      /* Desktop navigation items */
+      /* Desktop links */
       .dyn-desktop-nav {
         display: none;
         align-items: center;
@@ -80,7 +80,7 @@
         padding: 0 0.85rem !important;
         border-bottom: 3px solid transparent !important;
         transition: 0.2s ease !important;
-        text-transform: uppercase;
+        text-transform: uppercase !important;
       }
       .dyn-desktop-nav a:hover {
         color: #ffffff !important;
@@ -92,8 +92,8 @@
         background: rgba(30, 58, 138, 0.45) !important;
       }
 
-      /* Exact Homepage-Style "MORE" Button */
-      .dyn-more-btn {
+      /* Native-style MORE button */
+      .dyn-more-pill-btn {
         background: #1e3a8a !important;
         border: 1px solid rgba(96, 165, 250, 0.4) !important;
         color: #ffffff !important;
@@ -107,10 +107,10 @@
         gap: 0.3rem !important;
         height: auto !important;
         cursor: pointer !important;
-        text-transform: uppercase;
+        text-transform: uppercase !important;
         transition: all 0.2s ease !important;
       }
-      .dyn-more-btn:hover {
+      .dyn-more-pill-btn:hover {
         background: #2563eb !important;
         border-color: #93c5fd !important;
       }
@@ -222,6 +222,9 @@
     `;
     document.head.appendChild(style);
 
+    // EXACT TARGET URL SPECIFIED BY YOU
+    const targetMoreUrl = "https://thequantcal.pages.dev/?view=all-tools#/all";
+
     const categories = [
       { name: "FINANCE", path: "/#finance", slug: "finance" },
       { name: "MATH", path: "/#math", slug: "math" },
@@ -230,18 +233,20 @@
 
     const currentUrl = window.location.href.toLowerCase();
 
-    // Top categories + MORE button pointing to /#more
+    // Desktop items
     const desktopLinksHtml = categories
       .map((c) => {
         const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
         return `<a href="${c.path}" class="${isActive}">${c.name}</a>`;
       })
-      .join("") + `<a href="/#more" class="dyn-more-btn" id="dynMoreLinkBtn">MORE</a>`;
+      .join("") + `<a href="${targetMoreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
+    // Mobile drawer items
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}">${c.name}</a>`)
-      .join("") + `<a href="/#more" style="color:#38bdf8;">✨ MORE (ALL TOOLS)</a>`;
+      .join("") + `<a href="${targetMoreUrl}" style="color:#38bdf8; font-weight:700;">✨ MORE (ALL TOOLS)</a>`;
 
+    // Construct Navigation Bar
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
@@ -249,9 +254,11 @@
           <div class="dyn-logo-icon">&sum;</div>
           <span class="dyn-brand-text">thequantcals</span>
         </a>
+
         <nav class="dyn-desktop-nav">
           ${desktopLinksHtml}
         </nav>
+
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
           <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation">
@@ -259,6 +266,7 @@
           </button>
         </div>
       </header>
+
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
         <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
@@ -269,16 +277,7 @@
 
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // If clicked while already on the homepage, trigger the native MORE action directly
-    const moreBtn = document.getElementById("dynMoreLinkBtn");
-    if (moreBtn && (window.location.pathname === "/" || window.location.pathname.endsWith("/index.html"))) {
-      moreBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        triggerHomeMoreView();
-      });
-    }
-
-    // Drawer events
+    // Mobile Drawer interactions
     const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
     const closeBtn = document.getElementById("dynCloseBtn");
     const drawer = document.getElementById("dynDrawer");
@@ -288,7 +287,7 @@
     if (closeBtn) closeBtn.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
     if (overlay) overlay.onclick = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
 
-    // Theme toggle
+    // Theme Toggle
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
@@ -303,40 +302,6 @@
         themeBtn.textContent = isDark ? "🌙" : "☀️";
       };
     }
-  }
-
-  // Helper: Triggers the exact homepage action that shows Photo 1
-  function triggerHomeMoreView() {
-    // 1. Look for native homepage MORE buttons
-    const candidates = Array.from(document.querySelectorAll("header a, header button, nav a, nav button, button, a"));
-    const nativeMore = candidates.find((el) => {
-      if (el.id === "dynMoreLinkBtn") return false;
-      const t = el.textContent.trim().toUpperCase();
-      return t === "MORE" || t === "MORE ▾";
-    });
-
-    if (nativeMore) {
-      nativeMore.click();
-      return;
-    }
-
-    // 2. Fallback: hide the interactive calculator widget directly and show all categories
-    document.querySelectorAll("section, div").forEach((el) => {
-      const text = (el.textContent || "").toLowerCase();
-      if (text.includes("interactive calculator") && el.querySelector("table, .calculator-keypad, input")) {
-        el.style.display = "none";
-      }
-    });
-  }
-
-  // If arriving at the homepage with #more, auto-trigger the view immediately
-  if (window.location.hash === "#more" || window.location.search.includes("view=more")) {
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(triggerHomeMoreView, 60);
-    });
-    window.addEventListener("load", () => {
-      setTimeout(triggerHomeMoreView, 120);
-    });
   }
 
   if (document.readyState === "loading") {
