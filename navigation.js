@@ -1,7 +1,5 @@
 (function () {
-  const isAllToolsView = window.location.pathname.endsWith("/all-tools.html") || 
-                         window.location.search.includes("view=all-tools") ||
-                         window.location.hash === "#all-tools-page";
+  const isToolsDirectoryView = window.location.search.includes("view=all-tools") || window.location.hash === "#all-tools";
 
   function setupNavigation() {
     const oldHeader = document.getElementById("siteDynamicHeader");
@@ -61,7 +59,6 @@
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
       }
-
       .dyn-desktop-nav {
         display: none;
         align-items: center;
@@ -91,7 +88,6 @@
         border-bottom: 3px solid #38bdf8 !important;
         background: rgba(30, 58, 138, 0.45) !important;
       }
-
       .dyn-more-link {
         background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.25)) !important;
         border: 1px solid rgba(56, 189, 248, 0.5) !important;
@@ -113,7 +109,6 @@
         color: #ffffff !important;
         box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4) !important;
       }
-
       .dyn-right-controls {
         display: flex !important;
         align-items: center !important;
@@ -148,7 +143,6 @@
         border-radius: 2px !important;
         display: block !important;
       }
-
       .dyn-drawer-menu {
         position: fixed !important;
         top: 0 !important;
@@ -206,65 +200,69 @@
         display: block !important;
       }
 
-      /* Clean All-Tools Page styling */
-      .tools-page-wrapper {
-        max-width: 900px;
-        margin: 2rem auto;
-        padding: 0 1rem;
+      /* Photo 1 Layout Replication Styles */
+      .dyn-photo1-container {
+        max-width: 950px;
+        margin: 1.5rem auto;
+        padding: 0 1.2rem;
         box-sizing: border-box;
       }
-      .tools-page-header {
-        margin-bottom: 2rem;
-      }
-      .tools-page-header h1 {
-        font-size: 1.85rem;
-        font-weight: 800;
+      .dyn-photo1-crumb {
+        color: #2563eb;
+        font-size: 0.85rem;
         margin-bottom: 0.4rem;
-        color: var(--text-main, #1e293b);
+        font-family: inherit;
       }
-      .tools-page-header p {
-        color: var(--text-muted, #64748b);
-        font-size: 1rem;
+      .dyn-photo1-title {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1e40af;
+        margin-bottom: 0.2rem;
       }
-      .tools-cat-box {
-        background: var(--bg-surface, #ffffff);
-        border: 1px solid var(--border-color, #e2e8f0);
-        border-radius: 12px;
-        padding: 1.25rem 1.5rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      .dyn-photo1-desc {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
       }
-      .tools-cat-title {
-        font-size: 1.2rem;
+      .dyn-photo1-search {
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        margin-bottom: 1.8rem;
+        box-sizing: border-box;
+        outline: none;
+      }
+      .dyn-photo1-search:focus {
+        border-color: #3b82f6;
+      }
+      .dyn-photo1-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2rem 1.5rem;
+      }
+      .dyn-photo1-col h3 {
+        font-size: 1.05rem;
         font-weight: 700;
-        margin-bottom: 1rem;
-        border-bottom: 1px solid var(--border-color, #e2e8f0);
-        padding-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
       }
-      .tools-cat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 0.75rem;
+      .dyn-photo1-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
       }
-      .tools-item-card {
-        padding: 0.85rem 1rem;
-        background: var(--bg-primary, #f8fafc);
-        border: 1px solid var(--border-color, #e2e8f0);
-        border-radius: 8px;
-        color: var(--text-main, #1e293b);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        display: block;
-        transition: all 0.2s ease;
+      .dyn-photo1-link {
+        color: #2563eb;
+        text-decoration: underline;
+        font-size: 0.92rem;
+        transition: 0.2s;
       }
-      .tools-item-card:hover {
-        border-color: #38bdf8;
-        color: #0284c7;
-        transform: translateY(-2px);
+      .dyn-photo1-link:hover {
+        color: #1d4ed8;
       }
 
       @media (min-width: 768px) {
@@ -280,7 +278,7 @@
     `;
     document.head.appendChild(style);
 
-    const allToolsPageUrl = "/?view=all-tools";
+    const allToolsUrl = "/?view=all-tools";
     const categories = [
       { name: "Finance", path: "/#finance", slug: "finance" },
       { name: "Math", path: "/#math", slug: "math" },
@@ -294,17 +292,17 @@
         const isActive = currentUrl.includes(c.slug) ? "is-active" : "";
         return `<a href="${c.path}" class="${isActive}">${c.name}</a>`;
       })
-      .join("") + `<a href="${allToolsPageUrl}" class="dyn-more-link">More ▾</a>`;
+      .join("") + `<a href="${allToolsUrl}" class="dyn-more-link">More ▾</a>`;
 
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}">${c.name}</a>`)
-      .join("") + `<a href="${allToolsPageUrl}" style="color:#38bdf8;">✨ All Tools & Categories</a>`;
+      .join("") + `<a href="${allToolsUrl}" style="color:#38bdf8;">✨ All Calculators</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
         <a href="/" class="dyn-brand">
-          <div class="dyn-logo-symbol">&sum;</div>
+          <div class="dyn-logo-icon">&sum;</div>
           <span class="dyn-brand-text">thequantcals</span>
         </a>
 
@@ -355,30 +353,27 @@
     }
   }
 
-  // AUTOMATIC DISCOVERY OF ANY EXISTING AND NEW CATEGORY & TOOLS
-  if (isAllToolsView) {
-    document.title = "All Tools & Categories | thequantcals";
+  // BUILD PHOTO 1 DIRECTORY DYNAMICALLY WHEN VIEWING "ALL TOOLS"
+  if (isToolsDirectoryView) {
+    document.title = "All Calculators | thequantcals";
 
     fetch("/")
       .then((res) => (res.ok ? res.text() : ""))
       .then((html) => {
         if (!html) return;
         const parser = new DOMParser();
-        const homeDoc = parser.parseFromString(html, "text/html");
+        const doc = parser.parseFromString(html, "text/html");
 
-        // Select all headings that define categories (h2/h3)
-        const headings = homeDoc.querySelectorAll("h2, h3, [data-category-title]");
-        const discoveredCategories = [];
-        const ignored = ["interactive", "popular", "status", "system", "features", "faqs"];
+        // Collect all categories and links from homepage
+        const headings = doc.querySelectorAll("h2, h3");
+        const categoryMap = [];
+        const ignored = ["interactive", "popular", "status", "system"];
 
         headings.forEach((h) => {
           const title = h.textContent.trim();
-          const lowerTitle = title.toLowerCase();
+          const lower = title.toLowerCase();
+          if (!title || ignored.some((w) => lower.includes(w))) return;
 
-          // Exclude widgets, calculators, and system blocks
-          if (!title || ignored.some((word) => lowerTitle.includes(word))) return;
-
-          // Look for container holding tool links under this category heading
           let container = h.parentElement;
           if (container && container.querySelectorAll("a").length === 0) {
             container = container.parentElement;
@@ -397,45 +392,56 @@
             });
 
             if (catTools.length > 0) {
-              discoveredCategories.push({
-                category: title,
-                tools: catTools
-              });
+              categoryMap.push({ title, tools: catTools });
             }
           }
         });
 
-        // Build HTML for all discovered categories
-        let groupsHtml = "";
-        discoveredCategories.forEach((cat) => {
-          groupsHtml += `
-            <div class="tools-cat-box">
-              <h2 class="tools-cat-title">${cat.category}</h2>
-              <div class="tools-cat-grid">
-                ${cat.tools.map((t) => `<a href="${t.url}" class="tools-item-card">${t.name}</a>`).join("")}
+        // Generate columns layout matching Photo 1
+        let colsHtml = "";
+        categoryMap.forEach((col) => {
+          colsHtml += `
+            <div class="dyn-photo1-col">
+              <h3>${col.title}</h3>
+              <div class="dyn-photo1-links">
+                ${col.tools.map((t) => `<a href="${t.url}" class="dyn-photo1-link">${t.name}</a>`).join("")}
               </div>
             </div>
           `;
         });
 
-        const pageContainer = document.createElement("div");
-        pageContainer.className = "tools-page-wrapper";
-        pageContainer.innerHTML = `
-          <div class="tools-page-header">
-            <h1>All Tools & Categories</h1>
-            <p>Browse all available tools grouped by category.</p>
+        const viewContainer = document.createElement("div");
+        viewContainer.className = "dyn-photo1-container";
+        viewContainer.innerHTML = `
+          <div class="dyn-photo1-crumb">home / all calculators</div>
+          <h1 class="dyn-photo1-title">All Calculators</h1>
+          <p class="dyn-photo1-desc">The following is a complete list of all our calculators by category.</p>
+          <input type="text" id="dynPhoto1SearchInput" class="dyn-photo1-search" placeholder="Search calculators">
+          <div class="dyn-photo1-grid" id="dynPhoto1Grid">
+            ${colsHtml}
           </div>
-          ${groupsHtml}
         `;
 
-        // Strip homepage widgets and render only the clean category list
+        // Strip homepage widgets completely
         Array.from(document.body.children).forEach((child) => {
           if (child.id !== "siteDynamicHeader" && child.id !== "dynDrawer" && child.id !== "dynOverlay") {
             child.remove();
           }
         });
 
-        document.body.appendChild(pageContainer);
+        document.body.appendChild(viewContainer);
+
+        // Instant filter search logic
+        const searchInput = document.getElementById("dynPhoto1SearchInput");
+        if (searchInput) {
+          searchInput.addEventListener("input", (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll(".dyn-photo1-link").forEach((link) => {
+              const match = link.textContent.toLowerCase().includes(query);
+              link.style.display = match ? "inline" : "none";
+            });
+          });
+        }
       })
       .catch(() => {});
   }
