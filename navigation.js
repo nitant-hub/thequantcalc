@@ -64,7 +64,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* REFINED MODERN MOBILE DRAWER */
+      /* ZERO-GAP FLUSH MOBILE DRAWER */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -74,18 +74,16 @@
         height: 100dvh !important;
         background: #ffffff !important; 
         border-left: 1px solid #e2e8f0 !important; 
-        padding: 1.1rem 1.1rem 2.5rem !important; /* Reduced top gap from 3.5rem to 1.1rem */
+        padding: 0.75rem 0.9rem 2rem !important; /* Zero dead space at top */
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.45rem !important; 
-        transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: -10px 0 35px rgba(15, 23, 42, 0.2) !important; 
+        gap: 0.4rem !important; 
+        transition: right 0.26s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: -10px 0 35px rgba(15, 23, 42, 0.22) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
         box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch !important;
-        border-top-left-radius: 14px !important;
-        border-bottom-left-radius: 14px !important;
       }
       [data-theme="dark"] .dyn-drawer-menu { 
         background: #0b132b !important; 
@@ -93,48 +91,36 @@
       }
       .dyn-drawer-menu.open { right: 0 !important; }
 
-      /* PROPORTIONAL DRAWER HEADER BAR */
-      .dyn-drawer-header {
+      /* FLUSH SEARCH + CLOSE BUTTON ROW (NO UNWANTED HEADER WORDS) */
+      .dyn-drawer-top-row {
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        padding-bottom: 0.8rem !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
         margin-bottom: 0.4rem !important;
-        border-bottom: 1px solid #f1f5f9 !important;
       }
-      [data-theme="dark"] .dyn-drawer-header {
-        border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-      }
-
-      .dyn-drawer-title { 
-        color: #0f172a !important; 
-        font-size: 0.95rem !important; 
-        font-weight: 800 !important; 
-        letter-spacing: 0.8px !important; 
-        text-transform: uppercase !important; 
-        margin: 0 !important;
-      }
-      [data-theme="dark"] .dyn-drawer-title { color: #f8fafc !important; }
 
       .dyn-close-btn { 
         background: #f1f5f9 !important; 
-        border: none !important; 
-        width: 32px !important;
-        height: 32px !important;
-        border-radius: 8px !important;
-        font-size: 1.1rem !important; 
-        font-weight: 700 !important;
-        color: #64748b !important; 
+        border: 1px solid #cbd5e1 !important; 
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 10px !important;
+        font-size: 1.15rem !important; 
+        font-weight: 800 !important;
+        color: #475569 !important; 
         cursor: pointer !important; 
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         transition: all 0.15s ease !important;
+        flex-shrink: 0 !important;
         padding: 0 !important;
       }
       .dyn-close-btn:active { transform: scale(0.92) !important; }
       [data-theme="dark"] .dyn-close-btn { 
         background: rgba(255, 255, 255, 0.08) !important; 
+        border-color: rgba(255, 255, 255, 0.15) !important;
         color: #cbd5e1 !important; 
       }
 
@@ -165,16 +151,15 @@
 
       /* SEARCH COMPONENT */
       .dyn-search-wrapper { position: relative !important; width: 100% !important; box-sizing: border-box !important; display: block !important; }
-      #dynDrawerSearchSlot { width: 100% !important; margin: 0.2rem 0 0.5rem 0 !important; }
+      .dyn-drawer-top-row .dyn-search-wrapper { flex: 1 !important; margin: 0 !important; }
       
-      .dyn-search-wrapper.in-drawer { margin-bottom: 0.4rem !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.8rem auto 1.2rem !important; padding: 0 1rem !important; }
       .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.75rem 1rem !important;
-        font-size: 0.95rem !important;
+        padding: 0.65rem 0.9rem !important;
+        font-size: 0.92rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 10px !important;
@@ -183,7 +168,7 @@
         color: #0f172a !important;
         outline: none !important;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
         transition: all 0.2s ease-in-out !important;
       }
       .dyn-search-input::placeholder {
@@ -256,11 +241,10 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <div class="dyn-drawer-header">
-          <div class="dyn-drawer-title">Navigation</div>
+        <div class="dyn-drawer-top-row">
+          <div id="dynDrawerSearchSlot" style="flex:1;"></div>
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&#x2715;</button>
         </div>
-        <div id="dynDrawerSearchSlot"></div>
         <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
@@ -288,7 +272,7 @@
       const wrap = document.createElement("div");
       if (elementId) wrap.id = elementId;
       wrap.className = "dyn-search-wrapper " + wrapperClass;
-      wrap.innerHTML = `<input type="text" class="dyn-search-input" placeholder="🔍 Search any calculator..." autocomplete="off"><div class="dyn-search-dropdown"></div>`;
+      wrap.innerHTML = `<input type="text" class="dyn-search-input" placeholder="🔍 Search calculator..." autocomplete="off"><div class="dyn-search-dropdown"></div>`;
 
       const input = wrap.querySelector(".dyn-search-input");
       const dropdown = wrap.querySelector(".dyn-search-dropdown");
@@ -320,7 +304,7 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Integrated search box
+    // 1. MOBILE DRAWER: Inline search in top row
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
