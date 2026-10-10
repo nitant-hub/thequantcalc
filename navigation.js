@@ -330,7 +330,7 @@
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
         background: #0b132b !important;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3) !important;
       }
 
       /* Clear Dropdown styling */
@@ -396,18 +396,18 @@
     `;
 
     const categories = [
-      { name: "FINANCE", href: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", href: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", href: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", href: "/#/financial", hash: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", href: "/#/math", hash: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", href: "/#/utility", hash: "#/utility", slug: "utility", icon: "🧰" }
     ];
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.href}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a href="#/all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.href}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -431,23 +431,31 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Reliable Category Router Execution
-    function routeToCategory(hashPath) {
-      if (window.location.pathname !== "/" && !window.location.pathname.endsWith("/index.html")) {
-        window.location.href = "/" + hashPath;
-        return;
+    // Instant View Switch on Single Touch
+    function navigateInstantly(targetHash) {
+      if (window.location.hash !== targetHash) {
+        window.location.hash = targetHash;
       }
-      window.location.hash = hashPath;
+      
+      // Dispatch browser events to immediately wake the SPA router
       window.dispatchEvent(new Event("hashchange"));
       window.dispatchEvent(new Event("popstate"));
+
+      // If the app registered a global router or render handler, invoke it directly
+      if (typeof window.route === "function") window.route();
+      if (typeof window.router === "function") window.router();
+      if (typeof window.loadPage === "function") window.loadPage(targetHash);
+      if (typeof window.navigate === "function") window.navigate(targetHash);
+
       updateActiveNavTabs();
     }
 
     function updateActiveNavTabs() {
-      const currentH = window.location.hash.toLowerCase();
+      const currentH = (window.location.hash || "").toLowerCase();
       document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((el) => {
-        const href = (el.getAttribute("href") || "").toLowerCase();
-        if (href && currentH.includes(href.replace("#/", "").replace("#", ""))) {
+        const hash = (el.getAttribute("data-hash") || "").toLowerCase();
+        const slug = hash.replace("#/", "").replace("#", "");
+        if (slug && currentH.includes(slug)) {
           el.classList.add("is-active");
         } else {
           el.classList.remove("is-active");
@@ -456,11 +464,14 @@
     }
 
     document.querySelectorAll('.dyn-desktop-nav a, .dyn-drawer-link').forEach((link) => {
-      const href = link.getAttribute("href");
-      if (href && href.startsWith("#/")) {
+      const targetHash = link.getAttribute("data-hash");
+      if (targetHash) {
         link.addEventListener("click", function (e) {
           e.preventDefault();
-          routeToCategory(href);
+          if (link.classList.contains("dyn-drawer-link")) {
+            closeDrawer();
+          }
+          navigateInstantly(targetHash);
         });
       }
     });
@@ -539,10 +550,6 @@
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
-
-    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
-      link.addEventListener("click", closeDrawer);
-    });
 
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
