@@ -1,8 +1,10 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
   const currentHash = window.location.hash.toLowerCase();
+  
+  // Detect tool/inner calculator pages vs homepage
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
-  const isHomePage = !isToolPage;
+  const isHomePage = !isToolPage && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath.endsWith("/index") || currentPath.endsWith("/"));
 
   function initNavigation() {
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSearchWrap"].forEach((id) => {
@@ -108,7 +110,7 @@
         background: rgba(30, 58, 138, 0.5) !important; 
       }
 
-      /* DIRECT LINK MORE BUTTON */
+      /* DIRECT LINK MORE BUTTON PILL */
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important; 
         border: 1px solid rgba(199, 210, 254, 0.45) !important; 
@@ -261,7 +263,7 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* SEARCH COMPONENT */
+      /* SEARCH BOX STYLES */
       .dyn-search-wrapper { 
         position: relative !important; 
         width: 100% !important; 
@@ -273,22 +275,24 @@
         margin: 0 !important; 
       }
 
+      /* Placement 1: On Homepage (under Interactive Calculator) */
       .dyn-search-wrapper.in-home { 
         width: 100% !important; 
-        margin: 0.5rem 0 0.5rem 0 !important; 
+        margin: 0.4rem 0 0.8rem 0 !important; 
         padding: 0 !important; 
       }
 
+      /* Placement 2: On Tool Pages (at the top of the Sidebar) */
       .dyn-search-wrapper.in-sidebar { 
         width: 100% !important; 
-        margin: 0 0 1rem 0 !important; 
+        margin: 0 0 1.25rem 0 !important; 
         padding: 0 !important; 
       }
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.75rem 1rem !important;
-        font-size: 0.95rem !important;
+        padding: 0.75rem 1.1rem !important;
+        font-size: 0.98rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 12px !important;
@@ -468,7 +472,7 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER SEARCH (STRICT SINGLETON)
+    // 1. MOBILE DRAWER: Single search box
     const drawerMenu = document.getElementById("dynDrawer");
     if (drawerMenu) {
       drawerMenu.querySelectorAll(".dyn-search-wrapper, input[type='search'], input[placeholder*='Search']").forEach(el => el.remove());
@@ -479,42 +483,47 @@
       }
     }
 
-    // 2. SEARCH MOUNTING
-    const searchInstance = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
+    // 2. DESKTOP SEARCH: Contextual placement logic
+    const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
-    function placeSearchElement() {
-      if (searchInstance.isConnected) return true;
+    function placeDesktopSearch() {
+      if (desktopSearch.isConnected) return true;
 
       if (isHomePage) {
+        // HOMEPAGE: Attach directly below the interactive calculator card
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
-          homeSlot.appendChild(searchInstance);
+          homeSlot.appendChild(desktopSearch);
           return true;
         }
         const calcCard = document.querySelector(".calc-card");
         if (calcCard && calcCard.parentNode) {
-          calcCard.parentNode.insertBefore(searchInstance, calcCard.nextSibling);
+          calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
           return true;
         }
       } else {
-        const popularElement = Array.from(document.querySelectorAll("aside .box, aside .card, .sidebar .card, .card, .box")).find((el) => {
-          return (el.textContent || "").toLowerCase().includes("popular tools");
-        });
-
-        if (popularElement && popularElement.parentNode) {
-          popularElement.parentNode.insertBefore(searchInstance, popularElement);
-          return true;
-        }
-
+        // TOOL PAGES: Attach to the top of the sidebar directly above Popular Tools
         const sideSlot = document.getElementById("sidebarSearchSlot");
         if (sideSlot) {
-          sideSlot.appendChild(searchInstance);
+          sideSlot.appendChild(desktopSearch);
           return true;
         }
 
-        const asideElem = document.querySelector("aside, .sidebar");
-        if (asideElem) {
-          asideElem.insertBefore(searchInstance, asideElem.firstChild);
+        const popularHeader = Array.from(document.querySelectorAll("h3, h4, .st, b, div, span")).find((el) => {
+          return (el.textContent || "").includes("Popular Tools");
+        });
+
+        if (popularHeader) {
+          const popularCard = popularHeader.closest(".box, .card") || popularHeader.parentElement;
+          if (popularCard && popularCard.parentNode) {
+            popularCard.parentNode.insertBefore(desktopSearch, popularCard);
+            return true;
+          }
+        }
+
+        const sidebarAside = document.querySelector("aside, .sidebar");
+        if (sidebarAside) {
+          sidebarAside.insertBefore(desktopSearch, sidebarAside.firstChild);
           return true;
         }
       }
@@ -524,9 +533,9 @@
     let retries = 0;
     const interval = setInterval(() => {
       retries++;
-      if (placeSearchElement() || retries > 25) clearInterval(interval);
+      if (placeDesktopSearch() || retries > 25) clearInterval(interval);
     }, 100);
-    placeSearchElement();
+    placeDesktopSearch();
 
     // Drawer and Theme controls
     const drawer = document.getElementById("dynDrawer");
