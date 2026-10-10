@@ -1,8 +1,10 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
   const currentHash = window.location.hash.toLowerCase();
+  
+  // Clean page routing detection
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
-  const isHomePage = !isToolPage;
+  const isHomePage = !isToolPage && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath.endsWith("/index") || currentPath.endsWith("/"));
 
   function initNavigation() {
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSearchWrap"].forEach((id) => {
@@ -108,7 +110,7 @@
         background: rgba(30, 58, 138, 0.5) !important; 
       }
 
-      /* DIRECT LINK MORE BUTTON PILL (NO POPUP) */
+      /* DIRECT LINK MORE BUTTON */
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important; 
         border: 1px solid rgba(199, 210, 254, 0.45) !important; 
@@ -171,7 +173,7 @@
         display: block !important; 
       }
       
-      /* MOBILE DRAWER: ZERO TOP GAP */
+      /* MOBILE DRAWER */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -261,26 +263,45 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* SEARCH COMPONENT */
-      .dyn-search-wrapper { position: relative !important; width: 100% !important; box-sizing: border-box !important; display: block !important; }
-      .dyn-drawer-top-row .dyn-search-wrapper { flex: 1 !important; margin: 0 !important; }
-      
-      .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.8rem auto 1.2rem !important; padding: 0 1rem !important; }
-      .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
+      /* SEARCH COMPONENT PLACEMENT STYLING */
+      .dyn-search-wrapper { 
+        position: relative !important; 
+        width: 100% !important; 
+        box-sizing: border-box !important; 
+        display: block !important; 
+      }
+      .dyn-drawer-top-row .dyn-search-wrapper { 
+        flex: 1 !important; 
+        margin: 0 !important; 
+      }
+
+      /* Directly below Interactive Calculator on Homepage */
+      .dyn-search-wrapper.in-home { 
+        width: 100% !important; 
+        margin: 0.5rem 0 0.5rem 0 !important; 
+        padding: 0 !important; 
+      }
+
+      /* Sidebar placement for tool and category pages */
+      .dyn-search-wrapper.in-sidebar { 
+        width: 100% !important; 
+        margin: 0 0 1rem 0 !important; 
+        padding: 0 !important; 
+      }
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.72rem 1rem !important;
-        font-size: 0.95rem !important;
+        padding: 0.8rem 1.1rem !important;
+        font-size: 1rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
-        border-radius: 10px !important;
+        border-radius: 12px !important;
         border: 2px solid #cbd5e1 !important;
         background: #ffffff !important;
         color: #0f172a !important;
         outline: none !important;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
         transition: all 0.2s ease-in-out !important;
       }
       .dyn-search-input::placeholder {
@@ -293,7 +314,7 @@
       }
 
       [data-theme="dark"] .dyn-search-input {
-        background: #0f172a !important;
+        background: #1e293b !important;
         border: 2px solid #334155 !important;
         color: #ffffff !important;
       }
@@ -333,7 +354,7 @@
         font-weight: 700 !important; 
         color: #0f172a !important; 
         text-decoration: none !important; 
-        border-bottom: 1px solid #f1f5f9 !important;
+        border-bottom: 1px solid #f1f5f9 !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a { 
         color: #f1f5f9 !important; 
@@ -347,11 +368,6 @@
         background: #1e293b !important; 
         color: #38bdf8 !important; 
       }
-
-      #dynDesktopSearchWrap { display: none !important; }
-      @media (min-width: 768px) {
-        #dynDesktopSearchWrap { display: block !important; }
-      }
     `;
 
     const categories = [
@@ -364,7 +380,6 @@
       .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
       .join("");
 
-    // MORE BUTTON OPENS DIRECTLY LIKE PREVIOUSLY (NO POPUP)
     const moreUrl = "/#/all";
     const desktopMoreBtnHtml = `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
@@ -425,7 +440,7 @@
       const wrap = document.createElement("div");
       if (elementId) wrap.id = elementId;
       wrap.className = "dyn-search-wrapper " + wrapperClass;
-      wrap.innerHTML = `<input type="text" class="dyn-search-input" placeholder="🔍 Search calculator..." autocomplete="off"><div class="dyn-search-dropdown"></div>`;
+      wrap.innerHTML = `<input type="text" class="dyn-search-input" placeholder="🔍 Search any calculator..." autocomplete="off"><div class="dyn-search-dropdown"></div>`;
 
       const input = wrap.querySelector(".dyn-search-input");
       const dropdown = wrap.querySelector(".dyn-search-dropdown");
@@ -457,33 +472,44 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Inline search
+    // 1. MOBILE DRAWER SEARCH
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
-    const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
-    drawerSlot.appendChild(drawerSearch);
+    if (drawerSlot) {
+      const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
+      drawerSlot.appendChild(drawerSearch);
+    }
 
-    // 2. DESKTOP SEARCH
+    // 2. SEARCH MOUNTING: STRICT PLACEMENT
     const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
-    function placeDesktopSearch() {
+    function placeSearchElement() {
       if (desktopSearch.isConnected) return true;
 
       if (isHomePage) {
-        const mainContainer = document.querySelector("main, .hero, .container, #app, section");
-        if (mainContainer && mainContainer.parentNode) {
-          mainContainer.parentNode.insertBefore(desktopSearch, mainContainer);
+        // 1. Home page: look specifically for #homeSearchSlot
+        const homeSlot = document.getElementById("homeSearchSlot");
+        if (homeSlot) {
+          homeSlot.appendChild(desktopSearch);
           return true;
         }
-        document.body.appendChild(desktopSearch);
-        return true;
-      }
-
-      const sidebar = Array.from(document.querySelectorAll("aside, .sidebar, .card")).find((n) => {
-        return (n.textContent || "").toLowerCase().includes("popular tools");
-      });
-      if (sidebar) {
-        sidebar.insertBefore(desktopSearch, sidebar.firstChild);
-        return true;
+        // 2. Fallback: insert specifically AFTER the .calc-card element
+        const calcCard = document.querySelector(".calc-card");
+        if (calcCard && calcCard.parentNode) {
+          calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
+          return true;
+        }
+      } else {
+        // Other pages: look specifically for #sidebarSearchSlot or sidebar
+        const sideSlot = document.getElementById("sidebarSearchSlot");
+        if (sideSlot) {
+          sideSlot.appendChild(desktopSearch);
+          return true;
+        }
+        const sidebar = document.querySelector("aside");
+        if (sidebar) {
+          sidebar.insertBefore(desktopSearch, sidebar.firstChild);
+          return true;
+        }
       }
       return false;
     }
@@ -491,9 +517,9 @@
     let retries = 0;
     const interval = setInterval(() => {
       retries++;
-      if (placeDesktopSearch() || retries > 10) clearInterval(interval);
-    }, 150);
-    placeDesktopSearch();
+      if (placeSearchElement() || retries > 15) clearInterval(interval);
+    }, 100);
+    placeSearchElement();
 
     // Drawer and Theme controls
     const drawer = document.getElementById("dynDrawer");
