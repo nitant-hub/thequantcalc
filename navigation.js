@@ -29,7 +29,7 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* HIDE REDUNDANT DIRECTORY INTRO TEXT COMPLETELY */
+      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
       p:has(+ input[placeholder*="calculator" i]),
       .category-desc,
       .all-calc-desc {
@@ -396,18 +396,18 @@
     `;
 
     const categories = [
-      { name: "FINANCE", hash: "#financial", slug: "financial", icon: "📈" },
-      { name: "MATH", hash: "#math", slug: "math", icon: "📐" },
-      { name: "UTILITY", hash: "#utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", href: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", href: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", href: "#/utility", slug: "utility", icon: "🧰" }
     ];
 
     const desktopLinksHtml = categories
-      .map((c) => `<a data-target="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a data-target="#all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.href}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a href="#/all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a data-target="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a data-target="#all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.href}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -431,26 +431,23 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Reliable Category Navigation Trigger
-    function handleCategoryNavigation(targetHash) {
+    // Reliable Category Router Execution
+    function routeToCategory(hashPath) {
       if (window.location.pathname !== "/" && !window.location.pathname.endsWith("/index.html")) {
-        window.location.href = "/" + targetHash;
+        window.location.href = "/" + hashPath;
         return;
       }
-      if (window.location.hash === targetHash) {
-        window.dispatchEvent(new HashChangeEvent("hashchange"));
-      } else {
-        window.location.hash = targetHash;
-      }
+      window.location.hash = hashPath;
+      window.dispatchEvent(new Event("hashchange"));
+      window.dispatchEvent(new Event("popstate"));
       updateActiveNavTabs();
     }
 
     function updateActiveNavTabs() {
       const currentH = window.location.hash.toLowerCase();
       document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((el) => {
-        const target = el.getAttribute("data-target") || "";
-        const slug = target.replace("#", "").toLowerCase();
-        if (currentH.includes(slug)) {
+        const href = (el.getAttribute("href") || "").toLowerCase();
+        if (href && currentH.includes(href.replace("#/", "").replace("#", ""))) {
           el.classList.add("is-active");
         } else {
           el.classList.remove("is-active");
@@ -458,12 +455,14 @@
       });
     }
 
-    document.querySelectorAll("[data-target]").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const target = link.getAttribute("data-target");
-        handleCategoryNavigation(target);
-      });
+    document.querySelectorAll('.dyn-desktop-nav a, .dyn-drawer-link').forEach((link) => {
+      const href = link.getAttribute("href");
+      if (href && href.startsWith("#/")) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          routeToCategory(href);
+        });
+      }
     });
 
     window.addEventListener("hashchange", updateActiveNavTabs);
@@ -497,13 +496,12 @@
 
     cleanAndFixContent();
     window.addEventListener("hashchange", () => {
-      cleanAndFixContent();
-      setTimeout(cleanAndFixContent, 50);
-      setTimeout(cleanAndFixContent, 150);
+      setTimeout(cleanAndFixContent, 40);
+      setTimeout(cleanAndFixContent, 120);
     });
 
     const observer = new MutationObserver(() => cleanAndFixContent());
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
