@@ -22,7 +22,7 @@
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 68px;
+          --nav-header-height: 68px; 
         }
       }
 
@@ -30,11 +30,66 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
-      p:has(+ input[placeholder*="calculators" i]),
+      /* HIDE REDUNDANT DIRECTORY INTRO TEXT VIA CSS SAFELY WITHOUT CRASHING ROUTER */
+      p:has(+ input[placeholder*="calculator" i]),
       .category-desc,
       .all-calc-desc {
         display: none !important;
+      }
+
+      /* ATTRACTIVE, DISTINCT DIRECTORY SEARCH BAR */
+      input[placeholder*="Search calculators" i],
+      input[placeholder*="search calculators" i] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 480px !important;
+        margin: 0.9rem 0 1.3rem 0 !important;
+        padding: 0.85rem 1.25rem !important;
+        font-size: 0.98rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.2px !important;
+        border-radius: 24px !important;
+        border: 2px solid #93c5fd !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08) !important;
+        transition: all 0.22s ease-in-out !important;
+      }
+      input[placeholder*="Search calculators" i]::placeholder,
+      input[placeholder*="search calculators" i]::placeholder {
+        color: #64748b !important;
+        font-weight: 600 !important;
+      }
+      input[placeholder*="Search calculators" i]:hover,
+      input[placeholder*="search calculators" i]:hover {
+        border-color: #2563eb !important;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12) !important;
+      }
+      input[placeholder*="Search calculators" i]:focus,
+      input[placeholder*="search calculators" i]:focus {
+        border-color: #2563eb !important;
+        background: #ffffff !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18), 0 8px 24px rgba(37, 99, 235, 0.16) !important;
+        outline: none !important;
+      }
+      [data-theme="dark"] input[placeholder*="Search calculators" i],
+      [data-theme="dark"] input[placeholder*="search calculators" i] {
+        background: #0f172a !important;
+        border-color: #38bdf8 !important;
+        color: #f8fafc !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+      }
+      [data-theme="dark"] input[placeholder*="Search calculators" i]::placeholder,
+      [data-theme="dark"] input[placeholder*="search calculators" i]::placeholder {
+        color: #94a3b8 !important;
+      }
+      [data-theme="dark"] input[placeholder*="Search calculators" i]:focus,
+      [data-theme="dark"] input[placeholder*="search calculators" i]:focus {
+        border-color: #38bdf8 !important;
+        background: #0b132b !important;
+        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.28), 0 8px 24px rgba(0, 0, 0, 0.6) !important;
       }
 
       header#siteDynamicHeader {
@@ -342,19 +397,19 @@
     `;
 
     const categories = [
-      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", path: "/#/utility", slug: "utility", icon: "🧰" }
     ];
-    const moreHash = "#/all";
+    const moreUrl = "/#/all";
 
     const desktopLinksHtml = categories
-      .map((c) => `<a data-nav="${c.hash}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a data-nav="${moreHash}" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a data-nav="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a data-nav="${moreHash}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -378,50 +433,18 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // One-touch definitive navigation router
-    function handleOneTouchNavigation(hashTarget) {
-      const fullTarget = window.location.origin + "/" + hashTarget;
-      window.location.href = fullTarget;
-    }
-
-    document.querySelectorAll("[data-nav]").forEach((btn) => {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = this.getAttribute("data-nav");
-        if (target) {
-          handleOneTouchNavigation(target);
-        }
-      });
-    });
-
-    // Update Heading Text & Erase Subtitle Line
-    function cleanAndFixContent() {
-      const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
-      candidates.forEach((el) => {
-        const text = (el.textContent || "").trim();
-        
-        // 1. Rename to "All Calculators/Tools"
-        if (el.children.length === 0 && /^all calculators$/i.test(text)) {
+    // Only rename heading text — never remove or delete elements
+    function updateHeadingText() {
+      const headings = document.querySelectorAll("h1, h2, .title, .page-title");
+      headings.forEach((el) => {
+        if ((el.textContent || "").trim().toLowerCase() === "all calculators") {
           el.textContent = "All Calculators/Tools";
         }
-
-        // 2. Erase the subtitle in the red box
-        if (text.toLowerCase().includes("the following is a complete list of all our calculators by category") ||
-            text.toLowerCase().includes("the following is a complete list of our")) {
-          el.remove();
-        }
       });
     }
 
-    cleanAndFixContent();
-    window.addEventListener("hashchange", () => {
-      cleanAndFixContent();
-      setTimeout(cleanAndFixContent, 50);
-      setTimeout(cleanAndFixContent, 150);
-    });
-
-    const observer = new MutationObserver(() => cleanAndFixContent());
-    observer.observe(document.body, { childList: true, subtree: true });
+    updateHeadingText();
+    window.addEventListener("hashchange", () => setTimeout(updateHeadingText, 60));
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
