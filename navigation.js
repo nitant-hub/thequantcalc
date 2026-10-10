@@ -119,22 +119,22 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: OCCUPIES 55-65% WIDTH IN X DIRECTION, FLUSH TO TOP */
+      /* MOBILE DRAWER: 60vw WIDTH */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
         right: -75vw !important; 
-        width: 60vw !important; /* 60% of viewport width (55%-65% range) */
+        width: 60vw !important; 
         min-width: 210px !important;
         max-width: 250px !important;
         height: 100vh !important; 
         height: 100dvh !important;
         background: #fff !important; 
         border-left: 1px solid #e2e8f0 !important; 
-        padding: 0.75rem 0.8rem 2rem !important; 
+        padding: 0.6rem 0.8rem 2rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.45rem !important; 
+        gap: 0.5rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
         z-index: 1000000 !important; 
@@ -148,24 +148,25 @@
       }
       .dyn-drawer-menu.open { right: 0 !important; }
 
-      /* UPPER BAR: SEARCH AND CLOSE BUTTON OCCUPYING THE TOP ROW WITHOUT "MENU" */
-      .dyn-drawer-header-row {
+      /* COMPACT TOP ROW FOR CLOSE BUTTON */
+      .dyn-drawer-top-action {
         display: flex !important;
+        justify-content: flex-end !important;
         align-items: center !important;
-        gap: 0.4rem !important;
         width: 100% !important;
-        margin-bottom: 0.35rem !important;
+        margin-bottom: 0.15rem !important;
       }
 
+      /* ATTRACTIVE, BALANCED CLOSE BUTTON */
       .dyn-close-btn { 
-        background: #f1f5f9 !important; 
-        border: 1px solid #cbd5e1 !important; 
+        background: #fee2e2 !important; 
+        border: 1px solid #fca5a5 !important; 
         border-radius: 8px !important;
-        width: 34px !important;
-        height: 34px !important;
-        font-size: 1.4rem !important; 
-        font-weight: 700 !important;
-        color: #64748b !important; 
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 1.05rem !important; 
+        font-weight: 800 !important;
+        color: #ef4444 !important; 
         cursor: pointer !important; 
         line-height: 1 !important; 
         padding: 0 !important;
@@ -173,11 +174,16 @@
         align-items: center !important;
         justify-content: center !important;
         flex-shrink: 0 !important;
+        transition: all 0.15s ease !important;
+      }
+      .dyn-close-btn:hover {
+        background: #fecaca !important;
+        transform: scale(1.05) !important;
       }
       [data-theme="dark"] .dyn-close-btn {
-        background: #1e293b !important;
-        border-color: #334155 !important;
-        color: #94a3b8 !important;
+        background: rgba(239, 68, 68, 0.16) !important;
+        border-color: rgba(239, 68, 68, 0.35) !important;
+        color: #f87171 !important;
       }
 
       .dyn-drawer-menu a {
@@ -205,11 +211,11 @@
         z-index: 1000 !important;
       }
       #dynDrawerSearchSlot { 
-        flex: 1 !important; 
         width: 100% !important; 
+        margin-bottom: 0.25rem !important;
       }
       
-      .dyn-search-wrapper.in-drawer { margin-bottom: 0 !important; }
+      .dyn-search-wrapper.in-drawer { margin-bottom: 0 !important; width: 100% !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto 1.2rem !important; padding: 0 1rem !important; }
       .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
@@ -351,10 +357,10 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <div class="dyn-drawer-header-row">
-          <div id="dynDrawerSearchSlot"></div>
+        <div class="dyn-drawer-top-action">
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
+        <div id="dynDrawerSearchSlot"></div>
         <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
@@ -384,7 +390,7 @@
       wrap.className = "dyn-search-wrapper " + wrapperClass;
       wrap.innerHTML = `
         <div class="dyn-search-input-box">
-          <input type="text" class="dyn-search-input" placeholder="🔍 Search..." autocomplete="off">
+          <input type="text" class="dyn-search-input" placeholder="🔍 Search any calculator..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
