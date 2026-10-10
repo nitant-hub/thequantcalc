@@ -1,8 +1,6 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
-  const currentHash = window.location.hash.toLowerCase();
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
-  const isHomePage = !isToolPage;
 
   function initNavigation() {
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSidebarWrap"].forEach((id) => {
@@ -40,19 +38,10 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT: NO GAPS (DESKTOP)
+         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT (CATEGORY ONLY)
          ======================================================== */
       @media (min-width: 768px) {
-        /* Override template-level restrictions */
-        body > div, main, #app, #content, .container {
-          max-width: 100% !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-
-        /* Master two-column flex container aligned at the top */
-        .dyn-desktop-parent {
+        .dyn-category-mode .dyn-desktop-parent {
           display: flex !important;
           flex-direction: row !important;
           flex-wrap: nowrap !important;
@@ -66,9 +55,9 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA (STARTS AT TOP ROW, ZERO GAP) */
-        .dyn-main-card-left,
-        .dyn-main-card-left.card {
+        /* 1. LEFT MAIN TOOLS AREA */
+        .dyn-category-mode .dyn-main-card-left,
+        .dyn-category-mode .dyn-main-card-left.card {
           flex: 1 1 calc(100% - 324px) !important;
           width: calc(100% - 324px) !important;
           max-width: calc(100% - 324px) !important;
@@ -81,14 +70,13 @@
           box-shadow: none !important;
         }
 
-        /* Allow inner tool cards/links to fill left column */
-        .dyn-main-card-left * {
+        .dyn-category-mode .dyn-main-card-left * {
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
         /* 2. RIGHT SIDEBAR PORTION (300px FIXED AT TOP ROW) */
-        #dynDesktopSidebarWrap {
+        .dyn-category-mode #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
@@ -101,17 +89,15 @@
           box-sizing: border-box !important;
         }
 
-        /* All cards inside the right sidebar fill 300px */
-        #dynDesktopSidebarWrap .card,
-        #dynDesktopSidebarWrap > div {
+        .dyn-category-mode #dynDesktopSidebarWrap .card,
+        .dyn-category-mode #dynDesktopSidebarWrap > div {
           width: 100% !important;
           max-width: 300px !important;
           margin: 0 !important;
           box-sizing: border-box !important;
         }
 
-        /* Hide duplicate inline search in main left area */
-        .dyn-main-card-left input[placeholder*="search" i] {
+        .dyn-category-mode .dyn-main-card-left input[placeholder*="search" i] {
           display: none !important;
         }
       }
@@ -155,7 +141,7 @@
         background: linear-gradient(180deg, #2b6cb0 0%, #2c5282 100%) !important;
       }
 
-      /* ADSENSE PLACEHOLDER (300x250) */
+      /* ADSENSE PLACEHOLDER (CATEGORY PAGES ONLY) */
       #dynAdSenseSlot {
         display: none;
         width: 300px;
@@ -172,7 +158,7 @@
         box-sizing: border-box;
       }
       @media (min-width: 768px) {
-        #dynAdSenseSlot {
+        .dyn-category-mode #dynAdSenseSlot {
           display: flex !important;
         }
       }
@@ -268,7 +254,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: 60vw WIDTH WITH ISOLATED Y SCROLLING */
+      /* MOBILE DRAWER */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -546,13 +532,22 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER (ZERO TOP GAP)
+    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER (CATEGORY PAGES ONLY)
     let isLayoutUpdating = false;
     function setupCalculatorNetLayout() {
       if (isLayoutUpdating || window.innerWidth < 768) return;
 
-      const isCategoryView = window.location.hash.startsWith("#/");
-      if (!isCategoryView) return;
+      const isCategoryView = Boolean(window.location.hash.startsWith("#/") && window.location.hash.length > 2);
+
+      // On Homepage: ensure clean default state with no sidebar or ad box
+      if (!isCategoryView) {
+        document.body.classList.remove("dyn-category-mode");
+        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
+        if (existingSidebar) existingSidebar.remove();
+        return;
+      }
+
+      document.body.classList.add("dyn-category-mode");
 
       // Locate the main category tools block
       const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
@@ -567,7 +562,6 @@
 
       isLayoutUpdating = true;
       try {
-        // Tag mainCard and parentContainer for top alignment
         parentContainer.classList.add("dyn-desktop-parent");
         mainCard.classList.add("dyn-main-card-left");
 
@@ -579,7 +573,7 @@
           // 1. Search Box at the top of the right column
           sidebar.appendChild(makeSearchNode());
 
-          // 2. AdSense unit (300x250)
+          // 2. AdSense unit (300x250) - Only created inside category views
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
