@@ -396,18 +396,18 @@
     `;
 
     const categories = [
-      { name: "FINANCE", href: "/#/financial", hash: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", href: "/#/math", hash: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", href: "/#/utility", hash: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
     ];
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -431,36 +431,14 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Instant View Switch on Single Touch
-    function navigateInstantly(targetHash) {
-      if (window.location.hash !== targetHash) {
-        window.location.hash = targetHash;
+    // Guaranteed Direct-Touch Routing (Triggers view reload automatically)
+    function directRoute(targetHash) {
+      const destination = "/" + targetHash;
+      if (window.location.hash === targetHash) {
+        window.location.reload();
+      } else {
+        window.location.assign(destination);
       }
-      
-      // Dispatch browser events to immediately wake the SPA router
-      window.dispatchEvent(new Event("hashchange"));
-      window.dispatchEvent(new Event("popstate"));
-
-      // If the app registered a global router or render handler, invoke it directly
-      if (typeof window.route === "function") window.route();
-      if (typeof window.router === "function") window.router();
-      if (typeof window.loadPage === "function") window.loadPage(targetHash);
-      if (typeof window.navigate === "function") window.navigate(targetHash);
-
-      updateActiveNavTabs();
-    }
-
-    function updateActiveNavTabs() {
-      const currentH = (window.location.hash || "").toLowerCase();
-      document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((el) => {
-        const hash = (el.getAttribute("data-hash") || "").toLowerCase();
-        const slug = hash.replace("#/", "").replace("#", "");
-        if (slug && currentH.includes(slug)) {
-          el.classList.add("is-active");
-        } else {
-          el.classList.remove("is-active");
-        }
-      });
     }
 
     document.querySelectorAll('.dyn-desktop-nav a, .dyn-drawer-link').forEach((link) => {
@@ -468,15 +446,10 @@
       if (targetHash) {
         link.addEventListener("click", function (e) {
           e.preventDefault();
-          if (link.classList.contains("dyn-drawer-link")) {
-            closeDrawer();
-          }
-          navigateInstantly(targetHash);
+          directRoute(targetHash);
         });
       }
     });
-
-    window.addEventListener("hashchange", updateActiveNavTabs);
 
     // Dynamic clean-up for descriptions and headings
     function cleanAndFixContent() {
