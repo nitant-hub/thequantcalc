@@ -1,4 +1,3 @@
-
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
   const currentHash = window.location.hash.toLowerCase();
@@ -31,8 +30,8 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* ERASE UNWANTED SUBTITLE TEXT IN RED SQUARE PORTION */
-      p:has(+ input[placeholder*="calculators"]),
+      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
+      p:has(+ input[placeholder*="calculators" i]),
       .category-desc,
       .all-calc-desc {
         display: none !important;
@@ -81,6 +80,7 @@
         padding: 0 0.95rem !important;
         border-bottom: 3.5px solid transparent !important; 
         text-transform: uppercase !important;
+        cursor: pointer !important;
         transition: all 0.16s ease !important;
       }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
@@ -110,6 +110,7 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        cursor: pointer !important;
         transition: all 0.2s ease !important;
       }
       .dyn-more-pill-btn:hover { 
@@ -198,6 +199,7 @@
       .dyn-drawer-menu a {
         text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.92rem !important;
         padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
+        cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
@@ -274,7 +276,7 @@
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
         background: #0b132b !important;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       }
 
       /* Clear Dropdown styling */
@@ -340,19 +342,19 @@
     `;
 
     const categories = [
-      { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", path: "/#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
     ];
-    const moreUrl = "/#/all";
+    const moreHash = "#/all";
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a data-nav="${c.hash}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a data-nav="${moreHash}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a data-nav="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a data-nav="${moreHash}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -376,6 +378,22 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
+    // One-touch definitive navigation router
+    function handleOneTouchNavigation(hashTarget) {
+      const fullTarget = window.location.origin + "/" + hashTarget;
+      window.location.href = fullTarget;
+    }
+
+    document.querySelectorAll("[data-nav]").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = this.getAttribute("data-nav");
+        if (target) {
+          handleOneTouchNavigation(target);
+        }
+      });
+    });
+
     // Update Heading Text & Erase Subtitle Line
     function cleanAndFixContent() {
       const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
@@ -388,7 +406,8 @@
         }
 
         // 2. Erase the subtitle in the red box
-        if (text.toLowerCase().includes("the following is a complete list of all our calculators by category")) {
+        if (text.toLowerCase().includes("the following is a complete list of all our calculators by category") ||
+            text.toLowerCase().includes("the following is a complete list of our")) {
           el.remove();
         }
       });
@@ -402,7 +421,7 @@
     });
 
     const observer = new MutationObserver(() => cleanAndFixContent());
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
