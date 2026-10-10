@@ -108,14 +108,7 @@
         background: rgba(30, 58, 138, 0.5) !important; 
       }
 
-      /* MORE BUTTON CONTAINER & DROPDOWN */
-      .dyn-more-container {
-        position: relative !important;
-        display: flex !important;
-        align-items: center !important;
-        height: 100% !important;
-      }
-
+      /* DIRECT LINK MORE BUTTON PILL (NO POPUP) */
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important; 
         border: 1px solid rgba(199, 210, 254, 0.45) !important; 
@@ -124,98 +117,20 @@
         font-size: 0.92rem !important; 
         padding: 0.45rem 1.05rem !important; 
         border-radius: 8px !important;
-        height: auto !important; 
+        text-decoration: none !important;
         text-transform: uppercase !important;
         margin-left: 0.3rem !important;
         box-shadow: 0 3px 10px rgba(79, 70, 229, 0.35) !important;
-        cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        gap: 0.35rem !important;
+        justify-content: center !important;
         transition: all 0.15s ease !important;
       }
       .dyn-more-pill-btn:hover { 
         background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important; 
         box-shadow: 0 4px 14px rgba(79, 70, 229, 0.5) !important;
+        transform: translateY(-1px);
       }
-      .dyn-more-pill-btn::after {
-        content: "▾";
-        font-size: 0.85rem;
-        transition: transform 0.2s ease;
-      }
-      .dyn-more-container.open .dyn-more-pill-btn::after {
-        transform: rotate(180deg);
-      }
-
-      /* COLOR-CODED MORE DROPDOWN MENU */
-      .dyn-more-dropdown {
-        position: absolute !important;
-        top: calc(100% - 6px) !important;
-        right: 0 !important;
-        width: 250px !important;
-        background: #ffffff !important;
-        border-radius: 12px !important;
-        box-shadow: 0 14px 35px rgba(2, 6, 23, 0.22), 0 0 0 1px rgba(148, 163, 184, 0.2) !important;
-        padding: 0.5rem !important;
-        display: none;
-        flex-direction: column !important;
-        gap: 0.3rem !important;
-        z-index: 1000002 !important;
-        animation: dynFadeDown 0.18s ease-out forwards;
-      }
-      [data-theme="dark"] .dyn-more-dropdown {
-        background: #0b132b !important;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
-      }
-      .dyn-more-container.open .dyn-more-dropdown {
-        display: flex !important;
-      }
-
-      @keyframes dynFadeDown {
-        from { opacity: 0; transform: translateY(-6px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .dyn-dropdown-item {
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.75rem !important;
-        padding: 0.6rem 0.85rem !important;
-        border-radius: 8px !important;
-        text-decoration: none !important;
-        font-size: 0.9rem !important;
-        font-weight: 700 !important;
-        color: #1e293b !important;
-        transition: all 0.12s ease !important;
-      }
-      [data-theme="dark"] .dyn-dropdown-item { color: #f1f5f9 !important; }
-
-      .dyn-dropdown-icon {
-        width: 28px !important;
-        height: 28px !important;
-        border-radius: 6px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 1rem !important;
-        flex-shrink: 0 !important;
-      }
-
-      /* Color Themes for More Options */
-      .dyn-opt-all .dyn-dropdown-icon { background: rgba(16, 185, 129, 0.15) !important; color: #10b981 !important; }
-      .dyn-opt-all:hover { background: rgba(16, 185, 129, 0.12) !important; color: #059669 !important; }
-
-      .dyn-opt-fin .dyn-dropdown-icon { background: rgba(245, 158, 11, 0.15) !important; color: #f59e0b !important; }
-      .dyn-opt-fin:hover { background: rgba(245, 158, 11, 0.12) !important; color: #d97706 !important; }
-
-      .dyn-opt-math .dyn-dropdown-icon { background: rgba(6, 182, 212, 0.15) !important; color: #06b6d4 !important; }
-      .dyn-opt-math:hover { background: rgba(6, 182, 212, 0.12) !important; color: #0891b2 !important; }
-
-      .dyn-opt-util .dyn-dropdown-icon { background: rgba(244, 63, 94, 0.15) !important; color: #f43f5e !important; }
-      .dyn-opt-util:hover { background: rgba(244, 63, 94, 0.12) !important; color: #e11d48 !important; }
-
-      .dyn-opt-fit .dyn-dropdown-icon { background: rgba(20, 184, 166, 0.15) !important; color: #14b8a6 !important; }
-      .dyn-opt-fit:hover { background: rgba(20, 184, 166, 0.12) !important; color: #0d9488 !important; }
 
       .dyn-right-controls { 
         display: flex !important; 
@@ -256,7 +171,7 @@
         display: block !important; 
       }
       
-      /* MOBILE DRAWER */
+      /* MOBILE DRAWER: ZERO TOP GAP */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -415,7 +330,7 @@
         display: block !important; 
         padding: 0.75rem 1rem !important; 
         font-size: 0.92rem !important; 
-        font-weight: 700 !important;
+        font-weight: 700 !important; 
         color: #0f172a !important; 
         text-decoration: none !important; 
         border-bottom: 1px solid #f1f5f9 !important;
@@ -449,34 +364,13 @@
       .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
       .join("");
 
-    // MORE DROPDOWN WITH DISTINCT COLORS
-    const moreDropdownHtml = `
-      <div class="dyn-more-container" id="dynMoreContainer">
-        <button class="dyn-more-pill-btn" id="dynMoreBtn" type="button">MORE</button>
-        <div class="dyn-more-dropdown" id="dynMoreMenu">
-          <a href="/#/all" class="dyn-dropdown-item dyn-opt-all">
-            <span class="dyn-dropdown-icon">📋</span> All Calculators
-          </a>
-          <a href="/#/financial" class="dyn-dropdown-item dyn-opt-fin">
-            <span class="dyn-dropdown-icon">📈</span> Financial Tools
-          </a>
-          <a href="/#/math" class="dyn-dropdown-item dyn-opt-math">
-            <span class="dyn-dropdown-icon">📐</span> Math & Percentage
-          </a>
-          <a href="/#/utility" class="dyn-dropdown-item dyn-opt-util">
-            <span class="dyn-dropdown-icon">🧰</span> Utility & Conversion
-          </a>
-          <a href="/#/health" class="dyn-dropdown-item dyn-opt-fit">
-            <span class="dyn-dropdown-icon">🏃</span> Fitness & Health
-          </a>
-        </div>
-      </div>
-    `;
+    // MORE BUTTON OPENS DIRECTLY LIKE PREVIOUSLY (NO POPUP)
+    const moreUrl = "/#/all";
+    const desktopMoreBtnHtml = `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
       .join("") + `
-        <a href="/#/health"><span>🏃</span> Health & Fitness</a>
         <a href="/#/all"><span>📋</span> All Calculators</a>
       `;
 
@@ -489,7 +383,7 @@
         </a>
         <nav class="dyn-desktop-nav">
           ${desktopCategoriesHtml}
-          ${moreDropdownHtml}
+          ${desktopMoreBtnHtml}
         </nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
@@ -509,21 +403,6 @@
       </aside>
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
-
-    // More dropdown toggle handling
-    const moreContainer = document.getElementById("dynMoreContainer");
-    const moreBtn = document.getElementById("dynMoreBtn");
-    if (moreBtn && moreContainer) {
-      moreBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        moreContainer.classList.toggle("open");
-      });
-      document.addEventListener("click", (e) => {
-        if (!moreContainer.contains(e.target)) {
-          moreContainer.classList.remove("open");
-        }
-      });
-    }
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
