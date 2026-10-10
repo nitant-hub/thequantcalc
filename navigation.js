@@ -135,6 +135,7 @@
         border-bottom: 3.5px solid transparent !important; 
         text-transform: uppercase !important;
         cursor: pointer !important;
+        user-select: none !important;
         transition: all 0.16s ease !important;
       }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
@@ -165,6 +166,7 @@
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer !important;
+        user-select: none !important;
         transition: all 0.2s ease !important;
       }
       .dyn-more-pill-btn:hover { 
@@ -330,7 +332,7 @@
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
         background: #0b132b !important;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       }
 
       /* Clear Dropdown styling */
@@ -396,18 +398,18 @@
     `;
 
     const categories = [
-      { name: "FINANCE", href: "/#/financial", hash: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", href: "/#/math", hash: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", href: "/#/utility", hash: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
     ];
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -425,19 +427,21 @@
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
         <div id="dynDrawerSearchSlot"></div>
-        <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
+        <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Guaranteed single-touch navigation execution
-    function singleTouchNavigate(targetHash) {
-      if (window.location.hash === targetHash) {
-        window.location.reload();
-      } else {
-        window.location.href = "/" + targetHash;
-      }
+    // Guaranteed single-click immediate route trigger
+    function executeSingleClickNav(targetHash) {
+      const targetUrl = window.location.origin + "/" + targetHash;
+      window.location.replace(targetUrl);
+      setTimeout(() => {
+        if (window.location.hash !== targetHash) {
+          window.location.href = targetUrl;
+        }
+      }, 50);
     }
 
     document.querySelectorAll('.dyn-desktop-nav a, .dyn-drawer-link').forEach((link) => {
@@ -445,10 +449,11 @@
       if (targetHash) {
         link.addEventListener("click", function (e) {
           e.preventDefault();
+          e.stopPropagation();
           if (link.classList.contains("dyn-drawer-link")) {
             closeDrawer();
           }
-          singleTouchNavigate(targetHash);
+          executeSingleClickNav(targetHash);
         });
       }
     });
