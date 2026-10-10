@@ -111,18 +111,35 @@
             box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.22);
         }
 
+        .bc-screen-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 10px 0;
+            background: transparent;
+        }
+        .bc-mode-tag {
+            font-size: 10px;
+            font-weight: 900;
+            color: #1e3a8a;
+            background: #dbeafe;
+            padding: 1px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
         .bc-input-box {
             background: transparent; 
             color: #0f172a !important; 
             border: none;
             width: 100%; 
-            padding: 6px 10px 2px; 
+            padding: 2px 10px 2px; 
             font-size: 18px !important; 
             font-weight: 800 !important; 
             text-align: right; 
             outline: none; 
             font-family: inherit; 
-            height: 30px; 
+            height: 28px; 
             line-height: 22px;
             white-space: nowrap; 
             overflow-x: auto;
@@ -183,7 +200,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* BOLD MODERN BUTTON ENGINE */
+        /* Buttons Core */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a3b8; 
@@ -207,7 +224,7 @@
             box-shadow: 0 0 0 transparent, inset 0 2px 4px rgba(0,0,0,0.2) !important; 
         }
 
-        /* BOLD NUMBERS */
+        /* Bold Numbers */
         .bc-btn-num { 
             background: #ffffff !important; 
             color: #020617 !important; 
@@ -217,7 +234,7 @@
             box-shadow: 0 3px 0 #cbd5e1, 0 4px 6px rgba(15, 23, 42, 0.08) !important; 
         }
 
-        /* BOLD MATH SYMBOLS & OPERATORS */
+        /* Bold Operators */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -234,7 +251,7 @@
             box-shadow: 0 3px 0 #64748b, 0 4px 6px rgba(15, 23, 42, 0.15) !important;
         }
 
-        /* PRIMARY EQUALS BUTTON */
+        /* Equals */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%) !important; 
@@ -245,7 +262,7 @@
             font-weight: 900 !important;
         }
 
-        /* CLEAR / DANGER BUTTON */
+        /* Clear */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important; 
@@ -273,23 +290,43 @@
             font-weight: 900 !important;
         }
 
-        .bc-toggle-group {
-            display: flex; 
-            align-items: center; 
-            justify-content: space-evenly;
-            background: #cbd5e1; 
-            border: 1px solid #94a3b8; 
-            border-radius: 6px; 
-            font-size: 11px; 
-            color: #0f172a; 
-            height: 40px; 
-            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.15); 
+        /* MODERN DEG / RAD SEGMENTED SWITCH */
+        .bc-deg-rad-pill {
+            display: flex;
+            align-items: center;
+            background: #cbd5e1;
+            border: 1px solid #94a3b8;
+            border-radius: 7px;
+            padding: 2px;
+            height: 40px;
+            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.15);
+            gap: 2px;
         }
-        .bc-toggle-group label { cursor: pointer; display: flex; align-items: center; gap: 3px; font-weight: 800 !important; }
-        .bc-toggle-group input[type="radio"] { margin: 0; cursor: pointer; }
+        .bc-deg-rad-btn {
+            flex: 1;
+            height: 100%;
+            border: none;
+            background: transparent;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 900 !important;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bc-deg-rad-btn.active {
+            background: #2563eb;
+            color: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.35);
+        }
 
         .bc-span-2 { grid-column: span 2; }
         .bc-span-3 { grid-column: span 3; }
+        .bc-span-4 { grid-column: span 4; }
         .bc-span-5 { grid-column: span 5; }
         .bc-span-9 { grid-column: span 9; }
         .bc-span-10 { grid-column: span 10; }
@@ -330,7 +367,8 @@
             .bc-btn[aria-label="Modulo or Percent"],
             .bc-btn[aria-label="Percent"] { font-size: 18px !important; }
             .bc-btn-primary, .bc-btn[aria-label="Calculate Equals"] { font-size: 19px !important; }
-            .bc-toggle-group { height: 36px !important; font-size: 9px !important; }
+            .bc-deg-rad-pill { height: 36px !important; }
+            .bc-deg-rad-btn { font-size: 9px !important; }
             .bc-grid-gate { gap: 3px !important; }
         }
     </style>
@@ -348,6 +386,9 @@
     </div>
 
     <div class="bc-screen-container">
+        <div class="bc-screen-top-bar">
+            <span class="bc-mode-tag" id="bc-mode-indicator">DEG</span>
+        </div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
             <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
@@ -384,9 +425,9 @@
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.cos')">cos</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.tan')">tan</button>
-            <div class="bc-toggle-group bc-span-2">
-                <label><input type="radio" name="bc-angle-sci" value="deg" checked onchange="BloggerCalc.setAngle('deg')" /> Deg</label>
-                <label><input type="radio" name="bc-angle-sci" value="rad" onchange="BloggerCalc.setAngle('rad')" /> Rad</label>
+            <div class="bc-deg-rad-pill bc-span-2">
+                <button type="button" class="bc-deg-rad-btn active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">DEG</button>
+                <button type="button" class="bc-deg-rad-btn" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">RAD</button>
             </div>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
@@ -442,9 +483,9 @@
         <!-- 3. GATE -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <button class="bc-btn bc-btn-op" aria-label="Modulo" onclick="BloggerCalc.op('%')">mod</button>
-            <div class="bc-toggle-group bc-span-5">
-                <label><input type="radio" name="bc-angle-gate" value="deg" checked onchange="BloggerCalc.setAngle('deg')" /> Deg</label>
-                <label><input type="radio" name="bc-angle-gate" value="rad" onchange="BloggerCalc.setAngle('rad')" /> Rad</label>
+            <div class="bc-deg-rad-pill bc-span-5">
+                <button type="button" class="bc-deg-rad-btn active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">DEGREE</button>
+                <button type="button" class="bc-deg-rad-btn" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">RADIAN</button>
             </div>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mc')">MC</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
@@ -782,6 +823,7 @@
             const bcLiveOut = document.getElementById('bc-live-out');
             const bcMemInd = document.getElementById('bc-memory-indicator');
             const bcHistList = document.getElementById('bc-history-list');
+            const bcModeTag = document.getElementById('bc-mode-indicator');
             
             let bcInput = '';
             let isDegree = true;
@@ -945,7 +987,12 @@
                 },
                 setAngle: function(unit) {
                     isDegree = (unit === 'deg');
-                    document.querySelectorAll('input[value="' + unit + '"]').forEach(el => el.checked = true);
+                    document.querySelectorAll('.bc-deg-rad-btn').forEach(b => {
+                        b.classList.toggle('active', b.getAttribute('data-unit') === unit);
+                    });
+                    if (bcModeTag) {
+                        bcModeTag.textContent = isDegree ? 'DEG' : 'RAD';
+                    }
                     bcUpdate(); 
                 },
                 num: function(val) {
