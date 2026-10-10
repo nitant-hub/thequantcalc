@@ -40,16 +40,23 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT (DESKTOP)
+         TRUE 2-COLUMN SPLIT: UNLOCK TEMPLATE CONSTRAINTS (DESKTOP)
          ======================================================== */
       @media (min-width: 768px) {
-        /* Master container directly below header */
-        main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
-          display: flex !important;
-          flex-direction: row !important;
-          align-items: flex-start !important;
-          justify-content: space-between !important;
-          gap: 24px !important;
+        /* 1. Unlock constrained parent wrappers */
+        body > div, main, #app, #content, .container {
+          max-width: 100% !important;
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        /* 2. Target the primary content container */
+        .dyn-layout-active {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 300px !important;
+          column-gap: 28px !important;
+          align-items: start !important;
           width: 100% !important;
           max-width: 1220px !important;
           margin: 14px auto 40px !important;
@@ -57,44 +64,37 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA (STARTS DIRECTLY BELOW HEADER) */
-        .card:first-of-type,
-        div:has(> h1),
-        div:has(> h2),
-        .calc-directory-wrap,
-        section:first-of-type {
-          flex: 1 1 calc(100% - 324px) !important;
-          width: calc(100% - 324px) !important;
-          max-width: calc(100% - 324px) !important;
+        /* 3. LEFT MAIN COLUMN: Occupies Column 1 edge-to-edge */
+        .dyn-left-main-area {
+          grid-column: 1 / 2 !important;
+          width: 100% !important;
+          max-width: 100% !important;
           min-width: 0 !important;
           margin: 0 !important;
-          padding-top: 0 !important;
+          padding: 0 !important;
           box-sizing: border-box !important;
         }
 
-        /* Expand inner directory text/links cleanly across left width */
-        .card:first-of-type > div,
-        div:has(> h1) > div,
-        div:has(> h2) > div {
+        .dyn-left-main-area .card,
+        .dyn-left-main-area > div {
           width: 100% !important;
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
-        /* 2. RIGHT SIDEBAR PORTION (FIXED 300px ON THE RIGHT) */
+        /* 4. RIGHT SIDEBAR COLUMN: Occupies Column 2 */
         #dynDesktopSidebarWrap {
-          flex: 0 0 300px !important;
+          grid-column: 2 / 3 !important;
           width: 300px !important;
           max-width: 300px !important;
           margin: 0 !important;
-          padding-top: 0 !important;
+          padding: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
           box-sizing: border-box !important;
         }
 
-        /* All cards inside the right sidebar stretch to full 300px */
         #dynDesktopSidebarWrap .card,
         #dynDesktopSidebarWrap > div {
           width: 100% !important;
@@ -103,8 +103,8 @@
           box-sizing: border-box !important;
         }
 
-        /* Hide duplicate inline category search inside main left column */
-        .card:first-of-type input[placeholder*="search" i] {
+        /* Hide the redundant search input inside the left area */
+        .dyn-left-main-area input[placeholder*="search" i] {
           display: none !important;
         }
       }
@@ -192,7 +192,7 @@
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
 
-      /* BOLD & ENLARGED CATEGORIES HEADER SECTION */
+      /* CATEGORIES HEADER ITEMS */
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
@@ -539,7 +539,7 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP CALCULATOR.NET SIDEBAR INTEGRATION (SIDE-BY-SIDE WITHOUT GAPS)
+    // 2. DESKTOP 2-COLUMN STRUCTURE ENFORCER
     function setupCalculatorNetLayout() {
       if (window.innerWidth < 768) return;
 
@@ -547,36 +547,46 @@
       const mainContainer = document.querySelector("main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay)");
       if (!mainContainer || !isCategoryView) return;
 
+      // Wrap left tools block to occupy Column 1
+      const leftMainBlock = Array.from(mainContainer.children).find((el) => {
+        const text = (el.textContent || "").toLowerCase();
+        return el.querySelector("h1, h2") || (text.includes("calculators") && !text.includes("popular tools") && !text.includes("system status"));
+      });
+
+      if (leftMainBlock && !leftMainBlock.classList.contains("dyn-left-main-area")) {
+        leftMainBlock.classList.add("dyn-left-main-area");
+      }
+
+      mainContainer.classList.add("dyn-layout-active");
+
       let sidebar = document.getElementById("dynDesktopSidebarWrap");
       if (!sidebar) {
         sidebar = document.createElement("aside");
         sidebar.id = "dynDesktopSidebarWrap";
 
-        // Right Sidebar Item 1: Top Search Box
+        // 1. Search Box at top of sidebar
         sidebar.appendChild(makeSearchNode());
 
-        // Right Sidebar Item 2: Medium Rectangle Ad Unit (300x250)
+        // 2. AdSense Slot (300x250)
         const adSlot = document.createElement("div");
         adSlot.id = "dynAdSenseSlot";
         adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
         sidebar.appendChild(adSlot);
 
-        // Find secondary cards (Categories, Popular Tools, System Status)
+        // 3. Move secondary blocks (Categories, Popular Tools, System Status) directly into the sidebar
         const secondaryCards = Array.from(mainContainer.querySelectorAll("div, aside")).filter((el) => {
-          if (el === sidebar) return false;
+          if (el === sidebar || el === leftMainBlock) return false;
           const text = (el.textContent || "").toLowerCase();
           const hasTitle = el.querySelector("h1, h2");
           return !hasTitle && (text.includes("popular tools") || text.includes("categories") || text.includes("system status"));
         });
 
-        // Insert ALL secondary blocks directly into the 300px sidebar
         secondaryCards.forEach((c) => {
           if (c && c.parentNode && c !== sidebar) {
             sidebar.appendChild(c);
           }
         });
 
-        // Append the completed sidebar into the master flex container
         mainContainer.appendChild(sidebar);
       }
     }
