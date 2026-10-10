@@ -5,7 +5,7 @@
   const isHomePage = !isToolPage;
 
   function initNavigation() {
-    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSearchWrap"].forEach((id) => {
+    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSearchWrap", "dynAdSenseSlot"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
@@ -38,40 +38,54 @@
       }
 
       /* ========================================================
-         TRUE 2-COLUMN VERTICAL SPLIT (DESKTOP / CALCULATOR.NET)
+         EXACT CALCULATOR.NET 2-COLUMN SPLIT DESKTOP GRID
          ======================================================== */
       @media (min-width: 768px) {
-        /* Turn the main view wrapper into a true 2-column grid */
+        /* Main page wrapper becomes a 2-column grid: Wide Left + 300px Right */
         main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
           display: grid !important;
-          grid-template-columns: minmax(0, 1fr) 310px !important;
-          column-gap: 2rem !important;
+          grid-template-columns: minmax(0, 1fr) 300px !important;
+          column-gap: 2.2rem !important;
           row-gap: 1.25rem !important;
-          max-width: 1240px !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding: 1.2rem 1.2rem 3rem !important;
+          max-width: 1200px !important;
+          margin: 1.2rem auto 3rem !important;
+          padding: 0 1.2rem !important;
           box-sizing: border-box !important;
           align-items: start !important;
         }
 
-        /* 1. LEFT MAIN COLUMN: Tools directory card & Breadcrumbs */
-        .card:first-of-type,
+        /* 1. LEFT COLUMN: Directory, Breadcrumbs, Categories & Tools */
         div:has(> h1),
         div:has(> h2),
+        .card:first-of-type,
         .calc-directory-wrap,
         section:first-of-type {
           grid-column: 1 / 2 !important;
+          grid-row: 1 / 10 !important;
           width: 100% !important;
+          max-width: 100% !important;
         }
 
-        /* 2. RIGHT VERTICAL SIDEBAR: Place Search, Ads & Side Cards */
-        #dynDesktopSearchWrap,
-        #dynAdSenseSlot,
-        .card:has(a[href*="financial"]),
-        .card:has(a[href*="math"]),
+        /* 2. RIGHT COLUMN (SIDEBAR): Search, Ads, and Secondary Cards */
+        #dynDesktopSearchWrap {
+          grid-column: 2 / 3 !important;
+          grid-row: 1 !important;
+          width: 100% !important;
+          margin: 0 !important;
+        }
+
+        #dynAdSenseSlot {
+          grid-column: 2 / 3 !important;
+          grid-row: 2 !important;
+          width: 100% !important;
+          margin: 0 !important;
+          display: flex !important;
+        }
+
+        /* Secondary cards (Categories, Popular Tools, System Status) stack on Right Sidebar */
+        .card:not(:first-of-type),
         div:has(> div:contains("Popular Tools")),
-        div:has(> h3:contains("Categories")),
+        div:has(> div:contains("System Status")),
         aside,
         .sidebar {
           grid-column: 2 / 3 !important;
@@ -79,17 +93,7 @@
           box-sizing: border-box !important;
         }
 
-        /* Ordering in the Right Sidebar: Search First, then AdSense, then Cards */
-        #dynDesktopSearchWrap {
-          grid-row: 1 !important;
-          margin: 0 0 0.8rem 0 !important;
-        }
-        #dynAdSenseSlot {
-          grid-row: 2 !important;
-          margin: 0 0 1rem 0 !important;
-        }
-
-        /* Hide the duplicate inline search inside the left main directory */
+        /* Hide the small inline directory search on desktop so right sidebar search is primary */
         .card:first-of-type input[placeholder*="search" i] {
           display: none !important;
         }
@@ -102,15 +106,16 @@
       }
       .dyn-sidebar-search-box .dyn-search-input {
         width: 100% !important;
-        padding: 0.75rem 1rem !important;
+        padding: 0.72rem 1rem !important;
         font-size: 0.95rem !important;
+        font-weight: 600 !important;
         border-radius: 8px !important;
         border: 2px solid #94a3b8 !important;
         background: #ffffff !important;
         box-sizing: border-box !important;
       }
 
-      /* FUTURE ADSENSE PLACEHOLDER CONTAINER */
+      /* ADSENSE CONTAINER STYLING */
       #dynAdSenseSlot {
         display: none;
         width: 100%;
@@ -125,11 +130,6 @@
         font-size: 0.85rem;
         font-weight: 600;
         box-sizing: border-box;
-      }
-      @media (min-width: 768px) {
-        #dynAdSenseSlot {
-          display: flex !important;
-        }
       }
 
       header#siteDynamicHeader {
@@ -637,13 +637,11 @@
       const parentContainer = document.querySelector("main, #content, .container, body > div:not(#siteDynamicHeader)");
       
       if (parentContainer && isCategoryView && window.innerWidth >= 768) {
-        // Mount Desktop Search at the top of the grid
         if (!desktopSearch.isConnected) {
-          parentContainer.prepend(desktopSearch);
+          parentContainer.appendChild(desktopSearch);
         }
-        // Mount AdSense Slot right below Search
         if (!adSlot.isConnected) {
-          desktopSearch.insertAdjacentElement("afterend", adSlot);
+          parentContainer.appendChild(adSlot);
         }
       }
     }
