@@ -80,14 +80,18 @@
       .dyn-close-btn { position: absolute !important; top: 1rem !important; right: 1.2rem !important; background: none !important; border: none !important; font-size: 2rem !important; color: #64748b !important; cursor: pointer !important; line-height: 1 !important; }
       .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
       .dyn-backdrop-overlay.open { display: block !important; }
-
-      /* Desktop: hide hamburger + drawer, show top links. No page layout changes. */
       @media (min-width: 768px) {
         .dyn-desktop-nav { display: flex !important; }
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
+        /* Tool pages only: content on the left, sidebar on the right */
+        .dyn-two-col {
+          display: grid !important; grid-template-columns: minmax(0, 1fr) 300px !important; gap: 2rem !important;
+          align-items: start !important; max-width: 1200px !important; margin: 1.5rem auto !important;
+          padding: 0 1rem !important; width: 100% !important; box-sizing: border-box !important;
+        }
+        .dyn-two-col > .dyn-side { grid-column: 2 !important; grid-row: 1 !important; width: auto !important; min-width: 0 !important; margin: 0 !important; }
+        .dyn-two-col > *:not(.dyn-side) { grid-column: 1 !important; min-width: 0 !important; }
       }
-
-      /* The ONE search box */
       .dyn-search-wrapper { position: relative !important; width: 100% !important; box-sizing: border-box !important; }
       .dyn-search-wrapper.in-drawer { margin-bottom: 0.8rem !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto !important; padding: 0 1rem !important; }
@@ -146,7 +150,6 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Tools for search
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
       { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
@@ -165,7 +168,6 @@
     scanLinks(document);
     fetch("/").then((r) => (r.ok ? r.text() : "")).then((h) => { if (h) scanLinks(new DOMParser().parseFromString(h, "text/html")); }).catch(() => {});
 
-    // The ONE search box
     const wrap = document.createElement("div");
     wrap.id = "dynSearch";
     wrap.className = "dyn-search-wrapper in-drawer";
@@ -185,7 +187,6 @@
     });
     document.addEventListener("click", (e) => { if (!wrap.contains(e.target)) dropdown.style.display = "none"; });
 
-    // Where the search lives on desktop
     function findHomeAnchor() {
       const el = Array.from(document.querySelectorAll("h1, h2, h3, h4")).find((n) => {
         if (n.closest("#dynDrawer") || n.closest("#siteDynamicHeader")) return false;
@@ -203,17 +204,14 @@
       return el.closest("aside, .sidebar, .card") || el.parentElement;
     }
 
-    // Move the same box. Returns true when it is in its final place.
     function placeSearch() {
       const slot = document.getElementById("dynDrawerSearchSlot");
       if (!slot) return true;
-
       if (window.innerWidth < 768) {
         if (wrap.parentElement !== slot) slot.appendChild(wrap);
         wrap.className = "dyn-search-wrapper in-drawer";
         return true;
       }
-
       if (isHomePage) {
         const anchor = findHomeAnchor();
         if (!anchor || !anchor.parentNode) return false;
@@ -221,15 +219,27 @@
         wrap.className = "dyn-search-wrapper in-home";
         return true;
       }
-
       const box = findSidebarBox();
-      if (!box) return false;
+      if (!box) {
+        const top = document.querySelector("main, .main-body, .wrapper, .container") || document.body;
+        if (top.firstChild !== wrap) top.insertBefore(wrap, top.firstChild);
+        wrap.className = "dyn-search-wrapper in-home";
+        return false;
+      }
+      const par = box.parentElement;
+      if (par && par !== document.body) {
+        const d = getComputedStyle(par).display;
+        const kids = Array.from(par.children).filter((c) => !/^(SCRIPT|STYLE|LINK)$/.test(c.tagName));
+        if (d !== "grid" && d !== "flex" && kids.length >= 2 && kids.length <= 4) {
+          par.classList.add("dyn-two-col");
+          box.classList.add("dyn-side");
+        }
+      }
       if (box.firstChild !== wrap) box.insertBefore(wrap, box.firstChild);
       wrap.className = "dyn-search-wrapper in-sidebar";
       return true;
     }
 
-    // Drawer + theme
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
     const closeDrawer = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
@@ -247,7 +257,6 @@
       themeBtn.textContent = d ? "🌙" : "☀️";
     };
 
-    // Place once, retry a few times only until placed, then stop (no flicker)
     let tries = 0;
     const timer = setInterval(() => {
       tries++;
