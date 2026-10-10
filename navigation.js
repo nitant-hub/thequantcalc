@@ -139,7 +139,7 @@
         box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
-        overscroll-behavior: contain !important; /* Locks scroll strictly to drawer */
+        overscroll-behavior: contain !important;
         box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch !important;
       }
@@ -344,7 +344,7 @@
 
     const mobileLinksHtml = categories
       .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators</a>`;
+      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -368,6 +368,29 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
+    // Guaranteed replacement for "All Calculators" in the red square portion
+    function updateHeadingText() {
+      const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
+      candidates.forEach((el) => {
+        if (el.children.length === 0) {
+          const text = (el.textContent || "").trim();
+          if (/^all calculators$/i.test(text)) {
+            el.textContent = "All Calculators/Tools";
+          }
+        }
+      });
+    }
+
+    updateHeadingText();
+    window.addEventListener("hashchange", () => {
+      updateHeadingText();
+      setTimeout(updateHeadingText, 50);
+      setTimeout(updateHeadingText, 150);
+    });
+
+    const observer = new MutationObserver(() => updateHeadingText());
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
       { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
@@ -385,27 +408,26 @@
     };
     scanLinks(document);
 
-    // Drawer and Theme controls & scroll locking
+    // Drawer controls & isolated scrolling
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
     
     const closeDrawer = () => { 
       drawer.classList.remove("open"); 
       overlay.classList.remove("open");
-      document.body.style.overflow = ""; // Restores background scroll
+      document.body.style.overflow = "";
     };
 
     const openDrawer = () => {
       drawer.classList.add("open");
       overlay.classList.add("open");
-      document.body.style.overflow = "hidden"; // Prevents tools/page from scrolling behind popup
+      document.body.style.overflow = "hidden";
     };
 
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
 
-    // Auto-close popup when clicking/touching any menu navigation option
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
       link.addEventListener("click", closeDrawer);
     });
@@ -458,7 +480,6 @@
             return `<a href="${m.url}"><span>${highlighted}</span> <span style="font-size:0.8rem;color:#94a3b8;">→</span></a>`;
           }).join("");
 
-          // Close drawer if a search item inside drawer is tapped
           if (wrapperClass.includes("in-drawer")) {
             dropdown.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
           }
@@ -516,7 +537,7 @@
     let retries = 0;
     const interval = setInterval(() => {
       retries++;
-      if (placeDesktopSearch() || retries > 10) clearInterval(interval);
+      if (placeDesktopSearch() || retries > 15) clearInterval(interval);
     }, 150);
     placeDesktopSearch();
 
