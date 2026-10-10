@@ -20,15 +20,16 @@
 
 <div class="blogger-calc-classic" id="blogger-calc-widget">
     <style>
+        /* BRIGHT, CLEAN OUTER SHELL */
         .blogger-calc-classic {
             width: 100%;
             max-width: 630px; 
             margin: 0 auto !important; 
             box-sizing: border-box;
-            background: #ffffff;
-            border: 1px solid #b0c4de;
+            background: #f4f7fb;
+            border: 1px solid #c2d2e4;
             border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             padding: 8px; 
             position: relative;
         }
@@ -38,72 +39,72 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Tabs */
+        /* TABS */
         .bc-tabs {
             display: flex; 
             margin-bottom: 6px; 
-            border-bottom: 2px solid #3b5998;
+            border-bottom: 2px solid #466396;
             overflow-x: auto; 
             scrollbar-width: none; 
             white-space: nowrap;
             gap: 2px;
-            padding-bottom: 0px;
+            padding-bottom: 0;
         }
         .bc-tabs::-webkit-scrollbar { display: none; } 
 
         .bc-tab-btn {
-            padding: 4px 10px; 
-            background: #eef2f7; 
-            border: 1px solid #b0c4de; 
+            padding: 5px 12px; 
+            background: #e4ecf5; 
+            border: 1px solid #b8cbdf; 
             border-bottom: none; 
             border-radius: 4px 4px 0 0;
             font-size: 11px; 
-            font-weight: 700; 
-            color: #334155; 
+            font-weight: bold; 
+            color: #334e68; 
             cursor: pointer;
             transition: all 0.1s ease; 
             flex-shrink: 0;
         }
         .bc-tab-btn:hover { color: #000; background: #ffffff; }
         .bc-tab-btn.active {
-            background: #3b5998; 
+            background: #466396; 
             color: #ffffff !important; 
-            border-color: #3b5998;
+            border-color: #466396;
             margin-bottom: -1px;
         }
 
         #btn-bc-history-tab {
-            background: #1e293b;
+            background: #243b53;
             color: #ffffff !important;
-            border-color: #0f172a;
+            border-color: #102a43;
             position: sticky;
             right: 0;
             z-index: 10;
             text-transform: uppercase;
         }
         #btn-bc-history-tab.active {
-            background: #3b5998;
+            background: #466396;
         }
 
-        /* Screen: Calculator.net Clean Style */
+        /* BRIGHT HIGH-CONTRAST SCREEN */
         .bc-screen-container {
-            border: 1px solid #94a3b8;
+            border: 1px solid #9fb3c8;
             border-radius: 4px; 
             margin-bottom: 6px; 
             display: flex; 
             flex-direction: column;
             overflow: hidden; 
-            background: #e8eef7;
+            background: #ffffff;
         }
 
         .bc-input-box {
-            background: transparent; 
-            color: #475569 !important; 
+            background: #ffffff; 
+            color: #486581 !important; 
             border: none;
             width: 100%; 
             padding: 4px 8px 0; 
             font-size: 15px !important; 
-            font-weight: 700; 
+            font-weight: bold; 
             text-align: right; 
             outline: none; 
             font-family: inherit; 
@@ -132,14 +133,14 @@
             position: relative;
         }
         
-        .bc-mem-indicator { font-size: 11px; font-weight: 700; color: #cbd5e1; z-index: 10; }
+        .bc-mem-indicator { font-size: 11px; font-weight: bold; color: #dceefb; z-index: 10; }
         #bc-live-out { z-index: 10; font-weight: 900; }
 
         .bc-input-box::-webkit-scrollbar, .bc-output-box::-webkit-scrollbar { height: 3px; }
         .bc-input-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
         .bc-output-box::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 2px; }
 
-        /* Keypad Workspace */
+        /* KEYPAD WORKSPACE */
         .bc-keypad-container {
             height: 255px;
             min-height: 255px;
@@ -167,39 +168,39 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* BUTTONS ENGINE (Calculator.net Classic Style) */
+        /* BRIGHT CRISP BUTTONS (CALCULATOR.NET AUTHENTIC PALETTE) */
         .bc-btn {
             font-family: inherit; 
-            border: 1px solid #b6c5d8; 
+            border: 1px solid #b4c6db; 
             border-radius: 3px; 
             height: 38px; 
             font-size: 12px; 
-            font-weight: 700; 
+            font-weight: bold; 
             cursor: pointer; 
             display: flex;
             align-items: center; 
             justify-content: center; 
             user-select: none;
             background: #ffffff; 
-            color: #000000; 
+            color: #102a43; 
             padding: 0 1px;
             transition: background 0.08s;
         }
-        .bc-btn:hover { background: #f1f5f9; }
-        .bc-btn:active { background: #cbd5e1; }
+        .bc-btn:hover { background: #f0f4f8; }
+        .bc-btn:active { background: #d9e2ec; }
 
-        /* 1. Numbers Block (Soft Slate Blue - Distinct High Readability) */
+        /* 1. Numbers Block (Crisp Soft Sky Blue) */
         .bc-btn-num { 
-            background: #d4e2f0 !important; 
+            background: #dce7f3 !important; 
             color: #000000 !important; 
             font-size: 16px !important; 
             font-weight: 900 !important;
-            border-color: #a9bed6 !important;
+            border-color: #abc1d9 !important;
         }
-        .bc-btn-num:hover { background: #c2d6ea !important; }
-        .bc-btn-num:active { background: #a8c4df !important; }
+        .bc-btn-num:hover { background: #cadcf0 !important; }
+        .bc-btn-num:active { background: #b3cce7 !important; }
 
-        /* 2. Operations & Functions (Clean White) */
+        /* 2. Math Operators & Scientific Keys */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -210,66 +211,69 @@
         .bc-btn[aria-label="Percent"] {
             font-size: 16px !important;
             font-weight: 900 !important;
-            background: #e9eef5 !important;
-            border-color: #bcccdc !important;
-            color: #1e3a8a !important;
+            background: #ebf1f8 !important;
+            border-color: #c2d3e5 !important;
+            color: #102a43 !important;
         }
 
-        /* 3. Action Buttons */
+        /* 3. Primary Equals (=) */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: #466396 !important; 
             color: #ffffff !important; 
-            border-color: #314870 !important; 
+            border-color: #334d77 !important; 
             font-size: 18px !important; 
             font-weight: 900 !important;
         }
-        .bc-btn-primary:hover { background: #37507d !important; }
+        .bc-btn-primary:hover { background: #375380 !important; }
 
+        /* 4. Reset / Clear */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
-            background: #e06666 !important; 
+            background: #e25c5c !important; 
             color: #ffffff !important; 
-            border-color: #cc0000 !important; 
+            border-color: #c93b3b !important; 
             font-size: 13px !important; 
             font-weight: 900 !important;
         }
-        .bc-btn-danger:hover { background: #cc0000 !important; }
+        .bc-btn-danger:hover { background: #cc3333 !important; }
 
+        /* 5. Backspace */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
-            background: #ea9999 !important;
-            color: #780000 !important;
-            border-color: #e06666 !important;
+            background: #f09595 !important;
+            color: #610404 !important;
+            border-color: #e57373 !important;
             font-size: 13px !important;
             font-weight: 900 !important;
         }
 
-        /* Deg & Rad Toggle Keys */
+        /* 6. Deg / Rad Inline Keys */
         .bc-btn-deg, .bc-btn-rad {
             font-size: 11px !important;
-            font-weight: 800 !important;
-            background: #f1f5f9;
-            color: #475569;
-            border-color: #cbd5e1;
+            font-weight: bold !important;
+            background: #e4ecf5;
+            color: #334e68;
+            border-color: #bcccdc;
         }
         .bc-btn-deg.active, .bc-btn-rad.active {
             background: #466396 !important;
             color: #ffffff !important;
-            border-color: #314870 !important;
+            border-color: #334d77 !important;
         }
 
         .bc-btn-action { 
-            background: #e9eef5; 
-            color: #1e293b; 
+            background: #ebf1f8; 
+            color: #102a43; 
             font-size: 11px !important;
-            font-weight: 800 !important;
+            font-weight: bold !important;
+            border-color: #c2d3e5;
         }
 
         .bc-btn-special { 
-            background: #fff3cd; 
-            color: #856404; 
-            border-color: #ffeeba;
+            background: #fff8e1; 
+            color: #8d6b00; 
+            border-color: #ffe082;
             font-size: 10px;
             font-weight: 900 !important;
         }
@@ -281,27 +285,27 @@
         .bc-span-9 { grid-column: span 9; }
         .bc-span-10 { grid-column: span 10; }
 
-        /* History */
+        /* HISTORY */
         #bc-history-tab { 
             background: #ffffff; 
-            border: 1px solid #b0c4de; 
+            border: 1px solid #c2d2e4; 
             border-radius: 4px; 
             padding: 8px; 
             flex-direction: column; 
             height: 100% !important;
             box-sizing: border-box;
         }
-        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 6px; flex-shrink: 0; }
-        .bc-history-title { font-weight: 800; color: #3b5998; font-size: 12px; text-transform: uppercase; }
-        .bc-history-back-btn, .bc-clear-history { font-size: 10px; font-weight: 700; cursor: pointer; padding: 3px 8px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; }
-        .bc-history-back-btn { background: #3b5998; color: #ffffff; }
-        .bc-clear-history { background: #e06666; color: #ffffff; }
+        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d9e2ec; padding-bottom: 4px; margin-bottom: 6px; flex-shrink: 0; }
+        .bc-history-title { font-weight: bold; color: #466396; font-size: 12px; text-transform: uppercase; }
+        .bc-history-back-btn, .bc-clear-history { font-size: 10px; font-weight: bold; cursor: pointer; padding: 3px 8px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; }
+        .bc-history-back-btn { background: #466396; color: #ffffff; }
+        .bc-clear-history { background: #e25c5c; color: #ffffff; }
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 13px; }
-        .hist-entry { margin-bottom: 4px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 3px; text-align: left; color: #334155; font-weight: 700; }
-        .hist-entry strong { color: #3b5998; font-weight: 900 !important; }
-        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
+        .hist-entry { margin-bottom: 4px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 3px; text-align: left; color: #102a43; font-weight: bold; }
+        .hist-entry strong { color: #466396; font-weight: 900 !important; }
+        .hist-empty { color: #829ab1; text-align: center; font-style: italic; padding-top: 40px; }
 
-        /* Mobile View Rules */
+        /* MOBILE ADJUSTMENTS */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 6px; } 
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
@@ -357,7 +361,7 @@
             <button class="bc-btn bc-btn-primary" aria-label="Calculate Equals" onclick="BloggerCalc.calc()">=</button>
         </div>
 
-        <!-- 2. SCIENTIFIC (CALCULATOR.NET EXACT LAYOUT & READABILITY) -->
+        <!-- 2. SCIENTIFIC (CLEAR CALCULATOR.NET VISUAL FLOW) -->
         <div class="bc-tab-pane bc-grid-sci-desktop" role="tabpanel" id="bc-sci-desktop">
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.cos')">cos</button>
@@ -415,7 +419,7 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
         </div>
 
-        <!-- 3. GATE -->
+        <!-- 3. GATE (UNIFORM 11-COL MATRIX) -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <button class="bc-btn" onclick="BloggerCalc.op('%')">mod</button>
             <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
@@ -729,7 +733,7 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
 
             <button class="bc-btn bc-btn-special bc-span-2">f (Orange)</button>
-            <button class="bc-btn bc-btn-special bc-span-2" style="background: #3b5998; color:#fff;" onclick="BloggerCalc.finComp()">COMP</button>
+            <button class="bc-btn bc-btn-special bc-span-2" style="background: #466396; color:#fff;" onclick="BloggerCalc.finComp()">COMP</button>
             <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">ENTER</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
@@ -802,9 +806,9 @@
                 sin: (x) => isDegree ? Math.sin(x * Math.PI / 180) : Math.sin(x),
                 cos: (x) => isDegree ? Math.cos(x * Math.PI / 180) : Math.cos(x),
                 tan: (x) => isDegree ? Math.tan(x * Math.PI / 180) : Math.tan(x),
-                asin: (x) => isDegree ? Math.asin(x * 180 / Math.PI) : Math.asin(x),
-                acos: (x) => isDegree ? Math.acos(x * 180 / Math.PI) : Math.acos(x),
-                atan: (x) => isDegree ? Math.atan(x * 180 / Math.PI) : Math.atan(x)
+                asin: (x) => isDegree ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
+                acos: (x) => isDegree ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
+                atan: (x) => isDegree ? Math.atan(x) * 180 / Math.PI : Math.atan(x)
             };
             window.bcFact = function(n) {
                 if(n < 0 || !Number.isInteger(n)) return NaN;
