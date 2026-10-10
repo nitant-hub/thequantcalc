@@ -39,7 +39,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* TABS */
+        /* TABS: ULTRA-BOLD & HIGH-CONTRAST */
         .bc-tabs {
             display: flex; 
             margin-bottom: 6px; 
@@ -58,14 +58,16 @@
             border: 1px solid #a3b8ce; 
             border-bottom: none; 
             border-radius: 4px 4px 0 0;
-            font-size: 12px; 
-            font-weight: 900; 
-            color: #000000; 
+            font-size: 14px !important; 
+            font-weight: 900 !important; 
+            letter-spacing: -0.2px;
+            color: #000000 !important; 
             cursor: pointer;
             transition: all 0.1s ease; 
             flex-shrink: 0;
+            -webkit-font-smoothing: antialiased;
         }
-        .bc-tab-btn:hover { color: #000; background: #ffffff; }
+        .bc-tab-btn:hover { color: #000000; background: #ffffff; }
         .bc-tab-btn.active {
             background: #3b5998; 
             color: #ffffff !important; 
@@ -81,6 +83,8 @@
             right: 0;
             z-index: 10;
             text-transform: uppercase;
+            font-size: 13px !important;
+            font-weight: 900 !important;
         }
         #btn-bc-history-tab.active {
             background: #3b5998;
@@ -190,7 +194,7 @@
         .bc-btn:hover { background: #f0f4f8; }
         .bc-btn:active { transform: translateY(1px); }
 
-        /* 1. NUMBERS BLOCK */
+        /* NUMBERS */
         .bc-btn-num { 
             background: #c6d9ec !important; 
             color: #000000 !important; 
@@ -200,7 +204,7 @@
         }
         .bc-btn-num:hover { background: #b4cee6 !important; }
 
-        /* 2. OPERATORS */
+        /* OPERATORS */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -217,7 +221,7 @@
         }
         .bc-btn-op:hover { background: #d0e0ee !important; }
 
-        /* 3. EQUALS BUTTON (=) */
+        /* EQUALS (=) */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: #2563eb !important; 
@@ -228,7 +232,7 @@
         }
         .bc-btn-primary:hover { background: #1d4ed8 !important; }
 
-        /* 4. CLEAR / AC / C BUTTON */
+        /* CLEAR / AC */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: #dc2626 !important; 
@@ -239,7 +243,7 @@
         }
         .bc-btn-danger:hover { background: #b91c1c !important; }
 
-        /* 5. BACKSPACE / DELETE BUTTON */
+        /* BACKSPACE / DELETE */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
             background: #ea580c !important;
@@ -250,7 +254,7 @@
         }
         .bc-btn-delete:hover { background: #c2410c !important; }
 
-        /* 6. DEG / RAD TOGGLE BUTTONS */
+        /* DEG / RAD */
         .bc-btn-deg, .bc-btn-rad {
             font-size: 13px !important;
             font-weight: 900 !important;
@@ -310,6 +314,8 @@
         /* MOBILE VIEW */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
+            .bc-tab-btn { font-size: 11px !important; padding: 4px 8px; }
+            #btn-bc-history-tab { font-size: 10px !important; }
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
             .bc-btn { height: 34px !important; font-size: 11px !important; font-weight: 900 !important; }
             .bc-btn-num { font-size: 17px !important; font-weight: 900 !important; }
@@ -580,9 +586,9 @@
             <button class="bc-btn" onclick="BloggerCalc.num(',')">,</button>
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.op(';')">;</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('1')">1</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('2')">2</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
 
             <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
@@ -612,8 +618,8 @@
             <button class="bc-btn" onclick="BloggerCalc.func('sin(')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('cos(')">cos</button>
             <button class="bc-btn" onclick="BloggerCalc.num('7')">7</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('8')">8</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('9')">9</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">/</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**2')">x²</button>
@@ -729,7 +735,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('1/')">1/x</button>
             <button class="bc-btn" onclick="BloggerCalc.op('%')">%T</button>
             <button class="bc-btn" onclick="BloggerCalc.op('%')">Δ%</button>
-            <button class="bc-btn bc-btn-op" aria-label="Percent" onclick="BloggerCalc.op('%')">%</button>
+            <button class="bc-btn" onclick="BloggerCalc.op('%')">%</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
