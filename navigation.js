@@ -30,6 +30,13 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
+      /* ERASE UNWANTED SUBTITLE TEXT IN RED SQUARE PORTION */
+      p:has(+ input[placeholder*="calculators"]),
+      .category-desc,
+      .all-calc-desc {
+        display: none !important;
+      }
+
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -368,27 +375,32 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Guaranteed replacement for "All Calculators" in the red square portion
-    function updateHeadingText() {
+    // Update Heading Text & Erase Subtitle Line
+    function cleanAndFixContent() {
       const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
       candidates.forEach((el) => {
-        if (el.children.length === 0) {
-          const text = (el.textContent || "").trim();
-          if (/^all calculators$/i.test(text)) {
-            el.textContent = "All Calculators/Tools";
-          }
+        const text = (el.textContent || "").trim();
+        
+        // 1. Rename to "All Calculators/Tools"
+        if (el.children.length === 0 && /^all calculators$/i.test(text)) {
+          el.textContent = "All Calculators/Tools";
+        }
+
+        // 2. Erase the subtitle in the red box
+        if (text.toLowerCase().includes("the following is a complete list of all our calculators by category")) {
+          el.remove();
         }
       });
     }
 
-    updateHeadingText();
+    cleanAndFixContent();
     window.addEventListener("hashchange", () => {
-      updateHeadingText();
-      setTimeout(updateHeadingText, 50);
-      setTimeout(updateHeadingText, 150);
+      cleanAndFixContent();
+      setTimeout(cleanAndFixContent, 50);
+      setTimeout(cleanAndFixContent, 150);
     });
 
-    const observer = new MutationObserver(() => updateHeadingText());
+    const observer = new MutationObserver(() => cleanAndFixContent());
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 
     const allTools = [
