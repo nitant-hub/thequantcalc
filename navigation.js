@@ -29,7 +29,7 @@
       body { 
         padding-top: var(--nav-header-height) !important; 
         margin: 0 !important;
-        background-color: #f8fafc !important;
+        background-color: #ffffff !important;
       }
 
       /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
@@ -40,78 +40,75 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT 2-COLUMN DESKTOP SPLIT
-         LEFT: CATEGORY LIST (70%) | RIGHT: SEARCH & ADSENSE (30%)
+         EXACT CALCULATOR.NET 2-COLUMN DESKTOP SPLIT
+         LEFT: ~70% MAIN TOOLS | RIGHT: ~300px SIDEBAR
          ======================================================== */
       @media (min-width: 768px) {
-        /* Force container to start right below header with a 2-column Grid */
-        main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
-          display: grid !important;
-          grid-template-columns: minmax(0, 1fr) 300px !important;
-          column-gap: 24px !important;
-          row-gap: 0 !important;
-          align-items: start !important;
-          max-width: 1220px !important;
-          margin: 0.8rem auto 3rem !important;
-          padding: 0 1rem !important;
+        /* Force outer wrapper into two distinct side-by-side columns */
+        #calcNetDesktopContainer {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
+          width: 100% !important;
+          max-width: 1200px !important;
+          margin: 12px auto 40px !important;
+          padding: 0 16px !important;
           box-sizing: border-box !important;
+          gap: 24px !important;
         }
 
-        /* 1. LEFT SIDE: CATEGORY LIST & TOOLS (Starts Top-Left Below Header) */
-        .card:first-of-type,
-        div:has(> h1),
-        div:has(> h2),
-        .calc-directory-wrap,
-        section:first-of-type {
-          grid-column: 1 / 2 !important;
-          grid-row: 1 !important;
-          width: 100% !important;
-          max-width: 100% !important;
+        /* 1. LEFT MAIN COLUMN (~70% Width) */
+        #calcNetLeftColumn {
+          flex: 1 1 0% !important;
+          width: calc(100% - 324px) !important;
+          max-width: calc(100% - 324px) !important;
           min-width: 0 !important;
           margin: 0 !important;
-          padding-top: 0 !important;
+          padding: 0 !important;
           box-sizing: border-box !important;
         }
 
-        /* Expand tool text & links naturally */
-        .card:first-of-type > div,
-        div:has(> h1) > div,
-        div:has(> h2) > div {
+        #calcNetLeftColumn .card,
+        #calcNetLeftColumn section,
+        #calcNetLeftColumn > div {
           width: 100% !important;
           max-width: 100% !important;
-          box-sizing: border-box !important;
+          box-shadow: none !important;
+          border: none !important;
+          background: transparent !important;
+          padding: 0 !important;
+          margin: 0 !important;
         }
 
-        /* 2. RIGHT SIDE: SEARCH BOX & ADSENSE (Starts Top-Right Below Header) */
+        /* 2. RIGHT SIDEBAR COLUMN (~300px Fixed) */
         #dynDesktopSidebarWrap {
-          grid-column: 2 / 3 !important;
-          grid-row: 1 !important;
+          flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
           margin: 0 !important;
-          padding-top: 0 !important;
+          padding: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
           box-sizing: border-box !important;
         }
 
-        /* Sidebar cards (Popular Tools, Categories) fill right column */
         #dynDesktopSidebarWrap .card,
         #dynDesktopSidebarWrap > div {
           width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 !important;
+          max-width: 300px !important;
           box-sizing: border-box !important;
+          margin: 0 !important;
         }
 
-        /* Hide small duplicate search on desktop left view */
-        .card:first-of-type input[placeholder*="search" i] {
+        /* Hide any legacy inline search from the left column */
+        #calcNetLeftColumn input[placeholder*="search" i] {
           display: none !important;
         }
       }
 
-      /* CALCULATOR.NET SIDEBAR SEARCH BOX */
+      /* CALCULATOR.NET SIDEBAR SEARCH BAR */
       .dyn-calcnet-search {
         display: flex !important;
         align-items: center !important;
@@ -121,11 +118,11 @@
       }
       .dyn-calcnet-search input {
         flex: 1 1 auto !important;
-        height: 36px !important;
-        padding: 4px 10px !important;
-        font-size: 14px !important;
+        height: 32px !important;
+        padding: 4px 8px !important;
+        font-size: 13px !important;
         border: 1px solid #718096 !important;
-        border-radius: 4px !important;
+        border-radius: 2px !important;
         background: #ffffff !important;
         color: #1a202c !important;
         box-sizing: border-box !important;
@@ -135,14 +132,14 @@
         border-color: #2b6cb0 !important;
       }
       .dyn-calcnet-search button {
-        height: 36px !important;
+        height: 32px !important;
         padding: 0 14px !important;
         font-size: 13px !important;
         font-weight: 700 !important;
         background: linear-gradient(180deg, #3182ce 0%, #2b6cb0 100%) !important;
         color: #ffffff !important;
         border: 1px solid #2b6cb0 !important;
-        border-radius: 4px !important;
+        border-radius: 2px !important;
         cursor: pointer !important;
         box-sizing: border-box !important;
       }
@@ -155,7 +152,7 @@
         display: none;
         width: 300px;
         min-height: 250px;
-        background: #edf2f7;
+        background: #f7fafc;
         border: 1px dashed #cbd5e0;
         border-radius: 4px;
         align-items: center;
@@ -228,7 +225,7 @@
         background: rgba(30,58,138,0.55) !important; 
       }
 
-      /* DISTINCT & ATTRACTIVE MORE BUTTON */
+      /* DISTINCT MORE BUTTON */
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important; 
         border: 1px solid rgba(255, 255, 255, 0.45) !important; 
@@ -263,7 +260,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER */
+      /* MOBILE DRAWER: 60vw WIDTH WITH ISOLATED Y SCROLLING */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -541,51 +538,65 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP RIGHT-ALIGNED SIDEBAR BUILDER
-    function setupCalculatorNetLayout() {
+    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER
+    function buildCalculatorNetDesktopLayout() {
       if (window.innerWidth < 768) return;
 
       const isCategoryView = window.location.hash.startsWith("#/");
-      const mainContainer = document.querySelector("main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay)");
-      if (!mainContainer || !isCategoryView) return;
+      const parentContainer = document.querySelector("main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay)");
+      if (!parentContainer || !isCategoryView) return;
 
-      let sidebar = document.getElementById("dynDesktopSidebarWrap");
-      if (!sidebar) {
-        sidebar = document.createElement("aside");
-        sidebar.id = "dynDesktopSidebarWrap";
+      let splitContainer = document.getElementById("calcNetDesktopContainer");
+      if (!splitContainer) {
+        splitContainer = document.createElement("div");
+        splitContainer.id = "calcNetDesktopContainer";
 
-        // Top Search Box (at the very top of the right sidebar)
-        sidebar.appendChild(makeSearchNode());
+        const leftCol = document.createElement("div");
+        leftCol.id = "calcNetLeftColumn";
 
-        // AdSense Slot (300x250)
+        const rightSidebar = document.createElement("aside");
+        rightSidebar.id = "dynDesktopSidebarWrap";
+
+        // Right Sidebar Item 1: Top Search Box
+        rightSidebar.appendChild(makeSearchNode());
+
+        // Right Sidebar Item 2: Medium Rectangle Ad Unit (300x250)
         const adSlot = document.createElement("div");
         adSlot.id = "dynAdSenseSlot";
         adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
-        sidebar.appendChild(adSlot);
+        rightSidebar.appendChild(adSlot);
 
-        // Find secondary cards (Popular Tools, Categories, System Status)
-        const secondaryCards = Array.from(mainContainer.querySelectorAll("div, aside")).filter((el) => {
-          if (el === sidebar) return false;
-          const text = (el.textContent || "").toLowerCase();
-          const hasTitle = el.querySelector("h1, h2");
-          return !hasTitle && (text.includes("popular tools") || text.includes("categories") || text.includes("system status"));
-        });
+        // Gather all existing page items (Tools block, Popular Tools, etc.)
+        const children = Array.from(parentContainer.children).filter(el => 
+          el.id !== "calcNetDesktopContainer" && 
+          el.id !== "siteDynamicHeader" && 
+          el.id !== "dynDrawer" && 
+          el.id !== "dynOverlay"
+        );
 
-        // Nest secondary cards directly inside the right sidebar
-        secondaryCards.forEach((c) => {
-          if (c && c.parentNode && c !== sidebar) {
-            sidebar.appendChild(c);
+        // Separate Left Main content from Secondary cards
+        children.forEach((child) => {
+          const text = (child.textContent || "").toLowerCase();
+          const hasTitle = child.querySelector("h1, h2");
+
+          if (hasTitle || text.includes("calculators") && !text.includes("popular tools") && !text.includes("system status")) {
+            leftCol.appendChild(child);
+          } else if (text.includes("popular tools") || text.includes("categories") || text.includes("system status")) {
+            rightSidebar.appendChild(child);
+          } else {
+            leftCol.appendChild(child);
           }
         });
 
-        // Place the sidebar as a grid item in column 2
-        mainContainer.appendChild(sidebar);
+        splitContainer.appendChild(leftCol);
+        splitContainer.appendChild(rightSidebar);
+        parentContainer.appendChild(splitContainer);
       }
     }
 
-    setupCalculatorNetLayout();
-    window.addEventListener("hashchange", () => setTimeout(setupCalculatorNetLayout, 80));
-    window.addEventListener("resize", setupCalculatorNetLayout);
+    buildCalculatorNetDesktopLayout();
+    window.addEventListener("hashchange", () => setTimeout(buildCalculatorNetDesktopLayout, 80));
+    window.addEventListener("resize", buildCalculatorNetDesktopLayout);
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
