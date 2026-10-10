@@ -1,5 +1,6 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
+  const currentHash = window.location.hash.toLowerCase();
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
   const isHomePage = !isToolPage;
 
@@ -29,7 +30,7 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
+      /* HIDE REDUNDANT DIRECTORY INTRO TEXT COMPLETELY */
       p:has(+ input[placeholder*="calculator" i]),
       .category-desc,
       .all-calc-desc {
@@ -134,8 +135,6 @@
         padding: 0 0.95rem !important;
         border-bottom: 3.5px solid transparent !important; 
         text-transform: uppercase !important;
-        cursor: pointer !important;
-        user-select: none !important;
         transition: all 0.16s ease !important;
       }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
@@ -165,8 +164,6 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        cursor: pointer !important;
-        user-select: none !important;
         transition: all 0.2s ease !important;
       }
       .dyn-more-pill-btn:hover { 
@@ -255,7 +252,6 @@
       .dyn-drawer-menu a {
         text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.92rem !important;
         padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
-        cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
@@ -398,18 +394,19 @@
     `;
 
     const categories = [
-      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", path: "/#/utility", slug: "utility", icon: "🧰" }
     ];
+    const moreUrl = "/#/all";
 
     const desktopLinksHtml = categories
-      .map((c) => `<a data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -427,38 +424,13 @@
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
         <div id="dynDrawerSearchSlot"></div>
-        <a href="/"><span>🏠</span> Home</a>
+        <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Guaranteed single-click immediate route trigger
-    function executeSingleClickNav(targetHash) {
-      const targetUrl = window.location.origin + "/" + targetHash;
-      window.location.replace(targetUrl);
-      setTimeout(() => {
-        if (window.location.hash !== targetHash) {
-          window.location.href = targetUrl;
-        }
-      }, 50);
-    }
-
-    document.querySelectorAll('.dyn-desktop-nav a, .dyn-drawer-link').forEach((link) => {
-      const targetHash = link.getAttribute("data-hash");
-      if (targetHash) {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (link.classList.contains("dyn-drawer-link")) {
-            closeDrawer();
-          }
-          executeSingleClickNav(targetHash);
-        });
-      }
-    });
-
-    // Dynamic clean-up for descriptions and headings
+    // Dynamic clean-up for descriptions, headings, and search placeholders
     function cleanAndFixContent() {
       const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
       candidates.forEach((el) => {
@@ -487,12 +459,13 @@
 
     cleanAndFixContent();
     window.addEventListener("hashchange", () => {
-      setTimeout(cleanAndFixContent, 40);
-      setTimeout(cleanAndFixContent, 120);
+      cleanAndFixContent();
+      setTimeout(cleanAndFixContent, 50);
+      setTimeout(cleanAndFixContent, 150);
     });
 
     const observer = new MutationObserver(() => cleanAndFixContent());
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
@@ -530,6 +503,10 @@
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
+
+    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
+      link.addEventListener("click", closeDrawer);
+    });
 
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
