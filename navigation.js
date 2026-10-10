@@ -38,7 +38,7 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT (CATEGORY ONLY)
+         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT (DESKTOP)
          ======================================================== */
       @media (min-width: 768px) {
         .dyn-category-mode .dyn-desktop-parent {
@@ -254,7 +254,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER */
+      /* MOBILE DRAWER: 60vw WIDTH WITH ISOLATED Y SCROLLING */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -426,12 +426,19 @@
         if (link.classList.contains("dyn-drawer-link")) {
           closeDrawer();
         }
+        setTimeout(setupCalculatorNetLayout, 10);
       });
     });
 
     syncActiveTab();
-    window.addEventListener("hashchange", syncActiveTab);
-    window.addEventListener("popstate", syncActiveTab);
+    window.addEventListener("hashchange", () => {
+      syncActiveTab();
+      setupCalculatorNetLayout();
+    });
+    window.addEventListener("popstate", () => {
+      syncActiveTab();
+      setupCalculatorNetLayout();
+    });
 
     // Update Heading Text Safely
     function updateHeadingText() {
@@ -532,14 +539,14 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER (CATEGORY PAGES ONLY)
+    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER
     let isLayoutUpdating = false;
     function setupCalculatorNetLayout() {
       if (isLayoutUpdating || window.innerWidth < 768) return;
 
       const isCategoryView = Boolean(window.location.hash.startsWith("#/") && window.location.hash.length > 2);
 
-      // On Homepage: ensure clean default state with no sidebar or ad box
+      // On Homepage: reset to default state
       if (!isCategoryView) {
         document.body.classList.remove("dyn-category-mode");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -570,10 +577,10 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
-          // 1. Search Box at the top of the right column
+          // 1. Search Box at top of sidebar
           sidebar.appendChild(makeSearchNode());
 
-          // 2. AdSense unit (300x250) - Only created inside category views
+          // 2. AdSense unit (300x250)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
@@ -595,12 +602,20 @@
           parentContainer.appendChild(sidebar);
         }
       } finally {
-        setTimeout(() => { isLayoutUpdating = false; }, 50);
+        setTimeout(() => { isLayoutUpdating = false; }, 40);
       }
     }
 
+    // MutationObserver to capture single-click client router DOM changes
+    const observer = new MutationObserver(() => {
+      const isCategoryView = Boolean(window.location.hash.startsWith("#/") && window.location.hash.length > 2);
+      if (isCategoryView && !document.getElementById("dynDesktopSidebarWrap")) {
+        setupCalculatorNetLayout();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
     setupCalculatorNetLayout();
-    window.addEventListener("hashchange", () => setTimeout(setupCalculatorNetLayout, 50));
     window.addEventListener("resize", setupCalculatorNetLayout);
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
