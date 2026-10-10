@@ -17,8 +17,18 @@
       document.head.appendChild(style);
     }
     style.textContent = `
-      :root { --nav-header-height: 56px; }
-      body { padding-top: var(--nav-header-height) !important; }
+      :root { 
+        --nav-header-height: 56px; 
+      }
+      @media (min-width: 768px) {
+        :root { 
+          --nav-header-height: 68px; /* Professional, well-proportioned desktop height */
+        }
+      }
+
+      body { 
+        padding-top: var(--nav-header-height) !important; 
+      }
 
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
@@ -27,17 +37,17 @@
         border-bottom: 1px solid rgba(99, 179, 255, 0.25) !important;
         box-shadow: 0 4px 20px rgba(10, 20, 80, 0.4) !important;
         display: flex !important; align-items: center !important; justify-content: space-between !important;
-        padding: 0 1.2rem !important;
+        padding: 0 1.5rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
-      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.6rem !important; text-decoration: none !important; }
+      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.65rem !important; text-decoration: none !important; }
       .dyn-logo-icon {
-        background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 32px !important; height: 32px !important;
+        background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 36px !important; height: 36px !important;
         border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;
-        color: #fff !important; font-weight: 800 !important; font-size: 1.1rem !important;
+        color: #fff !important; font-weight: 800 !important; font-size: 1.2rem !important;
       }
       .dyn-brand-text {
-        font-size: 1.2rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
+        font-size: 1.3rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
         background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%) !important;
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
@@ -100,10 +110,10 @@
         box-shadow: 0 5px 18px rgba(236, 72, 153, 0.65) !important;
       }
 
-      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.65rem !important; }
+      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.75rem !important; }
       .dyn-theme-btn {
         background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important;
-        font-size: 1rem !important; cursor: pointer !important; color: #fff !important; width: 34px !important; height: 34px !important;
+        font-size: 1.05rem !important; cursor: pointer !important; color: #fff !important; width: 36px !important; height: 36px !important;
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
