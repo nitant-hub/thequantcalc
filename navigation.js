@@ -275,24 +275,24 @@
         margin: 0 !important; 
       }
 
-      /* Directly below Interactive Calculator on Homepage */
+      /* Below Interactive Calculator on Homepage */
       .dyn-search-wrapper.in-home { 
         width: 100% !important; 
         margin: 0.5rem 0 0.5rem 0 !important; 
         padding: 0 !important; 
       }
 
-      /* Sidebar placement for tool and category pages */
+      /* Sidebar placement for tool pages */
       .dyn-search-wrapper.in-sidebar { 
         width: 100% !important; 
-        margin: 0 0 1rem 0 !important; 
+        margin: 0 0 1.25rem 0 !important; 
         padding: 0 !important; 
       }
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.8rem 1.1rem !important;
-        font-size: 1rem !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 12px !important;
@@ -472,42 +472,65 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER SEARCH
+    // 1. MOBILE DRAWER SEARCH (STRICT SINGLETON)
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     if (drawerSlot) {
+      drawerSlot.innerHTML = ""; // Clear existing duplicate inputs
       const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
       drawerSlot.appendChild(drawerSearch);
     }
 
-    // 2. SEARCH MOUNTING: STRICT PLACEMENT
-    const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
+    // Remove any accidental pre-existing duplicate search inputs inside the drawer
+    const drawerEl = document.getElementById("dynDrawer");
+    if (drawerEl) {
+      const extraSearches = drawerEl.querySelectorAll(".dyn-search-wrapper");
+      if (extraSearches.length > 1) {
+        for (let i = 1; i < extraSearches.length; i++) extraSearches[i].remove();
+      }
+    }
+
+    // 2. DESKTOP SEARCH MOUNTING
+    const searchInstance = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
     function placeSearchElement() {
-      if (desktopSearch.isConnected) return true;
+      if (searchInstance.isConnected) return true;
 
       if (isHomePage) {
-        // 1. Home page: look specifically for #homeSearchSlot
+        // HOME: Put directly below the calculator card
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
-          homeSlot.appendChild(desktopSearch);
+          homeSlot.appendChild(searchInstance);
           return true;
         }
-        // 2. Fallback: insert specifically AFTER the .calc-card element
         const calcCard = document.querySelector(".calc-card");
         if (calcCard && calcCard.parentNode) {
-          calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
+          calcCard.parentNode.insertBefore(searchInstance, calcCard.nextSibling);
           return true;
         }
       } else {
-        // Other pages: look specifically for #sidebarSearchSlot or sidebar
+        // TOOLS & CATEGORIES: Find sidebar on any tool page layout
         const sideSlot = document.getElementById("sidebarSearchSlot");
         if (sideSlot) {
-          sideSlot.appendChild(desktopSearch);
+          sideSlot.appendChild(searchInstance);
           return true;
         }
-        const sidebar = document.querySelector("aside");
-        if (sidebar) {
-          sidebar.insertBefore(desktopSearch, sidebar.firstChild);
+
+        // Look for the "Popular Tools" container or sidebar box
+        const popularHeading = Array.from(document.querySelectorAll("h3, .box, aside, .sidebar, .card")).find((n) => {
+          return (n.textContent || "").toLowerCase().includes("popular tools");
+        });
+
+        if (popularHeading) {
+          const targetBox = popularHeading.closest(".box, .card") || popularHeading;
+          if (targetBox && targetBox.parentNode) {
+            targetBox.parentNode.insertBefore(searchInstance, targetBox);
+            return true;
+          }
+        }
+
+        const asideElem = document.querySelector("aside, .sidebar, .right-col");
+        if (asideElem) {
+          asideElem.insertBefore(searchInstance, asideElem.firstChild);
           return true;
         }
       }
@@ -517,7 +540,7 @@
     let retries = 0;
     const interval = setInterval(() => {
       retries++;
-      if (placeSearchElement() || retries > 15) clearInterval(interval);
+      if (placeSearchElement() || retries > 20) clearInterval(interval);
     }, 100);
     placeSearchElement();
 
