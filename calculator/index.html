@@ -55,7 +55,7 @@
 
         .bc-tab-btn {
             padding: 6px 12px; 
-            background: #e2e8f0;
+            background: #e2e8f0; 
             border: 1px solid #94a3b8; 
             border-bottom: none; 
             border-radius: 8px 8px 0 0;
@@ -100,7 +100,7 @@
             border-bottom: 2px solid #ffffff;
         }
 
-        /* Bold High-Definition Display Screen */
+        /* Display Screen */
         .bc-screen-container {
             border-radius: 10px; 
             margin-bottom: 12px; 
@@ -179,7 +179,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* Tactile Keypad Buttons */
+        /* Keypad Buttons */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a3b8; 
@@ -203,7 +203,6 @@
             box-shadow: 0 0 0 transparent, inset 0 2px 4px rgba(0,0,0,0.2) !important; 
         }
 
-        /* High-Visibility Key Variants */
         .bc-btn-num { 
             background: #ffffff; 
             color: #0f172a; 
@@ -261,7 +260,7 @@
         .bc-span-10 { grid-column: span 10; }
         .bc-row-2 { grid-row: span 2; height: 100% !important; }
 
-        /* History Tab */
+        /* FIXED HEIGHT HISTORY TAB TO PREVENT LAYOUT SHIFT */
         #bc-history-tab { 
             background: #ffffff; 
             border: 2px solid #cbd5e1;
@@ -269,9 +268,11 @@
             border-radius: 10px; 
             padding: 12px; 
             flex-direction: column; 
-            height: 220px; 
+            height: 275px !important; 
+            min-height: 275px !important;
+            box-sizing: border-box;
         }
-        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; }
+        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; flex-shrink: 0; }
         .bc-history-title { font-weight: 900 !important; color: #1e3a8a; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
         .bc-history-back-btn, .bc-clear-history { font-size: 11px; font-weight: 800 !important; cursor: pointer; padding: 6px 12px; border-radius: 6px; text-transform: uppercase; color: #ffffff; }
         .bc-history-back-btn { background: #2563eb; border: 1px solid #1d4ed8; box-shadow: 0 3px 0 #1e40af; }
@@ -279,7 +280,7 @@
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 14px; }
         .hist-entry { margin-bottom: 6px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; text-align: left; color: #0f172a; font-weight: 700; }
         .hist-entry strong { color: #1e3a8a; font-weight: 900 !important; }
-        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 30px; font-weight: 800; }
+        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 50px; font-weight: 800; }
 
         /* Responsive Mobile Scaling */
         @media (max-width: 600px) {
@@ -299,6 +300,11 @@
             .bc-grid-sci-desktop, .bc-grid-gate, .bc-grid-adv, .bc-grid-prog, .bc-grid-graph, .bc-grid-cas, .bc-grid-fin { 
                 gap: 4px !important; 
             }
+            #bc-history-tab { 
+                height: 240px !important; 
+                min-height: 240px !important; 
+            }
+            .hist-empty { padding-top: 40px; }
         }
     </style>
 
