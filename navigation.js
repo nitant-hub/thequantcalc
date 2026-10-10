@@ -119,20 +119,22 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: REMOVED EMPTY TOP SPACE */
+      /* MOBILE DRAWER: OCCUPIES 55-65% WIDTH IN X DIRECTION, FLUSH TO TOP */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
-        right: -310px !important; 
-        width: 285px !important;
+        right: -75vw !important; 
+        width: 60vw !important; /* 60% of viewport width (55%-65% range) */
+        min-width: 210px !important;
+        max-width: 250px !important;
         height: 100vh !important; 
         height: 100dvh !important;
         background: #fff !important; 
         border-left: 1px solid #e2e8f0 !important; 
-        padding: 0.85rem 1.1rem 2.5rem !important; /* Shrunk top padding from 3.5rem to 0.85rem */
+        padding: 0.75rem 0.8rem 2rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.55rem !important; 
+        gap: 0.45rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
         z-index: 1000000 !important; 
@@ -146,36 +148,41 @@
       }
       .dyn-drawer-menu.open { right: 0 !important; }
 
+      /* UPPER BAR: SEARCH AND CLOSE BUTTON OCCUPYING THE TOP ROW WITHOUT "MENU" */
       .dyn-drawer-header-row {
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        margin-bottom: 0.15rem !important;
+        gap: 0.4rem !important;
         width: 100% !important;
+        margin-bottom: 0.35rem !important;
       }
-      .dyn-drawer-title { 
-        color: #475569; 
-        font-size: 0.82rem; 
-        font-weight: 800; 
-        letter-spacing: 1.2px; 
-        text-transform: uppercase; 
-        margin: 0 !important; 
-      }
-      [data-theme="dark"] .dyn-drawer-title { color: #94a3b8; }
 
       .dyn-close-btn { 
-        position: static !important; 
-        background: none !important; 
-        border: none !important; 
-        font-size: 1.8rem !important; 
+        background: #f1f5f9 !important; 
+        border: 1px solid #cbd5e1 !important; 
+        border-radius: 8px !important;
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 1.4rem !important; 
+        font-weight: 700 !important;
         color: #64748b !important; 
         cursor: pointer !important; 
         line-height: 1 !important; 
         padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
       }
+      [data-theme="dark"] .dyn-close-btn {
+        background: #1e293b !important;
+        border-color: #334155 !important;
+        color: #94a3b8 !important;
+      }
+
       .dyn-drawer-menu a {
-        text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.94rem !important;
-        padding: 0.5rem 0.65rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.6rem !important;
+        text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.92rem !important;
+        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
@@ -197,9 +204,12 @@
         display: block !important; 
         z-index: 1000 !important;
       }
-      #dynDrawerSearchSlot { position: sticky !important; top: 0 !important; z-index: 10 !important; background: inherit !important; padding-bottom: 0.2rem !important; }
+      #dynDrawerSearchSlot { 
+        flex: 1 !important; 
+        width: 100% !important; 
+      }
       
-      .dyn-search-wrapper.in-drawer { margin-bottom: 0.4rem !important; }
+      .dyn-search-wrapper.in-drawer { margin-bottom: 0 !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto 1.2rem !important; padding: 0 1rem !important; }
       .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
@@ -210,11 +220,11 @@
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.85rem 1.15rem !important;
-        font-size: 16px !important;
+        padding: 0.75rem 0.95rem !important;
+        font-size: 15px !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         border: 2px solid #94a3b8 !important;
         background: #ffffff !important;
         color: #0f172a !important;
@@ -233,7 +243,7 @@
       .dyn-search-input:focus {
         border-color: #2563eb !important;
         background: #ffffff !important;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22), 0 8px 22px rgba(37, 99, 235, 0.15) !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22) !important;
       }
 
       /* Dark mode styles */
@@ -249,7 +259,7 @@
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
         background: #0b132b !important;
-        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3) !important;
       }
 
       /* Clear Dropdown styling */
@@ -277,8 +287,8 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0.85rem 1.1rem !important; 
-        font-size: 0.95rem !important; 
+        padding: 0.75rem 0.9rem !important; 
+        font-size: 0.92rem !important; 
         font-weight: 700 !important;
         color: #0f172a !important; 
         text-decoration: none !important; 
@@ -342,10 +352,9 @@
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
         <div class="dyn-drawer-header-row">
-          <div class="dyn-drawer-title">MENU</div>
+          <div id="dynDrawerSearchSlot"></div>
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
-        <div id="dynDrawerSearchSlot" style="width:100%;"></div>
         <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
@@ -375,7 +384,7 @@
       wrap.className = "dyn-search-wrapper " + wrapperClass;
       wrap.innerHTML = `
         <div class="dyn-search-input-box">
-          <input type="text" class="dyn-search-input" placeholder="🔍 Search any calculator..." autocomplete="off">
+          <input type="text" class="dyn-search-input" placeholder="🔍 Search..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
