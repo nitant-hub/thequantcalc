@@ -5,7 +5,7 @@
   const isHomePage = !isToolPage;
 
   function initNavigation() {
-    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSearchWrap", "dynAdSenseSlot"].forEach((id) => {
+    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSidebarWrap"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
@@ -40,62 +40,61 @@
       }
 
       /* ========================================================
-         EXACT CALCULATOR.NET 2-COLUMN SPLIT (DESKTOP)
+         CALCULATOR.NET DESKTOP 2-COLUMN STRUCTURE
          ======================================================== */
       @media (min-width: 768px) {
-        /* Container splits into Left Content (~70%) + Right Sidebar (300px) */
+        /* Main page wrapper becomes 2 columns: Wide Left + Fixed 300px Right */
         main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
-          display: flex !important;
-          flex-direction: row !important;
-          flex-wrap: wrap !important;
-          justify-content: space-between !important;
-          align-items: flex-start !important;
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 300px !important;
+          column-gap: 24px !important;
+          row-gap: 16px !important;
           max-width: 1200px !important;
-          margin: 1.2rem auto 3rem !important;
+          margin: 1.5rem auto 3rem !important;
           padding: 0 1.2rem !important;
           box-sizing: border-box !important;
+          align-items: start !important;
         }
 
-        /* 1. LEFT MAIN COLUMN: Tools directory, Subcategories & Links */
+        /* 1. LEFT MAIN COLUMN: Tools directory, title, and links */
+        body > div:not(#siteDynamicHeader) > div:first-of-type,
         .card:first-of-type,
         div:has(> h1),
         div:has(> h2),
         .calc-directory-wrap,
         section:first-of-type {
-          flex: 1 1 calc(100% - 330px) !important;
-          max-width: calc(100% - 330px) !important;
-          min-width: 0 !important;
-          order: 1 !important;
-          margin-bottom: 2rem !important;
+          grid-column: 1 / 2 !important;
+          grid-row: 1 / span 10 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
         }
 
-        /* 2. RIGHT SIDEBAR WRAPPER: Search, AdSense & Side Boxes */
+        /* Prevent tools card from squishing */
+        div:has(> h1) *,
+        div:has(> h2) *,
+        .card:first-of-type * {
+          max-width: 100% !important;
+        }
+
+        /* 2. RIGHT SIDEBAR WRAPPER */
         #dynDesktopSidebarWrap {
-          flex: 0 0 300px !important;
+          grid-column: 2 / 3 !important;
+          grid-row: 1 / span 10 !important;
           width: 300px !important;
-          order: 2 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 1.2rem !important;
-        }
-
-        /* Move existing sidebar cards (Popular Tools, Categories) into the sidebar flow */
-        .card:not(:first-of-type),
-        div:has(> div:contains("Popular Tools")),
-        aside,
-        .sidebar {
-          width: 100% !important;
+          gap: 16px !important;
           box-sizing: border-box !important;
-          margin: 0 !important;
         }
 
-        /* Hide the small inline directory search on desktop */
+        /* Hide the original inline category search inside the left column */
         .card:first-of-type input[placeholder*="search" i] {
           display: none !important;
         }
       }
 
-      /* CALCULATOR.NET CLASSIC SIDEBAR SEARCH BOX */
+      /* CALCULATOR.NET SEARCH BAR STYLE */
       .dyn-calcnet-search {
         display: flex !important;
         align-items: center !important;
@@ -106,10 +105,10 @@
       .dyn-calcnet-search input {
         flex: 1 1 auto !important;
         height: 34px !important;
-        padding: 4px 8px !important;
+        padding: 4px 10px !important;
         font-size: 14px !important;
         border: 1px solid #718096 !important;
-        border-radius: 3px !important;
+        border-radius: 4px !important;
         background: #ffffff !important;
         color: #1a202c !important;
         box-sizing: border-box !important;
@@ -126,7 +125,7 @@
         background: linear-gradient(180deg, #3182ce 0%, #2b6cb0 100%) !important;
         color: #ffffff !important;
         border: 1px solid #2b6cb0 !important;
-        border-radius: 3px !important;
+        border-radius: 4px !important;
         cursor: pointer !important;
         box-sizing: border-box !important;
       }
@@ -134,7 +133,7 @@
         background: linear-gradient(180deg, #2b6cb0 0%, #2c5282 100%) !important;
       }
 
-      /* ADSENSE PLACEHOLDER (300x250 MEDIUM RECTANGLE) */
+      /* ADSENSE PLACEHOLDER (300x250) */
       #dynAdSenseSlot {
         display: none;
         width: 300px;
@@ -479,8 +478,7 @@
       link.addEventListener("click", closeDrawer);
     });
 
-    // Make Search Node (with classic "Search" button for desktop)
-    function makeSearchNode(isSidebar) {
+    function makeSearchNode() {
       const wrap = document.createElement("div");
       wrap.className = "dyn-search-wrapper";
       wrap.innerHTML = `
@@ -524,14 +522,14 @@
 
     // 1. MOBILE DRAWER SEARCH
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
-    drawerSlot.appendChild(makeSearchNode(false));
+    drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP CALCULATOR.NET SIDEBAR BUILDER
-    function buildDesktopCalculatorNetSidebar() {
+    // 2. DESKTOP CALCULATOR.NET SIDEBAR INTEGRATION
+    function setupCalculatorNetLayout() {
       if (window.innerWidth < 768) return;
 
       const isCategoryView = window.location.hash.startsWith("#/");
-      const mainContainer = document.querySelector("main, #content, .container, body > div:not(#siteDynamicHeader)");
+      const mainContainer = document.querySelector("main, #app, #content, .container, body > div:not(#siteDynamicHeader)");
       if (!mainContainer || !isCategoryView) return;
 
       let sidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -540,7 +538,7 @@
         sidebar.id = "dynDesktopSidebarWrap";
 
         // Top Search Box (calculator.net style)
-        sidebar.appendChild(makeSearchNode(true));
+        sidebar.appendChild(makeSearchNode());
 
         // AdSense Slot (300x250)
         const adSlot = document.createElement("div");
@@ -548,23 +546,28 @@
         adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
         sidebar.appendChild(adSlot);
 
-        // Move existing Popular Tools & Categories card inside Sidebar
-        const secondaryCards = Array.from(mainContainer.querySelectorAll(".card, div")).filter((el) => {
-          const t = (el.textContent || "").toLowerCase();
-          return (t.includes("popular tools") || t.includes("categories")) && el !== sidebar;
+        // Collect existing sidebar blocks (Categories, Popular Tools, etc.)
+        const sidebarCards = Array.from(mainContainer.querySelectorAll("div, aside")).filter((el) => {
+          if (el === sidebar) return false;
+          const text = (el.textContent || "").toLowerCase();
+          const hasTitle = el.querySelector("h1, h2");
+          return !hasTitle && (text.includes("popular tools") || text.includes("categories") || text.includes("system status"));
         });
 
-        secondaryCards.forEach((card) => {
-          sidebar.appendChild(card);
+        // Move the cards inside the sidebar container cleanly
+        sidebarCards.forEach((c) => {
+          if (c && c.parentNode && c !== sidebar) {
+            sidebar.appendChild(c);
+          }
         });
 
         mainContainer.appendChild(sidebar);
       }
     }
 
-    buildDesktopCalculatorNetSidebar();
-    window.addEventListener("hashchange", () => setTimeout(buildDesktopCalculatorNetSidebar, 70));
-    window.addEventListener("resize", buildDesktopCalculatorNetSidebar);
+    setupCalculatorNetLayout();
+    window.addEventListener("hashchange", () => setTimeout(setupCalculatorNetLayout, 70));
+    window.addEventListener("resize", setupCalculatorNetLayout);
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
