@@ -20,6 +20,7 @@
 
 <div class="blogger-calc-classic" id="blogger-calc-widget">
     <style>
+        /* CLEAN HIGH-READABILITY SHELL */
         .blogger-calc-classic {
             width: 100%;
             max-width: 630px; 
@@ -38,6 +39,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* TABS CONTAINER */
         .bc-tabs {
             display: flex; 
             margin-bottom: 6px; 
@@ -52,7 +54,7 @@
 
         .bc-tab-btn {
             font-family: inherit;
-            padding: 6px 12px; 
+            padding: 6px 11px; 
             background: #ffffff !important; 
             border: 1px solid #94a3b8 !important; 
             border-bottom: none !important; 
@@ -93,19 +95,21 @@
             border-color: #2563eb !important;
         }
 
+        /* DESKTOP VIEWPORT: LARGER FONT SCALE */
         @media (min-width: 601px) {
             .bc-tab-btn {
-                font-size: 15px !important;
+                font-size: 16.5px !important;
                 font-weight: 800 !important;
-                letter-spacing: -0.3px;
-                padding: 6px 10px;
+                letter-spacing: -0.35px;
+                padding: 6px 9px; /* Preserves exact box footprint without wrapping */
             }
             #btn-bc-history-tab {
-                font-size: 13.5px !important;
-                padding: 6px 10px;
+                font-size: 14.5px !important;
+                padding: 6px 9px;
             }
         }
 
+        /* SCREEN */
         .bc-screen-container {
             border: 1px solid #7c93ab;
             border-radius: 3px; 
@@ -159,6 +163,7 @@
         .bc-input-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
         .bc-output-box::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 2px; }
 
+        /* KEYPAD WORKSPACE */
         .bc-keypad-container {
             height: 255px;
             min-height: 255px;
@@ -186,6 +191,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
+        /* BUTTONS ENGINE */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a8be; 
@@ -207,6 +213,7 @@
         .bc-btn:hover { background: #f0f4f8; }
         .bc-btn:active { transform: translateY(1px); }
 
+        /* NUMBERS */
         .bc-btn-num { 
             background: #c6d9ec !important; 
             color: #000000 !important; 
@@ -216,6 +223,7 @@
         }
         .bc-btn-num:hover { background: #b4cee6 !important; }
 
+        /* OPERATORS */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -232,6 +240,7 @@
         }
         .bc-btn-op:hover { background: #d0e0ee !important; }
 
+        /* EQUALS (=) */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: #2563eb !important; 
@@ -242,6 +251,7 @@
         }
         .bc-btn-primary:hover { background: #1d4ed8 !important; }
 
+        /* CLEAR / AC */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: #dc2626 !important; 
@@ -252,6 +262,7 @@
         }
         .bc-btn-danger:hover { background: #b91c1c !important; }
 
+        /* BACKSPACE / DELETE */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
             background: #ea580c !important;
@@ -262,6 +273,7 @@
         }
         .bc-btn-delete:hover { background: #c2410c !important; }
 
+        /* DEG / RAD */
         .bc-btn-deg, .bc-btn-rad {
             font-size: 13px !important;
             font-weight: 900 !important;
@@ -298,6 +310,7 @@
         .bc-span-9 { grid-column: span 9; }
         .bc-span-10 { grid-column: span 10; }
 
+        /* HISTORY */
         #bc-history-tab { 
             background: #ffffff; 
             border: 1px solid #9fb4cb; 
@@ -317,6 +330,7 @@
         .hist-entry strong { color: #3b5998; font-weight: 900 !important; }
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
 
+        /* MOBILE VIEW RULES */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
             .bc-tab-btn { font-size: 11px !important; padding: 5px 8px; font-weight: 800 !important; }
@@ -432,7 +446,7 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
         </div>
 
-        <!-- 3. GATE (FIXED MISSING QUOTE ON MR BUTTON) -->
+        <!-- 3. GATE -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <button class="bc-btn" onclick="BloggerCalc.op('%')">mod</button>
             <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
@@ -440,11 +454,11 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sinh')">sinh</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.cosh')">cosh</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.tanh')">tanh</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mc')">MC</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('ms')">MS</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m+')">M+</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m-')">M-</button>
+            <button class="bc-btn" onclick="BloggerCalc.mem('mc')">MC</button>
+            <button class="bc-btn" onclick="BloggerCalc.mem('mr')">MR</button>
+            <button class="bc-btn" onclick="BloggerCalc.mem('ms')">MS</button>
+            <button class="bc-btn" onclick="BloggerCalc.mem('m+')">M+</button>
+            <button class="bc-btn" onclick="BloggerCalc.mem('m-')">M-</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">Exp</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
@@ -452,11 +466,11 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Math.asinh')">sinh⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.acosh')">cosh⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.atanh')">tanh⁻¹</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num('(')">(</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num(')')">)</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('(')">(</button>
+            <button class="bc-btn" onclick="BloggerCalc.num(')')">)</button>
             <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">←</button>
             <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">C</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">±</button>
+            <button class="bc-btn" onclick="BloggerCalc.toggleSign()">±</button>
 
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log')">ln</button>
             <button class="bc-btn" onclick="BloggerCalc.num('Math.PI')">π</button>
@@ -488,9 +502,9 @@
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.atan')">tan⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.op('**2')">x²</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcNthRoot')">ʸ√x</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('1')">1</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('2')">2</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
             <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
 
@@ -591,9 +605,9 @@
             <button class="bc-btn" onclick="BloggerCalc.num(',')">,</button>
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.op(';')">;</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('1')">1</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('2')">2</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
 
             <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
@@ -807,7 +821,6 @@
             }
 
             function secureEvaluate(expr) {
-                // Strip whitelisted math functions and symbols to ensure safe calculation
                 const testStr = expr
                     .replace(/(Math\.[a-zA-Z0-9]+|bcTrig\.[a-zA-Z]+|bc[A-zA-Z]+)/g, '')
                     .replace(/[0-9+\-*/().,% eE]/g, '');
