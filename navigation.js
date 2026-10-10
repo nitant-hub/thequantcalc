@@ -2,7 +2,7 @@
   const currentPath = window.location.pathname.toLowerCase();
   const currentHash = window.location.hash.toLowerCase();
   
-  // Clean routing checks
+  // Clean page routing checks
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
   const isHomePage = !isToolPage && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath.endsWith("/index") || currentPath.endsWith("/"));
 
@@ -24,12 +24,25 @@
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 66px; 
+          --nav-header-height: 62px; 
         }
       }
 
+      /* TIGHT VERTICAL SPACING - REMOVES THE WHITE GAP BELOW HEADER */
       body { 
         padding-top: var(--nav-header-height) !important; 
+        margin-top: 0 !important;
+      }
+      
+      .wrap, .container, #app, main, .grid {
+        margin-top: 0.45rem !important;
+        padding-top: 0 !important;
+      }
+
+      .crumb, .breadcrumbs, [class*="crumb"] {
+        margin-top: 0.2rem !important;
+        margin-bottom: 0.4rem !important;
+        padding-top: 0 !important;
       }
 
       header#siteDynamicHeader {
@@ -261,6 +274,25 @@
       @media (min-width: 768px) {
         .dyn-desktop-nav { display: flex !important; }
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
+
+        /* ENSURE CLEAN 2-COLUMN DESKTOP LAYOUT WITHOUT PUSHING DOWN */
+        .wrap > .grid,
+        .wrap:has(aside),
+        .container:has(aside),
+        body.tool-page .grid {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 290px !important;
+          gap: 1.5rem !important;
+          align-items: start !important;
+        }
+
+        aside {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 1rem !important;
+          width: 100% !important;
+          margin-top: 0 !important;
+        }
       }
 
       /* SEARCH COMPONENT PLACEMENT STYLING */
@@ -275,15 +307,17 @@
         margin: 0 !important; 
       }
 
+      /* Below Interactive Calculator on Homepage */
       .dyn-search-wrapper.in-home { 
         width: 100% !important; 
         margin: 0.5rem 0 0.5rem 0 !important; 
         padding: 0 !important; 
       }
 
+      /* Top of Sidebar on Tool Pages */
       .dyn-search-wrapper.in-sidebar { 
         width: 100% !important; 
-        margin: 0 0 1rem 0 !important; 
+        margin: 0 0 0.75rem 0 !important; 
         padding: 0 !important; 
       }
 
@@ -470,10 +504,9 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER SEARCH (CLEAN SINGLETON - PURGES ANY DUPLICATE)
+    // 1. MOBILE DRAWER SEARCH (STRICT SINGLETON)
     const drawerMenu = document.getElementById("dynDrawer");
     if (drawerMenu) {
-      // Remove any existing inputs/wrappers inside the drawer
       drawerMenu.querySelectorAll(".dyn-search-wrapper, input[type='search'], input[placeholder*='Search']").forEach(el => el.remove());
       const drawerSlot = document.getElementById("dynDrawerSearchSlot");
       if (drawerSlot) {
@@ -489,7 +522,7 @@
       if (searchInstance.isConnected) return true;
 
       if (isHomePage) {
-        // HOME: strictly place into #homeSearchSlot or after .calc-card
+        // HOME: directly below calculator card
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
           homeSlot.appendChild(searchInstance);
@@ -501,13 +534,12 @@
           return true;
         }
       } else {
-        // TOOL PAGES: find the "Popular Tools" container and mount strictly above it
+        // TOOL PAGES: place in sidebar directly above Popular Tools
         const popularTitle = Array.from(document.querySelectorAll("h3, h4, .st, b, div, span")).find((el) => {
           return (el.textContent || "").includes("Popular Tools");
         });
 
         if (popularTitle) {
-          // Find the wrapper box/card holding Popular Tools
           const parentBox = popularTitle.closest(".box, .card") || popularTitle.parentElement;
           if (parentBox && parentBox.parentNode) {
             parentBox.parentNode.insertBefore(searchInstance, parentBox);
