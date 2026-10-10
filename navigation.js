@@ -261,6 +261,25 @@
       @media (min-width: 768px) {
         .dyn-desktop-nav { display: flex !important; }
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
+
+        /* ENSURE PROPER 2-COLUMN SIDEBAR ON TOOL PAGES */
+        .wrap > .grid,
+        .wrap:has(aside),
+        .container:has(aside),
+        main:has(+ aside),
+        body.tool-page .grid {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 300px !important;
+          gap: 1.5rem !important;
+          align-items: start !important;
+        }
+
+        aside {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 1rem !important;
+          width: 100% !important;
+        }
       }
 
       /* SEARCH COMPONENT PLACEMENT STYLING */
@@ -282,10 +301,10 @@
         padding: 0 !important; 
       }
 
-      /* Sidebar placement for tool pages */
+      /* Top of Sidebar on Tool Pages */
       .dyn-search-wrapper.in-sidebar { 
         width: 100% !important; 
-        margin: 0 0 1.25rem 0 !important; 
+        margin: 0 0 0.75rem 0 !important; 
         padding: 0 !important; 
       }
 
@@ -472,21 +491,12 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER SEARCH (STRICT SINGLETON)
+    // 1. MOBILE DRAWER SEARCH (CLEAN SINGLETON)
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     if (drawerSlot) {
-      drawerSlot.innerHTML = ""; // Clear existing duplicate inputs
+      drawerSlot.innerHTML = "";
       const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
       drawerSlot.appendChild(drawerSearch);
-    }
-
-    // Remove any accidental pre-existing duplicate search inputs inside the drawer
-    const drawerEl = document.getElementById("dynDrawer");
-    if (drawerEl) {
-      const extraSearches = drawerEl.querySelectorAll(".dyn-search-wrapper");
-      if (extraSearches.length > 1) {
-        for (let i = 1; i < extraSearches.length; i++) extraSearches[i].remove();
-      }
     }
 
     // 2. DESKTOP SEARCH MOUNTING
@@ -508,29 +518,26 @@
           return true;
         }
       } else {
-        // TOOLS & CATEGORIES: Find sidebar on any tool page layout
+        // TOOL PAGES: Place at the very top of the sidebar directly above Popular Tools
         const sideSlot = document.getElementById("sidebarSearchSlot");
         if (sideSlot) {
           sideSlot.appendChild(searchInstance);
           return true;
         }
 
-        // Look for the "Popular Tools" container or sidebar box
-        const popularHeading = Array.from(document.querySelectorAll("h3, .box, aside, .sidebar, .card")).find((n) => {
-          return (n.textContent || "").toLowerCase().includes("popular tools");
+        // Find the Popular Tools element or the sidebar/aside container
+        const popularElement = Array.from(document.querySelectorAll("aside .box, aside .card, .sidebar .card, .card, .box")).find((el) => {
+          return (el.textContent || "").toLowerCase().includes("popular tools");
         });
 
-        if (popularHeading) {
-          const targetBox = popularHeading.closest(".box, .card") || popularHeading;
-          if (targetBox && targetBox.parentNode) {
-            targetBox.parentNode.insertBefore(searchInstance, targetBox);
-            return true;
-          }
+        if (popularElement && popularElement.parentNode) {
+          popularElement.parentNode.insertBefore(searchInstance, popularElement);
+          return true;
         }
 
-        const asideElem = document.querySelector("aside, .sidebar, .right-col");
-        if (asideElem) {
-          asideElem.insertBefore(searchInstance, asideElem.firstChild);
+        const asideContainer = document.querySelector("aside, .sidebar");
+        if (asideContainer) {
+          asideContainer.insertBefore(searchInstance, asideContainer.firstChild);
           return true;
         }
       }
@@ -540,7 +547,7 @@
     let retries = 0;
     const interval = setInterval(() => {
       retries++;
-      if (placeSearchElement() || retries > 20) clearInterval(interval);
+      if (placeSearchElement() || retries > 25) clearInterval(interval);
     }, 100);
     placeSearchElement();
 
