@@ -1,6 +1,5 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
-  const currentHash = window.location.hash.toLowerCase();
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
   const isHomePage = !isToolPage;
 
@@ -404,12 +403,12 @@
     const moreUrl = "/#/all";
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.path}" data-slug="${c.slug}" class="dyn-nav-item">${c.name}</a>`)
+      .join("") + `<a href="${moreUrl}" data-slug="all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.path}" data-slug="${c.slug}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="${moreUrl}" data-slug="all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -433,7 +432,44 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Only rename heading text — never remove or delete elements
+    // Precise Active Tab Indicator Logic
+    function syncActiveTab() {
+      const hash = (window.location.hash || "").toLowerCase();
+      document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((link) => {
+        const slug = (link.getAttribute("data-slug") || "").toLowerCase();
+        if (slug && hash.includes(slug)) {
+          link.classList.add("is-active");
+        } else {
+          link.classList.remove("is-active");
+        }
+      });
+    }
+
+    // Direct Single-Touch Navigation & Underline Switch
+    document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item, .dyn-more-pill-btn, .dyn-drawer-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const slug = this.getAttribute("data-slug");
+        if (slug) {
+          // Immediately highlight clicked category tab
+          document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((item) => {
+            if (item.getAttribute("data-slug") === slug) {
+              item.classList.add("is-active");
+            } else {
+              item.classList.remove("is-active");
+            }
+          });
+        }
+        if (link.classList.contains("dyn-drawer-link")) {
+          closeDrawer();
+        }
+      });
+    });
+
+    syncActiveTab();
+    window.addEventListener("hashchange", syncActiveTab);
+    window.addEventListener("popstate", syncActiveTab);
+
+    // Update Heading Text Safely
     function updateHeadingText() {
       const headings = document.querySelectorAll("h1, h2, .title, .page-title");
       headings.forEach((el) => {
@@ -482,10 +518,6 @@
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
-
-    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
-      link.addEventListener("click", closeDrawer);
-    });
 
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
