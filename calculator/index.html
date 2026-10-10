@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             background: transparent;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             box-sizing: border-box;
             overflow: hidden;
             touch-action: manipulation;
@@ -22,19 +22,16 @@
     <style>
         .blogger-calc-classic {
             width: 100%;
-            max-width: 630px; 
+            max-width: 640px; 
             margin: 2px auto !important; 
             box-sizing: border-box;
-            background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
-            border: 2px solid #94a3b8;
-            border-top: 3px solid #ffffff;
-            border-left: 3px solid #ffffff;
-            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 18px;
             box-shadow: 
-                0 12px 26px rgba(15, 23, 42, 0.16), 
-                0 4px 8px rgba(15, 23, 42, 0.06),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.9);
-            padding: 10px; 
+                0 10px 25px -5px rgba(15, 23, 42, 0.08),
+                0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            padding: 12px; 
             position: relative;
         }
 
@@ -43,136 +40,128 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Tabs */
+        /* Clean Minimal Tabs */
         .bc-tabs {
             display: flex; 
-            margin-bottom: 6px; 
-            border-bottom: 2px solid #94a3b8;
+            margin-bottom: 8px; 
             overflow-x: auto; 
             scrollbar-width: none; 
             white-space: nowrap;
-            gap: 2px;
-            padding-bottom: 2px;
+            gap: 4px;
+            padding: 2px 2px 6px;
+            border-bottom: 1px solid #e2e8f0;
         }
         .bc-tabs::-webkit-scrollbar { display: none; } 
 
         .bc-tab-btn {
-            padding: 5px 11px; 
-            background: #e2e8f0; 
-            border: 1px solid #94a3b8; 
-            border-bottom: none; 
-            border-radius: 6px 6px 0 0;
+            padding: 6px 12px; 
+            background: #f1f5f9; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px;
             font-size: 11px; 
-            font-weight: 800 !important; 
-            letter-spacing: 0.2px; 
-            color: #475569; 
+            font-weight: 700; 
+            color: #64748b; 
             cursor: pointer;
-            transition: all 0.15s ease-in-out; 
+            transition: all 0.15s ease; 
             flex-shrink: 0;
         }
-        .bc-tab-btn:hover { color: #0f172a; background: #ffffff; }
+        .bc-tab-btn:hover { color: #0f172a; background: #e2e8f0; }
         .bc-tab-btn.active {
-            background: #ffffff; 
-            color: #1e3a8a !important; 
-            border: 2px solid #64748b;
-            border-bottom: 2px solid #ffffff; 
-            margin-bottom: -2px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.06);
+            background: #0f172a; 
+            color: #ffffff !important; 
+            border-color: #0f172a;
+            box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15);
         }
 
         #btn-bc-history-tab {
-            background: #0f172a;
-            color: #ffffff !important;
-            border: 1px solid #020617;
+            margin-left: auto;
             position: sticky;
             right: 0;
-            z-index: 10;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: -4px 0 8px rgba(0,0,0,0.25);
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f172a;
         }
-        #btn-bc-history-tab:hover { background: #1e293b; }
         #btn-bc-history-tab.active {
-            background: #ffffff; 
-            color: #0f172a !important; 
-            border: 2px solid #0f172a;
-            border-bottom: 2px solid #ffffff;
+            background: #2563eb;
+            color: #ffffff !important;
+            border-color: #2563eb;
         }
 
-        /* Screen */
+        /* Modern Display Console */
         .bc-screen-container {
-            border-radius: 8px; 
+            border-radius: 12px; 
             margin-bottom: 10px; 
             display: flex; 
             flex-direction: column;
             overflow: hidden; 
-            background: #ffffff;
-            border: 2px solid #94a3b8;
-            box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.22);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04);
+            padding: 8px 12px;
         }
 
         .bc-screen-top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 10px 0;
-            background: transparent;
+            min-height: 18px;
         }
         .bc-mode-tag {
             font-size: 10px;
-            font-weight: 900;
-            color: #1e3a8a;
-            background: #dbeafe;
-            padding: 1px 6px;
+            font-weight: 800;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 2px 6px;
             border-radius: 4px;
             letter-spacing: 0.5px;
+            border: 1px solid #dbeafe;
+        }
+        .bc-mem-indicator { 
+            font-size: 11px; 
+            font-weight: 800; 
+            color: #64748b; 
         }
 
         .bc-input-box {
             background: transparent; 
-            color: #0f172a !important; 
+            color: #475569 !important; 
             border: none;
             width: 100%; 
-            padding: 2px 10px 2px; 
-            font-size: 18px !important; 
-            font-weight: 800 !important; 
+            padding: 4px 0 0; 
+            font-size: 16px !important; 
+            font-weight: 600; 
             text-align: right; 
             outline: none; 
             font-family: inherit; 
-            height: 28px; 
-            line-height: 22px;
+            height: 24px; 
+            line-height: 24px;
             white-space: nowrap; 
             overflow-x: auto;
             user-select: none;
         }
 
         .bc-output-box {
-            background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%); 
-            color: #ffffff !important; 
-            padding: 4px 10px;
-            font-size: 24px !important; 
+            background: transparent;
+            color: #0f172a !important; 
+            padding: 2px 0 0;
+            font-size: 28px !important; 
             text-align: right; 
-            font-weight: 900 !important; 
-            height: 44px; 
+            font-weight: 800 !important; 
+            height: 38px; 
             display: flex; 
-            justify-content: space-between; 
+            justify-content: flex-end; 
             align-items: center;
             font-family: inherit; 
             white-space: nowrap; 
             overflow-x: auto; 
             overflow-y: hidden;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
-            position: relative;
+            letter-spacing: -0.5px;
         }
-        
-        .bc-mem-indicator { font-size: 12px; font-weight: 800 !important; color: #60a5fa; z-index: 10; }
-        #bc-live-out { z-index: 10; font-weight: 900; letter-spacing: -0.5px; }
 
-        .bc-input-box::-webkit-scrollbar, .bc-output-box::-webkit-scrollbar { height: 4px; }
-        .bc-input-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .bc-output-box::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
+        .bc-input-box::-webkit-scrollbar, .bc-output-box::-webkit-scrollbar { height: 3px; }
+        .bc-input-box::-webkit-scrollbar-thumb, .bc-output-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        /* Keypad Workspace */
+        /* Unified Keypad Container */
         .bc-keypad-container {
             height: 275px;
             min-height: 275px;
@@ -193,48 +182,56 @@
 
         .bc-grid-basic { grid-template-columns: repeat(4, 1fr); max-width: 350px; margin: 0 auto; }
         .bc-grid-sci-desktop { grid-template-columns: repeat(10, 1fr); }
-        .bc-grid-gate { grid-template-columns: repeat(11, 1fr); gap: 5px !important; }
         .bc-grid-adv { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-prog { grid-template-columns: repeat(9, 1fr); }
         .bc-grid-graph { grid-template-columns: repeat(9, 1fr); }
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
+        .bc-grid-gate { grid-template-columns: repeat(11, 1fr); gap: 5px !important; }
 
-        /* Buttons Core */
+        /* Modern Flat Key Engine */
         .bc-btn {
             font-family: inherit; 
-            border: 1px solid #94a3b8; 
-            border-radius: 7px; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
             height: 40px; 
             font-size: 12px; 
-            font-weight: 800 !important; 
+            font-weight: 700; 
             cursor: pointer; 
             display: flex;
             align-items: center; 
             justify-content: center; 
             user-select: none;
-            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); 
-            color: #0f172a; 
-            box-shadow: 0 3px 0 #94a3b8, 0 4px 6px rgba(15, 23, 42, 0.1); 
+            background: #f8fafc; 
+            color: #334155; 
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); 
             padding: 0 2px;
-            transition: transform 0.04s ease, box-shadow 0.04s ease;
+            transition: all 0.1s ease;
+        }
+        .bc-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #cbd5e1;
         }
         .bc-btn:active { 
-            transform: translateY(3px); 
-            box-shadow: 0 0 0 transparent, inset 0 2px 4px rgba(0,0,0,0.2) !important; 
+            transform: scale(0.97);
+            background: #e2e8f0;
         }
 
-        /* Bold Numbers */
+        /* Clear Distinction for Numbers */
         .bc-btn-num { 
             background: #ffffff !important; 
-            color: #020617 !important; 
-            font-size: 17px !important; 
-            font-weight: 900 !important;
+            color: #0f172a !important; 
+            font-size: 16px !important; 
+            font-weight: 800 !important;
             border-color: #cbd5e1 !important;
-            box-shadow: 0 3px 0 #cbd5e1, 0 4px 6px rgba(15, 23, 42, 0.08) !important; 
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+        }
+        .bc-btn-num:hover {
+            background: #f8fafc !important;
         }
 
-        /* Bold Operators */
+        /* Operators */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -243,63 +240,67 @@
         .bc-btn[aria-label="Modulo"],
         .bc-btn[aria-label="Modulo or Percent"],
         .bc-btn[aria-label="Percent"] {
-            font-size: 20px !important;
-            font-weight: 900 !important;
-            color: #020617 !important;
-            background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%) !important;
-            border-color: #94a3b8 !important;
-            box-shadow: 0 3px 0 #64748b, 0 4px 6px rgba(15, 23, 42, 0.15) !important;
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            color: #1e3a8a !important;
+            background: #eff6ff !important;
+            border-color: #bfdbfe !important;
+        }
+        .bc-btn-op:hover {
+            background: #dbeafe !important;
         }
 
-        /* Equals */
+        /* Equals Action Button */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
-            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%) !important; 
+            background: #2563eb !important; 
             color: #ffffff !important; 
-            border-color: #1e40af !important; 
-            box-shadow: 0 3px 0 #1e3a8a, 0 4px 8px rgba(37, 99, 235, 0.3) !important; 
-            font-size: 22px !important; 
-            font-weight: 900 !important;
+            border-color: #1d4ed8 !important; 
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25) !important; 
+            font-size: 20px !important; 
+            font-weight: 800 !important;
+        }
+        .bc-btn-primary:hover {
+            background: #1d4ed8 !important;
         }
 
-        /* Clear */
+        /* Clear / Delete Button */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
-            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important; 
-            color: #ffffff !important; 
-            border-color: #b91c1c !important; 
-            box-shadow: 0 3px 0 #991b1b, 0 4px 8px rgba(239, 68, 68, 0.3) !important; 
-            font-size: 14px !important; 
-            font-weight: 900 !important;
+            background: #fef2f2 !important; 
+            color: #dc2626 !important; 
+            border-color: #fecaca !important; 
+            font-size: 13px !important; 
+            font-weight: 800 !important;
+        }
+        .bc-btn-danger:hover {
+            background: #fee2e2 !important;
         }
 
         .bc-btn-action { 
-            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%); 
-            color: #0f172a; 
-            box-shadow: 0 3px 0 #94a3b8, 0 4px 6px rgba(15, 23, 42, 0.12); 
-            font-size: 13px !important;
-            font-weight: 800 !important;
+            background: #f1f5f9; 
+            color: #475569; 
+            font-size: 12px !important;
+            font-weight: 700;
         }
 
         .bc-btn-special { 
-            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); 
-            color: #ffffff; 
-            border-color: #b45309; 
-            box-shadow: 0 3px 0 #78350f, 0 4px 6px rgba(245, 158, 11, 0.25); 
+            background: #fffbeb; 
+            color: #b45309; 
+            border-color: #fde68a;
             font-size: 10px;
-            font-weight: 900 !important;
+            font-weight: 800;
         }
 
-        /* MODERN DEG / RAD SEGMENTED SWITCH */
+        /* Sleek Segmented Deg/Rad Toggle */
         .bc-deg-rad-pill {
             display: flex;
             align-items: center;
-            background: #cbd5e1;
-            border: 1px solid #94a3b8;
-            border-radius: 7px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             padding: 2px;
             height: 40px;
-            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.15);
             gap: 2px;
         }
         .bc-deg-rad-btn {
@@ -307,21 +308,21 @@
             height: 100%;
             border: none;
             background: transparent;
-            color: #475569;
-            font-size: 11px;
-            font-weight: 900 !important;
-            border-radius: 5px;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 800;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.15s ease;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .bc-deg-rad-btn.active {
-            background: #2563eb;
+            background: #0f172a;
             color: #ffffff !important;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
         }
 
         .bc-span-2 { grid-column: span 2; }
@@ -332,32 +333,31 @@
         .bc-span-10 { grid-column: span 10; }
         .bc-row-2 { grid-row: span 2; height: 100% !important; }
 
-        /* History */
+        /* History Tab */
         #bc-history-tab { 
-            background: #ffffff; 
-            border: 2px solid #cbd5e1;
-            box-shadow: inset 0 2px 6px rgba(15,23,42,0.1); 
-            border-radius: 8px; 
+            background: #f8fafc; 
+            border: 1px solid #e2e8f0;
+            border-radius: 10px; 
             padding: 10px; 
             flex-direction: column; 
             height: 100% !important;
             box-sizing: border-box;
         }
-        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 6px; flex-shrink: 0; }
-        .bc-history-title { font-weight: 900 !important; color: #1e3a8a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .bc-history-back-btn, .bc-clear-history { font-size: 10px; font-weight: 800 !important; cursor: pointer; padding: 5px 10px; border-radius: 5px; text-transform: uppercase; color: #ffffff; }
-        .bc-history-back-btn { background: #2563eb; border: 1px solid #1d4ed8; box-shadow: 0 2px 0 #1e40af; }
-        .bc-clear-history { background: #ef4444; border: 1px solid #dc2626; box-shadow: 0 2px 0 #b91c1c; }
+        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 6px; flex-shrink: 0; }
+        .bc-history-title { font-weight: 800; color: #0f172a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .bc-history-back-btn, .bc-clear-history { font-size: 10px; font-weight: 700; cursor: pointer; padding: 5px 10px; border-radius: 6px; border: 1px solid transparent; text-transform: uppercase; }
+        .bc-history-back-btn { background: #0f172a; color: #ffffff; }
+        .bc-clear-history { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 13px; }
-        .hist-entry { margin-bottom: 5px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 3px; text-align: left; color: #0f172a; font-weight: 700; }
-        .hist-entry strong { color: #1e3a8a; font-weight: 900 !important; }
-        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 45px; font-weight: 800; }
+        .hist-entry { margin-bottom: 6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; text-align: left; color: #475569; font-weight: 600; }
+        .hist-entry strong { color: #0f172a; font-weight: 800; }
+        .hist-empty { color: #94a3b8; text-align: center; font-style: italic; padding-top: 50px; font-weight: 600; }
 
-        /* Mobile View Rules */
+        /* Responsive Mobile Rules */
         @media (max-width: 600px) {
-            .blogger-calc-classic { padding: 8px; border-radius: 12px; } 
+            .blogger-calc-classic { padding: 8px; border-radius: 14px; } 
             .bc-keypad-container { height: 250px; min-height: 250px; max-height: 250px; }
-            .bc-btn { height: 36px !important; font-size: 9px !important; border-radius: 5px; }
+            .bc-btn { height: 36px !important; font-size: 9px !important; border-radius: 6px; }
             .bc-btn-num { font-size: 14px !important; }
             .bc-btn-op,
             .bc-btn[aria-label="Add"],
@@ -365,8 +365,8 @@
             .bc-btn[aria-label="Multiply"],
             .bc-btn[aria-label="Divide"],
             .bc-btn[aria-label="Modulo or Percent"],
-            .bc-btn[aria-label="Percent"] { font-size: 18px !important; }
-            .bc-btn-primary, .bc-btn[aria-label="Calculate Equals"] { font-size: 19px !important; }
+            .bc-btn[aria-label="Percent"] { font-size: 16px !important; }
+            .bc-btn-primary, .bc-btn[aria-label="Calculate Equals"] { font-size: 18px !important; }
             .bc-deg-rad-pill { height: 36px !important; }
             .bc-deg-rad-btn { font-size: 9px !important; }
             .bc-grid-gate { gap: 3px !important; }
@@ -382,16 +382,16 @@
         <button class="bc-tab-btn" role="tab" id="btn-bc-graph" onclick="BloggerCalc.switchTab('bc-graph', this)">HP Prime</button>
         <button class="bc-tab-btn" role="tab" id="btn-bc-cas" onclick="BloggerCalc.switchTab('bc-cas', this)">TI-Nspire</button>
         <button class="bc-tab-btn" role="tab" id="btn-bc-fin" onclick="BloggerCalc.switchTab('bc-fin', this)">HP 12C</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-history-tab" onclick="BloggerCalc.switchTab('bc-history-tab', this)">HISTORY</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-history-tab" onclick="BloggerCalc.switchTab('bc-history-tab', this)">History</button>
     </div>
 
     <div class="bc-screen-container">
         <div class="bc-screen-top-bar">
             <span class="bc-mode-tag" id="bc-mode-indicator">DEG</span>
+            <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
         </div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
-            <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
             <span id="bc-live-out"></span>
         </div>
     </div>
@@ -484,8 +484,8 @@
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <button class="bc-btn bc-btn-op" aria-label="Modulo" onclick="BloggerCalc.op('%')">mod</button>
             <div class="bc-deg-rad-pill bc-span-5">
-                <button type="button" class="bc-deg-rad-btn active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">DEGREE</button>
-                <button type="button" class="bc-deg-rad-btn" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">RADIAN</button>
+                <button type="button" class="bc-deg-rad-btn active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">DEG</button>
+                <button type="button" class="bc-deg-rad-btn" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">RAD</button>
             </div>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mc')">MC</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
@@ -797,7 +797,7 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
 
             <button class="bc-btn bc-btn-special bc-span-2">f (Orange)</button>
-            <button class="bc-btn bc-btn-special bc-span-2" style="background: linear-gradient(180deg, #3b82f6 0%, #1e3a8a 100%);" onclick="BloggerCalc.finComp()">COMP</button>
+            <button class="bc-btn bc-btn-special bc-span-2" style="background: #2563eb; color:#fff;" onclick="BloggerCalc.finComp()">COMP</button>
             <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">ENTER</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
@@ -895,9 +895,9 @@
                 let ctx = canvas.getContext('2d');
                 
                 ctx.clearRect(0,0,w,h);
-                ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(15,23,42,0.15)'; ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h); ctx.stroke();
-                ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2; ctx.beginPath();
+                ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2; ctx.beginPath();
                 
                 let compiled = null;
                 try { compiled = math.compile(exprStr); } catch(e) { return; }
@@ -978,7 +978,7 @@
                     if(tabId === 'bc-graph') {
                         outBox.style.height = '140px'; if(canvas) canvas.style.display = 'block';
                     } else {
-                        outBox.style.height = '44px'; if(canvas) canvas.style.display = 'none';
+                        outBox.style.height = '38px'; if(canvas) canvas.style.display = 'none';
                     }
                 },
                 historyBack: function() {
