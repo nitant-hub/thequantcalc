@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator Widget</title>
     <style>
-        /* Reset margins specifically for inside the iframe */
         body {
             margin: 0;
-            padding: 10px;
+            padding: 8px;
             background: transparent;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -17,116 +18,159 @@
 
 <div class="blogger-calc-classic" id="blogger-calc-widget">
     <style>
-        /* Scoped CSS for Ultra-Sleek Hardware Interface */
         .blogger-calc-classic {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100%;
-            max-width: 630px; 
-            margin: 10px auto !important; 
+            max-width: 620px; 
+            margin: 0 auto !important; 
             box-sizing: border-box;
-            height: auto; 
-            
-            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
-            border-top: 3px solid rgba(255, 255, 255, 0.9);
-            border-left: 3px solid rgba(255, 255, 255, 0.8);
-            border-bottom: 3px solid #64748b;
-            border-right: 3px solid #64748b;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 45%, #cbd5e1 100%);
+            border: 2px solid #94a3b8;
+            border-top: 3px solid #ffffff;
+            border-left: 3px solid #ffffff;
+            border-radius: 16px;
             box-shadow: 
-                12px 12px 24px rgba(15, 23, 42, 0.25), 
-                -8px -8px 20px rgba(255, 255, 255, 0.9), 
-                inset 2px 2px 4px rgba(255, 255, 255, 0.8), 
-                inset -3px -3px 8px rgba(100, 116, 139, 0.2); 
-            
-            padding: 10px; 
+                0 14px 28px rgba(15, 23, 42, 0.18), 
+                0 4px 10px rgba(15, 23, 42, 0.08),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.9);
+            padding: 12px; 
             position: relative;
         }
 
-        .blogger-calc-classic *, .blogger-calc-classic *::before, .blogger-calc-classic *::after { box-sizing: border-box; }
+        .blogger-calc-classic *, .blogger-calc-classic *::before, .blogger-calc-classic *::after { 
+            box-sizing: border-box; 
+        }
 
-        /* Swipeable Navigation Tabs */
+        /* Swipeable Model Tabs */
         .bc-tabs {
-            display: flex; margin-bottom: 6px; border-bottom: 2px solid #64748b;
-            overflow-x: auto; scrollbar-width: none; white-space: nowrap;
+            display: flex; 
+            margin-bottom: 8px; 
+            border-bottom: 2px solid #94a3b8;
+            overflow-x: auto; 
+            scrollbar-width: none; 
+            white-space: nowrap;
+            gap: 3px;
+            padding-bottom: 2px;
         }
         .bc-tabs::-webkit-scrollbar { display: none; } 
 
         .bc-tab-btn {
-            padding: 4px 10px; background: linear-gradient(to bottom, #d9e2ec, #bcccdc);
-            border: 1px solid #64748b; border-bottom: none; border-radius: 6px 6px 0 0;
-            margin-right: 2px; font-size: 11px; font-weight: 900 !important; 
-            letter-spacing: 0.2px; color: #334155; cursor: pointer;
-            transition: all 0.15s ease-in-out; flex-shrink: 0;
+            padding: 6px 12px; 
+            background: #e2e8f0;
+            border: 1px solid #94a3b8; 
+            border-bottom: none; 
+            border-radius: 8px 8px 0 0;
+            font-size: 11px; 
+            font-weight: 800 !important; 
+            letter-spacing: 0.3px; 
+            color: #475569; 
+            cursor: pointer;
+            transition: all 0.15s ease-in-out; 
+            flex-shrink: 0;
         }
-
-        .bc-tab-btn:hover { color: #0f172a; background: #e2e8f0; }
-        
+        .bc-tab-btn:hover { 
+            color: #0f172a; 
+            background: #ffffff; 
+        }
         .bc-tab-btn.active {
-            background: #f0f4f8; color: #1e3a8a; border: 2px solid #ffffff;
-            border-bottom: 2px solid #f0f4f8; margin-bottom: -2px;
-            box-shadow: -2px -2px 4px rgba(255,255,255,0.8);
+            background: #ffffff; 
+            color: #1e3a8a !important; 
+            border: 2px solid #64748b;
+            border-bottom: 2px solid #ffffff; 
+            margin-bottom: -2px;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.06);
         }
 
-        /* Premium Floating History Tab */
+        /* Floating History Button */
         #btn-bc-history-tab {
-            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            background: #0f172a;
             color: #ffffff !important;
-            border-color: #020617;
+            border: 1px solid #020617;
             position: sticky;
             right: 0;
             z-index: 10;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            box-shadow: -5px 0 10px rgba(0,0,0,0.25);
+            box-shadow: -4px 0 8px rgba(0,0,0,0.2);
         }
-        #btn-bc-history-tab:hover { background: linear-gradient(to bottom, #334155, #1e293b); }
+        #btn-bc-history-tab:hover { background: #1e293b; }
         #btn-bc-history-tab.active {
-            background: #f0f4f8; color: #0f172a !important; border: 2px solid #ffffff;
-            border-bottom: 2px solid #f0f4f8; box-shadow: -2px -2px 4px rgba(255,255,255,0.8), -5px 0 10px rgba(0,0,0,0.1);
+            background: #ffffff; 
+            color: #0f172a !important; 
+            border: 2px solid #0f172a;
+            border-bottom: 2px solid #ffffff;
         }
 
-        /* LCD Screen Component (Recessed 3D effect) */
+        /* Bold High-Definition Display Screen */
         .bc-screen-container {
-            border: none;
-            border-radius: 6px; margin-bottom: 8px; display: flex; flex-direction: column;
-            overflow: hidden; background: #ffffff;
+            border-radius: 10px; 
+            margin-bottom: 12px; 
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden; 
+            background: #ffffff;
+            border: 2px solid #94a3b8;
             box-shadow: 
-                inset 5px 5px 10px rgba(15, 23, 42, 0.35), 
-                inset -3px -3px 6px rgba(255, 255, 255, 1), 
-                0 1px 2px rgba(255, 255, 255, 0.6); 
-            transition: height 0.2s ease;
+                inset 0 3px 8px rgba(15, 23, 42, 0.22),
+                0 2px 4px rgba(255, 255, 255, 0.8);
         }
 
         .bc-input-box {
-            background: transparent; color: #000000 !important; border: none;
-            width: 100%; padding: 4px 8px; font-size: 16px !important; font-weight: 900 !important; 
-            text-align: right; outline: none; font-family: Arial, Helvetica, sans-serif; 
-            height: 28px; white-space: nowrap; overflow-x: auto; border-bottom: 1px solid #cbd5e1;
+            background: transparent; 
+            color: #0f172a !important; 
+            border: none;
+            width: 100%; 
+            padding: 8px 12px 2px; 
+            font-size: 19px !important; 
+            font-weight: 800 !important; 
+            text-align: right; 
+            outline: none; 
+            font-family: inherit; 
+            height: 34px; 
+            white-space: nowrap; 
+            overflow-x: auto;
         }
 
         .bc-output-box {
-            background: #1e3a8a; color: #ffffff !important; padding: 4px 8px;
-            font-size: 22px !important; text-align: right; font-weight: 900 !important; 
-            height: 38px; display: flex; justify-content: space-between; align-items: center;
-            font-family: Arial, Helvetica, sans-serif; white-space: nowrap; 
-            overflow-x: auto; overflow-y: hidden; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); 
-            transition: height 0.2s ease; position: relative;
+            background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%); 
+            color: #ffffff !important; 
+            padding: 6px 12px;
+            font-size: 26px !important; 
+            text-align: right; 
+            font-weight: 900 !important; 
+            height: 48px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            font-family: inherit; 
+            white-space: nowrap; 
+            overflow-x: auto; 
+            overflow-y: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+            position: relative;
         }
         
-        .bc-mem-indicator { font-size: 12px; font-weight: 900 !important; color: #93c5fd; text-shadow: none; z-index: 10; }
-        #bc-live-out { z-index: 10; }
+        .bc-mem-indicator { 
+            font-size: 13px; 
+            font-weight: 800 !important; 
+            color: #60a5fa; 
+            z-index: 10; 
+        }
+        #bc-live-out { 
+            z-index: 10; 
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
 
         .bc-input-box::-webkit-scrollbar, .bc-output-box::-webkit-scrollbar { height: 4px; }
         .bc-input-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .bc-output-box::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        .bc-output-box::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
 
-        /* Layout Architecture */
-        .bc-tab-pane { display: none !important; gap: 6px; padding-bottom: 2px; }
+        /* Grids & Tab Panes */
+        .bc-tab-pane { display: none !important; gap: 8px; padding-bottom: 4px; }
         .bc-tab-pane.active { display: grid !important; }
         #bc-history-tab.active { display: flex !important; }
 
-        /* Grids Matrix Config */
-        .bc-grid-basic { grid-template-columns: repeat(4, 1fr); max-width: 320px; margin: 0 auto; }
+        .bc-grid-basic { grid-template-columns: repeat(4, 1fr); max-width: 360px; margin: 0 auto; }
         .bc-grid-sci-desktop { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-gate { grid-template-columns: repeat(11, 1fr); }
         .bc-grid-adv { grid-template-columns: repeat(10, 1fr); }
@@ -135,30 +179,80 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* Button Engine (Enhanced 3D effect) */
+        /* Tactile Keypad Buttons */
         .bc-btn {
-            font-family: inherit; border: 1px solid #64748b; border-radius: 5px; height: 34px; 
-            font-size: 11px; font-weight: 900 !important; cursor: pointer; display: flex;
-            align-items: center; justify-content: center; user-select: none;
-            transition: transform 0.05s ease, box-shadow 0.05s ease; position: relative;
-            background: linear-gradient(180deg, #f8fafc 0%, #cbd5e1 100%); color: #000000; 
-            box-shadow: 0 4px 0 #94a3b8, 0 5px 6px rgba(0,0,0,0.2); padding: 0 2px;
+            font-family: inherit; 
+            border: 1px solid #94a3b8; 
+            border-radius: 8px; 
+            height: 46px; 
+            font-size: 13px; 
+            font-weight: 800 !important; 
+            cursor: pointer; 
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            user-select: none;
+            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); 
+            color: #0f172a; 
+            box-shadow: 0 4px 0 #94a3b8, 0 6px 8px rgba(15, 23, 42, 0.12); 
+            padding: 0 3px;
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
         }
-        .bc-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 transparent, inset 0 2px 5px rgba(0,0,0,0.3); }
+        .bc-btn:active { 
+            transform: translateY(4px); 
+            box-shadow: 0 0 0 transparent, inset 0 2px 4px rgba(0,0,0,0.2) !important; 
+        }
 
-        .bc-btn-num { background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); color: #000000; font-size: 14px !important; box-shadow: 0 4px 0 #cbd5e1, 0 5px 6px rgba(0,0,0,0.15); }
-        .bc-btn-action { background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%); color: #000000; box-shadow: 0 4px 0 #64748b, 0 5px 6px rgba(0,0,0,0.2); }
-        .bc-btn-primary { background: linear-gradient(180deg, #2b4d75 0%, #1e3a5f 100%); color: #ffffff; border-color: #0f1e33; box-shadow: 0 4px 0 #0f1e33, 0 5px 6px rgba(0,0,0,0.3); }
-        .bc-btn-danger { background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); color: #ffffff; border-color: #7f1d1d; box-shadow: 0 4px 0 #450a0a, 0 5px 6px rgba(0,0,0,0.3); }
-        .bc-btn-special { background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%); color: #ffffff; border-color: #78350f; box-shadow: 0 4px 0 #451a03, 0 5px 6px rgba(0,0,0,0.3); font-size: 10px;}
+        /* High-Visibility Key Variants */
+        .bc-btn-num { 
+            background: #ffffff; 
+            color: #0f172a; 
+            font-size: 18px !important; 
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 0 #cbd5e1, 0 6px 8px rgba(15, 23, 42, 0.08); 
+        }
+        .bc-btn-action { 
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%); 
+            color: #0f172a; 
+            box-shadow: 0 4px 0 #94a3b8, 0 6px 8px rgba(15, 23, 42, 0.12); 
+            font-size: 15px !important;
+        }
+        .bc-btn-primary { 
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%); 
+            color: #ffffff; 
+            border-color: #1e40af; 
+            box-shadow: 0 4px 0 #1e3a8a, 0 6px 10px rgba(37, 99, 235, 0.3); 
+            font-size: 20px !important;
+        }
+        .bc-btn-danger { 
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%); 
+            color: #ffffff; 
+            border-color: #b91c1c; 
+            box-shadow: 0 4px 0 #991b1b, 0 6px 10px rgba(239, 68, 68, 0.3); 
+            font-size: 15px !important;
+        }
+        .bc-btn-special { 
+            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); 
+            color: #ffffff; 
+            border-color: #b45309; 
+            box-shadow: 0 4px 0 #78350f, 0 6px 8px rgba(245, 158, 11, 0.25); 
+            font-size: 11px;
+        }
 
         .bc-toggle-group {
-            display: flex; align-items: center; justify-content: space-evenly;
-            background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; color: #000000; height: 34px; 
-            box-shadow: inset 2px 2px 5px rgba(15, 23, 42, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.9); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-evenly;
+            background: #cbd5e1; 
+            border: 1px solid #94a3b8; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            color: #0f172a; 
+            height: 46px; 
+            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.15); 
         }
-        .bc-toggle-group label { cursor: pointer; display: flex; align-items: center; gap: 3px; font-weight: 900 !important;}
-        .bc-toggle-group input[type="radio"] { margin: 0; cursor: pointer;}
+        .bc-toggle-group label { cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 800 !important; }
+        .bc-toggle-group input[type="radio"] { margin: 0; cursor: pointer; }
 
         .bc-span-2 { grid-column: span 2; }
         .bc-span-3 { grid-column: span 3; }
@@ -167,74 +261,43 @@
         .bc-span-10 { grid-column: span 10; }
         .bc-row-2 { grid-row: span 2; height: 100% !important; }
 
-        /* History Panel */
-        #bc-history-tab { background: #ffffff; border: none; box-shadow: inset 4px 4px 8px rgba(15,23,42,0.2), inset -3px -3px 6px rgba(255,255,255,1); border-radius: 6px; padding: 10px; flex-direction: column; height: 180px; }
-        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 6px; margin-bottom: 6px; }
-        .bc-history-title { font-weight: 900 !important; color: #1e3a8a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;}
-        .bc-history-back-btn, .bc-clear-history { font-size: 10px; font-weight: 900 !important; cursor: pointer; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; transition: transform 0.04s ease, box-shadow 0.04s ease; color: #ffffff; }
-        .bc-history-back-btn { background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%); border: 1px solid #1e40af; box-shadow: 0 3px 0 #1e3a8a, 0 4px 6px rgba(0,0,0,0.2); }
-        .bc-history-back-btn:active { transform: translateY(3px); box-shadow: 0 0px 0 transparent, inset 0 2px 4px rgba(0,0,0,0.25); }
-        .bc-clear-history { background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border: 1px solid #7f1d1d; box-shadow: 0 3px 0 #450a0a, 0 4px 6px rgba(0,0,0,0.2); }
-        .bc-clear-history:active { transform: translateY(3px); box-shadow: 0 0px 0 transparent, inset 0 2px 4px rgba(0,0,0,0.25); }
-        .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: Arial, Helvetica, sans-serif; font-size: 14px;}
-        .hist-entry { margin-bottom: 4px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; text-align: left; color: #000000; font-weight: 700;}
-        .hist-entry strong { color: #1e3a8a; font-weight: 900 !important;}
-        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 20px; font-weight: 900;}
-
-        /* --- BIG BOLD MATH SYMBOLS --- */
-        .bc-btn[aria-label="Divide"],
-        .bc-btn[aria-label="Multiply"],
-        .bc-btn[aria-label="Subtract"],
-        .bc-btn[aria-label="Add"],
-        .bc-btn[aria-label="Calculate Equals"],
-        .bc-btn[aria-label="Modulo or Percent"],
-        .bc-btn[aria-label="Percent"],
-        .bc-btn[aria-label="Modulo"] {
-            font-size: 20px !important;
+        /* History Tab */
+        #bc-history-tab { 
+            background: #ffffff; 
+            border: 2px solid #cbd5e1;
+            box-shadow: inset 0 2px 6px rgba(15,23,42,0.1); 
+            border-radius: 10px; 
+            padding: 12px; 
+            flex-direction: column; 
+            height: 220px; 
         }
+        .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; }
+        .bc-history-title { font-weight: 900 !important; color: #1e3a8a; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .bc-history-back-btn, .bc-clear-history { font-size: 11px; font-weight: 800 !important; cursor: pointer; padding: 6px 12px; border-radius: 6px; text-transform: uppercase; color: #ffffff; }
+        .bc-history-back-btn { background: #2563eb; border: 1px solid #1d4ed8; box-shadow: 0 3px 0 #1e40af; }
+        .bc-clear-history { background: #ef4444; border: 1px solid #dc2626; box-shadow: 0 3px 0 #b91c1c; }
+        .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 14px; }
+        .hist-entry { margin-bottom: 6px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; text-align: left; color: #0f172a; font-weight: 700; }
+        .hist-entry strong { color: #1e3a8a; font-weight: 900 !important; }
+        .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 30px; font-weight: 800; }
 
-        /* --- MICROMETRIC RESPONSIVE ENGINE --- */
+        /* Responsive Mobile Scaling */
         @media (max-width: 600px) {
-            .blogger-calc-classic { padding: 6px; border-radius: 10px; box-shadow: 6px 6px 12px rgba(15, 23, 42, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.9); border-width: 2px;} 
-            .bc-tabs { margin-bottom: 4px; padding-bottom: 2px;} 
-            .bc-tab-btn { padding: 4px 6px; font-size: 10px; margin-right: 2px; letter-spacing: 0; }
-            #btn-bc-history-tab { font-size: 9px; padding: 4px 8px; }
-            .bc-screen-container { margin-bottom: 6px; border-radius: 4px;} 
+            .blogger-calc-classic { padding: 8px; border-radius: 12px; } 
+            .bc-tabs { margin-bottom: 6px; } 
+            .bc-tab-btn { padding: 5px 8px; font-size: 10px; }
+            #btn-bc-history-tab { font-size: 9px; padding: 5px 8px; }
             
-            .bc-input-box { padding: 2px 6px; font-size: 14px !important; height: 26px; }
-            .bc-output-box { padding: 2px 6px; font-size: 18px !important; height: 32px; }
+            .bc-input-box { font-size: 16px !important; height: 28px; padding: 4px 8px; }
+            .bc-output-box { font-size: 21px !important; height: 38px; padding: 4px 8px; }
             
-            .bc-grid-sci-desktop { grid-template-columns: repeat(10, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-gate { grid-template-columns: repeat(11, minmax(0, 1fr)) !important; gap: 3px !important; overflow-x: auto; padding-bottom: 3px;}
-            .bc-grid-adv { grid-template-columns: repeat(10, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-prog { grid-template-columns: repeat(9, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-graph { grid-template-columns: repeat(9, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-cas { grid-template-columns: repeat(10, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-fin { grid-template-columns: repeat(8, minmax(0, 1fr)) !important; gap: 3px !important; }
-            .bc-grid-basic { gap: 5px !important; }
+            .bc-btn { height: 40px !important; font-size: 10px !important; border-radius: 6px; } 
+            .bc-btn-num { font-size: 15px !important; }
+            .bc-toggle-group { height: 40px !important; font-size: 10px !important; }
 
-            .bc-btn { height: 28px !important; font-size: 8px !important; letter-spacing: -0.5px; border-radius: 4px; padding: 0 !important; min-width: 0 !important; box-shadow: 0 3px 0 #94a3b8, 0 2px 3px rgba(0,0,0,0.15); } 
-            .bc-btn:active { transform: translateY(3px) !important; box-shadow: 0 0px 0 transparent, inset 0 1px 3px rgba(0,0,0,0.2) !important; }
-            .bc-btn-num { font-size: 11px !important; box-shadow: 0 3px 0 #cbd5e1, 0 2px 3px rgba(0,0,0,0.15); }
-            .bc-btn-action { box-shadow: 0 3px 0 #64748b, 0 2px 3px rgba(0,0,0,0.15); }
-            .bc-btn-primary { box-shadow: 0 3px 0 #0f1e33, 0 2px 3px rgba(0,0,0,0.2); }
-            .bc-btn-danger { box-shadow: 0 3px 0 #450a0a, 0 2px 3px rgba(0,0,0,0.2); }
-            .bc-btn-special { box-shadow: 0 3px 0 #451a03, 0 2px 3px rgba(0,0,0,0.2); font-size: 7px !important; }
-
-            .bc-toggle-group { height: 28px !important; font-size: 8px !important; padding: 0 1px; border-radius: 4px; overflow: hidden;}
-            .bc-toggle-group label { gap: 1px; }
-            .bc-toggle-group input[type="radio"] { transform: scale(0.7); margin: 0; }
-            
-            /* Big Math Symbols on Mobile */
-            .bc-btn[aria-label="Divide"],
-            .bc-btn[aria-label="Multiply"],
-            .bc-btn[aria-label="Subtract"],
-            .bc-btn[aria-label="Add"],
-            .bc-btn[aria-label="Calculate Equals"],
-            .bc-btn[aria-label="Modulo or Percent"],
-            .bc-btn[aria-label="Percent"],
-            .bc-btn[aria-label="Modulo"] {
-                font-size: 18px !important; 
+            .bc-grid-basic { max-width: 100%; gap: 6px !important; }
+            .bc-grid-sci-desktop, .bc-grid-gate, .bc-grid-adv, .bc-grid-prog, .bc-grid-graph, .bc-grid-cas, .bc-grid-fin { 
+                gap: 4px !important; 
             }
         }
     </style>
@@ -261,7 +324,7 @@
 
     <div class="bc-tab-pane bc-grid-basic active" role="tabpanel" id="bc-basic">
         <button class="bc-btn bc-btn-danger" aria-label="Clear All" onclick="BloggerCalc.clear()">AC</button>
-        <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">Back</button>
+        <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
         <button class="bc-btn bc-btn-action" aria-label="Modulo or Percent" onclick="BloggerCalc.op('%')">%</button>
         <button class="bc-btn bc-btn-action" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
         <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
@@ -293,7 +356,7 @@
         <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
         <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
         <button class="bc-btn bc-btn-action" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
-        <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">Back</button>
+        <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
 
         <button class="bc-btn" aria-label="Inverse Sine" onclick="BloggerCalc.func('bcTrig.asin')">sin⁻¹</button>
         <button class="bc-btn" aria-label="Inverse Cosine" onclick="BloggerCalc.func('bcTrig.acos')">cos⁻¹</button>
@@ -462,7 +525,7 @@
         <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('.')">.</button>
         <button class="bc-btn bc-btn-action" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
 
-        <button class="bc-btn bc-btn-primary bc-span-10" onclick="BloggerCalc.calc()" style="height:28px">EXECUTE (CAS)</button>
+        <button class="bc-btn bc-btn-primary bc-span-10" onclick="BloggerCalc.calc()" style="height:36px">EXECUTE (CAS)</button>
     </div>
 
     <div class="bc-tab-pane bc-grid-prog" role="tabpanel" id="bc-prog">
@@ -512,7 +575,7 @@
         <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('.')">.</button>
         <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op('+')">+</button>
 
-        <button class="bc-btn bc-btn-primary bc-span-9" onclick="BloggerCalc.calc()" style="height:28px">RUN SCRIPT</button>
+        <button class="bc-btn bc-btn-primary bc-span-9" onclick="BloggerCalc.calc()" style="height:36px">RUN SCRIPT</button>
     </div>
 
     <div class="bc-tab-pane bc-grid-graph" role="tabpanel" id="bc-graph">
@@ -689,7 +752,7 @@
             let extEnginesLoaded = false;
             function bcLoadAdvancedEngines() {
                 if (extEnginesLoaded) return;
-                bcLiveOut.innerText = "Loading Advanced Math Modules...";
+                bcLiveOut.innerText = "Loading Modules...";
                 
                 let s1 = document.createElement('script');
                 s1.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js";
@@ -830,7 +893,7 @@
                     if(tabId === 'bc-graph') {
                         outBox.style.height = '140px'; if(canvas) canvas.style.display = 'block';
                     } else {
-                        outBox.style.height = '38px'; if(canvas) canvas.style.display = 'none';
+                        outBox.style.height = '48px'; if(canvas) canvas.style.display = 'none';
                     }
                 },
                 historyBack: function() {
@@ -959,25 +1022,23 @@
     </script>
     
     <script>
-        // --- ADDED: Dynamic Resizing Communication ---
         function sendHeightToParent() {
             const calcWidget = document.getElementById('blogger-calc-widget');
             if (calcWidget) {
-                // Get the exact height of the calculator (+20px for padding)
-                const calcHeight = calcWidget.offsetHeight + 20; 
+                const calcHeight = calcWidget.offsetHeight + 18; 
                 window.parent.postMessage({ frameHeight: calcHeight }, '*');
             }
         }
 
-        // Send height when the calculator initially loads
         window.addEventListener('load', sendHeightToParent);
+        window.addEventListener('resize', sendHeightToParent);
 
-        // Send height whenever a top tab is clicked (to shrink or grow it)
         document.querySelectorAll('.bc-tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                setTimeout(sendHeightToParent, 50); // Wait a fraction of a second for CSS to change
+                setTimeout(sendHeightToParent, 60);
             });
         });
     </script>
+</div>
 </body>
 </html>
