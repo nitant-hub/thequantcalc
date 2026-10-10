@@ -270,9 +270,14 @@
       if (desktopSearch.isConnected) return true;
 
       if (isHomePage) {
+        const calcCard = document.querySelector(".calc-card");
+        if (calcCard && calcCard.parentNode) {
+          calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
+          return true;
+        }
         const mainContainer = document.querySelector("main, .hero, .container, #app, section");
         if (mainContainer && mainContainer.parentNode) {
-          mainContainer.parentNode.insertBefore(desktopSearch, mainContainer);
+          mainContainer.parentNode.insertBefore(desktopSearch, mainContainer.nextSibling);
           return true;
         }
         document.body.appendChild(desktopSearch);
