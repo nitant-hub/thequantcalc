@@ -29,7 +29,7 @@
       body { 
         padding-top: var(--nav-header-height) !important; 
         margin: 0 !important;
-        background-color: #ffffff !important;
+        background-color: #f8fafc !important;
       }
 
       /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
@@ -40,10 +40,10 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT TWO-COLUMN GRID: NO GAPS (DESKTOP)
+         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT: NO GAPS (DESKTOP)
          ======================================================== */
       @media (min-width: 768px) {
-        /* Remove template-level centering and spacing */
+        /* Override template-level restrictions */
         body > div, main, #app, #content, .container {
           max-width: 100% !important;
           width: 100% !important;
@@ -51,59 +51,57 @@
           padding: 0 !important;
         }
 
-        /* Enforce a strict 2-column Grid directly below the header */
-        .dyn-two-column-wrapper {
-          display: grid !important;
-          grid-template-columns: minmax(0, 1fr) 300px !important;
-          column-gap: 24px !important;
-          row-gap: 0 !important;
-          align-items: start !important;
+        /* Master two-column flex container aligned at the top */
+        .dyn-desktop-parent {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
+          gap: 24px !important;
           width: 100% !important;
-          max-width: 1200px !important;
-          margin: 12px auto 40px !important;
+          max-width: 1220px !important;
+          margin: 14px auto 40px !important;
           padding: 0 16px !important;
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN COLUMN: FILLS ENTIRE TOP-LEFT WITH NO GAPS */
-        .dyn-left-content {
-          grid-column: 1 / 2 !important;
-          grid-row: 1 !important;
-          width: 100% !important;
-          max-width: 100% !important;
+        /* 1. LEFT MAIN TOOLS AREA (STARTS AT TOP ROW, ZERO GAP) */
+        .dyn-main-card-left,
+        .dyn-main-card-left.card {
+          flex: 1 1 calc(100% - 324px) !important;
+          width: calc(100% - 324px) !important;
+          max-width: calc(100% - 324px) !important;
+          min-width: 0 !important;
           margin: 0 !important;
-          padding: 0 !important;
+          padding-top: 0 !important;
           box-sizing: border-box !important;
-        }
-
-        /* Strip squished card styling from the template */
-        .dyn-left-content .card,
-        .dyn-left-content > div,
-        .dyn-left-content section {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 !important;
-          padding: 0 !important;
           border: none !important;
-          box-shadow: none !important;
           background: transparent !important;
+          box-shadow: none !important;
+        }
+
+        /* Allow inner tool cards/links to fill left column */
+        .dyn-main-card-left * {
+          max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
-        /* 2. RIGHT SIDEBAR COLUMN: 300PX FIXED ON THE RIGHT */
+        /* 2. RIGHT SIDEBAR PORTION (300px FIXED AT TOP ROW) */
         #dynDesktopSidebarWrap {
-          grid-column: 2 / 3 !important;
-          grid-row: 1 !important;
+          flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
+          min-width: 300px !important;
           margin: 0 !important;
-          padding: 0 !important;
+          padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
           box-sizing: border-box !important;
         }
 
+        /* All cards inside the right sidebar fill 300px */
         #dynDesktopSidebarWrap .card,
         #dynDesktopSidebarWrap > div {
           width: 100% !important;
@@ -112,8 +110,8 @@
           box-sizing: border-box !important;
         }
 
-        /* Hide duplicate inline category search inside main left column */
-        .dyn-left-content input[placeholder*="search" i] {
+        /* Hide duplicate inline search in main left area */
+        .dyn-main-card-left input[placeholder*="search" i] {
           display: none !important;
         }
       }
@@ -548,64 +546,67 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. PARALLEL TWO-COLUMN LAYOUT CONSTRUCTOR (START DIRECTLY BELOW HEADER)
+    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER (ZERO TOP GAP)
+    let isLayoutUpdating = false;
     function setupCalculatorNetLayout() {
-      if (window.innerWidth < 768) return;
+      if (isLayoutUpdating || window.innerWidth < 768) return;
 
       const isCategoryView = window.location.hash.startsWith("#/");
-      const parentContainer = document.querySelector("main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay)");
-      if (!parentContainer || !isCategoryView) return;
+      if (!isCategoryView) return;
 
-      let layoutWrapper = document.getElementById("calcNetDesktopContainer");
-      if (!layoutWrapper) {
-        layoutWrapper = document.createElement("div");
-        layoutWrapper.id = "calcNetDesktopContainer";
-        layoutWrapper.className = "dyn-two-column-wrapper";
+      // Locate the main category tools block
+      const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
+        const h = el.querySelector("h1, h2");
+        return h && /calculators|tools/i.test(h.textContent);
+      }) || document.querySelector(".card");
 
-        const leftCol = document.createElement("div");
-        leftCol.className = "dyn-left-content";
+      if (!mainCard) return;
 
-        const rightSidebar = document.createElement("aside");
-        rightSidebar.id = "dynDesktopSidebarWrap";
+      const parentContainer = mainCard.parentElement;
+      if (!parentContainer) return;
 
-        // Right Sidebar Item 1: Search Box at the top
-        rightSidebar.appendChild(makeSearchNode());
+      isLayoutUpdating = true;
+      try {
+        // Tag mainCard and parentContainer for top alignment
+        parentContainer.classList.add("dyn-desktop-parent");
+        mainCard.classList.add("dyn-main-card-left");
 
-        // Right Sidebar Item 2: AdSense 300x250 medium rectangle
-        const adSlot = document.createElement("div");
-        adSlot.id = "dynAdSenseSlot";
-        adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
-        rightSidebar.appendChild(adSlot);
+        let sidebar = document.getElementById("dynDesktopSidebarWrap");
+        if (!sidebar) {
+          sidebar = document.createElement("aside");
+          sidebar.id = "dynDesktopSidebarWrap";
 
-        // Separate Left Tools content from the secondary blue cards
-        const allNodes = Array.from(parentContainer.children).filter(el => 
-          el.id !== "calcNetDesktopContainer" && 
-          el.id !== "siteDynamicHeader" && 
-          el.id !== "dynDrawer" && 
-          el.id !== "dynOverlay"
-        );
+          // 1. Search Box at the top of the right column
+          sidebar.appendChild(makeSearchNode());
 
-        allNodes.forEach((node) => {
-          const text = (node.textContent || "").toLowerCase();
-          const hasTitle = node.querySelector("h1, h2");
+          // 2. AdSense unit (300x250)
+          const adSlot = document.createElement("div");
+          adSlot.id = "dynAdSenseSlot";
+          adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
+          sidebar.appendChild(adSlot);
 
-          if (hasTitle || (text.includes("calculators") && !text.includes("popular tools") && !text.includes("system status"))) {
-            leftCol.appendChild(node);
-          } else if (text.includes("popular tools") || text.includes("categories") || text.includes("system status")) {
-            rightSidebar.appendChild(node);
-          } else {
-            leftCol.appendChild(node);
-          }
-        });
+          // 3. Move secondary cards (Categories, Popular Tools, System Status) directly into the sidebar
+          const secondaryCards = Array.from(parentContainer.children).filter((el) => {
+            if (el === mainCard || el === sidebar) return false;
+            const text = (el.textContent || "").toLowerCase();
+            return text.includes("popular tools") || text.includes("categories") || text.includes("system status");
+          });
 
-        layoutWrapper.appendChild(leftCol);
-        layoutWrapper.appendChild(rightSidebar);
-        parentContainer.appendChild(layoutWrapper);
+          secondaryCards.forEach((c) => {
+            if (c && c.parentElement && c !== sidebar) {
+              sidebar.appendChild(c);
+            }
+          });
+
+          parentContainer.appendChild(sidebar);
+        }
+      } finally {
+        setTimeout(() => { isLayoutUpdating = false; }, 50);
       }
     }
 
     setupCalculatorNetLayout();
-    window.addEventListener("hashchange", () => setTimeout(setupCalculatorNetLayout, 80));
+    window.addEventListener("hashchange", () => setTimeout(setupCalculatorNetLayout, 50));
     window.addEventListener("resize", setupCalculatorNetLayout);
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
