@@ -201,7 +201,7 @@
         .bc-btn-num:hover { background: #b4cee6 !important; }
         .bc-btn-num:active { background: #9bbfe0 !important; }
 
-        /* OPERATORS: Crisp & Bold */
+        /* OPERATORS */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -306,7 +306,7 @@
         .hist-entry strong { color: #3b5998; font-weight: 900 !important; }
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
 
-        /* MOBILE VIEW (High Readability Scale) */
+        /* MOBILE VIEW */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
@@ -402,7 +402,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log')">ln</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log10')">log</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op('*10**')">EXP</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">/</button>
@@ -610,9 +610,9 @@
             <button class="bc-btn" onclick="BloggerCalc.num('t')">T</button>
             <button class="bc-btn" onclick="BloggerCalc.func('sin(')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('cos(')">cos</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('7')">7</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('8')">8</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('9')">9</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">/</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**2')">x²</button>
@@ -620,9 +620,9 @@
             <button class="bc-btn" onclick="BloggerCalc.num('pi')">π</button>
             <button class="bc-btn" onclick="BloggerCalc.num('e')">e</button>
             <button class="bc-btn" onclick="BloggerCalc.func('log(')">LN</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('4')">4</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('5')">5</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('6')">6</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('4')">4</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('5')">5</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('6')">6</button>
             <button class="bc-btn bc-btn-op" aria-label="Multiply" onclick="BloggerCalc.op('*')">*</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('(')">(</button>
@@ -661,8 +661,8 @@
             <button class="bc-btn" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn" onclick="BloggerCalc.num('9')">9</button>
-            <button class="bc-btn" onclick="BloggerCalc.op('(')">(</button>
-            <button class="bc-btn" onclick="BloggerCalc.op(')')">)</button>
+            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op('(')">(</button>
+            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op(')')">)</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('pi')">π</button>
             <button class="bc-btn" onclick="BloggerCalc.num('e')">e</button>
@@ -690,8 +690,8 @@
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">(-)</button>
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">EE</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
-            <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('0')">0</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">enter</button>
         </div>
 
@@ -807,9 +807,9 @@
                 sin: (x) => isDegree ? Math.sin(x * Math.PI / 180) : Math.sin(x),
                 cos: (x) => isDegree ? Math.cos(x * Math.PI / 180) : Math.cos(x),
                 tan: (x) => isDegree ? Math.tan(x * Math.PI / 180) : Math.tan(x),
-                asin: (x) => isDegree ? Math.asin(x * 180 / Math.PI : Math.asin(x),
-                acos: (x) => isDegree ? Math.acos(x * 180 / Math.PI : Math.acos(x),
-                atan: (x) => isDegree ? Math.atan(x * 180 / Math.PI : Math.atan(x)
+                asin: (x) => isDegree ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
+                acos: (x) => isDegree ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
+                atan: (x) => isDegree ? Math.atan(x) * 180 / Math.PI : Math.atan(x)
             };
             window.bcFact = function(n) {
                 if(n < 0 || !Number.isInteger(n)) return NaN;
