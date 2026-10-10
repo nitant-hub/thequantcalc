@@ -1,5 +1,6 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
+  const currentHash = window.location.hash.toLowerCase();
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
   const isHomePage = !isToolPage;
 
@@ -29,66 +30,67 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* HIDE REDUNDANT DIRECTORY INTRO TEXT VIA CSS SAFELY WITHOUT CRASHING ROUTER */
+      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
       p:has(+ input[placeholder*="calculator" i]),
       .category-desc,
       .all-calc-desc {
         display: none !important;
       }
 
-      /* ATTRACTIVE, DISTINCT DIRECTORY SEARCH BAR */
-      input[placeholder*="Search calculators" i],
-      input[placeholder*="search calculators" i] {
-        display: block !important;
+      /* DESKTOP 2-COLUMN SPLIT LAYOUT (LIKE CALCULATOR.NET) */
+      @media (min-width: 992px) {
+        body:not(.is-tool-detail) main,
+        body:not(.is-tool-detail) #content,
+        body:not(.is-tool-detail) .container {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
+          gap: 2.2rem !important;
+          max-width: 1200px !important;
+          margin: 0 auto !important;
+          padding: 1.5rem 1rem !important;
+        }
+
+        /* LEFT CONTENT: CATEGORIES & TOOLS */
+        body:not(.is-tool-detail) .main-content,
+        body:not(.is-tool-detail) #left-content,
+        body:not(.is-tool-detail) section:first-of-type {
+          flex: 1 1 68% !important;
+          min-width: 0 !important;
+        }
+
+        /* RIGHT SIDEBAR: SEARCH BOX & POPULAR CATEGORIES */
+        body:not(.is-tool-detail) aside,
+        body:not(.is-tool-detail) .sidebar,
+        body:not(.is-tool-detail) #right-content {
+          flex: 0 0 280px !important;
+          width: 280px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 1.25rem !important;
+        }
+
+        /* MULTI-COLUMN SUB-CATEGORIES */
+        .category-grid,
+        .tools-list-wrap {
+          display: grid !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: 1.5rem !important;
+        }
+      }
+
+      /* SIDEBAR SEARCH BAR PROPORTIONS */
+      .dyn-search-wrapper.in-sidebar {
         width: 100% !important;
-        max-width: 480px !important;
-        margin: 0.9rem 0 1.3rem 0 !important;
-        padding: 0.85rem 1.25rem !important;
-        font-size: 0.98rem !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.2px !important;
-        border-radius: 24px !important;
-        border: 2px solid #93c5fd !important;
-        background: #ffffff !important;
-        color: #0f172a !important;
-        box-sizing: border-box !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08) !important;
-        transition: all 0.22s ease-in-out !important;
+        margin: 0 0 0.5rem 0 !important;
       }
-      input[placeholder*="Search calculators" i]::placeholder,
-      input[placeholder*="search calculators" i]::placeholder {
-        color: #64748b !important;
-        font-weight: 600 !important;
-      }
-      input[placeholder*="Search calculators" i]:hover,
-      input[placeholder*="search calculators" i]:hover {
-        border-color: #2563eb !important;
-        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12) !important;
-      }
-      input[placeholder*="Search calculators" i]:focus,
-      input[placeholder*="search calculators" i]:focus {
-        border-color: #2563eb !important;
-        background: #ffffff !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18), 0 8px 24px rgba(37, 99, 235, 0.16) !important;
-        outline: none !important;
-      }
-      [data-theme="dark"] input[placeholder*="Search calculators" i],
-      [data-theme="dark"] input[placeholder*="search calculators" i] {
-        background: #0f172a !important;
-        border-color: #38bdf8 !important;
-        color: #f8fafc !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
-      }
-      [data-theme="dark"] input[placeholder*="Search calculators" i]::placeholder,
-      [data-theme="dark"] input[placeholder*="search calculators" i]::placeholder {
-        color: #94a3b8 !important;
-      }
-      [data-theme="dark"] input[placeholder*="Search calculators" i]:focus,
-      [data-theme="dark"] input[placeholder*="search calculators" i]:focus {
-        border-color: #38bdf8 !important;
-        background: #0b132b !important;
-        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.28), 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+      .dyn-search-wrapper.in-sidebar .dyn-search-input {
+        width: 100% !important;
+        padding: 0.72rem 1rem !important;
+        font-size: 0.94rem !important;
+        border-radius: 8px !important;
+        border: 2px solid #94a3b8 !important;
       }
 
       header#siteDynamicHeader {
@@ -267,7 +269,7 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* PROFESSIONAL SEARCH CONTAINER */
+      /* SEARCH COMPONENT STYLES */
       .dyn-search-wrapper { 
         position: relative !important; 
         width: 100% !important; 
@@ -282,7 +284,6 @@
       
       .dyn-search-wrapper.in-drawer { margin-bottom: 0 !important; width: 100% !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto 1.2rem !important; padding: 0 1rem !important; }
-      .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
       .dyn-search-input-box {
         position: relative !important;
@@ -333,7 +334,7 @@
         box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       }
 
-      /* Clear Dropdown styling */
+      /* Dropdown styling */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -432,7 +433,7 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Precise Active Tab Indicator Logic
+    // Dynamic Underline Synchronizer
     function syncActiveTab() {
       const hash = (window.location.hash || "").toLowerCase();
       document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((link) => {
@@ -445,12 +446,10 @@
       });
     }
 
-    // Direct Single-Touch Navigation & Underline Switch
     document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item, .dyn-more-pill-btn, .dyn-drawer-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
+      link.addEventListener("click", function () {
         const slug = this.getAttribute("data-slug");
         if (slug) {
-          // Immediately highlight clicked category tab
           document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((item) => {
             if (item.getAttribute("data-slug") === slug) {
               item.classList.add("is-active");
@@ -518,6 +517,10 @@
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
+
+    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
+      link.addEventListener("click", closeDrawer);
+    });
 
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
@@ -590,7 +593,7 @@
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
 
-    // 2. DESKTOP SEARCH MOUNTING
+    // 2. DESKTOP SEARCH MOUNTING (SIDEBAR ON CATEGORY PAGES, BELOW CALC ON HOME)
     const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
     function placeDesktopSearch() {
@@ -611,11 +614,12 @@
         return true;
       }
 
-      const sidebar = Array.from(document.querySelectorAll("aside, .sidebar, .card")).find((n) => {
-        return (n.textContent || "").toLowerCase().includes("popular tools");
+      // Sidebar placement on category/tools directory pages
+      const sidebar = Array.from(document.querySelectorAll("aside, .sidebar, .card, div")).find((n) => {
+        return (n.textContent || "").toLowerCase().includes("popular tools") || (n.textContent || "").toLowerCase().includes("categories");
       });
-      if (sidebar) {
-        sidebar.insertBefore(desktopSearch, sidebar.firstChild);
+      if (sidebar && sidebar.parentNode) {
+        sidebar.parentNode.insertBefore(desktopSearch, sidebar);
         return true;
       }
       return false;
