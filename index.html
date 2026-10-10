@@ -60,10 +60,14 @@ h1{font-size:1.7rem;color:var(--link);margin:.4rem 0}
 .cols li a:hover{text-decoration:none}
 .none{display:none;color:var(--muted)}
 .gs{position:relative;width:100%}
-.gs input{width:100%;padding:.65rem .9rem;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-size:.95rem;outline:none}
-.gs .dd{display:none;position:absolute;top:100%;left:0;right:0;margin-top:5px;max-height:260px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.18);z-index:10050}
-.gs .dd a{display:block;padding:.6rem .85rem;font-size:.9rem;color:var(--text)!important;font-weight:500!important;border-bottom:1px solid var(--border)}
-.gs .dd .no{padding:.6rem .85rem;font-size:.85rem;color:var(--muted)}
+.gs input{-webkit-appearance:none;appearance:none;width:100%;height:54px;padding:0 1.1rem 0 3.1rem;border:2px solid transparent;border-radius:14px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 1.05rem center/22px;color:var(--text);font-size:1.05rem;font-weight:600;outline:none;box-shadow:0 0 0 1px var(--border),0 6px 20px rgba(37,99,235,.14);transition:border-color .2s,box-shadow .2s}
+.gs input::placeholder{color:var(--muted);font-weight:500}
+.gs input:focus{border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.18),0 8px 26px rgba(37,99,235,.28)}
+.gs input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.gs .dd{display:none;position:absolute;top:100%;left:0;right:0;margin-top:8px;max-height:280px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.2);z-index:10050;padding:.35rem}
+.gs .dd a{display:block;padding:.8rem 1rem;font-size:.98rem;color:var(--text)!important;font-weight:600!important;border-radius:10px}
+.gs .dd a:hover{background:linear-gradient(90deg,rgba(37,99,235,.12),rgba(124,58,237,.12));color:#2563eb!important}
+.gs .dd .no{padding:.8rem 1rem;font-size:.9rem;color:var(--muted)}
 .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .box h3{background:#2f6aa5;color:#fff;font-size:1rem;padding:.6rem .9rem}
 .box div{padding:.8rem .9rem;display:flex;flex-direction:column;gap:.55rem}
@@ -360,7 +364,7 @@ footer a{color:var(--muted);text-decoration:none}
 
   /* Search: in hamburger menu on mobile, below Interactive Calculator on desktop */
   var gs=document.createElement('div'); gs.className='gs';
-  gs.innerHTML='<input type="search" placeholder="🔍 Search calculators..." aria-label="Search calculators" autocomplete="off"><div class="dd"></div>';
+  gs.innerHTML='<input type="search" placeholder="Search calculators..." aria-label="Search calculators" autocomplete="off"><div class="dd"></div>';
   var gin=gs.querySelector('input'), gdd=gs.querySelector('.dd');
   gin.addEventListener('input',function(){
     var v=gin.value.trim().toLowerCase();
