@@ -21,20 +21,24 @@
       :root { 
         --nav-header-height: 56px; 
       }
-      @media (min-width: 768px) {
-        :root { 
-          --nav-header-height: 60px; 
-        }
-      }
 
       /* COLLAPSE UNWANTED WHITE GAP COMPLETELY */
+      html {
+        scroll-padding-top: var(--nav-header-height) !important;
+      }
       body { 
         padding-top: var(--nav-header-height) !important; 
         margin-top: 0 !important;
       }
       
-      body > .wrap, body > .container, body > #app, body > main {
-        margin-top: 0.35rem !important;
+      .wrap, .container, #app, main, .grid {
+        margin-top: 0.25rem !important;
+        padding-top: 0 !important;
+      }
+
+      .crumb, .breadcrumbs, [class*="crumb"] {
+        margin-top: 0.15rem !important;
+        margin-bottom: 0.35rem !important;
         padding-top: 0 !important;
       }
 
@@ -42,7 +46,7 @@
         position: fixed !important; 
         top: 0 !important; 
         left: 0 !important; 
-        width: 100% !important;
+        width: 100% !important; 
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
@@ -52,7 +56,7 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0 1.5rem !important;
+        padding: 0 1.2rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
 
@@ -85,12 +89,12 @@
 
       /* DESKTOP NAV BAR */
       .dyn-desktop-nav { 
-        display: none; 
-        align-items: center; 
-        gap: 0.6rem; 
-        height: 100%; 
-        margin-left: auto; 
-        margin-right: 1.2rem; 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 0.6rem !important; 
+        height: 100% !important; 
+        margin-left: auto !important; 
+        margin-right: 1.2rem !important; 
       }
       .dyn-desktop-nav a.dyn-nav-item {
         text-decoration: none !important; 
@@ -264,17 +268,15 @@
       }
       .dyn-backdrop-overlay.open { display: block !important; }
 
-      @media (min-width: 768px) {
-        .dyn-desktop-nav { display: flex !important; }
-        .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
-      }
-
-      /* SEARCH COMPONENT */
+      /* SEARCH COMPONENT (ALWAYS VISIBLE WHEN MOUNTED) */
       .dyn-search-wrapper { 
         position: relative !important; 
         width: 100% !important; 
         box-sizing: border-box !important; 
         display: block !important; 
+      }
+      #dynDesktopSearchWrap {
+        display: block !important;
       }
       .dyn-drawer-top-row .dyn-search-wrapper { 
         flex: 1 !important; 
@@ -476,7 +478,7 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Single search box
+    // 1. MOBILE DRAWER SEARCH (STRICT SINGLETON)
     const drawerMenu = document.getElementById("dynDrawer");
     if (drawerMenu) {
       drawerMenu.querySelectorAll(".dyn-search-wrapper, input[type='search'], input[placeholder*='Search']").forEach(el => el.remove());
@@ -487,7 +489,7 @@
       }
     }
 
-    // 2. DESKTOP SEARCH MOUNTING
+    // 2. SEARCH MOUNTING
     const searchInstance = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
     function placeSearchElement() {
@@ -507,7 +509,7 @@
         }
       } else {
         // TOOL PAGES: place right above Popular Tools card in sidebar
-        const popularHeading = Array.from(document.querySelectorAll("h2, h3, h4, .st, b, div, span")).find((el) => {
+        const popularHeading = Array.from(document.querySelectorAll("h2, h3, h4, .st, b, div, span, p")).find((el) => {
           return (el.textContent || "").includes("Popular Tools");
         });
 
