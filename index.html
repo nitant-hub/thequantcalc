@@ -55,6 +55,10 @@ footer a{color:var(--muted);text-decoration:none}
 .calc-card .st{padding-left:1rem;margin-bottom:.4rem}
 #calc{width:100%;height:420px;border:none;display:block;transition:height .15s ease}
 
+/* Dedicated search mount slots */
+#homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
+#sidebarSearchSlot { width: 100%; margin-bottom: 1rem; }
+
 @media(max-width:480px){.wrap{padding:0 .5rem}}
 @media(min-width:768px){
   .card{padding:1.75rem}
@@ -75,6 +79,10 @@ footer a{color:var(--muted);text-decoration:none}
       <h2 class="st">🧮 Interactive Calculator</h2>
       <iframe id="calc" src="calculator/index.html" title="Interactive Calculator"></iframe>
     </section>
+
+    <!-- SEARCH BAR BELOW INTERACTIVE CALCULATOR (HOMEPAGE) -->
+    <div id="homeSearchSlot"></div>
+
     <div class="feat">
       <div style="background:#eff6ff;color:#1e40af"><b>100+</b><span>Online Tools</span></div>
       <div style="background:#ecfdf5;color:#065f46"><b>Fast</b><span>Performance</span></div>
@@ -97,6 +105,9 @@ footer a{color:var(--muted);text-decoration:none}
 </main>
 
 <aside>
+  <!-- SEARCH BAR IN SIDEBAR (NON-HOMEPAGE PAGES) -->
+  <div id="sidebarSearchSlot"></div>
+
   <!-- Shown only on a single category page (hidden on home and All Calculators) -->
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   <div class="box"><h3>Popular Tools</h3><div>
