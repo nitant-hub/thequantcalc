@@ -41,20 +41,65 @@
         background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%) !important;
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
-      .dyn-desktop-nav { display: none; align-items: center; gap: 0.5rem; height: 100%; margin-left: auto; margin-right: 1rem; }
-      .dyn-desktop-nav a {
-        text-decoration: none !important; font-size: 0.85rem !important; font-weight: 600 !important; color: #cbd5e1 !important;
-        height: 100% !important; display: flex !important; align-items: center !important; padding: 0 0.8rem !important;
-        border-bottom: 3px solid transparent !important; text-transform: uppercase !important;
+
+      /* BOLD & ENLARGED CATEGORIES HEADER SECTION */
+      .dyn-desktop-nav { 
+        display: none; 
+        align-items: center; 
+        gap: 0.8rem; 
+        height: 100%; 
+        margin-left: auto; 
+        margin-right: 1.2rem; 
       }
-      .dyn-desktop-nav a:hover { color: #fff !important; background: rgba(255,255,255,0.08) !important; }
-      .dyn-desktop-nav a.is-active { color: #fff !important; border-bottom: 3px solid #38bdf8 !important; background: rgba(30,58,138,0.45) !important; }
+      .dyn-desktop-nav a.dyn-nav-item {
+        text-decoration: none !important; 
+        font-size: 1.08rem !important; 
+        font-weight: 800 !important; 
+        letter-spacing: 0.5px !important; 
+        color: #f8fafc !important;
+        height: 100% !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        padding: 0 0.95rem !important;
+        border-bottom: 3.5px solid transparent !important; 
+        text-transform: uppercase !important;
+        transition: all 0.16s ease !important;
+      }
+      .dyn-desktop-nav a.dyn-nav-item:hover { 
+        color: #38bdf8 !important; 
+        background: rgba(255,255,255,0.09) !important; 
+      }
+      .dyn-desktop-nav a.dyn-nav-item.is-active { 
+        color: #38bdf8 !important; 
+        border-bottom: 3.5px solid #38bdf8 !important; 
+        background: rgba(30,58,138,0.55) !important; 
+      }
+
+      /* DISTINCT & ATTRACTIVE MORE BUTTON */
       .dyn-more-pill-btn {
-        background: #1e3a8a !important; border: 1px solid rgba(96,165,250,0.4) !important; color: #fff !important;
-        font-weight: 700 !important; font-size: 0.8rem !important; padding: 0.35rem 0.8rem !important; border-radius: 6px !important;
-        height: auto !important; text-transform: uppercase !important;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.45) !important; 
+        color: #ffffff !important;
+        font-weight: 900 !important; 
+        font-size: 0.96rem !important; 
+        letter-spacing: 0.6px !important;
+        padding: 0.45rem 1.15rem !important; 
+        border-radius: 20px !important;
+        height: auto !important; 
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        box-shadow: 0 3px 14px rgba(236, 72, 153, 0.45) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s ease !important;
       }
-      .dyn-more-pill-btn:hover { background: #2563eb !important; }
+      .dyn-more-pill-btn:hover { 
+        background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%) !important; 
+        transform: translateY(-1px) scale(1.03) !important;
+        box-shadow: 0 5px 18px rgba(236, 72, 153, 0.65) !important;
+      }
+
       .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.65rem !important; }
       .dyn-theme-btn {
         background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important;
@@ -115,7 +160,7 @@
       .dyn-search-input {
         width: 100% !important;
         padding: 0.85rem 1.15rem !important;
-        font-size: 16px !important; /* Prevents unwanted browser zoom on mobile view */
+        font-size: 16px !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 12px !important;
@@ -226,7 +271,7 @@
     const moreUrl = "/#/all";
 
     const desktopLinksHtml = categories
-      .map((c) => `<a href="${c.path}" class="${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .map((c) => `<a href="${c.path}" class="dyn-nav-item ${currentHash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
       .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
@@ -285,7 +330,6 @@
       const input = wrap.querySelector(".dyn-search-input");
       const dropdown = wrap.querySelector(".dyn-search-dropdown");
 
-      // Auto-reposition viewport smoothly when the keyboard opens
       function bringIntoFocus() {
         setTimeout(() => {
           const rect = input.getBoundingClientRect();
@@ -346,7 +390,6 @@
       if (desktopSearch.isConnected) return true;
 
       if (isHomePage) {
-        // Strictly placed below the interactive calculator
         const calcCard = document.querySelector(".calc-card");
         if (calcCard && calcCard.parentNode) {
           calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
