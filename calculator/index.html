@@ -111,51 +111,18 @@
             box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.22);
         }
 
-        .bc-screen-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 10px 0;
-            background: transparent;
-        }
-        
-        .bc-deg-rad-pill {
-            display: flex;
-            align-items: center;
-            background: #e2e8f0;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 1px;
-            gap: 2px;
-        }
-        .bc-deg-rad-btn {
-            border: none;
-            background: transparent;
-            color: #475569;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-        .bc-deg-rad-btn.active {
-            background: #2563eb;
-            color: #ffffff;
-        }
-
         .bc-input-box {
             background: transparent; 
             color: #0f172a !important; 
             border: none;
             width: 100%; 
-            padding: 2px 10px 2px; 
+            padding: 6px 10px 2px; 
             font-size: 18px !important; 
             font-weight: 800 !important; 
             text-align: right; 
             outline: none; 
             font-family: inherit; 
-            height: 28px; 
+            height: 30px; 
             line-height: 22px;
             white-space: nowrap; 
             overflow-x: auto;
@@ -306,6 +273,21 @@
             font-weight: 900 !important;
         }
 
+        /* IN-KEYBOARD DEG/RAD BUTTONS */
+        .bc-btn-deg, .bc-btn-rad {
+            font-size: 11px !important;
+            font-weight: 900 !important;
+            background: #e2e8f0;
+            color: #475569;
+            border-color: #94a3b8;
+        }
+        .bc-btn-deg.active, .bc-btn-rad.active {
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%) !important;
+            color: #ffffff !important;
+            border-color: #1e40af !important;
+            box-shadow: 0 3px 0 #1e3a8a, 0 4px 6px rgba(37, 99, 235, 0.3) !important;
+        }
+
         .bc-span-2 { grid-column: span 2; }
         .bc-span-3 { grid-column: span 3; }
         .bc-span-5 { grid-column: span 5; }
@@ -343,6 +325,7 @@
             .bc-btn-num { font-size: 13px !important; }
             .bc-btn-op { font-size: 13px !important; }
             .bc-btn-primary { font-size: 15px !important; }
+            .bc-btn-deg, .bc-btn-rad { font-size: 9px !important; }
             .bc-tab-pane { gap: 3px !important; }
         }
     </style>
@@ -360,15 +343,9 @@
     </div>
 
     <div class="bc-screen-container">
-        <div class="bc-screen-top-bar">
-            <div class="bc-deg-rad-pill">
-                <button type="button" class="bc-deg-rad-btn active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">DEG</button>
-                <button type="button" class="bc-deg-rad-btn" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">RAD</button>
-            </div>
-            <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
-        </div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
+            <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
             <span id="bc-live-out"></span>
         </div>
     </div>
@@ -402,8 +379,8 @@
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.cos')">cos</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.tan')">tan</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num('(')">(</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num(')')">)</button>
+            <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
+            <button class="bc-btn bc-btn-rad" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">Rad</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
@@ -443,30 +420,34 @@
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">/</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m-')">M-</button>
 
+            <button class="bc-btn" onclick="BloggerCalc.num('(')">(</button>
+            <button class="bc-btn" onclick="BloggerCalc.num(')')">)</button>
             <button class="bc-btn" onclick="BloggerCalc.func('1/')">1/x</button>
             <button class="bc-btn bc-btn-op" aria-label="Percent" onclick="BloggerCalc.op('%')">%</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcFact')">n!</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">±</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num('Math.random()')">RND</button>
-            <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
-            <button class="bc-btn bc-btn-primary bc-span-2" onclick="BloggerCalc.calc()">=</button>
+            <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">AC</button>
+            <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">=</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
         </div>
 
-        <!-- 3. GATE (UNIFORM BALANCED GRID) -->
+        <!-- 3. GATE -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <button class="bc-btn" onclick="BloggerCalc.op('%')">mod</button>
+            <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
+            <button class="bc-btn bc-btn-rad" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">Rad</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sinh')">sinh</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.cosh')">cosh</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.tanh')">tanh</button>
-            <button class="bc-btn" onclick="BloggerCalc.op('*10**')">Exp</button>
-            <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mc')">MC</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('ms')">MS</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m+')">M+</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m-')">M-</button>
 
+            <button class="bc-btn" onclick="BloggerCalc.op('*10**')">Exp</button>
+            <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log2')">log₂</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.asinh')">sinh⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.acosh')">cosh⁻¹</button>
@@ -476,8 +457,6 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">←</button>
             <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">C</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">±</button>
-            <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
-            <button class="bc-btn bc-btn-op" aria-label="Modulo" onclick="BloggerCalc.op('%')">%</button>
 
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log')">ln</button>
             <button class="bc-btn" onclick="BloggerCalc.num('Math.PI')">π</button>
@@ -488,8 +467,8 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
-            <button class="bc-btn bc-btn-op" aria-label="Multiply" onclick="BloggerCalc.op('*')">×</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.func('1/')">1/x</button>
+            <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
+            <button class="bc-btn bc-btn-op" aria-label="Modulo" onclick="BloggerCalc.op('%')">%</button>
 
             <button class="bc-btn" onclick="BloggerCalc.func('Math.exp')">eˣ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
@@ -500,8 +479,8 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('4')">4</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('5')">5</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('6')">6</button>
-            <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">−</button>
-            <button class="bc-btn bc-btn-primary bc-row-2" onclick="BloggerCalc.calc()">=</button>
+            <button class="bc-btn bc-btn-op" aria-label="Multiply" onclick="BloggerCalc.op('*')">×</button>
+            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.func('1/')">1/x</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**3')">x³</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.asin')">sin⁻¹</button>
@@ -512,24 +491,27 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
-            <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
+            <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">−</button>
+            <button class="bc-btn bc-btn-primary bc-row-2" onclick="BloggerCalc.calc()">=</button>
 
             <button class="bc-btn" onclick="BloggerCalc.func('Math.cbrt')">∛</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.abs')">|x|</button>
             <button class="bc-btn bc-btn-num bc-span-6" onclick="BloggerCalc.num('0')">0</button>
-            <button class="bc-btn bc-btn-num bc-span-3" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
+            <button class="bc-btn bc-btn-num bc-span-2" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
+            <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
         </div>
 
         <!-- 4. FX-991CW -->
         <div class="bc-tab-pane bc-grid-adv" role="tabpanel" id="bc-adv">
-            <button class="bc-btn bc-btn-special bc-span-2">SHIFT</button>
-            <button class="bc-btn bc-btn-special bc-span-2">ALPHA</button>
+            <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
+            <button class="bc-btn bc-btn-rad" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">Rad</button>
             <button class="bc-btn" onclick="BloggerCalc.func('integral(')">∫dx</button>
             <button class="bc-btn" onclick="BloggerCalc.func('d(')">d/dx</button>
             <button class="bc-btn" onclick="BloggerCalc.func('sum(')">Σ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('x')">x</button>
             <button class="bc-btn" onclick="BloggerCalc.func('y')">y</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">DEL</button>
+            <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**-1')">x⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
@@ -564,7 +546,6 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">−</button>
 
-            <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.ans()">Ans</button>
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">×10ˣ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.abs')">Abs</button>
@@ -572,8 +553,7 @@
             <button class="bc-btn bc-btn-num bc-span-2" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
-
-            <button class="bc-btn bc-btn-primary bc-span-10" onclick="BloggerCalc.calc()" style="height:34px">EXECUTE (CAS)</button>
+            <button class="bc-btn bc-btn-primary bc-span-2" onclick="BloggerCalc.calc()">=</button>
         </div>
 
         <!-- 5. FX-5800P -->
@@ -955,9 +935,8 @@
                 },
                 setAngle: function(unit) {
                     isDegree = (unit === 'deg');
-                    document.querySelectorAll('.bc-deg-rad-btn').forEach(b => {
-                        b.classList.toggle('active', b.getAttribute('data-unit') === unit);
-                    });
+                    document.querySelectorAll('.bc-btn-deg').forEach(b => b.classList.toggle('active', unit === 'deg'));
+                    document.querySelectorAll('.bc-btn-rad').forEach(b => b.classList.toggle('active', unit === 'rad'));
                     bcUpdate(); 
                 },
                 num: function(val) {
