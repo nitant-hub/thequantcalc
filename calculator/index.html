@@ -168,7 +168,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* ULTRA-BOLD TEXT ENHANCED BUTTONS */
+        /* BUTTONS ENGINE */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a8be; 
@@ -185,12 +185,12 @@
             background: #ffffff; 
             color: #000000 !important; 
             padding: 0 1px;
-            transition: background 0.08s;
+            transition: all 0.08s ease;
         }
         .bc-btn:hover { background: #f0f4f8; }
-        .bc-btn:active { background: #cbd5e1; }
+        .bc-btn:active { transform: translateY(1px); }
 
-        /* NUMBERS: Extra Bold & Larger Size */
+        /* 1. NUMBERS BLOCK */
         .bc-btn-num { 
             background: #c6d9ec !important; 
             color: #000000 !important; 
@@ -199,9 +199,8 @@
             border-color: #92b0d0 !important;
         }
         .bc-btn-num:hover { background: #b4cee6 !important; }
-        .bc-btn-num:active { background: #9bbfe0 !important; }
 
-        /* OPERATORS */
+        /* 2. OPERATORS */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -216,40 +215,42 @@
             border-color: #a3bacc !important;
             color: #000000 !important;
         }
+        .bc-btn-op:hover { background: #d0e0ee !important; }
 
-        /* EQUALS (=) */
+        /* 3. EQUALS BUTTON (=) */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
-            background: #466396 !important; 
+            background: #2563eb !important; 
             color: #ffffff !important; 
-            border-color: #2b436b !important; 
+            border-color: #1d4ed8 !important; 
             font-size: 22px !important; 
             font-weight: 900 !important;
         }
-        .bc-btn-primary:hover { background: #354e7a !important; }
+        .bc-btn-primary:hover { background: #1d4ed8 !important; }
 
-        /* CLEAR / AC */
+        /* 4. CLEAR / AC / C BUTTON */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
-            background: #dbe4ef !important; 
-            color: #000000 !important; 
-            border-color: #94a8be !important; 
+            background: #dc2626 !important; 
+            color: #ffffff !important; 
+            border-color: #b91c1c !important; 
             font-size: 15px !important; 
             font-weight: 900 !important;
         }
-        .bc-btn-danger:hover { background: #c5d4e4 !important; }
+        .bc-btn-danger:hover { background: #b91c1c !important; }
 
-        /* BACKSPACE / DELETE */
+        /* 5. BACKSPACE / DELETE BUTTON */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
-            background: #dbe4ef !important;
-            color: #000000 !important;
-            border-color: #94a8be !important;
+            background: #ea580c !important;
+            color: #ffffff !important;
+            border-color: #c2410c !important;
             font-size: 15px !important;
             font-weight: 900 !important;
         }
+        .bc-btn-delete:hover { background: #c2410c !important; }
 
-        /* DEG / RAD TOGGLE BUTTONS */
+        /* 6. DEG / RAD TOGGLE BUTTONS */
         .bc-btn-deg, .bc-btn-rad {
             font-size: 13px !important;
             font-weight: 900 !important;
@@ -258,9 +259,9 @@
             border-color: #94a8be;
         }
         .bc-btn-deg.active, .bc-btn-rad.active {
-            background: #3b5998 !important;
+            background: #1e3a8a !important;
             color: #ffffff !important;
-            border-color: #2b436b !important;
+            border-color: #172554 !important;
         }
 
         .bc-btn-action { 
@@ -300,7 +301,7 @@
         .bc-history-title { font-weight: 900; color: #3b5998; font-size: 13px; text-transform: uppercase; }
         .bc-history-back-btn, .bc-clear-history { font-size: 11px; font-weight: 900; cursor: pointer; padding: 3px 8px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; }
         .bc-history-back-btn { background: #3b5998; color: #ffffff; }
-        .bc-clear-history { background: #d9534f; color: #ffffff; }
+        .bc-clear-history { background: #dc2626; color: #ffffff; }
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 14px; }
         .hist-entry { margin-bottom: 4px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 3px; text-align: left; color: #000000; font-weight: 900; }
         .hist-entry strong { color: #3b5998; font-weight: 900 !important; }
@@ -402,7 +403,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log')">ln</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log10')">log</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('0')">0</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op('*10**')">EXP</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">/</button>
@@ -579,9 +580,9 @@
             <button class="bc-btn" onclick="BloggerCalc.num(',')">,</button>
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.op(';')">;</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
-            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('1')">1</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('2')">2</button>
+            <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
 
             <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
@@ -635,7 +636,7 @@
             <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
 
-            <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">On/C</button>
+            <button class="bc-btn" onclick="BloggerCalc.clear()">On/C</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.ans()">Ans</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">+/-</button>
             <button class="bc-btn bc-btn-num bc-span-2" onclick="BloggerCalc.num('0')">0</button>
@@ -661,8 +662,8 @@
             <button class="bc-btn" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn" onclick="BloggerCalc.num('9')">9</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op('(')">(</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.op(')')">)</button>
+            <button class="bc-btn" onclick="BloggerCalc.op('(')">(</button>
+            <button class="bc-btn" onclick="BloggerCalc.op(')')">)</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('pi')">π</button>
             <button class="bc-btn" onclick="BloggerCalc.num('e')">e</button>
@@ -690,8 +691,8 @@
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">(-)</button>
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">EE</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('0')">0</button>
-            <button class="bc-btn" onclick="BloggerCalc.num('.')">.</button>
+            <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
+            <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">enter</button>
         </div>
 
