@@ -17,54 +17,156 @@
       document.head.appendChild(style);
     }
     style.textContent = `
-      :root { --nav-header-height: 56px; }
-      body { padding-top: var(--nav-header-height) !important; }
+      :root { 
+        --nav-header-height: 56px; 
+      }
+      @media (min-width: 768px) {
+        :root { 
+          --nav-header-height: 66px; /* Substantial, comfortable header height in Y-direction */
+        }
+      }
+
+      body { 
+        padding-top: var(--nav-header-height) !important; 
+      }
 
       header#siteDynamicHeader {
-        position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
-        height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
+        position: fixed !important; 
+        top: 0 !important; 
+        left: 0 !important; 
+        width: 100% !important;
+        height: var(--nav-header-height) !important; 
+        z-index: 999999 !important; 
+        box-sizing: border-box !important;
         background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%) !important;
-        border-bottom: 1px solid rgba(99, 179, 255, 0.25) !important;
-        box-shadow: 0 4px 20px rgba(10, 20, 80, 0.4) !important;
-        display: flex !important; align-items: center !important; justify-content: space-between !important;
-        padding: 0 1.2rem !important;
+        border-bottom: 1px solid rgba(99, 179, 255, 0.28) !important;
+        box-shadow: 0 4px 22px rgba(10, 20, 80, 0.45) !important;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: space-between !important;
+        padding: 0 1.5rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
-      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.6rem !important; text-decoration: none !important; }
+
+      .dyn-brand { 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 0.65rem !important; 
+        text-decoration: none !important; 
+      }
       .dyn-logo-icon {
-        background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 32px !important; height: 32px !important;
-        border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;
-        color: #fff !important; font-weight: 800 !important; font-size: 1.1rem !important;
+        background: linear-gradient(135deg, #2563eb, #7c3aed) !important; 
+        width: 34px !important; 
+        height: 34px !important;
+        border-radius: 8px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: center !important;
+        color: #fff !important; 
+        font-weight: 800 !important; 
+        font-size: 1.15rem !important;
       }
       .dyn-brand-text {
-        font-size: 1.2rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
+        font-size: 1.25rem !important; 
+        font-weight: 800 !important; 
+        letter-spacing: -0.4px !important;
         background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%) !important;
-        -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
+        -webkit-background-clip: text !important; 
+        -webkit-text-fill-color: transparent !important;
       }
-      .dyn-desktop-nav { display: none; align-items: center; gap: 0.5rem; height: 100%; margin-left: auto; margin-right: 1rem; }
+
+      /* DESKTOP NAV BAR: BOLD & HIGH READABILITY */
+      .dyn-desktop-nav { 
+        display: none; 
+        align-items: center; 
+        gap: 0.6rem; 
+        height: 100%; 
+        margin-left: auto; 
+        margin-right: 1.2rem; 
+      }
       .dyn-desktop-nav a {
-        text-decoration: none !important; font-size: 0.85rem !important; font-weight: 600 !important; color: #cbd5e1 !important;
-        height: 100% !important; display: flex !important; align-items: center !important; padding: 0 0.8rem !important;
-        border-bottom: 3px solid transparent !important; text-transform: uppercase !important;
+        text-decoration: none !important; 
+        font-size: 1rem !important; /* Larger text for desktop */
+        font-weight: 700 !important; 
+        letter-spacing: 0.3px !important;
+        color: #f1f5f9 !important; /* Bright high contrast */
+        height: 100% !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        padding: 0 1rem !important;
+        border-bottom: 3.5px solid transparent !important; 
+        text-transform: uppercase !important;
+        transition: all 0.15s ease !important;
       }
-      .dyn-desktop-nav a:hover { color: #fff !important; background: rgba(255,255,255,0.08) !important; }
-      .dyn-desktop-nav a.is-active { color: #fff !important; border-bottom: 3px solid #38bdf8 !important; background: rgba(30,58,138,0.45) !important; }
+      .dyn-desktop-nav a:hover { 
+        color: #ffffff !important; 
+        background: rgba(255, 255, 255, 0.1) !important; 
+      }
+      .dyn-desktop-nav a.is-active { 
+        color: #ffffff !important; 
+        border-bottom: 3.5px solid #38bdf8 !important; 
+        background: rgba(30, 58, 138, 0.5) !important; 
+      }
+
+      /* MORE BUTTON PILL */
       .dyn-more-pill-btn {
-        background: #1e3a8a !important; border: 1px solid rgba(96,165,250,0.4) !important; color: #fff !important;
-        font-weight: 700 !important; font-size: 0.8rem !important; padding: 0.35rem 0.8rem !important; border-radius: 6px !important;
-        height: auto !important; text-transform: uppercase !important;
+        background: #1e3a8a !important; 
+        border: 1px solid rgba(147, 197, 253, 0.45) !important; 
+        color: #ffffff !important;
+        font-weight: 800 !important; 
+        font-size: 0.92rem !important; 
+        padding: 0.45rem 1rem !important; 
+        border-radius: 8px !important;
+        height: auto !important; 
+        text-transform: uppercase !important;
+        margin-left: 0.3rem !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
       }
-      .dyn-more-pill-btn:hover { background: #2563eb !important; }
-      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.65rem !important; }
+      .dyn-more-pill-btn:hover { 
+        background: #2563eb !important; 
+        border-color: #60a5fa !important;
+      }
+
+      .dyn-right-controls { 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 0.75rem !important; 
+      }
       .dyn-theme-btn {
-        background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important;
-        font-size: 1rem !important; cursor: pointer !important; color: #fff !important; width: 34px !important; height: 34px !important;
-        display: flex !important; align-items: center !important; justify-content: center !important;
+        background: rgba(255, 255, 255, 0.12) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.25) !important; 
+        border-radius: 8px !important;
+        font-size: 1.05rem !important; 
+        cursor: pointer !important; 
+        color: #fff !important; 
+        width: 36px !important; 
+        height: 36px !important;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: center !important;
+        transition: background 0.15s ease !important;
       }
-      .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
-      .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
+      .dyn-theme-btn:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+      }
+      .dyn-hamburger-btn { 
+        background: none !important; 
+        border: none !important; 
+        cursor: pointer !important; 
+        display: flex !important; 
+        flex-direction: column !important; 
+        gap: 5px !important; 
+        padding: 4px !important; 
+      }
+      .dyn-hamburger-btn span { 
+        width: 22px !important; 
+        height: 2.5px !important; 
+        background: #fff !important; 
+        border-radius: 2px !important; 
+        display: block !important; 
+      }
       
-      /* ZERO-GAP FLUSH MOBILE DRAWER */
+      /* MOBILE DRAWER: FLUSH TOP */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -74,7 +176,7 @@
         height: 100dvh !important;
         background: #ffffff !important; 
         border-left: 1px solid #e2e8f0 !important; 
-        padding: 0.75rem 0.9rem 2rem !important; /* Zero dead space at top */
+        padding: 0.75rem 0.9rem 2rem !important;
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.4rem !important; 
@@ -87,11 +189,10 @@
       }
       [data-theme="dark"] .dyn-drawer-menu { 
         background: #0b132b !important; 
-        border-left: 1px solid rgba(255,255,255,0.08) !important; 
+        border-left: 1px solid rgba(255, 255, 255, 0.08) !important; 
       }
       .dyn-drawer-menu.open { right: 0 !important; }
 
-      /* FLUSH SEARCH + CLOSE BUTTON ROW (NO UNWANTED HEADER WORDS) */
       .dyn-drawer-top-row {
         display: flex !important;
         align-items: center !important;
@@ -124,7 +225,6 @@
         color: #cbd5e1 !important; 
       }
 
-      /* DRAWER NAVIGATION LINKS */
       .dyn-drawer-menu a {
         text-decoration: none !important; 
         color: #1e293b !important; 
@@ -139,9 +239,16 @@
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
-      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56,189,248,0.12) !important; color: #38bdf8 !important; }
+      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56, 189, 248, 0.12) !important; color: #38bdf8 !important; }
 
-      .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(2, 6, 23, 0.6) !important; backdrop-filter: blur(2px) !important; z-index: 999998 !important; display: none !important; }
+      .dyn-backdrop-overlay { 
+        position: fixed !important; 
+        inset: 0 !important; 
+        background: rgba(2, 6, 23, 0.6) !important; 
+        backdrop-filter: blur(2px) !important; 
+        z-index: 999998 !important; 
+        display: none !important; 
+      }
       .dyn-backdrop-overlay.open { display: block !important; }
 
       @media (min-width: 768px) {
@@ -158,8 +265,8 @@
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.65rem 0.9rem !important;
-        font-size: 0.92rem !important;
+        padding: 0.72rem 1rem !important;
+        font-size: 0.95rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 10px !important;
@@ -194,19 +301,47 @@
       }
 
       .dyn-search-dropdown {
-        position: absolute !important; top: 100% !important; left: 0 !important; width: 100% !important; max-height: 250px !important;
-        overflow-y: auto !important; background: #ffffff !important; border: 2px solid #cbd5e1 !important; border-radius: 10px !important;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.18) !important; margin-top: 6px !important; display: none; z-index: 1000005 !important;
+        position: absolute !important; 
+        top: 100% !important; 
+        left: 0 !important; 
+        width: 100% !important; 
+        max-height: 250px !important;
+        overflow-y: auto !important; 
+        background: #ffffff !important; 
+        border: 2px solid #cbd5e1 !important; 
+        border-radius: 10px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18) !important; 
+        margin-top: 6px !important; 
+        display: none; 
+        z-index: 1000005 !important;
       }
-      [data-theme="dark"] .dyn-search-dropdown { background: #0f172a !important; border-color: #1e293b !important; box-shadow: 0 12px 32px rgba(0,0,0,0.6) !important; }
+      [data-theme="dark"] .dyn-search-dropdown { 
+        background: #0f172a !important; 
+        border-color: #1e293b !important; 
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important; 
+      }
       
       .dyn-search-dropdown a {
-        display: block !important; padding: 0.75rem 1rem !important; font-size: 0.92rem !important; font-weight: 700 !important;
-        color: #0f172a !important; text-decoration: none !important; border-bottom: 1px solid #f1f5f9 !important;
+        display: block !important; 
+        padding: 0.75rem 1rem !important; 
+        font-size: 0.92rem !important; 
+        font-weight: 700 !important;
+        color: #0f172a !important; 
+        text-decoration: none !important; 
+        border-bottom: 1px solid #f1f5f9 !important;
       }
-      [data-theme="dark"] .dyn-search-dropdown a { color: #f1f5f9 !important; border-bottom: 1px solid #1e293b !important; }
-      .dyn-search-dropdown a:hover { background: #e0f2fe !important; color: #0369a1 !important; }
-      [data-theme="dark"] .dyn-search-dropdown a:hover { background: #1e293b !important; color: #38bdf8 !important; }
+      [data-theme="dark"] .dyn-search-dropdown a { 
+        color: #f1f5f9 !important; 
+        border-bottom: 1px solid #1e293b !important; 
+      }
+      .dyn-search-dropdown a:hover { 
+        background: #e0f2fe !important; 
+        color: #0369a1 !important; 
+      }
+      [data-theme="dark"] .dyn-search-dropdown a:hover { 
+        background: #1e293b !important; 
+        color: #38bdf8 !important; 
+      }
 
       #dynDesktopSearchWrap { display: none !important; }
       @media (min-width: 768px) {
@@ -232,11 +367,16 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
+        <a href="/" class="dyn-brand">
+          <div class="dyn-logo-icon">&sum;</div>
+          <span class="dyn-brand-text">thequantcals</span>
+        </a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
-          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation"><span></span><span></span><span></span></button>
+          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
@@ -304,7 +444,7 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Inline search in top row
+    // 1. MOBILE DRAWER: Inline search
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
