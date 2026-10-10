@@ -119,7 +119,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: 60vw WIDTH */
+      /* MOBILE DRAWER: 60vw WIDTH WITH ISOLATED Y SCROLLING */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -139,6 +139,7 @@
         box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
+        overscroll-behavior: contain !important; /* Locks scroll strictly to drawer */
         box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch !important;
       }
@@ -295,7 +296,7 @@
         justify-content: space-between !important;
         padding: 0.75rem 0.9rem !important; 
         font-size: 0.92rem !important; 
-        font-weight: 700 !important;
+        font-weight: 700 !important; 
         color: #0f172a !important; 
         text-decoration: none !important; 
         border-bottom: 1px solid #f1f5f9 !important; 
@@ -342,8 +343,8 @@
       .join("") + `<a href="${moreUrl}" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a href="${c.path}"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a href="${moreUrl}"><span>📋</span> All Calculators</a>`;
+      .map((c) => `<a href="${c.path}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="${moreUrl}" class="dyn-drawer-link"><span>📋</span> All Calculators</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -361,7 +362,7 @@
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
         <div id="dynDrawerSearchSlot"></div>
-        <a href="/"><span>🏠</span> Home</a>
+        <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
     `;
@@ -383,6 +384,31 @@
       } catch (e) {}
     };
     scanLinks(document);
+
+    // Drawer and Theme controls & scroll locking
+    const drawer = document.getElementById("dynDrawer");
+    const overlay = document.getElementById("dynOverlay");
+    
+    const closeDrawer = () => { 
+      drawer.classList.remove("open"); 
+      overlay.classList.remove("open");
+      document.body.style.overflow = ""; // Restores background scroll
+    };
+
+    const openDrawer = () => {
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden"; // Prevents tools/page from scrolling behind popup
+    };
+
+    document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
+    document.getElementById("dynCloseBtn").onclick = closeDrawer;
+    overlay.onclick = closeDrawer;
+
+    // Auto-close popup when clicking/touching any menu navigation option
+    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
+      link.addEventListener("click", closeDrawer);
+    });
 
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
@@ -431,6 +457,11 @@
             const highlighted = m.name.replace(regex, "<mark>$1</mark>");
             return `<a href="${m.url}"><span>${highlighted}</span> <span style="font-size:0.8rem;color:#94a3b8;">→</span></a>`;
           }).join("");
+
+          // Close drawer if a search item inside drawer is tapped
+          if (wrapperClass.includes("in-drawer")) {
+            dropdown.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
+          }
         }
         dropdown.style.display = "block";
       }
@@ -488,18 +519,6 @@
       if (placeDesktopSearch() || retries > 10) clearInterval(interval);
     }, 150);
     placeDesktopSearch();
-
-    // Drawer and Theme controls
-    const drawer = document.getElementById("dynDrawer");
-    const overlay = document.getElementById("dynOverlay");
-    const closeDrawer = () => { drawer.classList.remove("open"); overlay.classList.remove("open"); };
-
-    document.getElementById("dynHamburgerToggleBtn").onclick = () => {
-      drawer.classList.add("open");
-      overlay.classList.add("open");
-    };
-    document.getElementById("dynCloseBtn").onclick = closeDrawer;
-    overlay.onclick = closeDrawer;
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
