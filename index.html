@@ -8,35 +8,11 @@
 {"@context":"https://schema.org","@type":"WebSite","name":"thequantcals","url":"https://thequantcals.com","description":"Premium collection of calculators and tools for finance, health, and mathematics."}
 </script>
 <style>
-:root{--bg:#f4f6f9;--surface:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--link:#1d4ed8;--hh:55px;--grad:linear-gradient(135deg,#2563eb,#7c3aed)}
+:root{--bg:#f4f6f9;--surface:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--link:#1d4ed8;--grad:linear-gradient(135deg,#2563eb,#7c3aed)}
 [data-theme="dark"]{--bg:#0f172a;--surface:#1e293b;--text:#f8fafc;--muted:#94a3b8;--border:#334155;--link:#7cb2ff}
 html{scroll-padding-top:70px}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;padding-top:var(--hh)}
-header{position:fixed;top:0;left:0;width:100%;height:var(--hh);z-index:10000;background:linear-gradient(135deg,#020818 0%,#0d1f5c 40%,#1a3a8f 75%,#0e2d6b 100%);border-bottom:1px solid rgba(99,179,255,.25);box-shadow:0 4px 30px rgba(10,20,80,.6);padding:0 1rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem;transition:transform .3s ease-in-out}
-.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;flex-shrink:0}
-.logo{background:var(--grad);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold}
-.bt{font-size:1.15rem;font-weight:800;background:linear-gradient(90deg,#e0f2fe,#c7d2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-/* Desktop header links: hidden on mobile */
-.hn{display:none;align-items:stretch;height:100%;margin-left:auto;background:rgba(0,0,0,.2)}
-.hn>a{text-decoration:none;color:#fff;font-weight:700;font-size:.8rem;text-transform:uppercase;padding:0 1rem;display:flex;align-items:center;background:rgba(15,30,70,.6);border-top:3px solid transparent;white-space:nowrap}
-.hn>a:hover,.hn>a.on{background:#1e3a8a;border-top-color:#3b82f6}
-
-.acts{display:flex;align-items:center;gap:1rem;flex-shrink:0}
-.tt{background:none;border:none;font-size:1.3rem;cursor:pointer;color:#fff;padding:4px}
-
-/* Hamburger: visible on mobile */
-.menu-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px}
-.menu-btn span{width:24px;height:3px;background:#fff;border-radius:2px;display:block}
-
-/* Slide-out menu (mobile) */
-.nav-menu{position:fixed;top:0;right:-300px;width:280px;max-width:85%;height:100vh;background:var(--surface);border-left:1px solid var(--border);padding:4.5rem 1.5rem 2rem;display:flex;flex-direction:column;gap:1.1rem;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-10px 0 30px rgba(0,0,0,.15);z-index:10001;overflow-y:auto}
-.nav-menu.active{right:0}
-.nav-menu a{text-decoration:none;color:var(--text);font-weight:600;font-size:1.05rem}
-.nav-menu a.on,.nav-menu a:hover{color:#2563eb}
-.nav-menu .lbl{font-size:.75rem;text-transform:uppercase;color:var(--muted);letter-spacing:1px;font-weight:700}
-.close-menu{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:2rem;color:var(--muted);cursor:pointer;line-height:1}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
 .wrap{max-width:1200px;width:100%;margin:1.5rem auto;padding:0 1rem;flex:1}
 .grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
@@ -59,15 +35,7 @@ h1{font-size:1.7rem;color:var(--link);margin:.4rem 0}
 .cols li a{color:var(--link)}
 .cols li a:hover{text-decoration:none}
 .none{display:none;color:var(--muted)}
-.gs{position:relative;width:100%}
-.gs input{-webkit-appearance:none;appearance:none;width:100%;height:54px;padding:0 1.1rem 0 3.1rem;border:2px solid transparent;border-radius:14px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 1.05rem center/22px;color:var(--text);font-size:1.05rem;font-weight:600;outline:none;box-shadow:0 0 0 1px var(--border),0 6px 20px rgba(37,99,235,.14);transition:border-color .2s,box-shadow .2s}
-.gs input::placeholder{color:var(--muted);font-weight:500}
-.gs input:focus{border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.18),0 8px 26px rgba(37,99,235,.28)}
-.gs input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
-.gs .dd{display:none;position:absolute;top:100%;left:0;right:0;margin-top:8px;max-height:280px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.2);z-index:10050;padding:.35rem}
-.gs .dd a{display:block;padding:.8rem 1rem;font-size:.98rem;color:var(--text)!important;font-weight:600!important;border-radius:10px}
-.gs .dd a:hover{background:linear-gradient(90deg,rgba(37,99,235,.12),rgba(124,58,237,.12));color:#2563eb!important}
-.gs .dd .no{padding:.8rem 1rem;font-size:.9rem;color:var(--muted)}
+
 .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .box h3{background:#2f6aa5;color:#fff;font-size:1rem;padding:.6rem .9rem}
 .box div{padding:.8rem .9rem;display:flex;flex-direction:column;gap:.55rem}
@@ -88,17 +56,7 @@ footer a{color:var(--muted);text-decoration:none}
 #calc{width:100%;height:420px;border:none;display:block;transition:height .15s ease}
 
 @media(max-width:480px){.wrap{padding:0 .5rem}}
-@media(max-width:767px){
-  .nav-menu{height:100dvh}
-  .gs .dd{position:static;max-height:28vh;box-shadow:none}
-}
-
-/* DESKTOP (also Chrome "Desktop site"): header links + More, NO hamburger */
 @media(min-width:768px){
-  header{padding:0 1.5rem}
-  .hn{display:flex;margin-right:1rem}
-  .menu-btn,.nav-menu{display:none!important}
-  .bt{font-size:1.25rem}
   .card{padding:1.75rem}
   .calc-card{padding-left:0;padding-right:0;padding-bottom:.8rem}
 }
@@ -107,27 +65,6 @@ footer a{color:var(--muted);text-decoration:none}
 <script>if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')</script>
 </head>
 <body>
-
-<header id="hd">
-  <a href="#/" class="brand"><div class="logo">&sum;</div><div class="bt">thequantcals</div></a>
-
-  <!-- Desktop only -->
-  <nav class="hn" id="hn"></nav>
-
-  <div class="acts">
-    <button class="tt" id="tt" aria-label="Toggle Night Mode">🌙</button>
-    <!-- Mobile only -->
-    <button class="menu-btn" id="menuBtn" aria-label="Open Navigation Menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
-
-<!-- Mobile slide-out menu -->
-<nav class="nav-menu" id="navMenu">
-  <button class="close-menu" id="closeMenu" aria-label="Close Menu">×</button>
-  <div class="lbl">Menu</div>
-  <div id="menuSearchSlot"></div>
-  <div id="menuLinks" style="display:flex;flex-direction:column;gap:1.1rem"></div>
-</nav>
 
 <div class="wrap"><div class="grid">
 <main>
@@ -165,6 +102,7 @@ footer a{color:var(--muted);text-decoration:none}
   <div class="box"><h3>Popular Tools</h3><div>
     <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
     <a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a>
+    <a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a>
   </div></div>
   <div class="box"><h3>System Status</h3><div style="font-size:.88rem;color:var(--muted)">All tools process data locally inside your web browser.</div></div>
 </aside>
@@ -181,12 +119,11 @@ footer a{color:var(--muted);text-decoration:none}
 </footer>
 <button class="top" id="top" aria-label="Back to top">&#8963;</button>
 
+<!-- SCRIPT 1: Page router, dynamic tools registry & iframe resizer -->
 <script>
 (function(){
-  /* ====== SETTINGS ====== */
   var REPO='nitant-hub/thequantcalc', BRANCH='main';
 
-  /* Your existing tools (always shown). New tools are found automatically. */
   var BASE=[
     ['tools/Compound-Interest-Calculator.html','Compound Interest Calculator','financial','Investment'],
     ['tools/Exam-Marks-Percentage-Calculator.html','Exam Marks Percentage Calculator','math','Percentage'],
@@ -195,11 +132,16 @@ footer a{color:var(--muted);text-decoration:none}
   ];
   var FIRST=['financial','math','utility'];
   var SHORT={financial:'Finance'}, ICON={financial:'📈',math:'📐',utility:'🧰'};
-  /* ====================== */
 
   var calc=document.getElementById('calc');
 
-  /* ---- Calculator frame: fit to the calculator's REAL height (no empty gap, no cut-off) ---- */
+  /* Calculator frame auto-resize (listens to postMessage and fallback check) */
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.frameHeight && calc) {
+      calc.style.height = e.data.frameHeight + 'px';
+    }
+  });
+
   function measureCalc(){
     try{
       var d=calc.contentDocument, w=calc.contentWindow;
@@ -217,25 +159,26 @@ footer a{color:var(--muted);text-decoration:none}
       });
       var bs=w.getComputedStyle(d.body);
       var h=Math.ceil(max+(parseFloat(bs.paddingBottom)||0)+(parseFloat(bs.marginBottom)||0));
-      /* if the content overflows the frame, grow to fit it */
       var sh=d.documentElement.scrollHeight;
       if(sh>w.innerHeight+2&&sh>h)h=sh;
       return h;
     }catch(e){return 0}
   }
   function fitCalc(){
-    if(!calc.offsetParent)return;            /* skip while the home view is hidden */
+    if(!calc || !calc.offsetParent)return;
     var h=measureCalc();
-    if(h<200||h>2500)return;                 /* ignore not-ready / bogus values */
+    if(h<200||h>2500)return;
     h+=6;
     if(Math.abs(h-calc.offsetHeight)>2)calc.style.height=h+'px';
   }
-  calc.addEventListener('load',function(){
-    fitCalc();setTimeout(fitCalc,150);setTimeout(fitCalc,500);setTimeout(fitCalc,1200);
-  });
-  window.addEventListener('load',function(){fitCalc();setTimeout(fitCalc,400)});
-  window.addEventListener('resize',function(){setTimeout(fitCalc,150)});
-  setInterval(fitCalc,400);                  /* follows tab changes (Scientific, FX-991CW, ...) */
+  if(calc){
+    calc.addEventListener('load',function(){
+      fitCalc();setTimeout(fitCalc,150);setTimeout(fitCalc,500);setTimeout(fitCalc,1200);
+    });
+    window.addEventListener('load',function(){fitCalc();setTimeout(fitCalc,400)});
+    window.addEventListener('resize',function(){setTimeout(fitCalc,150)});
+    setInterval(fitCalc,400);
+  }
 
   var tools=[], seen={};
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
@@ -277,29 +220,19 @@ footer a{color:var(--muted);text-decoration:none}
   }
   function toolsOf(c){return tools.filter(function(t){return t.cat===c}).sort(function(a,b){return a.name.localeCompare(b.name)})}
   function label(c){return pretty(c)}
-  function short(c){return SHORT[c]||pretty(c)}
-  function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||short(c))+'</a>'}
+  function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||label(c))+'</a>'}
 
   function render(){
     var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur='';
     if(m&&(m[1]==='all'||cs.indexOf(m[1])>-1))cur=m[1];
 
-    /* desktop header: first 3 categories + More (opens the All Calculators page) */
-    var h=''; FIRST.forEach(function(c){h+=link(c,cur)});
-    h+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>More</a>';
-    document.getElementById('hn').innerHTML=h;
-
-    /* mobile hamburger menu: Home + ALL categories + All Calculators */
-    var ml='<a href="#/"'+(cur?'':' class="on"')+'>🏠 Home</a>';
-    cs.forEach(function(c){ml+=link(c,cur,(ICON[c]||'🗂️')+' '+label(c))});
-    ml+='<a href="#/all"'+(cur==='all'?' class="on"':'')+'>📋 All Calculators</a>';
-    document.getElementById('menuLinks').innerHTML=ml;
-
-    /* sidebar Categories box: only on a single category page */
+    /* Sidebar Categories Box */
     var s=''; cs.forEach(function(c){s+=link(c,cur,label(c))});
     s+='<a href="#/all">All Calculators</a>';
-    document.getElementById('sideCats').innerHTML=s;
-    document.getElementById('catBox').style.display=(cur&&cur!=='all')?'':'none';
+    var sideCats = document.getElementById('sideCats');
+    if (sideCats) sideCats.innerHTML=s;
+    var catBox = document.getElementById('catBox');
+    if (catBox) catBox.style.display=(cur&&cur!=='all')?'':'none';
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
     if(!cur){
@@ -351,77 +284,35 @@ footer a{color:var(--muted);text-decoration:none}
     }
   }
 
-  /* search inside a category / all page */
-  document.getElementById('q').oninput=function(){
-    var v=this.value.toLowerCase(), shown=0;
-    document.querySelectorAll('#cols section').forEach(function(sec){
-      var any=0;
-      sec.querySelectorAll('li').forEach(function(li){var ok=li.textContent.toLowerCase().indexOf(v)>-1;li.style.display=ok?'':'none';if(ok)any++});
-      sec.style.display=any?'':'none'; shown+=any;
-    });
-    document.getElementById('none').style.display=shown?'none':'block';
-  };
-
-  /* Search: in hamburger menu on mobile, below Interactive Calculator on desktop */
-  var gs=document.createElement('div'); gs.className='gs';
-  gs.innerHTML='<input type="search" placeholder="Search calculators..." aria-label="Search calculators" autocomplete="off"><div class="dd"></div>';
-  var gin=gs.querySelector('input'), gdd=gs.querySelector('.dd');
-  gin.addEventListener('input',function(){
-    var v=gin.value.trim().toLowerCase();
-    if(!v){gdd.style.display='none';gdd.innerHTML='';return}
-    var m=tools.filter(function(t){return t.name.toLowerCase().indexOf(v)>-1});
-    gdd.innerHTML=m.length?m.map(function(t){return '<a href="'+esc(t.url)+'">'+esc(t.name)+'</a>'}).join(''):'<div class="no">No calculators found</div>';
-    gdd.style.display='block';
-  });
-  document.addEventListener('click',function(e){if(!gs.contains(e.target))gdd.style.display='none'});
-  function placeSearch(){
-    if(window.innerWidth<768){
-      var slot=document.getElementById('menuSearchSlot');
-      if(gs.parentNode!==slot)slot.appendChild(gs);
-    }else{
-      var cc=document.querySelector('#home .calc-card');
-      if(gs.previousSibling!==cc)cc.parentNode.insertBefore(gs,cc.nextSibling);
-    }
+  /* Search inside Category view */
+  var qInput = document.getElementById('q');
+  if(qInput) {
+    qInput.oninput=function(){
+      var v=this.value.toLowerCase(), shown=0;
+      document.querySelectorAll('#cols section').forEach(function(sec){
+        var any=0;
+        sec.querySelectorAll('li').forEach(function(li){var ok=li.textContent.toLowerCase().indexOf(v)>-1;li.style.display=ok?'':'none';if(ok)any++});
+        sec.style.display=any?'':'none'; shown+=any;
+      });
+      document.getElementById('none').style.display=shown?'none':'block';
+    };
   }
-  placeSearch();
-  window.addEventListener('resize',placeSearch);
-
-  /* Hamburger menu (mobile) */
-  var navMenu=document.getElementById('navMenu');
-  document.addEventListener('click',function(e){
-    var t=e.target;
-    if(t.closest('#menuBtn')){navMenu.classList.toggle('active');return}
-    if(t.closest('#closeMenu')||t.closest('#navMenu a')||!t.closest('#navMenu')){navMenu.classList.remove('active')}
-  });
-  /* close the menu only when the screen WIDTH changes (not when the keyboard opens) */
-  var lastW=window.innerWidth;
-  window.addEventListener('resize',function(){
-    if(window.innerWidth!==lastW){lastW=window.innerWidth;navMenu.classList.remove('active')}
-  });
 
   window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
   render();
   load(render);
 
-  /* dark mode */
-  var tt=document.getElementById('tt'), root=document.documentElement;
-  if(localStorage.getItem('theme')==='dark')tt.textContent='☀️';
-  tt.onclick=function(){
-    var d=root.getAttribute('data-theme')==='dark';
-    root.setAttribute('data-theme',d?'light':'dark'); tt.textContent=d?'🌙':'☀️';
-    localStorage.setItem('theme',d?'light':'dark');
-  };
-
-  /* back to top + smart header */
-  var top_=document.getElementById('top'), hd=document.getElementById('hd'), last=window.scrollY;
+  /* Back to top button */
+  var top_=document.getElementById('top');
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
     top_.classList.toggle('show',y>300);
-    hd.style.transform=(y>last&&y>55)?'translateY(-100%)':'translateY(0)';
-    last=y;
   });
   top_.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 })();
 </script>
+
+<!-- SCRIPT 2: The Unified Navigation Script -->
+<script src="navigation.js"></script>
 </body>
 </html>
