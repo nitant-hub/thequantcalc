@@ -59,6 +59,11 @@ h1{font-size:1.7rem;color:var(--link);margin:.4rem 0}
 .cols li a{color:var(--link)}
 .cols li a:hover{text-decoration:none}
 .none{display:none;color:var(--muted)}
+.gs{position:relative;width:100%}
+.gs input{width:100%;padding:.65rem .9rem;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-size:.95rem;outline:none}
+.gs .dd{display:none;position:absolute;top:100%;left:0;right:0;margin-top:5px;max-height:260px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.18);z-index:10050}
+.gs .dd a{display:block;padding:.6rem .85rem;font-size:.9rem;color:var(--text)!important;font-weight:500!important;border-bottom:1px solid var(--border)}
+.gs .dd .no{padding:.6rem .85rem;font-size:.85rem;color:var(--muted)}
 .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem}
 .box h3{background:#2f6aa5;color:#fff;font-size:1rem;padding:.6rem .9rem}
 .box div{padding:.8rem .9rem;display:flex;flex-direction:column;gap:.55rem}
@@ -112,6 +117,7 @@ footer a{color:var(--muted);text-decoration:none}
 <nav class="nav-menu" id="navMenu">
   <button class="close-menu" id="closeMenu" aria-label="Close Menu">×</button>
   <div class="lbl">Menu</div>
+  <div id="menuSearchSlot"></div>
   <div id="menuLinks" style="display:flex;flex-direction:column;gap:1.1rem"></div>
 </nav>
 
@@ -347,6 +353,30 @@ footer a{color:var(--muted);text-decoration:none}
     });
     document.getElementById('none').style.display=shown?'none':'block';
   };
+
+  /* Search: in hamburger menu on mobile, below Interactive Calculator on desktop */
+  var gs=document.createElement('div'); gs.className='gs';
+  gs.innerHTML='<input type="search" placeholder="🔍 Search calculators..." aria-label="Search calculators" autocomplete="off"><div class="dd"></div>';
+  var gin=gs.querySelector('input'), gdd=gs.querySelector('.dd');
+  gin.addEventListener('input',function(){
+    var v=gin.value.trim().toLowerCase();
+    if(!v){gdd.style.display='none';gdd.innerHTML='';return}
+    var m=tools.filter(function(t){return t.name.toLowerCase().indexOf(v)>-1});
+    gdd.innerHTML=m.length?m.map(function(t){return '<a href="'+esc(t.url)+'">'+esc(t.name)+'</a>'}).join(''):'<div class="no">No calculators found</div>';
+    gdd.style.display='block';
+  });
+  document.addEventListener('click',function(e){if(!gs.contains(e.target))gdd.style.display='none'});
+  function placeSearch(){
+    if(window.innerWidth<768){
+      var slot=document.getElementById('menuSearchSlot');
+      if(gs.parentNode!==slot)slot.appendChild(gs);
+    }else{
+      var cc=document.querySelector('#home .calc-card');
+      if(gs.previousSibling!==cc)cc.parentNode.insertBefore(gs,cc.nextSibling);
+    }
+  }
+  placeSearch();
+  window.addEventListener('resize',placeSearch);
 
   /* Hamburger menu (mobile) */
   var navMenu=document.getElementById('navMenu');
