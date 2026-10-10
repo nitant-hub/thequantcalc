@@ -64,28 +64,98 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* Mobile Drawer Menu */
+      /* REFINED MODERN MOBILE DRAWER */
       .dyn-drawer-menu {
-        position: fixed !important; top: 0 !important; right: -310px !important; width: 285px !important;
-        height: 100vh !important; height: 100dvh !important;
-        background: #fff !important; border-left: 1px solid #e2e8f0 !important; padding: 3.5rem 1.2rem 3rem !important;
-        display: flex !important; flex-direction: column !important; gap: 0.65rem !important; transition: right 0.28s ease !important;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; z-index: 1000000 !important; overflow-y: auto !important; box-sizing: border-box !important;
+        position: fixed !important; 
+        top: 0 !important; 
+        right: -320px !important; 
+        width: 290px !important;
+        height: 100vh !important; 
+        height: 100dvh !important;
+        background: #ffffff !important; 
+        border-left: 1px solid #e2e8f0 !important; 
+        padding: 1.1rem 1.1rem 2.5rem !important; /* Reduced top gap from 3.5rem to 1.1rem */
+        display: flex !important; 
+        flex-direction: column !important; 
+        gap: 0.45rem !important; 
+        transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: -10px 0 35px rgba(15, 23, 42, 0.2) !important; 
+        z-index: 1000000 !important; 
+        overflow-y: auto !important; 
+        box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch !important;
+        border-top-left-radius: 14px !important;
+        border-bottom-left-radius: 14px !important;
       }
-      [data-theme="dark"] .dyn-drawer-menu { background: #0b132b !important; border-left: 1px solid rgba(255,255,255,0.1) !important; }
+      [data-theme="dark"] .dyn-drawer-menu { 
+        background: #0b132b !important; 
+        border-left: 1px solid rgba(255,255,255,0.08) !important; 
+      }
       .dyn-drawer-menu.open { right: 0 !important; }
-      .dyn-drawer-title { color: #475569; font-size: 0.8rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 0.3rem; }
-      [data-theme="dark"] .dyn-drawer-title { color: #94a3b8; }
+
+      /* PROPORTIONAL DRAWER HEADER BAR */
+      .dyn-drawer-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-bottom: 0.8rem !important;
+        margin-bottom: 0.4rem !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+      }
+      [data-theme="dark"] .dyn-drawer-header {
+        border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+      }
+
+      .dyn-drawer-title { 
+        color: #0f172a !important; 
+        font-size: 0.95rem !important; 
+        font-weight: 800 !important; 
+        letter-spacing: 0.8px !important; 
+        text-transform: uppercase !important; 
+        margin: 0 !important;
+      }
+      [data-theme="dark"] .dyn-drawer-title { color: #f8fafc !important; }
+
+      .dyn-close-btn { 
+        background: #f1f5f9 !important; 
+        border: none !important; 
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 8px !important;
+        font-size: 1.1rem !important; 
+        font-weight: 700 !important;
+        color: #64748b !important; 
+        cursor: pointer !important; 
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.15s ease !important;
+        padding: 0 !important;
+      }
+      .dyn-close-btn:active { transform: scale(0.92) !important; }
+      [data-theme="dark"] .dyn-close-btn { 
+        background: rgba(255, 255, 255, 0.08) !important; 
+        color: #cbd5e1 !important; 
+      }
+
+      /* DRAWER NAVIGATION LINKS */
       .dyn-drawer-menu a {
-        text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.94rem !important;
-        padding: 0.5rem 0.65rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.6rem !important;
+        text-decoration: none !important; 
+        color: #1e293b !important; 
+        font-weight: 700 !important; 
+        font-size: 0.95rem !important;
+        padding: 0.65rem 0.8rem !important; 
+        border-radius: 8px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 0.75rem !important;
+        transition: background 0.15s ease !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
-      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56,189,248,0.15) !important; color: #38bdf8 !important; }
-      .dyn-close-btn { position: absolute !important; top: 1rem !important; right: 1.2rem !important; background: none !important; border: none !important; font-size: 2rem !important; color: #64748b !important; cursor: pointer !important; line-height: 1 !important; }
-      .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
+      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56,189,248,0.12) !important; color: #38bdf8 !important; }
+
+      .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(2, 6, 23, 0.6) !important; backdrop-filter: blur(2px) !important; z-index: 999998 !important; display: none !important; }
       .dyn-backdrop-overlay.open { display: block !important; }
 
       @media (min-width: 768px) {
@@ -93,60 +163,51 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* BOLD & HIGH-CONTRAST SEARCH COMPONENT */
+      /* SEARCH COMPONENT */
       .dyn-search-wrapper { position: relative !important; width: 100% !important; box-sizing: border-box !important; display: block !important; }
-      #dynDrawerSearchSlot { position: sticky !important; top: 0 !important; z-index: 10 !important; background: inherit !important; padding-bottom: 0.4rem !important; }
+      #dynDrawerSearchSlot { width: 100% !important; margin: 0.2rem 0 0.5rem 0 !important; }
       
-      .dyn-search-wrapper.in-drawer { margin-bottom: 0.6rem !important; }
+      .dyn-search-wrapper.in-drawer { margin-bottom: 0.4rem !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.8rem auto 1.2rem !important; padding: 0 1rem !important; }
       .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.85rem 1.1rem !important;
-        font-size: 1rem !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
-        border-radius: 12px !important;
-        border: 2px solid #94a3b8 !important;
+        border-radius: 10px !important;
+        border: 2px solid #cbd5e1 !important;
         background: #ffffff !important;
         color: #0f172a !important;
         outline: none !important;
         box-sizing: border-box !important;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
         transition: all 0.2s ease-in-out !important;
       }
       .dyn-search-input::placeholder {
         color: #64748b !important;
         font-weight: 600 !important;
-        opacity: 0.9 !important;
-      }
-      .dyn-search-input:hover {
-        border-color: #0284c7 !important;
       }
       .dyn-search-input:focus {
         border-color: #0284c7 !important;
-        background: #ffffff !important;
-        box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.2), 0 8px 20px rgba(2, 132, 199, 0.12) !important;
+        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18) !important;
       }
 
-      /* Dark mode bold search */
       [data-theme="dark"] .dyn-search-input {
         background: #0f172a !important;
-        border: 2px solid #38bdf8 !important;
+        border: 2px solid #334155 !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
       }
       [data-theme="dark"] .dyn-search-input::placeholder {
         color: #94a3b8 !important;
       }
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
-        background: #0b132b !important;
-        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
       }
 
-      /* Bold Dropdown styling */
       .dyn-search-dropdown {
         position: absolute !important; top: 100% !important; left: 0 !important; width: 100% !important; max-height: 250px !important;
         overflow-y: auto !important; background: #ffffff !important; border: 2px solid #cbd5e1 !important; border-radius: 10px !important;
@@ -156,7 +217,7 @@
       
       .dyn-search-dropdown a {
         display: block !important; padding: 0.75rem 1rem !important; font-size: 0.92rem !important; font-weight: 700 !important;
-        color: #0f172a !important; text-decoration: none !important; border-bottom: 1px solid #f1f5f9 !important; transition: background 0.15s !important;
+        color: #0f172a !important; text-decoration: none !important; border-bottom: 1px solid #f1f5f9 !important;
       }
       [data-theme="dark"] .dyn-search-dropdown a { color: #f1f5f9 !important; border-bottom: 1px solid #1e293b !important; }
       .dyn-search-dropdown a:hover { background: #e0f2fe !important; color: #0369a1 !important; }
@@ -195,9 +256,11 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
-        <div class="dyn-drawer-title">MENU</div>
-        <div id="dynDrawerSearchSlot" style="width:100%;"></div>
+        <div class="dyn-drawer-header">
+          <div class="dyn-drawer-title">Navigation</div>
+          <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&#x2715;</button>
+        </div>
+        <div id="dynDrawerSearchSlot"></div>
         <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
@@ -221,7 +284,6 @@
     };
     scanLinks(document);
 
-    // Factory: build self-contained bold search box
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
       if (elementId) wrap.id = elementId;
@@ -258,12 +320,12 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Permanent bold search
+    // 1. MOBILE DRAWER: Integrated search box
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
 
-    // 2. DESKTOP SEARCH: Dedicated independent instance
+    // 2. DESKTOP SEARCH
     const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
     function placeDesktopSearch() {
