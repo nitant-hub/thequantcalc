@@ -273,7 +273,7 @@
             font-weight: 900 !important;
         }
 
-        /* IN-KEYBOARD DEG/RAD BUTTONS */
+        /* In-Keyboard DEG / RAD buttons */
         .bc-btn-deg, .bc-btn-rad {
             font-size: 11px !important;
             font-weight: 900 !important;
@@ -294,7 +294,6 @@
         .bc-span-6 { grid-column: span 6; }
         .bc-span-9 { grid-column: span 9; }
         .bc-span-10 { grid-column: span 10; }
-        .bc-row-2 { grid-row: span 2; height: 100% !important; }
 
         /* History */
         #bc-history-tab { 
@@ -432,8 +431,9 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
         </div>
 
-        <!-- 3. GATE -->
+        <!-- 3. GATE (EXACT 11-COLUMN BALANCED ALIGNMENT) -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
+            <!-- Row 1: 11 keys -->
             <button class="bc-btn" onclick="BloggerCalc.op('%')">mod</button>
             <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
             <button class="bc-btn bc-btn-rad" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">Rad</button>
@@ -446,6 +446,7 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m+')">M+</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('m-')">M-</button>
 
+            <!-- Row 2: 11 keys -->
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">Exp</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sqrt')">√</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log2')">log₂</button>
@@ -458,6 +459,7 @@
             <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">C</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">±</button>
 
+            <!-- Row 3: 11 keys -->
             <button class="bc-btn" onclick="BloggerCalc.func('Math.log')">ln</button>
             <button class="bc-btn" onclick="BloggerCalc.num('Math.PI')">π</button>
             <button class="bc-btn" onclick="BloggerCalc.num('Math.E')">e</button>
@@ -470,6 +472,7 @@
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
             <button class="bc-btn bc-btn-op" aria-label="Modulo" onclick="BloggerCalc.op('%')">%</button>
 
+            <!-- Row 4: 11 keys -->
             <button class="bc-btn" onclick="BloggerCalc.func('Math.exp')">eˣ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.sin')">sin</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.cos')">cos</button>
@@ -482,6 +485,7 @@
             <button class="bc-btn bc-btn-op" aria-label="Multiply" onclick="BloggerCalc.op('*')">×</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.func('1/')">1/x</button>
 
+            <!-- Row 5: 11 keys -->
             <button class="bc-btn" onclick="BloggerCalc.op('**3')">x³</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.asin')">sin⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.acos')">cos⁻¹</button>
@@ -492,13 +496,14 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">−</button>
-            <button class="bc-btn bc-btn-primary bc-row-2" onclick="BloggerCalc.calc()">=</button>
+            <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
 
+            <!-- Row 6: 1+1+5+2+2 = 11 keys (Fits completely inside container) -->
             <button class="bc-btn" onclick="BloggerCalc.func('Math.cbrt')">∛</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.abs')">|x|</button>
-            <button class="bc-btn bc-btn-num bc-span-6" onclick="BloggerCalc.num('0')">0</button>
+            <button class="bc-btn bc-btn-num bc-span-5" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num bc-span-2" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
+            <button class="bc-btn bc-btn-primary bc-span-2" aria-label="Calculate Equals" onclick="BloggerCalc.calc()">=</button>
         </div>
 
         <!-- 4. FX-991CW -->
