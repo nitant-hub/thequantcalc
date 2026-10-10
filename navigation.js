@@ -37,6 +37,101 @@
         display: none !important;
       }
 
+      /* ========================================================
+         TRUE 2-COLUMN VERTICAL SPLIT (DESKTOP / CALCULATOR.NET)
+         ======================================================== */
+      @media (min-width: 768px) {
+        /* Turn the main view wrapper into a true 2-column grid */
+        main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 310px !important;
+          column-gap: 2rem !important;
+          row-gap: 1.25rem !important;
+          max-width: 1240px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding: 1.2rem 1.2rem 3rem !important;
+          box-sizing: border-box !important;
+          align-items: start !important;
+        }
+
+        /* 1. LEFT MAIN COLUMN: Tools directory card & Breadcrumbs */
+        .card:first-of-type,
+        div:has(> h1),
+        div:has(> h2),
+        .calc-directory-wrap,
+        section:first-of-type {
+          grid-column: 1 / 2 !important;
+          width: 100% !important;
+        }
+
+        /* 2. RIGHT VERTICAL SIDEBAR: Place Search, Ads & Side Cards */
+        #dynDesktopSearchWrap,
+        #dynAdSenseSlot,
+        .card:has(a[href*="financial"]),
+        .card:has(a[href*="math"]),
+        div:has(> div:contains("Popular Tools")),
+        div:has(> h3:contains("Categories")),
+        aside,
+        .sidebar {
+          grid-column: 2 / 3 !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Ordering in the Right Sidebar: Search First, then AdSense, then Cards */
+        #dynDesktopSearchWrap {
+          grid-row: 1 !important;
+          margin: 0 0 0.8rem 0 !important;
+        }
+        #dynAdSenseSlot {
+          grid-row: 2 !important;
+          margin: 0 0 1rem 0 !important;
+        }
+
+        /* Hide the duplicate inline search inside the left main directory */
+        .card:first-of-type input[placeholder*="search" i] {
+          display: none !important;
+        }
+      }
+
+      /* SIDEBAR SEARCH BAR STYLING */
+      .dyn-sidebar-search-box {
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .dyn-sidebar-search-box .dyn-search-input {
+        width: 100% !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
+        border-radius: 8px !important;
+        border: 2px solid #94a3b8 !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+      }
+
+      /* FUTURE ADSENSE PLACEHOLDER CONTAINER */
+      #dynAdSenseSlot {
+        display: none;
+        width: 100%;
+        min-height: 250px;
+        background: rgba(148, 163, 184, 0.08);
+        border: 1px dashed rgba(148, 163, 184, 0.4);
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-sizing: border-box;
+      }
+      @media (min-width: 768px) {
+        #dynAdSenseSlot {
+          display: flex !important;
+        }
+      }
+
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -226,7 +321,6 @@
         margin-bottom: 0.25rem !important; 
       }
       .dyn-search-wrapper.in-drawer { margin-bottom: 0 !important; width: 100% !important; }
-      .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto 1.2rem !important; padding: 0 1rem !important; }
 
       .dyn-search-input-box {
         position: relative !important;
@@ -528,43 +622,35 @@
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
 
-    // 2. DESKTOP SEARCH MOUNTING
-    const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
-
-    function placeDesktopSearch() {
-      if (desktopSearch.isConnected) return true;
-
-      if (isHomePage) {
-        const calcCard = document.querySelector(".calc-card");
-        if (calcCard && calcCard.parentNode) {
-          calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
-          return true;
-        }
-        const mainContainer = document.querySelector("main, .hero, .container, #app, section");
-        if (mainContainer && mainContainer.parentNode) {
-          mainContainer.parentNode.insertBefore(desktopSearch, mainContainer.nextSibling);
-          return true;
-        }
-        document.body.appendChild(desktopSearch);
-        return true;
-      }
-
-      const sidebar = Array.from(document.querySelectorAll("aside, .sidebar, .card")).find((n) => {
-        return (n.textContent || "").toLowerCase().includes("popular tools") || (n.textContent || "").toLowerCase().includes("categories");
-      });
-      if (sidebar && sidebar.parentNode) {
-        sidebar.parentNode.insertBefore(desktopSearch, sidebar);
-        return true;
-      }
-      return false;
+    // 2. DESKTOP SIDEBAR SEARCH & ADSENSE CONTAINER MOUNTING
+    const desktopSearch = makeSearchNode("dyn-sidebar-search-box", "dynDesktopSearchWrap");
+    
+    let adSlot = document.getElementById("dynAdSenseSlot");
+    if (!adSlot) {
+      adSlot = document.createElement("div");
+      adSlot.id = "dynAdSenseSlot";
+      adSlot.innerHTML = `<span>Advertisement / AdSense Unit</span>`;
     }
 
-    let retries = 0;
-    const interval = setInterval(() => {
-      retries++;
-      if (placeDesktopSearch() || retries > 15) clearInterval(interval);
-    }, 150);
-    placeDesktopSearch();
+    function injectDesktopSidebar() {
+      const isCategoryView = window.location.hash.startsWith("#/");
+      const parentContainer = document.querySelector("main, #content, .container, body > div:not(#siteDynamicHeader)");
+      
+      if (parentContainer && isCategoryView && window.innerWidth >= 768) {
+        // Mount Desktop Search at the top of the grid
+        if (!desktopSearch.isConnected) {
+          parentContainer.prepend(desktopSearch);
+        }
+        // Mount AdSense Slot right below Search
+        if (!adSlot.isConnected) {
+          desktopSearch.insertAdjacentElement("afterend", adSlot);
+        }
+      }
+    }
+
+    injectDesktopSidebar();
+    window.addEventListener("hashchange", () => setTimeout(injectDesktopSidebar, 60));
+    window.addEventListener("resize", injectDesktopSidebar);
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
