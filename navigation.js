@@ -40,39 +40,38 @@
       }
 
       /* ========================================================
-         EXACT 70% / 30% SPLIT IN X-DIRECTION (DESKTOP)
+         TWO-COLUMN LAYOUT: MAIN CONTENT LEFT, SIDEBAR RIGHT
          ======================================================== */
       @media (min-width: 768px) {
-        /* Main page wrapper becomes a 2-column flex container */
         main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
           display: flex !important;
           flex-direction: row !important;
-          flex-wrap: nowrap !important;
+          flex-wrap: wrap !important;
           align-items: flex-start !important;
           justify-content: space-between !important;
-          gap: 2% !important;
           width: 100% !important;
-          max-width: 1280px !important;
+          max-width: 1240px !important;
           margin: 1rem auto 3rem !important;
           padding: 0 1.2rem !important;
           box-sizing: border-box !important;
         }
 
-        /* 1. BIG PORTION: 65% - 75% (70% FIXED IN X-DIRECTION) */
+        /* 1. LEFT MAIN TOOLS AREA (68% - 72%) */
         .card:first-of-type,
         div:has(> h1),
         div:has(> h2),
         .calc-directory-wrap,
         section:first-of-type {
-          flex: 0 0 70% !important;
-          width: 70% !important;
-          max-width: 70% !important;
+          flex: 1 1 calc(100% - 324px) !important;
+          width: calc(100% - 324px) !important;
+          max-width: calc(100% - 324px) !important;
           min-width: 0 !important;
-          margin: 0 !important;
+          order: 1 !important;
+          margin: 0 0 2rem 0 !important;
           box-sizing: border-box !important;
         }
 
-        /* Prevent inner directory elements from compressing */
+        /* Ensure category cards and text span naturally inside */
         .card:first-of-type > div,
         div:has(> h1) > div,
         div:has(> h2) > div {
@@ -80,20 +79,22 @@
           max-width: 100% !important;
         }
 
-        /* 2. SMALL PORTION: 28% - 30% IN X-DIRECTION */
+        /* 2. RIGHT SIDEBAR PORTION (FIXED 300px ON THE RIGHT) */
         #dynDesktopSidebarWrap {
-          flex: 0 0 28% !important;
-          width: 28% !important;
-          max-width: 30% !important;
-          min-width: 280px !important;
-          margin: 0 !important;
+          flex: 0 0 300px !important;
+          width: 300px !important;
+          max-width: 300px !important;
+          order: 2 !important;
+          margin-left: auto !important;
+          margin-right: 0 !important;
+          margin-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
           box-sizing: border-box !important;
         }
 
-        /* Secondary cards inside the sidebar take 100% of sidebar width */
+        /* Sidebar cards fill 100% width of the right column */
         #dynDesktopSidebarWrap .card,
         #dynDesktopSidebarWrap > div {
           width: 100% !important;
@@ -102,13 +103,13 @@
           box-sizing: border-box !important;
         }
 
-        /* Hide the small inline category search inside the left main box */
+        /* Hide duplicate inline category search inside main left column */
         .card:first-of-type input[placeholder*="search" i] {
           display: none !important;
         }
       }
 
-      /* CALCULATOR.NET SEARCH BAR STYLE */
+      /* CALCULATOR.NET SIDEBAR SEARCH BAR */
       .dyn-calcnet-search {
         display: flex !important;
         align-items: center !important;
@@ -150,7 +151,7 @@
       /* ADSENSE PLACEHOLDER (300x250) */
       #dynAdSenseSlot {
         display: none;
-        width: 100%;
+        width: 300px;
         min-height: 250px;
         background: #edf2f7;
         border: 1px dashed #cbd5e0;
@@ -260,7 +261,7 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER */
+      /* MOBILE DRAWER: 60vw WIDTH WITH ISOLATED Y SCROLLING */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 0 !important; 
@@ -538,7 +539,7 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP 70% / 30% SIDEBAR RE-ORGANIZATION
+    // 2. DESKTOP RIGHT-ALIGNED SIDEBAR BUILDER
     function setupCalculatorNetLayout() {
       if (window.innerWidth < 768) return;
 
@@ -551,7 +552,7 @@
         sidebar = document.createElement("aside");
         sidebar.id = "dynDesktopSidebarWrap";
 
-        // Top Search Box (Right Column Top)
+        // Top Search Box (at the very top of the right sidebar)
         sidebar.appendChild(makeSearchNode());
 
         // AdSense Slot (300x250)
@@ -560,7 +561,7 @@
         adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
         sidebar.appendChild(adSlot);
 
-        // Collect existing secondary blocks (Categories, Popular Tools, etc.)
+        // Collect existing secondary blocks (Categories, Popular Tools, System Status)
         const secondaryCards = Array.from(mainContainer.querySelectorAll("div, aside")).filter((el) => {
           if (el === sidebar) return false;
           const text = (el.textContent || "").toLowerCase();
@@ -568,14 +569,14 @@
           return !hasTitle && (text.includes("popular tools") || text.includes("categories") || text.includes("system status"));
         });
 
-        // Insert cards into the sidebar
+        // Insert the secondary blocks beneath the AdSense container
         secondaryCards.forEach((c) => {
           if (c && c.parentNode && c !== sidebar) {
             sidebar.appendChild(c);
           }
         });
 
-        // Place the sidebar next to the main block inside the container
+        // Place the sidebar as the last element of the container so it aligns to the right
         mainContainer.appendChild(sidebar);
       }
     }
