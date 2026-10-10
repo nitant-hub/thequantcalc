@@ -22,7 +22,7 @@
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 68px; /* Professional, well-proportioned desktop height */
+          --nav-header-height: 68px;
         }
       }
 
@@ -119,19 +119,60 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* Mobile Drawer Menu */
+      /* MOBILE DRAWER: REMOVED EMPTY TOP SPACE */
       .dyn-drawer-menu {
-        position: fixed !important; top: 0 !important; right: -310px !important; width: 285px !important;
-        height: 100vh !important; height: 100dvh !important;
-        background: #fff !important; border-left: 1px solid #e2e8f0 !important; padding: 3.5rem 1.2rem 3rem !important;
-        display: flex !important; flex-direction: column !important; gap: 0.65rem !important; transition: right 0.28s ease !important;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; z-index: 1000000 !important; overflow-y: auto !important; box-sizing: border-box !important;
+        position: fixed !important; 
+        top: 0 !important; 
+        right: -310px !important; 
+        width: 285px !important;
+        height: 100vh !important; 
+        height: 100dvh !important;
+        background: #fff !important; 
+        border-left: 1px solid #e2e8f0 !important; 
+        padding: 0.85rem 1.1rem 2.5rem !important; /* Shrunk top padding from 3.5rem to 0.85rem */
+        display: flex !important; 
+        flex-direction: column !important; 
+        gap: 0.55rem !important; 
+        transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
+        z-index: 1000000 !important; 
+        overflow-y: auto !important; 
+        box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch !important;
       }
-      [data-theme="dark"] .dyn-drawer-menu { background: #0b132b !important; border-left: 1px solid rgba(255,255,255,0.1) !important; }
+      [data-theme="dark"] .dyn-drawer-menu { 
+        background: #0b132b !important; 
+        border-left: 1px solid rgba(255,255,255,0.1) !important; 
+      }
       .dyn-drawer-menu.open { right: 0 !important; }
-      .dyn-drawer-title { color: #475569; font-size: 0.8rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 0.3rem; }
+
+      .dyn-drawer-header-row {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 0.15rem !important;
+        width: 100% !important;
+      }
+      .dyn-drawer-title { 
+        color: #475569; 
+        font-size: 0.82rem; 
+        font-weight: 800; 
+        letter-spacing: 1.2px; 
+        text-transform: uppercase; 
+        margin: 0 !important; 
+      }
       [data-theme="dark"] .dyn-drawer-title { color: #94a3b8; }
+
+      .dyn-close-btn { 
+        position: static !important; 
+        background: none !important; 
+        border: none !important; 
+        font-size: 1.8rem !important; 
+        color: #64748b !important; 
+        cursor: pointer !important; 
+        line-height: 1 !important; 
+        padding: 0 !important;
+      }
       .dyn-drawer-menu a {
         text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.94rem !important;
         padding: 0.5rem 0.65rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.6rem !important;
@@ -139,7 +180,7 @@
       [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
       .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
       [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56,189,248,0.15) !important; color: #38bdf8 !important; }
-      .dyn-close-btn { position: absolute !important; top: 1rem !important; right: 1.2rem !important; background: none !important; border: none !important; font-size: 2rem !important; color: #64748b !important; cursor: pointer !important; line-height: 1 !important; }
+
       .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
       .dyn-backdrop-overlay.open { display: block !important; }
 
@@ -156,9 +197,9 @@
         display: block !important; 
         z-index: 1000 !important;
       }
-      #dynDrawerSearchSlot { position: sticky !important; top: 0 !important; z-index: 10 !important; background: inherit !important; padding-bottom: 0.4rem !important; }
+      #dynDrawerSearchSlot { position: sticky !important; top: 0 !important; z-index: 10 !important; background: inherit !important; padding-bottom: 0.2rem !important; }
       
-      .dyn-search-wrapper.in-drawer { margin-bottom: 0.6rem !important; }
+      .dyn-search-wrapper.in-drawer { margin-bottom: 0.4rem !important; }
       .dyn-search-wrapper.in-home { max-width: 640px !important; margin: 1.2rem auto 1.2rem !important; padding: 0 1rem !important; }
       .dyn-search-wrapper.in-sidebar { margin: 0 0 1.5rem 0 !important; }
 
@@ -300,8 +341,10 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
-        <div class="dyn-drawer-title">MENU</div>
+        <div class="dyn-drawer-header-row">
+          <div class="dyn-drawer-title">MENU</div>
+          <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
+        </div>
         <div id="dynDrawerSearchSlot" style="width:100%;"></div>
         <a href="/"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
