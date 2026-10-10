@@ -93,12 +93,13 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* PROFESSIONAL DYNAMIC SEARCH STYLES */
+      /* PROFESSIONAL SEARCH CONTAINER */
       .dyn-search-wrapper { 
         position: relative !important; 
         width: 100% !important; 
         box-sizing: border-box !important; 
         display: block !important; 
+        z-index: 1000 !important;
       }
       #dynDrawerSearchSlot { position: sticky !important; top: 0 !important; z-index: 10 !important; background: inherit !important; padding-bottom: 0.4rem !important; }
       
@@ -113,8 +114,8 @@
 
       .dyn-search-input {
         width: 100% !important;
-        padding: 0.85rem 2.8rem 0.85rem 1.15rem !important;
-        font-size: 1rem !important;
+        padding: 0.85rem 1.15rem !important;
+        font-size: 16px !important; /* Prevents unwanted browser zoom on mobile view */
         font-weight: 700 !important;
         letter-spacing: -0.2px !important;
         border-radius: 12px !important;
@@ -124,40 +125,19 @@
         outline: none !important;
         box-sizing: border-box !important;
         box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
-        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+        -webkit-user-select: text !important;
+        user-select: text !important;
       }
       .dyn-search-input::placeholder {
         color: #64748b !important;
         font-weight: 600 !important;
-        opacity: 0.85 !important;
+        opacity: 0.9 !important;
       }
-      .dyn-search-input:hover {
-        border-color: #0284c7 !important;
-      }
-      
-      /* Professional focus/touch active behavior */
       .dyn-search-input:focus {
         border-color: #2563eb !important;
         background: #ffffff !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22), 0 10px 24px rgba(37, 99, 235, 0.16) !important;
-      }
-
-      /* Typing indicator dot/icon */
-      .dyn-typing-indicator {
-        position: absolute !important;
-        right: 1rem !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        font-size: 0.8rem !important;
-        font-weight: 800 !important;
-        color: #2563eb !important;
-        opacity: 0;
-        pointer-events: none !important;
-        transition: opacity 0.2s ease !important;
-      }
-      .dyn-typing-indicator.active {
-        opacity: 1 !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22), 0 8px 22px rgba(37, 99, 235, 0.15) !important;
       }
 
       /* Dark mode styles */
@@ -175,11 +155,8 @@
         background: #0b132b !important;
         box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       }
-      [data-theme="dark"] .dyn-typing-indicator {
-        color: #38bdf8 !important;
-      }
 
-      /* Interactive Dropdown styling */
+      /* Clear Dropdown styling */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -190,49 +167,27 @@
         background: #ffffff !important; 
         border: 2px solid #cbd5e1 !important; 
         border-radius: 12px !important;
-        box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18) !important; 
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.22) !important; 
         display: none; 
         z-index: 1000005 !important;
-        animation: dynDropIn 0.16s ease-out forwards;
       }
-      @keyframes dynDropIn {
-        from { opacity: 0; transform: translateY(-4px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
       [data-theme="dark"] .dyn-search-dropdown { 
         background: #0f172a !important; 
         border-color: #1e293b !important; 
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important; 
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7) !important; 
       }
       
-      .dyn-dropdown-header {
-        padding: 0.5rem 0.9rem !important;
-        font-size: 0.72rem !important;
-        font-weight: 800 !important;
-        letter-spacing: 0.6px !important;
-        text-transform: uppercase !important;
-        color: #64748b !important;
-        background: #f8fafc !important;
-        border-bottom: 1px solid #e2e8f0 !important;
-      }
-      [data-theme="dark"] .dyn-dropdown-header {
-        background: #1e293b !important;
-        color: #94a3b8 !important;
-        border-color: #334155 !important;
-      }
-
       .dyn-search-dropdown a {
         display: flex !important; 
-        align-items: center !important;
+        align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0.75rem 1rem !important; 
-        font-size: 0.94rem !important; 
+        padding: 0.85rem 1.1rem !important; 
+        font-size: 0.95rem !important; 
         font-weight: 700 !important;
         color: #0f172a !important; 
         text-decoration: none !important; 
         border-bottom: 1px solid #f1f5f9 !important; 
-        transition: all 0.12s ease !important;
+        transition: background 0.15s !important;
       }
       [data-theme="dark"] .dyn-search-dropdown a { 
         color: #f1f5f9 !important; 
@@ -240,21 +195,17 @@
       }
       .dyn-search-dropdown a:hover { 
         background: #e0f2fe !important; 
-        color: #0284c7 !important; 
-        padding-left: 1.25rem !important;
+        color: #0369a1 !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a:hover { 
         background: #1e293b !important; 
         color: #38bdf8 !important; 
       }
-
-      /* Match highlight styling */
       .dyn-search-dropdown mark {
         background: rgba(37, 99, 235, 0.15) !important;
         color: #2563eb !important;
-        font-weight: 900 !important;
-        padding: 0.1rem 0.2rem !important;
-        border-radius: 4px !important;
+        font-weight: 800 !important;
+        border-radius: 3px !important;
       }
       [data-theme="dark"] .dyn-search-dropdown mark {
         background: rgba(56, 189, 248, 0.25) !important;
@@ -320,7 +271,6 @@
     };
     scanLinks(document);
 
-    // Factory: build responsive typing search component
     function makeSearchNode(wrapperClass, elementId) {
       const wrap = document.createElement("div");
       if (elementId) wrap.id = elementId;
@@ -328,65 +278,53 @@
       wrap.innerHTML = `
         <div class="dyn-search-input-box">
           <input type="text" class="dyn-search-input" placeholder="🔍 Search any calculator..." autocomplete="off">
-          <span class="dyn-typing-indicator">Typing...</span>
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
 
       const input = wrap.querySelector(".dyn-search-input");
-      const indicator = wrap.querySelector(".dyn-typing-indicator");
       const dropdown = wrap.querySelector(".dyn-search-dropdown");
-      let typingTimer = null;
 
-      // Helper to render tools list with highlight
-      function renderList(query) {
-        if (!query) {
-          // Show quick suggested tools on initial tap
-          const populars = allTools.slice(0, 4);
-          dropdown.innerHTML = `
-            <div class="dyn-dropdown-header">⭐ Popular Calculators</div>
-            ${populars.map((m) => `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.8rem;color:#94a3b8;">→</span></a>`).join("")}
-          `;
-          dropdown.style.display = "block";
+      // Auto-reposition viewport smoothly when the keyboard opens
+      function bringIntoFocus() {
+        setTimeout(() => {
+          const rect = input.getBoundingClientRect();
+          const targetY = window.pageYOffset + rect.top - 80;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }, 120);
+      }
+
+      input.addEventListener("focus", () => {
+        bringIntoFocus();
+        const q = input.value.trim().toLowerCase();
+        if (q) {
+          renderList(q);
+        }
+      });
+
+      input.addEventListener("click", bringIntoFocus);
+
+      function renderList(q) {
+        if (!q) {
+          dropdown.style.display = "none";
+          dropdown.innerHTML = "";
           return;
         }
-
-        const matches = allTools.filter((t) => t.name.toLowerCase().includes(query));
+        const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.9rem 1rem;font-size:0.88rem;font-weight:700;color:#94a3b8;">No calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.9rem 1rem;font-size:0.9rem;font-weight:700;color:#94a3b8;">No calculators found</div>`;
         } else {
-          dropdown.innerHTML = `
-            <div class="dyn-dropdown-header">Found ${matches.length} Calculator${matches.length > 1 ? "s" : ""}</div>
-            ${matches.map((m) => {
-              const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
-              const highlighted = m.name.replace(regex, "<mark>$1</mark>");
-              return `<a href="${m.url}"><span>${highlighted}</span> <span style="font-size:0.8rem;color:#94a3b8;">→</span></a>`;
-            }).join("")}
-          `;
+          dropdown.innerHTML = matches.map((m) => {
+            const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+            const highlighted = m.name.replace(regex, "<mark>$1</mark>");
+            return `<a href="${m.url}"><span>${highlighted}</span> <span style="font-size:0.8rem;color:#94a3b8;">→</span></a>`;
+          }).join("");
         }
         dropdown.style.display = "block";
       }
 
-      // Touch / Focus: show immediate suggestion list
-      input.addEventListener("focus", () => {
-        setTimeout(() => {
-          input.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 250);
-        renderList(input.value.trim().toLowerCase());
-      });
-
-      // Professional real-time typing events
       input.addEventListener("input", (e) => {
-        const q = e.target.value.trim().toLowerCase();
-        
-        // Show live typing status indicator
-        indicator.classList.add("active");
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
-          indicator.classList.remove("active");
-        }, 400);
-
-        renderList(q);
+        renderList(e.target.value.trim().toLowerCase());
       });
 
       document.addEventListener("click", (e) => {
@@ -396,19 +334,19 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER: Permanent search
+    // 1. MOBILE DRAWER SEARCH
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     const drawerSearch = makeSearchNode("in-drawer", "dynDrawerSearch");
     drawerSlot.appendChild(drawerSearch);
 
-    // 2. DESKTOP SEARCH: Dedicated independent instance
+    // 2. DESKTOP SEARCH MOUNTING
     const desktopSearch = makeSearchNode(isHomePage ? "in-home" : "in-sidebar", "dynDesktopSearchWrap");
 
     function placeDesktopSearch() {
       if (desktopSearch.isConnected) return true;
 
       if (isHomePage) {
-        // STRICTLY PLACED BELOW THE INTERACTIVE CALCULATOR
+        // Strictly placed below the interactive calculator
         const calcCard = document.querySelector(".calc-card");
         if (calcCard && calcCard.parentNode) {
           calcCard.parentNode.insertBefore(desktopSearch, calcCard.nextSibling);
