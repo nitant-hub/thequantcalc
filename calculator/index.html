@@ -183,7 +183,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* Buttons Core */
+        /* Base Buttons */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a3b8; 
@@ -197,7 +197,7 @@
             justify-content: center; 
             user-select: none;
             background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); 
-            color: #0f172a; 
+            color: #1e293b; 
             box-shadow: 0 3px 0 #94a3b8, 0 4px 6px rgba(15, 23, 42, 0.1); 
             padding: 0 2px;
             transition: transform 0.04s ease, box-shadow 0.04s ease;
@@ -207,7 +207,7 @@
             box-shadow: 0 0 0 transparent, inset 0 2px 4px rgba(0,0,0,0.2) !important; 
         }
 
-        /* Number Buttons */
+        /* 1. Numbers (Ceramic White) */
         .bc-btn-num { 
             background: #ffffff !important; 
             color: #020617 !important; 
@@ -217,7 +217,7 @@
             box-shadow: 0 3px 0 #cbd5e1, 0 4px 6px rgba(15, 23, 42, 0.08) !important; 
         }
 
-        /* Operators */
+        /* 2. Math Operators (Soft Sky Blue) */
         .bc-btn-op,
         .bc-btn[aria-label="Add"],
         .bc-btn[aria-label="Subtract"],
@@ -228,64 +228,91 @@
         .bc-btn[aria-label="Percent"] {
             font-size: 16px !important;
             font-weight: 900 !important;
-            color: #020617 !important;
-            background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%) !important;
-            border-color: #94a3b8 !important;
-            box-shadow: 0 3px 0 #64748b, 0 4px 6px rgba(15, 23, 42, 0.15) !important;
+            color: #0369a1 !important;
+            background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%) !important;
+            border-color: #7dd3fc !important;
+            box-shadow: 0 3px 0 #38bdf8, 0 4px 6px rgba(2, 132, 199, 0.18) !important;
         }
 
-        /* Equals */
+        /* 3. Equals (Primary Blue) */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%) !important; 
             color: #ffffff !important; 
             border-color: #1e40af !important; 
-            box-shadow: 0 3px 0 #1e3a8a, 0 4px 8px rgba(37, 99, 235, 0.3) !important; 
+            box-shadow: 0 3px 0 #1e3a8a, 0 4px 8px rgba(37, 99, 235, 0.35) !important; 
             font-size: 18px !important; 
             font-weight: 900 !important;
         }
 
-        /* Clear */
+        /* 4. Full Reset / Clear (Crimson Red) */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important; 
             color: #ffffff !important; 
             border-color: #b91c1c !important; 
-            box-shadow: 0 3px 0 #991b1b, 0 4px 8px rgba(239, 68, 68, 0.3) !important; 
+            box-shadow: 0 3px 0 #991b1b, 0 4px 8px rgba(239, 68, 68, 0.35) !important; 
             font-size: 13px !important; 
             font-weight: 900 !important;
         }
 
-        .bc-btn-action { 
-            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%); 
-            color: #0f172a; 
-            box-shadow: 0 3px 0 #94a3b8, 0 4px 6px rgba(15, 23, 42, 0.12); 
-            font-size: 11px !important;
-            font-weight: 800 !important;
-        }
-
-        .bc-btn-special { 
-            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); 
-            color: #ffffff; 
-            border-color: #b45309; 
-            box-shadow: 0 3px 0 #78350f, 0 4px 6px rgba(245, 158, 11, 0.25); 
-            font-size: 10px;
+        /* 5. Backspace / Delete (Warm Orange) */
+        .bc-btn-delete,
+        .bc-btn[aria-label="Backspace"] {
+            background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%) !important;
+            color: #ffffff !important;
+            border-color: #c2410c !important;
+            box-shadow: 0 3px 0 #9a3412, 0 4px 6px rgba(234, 88, 12, 0.3) !important;
+            font-size: 14px !important;
             font-weight: 900 !important;
         }
 
-        /* In-Keyboard DEG / RAD buttons */
-        .bc-btn-deg, .bc-btn-rad {
+        /* 6. Degree Button (Emerald Green when active) */
+        .bc-btn-deg {
             font-size: 11px !important;
             font-weight: 900 !important;
             background: #e2e8f0;
             color: #475569;
             border-color: #94a3b8;
         }
-        .bc-btn-deg.active, .bc-btn-rad.active {
-            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%) !important;
+        .bc-btn-deg.active {
+            background: linear-gradient(180deg, #10b981 0%, #059669 100%) !important;
             color: #ffffff !important;
-            border-color: #1e40af !important;
-            box-shadow: 0 3px 0 #1e3a8a, 0 4px 6px rgba(37, 99, 235, 0.3) !important;
+            border-color: #047857 !important;
+            box-shadow: 0 3px 0 #065f46, 0 4px 6px rgba(5, 150, 105, 0.35) !important;
+        }
+
+        /* 7. Radian Button (Royal Purple when active) */
+        .bc-btn-rad {
+            font-size: 11px !important;
+            font-weight: 900 !important;
+            background: #e2e8f0;
+            color: #475569;
+            border-color: #94a3b8;
+        }
+        .bc-btn-rad.active {
+            background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%) !important;
+            color: #ffffff !important;
+            border-color: #6d28d9 !important;
+            box-shadow: 0 3px 0 #5b21b6, 0 4px 6px rgba(124, 58, 237, 0.35) !important;
+        }
+
+        /* Auxiliary Actions */
+        .bc-btn-action { 
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%); 
+            color: #334155; 
+            box-shadow: 0 3px 0 #cbd5e1, 0 4px 6px rgba(15, 23, 42, 0.08); 
+            font-size: 11px !important;
+            font-weight: 800 !important;
+        }
+
+        .bc-btn-special { 
+            background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%); 
+            color: #92400e; 
+            border-color: #f59e0b; 
+            box-shadow: 0 3px 0 #d97706, 0 4px 6px rgba(245, 158, 11, 0.25); 
+            font-size: 10px;
+            font-weight: 900 !important;
         }
 
         .bc-span-2 { grid-column: span 2; }
@@ -316,7 +343,7 @@
         .hist-entry strong { color: #1e3a8a; font-weight: 900 !important; }
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 45px; font-weight: 800; }
 
-        /* Mobile View Rules */
+        /* Mobile Adjustments */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 8px; border-radius: 12px; } 
             .bc-keypad-container { height: 250px; min-height: 250px; max-height: 250px; }
@@ -353,7 +380,7 @@
         <!-- 1. BASIC -->
         <div class="bc-tab-pane bc-grid-basic active" role="tabpanel" id="bc-basic">
             <button class="bc-btn bc-btn-danger" aria-label="Clear All" onclick="BloggerCalc.clear()">AC</button>
-            <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
+            <button class="bc-btn bc-btn-delete" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
             <button class="bc-btn bc-btn-op" aria-label="Modulo or Percent" onclick="BloggerCalc.op('%')">%</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
@@ -384,7 +411,7 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
             <button class="bc-btn bc-btn-op" aria-label="Divide" onclick="BloggerCalc.op('/')">÷</button>
-            <button class="bc-btn bc-btn-action" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
+            <button class="bc-btn bc-btn-delete" aria-label="Backspace" onclick="BloggerCalc.back()">⌫</button>
 
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.asin')">sin⁻¹</button>
             <button class="bc-btn" onclick="BloggerCalc.func('bcTrig.acos')">cos⁻¹</button>
@@ -431,10 +458,10 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.mem('mr')">MR</button>
         </div>
 
-        <!-- 3. GATE (EXACT 11-COLUMN BALANCED ALIGNMENT) -->
+        <!-- 3. GATE -->
         <div class="bc-tab-pane bc-grid-gate" role="tabpanel" id="bc-gate">
             <!-- Row 1: 11 keys -->
-            <button class="bc-btn" onclick="BloggerCalc.op('%')">mod</button>
+            <button class="bc-btn bc-btn-op" onclick="BloggerCalc.op('%')">mod</button>
             <button class="bc-btn bc-btn-deg active" data-unit="deg" onclick="BloggerCalc.setAngle('deg')">Deg</button>
             <button class="bc-btn bc-btn-rad" data-unit="rad" onclick="BloggerCalc.setAngle('rad')">Rad</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.sinh')">sinh</button>
@@ -455,7 +482,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Math.atanh')">tanh⁻¹</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num('(')">(</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.num(')')">)</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">←</button>
+            <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">←</button>
             <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">C</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">±</button>
 
@@ -498,7 +525,7 @@
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">−</button>
             <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
 
-            <!-- Row 6: 1+1+5+2+2 = 11 keys (Fits completely inside container) -->
+            <!-- Row 6: 11 keys perfectly fitted -->
             <button class="bc-btn" onclick="BloggerCalc.func('Math.cbrt')">∛</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.abs')">|x|</button>
             <button class="bc-btn bc-btn-num bc-span-5" onclick="BloggerCalc.num('0')">0</button>
@@ -515,7 +542,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('sum(')">Σ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('x')">x</button>
             <button class="bc-btn" onclick="BloggerCalc.func('y')">y</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">DEL</button>
+            <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">DEL</button>
             <button class="bc-btn bc-btn-danger bc-span-2" onclick="BloggerCalc.clear()">AC</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**-1')">x⁻¹</button>
@@ -569,7 +596,7 @@
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('b')">B</button>
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('c')">C</button>
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('x')">X</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">DEL</button>
+            <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">DEL</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('y')">Y</button>
             <button class="bc-btn" onclick="BloggerCalc.num('z')">Z</button>
@@ -620,7 +647,7 @@
             <button class="bc-btn bc-btn-action">Num</button>
             <button class="bc-btn bc-btn-action bc-span-2">Menu</button>
             <button class="bc-btn bc-btn-special bc-span-2">CAS Toggle</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">DEL</button>
+            <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">DEL</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('x')">X</button>
             <button class="bc-btn" onclick="BloggerCalc.num('y')">Y</button>
@@ -668,7 +695,7 @@
             <button class="bc-btn" onclick="BloggerCalc.func('factor(')">factor</button>
             <button class="bc-btn" onclick="BloggerCalc.func('expand(')">expand</button>
             <button class="bc-btn" onclick="BloggerCalc.func('simplify(')">smplfy</button>
-            <button class="bc-btn bc-btn-special bc-span-2" onclick="BloggerCalc.back()">del</button>
+            <button class="bc-btn bc-btn-delete bc-span-2" onclick="BloggerCalc.back()">del</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('x')">x</button>
             <button class="bc-btn" onclick="BloggerCalc.num('y')">y</button>
@@ -720,7 +747,7 @@
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.finKey('pmt')">PMT</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.finKey('fv')">FV</button>
             <button class="bc-btn bc-btn-action" onclick="BloggerCalc.toggleSign()">CHS</button>
-            <button class="bc-btn bc-btn-action" onclick="BloggerCalc.back()">←</button>
+            <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">←</button>
             <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">CLX</button>
 
             <button class="bc-btn">AMORT</button>
@@ -751,7 +778,7 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
 
             <button class="bc-btn bc-btn-special bc-span-2">f (Orange)</button>
-            <button class="bc-btn bc-btn-special bc-span-2" style="background: linear-gradient(180deg, #3b82f6 0%, #1e3a8a 100%);" onclick="BloggerCalc.finComp()">COMP</button>
+            <button class="bc-btn bc-btn-special bc-span-2" style="background: linear-gradient(180deg, #3b82f6 0%, #1e3a8a 100%); color:#fff;" onclick="BloggerCalc.finComp()">COMP</button>
             <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">ENTER</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
