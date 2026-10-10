@@ -396,18 +396,18 @@
     `;
 
     const categories = [
-      { name: "FINANCE", hash: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", hash: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", hash: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", href: "/#/financial", hash: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", href: "/#/math", hash: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", href: "/#/utility", hash: "#/utility", slug: "utility", icon: "🧰" }
     ];
 
     const desktopLinksHtml = categories
-      .map((c) => `<a data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
-      .join("") + `<a data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
+      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-nav-item ${window.location.hash.includes(c.slug) ? "is-active" : ""}">${c.name}</a>`)
+      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-more-pill-btn">MORE</a>`;
 
     const mobileLinksHtml = categories
-      .map((c) => `<a data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
-      .join("") + `<a data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
+      .map((c) => `<a href="${c.href}" data-hash="${c.hash}" class="dyn-drawer-link"><span>${c.icon}</span> ${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</a>`)
+      .join("") + `<a href="/#/all" data-hash="#/all" class="dyn-drawer-link"><span>📋</span> All Calculators/Tools</a>`;
 
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
@@ -431,13 +431,12 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Guaranteed Direct-Touch Routing (Triggers view reload automatically)
-    function directRoute(targetHash) {
-      const destination = "/" + targetHash;
+    // Guaranteed single-touch navigation execution
+    function singleTouchNavigate(targetHash) {
       if (window.location.hash === targetHash) {
         window.location.reload();
       } else {
-        window.location.assign(destination);
+        window.location.href = "/" + targetHash;
       }
     }
 
@@ -446,7 +445,10 @@
       if (targetHash) {
         link.addEventListener("click", function (e) {
           e.preventDefault();
-          directRoute(targetHash);
+          if (link.classList.contains("dyn-drawer-link")) {
+            closeDrawer();
+          }
+          singleTouchNavigate(targetHash);
         });
       }
     });
