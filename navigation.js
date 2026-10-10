@@ -37,6 +37,40 @@
         display: none !important;
       }
 
+      /* PROFESSIONAL PROPORTION FOR CATEGORY DIRECTORY SEARCH BOX */
+      input[placeholder*="Search calculators"],
+      input[placeholder*="search calculators"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 480px !important;
+        margin: 0.8rem 0 1.2rem 0 !important;
+        padding: 0.72rem 1rem !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        border: 2px solid #cbd5e1 !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+      }
+      input[placeholder*="Search calculators"]:focus,
+      input[placeholder*="search calculators"]:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+        outline: none !important;
+      }
+      [data-theme="dark"] input[placeholder*="Search calculators"],
+      [data-theme="dark"] input[placeholder*="search calculators"] {
+        background: #0f172a !important;
+        border-color: #334155 !important;
+        color: #f8fafc !important;
+      }
+      [data-theme="dark"] input[placeholder*="Search calculators"]:focus,
+      [data-theme="dark"] input[placeholder*="search calculators"]:focus {
+        border-color: #38bdf8 !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+      }
+
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -273,7 +307,7 @@
       [data-theme="dark"] .dyn-search-input:focus {
         border-color: #38bdf8 !important;
         background: #0b132b !important;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       }
 
       /* Clear Dropdown styling */
@@ -375,18 +409,15 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Update Heading Text & Erase Subtitle Line
     function cleanAndFixContent() {
       const candidates = document.querySelectorAll("h1, h2, h3, .title, .page-title, .crumb, .breadcrumbs, a, span, p");
       candidates.forEach((el) => {
         const text = (el.textContent || "").trim();
         
-        // 1. Rename to "All Calculators/Tools"
         if (el.children.length === 0 && /^all calculators$/i.test(text)) {
           el.textContent = "All Calculators/Tools";
         }
 
-        // 2. Erase the subtitle in the red box
         if (text.toLowerCase().includes("the following is a complete list of all our calculators by category")) {
           el.remove();
         }
@@ -420,7 +451,6 @@
     };
     scanLinks(document);
 
-    // Drawer controls & isolated scrolling
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
     
