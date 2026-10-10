@@ -40,23 +40,24 @@
       }
 
       /* ========================================================
-         TWO-COLUMN LAYOUT: MAIN CONTENT LEFT, SIDEBAR RIGHT
+         EXACT CALCULATOR.NET 2-COLUMN SPLIT (TOP-ALIGNED)
          ======================================================== */
       @media (min-width: 768px) {
         main, #app, #content, .container, body > div:not(#siteDynamicHeader):not(#dynDrawer):not(#dynOverlay) {
           display: flex !important;
           flex-direction: row !important;
-          flex-wrap: wrap !important;
+          flex-wrap: nowrap !important;
           align-items: flex-start !important;
           justify-content: space-between !important;
+          gap: 24px !important;
           width: 100% !important;
           max-width: 1240px !important;
-          margin: 1rem auto 3rem !important;
+          margin: 0.8rem auto 3rem !important;
           padding: 0 1.2rem !important;
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA (68% - 72%) */
+        /* 1. LEFT MAIN TOOLS AREA (STARTS DIRECTLY BELOW HEADER) */
         .card:first-of-type,
         div:has(> h1),
         div:has(> h2),
@@ -66,35 +67,34 @@
           width: calc(100% - 324px) !important;
           max-width: calc(100% - 324px) !important;
           min-width: 0 !important;
-          order: 1 !important;
-          margin: 0 0 2rem 0 !important;
+          margin: 0 !important;
+          padding-top: 0 !important;
           box-sizing: border-box !important;
         }
 
-        /* Ensure category cards and text span naturally inside */
+        /* Ensure card and directory text expand to 100% of left column */
         .card:first-of-type > div,
         div:has(> h1) > div,
         div:has(> h2) > div {
           width: 100% !important;
           max-width: 100% !important;
+          box-sizing: border-box !important;
         }
 
-        /* 2. RIGHT SIDEBAR PORTION (FIXED 300px ON THE RIGHT) */
+        /* 2. RIGHT SIDEBAR PORTION (STARTS DIRECTLY BELOW HEADER) */
         #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
-          order: 2 !important;
-          margin-left: auto !important;
-          margin-right: 0 !important;
-          margin-top: 0 !important;
+          margin: 0 !important;
+          padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
           box-sizing: border-box !important;
         }
 
-        /* Sidebar cards fill 100% width of the right column */
+        /* Sidebar cards stretch edge-to-edge inside the sidebar */
         #dynDesktopSidebarWrap .card,
         #dynDesktopSidebarWrap > div {
           width: 100% !important;
@@ -539,7 +539,7 @@
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP RIGHT-ALIGNED SIDEBAR BUILDER
+    // 2. DESKTOP CALCULATOR.NET SIDEBAR INTEGRATION
     function setupCalculatorNetLayout() {
       if (window.innerWidth < 768) return;
 
@@ -552,7 +552,7 @@
         sidebar = document.createElement("aside");
         sidebar.id = "dynDesktopSidebarWrap";
 
-        // Top Search Box (at the very top of the right sidebar)
+        // Top Search Box (Right Column Top)
         sidebar.appendChild(makeSearchNode());
 
         // AdSense Slot (300x250)
@@ -561,7 +561,7 @@
         adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
         sidebar.appendChild(adSlot);
 
-        // Collect existing secondary blocks (Categories, Popular Tools, System Status)
+        // Find secondary cards (Popular Tools, System Status, Categories)
         const secondaryCards = Array.from(mainContainer.querySelectorAll("div, aside")).filter((el) => {
           if (el === sidebar) return false;
           const text = (el.textContent || "").toLowerCase();
@@ -569,14 +569,13 @@
           return !hasTitle && (text.includes("popular tools") || text.includes("categories") || text.includes("system status"));
         });
 
-        // Insert the secondary blocks beneath the AdSense container
+        // Nest secondary cards directly inside the right sidebar
         secondaryCards.forEach((c) => {
           if (c && c.parentNode && c !== sidebar) {
             sidebar.appendChild(c);
           }
         });
 
-        // Place the sidebar as the last element of the container so it aligns to the right
         mainContainer.appendChild(sidebar);
       }
     }
