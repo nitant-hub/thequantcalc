@@ -74,7 +74,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT CORE & VARIANTS
+         SEARCH COMPONENT CORE & RECTANGULAR GEOMETRY
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -113,7 +113,7 @@
         margin: 0 !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
-        border-radius: 16px !important;
+        border-radius: 0px !important; /* Fully rectangular card */
         padding: 1rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         box-sizing: border-box !important;
@@ -123,6 +123,7 @@
         border-color: var(--border-color, #334155) !important;
       }
 
+      /* RECTANGULAR ROW CONTAINER */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
@@ -130,11 +131,11 @@
         height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid #2563eb !important;
-        border-radius: 24px !important;
-        padding: 3px 6px 3px 14px !important;
+        border-radius: 0px !important; /* Fully rectangular container */
+        padding: 0 4px 0 12px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08) !important;
+        box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
         cursor: text !important;
         position: relative !important;
@@ -147,14 +148,15 @@
       }
       .dyn-search-wrapper .dyn-search-row:focus-within {
         border-color: #1d4ed8 !important;
-        box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.25) !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22) !important;
       }
 
-      /* Modern Input Text - Fully Clickable & Active */
+      /* Modern Input Text */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
         border: none !important;
+        border-radius: 0px !important;
         background: transparent !important;
         outline: none !important;
         color: var(--text-main, #0f172a) !important;
@@ -176,27 +178,27 @@
         }
       }
 
-      /* Modern Search Button (Enabled Across All Views) */
+      /* RECTANGULAR SEARCH BUTTON */
       .dyn-modern-btn {
-        height: 32px !important;
+        height: 34px !important;
         padding: 0 14px !important;
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 18px !important;
+        border-radius: 0px !important; /* Fully rectangular button */
         font-size: 12.5px !important;
         font-weight: 700 !important;
         letter-spacing: 0.3px !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
-        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.22) !important;
         transition: transform 0.15s, box-shadow 0.15s !important;
         position: relative !important;
         z-index: 30 !important;
       }
       .dyn-modern-btn:hover {
         transform: translateY(-1px) !important;
-        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4) !important;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.38) !important;
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
@@ -209,7 +211,7 @@
         height: 250px !important;
         background: #f1f5f9 !important;
         border: 1px solid #e2e8f0 !important;
-        border-radius: 12px !important;
+        border-radius: 4px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -227,14 +229,14 @@
       /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
-        top: calc(100% + 6px) !important; 
+        top: calc(100% + 4px) !important; 
         left: 0 !important; 
         width: 100% !important; 
         max-height: 260px !important;
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 12px !important;
+        border-radius: 0px !important; /* Rectangular dropdown */
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
@@ -527,7 +529,6 @@
       const btn = globalSearchNode.querySelector(".dyn-modern-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      // Clicking anywhere inside the search row guarantees input focus
       row.addEventListener("click", () => {
         input.focus();
       });
