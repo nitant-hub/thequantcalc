@@ -30,7 +30,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT: SEPARATE STANDALONE FRAME/CARD
+         SEARCH COMPONENT: STANDALONE INDEPENDENT FRAME
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -41,18 +41,18 @@
         max-width: 100% !important;
         margin: 0.5rem 0 1rem 0 !important;
       }
-      /* Standalone Card in the Right Sidebar (Completely Separate) */
+      /* COMPLETELY SEPARATE OUTSIDE BOX IN SIDEBAR */
       .dyn-search-wrapper.in-sidebar {
         width: 100% !important;
         max-width: 100% !important;
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        margin-bottom: 16px !important; /* Space separating it from Popular Tools frame */
+        margin-bottom: 16px !important; /* Visual gap before Popular Tools card */
         background: var(--surface, #ffffff) !important;
         border: 1px solid var(--border, #e2e8f0) !important;
         border-radius: 16px !important;
-        padding: 12px !important;
+        padding: 12px 14px !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
@@ -475,7 +475,7 @@
       });
     }
 
-    // MOUNT SEARCH STRICTLY OUTSIDE POPULAR TOOLS FRAME
+    // MOUNT SEARCH STRICTLY OUTSIDE AND ABOVE THE POPULAR TOOLS CARD
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -483,7 +483,7 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile: Drawer slot
+      // 1. Mobile: inside drawer
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
@@ -530,23 +530,28 @@
 
       if (popularHeader) {
         // Walk upwards to find the entire outer card holding Popular Tools and System Status
-        let fullCard = popularHeader;
-        while (
-          fullCard.parentElement && 
-          fullCard.parentElement.tagName !== "ASIDE" && 
-          !fullCard.parentElement.classList.contains("sidebar") && 
-          !fullCard.parentElement.classList.contains("grid") &&
-          fullCard.parentElement.offsetWidth < 450
-        ) {
-          fullCard = fullCard.parentElement;
+        // Stop immediately when reaching <aside>, .sidebar, or a container that wraps the whole column
+        let current = popularHeader;
+        let outerCard = popularHeader;
+
+        while (current.parentElement) {
+          const p = current.parentElement;
+          const tag = p.tagName.toLowerCase();
+          const isSidebarContainer = tag === "aside" || p.classList.contains("sidebar") || tag === "main" || p.classList.contains("grid");
+
+          if (isSidebarContainer) {
+            outerCard = current;
+            break;
+          }
+          current = p;
         }
 
-        const sidebarContainer = fullCard.parentElement;
-        if (sidebarContainer && fullCard) {
+        const sidebarContainer = outerCard.parentElement;
+        if (sidebarContainer && outerCard) {
           globalSearchNode.className = "dyn-search-wrapper in-sidebar";
           // Inject completely outside and above the Popular Tools card frame
-          if (fullCard.previousElementSibling !== globalSearchNode) {
-            sidebarContainer.insertBefore(globalSearchNode, fullCard);
+          if (outerCard.previousElementSibling !== globalSearchNode) {
+            sidebarContainer.insertBefore(globalSearchNode, outerCard);
           }
         }
       }
