@@ -1,6 +1,5 @@
 (function () {
   function initNavigation() {
-    // Lock viewport strictly to 1:1 scale
     let vMeta = document.querySelector('meta[name="viewport"]');
     if (!vMeta) {
       vMeta = document.createElement("meta");
@@ -32,6 +31,7 @@
 
       html, body {
         overflow-x: hidden !important;
+        overflow-x: clip !important;
         width: 100% !important;
         max-width: 100vw !important;
         position: relative !important;
@@ -45,7 +45,9 @@
         display: none !important;
       }
 
-      /* CATEGORY VIEW TWO-COLUMN SPLIT */
+      /* ========================================================
+         CATEGORY VIEW TWO-COLUMN SPLIT
+         ======================================================== */
       @media (min-width: 768px) {
         #catView.dyn-cat-split {
           display: flex !important;
@@ -67,6 +69,9 @@
         }
       }
 
+      /* ========================================================
+         SEARCH COMPONENT CORE & VARIANTS
+         ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -74,9 +79,9 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
-      /* Mobile: strictly centered and contained */
+      /* Mobile default: Centered and strictly locked to safe area */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: min(340px, calc(100% - 2rem)) !important;
+        max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
@@ -117,7 +122,7 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
       }
 
-      /* Force 16px to completely eliminate mobile auto-zoom trigger */
+      /* 16px font-size physically disables mobile keyboard focus-zoom */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -459,7 +464,6 @@
       }
     `;
 
-    // HEADER & DRAWER LINKS
     const categories = [
       { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
       { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
@@ -527,7 +531,7 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // SEARCH NODE
+    // SEARCH COMPONENT
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -544,32 +548,22 @@
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      // Active unzoom and scroll recovery
-      function resetMobileZoomAndScroll() {
+      // Robust unzoom & zero-scroll recovery
+      function snapBack() {
         requestAnimationFrame(() => {
           window.scrollTo(0, window.scrollY);
           document.documentElement.scrollLeft = 0;
           document.body.scrollLeft = 0;
-
-          // Force viewport meta refresh to restore 1:1 mobile scale
-          const meta = document.querySelector('meta[name="viewport"]');
-          if (meta) {
-            const content = meta.getAttribute("content");
-            meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
-            setTimeout(() => {
-              meta.setAttribute("content", content);
-            }, 50);
-          }
         });
       }
 
-      input.addEventListener("blur", resetMobileZoomAndScroll);
-      input.addEventListener("focusout", resetMobileZoomAndScroll);
+      input.addEventListener("blur", snapBack);
+      input.addEventListener("focusout", snapBack);
 
       if (window.visualViewport) {
         window.visualViewport.addEventListener("resize", () => {
           if (document.activeElement !== input) {
-            resetMobileZoomAndScroll();
+            snapBack();
           }
         });
       }
@@ -611,7 +605,6 @@
       });
     }
 
-    // ADSENSE NODE
     let globalAdsenseNode = document.getElementById("dynAdsense300");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
@@ -620,7 +613,6 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // RELOCATION ENGINE
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -727,7 +719,6 @@
     });
     window.addEventListener("resize", relocateSearch);
 
-    // Theme Toggle
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
