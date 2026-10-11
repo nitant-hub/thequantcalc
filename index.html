@@ -119,52 +119,41 @@ p.intro, #cintro, #cintro:empty {
   width: 100%;
 }
 
-/* HIGH-VISIBILITY APPLE CATEGORY BANNER (NO VIEW ALL BADGE) */
-.cat-group-title {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 0.65rem 1.1rem;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.8) 100%);
+/* ========================================================
+   CATEGORY ENCLOSED IN HIGH-CONTRAST BENTO BOX
+   ======================================================== */
+.cat-group-box {
+  background: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
-  position: relative;
+  border-radius: var(--apple-radius);
   overflow: hidden;
+  box-shadow: var(--shadow-3d);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-bottom: 0.95rem;
 }
 
-[data-theme="dark"] .cat-group-title {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.06);
-}
-
-.cat-group-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  background: var(--grad);
-}
-
-.cat-group-title a {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.025em;
-  text-decoration: none;
+.cat-group-box-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  padding: 0.85rem 1.25rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding-left: 0.25rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  justify-content: space-between;
 }
 
-.cat-group-title a:hover {
-  color: #0071e3;
-  transform: translateX(2px);
+.cat-group-box-header a {
+  color: #ffffff !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  display: block;
+}
+
+.cat-group-box-header a:hover {
+  text-decoration: underline;
 }
 
 /* HORIZONTAL (X-DIRECTION) RESPONSIVE BENTO GRID */
@@ -173,6 +162,7 @@ p.intro, #cintro, #cintro:empty {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 0.85rem !important;
   width: 100% !important;
+  padding: 0 0.95rem;
 }
 
 /* Semi-3D Bento Tool Card */
@@ -182,7 +172,7 @@ p.intro, #cintro, #cintro:empty {
   align-items: center;
   justify-content: space-between;
   padding: 0.95rem 1.15rem;
-  border-radius: 18px;
+  border-radius: 16px;
   text-decoration: none;
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.7);
@@ -387,17 +377,10 @@ input, select, textarea {
     margin-left: auto !important;
   }
 
-  .cat-group-title {
-    padding: 0.55rem 0.9rem;
-  }
-
-  .cat-group-title a {
-    font-size: 1.12rem;
-  }
-
   .cat-tools-bento {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
     gap: 0.65rem !important;
+    padding: 0 0.65rem !important;
   }
   .cat-tool-card {
     padding: 0.85rem 1rem !important;
@@ -836,8 +819,8 @@ footer a:hover { color: var(--link); }
       cs.forEach(function(c){
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
-        o+='<div class="cat-group-block">';
-        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a></div>';
+        o+='<div class="cat-group-box">';
+        o+='  <div class="cat-group-box-header"><a href="#/'+c+'">'+esc(label(c))+'</a></div>';
         o+='  <div class="cat-tools-bento">';
         list.forEach(function(t){
           o+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
@@ -863,15 +846,18 @@ footer a:hover { color: var(--link); }
       var list = toolsOf(cur);
 
       var o2='';
-      o2+='<div class="cat-tools-bento">';
+      o2+='<div class="cat-group-box">';
+      o2+='  <div class="cat-group-box-header"><a>'+esc(label(cur))+'</a></div>';
+      o2+='  <div class="cat-tools-bento">';
       list.forEach(function(t){
-        o2+='  <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
-        o2+='    <div class="cat-tool-body">';
-        o2+='      <span class="cat-tool-title">' + esc(t.name) + '</span>';
-        o2+='    </div>';
-        o2+='    <div class="cat-tool-arrow">&rarr;</div>';
-        o2+='  </a>';
+        o2+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
+        o2+='      <div class="cat-tool-body">';
+        o2+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
+        o2+='      </div>';
+        o2+='      <div class="cat-tool-arrow">&rarr;</div>';
+        o2+='    </a>';
       });
+      o2+='  </div>';
       o2+='</div>';
 
       document.getElementById('cols').innerHTML=o2;
@@ -895,4 +881,3 @@ footer a:hover { color: var(--link); }
 <script src="navigation.js"></script>
 </body>
 </html>
-
