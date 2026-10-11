@@ -63,7 +63,7 @@
         width: 100% !important;
       }
 
-      /* In Category Right Pane: Rectangular Input + Blue "Search" Button */
+      /* Category Right Pane: Rectangular Input + Blue Search Button */
       .dyn-search-wrapper.in-cat-pane .dyn-search-row {
         display: flex !important;
         align-items: center !important;
@@ -97,7 +97,7 @@
         background: #1d4ed8 !important;
       }
 
-      /* In Standalone Tool Sidebar: Modern Rounded Card */
+      /* Tool Sidebar: Clean Standalone Card */
       .dyn-search-wrapper.in-sidebar {
         max-width: 100% !important;
         display: block !important;
@@ -138,7 +138,6 @@
         display: none !important;
       }
 
-      /* Common input placeholder and clear icon */
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
 
@@ -150,7 +149,7 @@
         height: 250px !important;
         background: #f1f5f9 !important;
         border: 1px solid #e2e8f0 !important;
-        border-radius: 6px !important;
+        border-radius: 12px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -533,7 +532,7 @@
         return;
       }
 
-      // 2. Desktop Category Page (Image 1000285090 Layout)
+      // 2. Desktop Category Page
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -547,7 +546,6 @@
             rightPane = document.createElement("div");
             rightPane.className = "dyn-cat-right-pane";
 
-            // Move the content (crumb, title, intro, tool columns) into leftPane
             const elementsToMove = ["crumb", "ch1", "cintro", "cols", "none"];
             elementsToMove.forEach((id) => {
               const el = document.getElementById(id);
@@ -559,7 +557,6 @@
             catView.appendChild(rightPane);
           }
 
-          // Mount search and advertisement in rightPane
           globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
           if (rightPane.firstElementChild !== globalSearchNode) {
             rightPane.insertBefore(globalSearchNode, rightPane.firstChild);
@@ -584,7 +581,7 @@
         }
       }
 
-      // 4. Standalone Tool Page: Sidebar view
+      // 4. Standalone Tool Page: AdSense on Top -> Search Option Below Ad -> Popular Tools Card Below Search
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -598,10 +595,16 @@
         }
 
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-        if (sidebarAside.firstElementChild !== globalSearchNode) {
+
+        // AdSense Box placed at the top of the sidebar column
+        if (sidebarAside.firstElementChild !== globalAdsenseNode) {
+          sidebarAside.insertBefore(globalAdsenseNode, sidebarAside.firstChild);
+        }
+
+        // Search Box placed directly beneath AdSense and above the Popular Tools card
+        if (globalSearchNode.previousElementSibling !== globalAdsenseNode) {
           sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
-        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
       }
     }
 
