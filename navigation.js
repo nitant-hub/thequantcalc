@@ -111,83 +111,122 @@
       }
 
       /* ========================================================
-         SEPARATED SEARCH CARD & DISTINCT SIDEBAR BOXES
+         MODERN INTEGRATED SEARCH BAR (NO SEPARATE BLUE BUTTON)
          ======================================================== */
-      .dyn-search-wrapper.in-tool-sidebar {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 0 16px 0 !important;
-        padding: 10px !important;
-        background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 10px !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
-        box-sizing: border-box !important;
-        display: block !important;
-      }
-
       .dyn-search-wrapper {
         position: relative !important;
         width: 100% !important;
         box-sizing: border-box !important;
       }
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 460px !important;
+        max-width: 480px !important;
         margin: 16px auto 24px !important;
       }
+      .dyn-search-wrapper.in-tool-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 16px 0 !important;
+        box-sizing: border-box !important;
+        display: block !important;
+      }
 
-      .dyn-calcnet-search {
+      .dyn-modern-search-box {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        gap: 6px !important;
-        box-sizing: border-box !important;
-      }
-      .dyn-calcnet-search input {
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
-        height: 38px !important;
-        padding: 6px 12px !important;
-        font-size: 14px !important;
-        font-weight: 600 !important;
-        letter-spacing: -0.2px !important;
+        height: 42px !important;
+        background: #ffffff !important;
         border: 1.5px solid #cbd5e1 !important;
-        border-radius: 6px !important;
-        background: #f8fafc !important;
-        color: #0f172a !important;
+        border-radius: 24px !important;
+        padding: 0 12px 0 14px !important;
+        gap: 8px !important;
         box-sizing: border-box !important;
-        outline: none !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
         transition: all 0.2s ease !important;
       }
-      .dyn-calcnet-search input::placeholder {
-        color: #64748b !important;
-        font-weight: 500 !important;
-      }
-      .dyn-calcnet-search input:focus {
-        border-color: #2563eb !important;
+      .dyn-modern-search-box:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
         background: #ffffff !important;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
       }
-      .dyn-calcnet-search button {
-        height: 38px !important;
-        padding: 0 16px !important;
-        font-size: 13.5px !important;
-        font-weight: 800 !important;
-        letter-spacing: 0.3px !important;
-        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 6px !important;
-        cursor: pointer !important;
-        box-sizing: border-box !important;
-        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3) !important;
-        transition: all 0.18s ease !important;
+
+      .dyn-modern-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #64748b !important;
+        font-size: 14px !important;
         flex-shrink: 0 !important;
       }
-      .dyn-calcnet-search button:hover {
-        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4) !important;
+
+      .dyn-modern-input {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #0f172a !important;
+        outline: none !important;
+      }
+      .dyn-modern-input::placeholder {
+        color: #94a3b8 !important;
+        font-size: 13px !important;
+      }
+
+      .dyn-modern-clear-btn {
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #e2e8f0 !important;
+        color: #475569 !important;
+        border: none !important;
+        border-radius: 50% !important;
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+      }
+      .dyn-modern-clear-btn:hover {
+        background: #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+
+      /* SEARCH DROPDOWN STYLING */
+      .dyn-search-dropdown {
+        position: absolute !important; 
+        top: calc(100% + 6px) !important; 
+        left: 0 !important; 
+        width: 100% !important; 
+        max-height: 280px !important;
+        overflow-y: auto !important; 
+        background: #ffffff !important; 
+        border: 1px solid #e2e8f0 !important; 
+        border-radius: 12px !important;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15) !important; 
+        display: none; 
+        z-index: 1000005 !important;
+      }
+      .dyn-search-dropdown a {
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: space-between !important;
+        padding: 0.65rem 0.85rem !important; 
+        font-size: 0.88rem !important; 
+        font-weight: 600 !important; 
+        color: #1e293b !important; 
+        text-decoration: none !important; 
+        border-bottom: 1px solid #f1f5f9 !important; 
+      }
+      .dyn-search-dropdown a:hover { 
+        background: #f8fafc !important; 
+        color: #2563eb !important; 
       }
 
       /* ADSENSE UNIT PLACEHOLDER (CATEGORY PAGES ONLY) */
@@ -318,7 +357,7 @@
         padding: 0.6rem 0.8rem 2rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.5rem !important; 
+        gap: 0.6rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
         z-index: 1000000 !important; 
@@ -375,37 +414,6 @@
       @media (min-width: 768px) {
         .dyn-desktop-nav { display: flex !important; }
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
-      }
-
-      /* SEARCH DROPDOWN STYLING */
-      .dyn-search-dropdown {
-        position: absolute !important; 
-        top: calc(100% + 4px) !important; 
-        left: 0 !important; 
-        width: 100% !important; 
-        max-height: 280px !important;
-        overflow-y: auto !important; 
-        background: #ffffff !important; 
-        border: 1px solid #cbd5e1 !important; 
-        border-radius: 6px !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important; 
-        display: none; 
-        z-index: 1000005 !important;
-      }
-      .dyn-search-dropdown a {
-        display: flex !important; 
-        align-items: center !important; 
-        justify-content: space-between !important;
-        padding: 0.65rem 0.8rem !important; 
-        font-size: 0.9rem !important; 
-        font-weight: 600 !important; 
-        color: #1a202c !important; 
-        text-decoration: none !important; 
-        border-bottom: 1px solid #f1f5f9 !important; 
-      }
-      .dyn-search-dropdown a:hover { 
-        background: #edf2f7 !important; 
-        color: #2b6cb0 !important; 
       }
     `;
 
@@ -538,51 +546,62 @@
     });
 
     // ========================================================
-    // SINGLE HIGH-READABILITY SEARCH BOX NODE
+    // MODERN EMBEDDED SEARCH ENGINE (NO BLUE "SEARCH" BUTTON)
     // ========================================================
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
       globalSearchNode.id = "dynGlobalSearchNode";
-      globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+      globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
-        <div class="dyn-calcnet-search">
-          <input type="text" class="dyn-search-input" placeholder="Search calculators..." autocomplete="off">
-          <button type="button">Search</button>
+        <div class="dyn-modern-search-box">
+          <span class="dyn-modern-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input type="text" class="dyn-modern-input" placeholder="Search calculators..." autocomplete="off">
+          <button type="button" class="dyn-modern-clear-btn" aria-label="Clear">&times;</button>
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
 
-      const input = globalSearchNode.querySelector(".dyn-search-input");
-      const btn = globalSearchNode.querySelector("button");
+      const input = globalSearchNode.querySelector(".dyn-modern-input");
+      const clearBtn = globalSearchNode.querySelector(".dyn-modern-clear-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
       function renderList(q) {
         if (!q) {
+          clearBtn.style.display = "none";
           dropdown.style.display = "none";
           dropdown.innerHTML = "";
           return;
         }
+        clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.7rem;font-size:0.85rem;color:#718096;">No calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:#94a3b8;">No matching calculators found</div>`;
         } else {
           dropdown.innerHTML = matches.map((m) => {
-            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:#718096;">→</span></a>`;
+            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:#94a3b8;">→</span></a>`;
           }).join("");
         }
         dropdown.style.display = "block";
       }
 
       input.addEventListener("input", (e) => renderList(e.target.value.trim().toLowerCase()));
-      btn.addEventListener("click", () => renderList(input.value.trim().toLowerCase()));
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        renderList("");
+        input.focus();
+      });
 
       document.addEventListener("click", (e) => {
         if (!globalSearchNode.contains(e.target)) dropdown.style.display = "none";
       });
     }
 
-    // HELPER: Locate Popular Tools card
     function findPopularToolsCard() {
       const candidates = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div, aside"));
       for (const el of candidates) {
@@ -598,7 +617,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH & ANCHOR SIDEBAR PROPERLY (DESKTOP & MOBILE)
+    // TELEPORT SEARCH & ANCHOR SIDEBAR PROPERLY
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -608,7 +627,7 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. MOBILE PLACEMENT: In hamburger drawer
+      // 1. MOBILE PLACEMENT: Embedded search goes inside Hamburger Drawer
       if (isMobile) {
         document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -622,7 +641,7 @@
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): Maintain 2 columns with sidebar on the right
+      // 2. TOOL PAGES (DESKTOP): 2 columns with sidebar on the right
       if (isToolPage) {
         document.body.classList.add("is-tool-page-view");
         document.body.classList.remove("dyn-is-category");
@@ -641,10 +660,9 @@
               sidebar = document.createElement("aside");
               sidebar.id = "dynDesktopSidebarWrap";
 
-              // 1. Search Box on Top
+              globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
               sidebar.appendChild(globalSearchNode);
 
-              // 2. Popular Tools and other secondary cards directly underneath
               const secondaryCards = Array.from(parentContainer.children).filter((el) => {
                 if (el === mainContentArea || el === sidebar || el === globalSearchNode) return false;
                 const text = (el.textContent || "").toLowerCase();
@@ -657,7 +675,7 @@
 
               parentContainer.appendChild(sidebar);
             } else {
-              // Ensure Search is at the top of the sidebar
+              globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
               if (sidebar.firstChild !== globalSearchNode) {
                 sidebar.prepend(globalSearchNode);
               }
