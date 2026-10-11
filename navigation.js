@@ -62,18 +62,18 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: NUDGED SLIGHTLY TOWARDS THE RIGHT */
+      /* 1. HOMEPAGE: PRECISELY LINED UP WITH RED RECTANGLE BOUNDARY */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 360px !important;
+        max-width: 330px !important;
         width: 100% !important;
         margin-top: 1.25rem !important;
         margin-bottom: 1.5rem !important;
-        margin-left: 18% !important; 
+        margin-left: 8% !important; 
         margin-right: auto !important;
       }
       @media (min-width: 900px) {
         .dyn-search-wrapper.in-home-desktop {
-          margin-left: calc(((100% - 480px) / 2) + 24px) !important;
+          margin-left: calc((100% - 480px) / 2) !important;
         }
       }
 
@@ -630,7 +630,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Positioned slightly to the right
+      // 3. Desktop Homepage View: Positioned inside the specified red rectangle zone
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
