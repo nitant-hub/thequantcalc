@@ -1,5 +1,14 @@
 (function () {
   function initNavigation() {
+    // Lock viewport strictly to 1:1 scale
+    let vMeta = document.querySelector('meta[name="viewport"]');
+    if (!vMeta) {
+      vMeta = document.createElement("meta");
+      vMeta.name = "viewport";
+      document.head.appendChild(vMeta);
+    }
+    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no");
+
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
@@ -21,6 +30,13 @@
         }
       }
 
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        position: relative !important;
+      }
+
       body { 
         padding-top: var(--nav-header-height) !important; 
       }
@@ -29,9 +45,7 @@
         display: none !important;
       }
 
-      /* ========================================================
-         CATEGORY VIEW INTERNAL TWO-COLUMN SPLIT
-         ======================================================== */
+      /* CATEGORY VIEW TWO-COLUMN SPLIT */
       @media (min-width: 768px) {
         #catView.dyn-cat-split {
           display: flex !important;
@@ -53,9 +67,6 @@
         }
       }
 
-      /* ========================================================
-         SEARCH COMPONENT CORE & VARIANTS
-         ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -63,7 +74,7 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
-      /* Mobile: centered within safe margins */
+      /* Mobile: strictly centered and contained */
       .dyn-search-wrapper.in-home-desktop {
         max-width: min(340px, calc(100% - 2rem)) !important;
         width: 100% !important;
@@ -106,7 +117,7 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
       }
 
-      /* Critical: 16px font-size prevents mobile keyboard auto-zoom completely */
+      /* Force 16px to completely eliminate mobile auto-zoom trigger */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -115,6 +126,7 @@
         outline: none !important;
         color: var(--text-main, #0f172a) !important;
         touch-action: manipulation !important;
+        -webkit-text-size-adjust: 100% !important;
       }
 
       .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
@@ -209,9 +221,7 @@
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13.5px !important; }
 
-      /* ========================================================
-         ADVERTISEMENT BOX (300x250)
-         ======================================================== */
+      /* AD CONTAINER */
       .dyn-adsense-300x250 {
         width: 100% !important;
         height: 250px !important;
@@ -265,7 +275,6 @@
       [data-theme="dark"] .dyn-search-dropdown a { color: #f8fafc !important; border-bottom: 1px solid #334155 !important; }
       .dyn-search-dropdown a:hover { background: var(--bg-primary, #f8fafc) !important; color: #2563eb !important; }
 
-      /* STANDALONE TOOL SIDEBAR FIX */
       aside.sidebar {
         background: transparent !important;
         border: none !important;
@@ -535,20 +544,32 @@
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      function forceSnapBack() {
+      // Active unzoom and scroll recovery
+      function resetMobileZoomAndScroll() {
         requestAnimationFrame(() => {
           window.scrollTo(0, window.scrollY);
           document.documentElement.scrollLeft = 0;
           document.body.scrollLeft = 0;
+
+          // Force viewport meta refresh to restore 1:1 mobile scale
+          const meta = document.querySelector('meta[name="viewport"]');
+          if (meta) {
+            const content = meta.getAttribute("content");
+            meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
+            setTimeout(() => {
+              meta.setAttribute("content", content);
+            }, 50);
+          }
         });
       }
 
-      input.addEventListener("blur", forceSnapBack);
+      input.addEventListener("blur", resetMobileZoomAndScroll);
+      input.addEventListener("focusout", resetMobileZoomAndScroll);
 
       if (window.visualViewport) {
         window.visualViewport.addEventListener("resize", () => {
           if (document.activeElement !== input) {
-            forceSnapBack();
+            resetMobileZoomAndScroll();
           }
         });
       }
@@ -590,7 +611,7 @@
       });
     }
 
-    // ADSENSE NODE (300x250 placeholder card)
+    // ADSENSE NODE
     let globalAdsenseNode = document.getElementById("dynAdsense300");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
@@ -618,7 +639,7 @@
         return;
       }
 
-      // 2. Desktop Category Page (Split View with 300x250 Ad)
+      // 2. Desktop Category Page
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -667,7 +688,7 @@
         }
       }
 
-      // 4. Standalone Tool Page: AdSense on Top -> Search Option Below Ad -> Popular Tools Card Below Search
+      // 4. Standalone Tool Page
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -682,12 +703,10 @@
 
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
-        // AdSense Box placed at the top of the sidebar column
         if (sidebarAside.firstElementChild !== globalAdsenseNode) {
           sidebarAside.insertBefore(globalAdsenseNode, sidebarAside.firstChild);
         }
 
-        // Search Box placed directly beneath AdSense and above the Popular Tools card
         if (globalSearchNode.previousElementSibling !== globalAdsenseNode) {
           sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
