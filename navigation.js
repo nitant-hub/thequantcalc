@@ -38,10 +38,19 @@
       }
 
       /* ========================================================
-         VIEW ISOLATION & TRUE 2-COLUMN LAYOUT (DESKTOP)
+         HOMEPAGE GUARDS: STRICTLY HIDE SIDEBAR & ADS ON HOME
+         ======================================================== */
+      body:not(.dyn-is-category) #dynDesktopSidebarWrap,
+      body:not(.dyn-is-category) #dynAdSenseSlot,
+      body:not(.dyn-is-category) .dyn-calcnet-search {
+        display: none !important;
+      }
+
+      /* ========================================================
+         CATEGORY MODE: HIDE HOME ELEMENTS AND DISPLAY 2 COLUMNS
          ======================================================== */
       @media (min-width: 768px) {
-        /* When in Category Mode, completely hide home-specific sections */
+        /* Hide homepage-specific widgets on category pages */
         body.dyn-is-category #home-view,
         body.dyn-is-category .interactive-calc,
         body.dyn-is-category .calc-card,
@@ -51,7 +60,7 @@
           display: none !important;
         }
 
-        /* Category master flex container directly below header */
+        /* 2-Column Desktop Grid for Category Views */
         body.dyn-is-category .dyn-category-grid-parent {
           display: flex !important;
           flex-direction: row !important;
@@ -66,7 +75,7 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA (ZERO TOP GAP) */
+        /* 1. LEFT MAIN TOOLS AREA */
         body.dyn-is-category .dyn-main-card-left,
         body.dyn-is-category .dyn-main-card-left.card {
           flex: 1 1 calc(100% - 325px) !important;
@@ -196,7 +205,7 @@
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
 
-      /* HEADER CATEGORY LINKS */
+      /* CATEGORIES HEADER ITEMS */
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
@@ -542,9 +551,10 @@
       if (isLayoutUpdating || window.innerWidth < 768) return;
 
       const hash = (window.location.hash || "").toLowerCase();
+      // True only on category routes like #/financial, #/math, #/utility, #/all
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // Reset when back on Home Page
+      // STRICT HOMEPAGE CLEANUP: If not a category view, purge sidebar & classes immediately
       if (!isCategoryView) {
         document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -556,6 +566,7 @@
         return;
       }
 
+      // Mark body as category mode
       document.body.classList.add("dyn-is-category");
 
       // Find the main category directory block
@@ -579,13 +590,16 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
+          // 1. Sidebar Search Box
           sidebar.appendChild(makeSearchNode());
 
+          // 2. Sidebar AdSense Unit (300x250)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
+          // 3. Move secondary blocks directly into the sidebar
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar) return false;
             const text = (el.textContent || "").toLowerCase();
@@ -608,7 +622,13 @@
     const observer = new MutationObserver(() => {
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
-      if (isCategoryView && (!document.getElementById("dynDesktopSidebarWrap") || !document.body.classList.contains("dyn-is-category"))) {
+      
+      // If user is on home page but sidebar was inadvertently inserted, delete it immediately
+      if (!isCategoryView) {
+        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
+        if (existingSidebar) existingSidebar.remove();
+        document.body.classList.remove("dyn-is-category");
+      } else if (!document.getElementById("dynDesktopSidebarWrap") || !document.body.classList.contains("dyn-is-category")) {
         setupCalculatorNetLayout();
       }
     });
