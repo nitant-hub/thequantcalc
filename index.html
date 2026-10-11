@@ -104,84 +104,86 @@ p.intro, #cintro, #cintro:empty {
    CATEGORY ENCLOSED IN APPLE BENTO CARD + TEXT-ONLY TOOLS
    ======================================================== */
 .cols, #cols {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-  gap: 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.75rem !important;
   margin-top: 0px !important;
   padding-top: 0px !important;
   width: 100% !important;
 }
 
-/* Semi-3D Bento Grid Card for Categories */
-.cat-bento-box {
-  position: relative;
+.cat-group-block {
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.35rem;
-  border-radius: var(--apple-radius);
+  gap: 0.95rem;
+  width: 100%;
+}
+
+/* Semi-3D Bento Grid Card for Categories */
+.cat-bento-header-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+  width: fit-content;
+  min-width: 240px;
+  text-decoration: none;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cat-bento-box:hover {
+.cat-bento-header-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 30px -8px rgba(0, 113, 227, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 16px 28px -6px rgba(0, 113, 227, 0.16), 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
-/* Header inside Category Box */
-.cat-bento-header {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-[data-theme="dark"] .cat-bento-header {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-/* Category Title */
 .cat-bento-title {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--text);
   letter-spacing: -0.025em;
   text-decoration: none;
 }
-.cat-bento-title:hover {
-  color: var(--link);
-}
 
-/* Minimalist Text-Only Tools List */
-.cat-text-tools {
+/* PURE MINIMALIST UNDERLINED TEXT TOOLS (NO CARD/NO BACKGROUND) */
+.cat-pure-text-list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
   margin: 0;
-  padding: 0;
+  padding: 0.2rem 0.5rem 0.2rem 0.6rem;
 }
 
-.cat-text-tools li {
+.cat-pure-text-list li {
   display: flex;
   align-items: center;
 }
 
-.cat-text-tools li a {
-  color: var(--link);
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-  line-height: 1.35;
-  transition: color 0.18s ease, transform 0.18s ease;
+.cat-pure-text-list li a {
+  color: #3b6fb6;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
 }
 
-.cat-text-tools li a:hover {
-  text-decoration: underline;
-  transform: translateX(3px);
+.cat-pure-text-list li a:hover {
+  color: #0056b3;
+}
+
+[data-theme="dark"] .cat-pure-text-list li a {
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .cat-pure-text-list li a:hover {
+  color: #93c5fd;
 }
 
 /* Category Palettes & 3D Icons */
@@ -346,7 +348,7 @@ input, select, textarea {
   color: #ffffff;
 }
 
-/* MOBILE VIEW */
+/* MOBILE ROW LAYOUT */
 @media (max-width: 767px) {
   html body #catView,
   html body div#catView.card {
@@ -404,11 +406,6 @@ input, select, textarea {
     font-size: 0.85rem !important;
     align-self: center !important;
     margin-left: auto !important;
-  }
-
-  .cols, #cols {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
   }
 }
 
@@ -741,12 +738,12 @@ footer a:hover { color: var(--link); }
       cs.forEach(function(c){
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
-        o+='<div class="cat-bento-box ' + meta.theme + '">';
-        o+='  <div class="cat-bento-header">';
+        o+='<div class="cat-group-block">';
+        o+='  <a class="cat-bento-header-card ' + meta.theme + '" href="#/'+c+'">';
         o+='    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
-        o+='    <a class="cat-bento-title" href="#/'+c+'">'+esc(label(c))+'</a>';
-        o+='  </div>';
-        o+='  <ul class="cat-text-tools">';
+        o+='    <span class="cat-bento-title">'+esc(label(c))+'</span>';
+        o+='  </a>';
+        o+='  <ul class="cat-pure-text-list">';
         list.forEach(function(t){
           o+='    <li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>';
         });
@@ -766,12 +763,12 @@ footer a:hover { color: var(--link); }
       var list = toolsOf(cur);
 
       var o2='';
-      o2+='<div class="cat-bento-box ' + meta.theme + '">';
-      o2+='  <div class="cat-bento-header">';
+      o2+='<div class="cat-group-block">';
+      o2+='  <div class="cat-bento-header-card ' + meta.theme + '">';
       o2+='    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
       o2+='    <span class="cat-bento-title">'+esc(label(cur))+'</span>';
       o2+='  </div>';
-      o2+='  <ul class="cat-text-tools">';
+      o2+='  <ul class="cat-pure-text-list">';
       list.forEach(function(t){
         o2+='    <li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>';
       });
