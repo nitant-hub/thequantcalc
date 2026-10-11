@@ -1,763 +1,142 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-<title>thequantcals | Free Advanced Calculators & Generators</title>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"thequantcals","url":"https://thequantcals.com","description":"Premium collection of calculators and tools for finance, health, and mathematics."}
-</script>
-<style>
-:root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-glass: rgba(255, 255, 255, 0.85);
-  --text: #0f172a;
-  --muted: #64748b;
-  --border: #e2e8f0;
-  --border-light: rgba(255, 255, 255, 0.7);
-  --link: #0066cc;
-  --grad: linear-gradient(135deg, #0071e3 0%, #6366f1 100%);
-  --shadow-3d: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --apple-radius: 20px;
-}
-
-[data-theme="dark"] {
-  --bg: #0b0f19;
-  --surface: #151c2e;
-  --surface-glass: rgba(21, 28, 46, 0.85);
-  --text: #f8fafc;
-  --muted: #94a3b8;
-  --border: #232d42;
-  --border-light: rgba(255, 255, 255, 0.08);
-  --link: #38bdf8;
-  --shadow-3d: 0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08);
-}
-
-html, body {
-  overflow-x: hidden !important;
-  overflow-x: clip !important;
-  width: 100% !important;
-  max-width: 100vw !important;
-  position: relative !important;
-  letter-spacing: -0.011em;
-}
-
-html { scroll-padding-top: 75px; }
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif; }
-body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-
-.wrap { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; flex: 1; }
-.grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
-
-.card { 
-  background: var(--surface); 
-  padding: 1.5rem; 
-  border-radius: var(--apple-radius); 
-  border: 1px solid var(--border); 
-  box-shadow: var(--shadow-3d); 
-}
-
-.st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
-
-/* CATEGORY VIEW HEADINGS & ZERO-GAP SETTINGS */
-.crumb, #crumb {
-  font-size: 0.82rem !important;
-  color: var(--muted) !important;
-  margin: 0 0 2px 0 !important;
-  padding: 0 !important;
-  line-height: 1.2 !important;
-}
-.crumb a { color: var(--link); text-decoration: none; }
-
-h1#ch1 {
-  font-size: 1.55rem !important;
-  color: var(--text) !important;
-  margin: 0 0 8px 0 !important;
-  padding: 0 !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.15 !important;
-}
-
-/* DELETED SENTENCE CONTAINER COLLAPSED COMPLETELY */
-p.intro, #cintro, #cintro:empty {
-  display: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 0 !important;
-  min-height: 0 !important;
-}
-
-/* Eliminate native search input block */
-.sr, #catView .sr {
-  display: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 0 !important;
-  min-height: 0 !important;
-  line-height: 0 !important;
-  border: none !important;
-}
-.sr input, #catView .sr input { display: none !important; }
-
-/* Tool Cards Container */
+/* ========================================================
+   CATEGORY PAGE: APPLE UI + SEMI-3D BENTO TOOL CARDS
+   ======================================================== */
 .cols, #cols {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
-  gap: 0.85rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
   margin-top: 0px !important;
   padding-top: 0px !important;
+  width: 100% !important;
 }
 
-.cols section, #cols section {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 0.95rem 1rem;
-  box-shadow: var(--shadow-3d);
-}
-
-.cols h2, #cols h2 {
-  font-size: 1rem;
-  margin-bottom: 0.45rem;
-  font-weight: 700;
-}
-.cols h2 a, #cols h2 a { color: var(--text); text-decoration: none; }
-.cols h2 a:hover, #cols h2 a:hover { color: var(--link); }
-
-.cols ul, #cols ul {
-  list-style: none;
+.cat-group-block {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-}
-.cols li a, #cols li a {
-  color: var(--link);
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 500;
-}
-.cols li a:hover { text-decoration: underline; }
-.none { display: none; color: var(--muted); font-size: 0.95rem; }
-
-input, select, textarea {
-  font-size: 16px !important;
-  -webkit-text-size-adjust: 100% !important;
-  touch-action: manipulation !important;
+  gap: 0.75rem;
+  width: 100%;
 }
 
-/* Stat Highlights */
-.feat { 
-  display: grid; 
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 12px; 
+.cat-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  padding: 0 0.15rem;
 }
-.feat div { 
-  border: 1px solid var(--border); 
-  border-radius: 16px; 
-  padding: 1rem; 
-  text-align: center;
-  box-shadow: var(--shadow-3d);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.feat div:hover { transform: translateY(-2px); }
-.feat b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
-.feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
-/* CATEGORY CARDS ON HOMEPAGE */
-.cat-hub-header {
+.cat-tools-bento {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+  width: 100%;
+}
+
+/* Semi-3D Bento Tool Card */
+.cat-tool-card {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-.cat-hub-title {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-.cat-hub-view-all {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #0071e3;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: transform 0.2s ease;
-}
-.cat-hub-view-all:hover { transform: translateX(3px); }
-
-.cat-hub-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.cat-hub-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 1.4rem;
-  border-radius: 22px;
+  padding: 0.95rem 1.1rem;
+  border-radius: 18px;
   text-decoration: none;
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
-  min-height: 205px;
-}
-.cat-hub-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 35px -10px rgba(0, 113, 227, 0.16), 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  gap: 0.85rem;
 }
 
-.cat-card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
+.cat-tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 28px -6px rgba(0, 113, 227, 0.18), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* MOBILE VIEW (SLIM ROWS & FLUSH COMPACT STACK) */
-@media (max-width: 767px) {
-  html body #catView,
-  html body div#catView.card {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0px !important;
-    row-gap: 0px !important;
-    padding: 1.15rem 1rem !important;
-  }
-
-  .cat-hub-grid { 
-    grid-template-columns: 1fr;
-    gap: 0.75rem; 
-  }
-
-  .cat-hub-card {
-    flex-direction: row !important;
-    align-items: center !important;
-    min-height: unset !important;
-    padding: 0.8rem 1rem !important;
-    border-radius: 16px !important;
-    gap: 0.85rem !important;
-  }
-
-  .cat-3d-icon {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    font-size: 1.35rem !important;
-    margin-bottom: 0 !important;
-    border-radius: 12px !important;
-  }
-
-  .cat-card-body {
-    min-width: 0 !important;
-  }
-
-  .cat-card-title {
-    font-size: 1.05rem !important;
-    margin-bottom: 0.15rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .cat-card-desc {
-    font-size: 0.78rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-
-  .cat-action-circle {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    font-size: 0.85rem !important;
-    align-self: center !important;
-    margin-left: auto !important;
-  }
-}
-
-/* DESKTOP SPLIT VIEW */
-@media (min-width: 768px) {
-  html body #catView.dyn-cat-split {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    gap: 2rem !important;
-    padding: 1.75rem !important;
-  }
-  html body #catView.dyn-cat-split > .dyn-cat-left-pane {
-    flex: 1 1 0% !important;
-    min-width: 0 !important;
-  }
-  html body #catView.dyn-cat-split > .dyn-cat-right-pane {
-    flex: 0 0 320px !important;
-    width: 320px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
-}
-
-/* Category Palettes */
-.cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
-.cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
-.cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
-.cat-theme-physics { background: linear-gradient(145deg, #f5f3ff 0%, #faf5ff 60%, #ffffff 100%); border-color: #ddd6fe; }
-.cat-theme-utility { background: linear-gradient(145deg, #fffbeb 0%, #fefce8 60%, #ffffff 100%); border-color: #fde68a; }
-.cat-theme-cyan { background: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 60%, #ffffff 100%); border-color: #a5f3fc; }
-.cat-theme-indigo { background: linear-gradient(145deg, #eef2ff 0%, #f8faff 60%, #ffffff 100%); border-color: #c7d2fe; }
-
-[data-theme="dark"] .cat-theme-financial { background: linear-gradient(145deg, #064e3b 0%, #0f172a 100%); border-color: #047857; }
-[data-theme="dark"] .cat-theme-math { background: linear-gradient(145deg, #1e3a8a 0%, #0f172a 100%); border-color: #1d4ed8; }
-[data-theme="dark"] .cat-theme-health { background: linear-gradient(145deg, #881337 0%, #0f172a 100%); border-color: #be123c; }
-[data-theme="dark"] .cat-theme-physics { background: linear-gradient(145deg, #4c1d95 0%, #0f172a 100%); border-color: #6d28d9; }
-[data-theme="dark"] .cat-theme-utility { background: linear-gradient(145deg, #78350f 0%, #0f172a 100%); border-color: #b45309; }
-[data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
-[data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
-
-.cat-3d-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+/* Semi-3D Raised Icon Badge */
+.cat-tool-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.65rem;
-  margin-bottom: 1.1rem;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  transition: transform 0.25s ease;
+  font-size: 1.35rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
-.cat-hub-card:hover .cat-3d-icon { transform: scale(1.08) rotate(-3deg); }
+.cat-tool-card:hover .cat-tool-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
 
-.cat-icon-financial { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
-.cat-icon-math { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; }
-.cat-icon-health { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff; }
-.cat-icon-physics { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: #fff; }
-.cat-icon-utility { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
-.cat-icon-cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #fff; }
-.cat-icon-indigo { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #fff; }
+.cat-tool-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
 
-.cat-card-title {
-  font-size: 1.15rem;
-  font-weight: 800;
+.cat-tool-title {
+  font-size: 0.98rem;
+  font-weight: 700;
   color: var(--text);
-  margin-bottom: 0.35rem;
-  letter-spacing: -0.02em;
-}
-.cat-card-desc {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.45;
-  font-weight: 500;
-  margin-bottom: 1.25rem;
-  flex-grow: 1;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.cat-action-circle {
-  width: 32px;
-  height: 32px;
+.cat-tool-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Semi-3D Floating Action Disc */
+.cat-tool-arrow {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
   border-radius: 50%;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0071e3;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-  align-self: flex-start;
+  flex-shrink: 0;
+  margin-left: auto;
 }
-[data-theme="dark"] .cat-action-circle {
+
+[data-theme="dark"] .cat-tool-arrow {
   background: rgba(255, 255, 255, 0.12);
   color: #38bdf8;
 }
-.cat-hub-card:hover .cat-action-circle {
-  transform: translateX(4px);
+
+.cat-tool-card:hover .cat-tool-arrow {
+  transform: translateX(3px);
   background: #0071e3;
   color: #ffffff;
 }
 
-.box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--apple-radius);
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-  box-shadow: var(--shadow-3d);
+/* Mobile: Single Column Slim Cards */
+@media (max-width: 767px) {
+  .cat-tools-bento {
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
+  }
+  .cat-tool-card {
+    padding: 0.75rem 0.95rem !important;
+  }
 }
-.box h3 {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  color: #fff;
-  font-size: 0.95rem;
-  padding: .75rem 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-.box div { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .65rem; }
-.box a { color: var(--link); font-size: .93rem; font-weight: 600; text-decoration: none; }
-.box a:hover { text-decoration: underline; }
-
-.calc-card {
-  padding-top: 1.25rem; padding-bottom: .6rem; padding-left: 0; padding-right: 0;
-  overflow: hidden; max-width: 100% !important; box-sizing: border-box !important;
-}
-.calc-card .st { padding-left: 1.25rem; margin-bottom: .4rem; }
-#calc { width: 100% !important; max-width: 100% !important; height: 420px; border: none; display: block; transition: height .15s ease; }
-
-#homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
-#sidebarSearchSlot { width: 100%; margin-bottom: 1.25rem; }
-
-footer {
-  background: var(--surface); border-top: 1px solid var(--border);
-  padding: 2.5rem 1.5rem; text-align: center; font-size: .9rem; color: var(--muted); margin-top: 3.5rem;
-}
-footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
-footer a { color: var(--muted); text-decoration: none; font-weight: 500; }
-footer a:hover { color: var(--link); }
-
-.top {
-  position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px;
-  background: var(--grad); color: #fff; border: none; border-radius: 50%; cursor: pointer;
-  opacity: 0; visibility: hidden; transition: .3s; z-index: 999; font-size: 1.2rem;
-  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.4);
-}
-.top.show { opacity: 1; visibility: visible; }
-
-@media(max-width:480px){ .wrap { padding: 0 .6rem; } }
-@media(min-width:768px){
-  .card { padding: 1.75rem; }
-  .calc-card { padding-left: 0; padding-right: 0; padding-bottom: .8rem; }
-}
-@media(min-width:992px){ .grid { grid-template-columns: 2.5fr 1fr; } }
-</style>
-<script>if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')</script>
-</head>
-<body>
-
-<div class="wrap"><div class="grid">
-<main>
-
-  <!-- HOME VIEW -->
-  <div id="home" style="display:flex;flex-direction:column;gap:1.5rem">
-    <section class="card calc-card">
-      <h2 class="st">🧮 Interactive Calculator</h2>
-      <iframe id="calc" src="calculator/index.html" title="Interactive Calculator"></iframe>
-    </section>
-
-    <!-- SEARCH BAR BELOW INTERACTIVE CALCULATOR (HOMEPAGE) -->
-    <div id="homeSearchSlot"></div>
-
-    <!-- Stat Highlights -->
-    <div class="feat">
-      <div style="background:rgba(239,246,255,0.7);color:#1e40af;border-color:#bfdbfe"><b>100+</b><span>Online Tools</span></div>
-      <div style="background:rgba(236,253,245,0.7);color:#065f46;border-color:#a7f3d0"><b>Fast</b><span>Performance</span></div>
-      <div style="background:rgba(245,243,255,0.7);color:#5b21b6;border-color:#ddd6fe"><b>100%</b><span>Client-Side</span></div>
-      <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
-    </div>
-
-    <!-- 3D Pastel Categories Container -->
-    <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
-  </div>
-
-  <!-- CATEGORY / ALL VIEW -->
-  <div id="catView" class="card" style="display:none">
-    <div class="crumb" id="crumb"></div>
-    <h1 id="ch1"></h1>
-    <p class="intro" id="cintro"></p>
-    <div class="sr"><input type="search" id="q" placeholder="Search calculators" aria-label="Search calculators"></div>
-    <div class="cols" id="cols"></div>
-    <p class="none" id="none">No calculators match your search.</p>
-  </div>
-
-</main>
-
-<aside>
-  <!-- SEARCH BAR IN SIDEBAR (NON-HOMEPAGE PAGES) -->
-  <div id="sidebarSearchSlot"></div>
-
-  <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
-  <div class="box"><h3>Popular Tools</h3><div>
-    <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
-    <a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a>
-    <a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a>
-  </div></div>
-  <div class="box"><h3>System Status</h3><div style="font-size:.88rem;color:var(--muted)">All tools process data locally inside your web browser.</div></div>
-</aside>
-</div></div>
-
-<footer>
-  <p>&copy; 2026 thequantcals. All rights reserved.</p>
-  <nav>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="terms-of-service.html">Terms of Service</a>
-    <a href="disclaimer.html">Disclaimer</a>
-    <a href="contact.html">Contact Us</a>
-  </nav>
-</footer>
-<button class="top" id="top" aria-label="Back to top">&#8963;</button>
-
-<!-- Page Router, Registry, Automatic Category Sketcher & Iframe Resizer -->
-<script>
-(function(){
-  var REPO='nitant-hub/thequantcalc', BRANCH='main';
-
-  var BASE=[
-    ['tools/Compound-Interest-Calculator.html','Compound Interest Calculator','financial','Investment'],
-    ['tools/Exam-Marks-Percentage-Calculator.html','Exam Marks Percentage Calculator','math','Percentage'],
-    ['tools/accurate-age-calculator.html','Accurate Age Calculator','utility','Date and Time'],
-    ['tools/cosmic-weight.html','Cosmic Weight Calculator','utility','Fun and Everyday']
-  ];
-  var FIRST=['financial','math','utility'];
-
-  var calc=document.getElementById('calc');
-
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.frameHeight && calc) {
-      calc.style.height = e.data.frameHeight + 'px';
-    }
-  });
-
-  function measureCalc(){
-    try{
-      var d=calc.contentDocument, w=calc.contentWindow;
-      if(!d||!d.body)return 0;
-      var sy=w.pageYOffset||0, max=0;
-      Array.prototype.forEach.call(d.body.children,function(el){
-        var tag=el.tagName;
-        if(tag==='SCRIPT'||tag==='STYLE'||tag==='LINK')return;
-        var cs=w.getComputedStyle(el);
-        if(cs.display==='none'||cs.position==='fixed')return;
-        var r=el.getBoundingClientRect();
-        if(!r.height)return;
-        var b=r.bottom+sy+(parseFloat(cs.marginBottom)||0);
-        if(b>max)max=b;
-      });
-      var bs=w.getComputedStyle(d.body);
-      var h=Math.ceil(max+(parseFloat(bs.paddingBottom)||0)+(parseFloat(bs.marginBottom)||0));
-      var sh=d.documentElement.scrollHeight;
-      if(sh>w.innerHeight+2&&sh>h)h=sh;
-      return h;
-    }catch(e){return 0}
-  }
-  function fitCalc(){
-    if(!calc || !calc.offsetParent)return;
-    var h=measureCalc();
-    if(h<200||h>2500)return;
-    h+=6;
-    if(Math.abs(h-calc.offsetHeight)>2)calc.style.height=h+'px';
-  }
-  if(calc){
-    calc.addEventListener('load',function(){
-      fitCalc();setTimeout(fitCalc,150);setTimeout(fitCalc,500);setTimeout(fitCalc,1200);
-    });
-    window.addEventListener('load',function(){fitCalc();setTimeout(fitCalc,400)});
-    window.addEventListener('resize',function(){setTimeout(fitCalc,150)});
-    setInterval(fitCalc,400);
-  }
-
-  var tools=[], seen={};
-  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
-  function pretty(s){return s.replace(/[-_]+/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase()})}
-  function norm(s){s=s.toLowerCase();return s==='finance'?'financial':s}
-  function add(path,name,cat,group){
-    var k=path.toLowerCase(); if(seen[k])return; seen[k]=1;
-    tools.push({url:'/'+path,name:name,cat:cat,group:group});
-  }
-  BASE.forEach(function(b){add(b[0],b[1],b[2],b[3])});
-
-  function addFromTree(list){
-    list.forEach(function(p){
-      if(!/^tools\/.+\.html$/i.test(p))return;
-      var parts=p.split('/').slice(1), file=parts.pop();
-      if(file.charAt(0)==='_'||/^index\.html$/i.test(file))return;
-      var cat=parts.length?norm(parts[0]):'utility';
-      var group=parts[1]?pretty(parts[1]):(parts.length?'Calculators':'More Tools');
-      add(p,pretty(file.replace(/\.html$/i,'')),cat,group);
-    });
-  }
-
-  function load(done){
-    var c=null; try{c=JSON.parse(localStorage.getItem('qc_tree'))}catch(e){}
-    if(c&&c.p&&Date.now()-c.t<1800000){addFromTree(c.p);return done()}
-    fetch('https://api.github.com/repos/'+REPO+'/git/trees/'+BRANCH+'?recursive=1')
-      .then(function(r){return r.json()})
-      .then(function(j){
-        if(!j.tree)return done();
-        var p=j.tree.filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
-        try{localStorage.setItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
-        addFromTree(p); done();
-      }).catch(done);
-  }
-
-  function cats(){
-    var ex=[]; tools.forEach(function(t){if(FIRST.indexOf(t.cat)<0&&ex.indexOf(t.cat)<0)ex.push(t.cat)});
-    return FIRST.concat(ex.sort());
-  }
-  function toolsOf(c){return tools.filter(function(t){return t.cat===c}).sort(function(a,b){return a.name.localeCompare(b.name)})}
-  function label(c){return pretty(c)}
-  function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||label(c))+'</a>'}
-
-  /* AUTOMATIC SYMBOL & PALETTE GENERATOR */
-  function autoSketchCategory(rawCategoryName) {
-    var c = rawCategoryName.toLowerCase();
-
-    if (c.includes('finan') || c.includes('money') || c.includes('invest') || c.includes('tax') || c.includes('loan'))
-      return { icon: '📈', theme: 'cat-theme-financial', iconClass: 'cat-icon-financial', desc: 'Investments, loans, taxes, and wealth calculations.' };
-    
-    if (c.includes('math') || c.includes('calc') || c.includes('stat') || c.includes('algebra') || c.includes('percent'))
-      return { icon: '📐', theme: 'cat-theme-math', iconClass: 'cat-icon-math', desc: 'Algebra, geometry, percentage, formulas and equations.' };
-
-    if (c.includes('health') || c.includes('fit') || c.includes('diet') || c.includes('body') || c.includes('bmi'))
-      return { icon: '❤️', theme: 'cat-theme-health', iconClass: 'cat-icon-health', desc: 'BMI, calories, nutrition, and personal health metrics.' };
-
-    if (c.includes('physic') || c.includes('science') || c.includes('space') || c.includes('astro') || c.includes('gravity'))
-      return { icon: '⚛️', theme: 'cat-theme-physics', iconClass: 'cat-icon-physics', desc: 'Motion, velocity, forces, energy, and astrophysics.' };
-
-    if (c.includes('image') || c.includes('photo') || c.includes('media') || c.includes('graphic'))
-      return { icon: '🖼️', theme: 'cat-theme-cyan', iconClass: 'cat-icon-cyan', desc: 'Resize, compress, convert, and graphic utilities.' };
-
-    if (c.includes('code') || c.includes('dev') || c.includes('web') || c.includes('tech') || c.includes('data'))
-      return { icon: '💻', theme: 'cat-theme-indigo', iconClass: 'cat-icon-indigo', desc: 'Formatters, parsers, encodings, and developer tools.' };
-
-    if (c.includes('chem') || c.includes('bio') || c.includes('lab'))
-      return { icon: '🧪', theme: 'cat-theme-cyan', iconClass: 'cat-icon-cyan', desc: 'Formulas, chemical reactions, and laboratory measurements.' };
-
-    if (c.includes('civil') || c.includes('build') || c.includes('struct') || c.includes('survey'))
-      return { icon: '🏗️', theme: 'cat-theme-utility', iconClass: 'cat-icon-utility', desc: 'Surveying, material metrics, and structural calculations.' };
-
-    if (c.includes('util') || c.includes('tool') || c.includes('time') || c.includes('date') || c.includes('everyday'))
-      return { icon: '🛠️', theme: 'cat-theme-utility', iconClass: 'cat-icon-utility', desc: 'Converters, date & time, generators, and smart utilities.' };
-
-    var dynamicIcons = ['⚡', '🔮', '🎯', '🧭', '⚙️', '📊', '💡', '🚀', '🧩', '🏷️', '🔭', '📡'];
-    var dynamicPalettes = [
-      { theme: 'cat-theme-financial', iconClass: 'cat-icon-financial' },
-      { theme: 'cat-theme-math', iconClass: 'cat-icon-math' },
-      { theme: 'cat-theme-health', iconClass: 'cat-icon-health' },
-      { theme: 'cat-theme-physics', iconClass: 'cat-icon-physics' },
-      { theme: 'cat-theme-utility', iconClass: 'cat-icon-utility' },
-      { theme: 'cat-theme-cyan', iconClass: 'cat-icon-cyan' },
-      { theme: 'cat-theme-indigo', iconClass: 'cat-icon-indigo' }
-    ];
-
-    var hash = 0;
-    for (var i = 0; i < c.length; i++) {
-      hash = c.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    var iconIdx = Math.abs(hash) % dynamicIcons.length;
-    var palIdx = Math.abs(hash) % dynamicPalettes.length;
-
-    return {
-      icon: dynamicIcons[iconIdx],
-      theme: dynamicPalettes[palIdx].theme,
-      iconClass: dynamicPalettes[palIdx].iconClass,
-      desc: 'Explore specialized tools and calculators for ' + pretty(c) + '.'
-    };
-  }
-
-  function render(){
-    var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur='';
-    if(m&&(m[1]==='all'||cs.indexOf(m[1])>-1))cur=m[1];
-
-    var s=''; cs.forEach(function(c){s+=link(c,cur,label(c))});
-    s+='<a href="#/all">All Calculators</a>';
-    var sideCats = document.getElementById('sideCats');
-    if (sideCats) sideCats.innerHTML=s;
-    var catBox = document.getElementById('catBox');
-    if (catBox) catBox.style.display=(cur&&cur!=='all')?'':'none';
-
-    var home=document.getElementById('home'), cv=document.getElementById('catView');
-    if(!cur){
-      home.style.display='flex'; cv.style.display='none';
-      document.title='thequantcals | Free Advanced Calculators & Generators';
-
-      var hs = '';
-      
-      hs += '<div class="cat-hub-header">';
-      hs += '  <h2 class="cat-hub-title">Browse by Category</h2>';
-      hs += '  <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
-      hs += '</div>';
-
-      hs += '<div class="cat-hub-grid">';
-      cs.forEach(function(c){
-        var meta = autoSketchCategory(c);
-        var displayName = c === 'financial' ? 'Finance' : label(c);
-
-        hs += '<a class="cat-hub-card ' + meta.theme + '" href="#/' + c + '">';
-        hs += '  <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
-        hs += '  <div class="cat-card-body">';
-        hs += '    <div class="cat-card-title">' + esc(displayName) + '</div>';
-        hs += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
-        hs += '  </div>';
-        hs += '  <div class="cat-action-circle">&rarr;</div>';
-        hs += '</a>';
-      });
-      hs += '</div>';
-
-      document.getElementById('homeSections').innerHTML = hs;
-      setTimeout(fitCalc, 50); setTimeout(fitCalc, 400);
-    } else if(cur==='all'){
-      home.style.display='none'; cv.style.display='block';
-      document.title='All Calculators | thequantcals';
-      document.getElementById('crumb').innerHTML='<a href="#/">home</a> / all calculators';
-      document.getElementById('ch1').textContent='All Calculators';
-      document.getElementById('cintro').textContent=''; /* Sentence 4 completely deleted */
-      var o='';
-      cs.forEach(function(c){
-        var list=toolsOf(c); if(!list.length)return;
-        var meta = autoSketchCategory(c);
-        o+='<section><h2><a href="#/'+c+'">'+meta.icon+' '+esc(label(c))+'</a></h2><ul>';
-        list.forEach(function(t){o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
-        o+='</ul></section>';
-      });
-      document.getElementById('cols').innerHTML=o;
-      document.getElementById('none').style.display='none';
-    } else {
-      home.style.display='none'; cv.style.display='block';
-      document.title=label(cur)+' Calculators | thequantcals';
-      document.getElementById('crumb').innerHTML='<a href="#/">home</a> / '+esc(cur);
-      document.getElementById('ch1').textContent=label(cur)+' Calculators';
-      document.getElementById('cintro').textContent=''; /* Sentences 1, 2, 3 completely deleted */
-      var groups={}, order=[];
-      toolsOf(cur).forEach(function(t){
-        if(!groups[t.group]){groups[t.group]=[];order.push(t.group)} groups[t.group].push(t);
-      });
-      var o2='';
-      order.forEach(function(g){
-        o2+='<section><h2>'+esc(g)+'</h2><ul>';
-        groups[g].forEach(function(t){o2+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'});
-        o2+='</ul></section>';
-      });
-      document.getElementById('cols').innerHTML=o2;
-      document.getElementById('none').style.display='none';
-    }
-  }
-
-  window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
-  render();
-  load(render);
-
-  var top_=document.getElementById('top');
-  window.addEventListener('scroll',function(){
-    var y=window.scrollY;
-    top_.classList.toggle('show',y>300);
-  });
-  top_.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
-})();
-</script>
-
-<script src="navigation.js"></script>
-</body>
-</html>
