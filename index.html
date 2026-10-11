@@ -62,29 +62,18 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 .st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
 
 /* ========================================================
-   HYPER-SPECIFIC OVERRIDE: KILLS EVERY UNWANTED GAP IN CATEGORY VIEW
+   CATEGORY VIEW COMPACT TYPOGRAPHY (FLUSH & ZERO DEAD SPACE)
    ======================================================== */
-html body #catView,
-html body div#catView.card {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0px !important;
-  row-gap: 0px !important;
-  padding: 1.15rem 1rem !important;
-}
-
-html body #catView .crumb,
-html body #catView #crumb {
+.crumb, #crumb {
   font-size: 0.82rem !important;
   color: var(--muted) !important;
   margin: 0 0 2px 0 !important;
   padding: 0 !important;
   line-height: 1.2 !important;
 }
-html body #catView .crumb a { color: var(--link); text-decoration: none; }
+.crumb a { color: var(--link); text-decoration: none; }
 
-html body #catView h1,
-html body #catView h1#ch1 {
+h1#ch1 {
   font-size: 1.55rem !important;
   color: var(--text) !important;
   margin: 0 0 4px 0 !important;
@@ -94,8 +83,7 @@ html body #catView h1#ch1 {
   line-height: 1.15 !important;
 }
 
-html body #catView p.intro,
-html body #catView #cintro {
+p.intro, #cintro {
   color: var(--muted) !important;
   margin: 0 0 10px 0 !important;
   padding: 0 !important;
@@ -103,9 +91,8 @@ html body #catView #cintro {
   line-height: 1.35 !important;
 }
 
-/* Kills the hidden search bar wrapper and any spacing it leaves */
-html body #catView .sr,
-html body .sr {
+/* Eliminate native search input block */
+.sr, #catView .sr {
   display: none !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -114,14 +101,10 @@ html body .sr {
   line-height: 0 !important;
   border: none !important;
 }
-html body #catView .sr input,
-html body .sr input {
-  display: none !important;
-}
+.sr input, #catView .sr input { display: none !important; }
 
-/* Compact tool columns */
-html body #catView .cols,
-html body #cols {
+/* Tool Cards Container */
+.cols, #cols {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
   gap: 0.85rem !important;
@@ -129,8 +112,7 @@ html body #cols {
   padding-top: 0px !important;
 }
 
-html body #catView .cols section,
-html body #cols section {
+.cols section, #cols section {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -138,30 +120,27 @@ html body #cols section {
   box-shadow: var(--shadow-3d);
 }
 
-html body #catView .cols h2,
-html body #cols h2 {
+.cols h2, #cols h2 {
   font-size: 1rem;
   margin-bottom: 0.45rem;
   font-weight: 700;
 }
-html body #catView .cols h2 a { color: var(--text); text-decoration: none; }
-html body #catView .cols h2 a:hover { color: var(--link); }
+.cols h2 a, #cols h2 a { color: var(--text); text-decoration: none; }
+.cols h2 a:hover, #cols h2 a:hover { color: var(--link); }
 
-html body #catView .cols ul,
-html body #cols ul {
+.cols ul, #cols ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
 }
-html body #catView .cols li a,
-html body #cols li a {
+.cols li a, #cols li a {
   color: var(--link);
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
 }
-html body #catView .cols li a:hover { text-decoration: underline; }
+.cols li a:hover, #cols li a:hover { text-decoration: underline; }
 .none { display: none; color: var(--muted); font-size: 0.95rem; }
 
 input, select, textarea {
@@ -246,8 +225,19 @@ input, select, textarea {
   flex: 1 1 auto;
 }
 
-/* MOBILE ROW LAYOUT */
-@media (max-width: 640px) {
+/* ========================================================
+   MOBILE VIEW (SLIM ROWS & FLUSH COMPACT STACK)
+   ======================================================== */
+@media (max-width: 767px) {
+  html body #catView,
+  html body div#catView.card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0px !important;
+    row-gap: 0px !important;
+    padding: 1.15rem 1rem !important;
+  }
+
   .cat-hub-grid { 
     grid-template-columns: 1fr;
     gap: 0.75rem; 
@@ -297,6 +287,31 @@ input, select, textarea {
     font-size: 0.85rem !important;
     align-self: center !important;
     margin-left: auto !important;
+  }
+}
+
+/* ========================================================
+   DESKTOP SPLIT VIEW: RESTORES PHOTO 2, 3, 4 LAYOUT
+   ======================================================== */
+@media (min-width: 768px) {
+  html body #catView.dyn-cat-split {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 2rem !important;
+    padding: 1.75rem !important;
+  }
+  html body #catView.dyn-cat-split > .dyn-cat-left-pane {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+  }
+  html body #catView.dyn-cat-split > .dyn-cat-right-pane {
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
   }
 }
 
