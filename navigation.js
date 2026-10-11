@@ -64,14 +64,12 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
-      /* Mobile default: Centered and strictly contained without side shift */
       .dyn-search-wrapper.in-home-desktop {
         max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
 
-      /* Desktop: Starts precisely after 15% margin in X direction */
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-desktop {
           max-width: 320px !important;
@@ -113,7 +111,7 @@
         border: none !important;
         background: transparent !important;
         outline: none !important;
-        font-size: 16px !important; /* 16px prevents mobile keyboard auto-zoom shift */
+        font-size: 14px !important;
         font-weight: 500 !important;
         color: var(--text-main, #0f172a) !important;
       }
@@ -153,7 +151,7 @@
         border-radius: 6px !important;
         background: var(--bg-surface, #ffffff) !important;
         padding: 0 10px !important;
-        font-size: 16px !important;
+        font-size: 14px !important;
         color: var(--text-main, #0f172a) !important;
         outline: none !important;
       }
@@ -206,7 +204,7 @@
         border: none !important;
         background: transparent !important;
         outline: none !important;
-        font-size: 16px !important;
+        font-size: 14px !important;
         color: var(--text-main, #0f172a) !important;
       }
       @media (min-width: 768px) {
@@ -546,6 +544,25 @@
 
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
+
+      // AUTO-RESET ZOOM ON MOBILE WHEN KEYBOARD CLOSES
+      function resetMobileZoom() {
+        if (window.innerWidth <= 768) {
+          const viewportMeta = document.querySelector('meta[name="viewport"]');
+          if (viewportMeta) {
+            const originalContent = viewportMeta.content;
+            viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0";
+            setTimeout(() => {
+              viewportMeta.content = originalContent || "width=device-width, initial-scale=1.0";
+              window.scrollTo({ left: 0, behavior: "smooth" });
+            }, 100);
+          } else {
+            window.scrollTo({ left: 0, behavior: "smooth" });
+          }
+        }
+      }
+
+      input.addEventListener("blur", resetMobileZoom);
 
       const allTools = [
         { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
