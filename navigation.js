@@ -62,33 +62,34 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: CENTERED, ATTRACTIVE OPTIMAL WIDTH (NOT FULL-WIDTH) */
+      /* 1. HOMEPAGE: SLIMMER, COMPACT WIDTH (360px) & CENTERED */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 580px !important;
+        max-width: 360px !important;
+        width: 90% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
       .dyn-search-wrapper.in-home-desktop .dyn-search-row {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 48px !important;
+        height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid var(--border-color, #cbd5e1) !important;
-        border-radius: 28px !important;
-        padding: 4px 6px 4px 16px !important;
-        gap: 10px !important;
+        border-radius: 24px !important;
+        padding: 3px 5px 3px 14px !important;
+        gap: 8px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-home-desktop .dyn-search-row {
         background: var(--bg-surface, #1e293b) !important;
         border-color: var(--border-color, #334155) !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
       }
       .dyn-search-wrapper.in-home-desktop .dyn-search-row:focus-within {
         border-color: #3b82f6 !important;
-        box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.16) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
       }
       .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
         flex: 1 1 auto !important;
@@ -97,28 +98,28 @@
         border: none !important;
         background: transparent !important;
         outline: none !important;
-        font-size: 14.5px !important;
+        font-size: 13.5px !important;
         font-weight: 500 !important;
         color: var(--text-main, #0f172a) !important;
       }
       .dyn-search-wrapper.in-home-desktop .dyn-modern-btn {
-        height: 38px !important;
-        padding: 0 20px !important;
+        height: 32px !important;
+        padding: 0 14px !important;
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 20px !important;
-        font-size: 13.5px !important;
+        border-radius: 18px !important;
+        font-size: 12.5px !important;
         font-weight: 700 !important;
         letter-spacing: 0.3px !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
-        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3) !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
         transition: transform 0.15s, box-shadow 0.15s !important;
       }
       .dyn-search-wrapper.in-home-desktop .dyn-modern-btn:hover {
         transform: translateY(-1px) !important;
-        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.45) !important;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4) !important;
       }
 
       /* 2. CATEGORY VIEW: SIDE PANEL RECTANGULAR FIT */
@@ -194,7 +195,7 @@
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13.5px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
 
       /* ========================================================
          ADVERTISEMENT BOX (300x250)
@@ -587,7 +588,7 @@
         return;
       }
 
-      // 2. Desktop Category Page
+      // 2. Desktop Category Page (Split View with 300x250 Ad)
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -623,7 +624,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Centered, clean bounded search under calculator
+      // 3. Desktop Homepage View: Centered, compact search bar (360px)
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
