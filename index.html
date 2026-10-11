@@ -179,12 +179,12 @@ p.intro, #cintro, #cintro:empty {
   text-decoration: none;
 }
 
-/* RESPONSIVE AUTO-FITTING TWO-COLUMN LAYOUT */
+/* ADAPTIVE MULTI-COLUMN FLOW FOR TEXT TOOLS */
 .cat-pure-text-list {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 0.65rem 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 2rem;
   margin: 0;
   padding: 0.2rem 0.5rem 0.2rem 0.6rem;
   width: 100%;
@@ -193,7 +193,8 @@ p.intro, #cintro, #cintro:empty {
 .cat-pure-text-list li {
   display: flex;
   align-items: center;
-  min-width: 0;
+  flex: 0 1 calc(50% - 1rem);
+  min-width: 220px;
 }
 
 .cat-pure-text-list li a {
@@ -384,7 +385,7 @@ input, select, textarea {
 }
 
 /* ========================================================
-   MOBILE VIEW: FULL WIDTH (X) + SLIM Y-DIRECTION + SMART COLUMNS
+   MOBILE VIEW: FULL WIDTH (X) + SLIM Y-DIRECTION
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -492,11 +493,16 @@ input, select, textarea {
     gap: 1.35rem !important;
   }
 
-  /* AUTO-FIT COLUMNS ON MOBILE (Two columns for short names, single row for long names) */
   .cat-pure-text-list {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.55rem 1.25rem !important;
     padding-left: 0.35rem !important;
-    gap: 0.55rem 0.95rem !important;
+  }
+
+  .cat-pure-text-list li {
+    flex: 0 1 calc(50% - 0.65rem) !important;
+    min-width: 140px !important;
   }
 
   .cat-pure-text-list li a {
