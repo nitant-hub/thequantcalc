@@ -23,6 +23,7 @@
 
       body { 
         padding-top: var(--nav-header-height) !important; 
+        overflow-x: hidden !important;
       }
 
       .sr input#q {
@@ -62,14 +63,21 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: STARTS AFTER 15% MARGIN IN X DIRECTION */
+      /* 1. HOMEPAGE SEARCH COMPONENT */
+      /* Mobile default: Centered and strictly contained without side shift */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 320px !important;
+        max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
-        margin-top: 1.25rem !important;
-        margin-bottom: 1.5rem !important;
-        margin-left: 15% !important; /* Starts precisely after 15% width */
-        margin-right: auto !important;
+        margin: 1.25rem auto 1.5rem auto !important;
+      }
+
+      /* Desktop: Starts precisely after 15% margin in X direction */
+      @media (min-width: 768px) {
+        .dyn-search-wrapper.in-home-desktop {
+          max-width: 320px !important;
+          margin-left: 15% !important;
+          margin-right: auto !important;
+        }
       }
 
       .dyn-search-row {
@@ -105,9 +113,14 @@
         border: none !important;
         background: transparent !important;
         outline: none !important;
-        font-size: 13.5px !important;
+        font-size: 16px !important; /* 16px prevents mobile keyboard auto-zoom shift */
         font-weight: 500 !important;
         color: var(--text-main, #0f172a) !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
+          font-size: 13.5px !important;
+        }
       }
       .dyn-search-wrapper.in-home-desktop .dyn-modern-btn {
         height: 32px !important;
@@ -140,9 +153,14 @@
         border-radius: 6px !important;
         background: var(--bg-surface, #ffffff) !important;
         padding: 0 10px !important;
-        font-size: 13px !important;
+        font-size: 16px !important;
         color: var(--text-main, #0f172a) !important;
         outline: none !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-search-wrapper.in-cat-pane .dyn-modern-input {
+          font-size: 13px !important;
+        }
       }
       .dyn-search-wrapper.in-cat-pane .dyn-modern-btn {
         height: 36px !important;
@@ -188,8 +206,13 @@
         border: none !important;
         background: transparent !important;
         outline: none !important;
-        font-size: 13.5px !important;
+        font-size: 16px !important;
         color: var(--text-main, #0f172a) !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-search-wrapper.in-sidebar .dyn-modern-input {
+          font-size: 13.5px !important;
+        }
       }
       .dyn-search-wrapper.in-sidebar .dyn-modern-btn {
         display: none !important;
@@ -625,7 +648,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Exactly at 15% margin in X direction
+      // 3. Desktop Homepage View: 15% margin on desktop, centered & locked on mobile
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
