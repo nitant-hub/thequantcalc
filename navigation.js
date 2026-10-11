@@ -46,11 +46,15 @@
       }
 
       /* ========================================================
-         CATEGORY VIEW TWO-COLUMN SPLIT
+         CATEGORY VIEW LAYOUT
          ======================================================== */
+      #catView {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.25rem !important;
+      }
       @media (min-width: 768px) {
         #catView.dyn-cat-split {
-          display: flex !important;
           flex-direction: row !important;
           justify-content: space-between !important;
           align-items: flex-start !important;
@@ -79,14 +83,11 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
-      /* Mobile default: Centered and strictly locked to safe area */
       .dyn-search-wrapper.in-home-desktop {
         max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
-
-      /* Desktop: starts precisely after 15% margin in X direction */
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-desktop {
           max-width: 320px !important;
@@ -95,34 +96,38 @@
         }
       }
 
+      /* 2. CATEGORY VIEW: CLEAR BLUE PILL DESIGN */
+      .dyn-search-wrapper.in-cat-pane {
+        max-width: 340px !important;
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+      }
+
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-      }
-
-      .dyn-search-wrapper.in-home-desktop .dyn-search-row {
         height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
-        border: 1.5px solid var(--border-color, #cbd5e1) !important;
+        border: 1.5px solid #2563eb !important; /* Clear blue border */
         border-radius: 24px !important;
         padding: 3px 5px 3px 14px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05) !important;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
       }
-      [data-theme="dark"] .dyn-search-wrapper.in-home-desktop .dyn-search-row {
+      [data-theme="dark"] .dyn-search-row {
         background: var(--bg-surface, #1e293b) !important;
-        border-color: var(--border-color, #334155) !important;
+        border-color: #3b82f6 !important;
         box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
       }
-      .dyn-search-wrapper.in-home-desktop .dyn-search-row:focus-within {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
+      .dyn-search-wrapper .dyn-search-row:focus-within {
+        border-color: #1d4ed8 !important;
+        box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.25) !important; /* Vivid blue ring when typing */
       }
 
-      /* 16px font-size physically disables mobile keyboard focus-zoom */
+      /* Modern Input Text */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -132,9 +137,6 @@
         color: var(--text-main, #0f172a) !important;
         touch-action: manipulation !important;
         -webkit-text-size-adjust: 100% !important;
-      }
-
-      .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
         flex: 1 1 auto !important;
         min-width: 0 !important;
         height: 100% !important;
@@ -145,7 +147,8 @@
         }
       }
 
-      .dyn-search-wrapper.in-home-desktop .dyn-modern-btn {
+      /* Modern Button */
+      .dyn-modern-btn {
         height: 32px !important;
         padding: 0 14px !important;
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
@@ -160,37 +163,12 @@
         box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
         transition: transform 0.15s, box-shadow 0.15s !important;
       }
-      .dyn-search-wrapper.in-home-desktop .dyn-modern-btn:hover {
+      .dyn-modern-btn:hover {
         transform: translateY(-1px) !important;
         box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4) !important;
       }
 
-      /* 2. CATEGORY VIEW: SIDE PANEL RECTANGULAR FIT */
-      .dyn-search-wrapper.in-cat-pane .dyn-search-row {
-        gap: 6px !important;
-      }
-      .dyn-search-wrapper.in-cat-pane .dyn-modern-input {
-        flex: 1 1 auto !important;
-        height: 36px !important;
-        border: 1px solid var(--border-color, #cbd5e1) !important;
-        border-radius: 6px !important;
-        background: var(--bg-surface, #ffffff) !important;
-        padding: 0 10px !important;
-      }
-      .dyn-search-wrapper.in-cat-pane .dyn-modern-btn {
-        height: 36px !important;
-        padding: 0 16px !important;
-        background: #2563eb !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 6px !important;
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        cursor: pointer !important;
-        flex-shrink: 0 !important;
-      }
-
-      /* 3. TOOL SIDEBAR: SEPARATE CARD CONTAINER */
+      /* 3. TOOL SIDEBAR */
       .dyn-search-wrapper.in-sidebar {
         max-width: 100% !important;
         display: block !important;
@@ -206,19 +184,6 @@
         background: var(--bg-surface, #1e293b) !important;
         border-color: var(--border-color, #334155) !important;
       }
-      .dyn-search-wrapper.in-sidebar .dyn-search-row {
-        height: 40px !important;
-        background: var(--bg-primary, #f8fafc) !important;
-        border: 1.5px solid var(--border-color, #cbd5e1) !important;
-        border-radius: 20px !important;
-        padding: 0 12px 0 14px !important;
-        gap: 8px !important;
-        box-sizing: border-box !important;
-      }
-      .dyn-search-wrapper.in-sidebar .dyn-modern-input {
-        flex: 1 1 auto !important;
-        height: 100% !important;
-      }
       .dyn-search-wrapper.in-sidebar .dyn-modern-btn {
         display: none !important;
       }
@@ -229,6 +194,7 @@
       /* AD CONTAINER */
       .dyn-adsense-300x250 {
         width: 100% !important;
+        max-width: 320px !important;
         height: 250px !important;
         background: #f1f5f9 !important;
         border: 1px solid #e2e8f0 !important;
@@ -548,7 +514,6 @@
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      // Robust unzoom & zero-scroll recovery
       function snapBack() {
         requestAnimationFrame(() => {
           window.scrollTo(0, window.scrollY);
@@ -631,7 +596,7 @@
         return;
       }
 
-      // 2. Desktop Category Page
+      // 2. Desktop Category Page (Split View with Ad)
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
