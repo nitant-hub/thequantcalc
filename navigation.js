@@ -29,7 +29,9 @@
         display: none !important;
       }
 
-      /* SEARCH BAR ENCLOSED IN ITS OWN SEPARATE FRAME/CARD */
+      /* ========================================================
+         SEARCH COMPONENT: SEPARATE MODERN INDEPENDENT CARD
+         ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -45,31 +47,30 @@
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        margin-bottom: 1rem !important;
-        /* Dedicated separate card styling matching .card / .box */
-        background: var(--surface, #ffffff) !important;
-        border: 1px solid var(--border, #e2e8f0) !important;
+        margin-bottom: 16px !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
         border-radius: 16px !important;
-        padding: 0.85rem !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+        padding: 12px !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
-        background: var(--surface, #1e293b) !important;
-        border-color: var(--border, #334155) !important;
+        background: #1e293b !important;
+        border-color: #334155 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
       }
 
       .dyn-modern-search-box {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 42px !important;
-        background: var(--surface, #ffffff) !important;
-        border: 1.5px solid var(--border, #cbd5e1) !important;
-        border-radius: 24px !important;
+        height: 40px !important;
+        background: #f8fafc !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 20px !important;
         padding: 0 12px 0 14px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
         transition: all 0.2s ease !important;
       }
       [data-theme="dark"] .dyn-modern-search-box {
@@ -78,14 +79,18 @@
       }
       .dyn-modern-search-box:focus-within {
         border-color: #3b82f6 !important;
+        background: #ffffff !important;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+      }
+      [data-theme="dark"] .dyn-modern-search-box:focus-within {
+        background: #0f172a !important;
       }
 
       .dyn-modern-icon {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: var(--muted, #64748b) !important;
+        color: #64748b !important;
         font-size: 14px !important;
         flex-shrink: 0 !important;
       }
@@ -99,14 +104,14 @@
         padding: 0 !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
-        color: var(--text, #0f172a) !important;
+        color: #0f172a !important;
         outline: none !important;
       }
       [data-theme="dark"] .dyn-modern-input {
         color: #f8fafc !important;
       }
       .dyn-modern-input::placeholder {
-        color: var(--muted, #94a3b8) !important;
+        color: #94a3b8 !important;
         font-size: 13px !important;
       }
 
@@ -114,8 +119,8 @@
         display: none;
         align-items: center !important;
         justify-content: center !important;
-        background: var(--border, #e2e8f0) !important;
-        color: var(--muted, #475569) !important;
+        background: #e2e8f0 !important;
+        color: #475569 !important;
         border: none !important;
         border-radius: 50% !important;
         width: 18px !important;
@@ -132,7 +137,7 @@
         color: #94a3b8 !important;
       }
       .dyn-modern-clear-btn:hover {
-        color: var(--text, #0f172a) !important;
+        color: #0f172a !important;
       }
 
       .dyn-search-dropdown {
@@ -142,8 +147,8 @@
         width: 100% !important; 
         max-height: 280px !important;
         overflow-y: auto !important; 
-        background: var(--surface, #ffffff) !important; 
-        border: 1px solid var(--border, #e2e8f0) !important; 
+        background: #ffffff !important; 
+        border: 1px solid #e2e8f0 !important; 
         border-radius: 12px !important;
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
@@ -160,17 +165,17 @@
         padding: 0.65rem 0.85rem !important; 
         font-size: 0.88rem !important; 
         font-weight: 600 !important; 
-        color: var(--text, #1e293b) !important; 
+        color: #1e293b !important; 
         text-decoration: none !important; 
-        border-bottom: 1px solid var(--border, #f1f5f9) !important; 
+        border-bottom: 1px solid #f1f5f9 !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a {
         color: #f8fafc !important;
         border-bottom: 1px solid #334155 !important;
       }
       .dyn-search-dropdown a:hover { 
-        background: var(--bg, #f8fafc) !important; 
-        color: var(--link, #2563eb) !important; 
+        background: #f8fafc !important; 
+        color: #2563eb !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a:hover {
         background: #0f172a !important;
@@ -413,7 +418,7 @@
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
       globalSearchNode.id = "dynGlobalSearchNode";
-      globalSearchNode.className = "dyn-search-wrapper";
+      globalSearchNode.className = "dyn-search-wrapper in-sidebar";
       globalSearchNode.innerHTML = `
         <div class="dyn-modern-search-box">
           <span class="dyn-modern-icon">
@@ -449,10 +454,10 @@
         clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--muted,#94a3b8);">No matching calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:#94a3b8;">No matching calculators found</div>`;
         } else {
           dropdown.innerHTML = matches.map((m) => {
-            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:var(--muted,#94a3b8);">→</span></a>`;
+            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:#94a3b8;">→</span></a>`;
           }).join("");
         }
         dropdown.style.display = "block";
@@ -470,7 +475,7 @@
       });
     }
 
-    // STRICT SIDEBAR PLACEMENT (SEPARATE FRAME/CARD BEFORE POPULAR TOOLS CARD)
+    // MOUNT SEARCH STRICTLY OUTSIDE THE POPULAR TOOLS CARD
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -510,7 +515,7 @@
         return;
       }
 
-      // 4. Standalone Tool Page: Target the Popular Tools module inside sidebar column
+      // 4. Standalone Tool Page: Target the full card frame containing Popular Tools & insert BEFORE it
       const allElements = Array.from(document.querySelectorAll("aside *, .sidebar *, div"));
       let popularHeader = null;
 
@@ -524,20 +529,23 @@
       }
 
       if (popularHeader) {
-        let cardModule = popularHeader;
-        while (cardModule.parentElement && 
-               cardModule.parentElement.tagName !== "ASIDE" && 
-               !cardModule.parentElement.classList.contains("sidebar") && 
-               cardModule.parentElement.offsetWidth < 450) {
-          cardModule = cardModule.parentElement;
+        // Walk upwards to find the entire outer card holding Popular Tools and System Status
+        let fullCard = popularHeader;
+        while (
+          fullCard.parentElement && 
+          fullCard.parentElement.tagName !== "ASIDE" && 
+          !fullCard.parentElement.classList.contains("sidebar") && 
+          fullCard.parentElement.offsetWidth < 450
+        ) {
+          fullCard = fullCard.parentElement;
         }
 
-        const sidebarContainer = cardModule.parentElement;
-        if (sidebarContainer && cardModule) {
+        const sidebarContainer = fullCard.parentElement;
+        if (sidebarContainer && fullCard) {
           globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-          // Mount as separate card preceding the Popular Tools card
-          if (cardModule.previousElementSibling !== globalSearchNode) {
-            sidebarContainer.insertBefore(globalSearchNode, cardModule);
+          // Inject completely outside and above the Popular Tools card frame
+          if (fullCard.previousElementSibling !== globalSearchNode) {
+            sidebarContainer.insertBefore(globalSearchNode, fullCard);
           }
         }
       }
