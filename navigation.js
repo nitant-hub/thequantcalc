@@ -1,13 +1,12 @@
 (function () {
-  const currentPath = window.location.pathname.toLowerCase();
-  const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
-
   function initNavigation() {
+    // 1. Clean up any previous headers or drawers
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSidebarWrap", "dynToolSidebar"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
 
+    // 2. Inject navigation & search styles
     let style = document.getElementById("injectedNavigationStyles");
     if (!style) {
       style = document.createElement("style");
@@ -26,98 +25,15 @@
 
       body { 
         padding-top: var(--nav-header-height) !important; 
-        margin: 0 !important;
-        background-color: #f8fafc !important;
       }
 
-      /* HIDE REDUNDANT DIRECTORY INTRO TEXT */
-      p:has(+ input[placeholder*="calculator" i]),
-      .category-desc,
-      .all-calc-desc {
-        display: none !important;
-      }
-
-      /* HIDE AD BOX ON HOMEPAGE */
-      body:not(.dyn-is-category) #dynAdSenseSlot {
+      /* Hide redundant in-card category search input */
+      .sr input#q {
         display: none !important;
       }
 
       /* ========================================================
-         ELIMINATE EMPTY 3RD COLUMN ON TOOL PAGES
-         ======================================================== */
-      @media (min-width: 768px) {
-        /* Force container to 2 items max */
-        body.is-tool-page-view main,
-        body.is-tool-page-view .container,
-        body.is-tool-page-view #content,
-        body.is-tool-page-view .dyn-two-col-container {
-          display: flex !important;
-          flex-direction: row !important;
-          flex-wrap: nowrap !important;
-          align-items: flex-start !important;
-          justify-content: space-between !important;
-          gap: 24px !important;
-          width: 100% !important;
-          max-width: 1220px !important;
-          margin: 14px auto 40px !important;
-          padding: 0 16px !important;
-          box-sizing: border-box !important;
-        }
-
-        /* Hide empty right column elements from the template */
-        body.is-tool-page-view aside:empty,
-        body.is-tool-page-view .sidebar:empty,
-        body.is-tool-page-view div:empty:not(#dynGlobalSearchNode *) {
-          display: none !important;
-        }
-
-        /* 1. LEFT COLUMN: EXPANDS NATURALLY */
-        body.dyn-is-category .dyn-main-card-left,
-        body.is-tool-page-view .dyn-two-col-left {
-          flex: 1 1 calc(100% - 325px) !important;
-          width: calc(100% - 325px) !important;
-          max-width: calc(100% - 325px) !important;
-          min-width: 0 !important;
-          margin: 0 !important;
-          padding-top: 0 !important;
-          box-sizing: border-box !important;
-        }
-
-        body.dyn-is-category .dyn-main-card-left *,
-        body.is-tool-page-view .dyn-two-col-left * {
-          max-width: 100% !important;
-          box-sizing: border-box !important;
-        }
-
-        /* 2. ONLY ONE RIGHT COLUMN (300PX FIXED) */
-        #dynDesktopSidebarWrap {
-          flex: 0 0 300px !important;
-          width: 300px !important;
-          max-width: 300px !important;
-          min-width: 300px !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 16px !important;
-          box-sizing: border-box !important;
-        }
-
-        #dynDesktopSidebarWrap .card,
-        #dynDesktopSidebarWrap > div {
-          width: 100% !important;
-          max-width: 300px !important;
-          margin: 0 !important;
-          box-sizing: border-box !important;
-        }
-
-        body.dyn-is-category .dyn-main-card-left input[placeholder*="search" i] {
-          display: none !important;
-        }
-      }
-
-      /* ========================================================
-         MODERN INTEGRATED SEARCH BAR (NO BLUE "SEARCH" TEXT BUTTON)
+         MODERN INTEGRATED SEARCH BAR (NO SEPARATE BLUE BUTTON)
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -125,14 +41,12 @@
         box-sizing: border-box !important;
       }
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 480px !important;
-        margin: 16px auto 24px !important;
-      }
-      .dyn-search-wrapper.in-tool-sidebar {
-        width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 4px 0 !important;
-        box-sizing: border-box !important;
+        margin: 0.5rem 0 1rem 0 !important;
+      }
+      .dyn-search-wrapper.in-sidebar {
+        width: 100% !important;
+        margin-bottom: 1rem !important;
         display: block !important;
       }
 
@@ -141,8 +55,8 @@
         align-items: center !important;
         width: 100% !important;
         height: 42px !important;
-        background: #ffffff !important;
-        border: 1.5px solid #cbd5e1 !important;
+        background: var(--surface, #ffffff) !important;
+        border: 1.5px solid var(--border, #cbd5e1) !important;
         border-radius: 24px !important;
         padding: 0 12px 0 14px !important;
         gap: 8px !important;
@@ -153,14 +67,13 @@
       .dyn-modern-search-box:focus-within {
         border-color: #3b82f6 !important;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
-        background: #ffffff !important;
       }
 
       .dyn-modern-icon {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: #64748b !important;
+        color: var(--muted, #64748b) !important;
         font-size: 14px !important;
         flex-shrink: 0 !important;
       }
@@ -174,11 +87,11 @@
         padding: 0 !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
-        color: #0f172a !important;
+        color: var(--text, #0f172a) !important;
         outline: none !important;
       }
       .dyn-modern-input::placeholder {
-        color: #94a3b8 !important;
+        color: var(--muted, #94a3b8) !important;
         font-size: 13px !important;
       }
 
@@ -186,8 +99,8 @@
         display: none;
         align-items: center !important;
         justify-content: center !important;
-        background: #e2e8f0 !important;
-        color: #475569 !important;
+        background: var(--border, #e2e8f0) !important;
+        color: var(--muted, #475569) !important;
         border: none !important;
         border-radius: 50% !important;
         width: 18px !important;
@@ -200,11 +113,10 @@
         padding: 0 !important;
       }
       .dyn-modern-clear-btn:hover {
-        background: #cbd5e1 !important;
-        color: #0f172a !important;
+        color: var(--text, #0f172a) !important;
       }
 
-      /* SEARCH DROPDOWN */
+      /* SEARCH DROPDOWN STYLING */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -212,8 +124,8 @@
         width: 100% !important; 
         max-height: 280px !important;
         overflow-y: auto !important; 
-        background: #ffffff !important; 
-        border: 1px solid #e2e8f0 !important; 
+        background: var(--surface, #ffffff) !important; 
+        border: 1px solid var(--border, #e2e8f0) !important; 
         border-radius: 12px !important;
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
@@ -226,37 +138,18 @@
         padding: 0.65rem 0.85rem !important; 
         font-size: 0.88rem !important; 
         font-weight: 600 !important; 
-        color: #1e293b !important; 
+        color: var(--text, #1e293b) !important; 
         text-decoration: none !important; 
-        border-bottom: 1px solid #f1f5f9 !important; 
+        border-bottom: 1px solid var(--border, #f1f5f9) !important; 
       }
       .dyn-search-dropdown a:hover { 
-        background: #f8fafc !important; 
-        color: #2563eb !important; 
+        background: var(--bg, #f8fafc) !important; 
+        color: var(--link, #2563eb) !important; 
       }
 
-      /* ADSENSE UNIT PLACEHOLDER (CATEGORY PAGES ONLY) */
-      #dynAdSenseSlot {
-        display: none;
-        width: 300px;
-        min-height: 250px;
-        background: #f1f5f9;
-        border: 1px dashed #cbd5e1;
-        border-radius: 8px;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #64748b;
-        font-size: 13px;
-        font-weight: 600;
-        box-sizing: border-box;
-      }
-      @media (min-width: 768px) {
-        body.dyn-is-category #dynAdSenseSlot {
-          display: flex !important;
-        }
-      }
-
+      /* ========================================================
+         HEADER BAR
+         ======================================================== */
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -356,8 +249,8 @@
         max-width: 250px !important;
         height: 100vh !important; 
         height: 100dvh !important;
-        background: #fff !important; 
-        border-left: 1px solid #e2e8f0 !important; 
+        background: var(--surface, #fff) !important; 
+        border-left: 1px solid var(--border, #e2e8f0) !important; 
         padding: 0.6rem 0.8rem 2rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
@@ -368,11 +261,6 @@
         overflow-y: auto !important; 
         overscroll-behavior: contain !important;
         box-sizing: border-box !important;
-        -webkit-overflow-scrolling: touch !important;
-      }
-      [data-theme="dark"] .dyn-drawer-menu { 
-        background: #0b132b !important; 
-        border-left: 1px solid rgba(255,255,255,0.1) !important; 
       }
       .dyn-drawer-menu.open { right: 0 !important; }
 
@@ -400,17 +288,14 @@
         align-items: center !important;
         justify-content: center !important;
         flex-shrink: 0 !important;
-        transition: all 0.15s ease !important;
       }
 
       .dyn-drawer-menu a {
-        text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.92rem !important;
+        text-decoration: none !important; color: var(--text, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
         padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
         cursor: pointer !important;
       }
-      [data-theme="dark"] .dyn-drawer-menu a { color: #e2e8f0 !important; }
-      .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
-      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(56,189,248,0.15) !important; color: #38bdf8 !important; }
+      .dyn-drawer-menu a:hover { background: var(--bg, #f1f5f9) !important; color: var(--link, #0284c7) !important; }
 
       .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
       .dyn-backdrop-overlay.open { display: block !important; }
@@ -421,12 +306,13 @@
       }
     `;
 
+    // 3. Mount Header Bar & Drawer
     const categories = [
-      { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", path: "/#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", path: "#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", path: "#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", path: "#/utility", slug: "utility", icon: "🧰" }
     ];
-    const moreUrl = "/#/all";
+    const moreUrl = "#/all";
 
     const desktopLinksHtml = categories
       .map((c) => `<a href="${c.path}" data-slug="${c.slug}" class="dyn-nav-item">${c.name}</a>`)
@@ -439,7 +325,7 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
+        <a href="#/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
@@ -452,7 +338,7 @@
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
         <div id="dynDrawerSearchSlot"></div>
-        <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
+        <a href="#/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
     `;
@@ -470,71 +356,13 @@
       });
     }
 
-    document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item, .dyn-more-pill-btn, .dyn-drawer-link, .dyn-brand").forEach((link) => {
-      link.addEventListener("click", function (e) {
-        const href = this.getAttribute("href");
-        if (link.classList.contains("dyn-drawer-link")) {
-          closeDrawer();
-        }
-
-        const isGoingHome = href === "/" || href === "";
-        const wasHome = !window.location.hash || window.location.hash === "#" || window.location.hash === "#/";
-
-        if (isGoingHome) {
-          if (!wasHome) {
-            e.preventDefault();
-            window.location.href = "/";
-          }
-          return;
-        }
-
-        if (wasHome) {
-          e.preventDefault();
-          window.location.href = href;
-          window.location.reload();
-          return;
-        }
-
-        setTimeout(relocateSearchAndLayout, 10);
-      });
-    });
-
-    syncActiveTab();
-    window.addEventListener("hashchange", () => {
-      syncActiveTab();
-      relocateSearchAndLayout();
-    });
-    window.addEventListener("popstate", () => {
-      syncActiveTab();
-      relocateSearchAndLayout();
-    });
-
-    const allTools = [
-      { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
-      { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
-      { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
-      { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" }
-    ];
-    const scanLinks = (rootDoc) => {
-      try {
-        rootDoc.querySelectorAll('a[href*="/tools/"]').forEach((a) => {
-          const name = (a.textContent || "").trim().replace(/^[^a-zA-Z0-9]+/, "");
-          const href = a.getAttribute("href");
-          if (name && href && !allTools.some((t) => t.url === href || t.name === name)) allTools.push({ name, url: href });
-        });
-      } catch (e) {}
-    };
-    scanLinks(document);
-
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
-    
     const closeDrawer = () => { 
       drawer.classList.remove("open"); 
       overlay.classList.remove("open");
       document.body.style.overflow = "";
     };
-
     const openDrawer = () => {
       drawer.classList.add("open");
       overlay.classList.add("open");
@@ -544,19 +372,14 @@
     document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
     document.getElementById("dynCloseBtn").onclick = closeDrawer;
     overlay.onclick = closeDrawer;
+    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => {
-      link.addEventListener("click", closeDrawer);
-    });
-
-    // ========================================================
-    // SINGLE HIGH-READABILITY SEARCH BOX NODE
-    // ========================================================
+    // 4. Single Search Component Instance
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
       globalSearchNode.id = "dynGlobalSearchNode";
-      globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+      globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-modern-search-box">
           <span class="dyn-modern-icon">
@@ -575,6 +398,13 @@
       const clearBtn = globalSearchNode.querySelector(".dyn-modern-clear-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
+      const allTools = [
+        { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
+        { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
+        { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
+        { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" }
+      ];
+
       function renderList(q) {
         if (!q) {
           clearBtn.style.display = "none";
@@ -585,10 +415,10 @@
         clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:#94a3b8;">No matching calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--muted,#94a3b8);">No matching calculators found</div>`;
         } else {
           dropdown.innerHTML = matches.map((m) => {
-            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:#94a3b8;">→</span></a>`;
+            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:var(--muted,#94a3b8);">→</span></a>`;
           }).join("");
         }
         dropdown.style.display = "block";
@@ -606,245 +436,81 @@
       });
     }
 
-    // HELPER: Find the exact Popular Tools element
-    function findPopularToolsCard() {
-      const allElements = Array.from(document.querySelectorAll("aside, div, section, .card"));
-      for (const el of allElements) {
-        if (el === globalSearchNode || el === document.body) continue;
-        const text = (el.textContent || "").toLowerCase();
-        if (text.includes("popular tools") && (el.offsetWidth < 450 || el.classList.contains("card") || el.tagName.toLowerCase() === "aside")) {
-          return el;
-        }
-      }
-      return null;
-    }
-
-    // HELPER: Find System Status card
-    function findSystemStatusCard() {
-      const allElements = Array.from(document.querySelectorAll("aside, div, section, .card"));
-      for (const el of allElements) {
-        if (el === globalSearchNode || el === document.body) continue;
-        const text = (el.textContent || "").toLowerCase();
-        if (text.includes("system status") && !text.includes("popular tools") && el.offsetWidth < 450) {
-          return el;
-        }
-      }
-      return null;
-    }
-
-    // ========================================================
-    // TELEPORT SEARCH & CONSOLIDATE INTO STRICT 2 COLUMNS
-    // ========================================================
-    let isLayoutUpdating = false;
-    function relocateSearchAndLayout() {
-      if (isLayoutUpdating) return;
-
+    // 5. Intelligent Mount System (Uses your HTML's native layout containers)
+    function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. MOBILE VIEW: Search inside Hamburger Drawer
+      // Mobile: mount into drawer
       if (isMobile) {
-        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
-        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
-        if (existingSidebar) existingSidebar.remove();
-
-        globalSearchNode.className = "dyn-search-wrapper";
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
+        globalSearchNode.className = "dyn-search-wrapper";
         if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
           drawerSlot.appendChild(globalSearchNode);
         }
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): STRICT TWO COLUMNS (NO 3RD COLUMN)
-      if (isToolPage) {
-        document.body.classList.add("is-tool-page-view");
-        document.body.classList.remove("dyn-is-category");
-
-        const popCard = findPopularToolsCard();
-        const statCard = findSystemStatusCard();
-
-        // Main content wrapper
-        const mainContentArea = document.querySelector(".card:not(#dynDesktopSidebarWrap *), div:has(> .calculator-interface), div:has(> #calc-form), div:has(> h1), section:first-of-type");
-        const parentContainer = document.querySelector("main, #app, #content, .container") || (mainContentArea ? mainContentArea.parentElement : null);
-
-        if (parentContainer && popCard) {
-          let sidebar = document.getElementById("dynDesktopSidebarWrap");
-          if (!sidebar) {
-            sidebar = document.createElement("aside");
-            sidebar.id = "dynDesktopSidebarWrap";
-
-            // Group all other content into left column
-            let leftCol = parentContainer.querySelector(".dyn-two-col-left");
-            if (!leftCol) {
-              leftCol = document.createElement("div");
-              leftCol.className = "dyn-two-col-left";
-
-              const childrenToKeep = Array.from(parentContainer.children).filter((el) => {
-                if (el === sidebar || el === globalSearchNode) return false;
-                const text = (el.textContent || "").toLowerCase();
-                return !(text.includes("popular tools") || text.includes("system status"));
-              });
-
-              childrenToKeep.forEach((child) => leftCol.appendChild(child));
-              parentContainer.prepend(leftCol);
-            }
-
-            // ORDER: 1. Search Box
-            globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
-            sidebar.appendChild(globalSearchNode);
-
-            // ORDER: 2. Popular Tools
-            sidebar.appendChild(popCard);
-
-            // ORDER: 3. System Status
-            if (statCard) {
-              sidebar.appendChild(statCard);
-            }
-
-            parentContainer.appendChild(sidebar);
-          } else {
-            // Keep strictly stacked order
-            if (sidebar.firstElementChild !== globalSearchNode) {
-              sidebar.prepend(globalSearchNode);
-            }
-            if (popCard && popCard.parentElement !== sidebar) {
-              sidebar.appendChild(popCard);
-            }
-            if (statCard && statCard.parentElement !== sidebar) {
-              sidebar.appendChild(statCard);
-            }
-          }
-
-          // PURGE ANY REMAINING EMPTY SIBLING ASIDES OR 3RD COLUMNS
-          Array.from(parentContainer.children).forEach((child) => {
-            if (child !== sidebar && !child.classList.contains("dyn-two-col-left")) {
-              const text = (child.textContent || "").trim();
-              if (!text || text.length === 0 || child.tagName.toLowerCase() === "aside") {
-                child.remove();
-              }
-            }
-          });
-
-          parentContainer.classList.add("dyn-two-col-container");
-          return;
-        }
-      }
-
-      // 3. DESKTOP HOME PAGE: Below Interactive Calculator
-      if (!isCategoryView) {
-        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
-        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
-        if (existingSidebar) existingSidebar.remove();
-
-        const gridParent = document.querySelector(".dyn-category-grid-parent, .dyn-two-col-container");
-        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent", "dyn-two-col-container");
-        const mainCard = document.querySelector(".dyn-main-card-left, .dyn-two-col-left");
-        if (mainCard) mainCard.classList.remove("dyn-main-card-left", "dyn-two-col-left");
-
-        const calcCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
-          const t = (el.textContent || "").toLowerCase();
-          return t.includes("interactive calculator") || el.querySelector(".calc-grid") || el.classList.contains("calc-card");
-        });
-
+      // Desktop: Home Page (mount into #homeSearchSlot)
+      if (!isCategoryView && !isToolPage) {
+        const homeSlot = document.getElementById("homeSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
-        if (calcCard && calcCard.parentElement) {
-          if (globalSearchNode.nextSibling !== calcCard.nextSibling || globalSearchNode.parentElement !== calcCard.parentElement) {
-            calcCard.insertAdjacentElement("afterend", globalSearchNode);
-          }
+        if (homeSlot && globalSearchNode.parentElement !== homeSlot) {
+          homeSlot.appendChild(globalSearchNode);
         }
         return;
       }
 
-      // 4. DESKTOP CATEGORY PAGES: AdSense -> Search -> Popular Tools -> System Status
-      document.body.classList.add("dyn-is-category");
-      globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
-
-      const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
-        const h = el.querySelector("h1, h2");
-        return h && /calculators|tools/i.test(h.textContent);
-      }) || document.querySelector(".card");
-
-      if (!mainCard) return;
-
-      const parentContainer = mainCard.parentElement;
-      if (!parentContainer) return;
-
-      isLayoutUpdating = true;
-      try {
-        parentContainer.classList.add("dyn-category-grid-parent");
-        mainCard.classList.add("dyn-main-card-left");
-
-        let sidebar = document.getElementById("dynDesktopSidebarWrap");
-        if (!sidebar) {
-          sidebar = document.createElement("aside");
-          sidebar.id = "dynDesktopSidebarWrap";
-
-          const adSlot = document.createElement("div");
-          adSlot.id = "dynAdSenseSlot";
-          adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
-          sidebar.appendChild(adSlot);
-
-          sidebar.appendChild(globalSearchNode);
-
-          const secondaryCards = Array.from(parentContainer.children).filter((el) => {
-            if (el === mainCard || el === sidebar || el === globalSearchNode) return false;
-            const text = (el.textContent || "").toLowerCase();
-            return text.includes("popular tools") || text.includes("categories") || text.includes("system status");
-          });
-
-          secondaryCards.forEach((c) => {
-            if (c && c.parentElement && c !== sidebar) {
-              sidebar.appendChild(c);
-            }
-          });
-
-          parentContainer.appendChild(sidebar);
-        } else {
-          const popTools = Array.from(sidebar.children).find((el) => {
-            return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
-          });
-          if (popTools) {
-            if (popTools.previousElementSibling !== globalSearchNode) {
-              sidebar.insertBefore(globalSearchNode, popTools);
-            }
+      // Desktop: Category or Tool Pages (mount into native #sidebarSearchSlot)
+      const sidebarSlot = document.getElementById("sidebarSearchSlot");
+      if (sidebarSlot) {
+        globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+        if (globalSearchNode.parentElement !== sidebarSlot) {
+          sidebarSlot.appendChild(globalSearchNode);
+        }
+      } else {
+        // Fallback for standalone tool pages lacking #sidebarSearchSlot
+        const popTools = Array.from(document.querySelectorAll(".box, .card")).find((el) => {
+          return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
+        });
+        if (popTools && popTools.parentElement) {
+          globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+          if (popTools.previousElementSibling !== globalSearchNode) {
+            popTools.parentElement.insertBefore(globalSearchNode, popTools);
           }
         }
-      } finally {
-        setTimeout(() => { isLayoutUpdating = false; }, 30);
       }
     }
 
-    const observer = new MutationObserver(() => {
-      const isMobile = window.innerWidth < 768;
-      const hash = (window.location.hash || "").toLowerCase();
-      const isCategoryView = hash.startsWith("#/") && hash.length > 2;
+    syncActiveTab();
+    relocateSearch();
 
-      if (!isCategoryView && !isMobile && !isToolPage) {
-        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
-        if (existingSidebar) existingSidebar.remove();
-        document.body.classList.remove("dyn-is-category");
-      } else {
-        relocateSearchAndLayout();
-      }
+    window.addEventListener("hashchange", () => {
+      syncActiveTab();
+      relocateSearch();
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("resize", relocateSearch);
 
-    relocateSearchAndLayout();
-    window.addEventListener("resize", relocateSearchAndLayout);
-
+    // Theme Toggle
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
-    if (localStorage.getItem("theme") === "dark") { rootEl.setAttribute("data-theme", "dark"); themeBtn.textContent = "☀️"; }
+    if (localStorage.getItem("theme") === "dark") {
+      rootEl.setAttribute("data-theme", "dark");
+      themeBtn.textContent = "☀️";
+    }
     themeBtn.onclick = () => {
-      const d = rootEl.getAttribute("data-theme") === "dark";
-      rootEl.setAttribute("data-theme", d ? "light" : "dark");
-      localStorage.setItem("theme", d ? "light" : "dark");
-      themeBtn.textContent = d ? "🌙" : "☀️";
+      const isDark = rootEl.getAttribute("data-theme") === "dark";
+      const nextTheme = isDark ? "light" : "dark";
+      rootEl.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("theme", nextTheme);
+      themeBtn.textContent = isDark ? "🌙" : "☀️";
     };
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initNavigation);
-  else initNavigation();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNavigation);
+  } else {
+    initNavigation();
+  }
 })();
