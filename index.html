@@ -101,132 +101,125 @@ p.intro, #cintro, #cintro:empty {
 .sr input, #catView .sr input { display: none !important; }
 
 /* ========================================================
-   CATEGORY PAGE: VERTICAL & HORIZONTAL ACCENT BARS
+   CATEGORY ENCLOSED IN APPLE BENTO CARD + TEXT-ONLY TOOLS
    ======================================================== */
 .cols, #cols {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1.5rem !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1.25rem !important;
   margin-top: 0px !important;
   padding-top: 0px !important;
   width: 100% !important;
 }
 
-.cat-group-block {
+/* Semi-3D Bento Grid Card for Categories */
+.cat-bento-box {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--apple-radius);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* DUAL ACCENT CATEGORY TITLE: VERTICAL LEFT BAR + HORIZONTAL UNDERLINE */
-.cat-group-title {
-  display: inline-flex;
+.cat-bento-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 30px -8px rgba(0, 113, 227, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Header inside Category Box */
+.cat-bento-header {
+  display: flex;
   align-items: center;
-  position: relative;
-  width: fit-content;
-  padding: 0.32rem 0.95rem 0.42rem 0.75rem;
-  background: rgba(241, 245, 249, 0.85);
-  border-left: 4px solid #0071e3;
-  border-bottom: 2.5px solid #0071e3;
-  border-radius: 4px 12px 6px 0;
-  box-shadow: 0 2px 6px rgba(0, 113, 227, 0.08);
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-[data-theme="dark"] .cat-group-title {
-  background: rgba(30, 41, 59, 0.75);
-  border-left-color: #38bdf8;
-  border-bottom-color: #38bdf8;
-  box-shadow: 0 2px 6px rgba(56, 189, 248, 0.12);
+[data-theme="dark"] .cat-bento-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
-.cat-group-title a,
-.cat-group-title span {
-  font-size: 1.08rem;
+/* Category Title */
+.cat-bento-title {
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   text-decoration: none;
 }
-.cat-group-title a:hover {
-  color: #0071e3;
+.cat-bento-title:hover {
+  color: var(--link);
 }
 
-/* HORIZONTAL (X-DIRECTION) GRID FOR TOOLS */
-.cat-tools-bento {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
-  gap: 0.85rem !important;
-  width: 100% !important;
-}
-
-/* Semi-3D Bento Tool Card */
-.cat-tool-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.95rem 1.15rem;
-  border-radius: 18px;
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  cursor: pointer;
-  gap: 0.85rem;
-}
-
-.cat-tool-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 28px -6px rgba(0, 113, 227, 0.18), 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.cat-tool-body {
+/* Minimalist Text-Only Tools List */
+.cat-text-tools {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-width: 0;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
 }
 
-.cat-tool-title {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-  word-break: break-word;
+.cat-text-tools li {
+  display: flex;
+  align-items: center;
 }
 
-/* Semi-3D Floating Action Disc */
-.cat-tool-arrow {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  border-radius: 50%;
-  background: #ffffff;
+.cat-text-tools li a {
+  color: var(--link);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.cat-text-tools li a:hover {
+  text-decoration: underline;
+  transform: translateX(3px);
+}
+
+/* Category Palettes & 3D Icons */
+.cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
+.cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
+.cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
+.cat-theme-physics { background: linear-gradient(145deg, #f5f3ff 0%, #faf5ff 60%, #ffffff 100%); border-color: #ddd6fe; }
+.cat-theme-utility { background: linear-gradient(145deg, #fffbeb 0%, #fefce8 60%, #ffffff 100%); border-color: #fde68a; }
+.cat-theme-cyan { background: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 60%, #ffffff 100%); border-color: #a5f3fc; }
+.cat-theme-indigo { background: linear-gradient(145deg, #eef2ff 0%, #f8faff 60%, #ffffff 100%); border-color: #c7d2fe; }
+
+[data-theme="dark"] .cat-theme-financial { background: linear-gradient(145deg, #064e3b 0%, #0f172a 100%); border-color: #047857; }
+[data-theme="dark"] .cat-theme-math { background: linear-gradient(145deg, #1e3a8a 0%, #0f172a 100%); border-color: #1d4ed8; }
+[data-theme="dark"] .cat-theme-health { background: linear-gradient(145deg, #881337 0%, #0f172a 100%); border-color: #be123c; }
+[data-theme="dark"] .cat-theme-physics { background: linear-gradient(145deg, #4c1d95 0%, #0f172a 100%); border-color: #6d28d9; }
+[data-theme="dark"] .cat-theme-utility { background: linear-gradient(145deg, #78350f 0%, #0f172a 100%); border-color: #b45309; }
+[data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
+[data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
+
+.cat-3d-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0071e3;
-  font-size: 0.88rem;
-  font-weight: 800;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  font-size: 1.45rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.6);
   flex-shrink: 0;
-  margin-left: auto;
 }
 
-[data-theme="dark"] .cat-tool-arrow {
-  background: rgba(255, 255, 255, 0.12);
-  color: #38bdf8;
-}
-
-.cat-tool-card:hover .cat-tool-arrow {
-  transform: translateX(3px);
-  background: #0071e3;
-  color: #ffffff;
-}
+.cat-icon-financial { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
+.cat-icon-math { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; }
+.cat-icon-health { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff; }
+.cat-icon-physics { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: #fff; }
+.cat-icon-utility { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
+.cat-icon-cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #fff; }
+.cat-icon-indigo { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #fff; }
 
 .none { display: none; color: var(--muted); font-size: 0.95rem; }
 
@@ -312,137 +305,6 @@ input, select, textarea {
   flex: 1 1 auto;
 }
 
-/* MOBILE ROW LAYOUT */
-@media (max-width: 767px) {
-  html body #catView,
-  html body div#catView.card {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0px !important;
-    row-gap: 0px !important;
-    padding: 1.15rem 1rem !important;
-  }
-
-  .cat-hub-grid { 
-    grid-template-columns: 1fr;
-    gap: 0.75rem; 
-  }
-
-  .cat-hub-card {
-    flex-direction: row !important;
-    align-items: center !important;
-    min-height: unset !important;
-    padding: 0.8rem 1rem !important;
-    border-radius: 16px !important;
-    gap: 0.85rem !important;
-  }
-
-  .cat-3d-icon {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    font-size: 1.35rem !important;
-    margin-bottom: 0 !important;
-    border-radius: 12px !important;
-  }
-
-  .cat-card-body { min-width: 0 !important; }
-
-  .cat-card-title {
-    font-size: 1.05rem !important;
-    margin-bottom: 0.15rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .cat-card-desc {
-    font-size: 0.78rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-
-  .cat-action-circle {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    font-size: 0.85rem !important;
-    align-self: center !important;
-    margin-left: auto !important;
-  }
-
-  .cat-tools-bento {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-    gap: 0.65rem !important;
-  }
-  .cat-tool-card {
-    padding: 0.85rem 1rem !important;
-  }
-}
-
-/* DESKTOP SPLIT VIEW */
-@media (min-width: 768px) {
-  html body #catView.dyn-cat-split {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    gap: 2rem !important;
-    padding: 1.75rem !important;
-  }
-  html body #catView.dyn-cat-split > .dyn-cat-left-pane {
-    flex: 1 1 0% !important;
-    min-width: 0 !important;
-  }
-  html body #catView.dyn-cat-split > .dyn-cat-right-pane {
-    flex: 0 0 320px !important;
-    width: 320px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
-}
-
-/* Category Palettes */
-.cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
-.cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
-.cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
-.cat-theme-physics { background: linear-gradient(145deg, #f5f3ff 0%, #faf5ff 60%, #ffffff 100%); border-color: #ddd6fe; }
-.cat-theme-utility { background: linear-gradient(145deg, #fffbeb 0%, #fefce8 60%, #ffffff 100%); border-color: #fde68a; }
-.cat-theme-cyan { background: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 60%, #ffffff 100%); border-color: #a5f3fc; }
-.cat-theme-indigo { background: linear-gradient(145deg, #eef2ff 0%, #f8faff 60%, #ffffff 100%); border-color: #c7d2fe; }
-
-[data-theme="dark"] .cat-theme-financial { background: linear-gradient(145deg, #064e3b 0%, #0f172a 100%); border-color: #047857; }
-[data-theme="dark"] .cat-theme-math { background: linear-gradient(145deg, #1e3a8a 0%, #0f172a 100%); border-color: #1d4ed8; }
-[data-theme="dark"] .cat-theme-health { background: linear-gradient(145deg, #881337 0%, #0f172a 100%); border-color: #be123c; }
-[data-theme="dark"] .cat-theme-physics { background: linear-gradient(145deg, #4c1d95 0%, #0f172a 100%); border-color: #6d28d9; }
-[data-theme="dark"] .cat-theme-utility { background: linear-gradient(145deg, #78350f 0%, #0f172a 100%); border-color: #b45309; }
-[data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
-[data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
-
-.cat-3d-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.65rem;
-  margin-bottom: 1.1rem;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  transition: transform 0.25s ease;
-}
-.cat-hub-card:hover .cat-3d-icon { transform: scale(1.08) rotate(-3deg); }
-
-.cat-icon-financial { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
-.cat-icon-math { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; }
-.cat-icon-health { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff; }
-.cat-icon-physics { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: #fff; }
-.cat-icon-utility { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
-.cat-icon-cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #fff; }
-.cat-icon-indigo { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #fff; }
-
 .cat-card-title {
   font-size: 1.15rem;
   font-weight: 800;
@@ -482,6 +344,72 @@ input, select, textarea {
   transform: translateX(4px);
   background: #0071e3;
   color: #ffffff;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 767px) {
+  html body #catView,
+  html body div#catView.card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0px !important;
+    row-gap: 0px !important;
+    padding: 1.15rem 1rem !important;
+  }
+
+  .cat-hub-grid { 
+    grid-template-columns: 1fr;
+    gap: 0.75rem; 
+  }
+
+  .cat-hub-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    min-height: unset !important;
+    padding: 0.8rem 1rem !important;
+    border-radius: 16px !important;
+    gap: 0.85rem !important;
+  }
+
+  .cat-hub-card .cat-3d-icon {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 1.35rem !important;
+    margin-bottom: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  .cat-card-body { min-width: 0 !important; }
+
+  .cat-card-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.15rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .cat-card-desc {
+    font-size: 0.78rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .cat-action-circle {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 0.85rem !important;
+    align-self: center !important;
+    margin-left: auto !important;
+  }
+
+  .cols, #cols {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
 }
 
 .box {
@@ -813,18 +741,16 @@ footer a:hover { color: var(--link); }
       cs.forEach(function(c){
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
-        o+='<div class="cat-group-block">';
-        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a></div>';
-        o+='  <div class="cat-tools-bento">';
-        list.forEach(function(t){
-          o+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
-          o+='      <div class="cat-tool-body">';
-          o+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
-          o+='      </div>';
-          o+='      <div class="cat-tool-arrow">&rarr;</div>';
-          o+='    </a>';
-        });
+        o+='<div class="cat-bento-box ' + meta.theme + '">';
+        o+='  <div class="cat-bento-header">';
+        o+='    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
+        o+='    <a class="cat-bento-title" href="#/'+c+'">'+esc(label(c))+'</a>';
         o+='  </div>';
+        o+='  <ul class="cat-text-tools">';
+        list.forEach(function(t){
+          o+='    <li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>';
+        });
+        o+='  </ul>';
         o+='</div>';
       });
       document.getElementById('cols').innerHTML=o;
@@ -840,18 +766,16 @@ footer a:hover { color: var(--link); }
       var list = toolsOf(cur);
 
       var o2='';
-      o2+='<div class="cat-group-block">';
-      o2+='  <div class="cat-group-title"><span>'+esc(label(cur))+'</span></div>';
-      o2+='  <div class="cat-tools-bento">';
-      list.forEach(function(t){
-        o2+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
-        o2+='      <div class="cat-tool-body">';
-        o2+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
-        o2+='      </div>';
-        o2+='      <div class="cat-tool-arrow">&rarr;</div>';
-        o2+='    </a>';
-      });
+      o2+='<div class="cat-bento-box ' + meta.theme + '">';
+      o2+='  <div class="cat-bento-header">';
+      o2+='    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
+      o2+='    <span class="cat-bento-title">'+esc(label(cur))+'</span>';
       o2+='  </div>';
+      o2+='  <ul class="cat-text-tools">';
+      list.forEach(function(t){
+        o2+='    <li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>';
+      });
+      o2+='  </ul>';
       o2+='</div>';
 
       document.getElementById('cols').innerHTML=o2;
