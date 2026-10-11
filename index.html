@@ -119,13 +119,13 @@ p.intro, #cintro, #cintro:empty {
   width: 100%;
 }
 
-/* Semi-3D Bento Grid Card for Categories */
+/* APPLE UI + SEMI-3D BENTO CATEGORY HEADER CARD WITH VERTICAL & HORIZONTAL ACCENTS */
 .cat-bento-header-card {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.95rem;
-  padding: 0.9rem 1.2rem;
+  padding: 0.85rem 1.25rem 0.95rem 1.15rem;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
@@ -133,6 +133,7 @@ p.intro, #cintro, #cintro:empty {
   min-width: 240px;
   text-decoration: none;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .cat-bento-header-card:hover {
@@ -140,15 +141,45 @@ p.intro, #cintro, #cintro:empty {
   box-shadow: 0 16px 28px -6px rgba(0, 113, 227, 0.16), 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
+/* Category Specific Accent Bars (Left Border & Bottom Underline) */
+.cat-bento-header-card.cat-theme-financial {
+  border-left: 4.5px solid #10b981 !important;
+  border-bottom: 3.5px solid #10b981 !important;
+}
+.cat-bento-header-card.cat-theme-math {
+  border-left: 4.5px solid #3b82f6 !important;
+  border-bottom: 3.5px solid #3b82f6 !important;
+}
+.cat-bento-header-card.cat-theme-utility {
+  border-left: 4.5px solid #f59e0b !important;
+  border-bottom: 3.5px solid #f59e0b !important;
+}
+.cat-bento-header-card.cat-theme-health {
+  border-left: 4.5px solid #f43f5e !important;
+  border-bottom: 3.5px solid #f43f5e !important;
+}
+.cat-bento-header-card.cat-theme-physics {
+  border-left: 4.5px solid #8b5cf6 !important;
+  border-bottom: 3.5px solid #8b5cf6 !important;
+}
+.cat-bento-header-card.cat-theme-cyan {
+  border-left: 4.5px solid #06b6d4 !important;
+  border-bottom: 3.5px solid #06b6d4 !important;
+}
+.cat-bento-header-card.cat-theme-indigo {
+  border-left: 4.5px solid #6366f1 !important;
+  border-bottom: 3.5px solid #6366f1 !important;
+}
+
 .cat-bento-title {
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   font-weight: 800;
   color: var(--text);
   letter-spacing: -0.025em;
   text-decoration: none;
 }
 
-/* PURE MINIMALIST UNDERLINED TEXT TOOLS (NO CARD/NO BACKGROUND) */
+/* PURE MINIMALIST UNDERLINED TEXT TOOLS */
 .cat-pure-text-list {
   list-style: none;
   display: flex;
