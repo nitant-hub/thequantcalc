@@ -101,7 +101,7 @@ p.intro, #cintro, #cintro:empty {
 .sr input, #catView .sr input { display: none !important; }
 
 /* ========================================================
-   HOMEPAGE: HORIZONTAL (X-DIRECTION) CAROUSEL WITH ARROWS
+   HOMEPAGE: SINGLE HORIZONTAL (X-DIRECTION) CAROUSEL
    ======================================================== */
 .cat-hub-header {
   display: flex;
@@ -132,14 +132,6 @@ p.intro, #cintro, #cintro:empty {
   transition: transform 0.2s ease;
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
-
-/* Multi-Row Carousel Stack */
-.cat-hub-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
-}
 
 /* Carousel Outer Wrapper */
 .cat-hub-carousel-wrap {
@@ -207,7 +199,7 @@ p.intro, #cintro, #cintro:empty {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Sleek Scrollbar for Desktop Track */
+/* Scrollbar for Desktop Track */
 .cat-hub-grid::-webkit-scrollbar {
   height: 6px;
 }
@@ -278,7 +270,7 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS (DESKTOP & GENERAL) */
+/* Y-FLOW TOOLS INSIDE CATEGORY CARDS */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
@@ -547,7 +539,7 @@ input, select, textarea {
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* ========================================================
-   MOBILE VIEW: SLIM PROFILE & COMPACT TOOLS GAP
+   MOBILE VIEW: SINGLE HORIZONTAL SWIPE CAROUSEL
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -563,10 +555,6 @@ input, select, textarea {
     display: none !important;
   }
 
-  .cat-hub-stack {
-    gap: 0.85rem !important;
-  }
-
   .cat-hub-grid { 
     display: flex !important;
     flex-direction: row !important;
@@ -574,7 +562,6 @@ input, select, textarea {
     gap: 0.85rem !important;
     overflow-x: auto !important;
     padding: 0.2rem 0.1rem 0.6rem 0.1rem !important;
-    margin-bottom: 0 !important;
   }
 
   .cat-hub-card {
@@ -621,7 +608,6 @@ input, select, textarea {
     margin-bottom: 0.45rem !important;
   }
 
-  /* SLIM, BALANCED GAP BETWEEN TOOLS ON MOBILE */
   .cat-card-tools-y {
     margin-top: 0 !important;
     padding-top: 0.45rem !important;
@@ -783,7 +769,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Category Sections Container on Home (X-Direction Overflow Carousel with Arrows) -->
+    <!-- Category Sections Container on Home (Single Horizontal Track) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
@@ -982,10 +968,10 @@ footer a:hover { color: var(--link); }
     };
   }
 
-  function updateCarouselArrows(rIdx) {
-    var track = document.getElementById('homeCatGrid_' + rIdx);
-    var prevBtn = document.getElementById('catPrevBtn_' + rIdx);
-    var nextBtn = document.getElementById('catNextBtn_' + rIdx);
+  function updateCarouselArrows() {
+    var track = document.getElementById('homeCatGrid');
+    var prevBtn = document.getElementById('catPrevBtn');
+    var nextBtn = document.getElementById('catNextBtn');
     if (!track || !prevBtn || !nextBtn) return;
 
     if (window.innerWidth <= 767) {
@@ -1014,32 +1000,6 @@ footer a:hover { color: var(--link); }
     }
   }
 
-  function renderCardHTML(c) {
-    var meta = autoSketchCategory(c);
-    var displayName = c === 'financial' ? 'Finance' : label(c);
-    var list = toolsOf(c);
-
-    var cardHTML = '<div class="cat-hub-card ' + meta.theme + '">';
-    cardHTML += '  <a class="cat-hub-top" href="#/' + c + '">';
-    cardHTML += '    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
-    cardHTML += '    <div class="cat-card-body">';
-    cardHTML += '      <div class="cat-card-title">' + esc(displayName) + '</div>';
-    cardHTML += '    </div>';
-    cardHTML += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
-    cardHTML += '  </a>';
-
-    if(list.length > 0){
-      cardHTML += '  <ul class="cat-card-tools-y">';
-      list.forEach(function(t){
-        cardHTML += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
-      });
-      cardHTML += '  </ul>';
-    }
-
-    cardHTML += '</div>';
-    return cardHTML;
-  }
-
   function render(){
     var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur='';
     if(m&&(m[1]==='all'||cs.indexOf(m[1])>-1))cur=m[1];
@@ -1064,54 +1024,57 @@ footer a:hover { color: var(--link); }
       hs += '  </div>';
       hs += '</div>';
 
-      /* OPTION B: ROUND-ROBIN DISTRIBUTION INTO 5 ROWS */
-      var NUM_ROWS = 5;
-      var rows = [[], [], [], [], []];
-      cs.forEach(function(c, idx){
-        rows[idx % NUM_ROWS].push(c);
-      });
+      hs += '<div class="cat-hub-carousel-wrap">';
+      hs += '  <button class="cat-nav-btn prev hidden" id="catPrevBtn" aria-label="Scroll left">&#8249;</button>';
+      hs += '  <div class="cat-hub-grid" id="homeCatGrid">';
 
-      hs += '<div class="cat-hub-stack">';
-      var activeRowIndexes = [];
+      cs.forEach(function(c){
+        var meta = autoSketchCategory(c);
+        var displayName = c === 'financial' ? 'Finance' : label(c);
+        var list = toolsOf(c);
 
-      rows.forEach(function(rowCategories, rIdx){
-        if (rowCategories.length === 0) return;
-        activeRowIndexes.push(rIdx);
+        hs += '<div class="cat-hub-card ' + meta.theme + '">';
+        hs += '  <a class="cat-hub-top" href="#/' + c + '">';
+        hs += '    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
+        hs += '    <div class="cat-card-body">';
+        hs += '      <div class="cat-card-title">' + esc(displayName) + '</div>';
+        hs += '    </div>';
+        hs += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
+        hs += '  </a>';
 
-        hs += '<div class="cat-hub-carousel-wrap">';
-        hs += '  <button class="cat-nav-btn prev hidden" id="catPrevBtn_' + rIdx + '" aria-label="Scroll left">&#8249;</button>';
-        hs += '  <div class="cat-hub-grid" id="homeCatGrid_' + rIdx + '">';
+        if(list.length > 0){
+          hs += '  <ul class="cat-card-tools-y">';
+          list.forEach(function(t){
+            hs += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
+          });
+          hs += '  </ul>';
+        }
 
-        rowCategories.forEach(function(c){
-          hs += renderCardHTML(c);
-        });
-
-        hs += '  </div>';
-        hs += '  <button class="cat-nav-btn next hidden" id="catNextBtn_' + rIdx + '" aria-label="Scroll right">&#8250;</button>';
         hs += '</div>';
       });
+
+      hs += '  </div>';
+      hs += '  <button class="cat-nav-btn next hidden" id="catNextBtn" aria-label="Scroll right">&#8250;</button>';
       hs += '</div>';
 
       document.getElementById('homeSections').innerHTML = hs;
 
-      activeRowIndexes.forEach(function(rIdx){
-        var track = document.getElementById('homeCatGrid_' + rIdx);
-        var prevBtn = document.getElementById('catPrevBtn_' + rIdx);
-        var nextBtn = document.getElementById('catNextBtn_' + rIdx);
+      var track = document.getElementById('homeCatGrid');
+      var prevBtn = document.getElementById('catPrevBtn');
+      var nextBtn = document.getElementById('catNextBtn');
 
-        if (track && prevBtn && nextBtn) {
-          prevBtn.onclick = function() {
-            track.scrollBy({ left: -310, behavior: 'smooth' });
-          };
-          nextBtn.onclick = function() {
-            track.scrollBy({ left: 310, behavior: 'smooth' });
-          };
-          track.addEventListener('scroll', function(){ updateCarouselArrows(rIdx); });
-          window.addEventListener('resize', function(){ updateCarouselArrows(rIdx); });
-          setTimeout(function(){ updateCarouselArrows(rIdx); }, 100);
-          setTimeout(function(){ updateCarouselArrows(rIdx); }, 600);
-        }
-      });
+      if (track && prevBtn && nextBtn) {
+        prevBtn.onclick = function() {
+          track.scrollBy({ left: -310, behavior: 'smooth' });
+        };
+        nextBtn.onclick = function() {
+          track.scrollBy({ left: 310, behavior: 'smooth' });
+        };
+        track.addEventListener('scroll', updateCarouselArrows);
+        window.addEventListener('resize', updateCarouselArrows);
+        setTimeout(updateCarouselArrows, 100);
+        setTimeout(updateCarouselArrows, 600);
+      }
 
       setTimeout(fitCalc, 50); setTimeout(fitCalc, 400);
     } else if(cur==='all'){
