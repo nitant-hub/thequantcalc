@@ -1,5 +1,6 @@
 (function () {
   const currentPath = window.location.pathname.toLowerCase();
+  const currentHash = (window.location.hash || "").toLowerCase();
   const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
 
   function initNavigation() {
@@ -47,20 +48,9 @@
       }
 
       /* ========================================================
-         CATEGORY MODE: HIDE HOME ELEMENTS AND DISPLAY 2 COLUMNS
+         CATEGORY MODE: CLEAN 2-COLUMN SPLIT (DESKTOP)
          ======================================================== */
       @media (min-width: 768px) {
-        /* Hide homepage-specific widgets on category pages */
-        body.dyn-is-category #home-view,
-        body.dyn-is-category .interactive-calc,
-        body.dyn-is-category .calc-card,
-        body.dyn-is-category div:has(> .badge),
-        body.dyn-is-category div:has(> div > div:contains("100+")),
-        body.dyn-is-category div:has(> div:contains("Interactive Calculator")) {
-          display: none !important;
-        }
-
-        /* 2-Column Desktop Grid for Category Views */
         body.dyn-is-category .dyn-category-grid-parent {
           display: flex !important;
           flex-direction: row !important;
@@ -430,22 +420,35 @@
       });
     }
 
-    document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item, .dyn-more-pill-btn, .dyn-drawer-link").forEach((link) => {
-      link.addEventListener("click", function () {
-        const slug = this.getAttribute("data-slug");
-        if (slug) {
-          document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((item) => {
-            if (item.getAttribute("data-slug") === slug) {
-              item.classList.add("is-active");
-            } else {
-              item.classList.remove("is-active");
-            }
-          });
-        }
+    // Direct routing: handles switching between Home and Categories reliably
+    document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item, .dyn-more-pill-btn, .dyn-drawer-link, .dyn-brand").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
         if (link.classList.contains("dyn-drawer-link")) {
           closeDrawer();
         }
-        setTimeout(setupCalculatorNetLayout, 0);
+
+        const isGoingHome = href === "/" || href === "";
+        const wasHome = !window.location.hash || window.location.hash === "#" || window.location.hash === "#/";
+
+        if (isGoingHome) {
+          if (!wasHome) {
+            e.preventDefault();
+            window.location.href = "/";
+          }
+          return;
+        }
+
+        // When navigating from the homepage to a category, trigger a location reload
+        if (wasHome) {
+          e.preventDefault();
+          window.location.href = href;
+          window.location.reload();
+          return;
+        }
+
+        // Intra-category transitions execute without full refresh
+        setTimeout(setupCalculatorNetLayout, 10);
       });
     });
 
@@ -541,20 +544,17 @@
       return wrap;
     }
 
-    // Mobile drawer search
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // Desktop 2-column sidebar builder
     let isLayoutUpdating = false;
     function setupCalculatorNetLayout() {
       if (isLayoutUpdating || window.innerWidth < 768) return;
 
       const hash = (window.location.hash || "").toLowerCase();
-      // True only on category routes like #/financial, #/math, #/utility, #/all
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // STRICT HOMEPAGE CLEANUP: If not a category view, purge sidebar & classes immediately
+      // Handle homepage view
       if (!isCategoryView) {
         document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -566,10 +566,8 @@
         return;
       }
 
-      // Mark body as category mode
       document.body.classList.add("dyn-is-category");
 
-      // Find the main category directory block
       const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
         const h = el.querySelector("h1, h2");
         return h && /calculators|tools/i.test(h.textContent);
@@ -590,16 +588,13 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
-          // 1. Sidebar Search Box
           sidebar.appendChild(makeSearchNode());
 
-          // 2. Sidebar AdSense Unit (300x250)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
-          // 3. Move secondary blocks directly into the sidebar
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar) return false;
             const text = (el.textContent || "").toLowerCase();
@@ -623,7 +618,6 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
       
-      // If user is on home page but sidebar was inadvertently inserted, delete it immediately
       if (!isCategoryView) {
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
