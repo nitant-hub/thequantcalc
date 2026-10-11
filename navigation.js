@@ -38,10 +38,21 @@
       }
 
       /* ========================================================
-         CALCULATOR.NET EXACT TWO-COLUMN LAYOUT (DESKTOP)
+         VIEW ISOLATION & TRUE 2-COLUMN LAYOUT (DESKTOP)
          ======================================================== */
       @media (min-width: 768px) {
-        .dyn-category-mode .dyn-desktop-parent {
+        /* When in Category Mode, completely hide home-specific sections */
+        body.dyn-is-category #home-view,
+        body.dyn-is-category .interactive-calc,
+        body.dyn-is-category .calc-card,
+        body.dyn-is-category div:has(> .badge),
+        body.dyn-is-category div:has(> div > div:contains("100+")),
+        body.dyn-is-category div:has(> div:contains("Interactive Calculator")) {
+          display: none !important;
+        }
+
+        /* Category master flex container directly below header */
+        body.dyn-is-category .dyn-category-grid-parent {
           display: flex !important;
           flex-direction: row !important;
           flex-wrap: nowrap !important;
@@ -55,12 +66,12 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA */
-        .dyn-category-mode .dyn-main-card-left,
-        .dyn-category-mode .dyn-main-card-left.card {
-          flex: 1 1 calc(100% - 324px) !important;
-          width: calc(100% - 324px) !important;
-          max-width: calc(100% - 324px) !important;
+        /* 1. LEFT MAIN TOOLS AREA (ZERO TOP GAP) */
+        body.dyn-is-category .dyn-main-card-left,
+        body.dyn-is-category .dyn-main-card-left.card {
+          flex: 1 1 calc(100% - 325px) !important;
+          width: calc(100% - 325px) !important;
+          max-width: calc(100% - 325px) !important;
           min-width: 0 !important;
           margin: 0 !important;
           padding-top: 0 !important;
@@ -70,13 +81,13 @@
           box-shadow: none !important;
         }
 
-        .dyn-category-mode .dyn-main-card-left * {
+        body.dyn-is-category .dyn-main-card-left * {
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
         /* 2. RIGHT SIDEBAR PORTION (300px FIXED AT TOP ROW) */
-        .dyn-category-mode #dynDesktopSidebarWrap {
+        body.dyn-is-category #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
@@ -89,15 +100,15 @@
           box-sizing: border-box !important;
         }
 
-        .dyn-category-mode #dynDesktopSidebarWrap .card,
-        .dyn-category-mode #dynDesktopSidebarWrap > div {
+        body.dyn-is-category #dynDesktopSidebarWrap .card,
+        body.dyn-is-category #dynDesktopSidebarWrap > div {
           width: 100% !important;
           max-width: 300px !important;
           margin: 0 !important;
           box-sizing: border-box !important;
         }
 
-        .dyn-category-mode .dyn-main-card-left input[placeholder*="search" i] {
+        body.dyn-is-category .dyn-main-card-left input[placeholder*="search" i] {
           display: none !important;
         }
       }
@@ -141,7 +152,7 @@
         background: linear-gradient(180deg, #2b6cb0 0%, #2c5282 100%) !important;
       }
 
-      /* ADSENSE PLACEHOLDER (CATEGORY PAGES ONLY) */
+      /* ADSENSE PLACEHOLDER (CATEGORY ONLY) */
       #dynAdSenseSlot {
         display: none;
         width: 300px;
@@ -158,7 +169,7 @@
         box-sizing: border-box;
       }
       @media (min-width: 768px) {
-        .dyn-category-mode #dynAdSenseSlot {
+        body.dyn-is-category #dynAdSenseSlot {
           display: flex !important;
         }
       }
@@ -185,7 +196,7 @@
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
 
-      /* CATEGORIES HEADER ITEMS */
+      /* HEADER CATEGORY LINKS */
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
@@ -398,7 +409,6 @@
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
-    // Dynamic Underline Tab Indicator
     function syncActiveTab() {
       const hash = (window.location.hash || "").toLowerCase();
       document.querySelectorAll(".dyn-desktop-nav a.dyn-nav-item").forEach((link) => {
@@ -426,7 +436,7 @@
         if (link.classList.contains("dyn-drawer-link")) {
           closeDrawer();
         }
-        setTimeout(setupCalculatorNetLayout, 10);
+        setTimeout(setupCalculatorNetLayout, 0);
       });
     });
 
@@ -439,18 +449,6 @@
       syncActiveTab();
       setupCalculatorNetLayout();
     });
-
-    // Update Heading Text Safely
-    function updateHeadingText() {
-      const headings = document.querySelectorAll("h1, h2, .title, .page-title");
-      headings.forEach((el) => {
-        if ((el.textContent || "").trim().toLowerCase() === "all calculators") {
-          el.textContent = "All Calculators/Tools";
-        }
-      });
-    }
-    updateHeadingText();
-    window.addEventListener("hashchange", () => setTimeout(updateHeadingText, 60));
 
     const allTools = [
       { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
@@ -469,7 +467,6 @@
     };
     scanLinks(document);
 
-    // Drawer controls
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
     
@@ -535,28 +532,33 @@
       return wrap;
     }
 
-    // 1. MOBILE DRAWER SEARCH
+    // Mobile drawer search
     const drawerSlot = document.getElementById("dynDrawerSearchSlot");
     drawerSlot.appendChild(makeSearchNode());
 
-    // 2. DESKTOP CALCULATOR.NET SIDE-BY-SIDE BUILDER
+    // Desktop 2-column sidebar builder
     let isLayoutUpdating = false;
     function setupCalculatorNetLayout() {
       if (isLayoutUpdating || window.innerWidth < 768) return;
 
-      const isCategoryView = Boolean(window.location.hash.startsWith("#/") && window.location.hash.length > 2);
+      const hash = (window.location.hash || "").toLowerCase();
+      const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // On Homepage: reset to default state
+      // Reset when back on Home Page
       if (!isCategoryView) {
-        document.body.classList.remove("dyn-category-mode");
+        document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
+        const gridParent = document.querySelector(".dyn-category-grid-parent");
+        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent");
+        const mainCard = document.querySelector(".dyn-main-card-left");
+        if (mainCard) mainCard.classList.remove("dyn-main-card-left");
         return;
       }
 
-      document.body.classList.add("dyn-category-mode");
+      document.body.classList.add("dyn-is-category");
 
-      // Locate the main category tools block
+      // Find the main category directory block
       const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
         const h = el.querySelector("h1, h2");
         return h && /calculators|tools/i.test(h.textContent);
@@ -569,7 +571,7 @@
 
       isLayoutUpdating = true;
       try {
-        parentContainer.classList.add("dyn-desktop-parent");
+        parentContainer.classList.add("dyn-category-grid-parent");
         mainCard.classList.add("dyn-main-card-left");
 
         let sidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -577,16 +579,13 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
-          // 1. Search Box at top of sidebar
           sidebar.appendChild(makeSearchNode());
 
-          // 2. AdSense unit (300x250)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
-          // 3. Move secondary cards (Categories, Popular Tools, System Status) directly into the sidebar
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar) return false;
             const text = (el.textContent || "").toLowerCase();
@@ -602,14 +601,14 @@
           parentContainer.appendChild(sidebar);
         }
       } finally {
-        setTimeout(() => { isLayoutUpdating = false; }, 40);
+        setTimeout(() => { isLayoutUpdating = false; }, 30);
       }
     }
 
-    // MutationObserver to capture single-click client router DOM changes
     const observer = new MutationObserver(() => {
-      const isCategoryView = Boolean(window.location.hash.startsWith("#/") && window.location.hash.length > 2);
-      if (isCategoryView && !document.getElementById("dynDesktopSidebarWrap")) {
+      const hash = (window.location.hash || "").toLowerCase();
+      const isCategoryView = hash.startsWith("#/") && hash.length > 2;
+      if (isCategoryView && (!document.getElementById("dynDesktopSidebarWrap") || !document.body.classList.contains("dyn-is-category"))) {
         setupCalculatorNetLayout();
       }
     });
