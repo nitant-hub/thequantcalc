@@ -62,13 +62,13 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: STARTS AFTER 20% MARGIN IN X DIRECTION */
+      /* 1. HOMEPAGE: STARTS AFTER 15% MARGIN IN X DIRECTION */
       .dyn-search-wrapper.in-home-desktop {
         max-width: 320px !important;
         width: 100% !important;
         margin-top: 1.25rem !important;
         margin-bottom: 1.5rem !important;
-        margin-left: 20% !important; /* Starts precisely after 20% width */
+        margin-left: 15% !important; /* Starts precisely after 15% width */
         margin-right: auto !important;
       }
 
@@ -625,7 +625,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Exactly at 20% margin in X direction
+      // 3. Desktop Homepage View: Exactly at 15% margin in X direction
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
