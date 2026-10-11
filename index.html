@@ -103,7 +103,7 @@ p.intro, #cintro, #cintro:empty {
 /* ========================================================
    CATEGORY ENCLOSED IN APPLE BENTO CARD + TEXT TOOLS
    ======================================================== */
-.cols, #cols {
+.cols, #cols, .home-cat-cols {
   display: flex !important;
   flex-direction: column !important;
   gap: 1.6rem !important;
@@ -184,7 +184,7 @@ p.intro, #cintro, #cintro:empty {
   text-decoration: none;
 }
 
-/* FLEXIBLE AUTO-WRAPPING TEXT TOOLS (PREVENTS OVERFLOW INTO RIGHT SIDEBAR) */
+/* TEXT TOOLS LIST */
 .cat-pure-text-list {
   list-style: none;
   display: flex;
@@ -196,6 +196,14 @@ p.intro, #cintro, #cintro:empty {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* HOMEPAGE Y-FLOW FOR TOOLS */
+.home-y-flow {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.65rem !important;
+  column-gap: 0 !important;
 }
 
 .cat-pure-text-list li {
@@ -225,12 +233,33 @@ p.intro, #cintro, #cintro:empty {
   color: #0056b3;
 }
 
+.home-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0071e3 !important;
+  text-decoration: none !important;
+  margin-top: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  transition: transform 0.15s ease;
+}
+.home-more-link:hover {
+  transform: translateX(3px);
+  text-decoration: underline !important;
+}
+
 [data-theme="dark"] .cat-pure-text-list li a {
   color: #60a5fa;
 }
 
 [data-theme="dark"] .cat-pure-text-list li a:hover {
   color: #93c5fd;
+}
+
+[data-theme="dark"] .home-more-link {
+  color: #38bdf8 !important;
 }
 
 /* Category Palettes & 3D Icons */
@@ -296,13 +325,13 @@ input, select, textarea {
 .feat b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
-/* CATEGORY CARDS ON HOMEPAGE */
+/* CATEGORY HEADER ON HOMEPAGE */
 .cat-hub-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 .cat-hub-title {
   font-size: 1.45rem;
@@ -322,79 +351,6 @@ input, select, textarea {
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
 
-.cat-hub-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.cat-hub-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 1.4rem;
-  border-radius: 22px;
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  min-height: 205px;
-}
-.cat-hub-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 35px -10px rgba(0, 113, 227, 0.16), 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.cat-card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-}
-
-.cat-card-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 0.35rem;
-  letter-spacing: -0.02em;
-}
-.cat-card-desc {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.45;
-  font-weight: 500;
-  margin-bottom: 1.25rem;
-  flex-grow: 1;
-}
-
-.cat-action-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #0071e3;
-  font-size: 0.95rem;
-  font-weight: 800;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-  align-self: flex-start;
-}
-[data-theme="dark"] .cat-action-circle {
-  background: rgba(255, 255, 255, 0.12);
-  color: #38bdf8;
-}
-.cat-hub-card:hover .cat-action-circle {
-  transform: translateX(4px);
-  background: #0071e3;
-  color: #ffffff;
-}
-
 /* ========================================================
    MOBILE VIEW: SLIM Y-DIRECTION + FULL WIDTH
    ======================================================== */
@@ -406,55 +362,6 @@ input, select, textarea {
     gap: 0px !important;
     row-gap: 0px !important;
     padding: 1.15rem 1rem !important;
-  }
-
-  .cat-hub-grid { 
-    grid-template-columns: 1fr;
-    gap: 0.75rem; 
-  }
-
-  .cat-hub-card {
-    flex-direction: row !important;
-    align-items: center !important;
-    min-height: unset !important;
-    padding: 0.8rem 1rem !important;
-    border-radius: 16px !important;
-    gap: 0.85rem !important;
-  }
-
-  .cat-hub-card .cat-3d-icon {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    font-size: 1.35rem !important;
-    margin-bottom: 0 !important;
-    border-radius: 12px !important;
-  }
-
-  .cat-card-body { min-width: 0 !important; }
-
-  .cat-card-title {
-    font-size: 1.05rem !important;
-    margin-bottom: 0.15rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .cat-card-desc {
-    font-size: 0.78rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-
-  .cat-action-circle {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    font-size: 0.85rem !important;
-    align-self: center !important;
-    margin-left: auto !important;
   }
 
   /* FULL WIDTH ON X-AXIS, SLIMMED DOWN ON Y-AXIS */
@@ -500,11 +407,11 @@ input, select, textarea {
     gap: 0.55rem !important;
   }
 
-  .cols, #cols {
+  .cols, #cols, .home-cat-cols {
     gap: 1.35rem !important;
   }
 
-  /* MOBILE TOOLS LIST: CLEAN ONE-BELOW-OTHER */
+  /* MOBILE TOOLS LIST: VERTICAL SINGLE COLUMN STACK */
   .cat-pure-text-list {
     display: flex !important;
     flex-direction: column !important;
@@ -603,7 +510,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- 3D Pastel Categories Container -->
+    <!-- Category Sections Container on Home (Categories with Y-Flow Tools) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
@@ -819,25 +726,32 @@ footer a:hover { color: var(--link); }
       document.title='thequantcals | Free Advanced Calculators & Generators';
 
       var hs = '';
-      
       hs += '<div class="cat-hub-header">';
       hs += '  <h2 class="cat-hub-title">Browse by Category</h2>';
       hs += '  <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
       hs += '</div>';
 
-      hs += '<div class="cat-hub-grid">';
+      hs += '<div class="home-cat-cols">';
       cs.forEach(function(c){
         var meta = autoSketchCategory(c);
-        var displayName = c === 'financial' ? 'Finance' : label(c);
+        var displayName = c === 'financial' ? 'Financial' : label(c);
+        var list = toolsOf(c);
+        var displayTools = list.slice(0, 10);
 
-        hs += '<a class="cat-hub-card ' + meta.theme + '" href="#/' + c + '">';
-        hs += '  <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
-        hs += '  <div class="cat-card-body">';
-        hs += '    <div class="cat-card-title">' + esc(displayName) + '</div>';
-        hs += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
-        hs += '  </div>';
-        hs += '  <div class="cat-action-circle">&rarr;</div>';
-        hs += '</a>';
+        hs += '<div class="cat-group-block">';
+        hs += '  <a class="cat-bento-header-card ' + meta.theme + '" href="#/' + c + '">';
+        hs += '    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
+        hs += '    <span class="cat-bento-title">' + esc(displayName) + '</span>';
+        hs += '  </a>';
+        hs += '  <ul class="cat-pure-text-list home-y-flow">';
+        displayTools.forEach(function(t){
+          hs += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
+        });
+        if(list.length > 10){
+          hs += '    <li><a class="home-more-link" href="#/' + c + '">+ ' + (list.length - 10) + ' more in ' + esc(displayName) + ' &rarr;</a></li>';
+        }
+        hs += '  </ul>';
+        hs += '</div>';
       });
       hs += '</div>';
 
