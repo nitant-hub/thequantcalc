@@ -165,7 +165,6 @@ p.intro, #cintro, #cintro:empty {
 .cat-tool-body {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -176,12 +175,6 @@ p.intro, #cintro, #cintro:empty {
   color: var(--text);
   line-height: 1.3;
   word-break: break-word;
-}
-
-.cat-tool-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--muted);
 }
 
 /* Semi-3D Floating Action Disc */
@@ -806,7 +799,6 @@ footer a:hover { color: var(--link); }
           o+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
           o+='      <div class="cat-tool-body">';
           o+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
-          o+='        <span class="cat-tool-tag">' + esc(t.group || label(c)) + '</span>';
           o+='      </div>';
           o+='      <div class="cat-tool-arrow">&rarr;</div>';
           o+='    </a>';
@@ -824,28 +816,20 @@ footer a:hover { color: var(--link); }
       document.getElementById('cintro').textContent='';
 
       var meta = autoSketchCategory(cur);
-      var groups={}, order=[];
-      toolsOf(cur).forEach(function(t){
-        if(!groups[t.group]){groups[t.group]=[];order.push(t.group)} groups[t.group].push(t);
-      });
+      var list = toolsOf(cur);
 
       var o2='';
-      order.forEach(function(g){
-        o2+='<div class="cat-group-block">';
-        o2+='  <div class="cat-group-title">' + esc(g) + '</div>';
-        o2+='  <div class="cat-tools-bento">';
-        groups[g].forEach(function(t){
-          o2+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
-          o2+='      <div class="cat-tool-body">';
-          o2+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
-          o2+='        <span class="cat-tool-tag">' + esc(g) + '</span>';
-          o2+='      </div>';
-          o2+='      <div class="cat-tool-arrow">&rarr;</div>';
-          o2+='    </a>';
-        });
-        o2+='  </div>';
-        o2+='</div>';
+      o2+='<div class="cat-tools-bento">';
+      list.forEach(function(t){
+        o2+='  <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
+        o2+='    <div class="cat-tool-body">';
+        o2+='      <span class="cat-tool-title">' + esc(t.name) + '</span>';
+        o2+='    </div>';
+        o2+='    <div class="cat-tool-arrow">&rarr;</div>';
+        o2+='  </a>';
       });
+      o2+='</div>';
+
       document.getElementById('cols').innerHTML=o2;
       document.getElementById('none').style.display='none';
     }
