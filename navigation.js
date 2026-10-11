@@ -43,10 +43,12 @@
       }
 
       /* ========================================================
-         CATEGORY 2-COLUMN DESKTOP SPLIT
+         EXACT TWO-COLUMN SYSTEM (NO 3RD COLUMN ALLOWED)
          ======================================================== */
       @media (min-width: 768px) {
-        body.dyn-is-category .dyn-category-grid-parent {
+        /* Both category and tool views share the strict 2-column flex layout */
+        body.dyn-is-category .dyn-category-grid-parent,
+        body.is-tool-page-view .dyn-two-col-container {
           display: flex !important;
           flex-direction: row !important;
           flex-wrap: nowrap !important;
@@ -60,7 +62,9 @@
           box-sizing: border-box !important;
         }
 
-        body.dyn-is-category .dyn-main-card-left {
+        /* LEFT COLUMN (MAIN CALCULATOR & ARTICLE) */
+        body.dyn-is-category .dyn-main-card-left,
+        body.is-tool-page-view .dyn-two-col-left {
           flex: 1 1 calc(100% - 325px) !important;
           width: calc(100% - 325px) !important;
           max-width: calc(100% - 325px) !important;
@@ -68,16 +72,15 @@
           margin: 0 !important;
           padding-top: 0 !important;
           box-sizing: border-box !important;
-          border: none !important;
-          background: transparent !important;
-          box-shadow: none !important;
         }
 
-        body.dyn-is-category .dyn-main-card-left * {
+        body.dyn-is-category .dyn-main-card-left *,
+        body.is-tool-page-view .dyn-two-col-left * {
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
+        /* SINGLE RIGHT COLUMN (300PX FIXED) */
         #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
@@ -105,7 +108,7 @@
       }
 
       /* ========================================================
-         MODERN INTEGRATED SEARCH BAR (NO SEPARATE BLUE BUTTON)
+         MODERN INTEGRATED SEARCH BAR (NO BLUE "SEARCH" TEXT BUTTON)
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -119,7 +122,7 @@
       .dyn-search-wrapper.in-tool-sidebar {
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 16px 0 !important;
+        margin: 0 0 4px 0 !important;
         box-sizing: border-box !important;
         display: block !important;
       }
@@ -192,7 +195,7 @@
         color: #0f172a !important;
       }
 
-      /* SEARCH DROPDOWN STYLING */
+      /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -267,7 +270,6 @@
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
       }
 
-      /* CATEGORIES HEADER ITEMS */
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
@@ -301,7 +303,6 @@
         background: rgba(30,58,138,0.55) !important; 
       }
 
-      /* DISTINCT MORE BUTTON */
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important; 
         border: 1px solid rgba(255, 255, 255, 0.45) !important; 
@@ -596,14 +597,26 @@
       });
     }
 
-    // HELPER: Find the exact Popular Tools leaf card element in the sidebar
+    // HELPER: Find the exact Popular Tools element
     function findPopularToolsCard() {
       const allElements = Array.from(document.querySelectorAll("aside, div, section, .card"));
       for (const el of allElements) {
         if (el === globalSearchNode || el === document.body) continue;
         const text = (el.textContent || "").toLowerCase();
-        // Match the specific card containing Popular Tools (small sidebar card)
-        if (text.includes("popular tools") && (el.offsetWidth < 450 || el.classList.contains("card"))) {
+        if (text.includes("popular tools") && (el.offsetWidth < 450 || el.classList.contains("card") || el.tagName.toLowerCase() === "aside")) {
+          return el;
+        }
+      }
+      return null;
+    }
+
+    // HELPER: Find System Status card
+    function findSystemStatusCard() {
+      const allElements = Array.from(document.querySelectorAll("aside, div, section, .card"));
+      for (const el of allElements) {
+        if (el === globalSearchNode || el === document.body) continue;
+        const text = (el.textContent || "").toLowerCase();
+        if (text.includes("system status") && !text.includes("popular tools") && el.offsetWidth < 450) {
           return el;
         }
       }
@@ -611,7 +624,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH EXACTLY: KEEP STRICT 2-COLUMN STRUCTURE
+    // TELEPORT SEARCH & CONSOLIDATE INTO STRICT 2 COLUMNS
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -621,9 +634,9 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. MOBILE PLACEMENT: Search goes inside Hamburger Drawer
+      // 1. MOBILE VIEW: Search inside Hamburger Drawer
       if (isMobile) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
@@ -635,35 +648,81 @@
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): Direct insert into existing sidebar above Popular Tools
+      // 2. TOOL PAGES (DESKTOP): STRICT TWO COLUMNS
       if (isToolPage) {
+        document.body.classList.add("is-tool-page-view");
         document.body.classList.remove("dyn-is-category");
-        const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
-        if (existingSidebar) existingSidebar.remove();
 
         const popCard = findPopularToolsCard();
-        if (popCard && popCard.parentElement) {
-          globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
-          const sidebarContainer = popCard.parentElement;
+        const statCard = findSystemStatusCard();
 
-          // Dock search bar directly above Popular Tools inside the existing sidebar
-          if (popCard.previousElementSibling !== globalSearchNode) {
-            sidebarContainer.insertBefore(globalSearchNode, popCard);
+        // Main content wrapper
+        const mainContentArea = document.querySelector(".card:not(#dynDesktopSidebarWrap *), div:has(> .calculator-interface), div:has(> #calc-form), div:has(> h1), section:first-of-type");
+        const parentContainer = document.querySelector("main, #app, #content, .container") || (mainContentArea ? mainContentArea.parentElement : null);
+
+        if (parentContainer && popCard) {
+          let sidebar = document.getElementById("dynDesktopSidebarWrap");
+          if (!sidebar) {
+            sidebar = document.createElement("aside");
+            sidebar.id = "dynDesktopSidebarWrap";
+
+            // Group all other content into left column
+            let leftCol = parentContainer.querySelector(".dyn-two-col-left");
+            if (!leftCol) {
+              leftCol = document.createElement("div");
+              leftCol.className = "dyn-two-col-left";
+
+              const childrenToKeep = Array.from(parentContainer.children).filter((el) => {
+                if (el === sidebar || el === globalSearchNode) return false;
+                const text = (el.textContent || "").toLowerCase();
+                return !(text.includes("popular tools") || text.includes("system status"));
+              });
+
+              childrenToKeep.forEach((child) => leftCol.appendChild(child));
+              parentContainer.prepend(leftCol);
+            }
+
+            // ORDER: 1. Search Box
+            globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+            sidebar.appendChild(globalSearchNode);
+
+            // ORDER: 2. Popular Tools
+            sidebar.appendChild(popCard);
+
+            // ORDER: 3. System Status
+            if (statCard) {
+              sidebar.appendChild(statCard);
+            }
+
+            parentContainer.appendChild(sidebar);
+          } else {
+            // Re-order if elements exist
+            if (sidebar.firstElementChild !== globalSearchNode) {
+              sidebar.prepend(globalSearchNode);
+            }
+            if (popCard && popCard.parentElement !== sidebar) {
+              sidebar.appendChild(popCard);
+            }
+            if (statCard && statCard.parentElement !== sidebar) {
+              sidebar.appendChild(statCard);
+            }
           }
+
+          parentContainer.classList.add("dyn-two-col-container");
           return;
         }
       }
 
-      // 3. DESKTOP HOME PAGE: Below the interactive calculator
+      // 3. DESKTOP HOME PAGE: Below Interactive Calculator
       if (!isCategoryView) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
-        const gridParent = document.querySelector(".dyn-category-grid-parent");
-        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent");
-        const mainCard = document.querySelector(".dyn-main-card-left");
-        if (mainCard) mainCard.classList.remove("dyn-main-card-left");
+        const gridParent = document.querySelector(".dyn-category-grid-parent, .dyn-two-col-container");
+        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent", "dyn-two-col-container");
+        const mainCard = document.querySelector(".dyn-main-card-left, .dyn-two-col-left");
+        if (mainCard) mainCard.classList.remove("dyn-main-card-left", "dyn-two-col-left");
 
         const calcCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
           const t = (el.textContent || "").toLowerCase();
