@@ -80,6 +80,8 @@
         position: relative !important;
         box-sizing: border-box !important;
         width: 100% !important;
+        pointer-events: auto !important;
+        z-index: 20 !important;
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
@@ -96,11 +98,29 @@
         }
       }
 
-      /* 2. CATEGORY VIEW: CLEAR BLUE PILL DESIGN */
+      /* 2. CATEGORY VIEW */
       .dyn-search-wrapper.in-cat-pane {
         max-width: 340px !important;
         width: 100% !important;
         margin-bottom: 0.5rem !important;
+      }
+
+      /* 3. TOOL SIDEBAR */
+      .dyn-search-wrapper.in-sidebar {
+        max-width: 100% !important;
+        display: block !important;
+        clear: both !important;
+        margin: 0 !important;
+        background: var(--bg-surface, #ffffff) !important;
+        border: 1px solid var(--border-color, #e2e8f0) !important;
+        border-radius: 16px !important;
+        padding: 1rem !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+        box-sizing: border-box !important;
+      }
+      [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
+        background: var(--bg-surface, #1e293b) !important;
+        border-color: var(--border-color, #334155) !important;
       }
 
       .dyn-search-row {
@@ -109,13 +129,16 @@
         width: 100% !important;
         height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
-        border: 1.5px solid #2563eb !important; /* Clear blue border */
+        border: 1.5px solid #2563eb !important;
         border-radius: 24px !important;
-        padding: 3px 5px 3px 14px !important;
+        padding: 3px 6px 3px 14px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
         box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
+        cursor: text !important;
+        position: relative !important;
+        z-index: 25 !important;
       }
       [data-theme="dark"] .dyn-search-row {
         background: var(--bg-surface, #1e293b) !important;
@@ -124,10 +147,10 @@
       }
       .dyn-search-wrapper .dyn-search-row:focus-within {
         border-color: #1d4ed8 !important;
-        box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.25) !important; /* Vivid blue ring when typing */
+        box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.25) !important;
       }
 
-      /* Modern Input Text */
+      /* Modern Input Text - Fully Clickable & Active */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -140,6 +163,12 @@
         flex: 1 1 auto !important;
         min-width: 0 !important;
         height: 100% !important;
+        cursor: text !important;
+        pointer-events: auto !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        position: relative !important;
+        z-index: 30 !important;
       }
       @media (min-width: 768px) {
         .dyn-modern-input {
@@ -147,7 +176,7 @@
         }
       }
 
-      /* Modern Button */
+      /* Modern Search Button (Enabled Across All Views) */
       .dyn-modern-btn {
         height: 32px !important;
         padding: 0 14px !important;
@@ -162,30 +191,12 @@
         flex-shrink: 0 !important;
         box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
         transition: transform 0.15s, box-shadow 0.15s !important;
+        position: relative !important;
+        z-index: 30 !important;
       }
       .dyn-modern-btn:hover {
         transform: translateY(-1px) !important;
         box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4) !important;
-      }
-
-      /* 3. TOOL SIDEBAR */
-      .dyn-search-wrapper.in-sidebar {
-        max-width: 100% !important;
-        display: block !important;
-        clear: both !important;
-        margin: 0 !important;
-        background: var(--bg-surface, #ffffff) !important;
-        border: 1px solid var(--border-color, #e2e8f0) !important;
-        border-radius: 16px !important;
-        padding: 1.15rem 1.25rem !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-      }
-      [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
-        background: var(--bg-surface, #1e293b) !important;
-        border-color: var(--border-color, #334155) !important;
-      }
-      .dyn-search-wrapper.in-sidebar .dyn-modern-btn {
-        display: none !important;
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
@@ -512,7 +523,14 @@
       `;
 
       const input = globalSearchNode.querySelector(".dyn-modern-input");
+      const row = globalSearchNode.querySelector(".dyn-search-row");
+      const btn = globalSearchNode.querySelector(".dyn-modern-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
+
+      // Clicking anywhere inside the search row guarantees input focus
+      row.addEventListener("click", () => {
+        input.focus();
+      });
 
       function snapBack() {
         requestAnimationFrame(() => {
@@ -563,7 +581,15 @@
         dropdown.style.display = "block";
       }
 
-      input.addEventListener("input", (e) => renderList(e.target.value.trim().toLowerCase()));
+      input.addEventListener("input", (e) => {
+        renderList(e.target.value.trim().toLowerCase());
+      });
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        renderList(input.value.trim().toLowerCase());
+        input.focus();
+      });
 
       document.addEventListener("click", (e) => {
         if (!globalSearchNode.contains(e.target)) dropdown.style.display = "none";
