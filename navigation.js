@@ -91,7 +91,7 @@
           padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 16px !important;
+          gap: 18px !important;
           box-sizing: border-box !important;
         }
 
@@ -108,26 +108,22 @@
         }
       }
 
-      /* TOOL PAGE: ENSURE RIGHT SIDEBAR STAYS FIXED AT TOP-RIGHT */
-      @media (min-width: 768px) {
-        body.is-tool-page-view main,
-        body.is-tool-page-view .container,
-        body.is-tool-page-view body > div:not(#siteDynamicHeader) {
-          align-items: flex-start !important;
-        }
-
-        .dyn-search-wrapper.in-tool-sidebar {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 0 16px 0 !important;
-          box-sizing: border-box !important;
-          display: block !important;
-        }
+      /* ========================================================
+         SEPARATED SEARCH CARD (TOOL PAGES & SIDEBAR)
+         ======================================================== */
+      .dyn-search-wrapper.in-tool-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 20px 0 !important;
+        padding: 10px !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+        box-sizing: border-box !important;
+        display: block !important;
       }
 
-      /* ========================================================
-         ATTRACTIVE & READABLE SEARCH BAR DESIGN
-         ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         width: 100% !important;
@@ -144,11 +140,6 @@
         width: 100% !important;
         gap: 6px !important;
         box-sizing: border-box !important;
-        background: #ffffff !important;
-        padding: 4px !important;
-        border-radius: 8px !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
       }
       .dyn-calcnet-search input {
         flex: 1 1 auto !important;
@@ -204,7 +195,7 @@
         min-height: 250px;
         background: #f1f5f9;
         border: 1px dashed #cbd5e1;
-        border-radius: 4px;
+        border-radius: 8px;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -605,7 +596,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH: DOCKED IN SIDEBAR DIRECTLY ABOVE POPULAR TOOLS
+    // TELEPORT SEARCH: SEPARATE CARD JUST ABOVE POPULAR TOOLS
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -615,13 +606,7 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      if (isToolPage) {
-        document.body.classList.add("is-tool-page-view");
-      } else {
-        document.body.classList.remove("is-tool-page-view");
-      }
-
-      // 1. MOBILE PLACEMENT: Search lives inside Hamburger Drawer
+      // 1. MOBILE PLACEMENT: Search goes inside Hamburger Drawer
       if (isMobile) {
         document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -635,14 +620,14 @@
         return;
       }
 
-      // 2. TOOL PAGES WITH SIDEBAR: Place Search directly inside the card ABOVE Popular Tools
+      // 2. TOOL PAGES WITH SIDEBAR: Separate Card placed directly above Popular Tools
       const popularToolsCard = findPopularToolsCard();
-      if (!isCategoryView && popularToolsCard) {
+      if (!isCategoryView && popularToolsCard && popularToolsCard.parentElement) {
         globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
 
-        // Insert inside the popular tools card or just above its content
-        if (popularToolsCard.firstElementChild !== globalSearchNode) {
-          popularToolsCard.insertAdjacentElement("afterbegin", globalSearchNode);
+        const sidebarParent = popularToolsCard.parentElement;
+        if (popularToolsCard.previousElementSibling !== globalSearchNode) {
+          sidebarParent.insertBefore(globalSearchNode, popularToolsCard);
         }
         return;
       }
@@ -672,7 +657,7 @@
         return;
       }
 
-      // 4. DESKTOP CATEGORY PAGES: Right Sidebar above Popular Tools
+      // 4. DESKTOP CATEGORY PAGES: Separate module inside 300px sidebar
       document.body.classList.add("dyn-is-category");
       globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
 
