@@ -62,13 +62,13 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: STARTS AFTER 25% MARGIN IN X DIRECTION */
+      /* 1. HOMEPAGE: STARTS AFTER 20% MARGIN IN X DIRECTION */
       .dyn-search-wrapper.in-home-desktop {
         max-width: 320px !important;
         width: 100% !important;
         margin-top: 1.25rem !important;
         margin-bottom: 1.5rem !important;
-        margin-left: 25% !important; /* Starts precisely after 25% width */
+        margin-left: 20% !important; /* Starts precisely after 20% width */
         margin-right: auto !important;
       }
 
@@ -423,7 +423,7 @@
 
       .dyn-drawer-menu a {
         text-decoration: none !important; color: var(--text-main, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
-        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
+        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !gap: 0.55rem !important;
         cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
@@ -625,7 +625,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Exactly at 25% margin in X direction
+      // 3. Desktop Homepage View: Exactly at 20% margin in X direction
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
