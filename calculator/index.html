@@ -128,7 +128,7 @@ p.intro, #cintro, #cintro:empty {
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
 
-/* Vertical Stack containing the 5 X-Flow Rows */
+/* Stack of 5 X-Flow Rows */
 .cat-rows-stack {
   display: flex;
   flex-direction: column;
@@ -234,6 +234,7 @@ p.intro, #cintro, #cintro:empty {
   width: 285px !important;
   min-width: 285px !important;
   scroll-snap-align: start;
+  box-sizing: border-box;
 }
 .cat-hub-card:hover {
   transform: translateY(-3px);
@@ -269,7 +270,7 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.65rem;
 }
 
-/* Y-FLOW TOOLS SCROLL: LOCKED TO 10 ITEMS WITH TIGHT SPACING */
+/* Y-FLOW TOOLS SCROLL */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
@@ -389,7 +390,7 @@ p.intro, #cintro, #cintro:empty {
   white-space: nowrap;
 }
 
-/* Category Palettes */
+/* Palettes */
 .cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
 .cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
 .cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
@@ -574,7 +575,17 @@ input, select, textarea {
   overflow: hidden; max-width: 100% !important; box-sizing: border-box !important;
 }
 .calc-card .st { padding-left: 1.25rem; margin-bottom: .4rem; }
-#calc { width: 100% !important; max-width: 100% !important; height: 420px; border: none; display: block; transition: height .15s ease; }
+
+/* Fixed explicit height prevents empty collapse */
+#calc { 
+  width: 100% !important; 
+  max-width: 100% !important; 
+  height: 440px; 
+  min-height: 440px;
+  border: none; 
+  display: block; 
+  transition: height .15s ease; 
+}
 
 #homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
 #sidebarSearchSlot { width: 100%; margin-bottom: 1.25rem; }
@@ -613,10 +624,10 @@ footer a:hover { color: var(--link); }
   <div id="home" style="display:flex;flex-direction:column;gap:1.5rem">
     <section class="card calc-card">
       <h2 class="st">🧮 Interactive Calculator</h2>
-      <iframe id="calc" src="/calculator/index.html" title="Interactive Calculator"></iframe>
+      <iframe id="calc" src="calculator/index.html" title="Interactive Calculator"></iframe>
     </section>
 
-    <!-- SEARCH BAR BELOW CALCULATOR -->
+    <!-- SEARCH BAR BELOW INTERACTIVE CALCULATOR -->
     <div id="homeSearchSlot"></div>
 
     <!-- Stat Highlights -->
@@ -627,7 +638,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Category Sections Container (5 X-Flow Rows on Home) -->
+    <!-- Category Sections Container on Home (Only this uses the 5-row Round-Robin) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:0.75rem;width:100%;min-width:0;"></div>
   </div>
 
@@ -644,7 +655,9 @@ footer a:hover { color: var(--link); }
 </main>
 
 <aside>
+  <!-- SEARCH BAR IN SIDEBAR (NON-HOMEPAGE PAGES) -->
   <div id="sidebarSearchSlot"></div>
+
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   <div class="box"><h3>Popular Tools</h3><div>
     <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
@@ -669,9 +682,8 @@ footer a:hover { color: var(--link); }
 <!-- Page Router, Registry, 5-Row Round Robin Carousel & Iframe Resizer -->
 <script>
 (function(){
-  /* CRITICAL ANTI-RECURSION GUARD: Stop if accidentally embedded in an iframe */
+  /* SAFE GUARD: If run inside an iframe, don't execute router or nested frame mutations */
   if (window.top !== window.self) {
-    document.body.innerHTML = '';
     return;
   }
 
@@ -908,7 +920,7 @@ footer a:hover { color: var(--link); }
       hs += '  <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
       hs += '</div>';
 
-      /* OPTION B: ROUND-ROBIN DISTRIBUTION ACROSS 5 ROWS STRICTLY FOR CATEGORIES */
+      /* 5 ROWS (ROUND-ROBIN) */
       var NUM_ROWS = 5;
       var rows = [[], [], [], [], []];
       cs.forEach(function(c, idx){
