@@ -74,7 +74,7 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 h1#ch1 {
   font-size: 1.55rem !important;
   color: var(--text) !important;
-  margin: 0 0 14px 0 !important;
+  margin: 0 0 16px 0 !important;
   padding: 0 !important;
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
@@ -106,7 +106,7 @@ p.intro, #cintro, #cintro:empty {
 .cols, #cols {
   display: flex !important;
   flex-direction: column !important;
-  gap: 1.6rem !important;
+  gap: 1.85rem !important;
   margin-top: 0px !important;
   padding-top: 0px !important;
   width: 100% !important;
@@ -115,38 +115,74 @@ p.intro, #cintro, #cintro:empty {
 .cat-group-block {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.95rem;
   width: 100%;
 }
 
-/* HIGH-VISIBILITY APPLE SECTION HEADER */
+/* ========================================================
+   MAX-HIGHLIGHT APPLE SEMI-3D CATEGORY BANNER
+   ======================================================== */
 .cat-group-title {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 1.18rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.025em;
-  padding: 0.35rem 0.75rem 0.35rem 0.65rem;
-  background: rgba(0, 113, 227, 0.06);
-  border-left: 4px solid #0071e3;
-  border-radius: 6px 12px 12px 6px;
-  width: fit-content;
-  transition: all 0.2s ease;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.65rem 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.8) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 [data-theme="dark"] .cat-group-title {
-  background: rgba(56, 189, 248, 0.1);
-  border-left-color: #38bdf8;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+}
+
+.cat-group-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--grad);
 }
 
 .cat-group-title a {
+  font-size: 1.25rem;
+  font-weight: 800;
   color: var(--text);
+  letter-spacing: -0.025em;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.25rem;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
+
 .cat-group-title a:hover {
-  color: var(--link);
+  color: #0071e3;
+  transform: translateX(2px);
+}
+
+.cat-group-title .cat-badge-arrow {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0071e3;
+  background: rgba(0, 113, 227, 0.1);
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] .cat-group-title .cat-badge-arrow {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
 }
 
 .cat-tools-bento {
@@ -366,6 +402,14 @@ input, select, textarea {
     font-size: 0.85rem !important;
     align-self: center !important;
     margin-left: auto !important;
+  }
+
+  .cat-group-title {
+    padding: 0.55rem 0.9rem;
+  }
+
+  .cat-group-title a {
+    font-size: 1.12rem;
   }
 
   .cat-tools-bento {
@@ -810,7 +854,7 @@ footer a:hover { color: var(--link); }
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
         o+='<div class="cat-group-block">';
-        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a></div>';
+        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a><span class="cat-badge-arrow">View All &rarr;</span></div>';
         o+='  <div class="cat-tools-bento">';
         list.forEach(function(t){
           o+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
