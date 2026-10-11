@@ -380,7 +380,7 @@ input, select, textarea {
 }
 
 /* ========================================================
-   MOBILE VIEW: SLIM & ULTRA-PROFESSIONAL CATEGORY HEADERS
+   MOBILE VIEW: FULL WIDTH (X) + SLIM Y-DIRECTION
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -441,26 +441,27 @@ input, select, textarea {
     margin-left: auto !important;
   }
 
-  /* SLIM PROFESSIONAL CATEGORY PILL IN MOBILE VIEW */
+  /* FULL WIDTH ON X-AXIS, SLIMMED DOWN ON Y-AXIS */
   .cat-bento-header-card {
-    padding: 0.42rem 0.85rem 0.48rem 0.75rem !important;
-    min-width: unset !important;
-    width: fit-content !important;
-    border-radius: 12px !important;
-    gap: 0.55rem !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 0.35rem 0.95rem 0.42rem 0.85rem !important;
+    border-radius: 14px !important;
+    gap: 0.75rem !important;
     box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+    box-sizing: border-box !important;
   }
 
   .cat-bento-header-card.cat-theme-financial {
-    border-left-width: 3.5px !important;
+    border-left-width: 4px !important;
     border-bottom-width: 2.5px !important;
   }
   .cat-bento-header-card.cat-theme-math {
-    border-left-width: 3.5px !important;
+    border-left-width: 4px !important;
     border-bottom-width: 2.5px !important;
   }
   .cat-bento-header-card.cat-theme-utility {
-    border-left-width: 3.5px !important;
+    border-left-width: 4px !important;
     border-bottom-width: 2.5px !important;
   }
 
@@ -469,12 +470,12 @@ input, select, textarea {
     height: 32px !important;
     min-width: 32px !important;
     font-size: 1.15rem !important;
-    border-radius: 8px !important;
+    border-radius: 9px !important;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
   }
 
   .cat-bento-title {
-    font-size: 1.02rem !important;
+    font-size: 1.08rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.015em !important;
   }
@@ -488,12 +489,12 @@ input, select, textarea {
   }
 
   .cat-pure-text-list {
-    padding-left: 0.35rem !important;
-    gap: 0.5rem !important;
+    padding-left: 0.45rem !important;
+    gap: 0.55rem !important;
   }
 
   .cat-pure-text-list li a {
-    font-size: 0.98rem !important;
+    font-size: 1rem !important;
   }
 }
 
