@@ -29,7 +29,7 @@
         display: none !important;
       }
 
-      /* SEARCH BAR ENCLOSED IN SIDEBAR ONLY */
+      /* SEARCH BAR ENCLOSED IN ITS OWN SEPARATE FRAME/CARD */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -45,13 +45,17 @@
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        padding-bottom: 16px !important;
-        margin-bottom: 16px !important;
-        /* Standard border dividing search bar from Popular Tools */
-        border-bottom: 1px solid var(--border, #e2e8f0) !important;
+        margin-bottom: 1rem !important;
+        /* Dedicated separate card styling matching .card / .box */
+        background: var(--surface, #ffffff) !important;
+        border: 1px solid var(--border, #e2e8f0) !important;
+        border-radius: 16px !important;
+        padding: 0.85rem !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
-        border-bottom-color: var(--border, #334155) !important;
+        background: var(--surface, #1e293b) !important;
+        border-color: var(--border, #334155) !important;
       }
 
       .dyn-modern-search-box {
@@ -69,7 +73,7 @@
         transition: all 0.2s ease !important;
       }
       [data-theme="dark"] .dyn-modern-search-box {
-        background: #1e293b !important;
+        background: #0f172a !important;
         border-color: #334155 !important;
       }
       .dyn-modern-search-box:focus-within {
@@ -466,7 +470,7 @@
       });
     }
 
-    // STRICT SIDEBAR PLACEMENT
+    // STRICT SIDEBAR PLACEMENT (SEPARATE FRAME/CARD BEFORE POPULAR TOOLS CARD)
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -531,6 +535,7 @@
         const sidebarContainer = cardModule.parentElement;
         if (sidebarContainer && cardModule) {
           globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+          // Mount as separate card preceding the Popular Tools card
           if (cardModule.previousElementSibling !== globalSearchNode) {
             sidebarContainer.insertBefore(globalSearchNode, cardModule);
           }
