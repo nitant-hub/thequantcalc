@@ -1,12 +1,15 @@
 (function () {
+  const currentPath = window.location.pathname.toLowerCase();
+  const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
+
   function initNavigation() {
-    // 1. Clean up any previous headers or drawers
+    // 1. Clean up old elements
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSidebarWrap", "dynToolSidebar"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
 
-    // 2. Inject navigation & search styles
+    // 2. Inject styles
     let style = document.getElementById("injectedNavigationStyles");
     if (!style) {
       style = document.createElement("style");
@@ -33,7 +36,7 @@
       }
 
       /* ========================================================
-         MODERN INTEGRATED SEARCH BAR (NO SEPARATE BLUE BUTTON)
+         SEARCH CONTAINER & SEPARATION (NO OVERLAPPING)
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -46,8 +49,10 @@
       }
       .dyn-search-wrapper.in-sidebar {
         width: 100% !important;
-        margin-bottom: 1rem !important;
         display: block !important;
+        clear: both !important;
+        margin-top: 0 !important;
+        margin-bottom: 1.25rem !important; /* Clean space before Popular Tools */
       }
 
       .dyn-modern-search-box {
@@ -116,7 +121,7 @@
         color: var(--text, #0f172a) !important;
       }
 
-      /* SEARCH DROPDOWN STYLING */
+      /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -306,7 +311,7 @@
       }
     `;
 
-    // 3. Mount Header Bar & Drawer
+    // 3. Build Header and Drawer
     const categories = [
       { name: "FINANCE", path: "#/financial", slug: "financial", icon: "📈" },
       { name: "MATH", path: "#/math", slug: "math", icon: "📐" },
@@ -374,7 +379,7 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // 4. Single Search Component Instance
+    // 4. Single Search Node
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -436,13 +441,13 @@
       });
     }
 
-    // 5. Intelligent Mount System (Uses your HTML's native layout containers)
+    // 5. Intelligent Placement Logic
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // Mobile: mount into drawer
+      // Mobile View: Inside Drawer
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
@@ -452,7 +457,7 @@
         return;
       }
 
-      // Desktop: Home Page (mount into #homeSearchSlot)
+      // Desktop View (Homepage): Below Calculator
       if (!isCategoryView && !isToolPage) {
         const homeSlot = document.getElementById("homeSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
@@ -462,23 +467,24 @@
         return;
       }
 
-      // Desktop: Category or Tool Pages (mount into native #sidebarSearchSlot)
+      // Desktop View (Category or Tool Page): Top of Sidebar just above Popular Tools
       const sidebarSlot = document.getElementById("sidebarSearchSlot");
       if (sidebarSlot) {
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
         if (globalSearchNode.parentElement !== sidebarSlot) {
           sidebarSlot.appendChild(globalSearchNode);
         }
-      } else {
-        // Fallback for standalone tool pages lacking #sidebarSearchSlot
-        const popTools = Array.from(document.querySelectorAll(".box, .card")).find((el) => {
-          return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
-        });
-        if (popTools && popTools.parentElement) {
-          globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-          if (popTools.previousElementSibling !== globalSearchNode) {
-            popTools.parentElement.insertBefore(globalSearchNode, popTools);
-          }
+        return;
+      }
+
+      // Fallback for custom tool pages without #sidebarSearchSlot
+      const popTools = Array.from(document.querySelectorAll(".box, .card, aside > div")).find((el) => {
+        return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
+      });
+      if (popTools && popTools.parentElement) {
+        globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+        if (popTools.previousElementSibling !== globalSearchNode) {
+          popTools.parentElement.insertBefore(globalSearchNode, popTools);
         }
       }
     }
