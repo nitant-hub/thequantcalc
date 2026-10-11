@@ -38,16 +38,17 @@
       }
 
       /* HIDE SIDEBAR & ADS ON HOMEPAGE */
-      body:not(.dyn-is-category) #dynDesktopSidebarWrap,
+      body:not(.dyn-is-category):not(.is-tool-page-view) #dynDesktopSidebarWrap,
       body:not(.dyn-is-category) #dynAdSenseSlot {
         display: none !important;
       }
 
       /* ========================================================
-         CATEGORY MODE: CLEAN 2-COLUMN SPLIT (DESKTOP)
+         2-COLUMN DESKTOP SPLIT (CATEGORY & TOOL PAGES)
          ======================================================== */
       @media (min-width: 768px) {
-        body.dyn-is-category .dyn-category-grid-parent {
+        body.dyn-is-category .dyn-category-grid-parent,
+        body.is-tool-page-view .dyn-tool-grid-parent {
           display: flex !important;
           flex-direction: row !important;
           flex-wrap: nowrap !important;
@@ -61,9 +62,9 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. LEFT MAIN TOOLS AREA */
+        /* 1. LEFT MAIN AREA */
         body.dyn-is-category .dyn-main-card-left,
-        body.dyn-is-category .dyn-main-card-left.card {
+        body.is-tool-page-view .dyn-tool-main-left {
           flex: 1 1 calc(100% - 325px) !important;
           width: calc(100% - 325px) !important;
           max-width: calc(100% - 325px) !important;
@@ -76,13 +77,14 @@
           box-shadow: none !important;
         }
 
-        body.dyn-is-category .dyn-main-card-left * {
+        body.dyn-is-category .dyn-main-card-left *,
+        body.is-tool-page-view .dyn-tool-main-left * {
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
 
         /* 2. RIGHT SIDEBAR PORTION (300px FIXED AT TOP ROW) */
-        body.dyn-is-category #dynDesktopSidebarWrap {
+        #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
@@ -91,12 +93,12 @@
           padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 20px !important;
+          gap: 18px !important;
           box-sizing: border-box !important;
         }
 
-        body.dyn-is-category #dynDesktopSidebarWrap .card,
-        body.dyn-is-category #dynDesktopSidebarWrap > div {
+        #dynDesktopSidebarWrap .card,
+        #dynDesktopSidebarWrap > div {
           width: 100% !important;
           max-width: 300px !important;
           margin: 0 !important;
@@ -109,12 +111,12 @@
       }
 
       /* ========================================================
-         SEPARATED SEARCH CARD & POPULAR TOOLS GAP (NO OVERLAP)
+         SEPARATED SEARCH CARD & DISTINCT SIDEBAR BOXES
          ======================================================== */
       .dyn-search-wrapper.in-tool-sidebar {
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 22px 0 !important;
+        margin: 0 0 16px 0 !important;
         padding: 10px !important;
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
@@ -122,16 +124,6 @@
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
         box-sizing: border-box !important;
         display: block !important;
-        position: relative !important;
-        clear: both !important;
-      }
-
-      /* FORCE SEPARATION ON POPULAR TOOLS CARD */
-      .dyn-separated-popular-tools {
-        display: block !important;
-        position: relative !important;
-        margin-top: 0 !important;
-        clear: both !important;
       }
 
       .dyn-search-wrapper {
@@ -552,7 +544,7 @@
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
       globalSearchNode.id = "dynGlobalSearchNode";
-      globalSearchNode.className = "dyn-search-wrapper";
+      globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
       globalSearchNode.innerHTML = `
         <div class="dyn-calcnet-search">
           <input type="text" class="dyn-search-input" placeholder="Search calculators..." autocomplete="off">
@@ -590,7 +582,7 @@
       });
     }
 
-    // HELPER: Find the exact Popular Tools card safely
+    // HELPER: Locate Popular Tools card
     function findPopularToolsCard() {
       const candidates = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div, aside"));
       for (const el of candidates) {
@@ -606,7 +598,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH: SEPARATE CARD JUST ABOVE POPULAR TOOLS
+    // TELEPORT SEARCH & ANCHOR SIDEBAR PROPERLY (DESKTOP & MOBILE)
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -616,9 +608,9 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. MOBILE PLACEMENT: Search goes inside Hamburger Drawer
+      // 1. MOBILE PLACEMENT: In hamburger drawer
       if (isMobile) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
@@ -630,29 +622,61 @@
         return;
       }
 
-      // 2. TOOL PAGES WITH SIDEBAR: Separate Card placed directly above Popular Tools
-      const popularToolsCard = findPopularToolsCard();
-      if (!isCategoryView && popularToolsCard && popularToolsCard.parentElement) {
-        globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
-        popularToolsCard.classList.add("dyn-separated-popular-tools");
+      // 2. TOOL PAGES (DESKTOP): Maintain 2 columns with sidebar on the right
+      if (isToolPage) {
+        document.body.classList.add("is-tool-page-view");
+        document.body.classList.remove("dyn-is-category");
 
-        const sidebarParent = popularToolsCard.parentElement;
-        if (popularToolsCard.previousElementSibling !== globalSearchNode) {
-          sidebarParent.insertBefore(globalSearchNode, popularToolsCard);
+        const popularToolsCard = findPopularToolsCard();
+        const mainContentArea = document.querySelector(".card:not(#dynDesktopSidebarWrap *), div:has(> .calculator-interface), div:has(> #calc-form), div:has(> h1), section:first-of-type");
+
+        if (mainContentArea && popularToolsCard) {
+          const parentContainer = mainContentArea.parentElement;
+          if (parentContainer) {
+            parentContainer.classList.add("dyn-tool-grid-parent");
+            mainContentArea.classList.add("dyn-tool-main-left");
+
+            let sidebar = document.getElementById("dynDesktopSidebarWrap");
+            if (!sidebar) {
+              sidebar = document.createElement("aside");
+              sidebar.id = "dynDesktopSidebarWrap";
+
+              // 1. Search Box on Top
+              sidebar.appendChild(globalSearchNode);
+
+              // 2. Popular Tools and other secondary cards directly underneath
+              const secondaryCards = Array.from(parentContainer.children).filter((el) => {
+                if (el === mainContentArea || el === sidebar || el === globalSearchNode) return false;
+                const text = (el.textContent || "").toLowerCase();
+                return text.includes("popular tools") || text.includes("system status");
+              });
+
+              secondaryCards.forEach((c) => {
+                sidebar.appendChild(c);
+              });
+
+              parentContainer.appendChild(sidebar);
+            } else {
+              // Ensure Search is at the top of the sidebar
+              if (sidebar.firstChild !== globalSearchNode) {
+                sidebar.prepend(globalSearchNode);
+              }
+            }
+            return;
+          }
         }
-        return;
       }
 
-      // 3. DESKTOP HOME PAGE: Below interactive calculator
+      // 3. DESKTOP HOME PAGE: Below the interactive calculator
       if (!isCategoryView) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
-        const gridParent = document.querySelector(".dyn-category-grid-parent");
-        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent");
-        const mainCard = document.querySelector(".dyn-main-card-left");
-        if (mainCard) mainCard.classList.remove("dyn-main-card-left");
+        const gridParent = document.querySelector(".dyn-category-grid-parent, .dyn-tool-grid-parent");
+        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent", "dyn-tool-grid-parent");
+        const mainCard = document.querySelector(".dyn-main-card-left, .dyn-tool-main-left");
+        if (mainCard) mainCard.classList.remove("dyn-main-card-left", "dyn-tool-main-left");
 
         const calcCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
           const t = (el.textContent || "").toLowerCase();
@@ -668,8 +692,9 @@
         return;
       }
 
-      // 4. DESKTOP CATEGORY PAGES: Separate module inside 300px sidebar
+      // 4. DESKTOP CATEGORY PAGES: AdSense, then Search, then Popular Tools
       document.body.classList.add("dyn-is-category");
+      document.body.classList.remove("is-tool-page-view");
       globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
 
       const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
@@ -734,10 +759,10 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      if (!isCategoryView && !isMobile && !findPopularToolsCard()) {
+      if (!isCategoryView && !isMobile && !isToolPage) {
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
       } else {
         relocateSearchAndLayout();
       }
