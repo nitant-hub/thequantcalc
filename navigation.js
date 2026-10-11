@@ -43,11 +43,13 @@
       }
 
       /* ========================================================
-         EXACT TWO-COLUMN SYSTEM (NO 3RD COLUMN ALLOWED)
+         ELIMINATE EMPTY 3RD COLUMN ON TOOL PAGES
          ======================================================== */
       @media (min-width: 768px) {
-        /* Both category and tool views share the strict 2-column flex layout */
-        body.dyn-is-category .dyn-category-grid-parent,
+        /* Force container to 2 items max */
+        body.is-tool-page-view main,
+        body.is-tool-page-view .container,
+        body.is-tool-page-view #content,
         body.is-tool-page-view .dyn-two-col-container {
           display: flex !important;
           flex-direction: row !important;
@@ -62,7 +64,14 @@
           box-sizing: border-box !important;
         }
 
-        /* LEFT COLUMN (MAIN CALCULATOR & ARTICLE) */
+        /* Hide empty right column elements from the template */
+        body.is-tool-page-view aside:empty,
+        body.is-tool-page-view .sidebar:empty,
+        body.is-tool-page-view div:empty:not(#dynGlobalSearchNode *) {
+          display: none !important;
+        }
+
+        /* 1. LEFT COLUMN: EXPANDS NATURALLY */
         body.dyn-is-category .dyn-main-card-left,
         body.is-tool-page-view .dyn-two-col-left {
           flex: 1 1 calc(100% - 325px) !important;
@@ -80,14 +89,14 @@
           box-sizing: border-box !important;
         }
 
-        /* SINGLE RIGHT COLUMN (300PX FIXED) */
+        /* 2. ONLY ONE RIGHT COLUMN (300PX FIXED) */
         #dynDesktopSidebarWrap {
           flex: 0 0 300px !important;
           width: 300px !important;
           max-width: 300px !important;
           min-width: 300px !important;
           margin: 0 !important;
-          padding-top: 0 !important;
+          padding: 0 !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 16px !important;
@@ -648,7 +657,7 @@
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): STRICT TWO COLUMNS
+      // 2. TOOL PAGES (DESKTOP): STRICT TWO COLUMNS (NO 3RD COLUMN)
       if (isToolPage) {
         document.body.classList.add("is-tool-page-view");
         document.body.classList.remove("dyn-is-category");
@@ -696,7 +705,7 @@
 
             parentContainer.appendChild(sidebar);
           } else {
-            // Re-order if elements exist
+            // Keep strictly stacked order
             if (sidebar.firstElementChild !== globalSearchNode) {
               sidebar.prepend(globalSearchNode);
             }
@@ -707,6 +716,16 @@
               sidebar.appendChild(statCard);
             }
           }
+
+          // PURGE ANY REMAINING EMPTY SIBLING ASIDES OR 3RD COLUMNS
+          Array.from(parentContainer.children).forEach((child) => {
+            if (child !== sidebar && !child.classList.contains("dyn-two-col-left")) {
+              const text = (child.textContent || "").trim();
+              if (!text || text.length === 0 || child.tagName.toLowerCase() === "aside") {
+                child.remove();
+              }
+            }
+          });
 
           parentContainer.classList.add("dyn-two-col-container");
           return;
