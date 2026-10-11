@@ -25,47 +25,79 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* Hide native unstyled search input */
+      /* Hide native plain search input */
       .sr input#q {
         display: none !important;
       }
 
-      /* Keep 2-column layout active on category views */
+      /* ========================================================
+         CATEGORY VIEW INTERNAL TWO-COLUMN SPLIT
+         ======================================================== */
       @media (min-width: 768px) {
-        .grid {
-          display: grid !important;
-          grid-template-columns: 2.5fr 1fr !important;
-          gap: 1.5rem !important;
-          align-items: start !important;
+        #catView.dyn-cat-split {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: flex-start !important;
+          gap: 2rem !important;
+        }
+        #catView.dyn-cat-split > .dyn-cat-left-pane {
+          flex: 1 1 0% !important;
+          min-width: 0 !important;
+        }
+        #catView.dyn-cat-split > .dyn-cat-right-pane {
+          flex: 0 0 320px !important;
+          width: 320px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 1rem !important;
         }
       }
 
-      /* Standalone Tool Page sidebar reset */
-      aside.sidebar {
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 16px !important;
-      }
-
       /* ========================================================
-         SEARCH COMPONENT
+         SEARCH BAR STYLES
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
         width: 100% !important;
       }
-      .dyn-search-wrapper.in-home-desktop {
-        max-width: 100% !important;
-        margin: 0.5rem 0 1rem 0 !important;
+
+      /* In Category Right Pane: Rectangular Input + Blue "Search" Button */
+      .dyn-search-wrapper.in-cat-pane .dyn-search-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: 100% !important;
       }
-      .dyn-search-wrapper.in-cat-left {
-        max-width: 100% !important;
-        margin: 0.8rem 0 1rem 0 !important;
+      .dyn-search-wrapper.in-cat-pane .dyn-modern-input {
+        flex: 1 1 auto !important;
+        height: 36px !important;
+        border: 1px solid var(--border-color, #cbd5e1) !important;
+        border-radius: 4px !important;
+        background: var(--bg-surface, #ffffff) !important;
+        padding: 0 10px !important;
+        font-size: 13px !important;
+        color: var(--text-main, #0f172a) !important;
+        outline: none !important;
       }
+      .dyn-search-wrapper.in-cat-pane .dyn-modern-btn {
+        height: 36px !important;
+        padding: 0 16px !important;
+        background: #2563eb !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 4px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+      }
+      .dyn-search-wrapper.in-cat-pane .dyn-modern-btn:hover {
+        background: #1d4ed8 !important;
+      }
+
+      /* In Standalone Tool Sidebar: Modern Rounded Card */
       .dyn-search-wrapper.in-sidebar {
         max-width: 100% !important;
         display: block !important;
@@ -81,8 +113,7 @@
         background: var(--bg-surface, #1e293b) !important;
         border-color: var(--border-color, #334155) !important;
       }
-
-      .dyn-modern-search-box {
+      .dyn-search-wrapper.in-sidebar .dyn-search-row {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
@@ -93,86 +124,59 @@
         padding: 0 12px 0 14px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
-        transition: all 0.2s ease !important;
       }
-      [data-theme="dark"] .dyn-modern-search-box {
-        background: #0f172a !important;
-        border-color: #334155 !important;
-      }
-      .dyn-modern-search-box:focus-within {
-        border-color: #3b82f6 !important;
-        background: var(--bg-surface, #ffffff) !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
-      }
-      [data-theme="dark"] .dyn-modern-search-box:focus-within {
-        background: #0f172a !important;
-      }
-
-      .dyn-modern-icon {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        color: var(--text-muted, #64748b) !important;
-        font-size: 14px !important;
-        flex-shrink: 0 !important;
-      }
-
-      .dyn-modern-input {
+      .dyn-search-wrapper.in-sidebar .dyn-modern-input {
         flex: 1 1 auto !important;
-        min-width: 0 !important;
         height: 100% !important;
         border: none !important;
         background: transparent !important;
-        padding: 0 !important;
-        font-size: 13.5px !important;
-        font-weight: 500 !important;
-        color: var(--text-main, #0f172a) !important;
         outline: none !important;
+        font-size: 13.5px !important;
+        color: var(--text-main, #0f172a) !important;
       }
-      [data-theme="dark"] .dyn-modern-input {
-        color: #f8fafc !important;
-      }
-      .dyn-modern-input::placeholder {
-        color: var(--text-muted, #94a3b8) !important;
-        font-size: 13px !important;
+      .dyn-search-wrapper.in-sidebar .dyn-modern-btn {
+        display: none !important;
       }
 
-      .dyn-modern-clear-btn {
-        display: none;
+      /* Common input placeholder and clear icon */
+      [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
+
+      /* ========================================================
+         ADVERTISEMENT BOX (300x250)
+         ======================================================== */
+      .dyn-adsense-300x250 {
+        width: 100% !important;
+        height: 250px !important;
+        background: #f1f5f9 !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 6px !important;
+        display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: var(--border-color, #e2e8f0) !important;
-        color: var(--text-muted, #475569) !important;
-        border: none !important;
-        border-radius: 50% !important;
-        width: 18px !important;
-        height: 18px !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        cursor: pointer !important;
-        flex-shrink: 0 !important;
-        padding: 0 !important;
+        color: #64748b !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        box-sizing: border-box !important;
       }
-      [data-theme="dark"] .dyn-modern-clear-btn {
-        background: #334155 !important;
+      [data-theme="dark"] .dyn-adsense-300x250 {
+        background: #1e293b !important;
+        border-color: #334155 !important;
         color: #94a3b8 !important;
       }
-      .dyn-modern-clear-btn:hover {
-        color: #0f172a !important;
-      }
 
+      /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
-        top: calc(100% + 6px) !important; 
+        top: calc(100% + 4px) !important; 
         left: 0 !important; 
         width: 100% !important; 
-        max-height: 280px !important;
+        max-height: 260px !important;
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 12px !important;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15) !important; 
+        border-radius: 8px !important;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
       }
@@ -191,46 +195,24 @@
         text-decoration: none !important; 
         border-bottom: 1px solid var(--border-color, #f1f5f9) !important; 
       }
-      [data-theme="dark"] .dyn-search-dropdown a {
-        color: #f8fafc !important;
-        border-bottom: 1px solid #334155 !important;
-      }
-      .dyn-search-dropdown a:hover { 
-        background: var(--bg-primary, #f8fafc) !important; 
-        color: #2563eb !important; 
-      }
-      [data-theme="dark"] .dyn-search-dropdown a:hover {
-        background: #0f172a !important;
-        color: #38bdf8 !important;
-      }
+      [data-theme="dark"] .dyn-search-dropdown a { color: #f8fafc !important; border-bottom: 1px solid #334155 !important; }
+      .dyn-search-dropdown a:hover { background: var(--bg-primary, #f8fafc) !important; color: #2563eb !important; }
 
-      /* ADSENSE BOX (CARD CONTAINER) */
-      .dyn-adsense-slot {
-        width: 100% !important;
-        min-height: 100px !important;
-        background: var(--bg-surface, #ffffff) !important;
-        border: 1px dashed var(--border-color, #cbd5e1) !important;
-        border-radius: 12px !important;
-        margin: 1rem 0 !important;
+      /* STANDALONE TOOL SIDEBAR FIX */
+      aside.sidebar {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        color: var(--text-muted, #94a3b8) !important;
-        font-size: 0.85rem !important;
-        box-sizing: border-box !important;
+        flex-direction: column !important;
+        gap: 16px !important;
       }
-      [data-theme="dark"] .dyn-adsense-slot {
-        background: var(--bg-surface, #1e293b) !important;
-        border-color: var(--border-color, #334155) !important;
-      }
-
       .dyn-tools-card {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 16px !important;
         padding: 1.75rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-        display: block !important;
         width: 100% !important;
       }
       [data-theme="dark"] .dyn-tools-card {
@@ -474,23 +456,16 @@
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
       globalSearchNode.id = "dynGlobalSearchNode";
-      globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+      globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
-        <div class="dyn-modern-search-box">
-          <span class="dyn-modern-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
+        <div class="dyn-search-row">
           <input type="text" class="dyn-modern-input" placeholder="Search calculators..." autocomplete="off">
-          <button type="button" class="dyn-modern-clear-btn" aria-label="Clear">&times;</button>
+          <button type="button" class="dyn-modern-btn">Search</button>
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
 
       const input = globalSearchNode.querySelector(".dyn-modern-input");
-      const clearBtn = globalSearchNode.querySelector(".dyn-modern-clear-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
       const allTools = [
@@ -501,7 +476,6 @@
       ];
 
       function renderList(q) {
-        // Also trigger the category view page filter if on category page
         const nativeInput = document.getElementById("q");
         if (nativeInput && nativeInput.offsetParent !== null) {
           nativeInput.value = q;
@@ -509,12 +483,10 @@
         }
 
         if (!q) {
-          clearBtn.style.display = "none";
           dropdown.style.display = "none";
           dropdown.innerHTML = "";
           return;
         }
-        clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
           dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--text-muted,#94a3b8);">No matching calculators found</div>`;
@@ -527,27 +499,22 @@
       }
 
       input.addEventListener("input", (e) => renderList(e.target.value.trim().toLowerCase()));
-      clearBtn.addEventListener("click", () => {
-        input.value = "";
-        renderList("");
-        input.focus();
-      });
 
       document.addEventListener("click", (e) => {
         if (!globalSearchNode.contains(e.target)) dropdown.style.display = "none";
       });
     }
 
-    // ADSENSE NODE
-    let globalAdsenseNode = document.getElementById("dynAdsenseBox");
+    // ADSENSE NODE (300x250 placeholder card)
+    let globalAdsenseNode = document.getElementById("dynAdsense300");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
-      globalAdsenseNode.id = "dynAdsenseBox";
-      globalAdsenseNode.className = "dyn-adsense-slot";
-      globalAdsenseNode.innerHTML = `<span>Advertisement</span>`;
+      globalAdsenseNode.id = "dynAdsense300";
+      globalAdsenseNode.className = "dyn-adsense-300x250";
+      globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // RELOCATION LOGIC
+    // RELOCATION ENGINE
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -555,10 +522,10 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile Drawer
+      // 1. Mobile Drawer View
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
-        globalSearchNode.className = "dyn-search-wrapper";
+        globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
         if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
           drawerSlot.appendChild(globalSearchNode);
         }
@@ -566,26 +533,49 @@
         return;
       }
 
-      // 2. Desktop Category View (Financial, Math, Utility, All)
-      // Move search option and adsense box to the LEFT column (#catView)
+      // 2. Desktop Category Page (Image 1000285090 Layout)
       if (isCategory) {
         const catView = document.getElementById("catView");
-        const cols = document.getElementById("cols");
-        if (catView && cols) {
-          globalSearchNode.className = "dyn-search-wrapper in-cat-left";
-          if (cols.previousElementSibling !== globalAdsenseNode) {
-            catView.insertBefore(globalSearchNode, cols);
-            catView.insertBefore(globalAdsenseNode, cols);
+        if (catView) {
+          let leftPane = catView.querySelector(".dyn-cat-left-pane");
+          let rightPane = catView.querySelector(".dyn-cat-right-pane");
+
+          if (!leftPane || !rightPane) {
+            leftPane = document.createElement("div");
+            leftPane.className = "dyn-cat-left-pane";
+
+            rightPane = document.createElement("div");
+            rightPane.className = "dyn-cat-right-pane";
+
+            // Move the content (crumb, title, intro, tool columns) into leftPane
+            const elementsToMove = ["crumb", "ch1", "cintro", "cols", "none"];
+            elementsToMove.forEach((id) => {
+              const el = document.getElementById(id);
+              if (el && el.parentElement === catView) leftPane.appendChild(el);
+            });
+
+            catView.classList.add("dyn-cat-split");
+            catView.appendChild(leftPane);
+            catView.appendChild(rightPane);
+          }
+
+          // Mount search and advertisement in rightPane
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          if (rightPane.firstElementChild !== globalSearchNode) {
+            rightPane.insertBefore(globalSearchNode, rightPane.firstChild);
+          }
+          if (globalAdsenseNode.parentElement !== rightPane) {
+            rightPane.appendChild(globalAdsenseNode);
           }
           return;
         }
       }
 
-      // 3. Desktop Homepage View: Under calculator
+      // 3. Desktop Homepage View
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
-          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
           if (globalSearchNode.parentElement !== homeSlot) {
             homeSlot.appendChild(globalSearchNode);
           }
@@ -594,7 +584,7 @@
         }
       }
 
-      // 4. Standalone Tool Page: Right column above Popular Tools
+      // 4. Standalone Tool Page: Sidebar view
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
