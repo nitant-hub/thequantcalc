@@ -29,9 +29,7 @@
         display: none !important;
       }
 
-      /* ========================================================
-         SEARCH COMPONENT: SCOPED TO SIDEBAR ONLY
-         ======================================================== */
+      /* SEARCH BAR ENCLOSED IN SIDEBAR ONLY */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -169,9 +167,7 @@
         color: #38bdf8 !important;
       }
 
-      /* ========================================================
-         HEADER BAR & DRAWER
-         ======================================================== */
+      /* HEADER & NAVIGATION */
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -334,7 +330,6 @@
       }
     `;
 
-    // HEADER & DRAWER LINKS
     const categories = [
       { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
       { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
@@ -464,7 +459,7 @@
       });
     }
 
-    // SCOPED TARGETING: INSERTS STRICTLY INSIDE THE SECOND COLUMN
+    // STRICT SIDEBAR PLACEMENT (NO FULL-WIDTH BLEED)
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -472,7 +467,7 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile: Drawer slot
+      // 1. Mobile: inside drawer
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
@@ -482,7 +477,7 @@
         return;
       }
 
-      // 2. Desktop Homepage: Home search slot under the calculator
+      // 2. Desktop Homepage: below interactive calculator
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
@@ -504,28 +499,36 @@
         return;
       }
 
-      // 4. Standalone Tool Page: Find the exact leaf card for "Popular Tools"
-      const allTextNodes = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div"));
-      let popularToolsHeader = null;
+      // 4. Standalone Tool Page: Target the Popular Tools module inside the sidebar column
+      const allElements = Array.from(document.querySelectorAll("aside *, .sidebar *, div"));
+      let popularHeader = null;
 
-      for (let el of allTextNodes) {
-        const text = (el.textContent || "").toLowerCase();
-        if (text.includes("popular tools") && el !== globalSearchNode) {
-          popularToolsHeader = el;
+      for (let el of allElements) {
+        if (el === globalSearchNode || el === document.body) continue;
+        const text = (el.textContent || "").trim();
+        // Specifically look for the header element containing Popular Tools
+        if ((text.startsWith("🔥 Popular Tools") || text.startsWith("Popular Tools")) && el.children.length === 0) {
+          popularHeader = el;
           break;
         }
       }
 
-      if (popularToolsHeader) {
-        // Find the outer card container
-        const popularToolsCard = popularToolsHeader.closest(".card, .box, aside > div") || popularToolsHeader.parentElement;
-        const secondColumnContainer = popularToolsCard ? popularToolsCard.parentElement : null;
+      if (popularHeader) {
+        // Walk up to find the immediate card module, stopping BEFORE any wide main container
+        let cardModule = popularHeader;
+        while (cardModule.parentElement && 
+               cardModule.parentElement.tagName !== "ASIDE" && 
+               !cardModule.parentElement.classList.contains("sidebar") && 
+               cardModule.parentElement.offsetWidth < 450) {
+          cardModule = cardModule.parentElement;
+        }
 
-        if (secondColumnContainer && popularToolsCard) {
+        const sidebarContainer = cardModule.parentElement;
+        if (sidebarContainer && cardModule) {
           globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-          // Prepend directly into the second column above Popular Tools
-          if (popularToolsCard.previousElementSibling !== globalSearchNode) {
-            secondColumnContainer.insertBefore(globalSearchNode, popularToolsCard);
+          // Inject strictly inside the sidebar container, right above Popular Tools
+          if (cardModule.previousElementSibling !== globalSearchNode) {
+            sidebarContainer.insertBefore(globalSearchNode, cardModule);
           }
         }
       }
