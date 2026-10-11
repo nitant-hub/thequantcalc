@@ -62,11 +62,19 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: STARTS DIRECTLY FROM THE RED LINE (LEFT-ALIGNED) */
+      /* 1. HOMEPAGE: PRECISELY POSITIONED WITHIN THE RED SPAN */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: 360px !important;
+        max-width: 320px !important;
         width: 100% !important;
-        margin: 1.25rem auto 1.5rem 0 !important; /* Flush at the red line boundary */
+        margin-top: 1.25rem !important;
+        margin-bottom: 1.5rem !important;
+        margin-left: 17% !important; /* Positions it directly in the red span */
+        margin-right: auto !important;
+      }
+      @media (min-width: 900px) {
+        .dyn-search-wrapper.in-home-desktop {
+          margin-left: calc(((100% - 480px) / 2) + 75px) !important;
+        }
       }
 
       .dyn-search-row {
@@ -420,7 +428,7 @@
 
       .dyn-drawer-menu a {
         text-decoration: none !important; color: var(--text-main, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
-        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
+        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !gap: 0.55rem !important;
         cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
@@ -622,7 +630,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Anchored exactly at the red line
+      // 3. Desktop Homepage View: Anchored in the red span
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
