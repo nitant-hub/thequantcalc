@@ -110,6 +110,12 @@
         }
       }
 
+      /* TOOL PAGE SIDEBAR SEARCH SPACING */
+      .dyn-search-wrapper.in-tool-sidebar {
+        margin-bottom: 16px !important;
+        width: 100% !important;
+      }
+
       /* SEARCH BOX STYLES ACROSS MOBILE & DESKTOP PLACEMENTS */
       .dyn-search-wrapper {
         position: relative !important;
@@ -507,7 +513,7 @@
     });
 
     // ========================================================
-    // SINGLE SEARCH BOX GENERATOR (NO DUPLICATES ALLOWED)
+    // SINGLE SEARCH BOX NODE
     // ========================================================
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
@@ -552,10 +558,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH NODE EXACTLY AS REQUESTED
-    // 1. Mobile: Inside Hamburger menu
-    // 2. Desktop Home: Below interactive calculator
-    // 3. Desktop Other: Inside right sidebar
+    // TELEPORT SEARCH EXACTLY TO TARGET DESTINATIONS
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -565,13 +568,13 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. MOBILE PLACEMENT: Search goes directly into the Hamburger Drawer
+      // 1. MOBILE PLACEMENT: Put search in hamburger drawer
       if (isMobile) {
         document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
-        globalSearchNode.classList.remove("in-home-desktop");
+        globalSearchNode.className = "dyn-search-wrapper";
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
           drawerSlot.appendChild(globalSearchNode);
@@ -579,7 +582,22 @@
         return;
       }
 
-      // 2. DESKTOP HOME PAGE: Below the interactive calculator
+      // 2. TOOL PAGES (DESKTOP): Move search directly above Popular Tools in sidebar
+      if (isToolPage) {
+        globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+        const popularToolsBlock = Array.from(document.querySelectorAll("aside, div, .sidebar, .card")).find((el) => {
+          return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
+        });
+
+        if (popularToolsBlock && popularToolsBlock.parentElement) {
+          if (popularToolsBlock.previousElementSibling !== globalSearchNode) {
+            popularToolsBlock.parentElement.insertBefore(globalSearchNode, popularToolsBlock);
+          }
+          return;
+        }
+      }
+
+      // 3. DESKTOP HOME PAGE: Below the interactive calculator
       if (!isCategoryView) {
         document.body.classList.remove("dyn-is-category");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
@@ -590,13 +608,12 @@
         const mainCard = document.querySelector(".dyn-main-card-left");
         if (mainCard) mainCard.classList.remove("dyn-main-card-left");
 
-        // Locate interactive calculator card on home page
         const calcCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
           const t = (el.textContent || "").toLowerCase();
           return t.includes("interactive calculator") || el.querySelector(".calc-grid") || el.classList.contains("calc-card");
         });
 
-        globalSearchNode.classList.add("in-home-desktop");
+        globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
         if (calcCard && calcCard.parentElement) {
           if (globalSearchNode.nextSibling !== calcCard.nextSibling || globalSearchNode.parentElement !== calcCard.parentElement) {
             calcCard.insertAdjacentElement("afterend", globalSearchNode);
@@ -610,9 +627,9 @@
         return;
       }
 
-      // 3. DESKTOP CATEGORY PAGES: Move Search to the top of Sidebar
+      // 4. DESKTOP CATEGORY PAGES: Place in 300px sidebar
       document.body.classList.add("dyn-is-category");
-      globalSearchNode.classList.remove("in-home-desktop");
+      globalSearchNode.className = "dyn-search-wrapper";
 
       const mainCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
         const h = el.querySelector("h1, h2");
@@ -634,16 +651,13 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
-          // Move search node to the top of the sidebar[span_3](start_span)[span_3](end_span)
           sidebar.appendChild(globalSearchNode);
 
-          // 300x250 AdSense unit below the search node[span_4](start_span)[span_4](end_span)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
-          // Secondary cards (Popular Tools, Categories, System Status)
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar || el === globalSearchNode) return false;
             const text = (el.textContent || "").toLowerCase();
@@ -658,7 +672,6 @@
 
           parentContainer.appendChild(sidebar);
         } else {
-          // Keep search node pinned as first child in the sidebar[span_5](start_span)[span_5](end_span)
           if (sidebar.firstChild !== globalSearchNode) {
             sidebar.prepend(globalSearchNode);
           }
@@ -673,11 +686,13 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isCategoryView = hash.startsWith("#/") && hash.length > 2;
 
-      if (!isCategoryView && !isMobile) {
+      if (!isCategoryView && !isMobile && !isToolPage) {
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
         document.body.classList.remove("dyn-is-category");
       } else if (isCategoryView && (!document.getElementById("dynDesktopSidebarWrap") || !document.body.classList.contains("dyn-is-category"))) {
+        relocateSearchAndLayout();
+      } else if (isToolPage) {
         relocateSearchAndLayout();
       }
     });
