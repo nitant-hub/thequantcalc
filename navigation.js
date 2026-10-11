@@ -46,7 +46,8 @@
          2-COLUMN DESKTOP SPLIT (CATEGORY & TOOL PAGES)
          ======================================================== */
       @media (min-width: 768px) {
-        body.dyn-is-category .dyn-category-grid-parent {
+        body.dyn-is-category .dyn-category-grid-parent,
+        body.is-tool-page-view .dyn-tool-grid-parent {
           display: flex !important;
           flex-direction: row !important;
           flex-wrap: nowrap !important;
@@ -61,7 +62,8 @@
         }
 
         /* 1. LEFT MAIN AREA */
-        body.dyn-is-category .dyn-main-card-left {
+        body.dyn-is-category .dyn-main-card-left,
+        body.is-tool-page-view .dyn-tool-main-left {
           flex: 1 1 calc(100% - 325px) !important;
           width: calc(100% - 325px) !important;
           max-width: calc(100% - 325px) !important;
@@ -74,7 +76,8 @@
           box-shadow: none !important;
         }
 
-        body.dyn-is-category .dyn-main-card-left * {
+        body.dyn-is-category .dyn-main-card-left *,
+        body.is-tool-page-view .dyn-tool-main-left * {
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
@@ -89,7 +92,7 @@
           padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 16px !important;
+          gap: 18px !important;
           box-sizing: border-box !important;
         }
 
@@ -577,7 +580,7 @@
         clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:#94a3b8;">No matching calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.7rem 0.9rem;font-size:0.85rem;color:#94a3b8;">No matching calculators found</div>`;
         } else {
           dropdown.innerHTML = matches.map((m) => {
             return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:#94a3b8;">→</span></a>`;
@@ -598,15 +601,16 @@
       });
     }
 
-    // HELPER: Find the exact Popular Tools card element
+    // HELPER: Find the exact Popular Tools card element (leaf-level card)
     function findPopularToolsCard() {
-      const allElements = Array.from(document.querySelectorAll("aside, div, section, .card"));
-      for (const el of allElements) {
-        if (el === globalSearchNode || el === document.body || el.contains(document.querySelector(".calculator-interface"))) continue;
-        const text = (el.textContent || "").toLowerCase();
-        // Look for the specific card containing Popular Tools
-        if (text.includes("popular tools") && (el.offsetWidth < 450 || el.tagName.toLowerCase() === "aside")) {
-          return el;
+      const candidates = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div, aside"));
+      for (const el of candidates) {
+        const text = (el.textContent || "").trim().toLowerCase();
+        if ((text.includes("popular tools") || text.includes("popular calculators")) && el !== globalSearchNode) {
+          const card = el.closest(".card, aside, .sidebar") || (el.tagName.startsWith("H") ? el.parentElement : el);
+          if (card && card !== document.body && card.offsetWidth < 550) {
+            return card;
+          }
         }
       }
       return null;
@@ -628,7 +632,7 @@
 
       // 1. MOBILE PLACEMENT: Search goes inside Hamburger Drawer
       if (isMobile) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
@@ -640,31 +644,73 @@
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): In right sidebar, just above Popular Tools
+      // 2. TOOL PAGES (DESKTOP): Two-column layout with sidebar on right
       if (isToolPage) {
-        globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+        document.body.classList.add("is-tool-page-view");
+        document.body.classList.remove("dyn-is-category");
 
-        const popCard = findPopularToolsCard();
-        if (popCard && popCard.parentElement) {
-          const sidebarContainer = popCard.parentElement;
-          // Prepend search right above Popular Tools in the sidebar
-          if (popCard.previousElementSibling !== globalSearchNode) {
-            sidebarContainer.insertBefore(globalSearchNode, popCard);
+        const popularToolsCard = findPopularToolsCard();
+        // The main container that wraps the calculator and article/FAQ
+        const toolContainer = document.querySelector("main, #app, #content, .container") || (popularToolsCard ? popularToolsCard.parentElement : null);
+
+        if (toolContainer && popularToolsCard) {
+          let sidebar = document.getElementById("dynDesktopSidebarWrap");
+          if (!sidebar) {
+            sidebar = document.createElement("aside");
+            sidebar.id = "dynDesktopSidebarWrap";
+
+            // Identify all content not meant for the right sidebar (main content)
+            let mainArea = toolContainer.querySelector(".dyn-tool-main-left");
+            if (!mainArea) {
+              mainArea = document.createElement("div");
+              mainArea.className = "dyn-tool-main-left";
+
+              const childrenToMove = Array.from(toolContainer.children).filter((el) => {
+                if (el === sidebar || el === globalSearchNode) return false;
+                const text = (el.textContent || "").toLowerCase();
+                return !(text.includes("popular tools") || text.includes("system status"));
+              });
+
+              childrenToMove.forEach((child) => mainArea.appendChild(child));
+              toolContainer.prepend(mainArea);
+            }
+
+            // 1. Search Bar at the top of the sidebar[span_6](start_span)[span_6](end_span)
+            globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+            sidebar.appendChild(globalSearchNode);
+
+            // 2. Popular Tools and 3. System Status into sidebar[span_7](start_span)[span_7](end_span)
+            const sidebarCards = Array.from(toolContainer.children).filter((el) => {
+              if (el === mainArea || el === sidebar || el === globalSearchNode) return false;
+              const text = (el.textContent || "").toLowerCase();
+              return text.includes("popular tools") || text.includes("system status");
+            });
+
+            sidebarCards.forEach((card) => sidebar.appendChild(card));
+            toolContainer.appendChild(sidebar);
+          } else {
+            // Keep search as first child in the sidebar[span_8](start_span)[span_8](end_span)
+            globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+            if (sidebar.firstChild !== globalSearchNode) {
+              sidebar.prepend(globalSearchNode);
+            }
           }
+
+          toolContainer.classList.add("dyn-tool-grid-parent");
           return;
         }
       }
 
       // 3. DESKTOP HOME PAGE: Below the interactive calculator
       if (!isCategoryView) {
-        document.body.classList.remove("dyn-is-category");
+        document.body.classList.remove("dyn-is-category", "is-tool-page-view");
         const existingSidebar = document.getElementById("dynDesktopSidebarWrap");
         if (existingSidebar) existingSidebar.remove();
 
-        const gridParent = document.querySelector(".dyn-category-grid-parent");
-        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent");
-        const mainCard = document.querySelector(".dyn-main-card-left");
-        if (mainCard) mainCard.classList.remove("dyn-main-card-left");
+        const gridParent = document.querySelector(".dyn-category-grid-parent, .dyn-tool-grid-parent");
+        if (gridParent) gridParent.classList.remove("dyn-category-grid-parent", "dyn-tool-grid-parent");
+        const mainCard = document.querySelector(".dyn-main-card-left, .dyn-tool-main-left");
+        if (mainCard) mainCard.classList.remove("dyn-main-card-left", "dyn-tool-main-left");
 
         const calcCard = Array.from(document.querySelectorAll("div, section, .card")).find((el) => {
           const t = (el.textContent || "").toLowerCase();
@@ -710,10 +756,10 @@
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
-          // 1. Search Option
+          // 1. Search Option[span_9](start_span)[span_9](end_span)
           sidebar.appendChild(globalSearchNode);
 
-          // 2. Popular Tools & 3. System Status
+          // 2. Popular Tools & 3. System Status[span_10](start_span)[span_10](end_span)
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar || el === globalSearchNode) return false;
             const text = (el.textContent || "").toLowerCase();
