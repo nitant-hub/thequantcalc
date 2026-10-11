@@ -18,8 +18,7 @@
   --border-light: rgba(255, 255, 255, 0.7);
   --link: #0066cc;
   --grad: linear-gradient(135deg, #0071e3 0%, #6366f1 100%);
-  --shadow-3d: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --shadow-3d-hover: 0 20px 30px -10px rgba(0, 113, 227, 0.18), 0 10px 15px -5px rgba(15, 23, 42, 0.05), inset 0 1px 2px rgba(255, 255, 255, 1);
+  --shadow-3d: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
   --apple-radius: 20px;
 }
 
@@ -33,7 +32,6 @@
   --border-light: rgba(255, 255, 255, 0.08);
   --link: #38bdf8;
   --shadow-3d: 0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08);
-  --shadow-3d-hover: 0 20px 35px -10px rgba(56, 189, 248, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
 /* Prevents page shifting horizontally */
@@ -94,7 +92,7 @@ input, select, textarea, .sr input {
 .cols li a:hover { text-decoration: underline; }
 .none { display: none; color: var(--muted); font-size: 0.95rem; }
 
-/* Bento Apple-UI Feature Grid */
+/* Apple Bento Highlight Statistics */
 .feat { 
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
@@ -115,173 +113,170 @@ input, select, textarea, .sr input {
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* ========================================================
-   APPLE UI + SEMI-3D + BENTO GRID CATEGORIES STYLES
+   PREMIUM 3D PASTEL CATEGORY CARDS (REFERENCE UI MATCH)
    ======================================================== */
-.bento-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.bento-header {
+.cat-hub-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
-.bento-header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.bento-icon-pill {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04), inset 0 1px 1px var(--border-light);
-}
-
-.bento-title {
-  font-size: 1.3rem;
+.cat-hub-title {
+  font-size: 1.45rem;
   font-weight: 800;
   color: var(--text);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
-.bento-count-badge {
-  font-size: 0.72rem;
+.cat-hub-view-all {
+  font-size: 0.9rem;
   font-weight: 700;
-  padding: 0.25rem 0.65rem;
-  border-radius: 20px;
-  background: rgba(0, 113, 227, 0.08);
-  color: var(--link);
-  letter-spacing: 0.3px;
-}
-
-.bento-view-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--link);
+  color: #0071e3;
   text-decoration: none;
-  background: var(--surface);
-  padding: 0.45rem 0.9rem;
-  border-radius: 30px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: transform 0.2s ease;
+}
+.cat-hub-view-all:hover {
+  transform: translateX(3px);
 }
 
-.bento-view-btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.12);
-}
-
-/* Bento Grid System */
-.bento-grid {
+.cat-hub-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1rem;
 }
 
-/* Semi-3D Apple UI Tool Card */
-.bento-card {
+@media (max-width: 640px) {
+  .cat-hub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cat-hub-card {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.15rem 1.25rem;
-  background: var(--surface-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  flex-direction: column;
+  padding: 1.4rem;
+  border-radius: 22px;
   text-decoration: none;
   color: var(--text);
-  box-shadow: var(--shadow-3d);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
-  cursor: pointer;
+  min-height: 205px;
 }
 
-.bento-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
+.cat-hub-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 35px -10px rgba(0, 113, 227, 0.16), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-[data-theme="dark"] .bento-card::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+/* Category-Specific Gradient Themes */
+.cat-theme-financial {
+  background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%);
+  border-color: #bbf7d0;
+}
+.cat-theme-math {
+  background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%);
+  border-color: #bfdbfe;
+}
+.cat-theme-health {
+  background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%);
+  border-color: #fecdd3;
+}
+.cat-theme-physics {
+  background: linear-gradient(145deg, #f5f3ff 0%, #faf5ff 60%, #ffffff 100%);
+  border-color: #ddd6fe;
+}
+.cat-theme-utility {
+  background: linear-gradient(145deg, #fffbeb 0%, #fefce8 60%, #ffffff 100%);
+  border-color: #fde68a;
+}
+.cat-theme-default {
+  background: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 60%, #ffffff 100%);
+  border-color: #a5f3fc;
 }
 
-.bento-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 113, 227, 0.35);
-  box-shadow: var(--shadow-3d-hover);
-}
+[data-theme="dark"] .cat-theme-financial { background: linear-gradient(145deg, #064e3b 0%, #0f172a 100%); border-color: #047857; }
+[data-theme="dark"] .cat-theme-math { background: linear-gradient(145deg, #1e3a8a 0%, #0f172a 100%); border-color: #1d4ed8; }
+[data-theme="dark"] .cat-theme-health { background: linear-gradient(145deg, #881337 0%, #0f172a 100%); border-color: #be123c; }
+[data-theme="dark"] .cat-theme-physics { background: linear-gradient(145deg, #4c1d95 0%, #0f172a 100%); border-color: #6d28d9; }
+[data-theme="dark"] .cat-theme-utility { background: linear-gradient(145deg, #78350f 0%, #0f172a 100%); border-color: #b45309; }
+[data-theme="dark"] .cat-theme-default { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
 
-.bento-card-main {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  min-width: 0;
-}
-
-.bento-card-title {
-  font-size: 0.96rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bento-card-sub {
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: capitalize;
-}
-
-.bento-arrow-disc {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.03);
+/* 3D App Icon Squircle */
+.cat-3d-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 1.65rem;
+  margin-bottom: 1.1rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transition: transform 0.25s ease;
+}
+
+.cat-hub-card:hover .cat-3d-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.cat-icon-financial { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
+.cat-icon-math { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; }
+.cat-icon-health { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff; }
+.cat-icon-physics { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: #fff; }
+.cat-icon-utility { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
+.cat-icon-default { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #fff; }
+
+.cat-card-title {
+  font-size: 1.15rem;
   font-weight: 800;
-  flex-shrink: 0;
-  margin-left: 0.65rem;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
 }
 
-[data-theme="dark"] .bento-arrow-disc {
-  background: rgba(255, 255, 255, 0.06);
+.cat-card-desc {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.45;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
 }
 
-.bento-card:hover .bento-arrow-disc {
-  background: var(--link);
+.cat-action-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0071e3;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  align-self: flex-start;
+}
+
+[data-theme="dark"] .cat-action-circle {
+  background: rgba(255, 255, 255, 0.12);
+  color: #38bdf8;
+}
+
+.cat-hub-card:hover .cat-action-circle {
+  transform: translateX(4px);
+  background: #0071e3;
   color: #ffffff;
-  transform: translateX(3px);
 }
 
 /* Sidebar Box Aesthetics */
@@ -335,7 +330,6 @@ footer a:hover { color: var(--link); }
 
 @media(max-width:480px){ 
   .wrap { padding: 0 .6rem; }
-  .bento-grid { grid-template-columns: 1fr; }
 }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
@@ -370,8 +364,8 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Apple Bento Categories Mount Container -->
-    <div id="homeSections" style="display:flex;flex-direction:column;gap:2rem"></div>
+    <!-- 3D Pastel Categories Mount Container -->
+    <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
   <!-- CATEGORY / ALL VIEW -->
@@ -529,42 +523,51 @@ footer a:hover { color: var(--link); }
     if(!cur){
       home.style.display='flex'; cv.style.display='none';
       document.title='thequantcals | Free Advanced Calculators & Generators';
-      var hs='';
 
-      /* Apple UI + Semi-3D + Bento Grid Renderer */
+      var DESCRIPTIONS = {
+        financial: 'Investments, loans, EMI, FD, SIP and wealth calculations.',
+        math: 'Algebra, geometry, percentage, formulas and statistics.',
+        health: 'BMI, TDEE, calories, body metrics and fitness.',
+        physics: 'Motion, force, energy, gravity and conversions.',
+        utility: 'Converters, date & time, generators and everyday tools.'
+      };
+
+      var ICONS_EMOJI = {
+        financial: '📈',
+        math: '📐',
+        health: '❤️',
+        physics: '⚛️',
+        utility: '🛠️'
+      };
+
+      var hs = '';
+      
+      // Top "Browse by Category" Header
+      hs += '<div class="cat-hub-header">';
+      hs += '  <h2 class="cat-hub-title">Browse by Category</h2>';
+      hs += '  <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
+      hs += '</div>';
+
+      // 3D Pastel Category Cards Grid
+      hs += '<div class="cat-hub-grid">';
       cs.forEach(function(c){
-        var list=toolsOf(c);
-        if(!list.length)return;
-        var icon = ICON[c] || '🗂️';
-        var catTitle = esc(label(c));
+        var desc = DESCRIPTIONS[c] || 'Calculators, generators, and smart utilities.';
+        var emoji = ICONS_EMOJI[c] || (ICON[c] || '🗂️');
+        var themeClass = 'cat-theme-' + (DESCRIPTIONS[c] ? c : 'default');
+        var iconClass = 'cat-icon-' + (DESCRIPTIONS[c] ? c : 'default');
+        var displayName = c === 'financial' ? 'Finance' : label(c);
 
-        hs += '<section class="bento-section" id="' + c + '">';
-        hs += '  <div class="bento-header">';
-        hs += '    <div class="bento-header-left">';
-        hs += '      <div class="bento-icon-pill">' + icon + '</div>';
-        hs += '      <h2 class="bento-title">' + catTitle + ' Tools</h2>';
-        hs += '      <span class="bento-count-badge">' + list.length + ' Available</span>';
-        hs += '    </div>';
-        hs += '    <a class="bento-view-btn" href="#/' + c + '">Explore &rarr;</a>';
-        hs += '  </div>';
-        
-        hs += '  <div class="bento-grid">';
-        list.forEach(function(t){
-          var groupName = t.group ? esc(t.group) : 'Calculator';
-          hs += '    <a class="bento-card" href="' + esc(t.url) + '">';
-          hs += '      <div class="bento-card-main">';
-          hs += '        <span class="bento-card-title">' + esc(t.name) + '</span>';
-          hs += '        <span class="bento-card-sub">' + groupName + '</span>';
-          hs += '      </div>';
-          hs += '      <div class="bento-arrow-disc">&rarr;</div>';
-          hs += '    </a>';
-        });
-        hs += '  </div>';
-        hs += '</section>';
+        hs += '<a class="cat-hub-card ' + themeClass + '" href="#/' + c + '">';
+        hs += '  <div class="cat-3d-icon ' + iconClass + '">' + emoji + '</div>';
+        hs += '  <div class="cat-card-title">' + esc(displayName) + '</div>';
+        hs += '  <div class="cat-card-desc">' + esc(desc) + '</div>';
+        hs += '  <div class="cat-action-circle">&rarr;</div>';
+        hs += '</a>';
       });
+      hs += '</div>';
 
-      document.getElementById('homeSections').innerHTML=hs;
-      setTimeout(fitCalc,50);setTimeout(fitCalc,400);
+      document.getElementById('homeSections').innerHTML = hs;
+      setTimeout(fitCalc, 50); setTimeout(fitCalc, 400);
     } else if(cur==='all'){
       home.style.display='none'; cv.style.display='block';
       document.title='All Calculators | thequantcals';
