@@ -62,16 +62,29 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: LEFT-ALIGNED COMPACT SEARCH BAR */
+      /* 1. HOMEPAGE: STARTS DIRECTLY AT CALCULATOR'S LEFT BOUNDARY */
       .dyn-search-wrapper.in-home-desktop {
         max-width: 360px !important;
         width: 100% !important;
-        margin: 1.25rem auto 1.5rem 0 !important; /* Pushed cleanly to start at the left */
+        /* Aligns exactly where the interactive calculator starts */
+        margin-top: 1.25rem !important;
+        margin-bottom: 1.5rem !important;
+        margin-left: 12% !important; 
+        margin-right: auto !important;
       }
-      .dyn-search-wrapper.in-home-desktop .dyn-search-row {
+      @media (min-width: 900px) {
+        .dyn-search-wrapper.in-home-desktop {
+          margin-left: calc((100% - 480px) / 2) !important;
+        }
+      }
+
+      .dyn-search-row {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
+      }
+
+      .dyn-search-wrapper.in-home-desktop .dyn-search-row {
         height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid var(--border-color, #cbd5e1) !important;
@@ -124,10 +137,7 @@
 
       /* 2. CATEGORY VIEW: SIDE PANEL RECTANGULAR FIT */
       .dyn-search-wrapper.in-cat-pane .dyn-search-row {
-        display: flex !important;
-        align-items: center !important;
         gap: 6px !important;
-        width: 100% !important;
       }
       .dyn-search-wrapper.in-cat-pane .dyn-modern-input {
         flex: 1 1 auto !important;
@@ -170,9 +180,6 @@
         border-color: var(--border-color, #334155) !important;
       }
       .dyn-search-wrapper.in-sidebar .dyn-search-row {
-        display: flex !important;
-        align-items: center !important;
-        width: 100% !important;
         height: 40px !important;
         background: var(--bg-primary, #f8fafc) !important;
         border: 1.5px solid var(--border-color, #cbd5e1) !important;
@@ -624,7 +631,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Left-aligned compact search bar (360px)
+      // 3. Desktop Homepage View: Starts where the interactive calculator starts
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
