@@ -25,7 +25,6 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* Hide native plain search input */
       .sr input#q {
         display: none !important;
       }
@@ -55,7 +54,7 @@
       }
 
       /* ========================================================
-         SEARCH BAR STYLES
+         SEARCH COMPONENT CORE & VARIANTS
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -63,7 +62,66 @@
         width: 100% !important;
       }
 
-      /* Category Right Pane: Rectangular Input + Blue Search Button */
+      /* 1. HOMEPAGE: CENTERED, ATTRACTIVE OPTIMAL WIDTH (NOT FULL-WIDTH) */
+      .dyn-search-wrapper.in-home-desktop {
+        max-width: 580px !important;
+        margin: 1.25rem auto 1.5rem auto !important;
+      }
+      .dyn-search-wrapper.in-home-desktop .dyn-search-row {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        height: 48px !important;
+        background: var(--bg-surface, #ffffff) !important;
+        border: 1.5px solid var(--border-color, #cbd5e1) !important;
+        border-radius: 28px !important;
+        padding: 4px 6px 4px 16px !important;
+        gap: 10px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+      }
+      [data-theme="dark"] .dyn-search-wrapper.in-home-desktop .dyn-search-row {
+        background: var(--bg-surface, #1e293b) !important;
+        border-color: var(--border-color, #334155) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+      }
+      .dyn-search-wrapper.in-home-desktop .dyn-search-row:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.16) !important;
+      }
+      .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        border: none !important;
+        background: transparent !important;
+        outline: none !important;
+        font-size: 14.5px !important;
+        font-weight: 500 !important;
+        color: var(--text-main, #0f172a) !important;
+      }
+      .dyn-search-wrapper.in-home-desktop .dyn-modern-btn {
+        height: 38px !important;
+        padding: 0 20px !important;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 20px !important;
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.3px !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3) !important;
+        transition: transform 0.15s, box-shadow 0.15s !important;
+      }
+      .dyn-search-wrapper.in-home-desktop .dyn-modern-btn:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.45) !important;
+      }
+
+      /* 2. CATEGORY VIEW: SIDE PANEL RECTANGULAR FIT */
       .dyn-search-wrapper.in-cat-pane .dyn-search-row {
         display: flex !important;
         align-items: center !important;
@@ -74,7 +132,7 @@
         flex: 1 1 auto !important;
         height: 36px !important;
         border: 1px solid var(--border-color, #cbd5e1) !important;
-        border-radius: 4px !important;
+        border-radius: 6px !important;
         background: var(--bg-surface, #ffffff) !important;
         padding: 0 10px !important;
         font-size: 13px !important;
@@ -87,17 +145,14 @@
         background: #2563eb !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 4px !important;
+        border-radius: 6px !important;
         font-size: 13px !important;
         font-weight: 600 !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
       }
-      .dyn-search-wrapper.in-cat-pane .dyn-modern-btn:hover {
-        background: #1d4ed8 !important;
-      }
 
-      /* Tool Sidebar: Clean Standalone Card */
+      /* 3. TOOL SIDEBAR: SEPARATE CARD CONTAINER */
       .dyn-search-wrapper.in-sidebar {
         max-width: 100% !important;
         display: block !important;
@@ -139,7 +194,7 @@
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13.5px !important; }
 
       /* ========================================================
          ADVERTISEMENT BOX (300x250)
@@ -167,14 +222,14 @@
       /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
-        top: calc(100% + 4px) !important; 
+        top: calc(100% + 6px) !important; 
         left: 0 !important; 
         width: 100% !important; 
         max-height: 260px !important;
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 8px !important;
+        border-radius: 12px !important;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
@@ -187,7 +242,7 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0.65rem 0.85rem !important; 
+        padding: 0.65rem 0.95rem !important; 
         font-size: 0.88rem !important; 
         font-weight: 600 !important; 
         color: var(--text-main, #1e293b) !important; 
@@ -568,11 +623,11 @@
         }
       }
 
-      // 3. Desktop Homepage View
+      // 3. Desktop Homepage View: Centered, clean bounded search under calculator
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
-          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
             homeSlot.appendChild(globalSearchNode);
           }
