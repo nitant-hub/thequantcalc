@@ -106,7 +106,7 @@ p.intro, #cintro, #cintro:empty {
 .cols, #cols {
   display: flex !important;
   flex-direction: column !important;
-  gap: 1.75rem !important;
+  gap: 1.6rem !important;
   margin-top: 0px !important;
   padding-top: 0px !important;
   width: 100% !important;
@@ -115,11 +115,11 @@ p.intro, #cintro, #cintro:empty {
 .cat-group-block {
   display: flex;
   flex-direction: column;
-  gap: 0.95rem;
+  gap: 0.85rem;
   width: 100%;
 }
 
-/* APPLE UI + SEMI-3D BENTO CATEGORY HEADER CARD WITH VERTICAL & HORIZONTAL ACCENTS */
+/* APPLE UI + SEMI-3D BENTO CATEGORY HEADER CARD WITH DUAL ACCENTS */
 .cat-bento-header-card {
   position: relative;
   display: flex;
@@ -379,7 +379,9 @@ input, select, textarea {
   color: #ffffff;
 }
 
-/* MOBILE ROW LAYOUT */
+/* ========================================================
+   MOBILE VIEW: SLIM & ULTRA-PROFESSIONAL CATEGORY HEADERS
+   ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
   html body div#catView.card {
@@ -437,6 +439,61 @@ input, select, textarea {
     font-size: 0.85rem !important;
     align-self: center !important;
     margin-left: auto !important;
+  }
+
+  /* SLIM PROFESSIONAL CATEGORY PILL IN MOBILE VIEW */
+  .cat-bento-header-card {
+    padding: 0.42rem 0.85rem 0.48rem 0.75rem !important;
+    min-width: unset !important;
+    width: fit-content !important;
+    border-radius: 12px !important;
+    gap: 0.55rem !important;
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+  }
+
+  .cat-bento-header-card.cat-theme-financial {
+    border-left-width: 3.5px !important;
+    border-bottom-width: 2.5px !important;
+  }
+  .cat-bento-header-card.cat-theme-math {
+    border-left-width: 3.5px !important;
+    border-bottom-width: 2.5px !important;
+  }
+  .cat-bento-header-card.cat-theme-utility {
+    border-left-width: 3.5px !important;
+    border-bottom-width: 2.5px !important;
+  }
+
+  .cat-bento-header-card .cat-3d-icon {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    font-size: 1.15rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .cat-bento-title {
+    font-size: 1.02rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.015em !important;
+  }
+
+  .cat-group-block {
+    gap: 0.55rem !important;
+  }
+
+  .cols, #cols {
+    gap: 1.35rem !important;
+  }
+
+  .cat-pure-text-list {
+    padding-left: 0.35rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .cat-pure-text-list li a {
+    font-size: 0.98rem !important;
   }
 }
 
