@@ -61,15 +61,52 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 
 .st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
 
-/* CATEGORY PAGE HEADER - FIXED COMPACT SPACING */
-.crumb { font-size: .85rem; color: var(--muted); margin: 0 0 0.25rem 0 !important; }
-.crumb a { color: var(--link); text-decoration: none; }
-h1 { font-size: 1.7rem; color: var(--text); margin: 0.15rem 0 !important; font-weight: 800; letter-spacing: -0.025em; line-height: 1.2 !important; }
-.intro { color: var(--muted); margin: 0.25rem 0 0.75rem 0 !important; font-size: 0.92rem; line-height: 1.4 !important; }
+/* ========================================================
+   CATEGORY VIEW COMPACT RULES (REMOVES ALL RED HIGHLIGHT GAPS)
+   ======================================================== */
+#catView {
+  gap: 0 !important; /* Overrides navigation.js gap */
+  display: flex !important;
+  flex-direction: column !important;
+}
 
-/* COMPLETELY COLLAPSE UNUSED SEARCH INPUT BLOCK */
-.sr { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
-.sr input { display: none !important; }
+.crumb { 
+  font-size: .82rem !important; 
+  color: var(--muted) !important; 
+  margin: 0 0 0.15rem 0 !important; 
+  padding: 0 !important;
+  line-height: 1.2 !important;
+}
+.crumb a { color: var(--link); text-decoration: none; }
+
+h1#ch1 { 
+  font-size: 1.65rem !important; 
+  color: var(--text) !important; 
+  margin: 0.1rem 0 0.25rem 0 !important; /* Eliminates top and bottom gaps */
+  padding: 0 !important;
+  font-weight: 800 !important; 
+  letter-spacing: -0.03em !important; 
+  line-height: 1.15 !important; 
+}
+
+.intro#cintro { 
+  color: var(--muted) !important; 
+  margin: 0 0 0.75rem 0 !important; /* Tight bottom space before cards */
+  padding: 0 !important;
+  font-size: 0.88rem !important; 
+  line-height: 1.35 !important; 
+}
+
+/* Completely remove and collapse empty search element */
+.sr, #catView .sr { 
+  display: none !important; 
+  margin: 0 !important; 
+  padding: 0 !important; 
+  height: 0 !important; 
+  min-height: 0 !important;
+  border: none !important;
+}
+.sr input, #catView .sr input { display: none !important; }
 
 input, select, textarea {
   font-size: 16px !important;
@@ -77,15 +114,21 @@ input, select, textarea {
   touch-action: manipulation !important;
 }
 
-.cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; align-items: start; }
+.cols { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+  gap: 1rem; 
+  align-items: start; 
+  margin-top: 0.2rem !important;
+}
 .cols section {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.15rem;
   box-shadow: var(--shadow-3d);
 }
-.cols h2 { font-size: 1.05rem; margin-bottom: .8rem; font-weight: 700; }
+.cols h2 { font-size: 1.05rem; margin-bottom: .6rem; font-weight: 700; }
 .cols h2 a { color: var(--text); text-decoration: none; }
 .cols h2 a:hover { color: var(--link); }
-.cols ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+.cols ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
 .cols li a { color: var(--link); text-decoration: none; font-size: 0.92rem; font-weight: 500; }
 .cols li a:hover { text-decoration: underline; }
 .none { display: none; color: var(--muted); font-size: 0.95rem; }
@@ -108,7 +151,7 @@ input, select, textarea {
 .feat b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
-/* CATEGORY CARDS LAYOUT */
+/* CATEGORY CARDS ON HOMEPAGE */
 .cat-hub-header {
   display: flex;
   align-items: center;
@@ -166,13 +209,10 @@ input, select, textarea {
   flex: 1 1 auto;
 }
 
-/* SLIM MOBILE LAYOUT */
+/* MOBILE VIEW */
 @media (max-width: 640px) {
   .card {
-    padding: 1.15rem 1rem !important;
-  }
-  #catView {
-    gap: 0.4rem !important; /* Tightens space between breadcrumb, heading, and intro */
+    padding: 1rem 0.95rem !important;
   }
   .cat-hub-grid { 
     grid-template-columns: 1fr;
@@ -226,7 +266,7 @@ input, select, textarea {
   }
 }
 
-/* Category Color Palettes */
+/* Category Palettes */
 .cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
 .cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
 .cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
@@ -243,6 +283,7 @@ input, select, textarea {
 [data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
 [data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
 
+/* 3D App Icon Squircle */
 .cat-3d-icon {
   width: 52px;
   height: 52px;
