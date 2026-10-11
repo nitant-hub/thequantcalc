@@ -119,13 +119,10 @@ p.intro, #cintro, #cintro:empty {
   width: 100%;
 }
 
-/* ========================================================
-   MAX-HIGHLIGHT APPLE SEMI-3D CATEGORY BANNER
-   ======================================================== */
+/* HIGH-VISIBILITY APPLE CATEGORY BANNER (NO VIEW ALL BADGE) */
 .cat-group-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   padding: 0.65rem 1.1rem;
   border-radius: 14px;
@@ -170,26 +167,12 @@ p.intro, #cintro, #cintro:empty {
   transform: translateX(2px);
 }
 
-.cat-group-title .cat-badge-arrow {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #0071e3;
-  background: rgba(0, 113, 227, 0.1);
-  padding: 0.2rem 0.65rem;
-  border-radius: 20px;
-  letter-spacing: 0;
-}
-
-[data-theme="dark"] .cat-group-title .cat-badge-arrow {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.15);
-}
-
+/* HORIZONTAL (X-DIRECTION) RESPONSIVE BENTO GRID */
 .cat-tools-bento {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 0.85rem;
-  width: 100%;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 0.85rem !important;
+  width: 100% !important;
 }
 
 /* Semi-3D Bento Tool Card */
@@ -413,7 +396,7 @@ input, select, textarea {
   }
 
   .cat-tools-bento {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
     gap: 0.65rem !important;
   }
   .cat-tool-card {
@@ -854,7 +837,7 @@ footer a:hover { color: var(--link); }
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
         o+='<div class="cat-group-block">';
-        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a><span class="cat-badge-arrow">View All &rarr;</span></div>';
+        o+='  <div class="cat-group-title"><a href="#/'+c+'">'+esc(label(c))+'</a></div>';
         o+='  <div class="cat-tools-bento">';
         list.forEach(function(t){
           o+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
@@ -912,3 +895,4 @@ footer a:hover { color: var(--link); }
 <script src="navigation.js"></script>
 </body>
 </html>
+
