@@ -30,7 +30,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT: STANDALONE INDEPENDENT FRAME
+         SEARCH COMPONENT: FULLY SEPARATE CARD IN SIDEBAR
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -48,7 +48,7 @@
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        margin-bottom: 16px !important; /* Visual gap before Popular Tools card */
+        margin-bottom: 16px !important; /* Visible clean gap between the 2 cards */
         background: var(--surface, #ffffff) !important;
         border: 1px solid var(--border, #e2e8f0) !important;
         border-radius: 16px !important;
@@ -475,7 +475,7 @@
       });
     }
 
-    // MOUNT SEARCH STRICTLY OUTSIDE AND ABOVE THE POPULAR TOOLS CARD
+    // RELOCATE LOGIC: GUARANTEES SEPARATE CARD OUTSIDE POPULAR TOOLS
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -515,11 +515,20 @@
         return;
       }
 
-      // 4. Standalone Tool Page: Find the header text first
-      const allElements = Array.from(document.querySelectorAll("aside *, .sidebar *, div"));
-      let popularHeader = null;
+      // 4. Standalone Tool Page: Target <aside> directly as its first child
+      const asideElement = document.querySelector("aside, .sidebar");
+      if (asideElement) {
+        globalSearchNode.className = "dyn-search-wrapper in-sidebar";
+        if (asideElement.firstElementChild !== globalSearchNode) {
+          asideElement.insertBefore(globalSearchNode, asideElement.firstElementChild);
+        }
+        return;
+      }
 
-      for (let el of allElements) {
+      // Fallback: If no <aside> tag is used, find the outer card holding Popular Tools and inject before it
+      const allTextNodes = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div"));
+      let popularHeader = null;
+      for (let el of allTextNodes) {
         if (el === globalSearchNode || el === document.body) continue;
         const text = (el.textContent || "").trim();
         if ((text.startsWith("🔥 Popular Tools") || text.startsWith("Popular Tools")) && el.children.length === 0) {
@@ -529,29 +538,11 @@
       }
 
       if (popularHeader) {
-        // Walk upwards to find the entire outer card holding Popular Tools and System Status
-        // Stop immediately when reaching <aside>, .sidebar, or a container that wraps the whole column
-        let current = popularHeader;
-        let outerCard = popularHeader;
-
-        while (current.parentElement) {
-          const p = current.parentElement;
-          const tag = p.tagName.toLowerCase();
-          const isSidebarContainer = tag === "aside" || p.classList.contains("sidebar") || tag === "main" || p.classList.contains("grid");
-
-          if (isSidebarContainer) {
-            outerCard = current;
-            break;
-          }
-          current = p;
-        }
-
-        const sidebarContainer = outerCard.parentElement;
-        if (sidebarContainer && outerCard) {
+        let outerCard = popularHeader.closest(".card, .box") || popularHeader.parentElement;
+        if (outerCard && outerCard.parentElement) {
           globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-          // Inject completely outside and above the Popular Tools card frame
           if (outerCard.previousElementSibling !== globalSearchNode) {
-            sidebarContainer.insertBefore(globalSearchNode, outerCard);
+            outerCard.parentElement.insertBefore(globalSearchNode, outerCard);
           }
         }
       }
@@ -593,3 +584,4 @@
     initNavigation();
   }
 })();
+
