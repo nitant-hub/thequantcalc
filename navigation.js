@@ -25,11 +25,22 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
+      /* Hide native unstyled search input */
       .sr input#q {
         display: none !important;
       }
 
-      /* Make the sidebar container clean so it can hold 2 separate cards */
+      /* Keep 2-column layout active on category views */
+      @media (min-width: 768px) {
+        .grid {
+          display: grid !important;
+          grid-template-columns: 2.5fr 1fr !important;
+          gap: 1.5rem !important;
+          align-items: start !important;
+        }
+      }
+
+      /* Standalone Tool Page sidebar reset */
       aside.sidebar {
         background: transparent !important;
         border: none !important;
@@ -40,19 +51,22 @@
       }
 
       /* ========================================================
-         FRAME 1: SEARCH OPTION (INDEPENDENT CARD)
+         SEARCH COMPONENT
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
+        width: 100% !important;
       }
       .dyn-search-wrapper.in-home-desktop {
-        width: 100% !important;
         max-width: 100% !important;
         margin: 0.5rem 0 1rem 0 !important;
       }
+      .dyn-search-wrapper.in-cat-left {
+        max-width: 100% !important;
+        margin: 0.8rem 0 1rem 0 !important;
+      }
       .dyn-search-wrapper.in-sidebar {
-        width: 100% !important;
         max-width: 100% !important;
         display: block !important;
         clear: both !important;
@@ -190,9 +204,26 @@
         color: #38bdf8 !important;
       }
 
-      /* ========================================================
-         FRAME 2: POPULAR TOOLS + SYSTEM STATUS SEPARATE CARD
-         ======================================================== */
+      /* ADSENSE BOX (CARD CONTAINER) */
+      .dyn-adsense-slot {
+        width: 100% !important;
+        min-height: 100px !important;
+        background: var(--bg-surface, #ffffff) !important;
+        border: 1px dashed var(--border-color, #cbd5e1) !important;
+        border-radius: 12px !important;
+        margin: 1rem 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--text-muted, #94a3b8) !important;
+        font-size: 0.85rem !important;
+        box-sizing: border-box !important;
+      }
+      [data-theme="dark"] .dyn-adsense-slot {
+        background: var(--bg-surface, #1e293b) !important;
+        border-color: var(--border-color, #334155) !important;
+      }
+
       .dyn-tools-card {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
@@ -470,6 +501,13 @@
       ];
 
       function renderList(q) {
+        // Also trigger the category view page filter if on category page
+        const nativeInput = document.getElementById("q");
+        if (nativeInput && nativeInput.offsetParent !== null) {
+          nativeInput.value = q;
+          if (typeof nativeInput.oninput === "function") nativeInput.oninput();
+        }
+
         if (!q) {
           clearBtn.style.display = "none";
           dropdown.style.display = "none";
@@ -500,27 +538,50 @@
       });
     }
 
-    // RELOCATE LOGIC: GUARANTEES 2 SEPARATE CARDS
-    function relocateSearch() {
-      const sidebarAside = document.querySelector("aside.sidebar");
-      const sidebarIsVisible = sidebarAside && window.getComputedStyle(sidebarAside).display !== "none";
+    // ADSENSE NODE
+    let globalAdsenseNode = document.getElementById("dynAdsenseBox");
+    if (!globalAdsenseNode) {
+      globalAdsenseNode = document.createElement("div");
+      globalAdsenseNode.id = "dynAdsenseBox";
+      globalAdsenseNode.className = "dyn-adsense-slot";
+      globalAdsenseNode.innerHTML = `<span>Advertisement</span>`;
+    }
 
-      const hash = (window.location.hash || "").toLowerCase();
+    // RELOCATION LOGIC
+    function relocateSearch() {
+      const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
+      const hash = (window.location.hash || "").toLowerCase();
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile Drawer: Only when sidebar is truly hidden
-      if (!sidebarIsVisible && window.innerWidth < 768) {
+      // 1. Mobile Drawer
+      if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
         if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
           drawerSlot.appendChild(globalSearchNode);
         }
+        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
         return;
       }
 
-      // 2. Desktop Homepage
+      // 2. Desktop Category View (Financial, Math, Utility, All)
+      // Move search option and adsense box to the LEFT column (#catView)
+      if (isCategory) {
+        const catView = document.getElementById("catView");
+        const cols = document.getElementById("cols");
+        if (catView && cols) {
+          globalSearchNode.className = "dyn-search-wrapper in-cat-left";
+          if (cols.previousElementSibling !== globalAdsenseNode) {
+            catView.insertBefore(globalSearchNode, cols);
+            catView.insertBefore(globalAdsenseNode, cols);
+          }
+          return;
+        }
+      }
+
+      // 3. Desktop Homepage View: Under calculator
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
@@ -528,40 +589,29 @@
           if (globalSearchNode.parentElement !== homeSlot) {
             homeSlot.appendChild(globalSearchNode);
           }
+          if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
         }
       }
 
-      // 3. Category Page with dedicated slot
-      const sidebarSlot = document.getElementById("sidebarSearchSlot");
-      if (sidebarSlot) {
-        globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-        if (globalSearchNode.parentElement !== sidebarSlot) {
-          sidebarSlot.appendChild(globalSearchNode);
-        }
-        return;
-      }
-
-      // 4. Standalone Tool Page: Create 2 separate card boxes inside aside.sidebar
+      // 4. Standalone Tool Page: Right column above Popular Tools
+      const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
-        // Find or create the card container for Popular Tools & System Status
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         if (!toolsCard) {
           toolsCard = document.createElement("div");
           toolsCard.className = "dyn-tools-card";
-
-          // Move all existing children of aside into toolsCard
           while (sidebarAside.firstChild) {
             toolsCard.appendChild(sidebarAside.firstChild);
           }
           sidebarAside.appendChild(toolsCard);
         }
 
-        // Now place the Search option as Card 1 above Card 2 (Popular Tools)
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
         if (sidebarAside.firstElementChild !== globalSearchNode) {
           sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
+        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
       }
     }
 
