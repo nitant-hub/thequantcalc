@@ -62,76 +62,113 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 .st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
 
 /* ========================================================
-   CATEGORY VIEW COMPACT RULES (REMOVES ALL RED HIGHLIGHT GAPS)
+   HYPER-SPECIFIC OVERRIDE: KILLS EVERY UNWANTED GAP IN CATEGORY VIEW
    ======================================================== */
-#catView {
-  gap: 0 !important; /* Overrides navigation.js gap */
+html body #catView,
+html body div#catView.card {
   display: flex !important;
   flex-direction: column !important;
+  gap: 0px !important;
+  row-gap: 0px !important;
+  padding: 1.15rem 1rem !important;
 }
 
-.crumb { 
-  font-size: .82rem !important; 
-  color: var(--muted) !important; 
-  margin: 0 0 0.15rem 0 !important; 
+html body #catView .crumb,
+html body #catView #crumb {
+  font-size: 0.82rem !important;
+  color: var(--muted) !important;
+  margin: 0 0 2px 0 !important;
   padding: 0 !important;
   line-height: 1.2 !important;
 }
-.crumb a { color: var(--link); text-decoration: none; }
+html body #catView .crumb a { color: var(--link); text-decoration: none; }
 
-h1#ch1 { 
-  font-size: 1.65rem !important; 
-  color: var(--text) !important; 
-  margin: 0.1rem 0 0.25rem 0 !important; /* Eliminates top and bottom gaps */
+html body #catView h1,
+html body #catView h1#ch1 {
+  font-size: 1.55rem !important;
+  color: var(--text) !important;
+  margin: 0 0 4px 0 !important;
   padding: 0 !important;
-  font-weight: 800 !important; 
-  letter-spacing: -0.03em !important; 
-  line-height: 1.15 !important; 
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
 }
 
-.intro#cintro { 
-  color: var(--muted) !important; 
-  margin: 0 0 0.75rem 0 !important; /* Tight bottom space before cards */
+html body #catView p.intro,
+html body #catView #cintro {
+  color: var(--muted) !important;
+  margin: 0 0 10px 0 !important;
   padding: 0 !important;
-  font-size: 0.88rem !important; 
-  line-height: 1.35 !important; 
+  font-size: 0.86rem !important;
+  line-height: 1.35 !important;
 }
 
-/* Completely remove and collapse empty search element */
-.sr, #catView .sr { 
-  display: none !important; 
-  margin: 0 !important; 
-  padding: 0 !important; 
-  height: 0 !important; 
+/* Kills the hidden search bar wrapper and any spacing it leaves */
+html body #catView .sr,
+html body .sr {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
   min-height: 0 !important;
+  line-height: 0 !important;
   border: none !important;
 }
-.sr input, #catView .sr input { display: none !important; }
+html body #catView .sr input,
+html body .sr input {
+  display: none !important;
+}
+
+/* Compact tool columns */
+html body #catView .cols,
+html body #cols {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 0.85rem !important;
+  margin-top: 0px !important;
+  padding-top: 0px !important;
+}
+
+html body #catView .cols section,
+html body #cols section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.95rem 1rem;
+  box-shadow: var(--shadow-3d);
+}
+
+html body #catView .cols h2,
+html body #cols h2 {
+  font-size: 1rem;
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+html body #catView .cols h2 a { color: var(--text); text-decoration: none; }
+html body #catView .cols h2 a:hover { color: var(--link); }
+
+html body #catView .cols ul,
+html body #cols ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+html body #catView .cols li a,
+html body #cols li a {
+  color: var(--link);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+html body #catView .cols li a:hover { text-decoration: underline; }
+.none { display: none; color: var(--muted); font-size: 0.95rem; }
 
 input, select, textarea {
   font-size: 16px !important;
   -webkit-text-size-adjust: 100% !important;
   touch-action: manipulation !important;
 }
-
-.cols { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-  gap: 1rem; 
-  align-items: start; 
-  margin-top: 0.2rem !important;
-}
-.cols section {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.15rem;
-  box-shadow: var(--shadow-3d);
-}
-.cols h2 { font-size: 1.05rem; margin-bottom: .6rem; font-weight: 700; }
-.cols h2 a { color: var(--text); text-decoration: none; }
-.cols h2 a:hover { color: var(--link); }
-.cols ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-.cols li a { color: var(--link); text-decoration: none; font-size: 0.92rem; font-weight: 500; }
-.cols li a:hover { text-decoration: underline; }
-.none { display: none; color: var(--muted); font-size: 0.95rem; }
 
 /* Stat Highlights */
 .feat { 
@@ -209,11 +246,8 @@ input, select, textarea {
   flex: 1 1 auto;
 }
 
-/* MOBILE VIEW */
+/* MOBILE ROW LAYOUT */
 @media (max-width: 640px) {
-  .card {
-    padding: 1rem 0.95rem !important;
-  }
   .cat-hub-grid { 
     grid-template-columns: 1fr;
     gap: 0.75rem; 
@@ -283,7 +317,6 @@ input, select, textarea {
 [data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
 [data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
 
-/* 3D App Icon Squircle */
 .cat-3d-icon {
   width: 52px;
   height: 52px;
