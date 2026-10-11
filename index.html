@@ -61,9 +61,7 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 
 .st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
 
-/* ========================================================
-   CATEGORY VIEW COMPACT TYPOGRAPHY (FLUSH & ZERO DEAD SPACE)
-   ======================================================== */
+/* CATEGORY VIEW HEADINGS & ZERO-GAP SETTINGS */
 .crumb, #crumb {
   font-size: 0.82rem !important;
   color: var(--muted) !important;
@@ -76,19 +74,20 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 h1#ch1 {
   font-size: 1.55rem !important;
   color: var(--text) !important;
-  margin: 0 0 4px 0 !important;
+  margin: 0 0 8px 0 !important;
   padding: 0 !important;
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
   line-height: 1.15 !important;
 }
 
-p.intro, #cintro {
-  color: var(--muted) !important;
-  margin: 0 0 10px 0 !important;
+/* DELETED SENTENCE CONTAINER COLLAPSED COMPLETELY */
+p.intro, #cintro, #cintro:empty {
+  display: none !important;
+  margin: 0 !important;
   padding: 0 !important;
-  font-size: 0.86rem !important;
-  line-height: 1.35 !important;
+  height: 0 !important;
+  min-height: 0 !important;
 }
 
 /* Eliminate native search input block */
@@ -140,7 +139,7 @@ p.intro, #cintro {
   font-size: 0.92rem;
   font-weight: 500;
 }
-.cols li a:hover, #cols li a:hover { text-decoration: underline; }
+.cols li a:hover { text-decoration: underline; }
 .none { display: none; color: var(--muted); font-size: 0.95rem; }
 
 input, select, textarea {
@@ -225,9 +224,7 @@ input, select, textarea {
   flex: 1 1 auto;
 }
 
-/* ========================================================
-   MOBILE VIEW (SLIM ROWS & FLUSH COMPACT STACK)
-   ======================================================== */
+/* MOBILE VIEW (SLIM ROWS & FLUSH COMPACT STACK) */
 @media (max-width: 767px) {
   html body #catView,
   html body div#catView.card {
@@ -290,9 +287,7 @@ input, select, textarea {
   }
 }
 
-/* ========================================================
-   DESKTOP SPLIT VIEW: RESTORES PHOTO 2, 3, 4 LAYOUT
-   ======================================================== */
+/* DESKTOP SPLIT VIEW */
 @media (min-width: 768px) {
   html body #catView.dyn-cat-split {
     display: flex !important;
@@ -718,7 +713,7 @@ footer a:hover { color: var(--link); }
       document.title='All Calculators | thequantcals';
       document.getElementById('crumb').innerHTML='<a href="#/">home</a> / all calculators';
       document.getElementById('ch1').textContent='All Calculators';
-      document.getElementById('cintro').textContent='The following is a complete list of all our calculators by category.';
+      document.getElementById('cintro').textContent=''; /* Sentence 4 completely deleted */
       var o='';
       cs.forEach(function(c){
         var list=toolsOf(c); if(!list.length)return;
@@ -734,7 +729,7 @@ footer a:hover { color: var(--link); }
       document.title=label(cur)+' Calculators | thequantcals';
       document.getElementById('crumb').innerHTML='<a href="#/">home</a> / '+esc(cur);
       document.getElementById('ch1').textContent=label(cur)+' Calculators';
-      document.getElementById('cintro').textContent='The following is a complete list of our '+label(cur).toLowerCase()+' calculators.';
+      document.getElementById('cintro').textContent=''; /* Sentences 1, 2, 3 completely deleted */
       var groups={}, order=[];
       toolsOf(cur).forEach(function(t){
         if(!groups[t.group]){groups[t.group]=[];order.push(t.group)} groups[t.group].push(t);
