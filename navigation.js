@@ -62,11 +62,11 @@
         width: 100% !important;
       }
 
-      /* 1. HOMEPAGE: SLIMMER, COMPACT WIDTH (360px) & CENTERED */
+      /* 1. HOMEPAGE: RIGHT-ALIGNED COMPACT SEARCH BAR */
       .dyn-search-wrapper.in-home-desktop {
         max-width: 360px !important;
-        width: 90% !important;
-        margin: 1.25rem auto 1.5rem auto !important;
+        width: 100% !important;
+        margin: 1.25rem 0 1.5rem auto !important; /* Pushed cleanly to the right */
       }
       .dyn-search-wrapper.in-home-desktop .dyn-search-row {
         display: flex !important;
@@ -624,7 +624,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: Centered, compact search bar (360px)
+      // 3. Desktop Homepage View: Right-aligned compact search bar (360px)
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
