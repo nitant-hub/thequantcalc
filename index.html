@@ -119,7 +119,7 @@ p.intro, #cintro, #cintro:empty {
   width: 100%;
 }
 
-/* EXACT APPLE PILL HEADER FROM PHOTO 1000285178.jpg */
+/* APPLE PILL HEADER */
 .cat-group-title {
   display: inline-flex;
   align-items: center;
@@ -136,7 +136,8 @@ p.intro, #cintro, #cintro:empty {
   border-left-color: #38bdf8;
 }
 
-.cat-group-title a {
+.cat-group-title a,
+.cat-group-title span {
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--text);
@@ -658,7 +659,7 @@ footer a:hover { color: var(--link); }
   }
 
   var tools=[], seen={};
-  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/ biological/g,'').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
   function pretty(s){return s.replace(/[-_]+/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase()})}
   function norm(s){s=s.toLowerCase();return s==='finance'?'financial':s}
   function add(path,name,cat,group){
@@ -835,15 +836,18 @@ footer a:hover { color: var(--link); }
       var list = toolsOf(cur);
 
       var o2='';
-      o2+='<div class="cat-tools-bento">';
+      o2+='<div class="cat-group-block">';
+      o2+='  <div class="cat-group-title"><span>'+esc(label(cur))+'</span></div>';
+      o2+='  <div class="cat-tools-bento">';
       list.forEach(function(t){
-        o2+='  <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
-        o2+='    <div class="cat-tool-body">';
-        o2+='      <span class="cat-tool-title">' + esc(t.name) + '</span>';
-        o2+='    </div>';
-        o2+='    <div class="cat-tool-arrow">&rarr;</div>';
-        o2+='  </a>';
+        o2+='    <a class="cat-tool-card ' + meta.theme + '" href="'+esc(t.url)+'">';
+        o2+='      <div class="cat-tool-body">';
+        o2+='        <span class="cat-tool-title">' + esc(t.name) + '</span>';
+        o2+='      </div>';
+        o2+='      <div class="cat-tool-arrow">&rarr;</div>';
+        o2+='    </a>';
       });
+      o2+='  </div>';
       o2+='</div>';
 
       document.getElementById('cols').innerHTML=o2;
