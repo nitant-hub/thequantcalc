@@ -179,12 +179,13 @@ p.intro, #cintro, #cintro:empty {
   text-decoration: none;
 }
 
-/* NO-WRAP MULTI-COLUMN FLOW: PREVENTS TEXT WRAPPING DOWNWARD */
+/* PROPORTIONAL HORIZONTAL GAP BETWEEN SIDE-BY-SIDE TOOLS */
 .cat-pure-text-list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem 2.2rem;
+  column-gap: 3.5rem !important;
+  row-gap: 0.75rem !important;
   margin: 0;
   padding: 0.2rem 0.5rem 0.2rem 0.6rem;
   width: 100%;
@@ -492,19 +493,18 @@ input, select, textarea {
     gap: 1.35rem !important;
   }
 
-  /* MOBILE TEXT LIST: PRESERVES SINGLE LINE FOR LONG TITLES */
+  /* CLEAN COLUMN STACK ON MOBILE SCREENS */
   .cat-pure-text-list {
     display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 0.55rem 1.5rem !important;
+    flex-direction: column !important;
+    gap: 0.55rem !important;
     padding-left: 0.35rem !important;
     width: 100% !important;
   }
 
   .cat-pure-text-list li {
-    display: inline-flex !important;
-    flex: 0 0 auto !important;
-    max-width: 100% !important;
+    display: block !important;
+    width: 100% !important;
   }
 
   .cat-pure-text-list li a {
