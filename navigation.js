@@ -91,7 +91,7 @@
           padding-top: 0 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 18px !important;
+          gap: 20px !important;
           box-sizing: border-box !important;
         }
 
@@ -109,12 +109,12 @@
       }
 
       /* ========================================================
-         SEPARATED SEARCH CARD (TOOL PAGES & SIDEBAR)
+         SEPARATED SEARCH CARD & POPULAR TOOLS GAP (NO OVERLAP)
          ======================================================== */
       .dyn-search-wrapper.in-tool-sidebar {
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 20px 0 !important;
+        margin: 0 0 22px 0 !important;
         padding: 10px !important;
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
@@ -122,6 +122,16 @@
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
         box-sizing: border-box !important;
         display: block !important;
+        position: relative !important;
+        clear: both !important;
+      }
+
+      /* FORCE SEPARATION ON POPULAR TOOLS CARD */
+      .dyn-separated-popular-tools {
+        display: block !important;
+        position: relative !important;
+        margin-top: 0 !important;
+        clear: both !important;
       }
 
       .dyn-search-wrapper {
@@ -624,6 +634,7 @@
       const popularToolsCard = findPopularToolsCard();
       if (!isCategoryView && popularToolsCard && popularToolsCard.parentElement) {
         globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
+        popularToolsCard.classList.add("dyn-separated-popular-tools");
 
         const sidebarParent = popularToolsCard.parentElement;
         if (popularToolsCard.previousElementSibling !== globalSearchNode) {
