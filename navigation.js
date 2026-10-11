@@ -37,9 +37,7 @@
         display: none !important;
       }
 
-      /* ========================================================
-         HOMEPAGE GUARDS: STRICTLY HIDE SIDEBAR & ADS ON HOME
-         ======================================================== */
+      /* HIDE SIDEBAR & ADS ON HOMEPAGE */
       body:not(.dyn-is-category) #dynDesktopSidebarWrap,
       body:not(.dyn-is-category) #dynAdSenseSlot {
         display: none !important;
@@ -110,13 +108,13 @@
         }
       }
 
-      /* TOOL PAGE SIDEBAR SEARCH SPACING */
+      /* TOOL PAGE SIDEBAR SEARCH PLACEMENT */
       .dyn-search-wrapper.in-tool-sidebar {
         margin-bottom: 16px !important;
         width: 100% !important;
       }
 
-      /* SEARCH BOX STYLES ACROSS MOBILE & DESKTOP PLACEMENTS */
+      /* SEARCH BOX STYLES */
       .dyn-search-wrapper {
         position: relative !important;
         width: 100% !important;
@@ -165,7 +163,7 @@
         background: linear-gradient(180deg, #2b6cb0 0%, #2c5282 100%) !important;
       }
 
-      /* ADSENSE PLACEHOLDER (CATEGORY ONLY) */
+      /* ADSENSE UNIT PLACEHOLDER (CATEGORY PAGES ONLY) */
       #dynAdSenseSlot {
         display: none;
         width: 300px;
@@ -558,7 +556,7 @@
     }
 
     // ========================================================
-    // TELEPORT SEARCH EXACTLY TO TARGET DESTINATIONS
+    // TELEPORT SEARCH EXACTLY: SIDEBAR JUST ABOVE POPULAR TOOLS
     // ========================================================
     let isLayoutUpdating = false;
     function relocateSearchAndLayout() {
@@ -582,7 +580,7 @@
         return;
       }
 
-      // 2. TOOL PAGES (DESKTOP): Move search directly above Popular Tools in sidebar
+      // 2. TOOL PAGES (DESKTOP): In right sidebar, just above Popular Tools
       if (isToolPage) {
         globalSearchNode.className = "dyn-search-wrapper in-tool-sidebar";
         const popularToolsBlock = Array.from(document.querySelectorAll("aside, div, .sidebar, .card")).find((el) => {
@@ -627,7 +625,7 @@
         return;
       }
 
-      // 4. DESKTOP CATEGORY PAGES: Place in 300px sidebar
+      // 4. DESKTOP CATEGORY PAGES: Sidebar - AdSense, then Search, then Popular Tools
       document.body.classList.add("dyn-is-category");
       globalSearchNode.className = "dyn-search-wrapper";
 
@@ -651,19 +649,23 @@
           sidebar = document.createElement("aside");
           sidebar.id = "dynDesktopSidebarWrap";
 
-          sidebar.appendChild(globalSearchNode);
-
+          // Top item: 300x250 AdSense Unit[span_0](start_span)[span_0](end_span)
           const adSlot = document.createElement("div");
           adSlot.id = "dynAdSenseSlot";
           adSlot.innerHTML = `<span>Advertisement (300x250)</span>`;
           sidebar.appendChild(adSlot);
 
+          // Second item: Search Option placed directly above Popular Tools[span_1](start_span)[span_1](end_span)
+          sidebar.appendChild(globalSearchNode);
+
+          // Find secondary cards (Categories, Popular Tools, System Status)
           const secondaryCards = Array.from(parentContainer.children).filter((el) => {
             if (el === mainCard || el === sidebar || el === globalSearchNode) return false;
             const text = (el.textContent || "").toLowerCase();
             return text.includes("popular tools") || text.includes("categories") || text.includes("system status");
           });
 
+          // Insert secondary blocks below the search box
           secondaryCards.forEach((c) => {
             if (c && c.parentElement && c !== sidebar) {
               sidebar.appendChild(c);
@@ -672,8 +674,16 @@
 
           parentContainer.appendChild(sidebar);
         } else {
-          if (sidebar.firstChild !== globalSearchNode) {
-            sidebar.prepend(globalSearchNode);
+          // Re-ensure Search is placed just above Popular Tools inside sidebar
+          const popTools = Array.from(sidebar.children).find((el) => {
+            return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
+          });
+          if (popTools) {
+            if (popTools.previousElementSibling !== globalSearchNode) {
+              sidebar.insertBefore(globalSearchNode, popTools);
+            }
+          } else if (sidebar.lastElementChild !== globalSearchNode) {
+            sidebar.appendChild(globalSearchNode);
           }
         }
       } finally {
