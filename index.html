@@ -128,7 +128,7 @@ p.intro, #cintro, #cintro:empty {
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
 
-/* Horizontal Carousel Grid across X-axis */
+/* Horizontal Track across X-axis */
 .cat-hub-grid {
   display: flex !important;
   flex-direction: row !important;
@@ -142,7 +142,7 @@ p.intro, #cintro, #cintro:empty {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Custom Sleek Scrollbar for Desktop X-Flow */
+/* Custom Scrollbar for Desktop X-Flow Track */
 .cat-hub-grid::-webkit-scrollbar {
   height: 6px;
 }
@@ -210,26 +210,53 @@ p.intro, #cintro, #cintro:empty {
   color: var(--muted);
   line-height: 1.45;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS */
+/* ========================================================
+   Y-FLOW SCROLLING TOOLS: EXACT 10 VISIBLE AT A TIME
+   ======================================================== */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 0.25rem;
-  padding-top: 0.85rem;
+  padding-top: 0.75rem;
+  padding-right: 0.35rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
+  max-height: 310px; /* Locks height to precisely 10 tools */
+  overflow-y: auto;   /* Smooth Y-overflow for all remaining tools */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 [data-theme="dark"] .cat-card-tools-y {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Sleek Slim Vertical Scrollbar for the 10-Tool Window */
+.cat-card-tools-y::-webkit-scrollbar {
+  width: 4px;
+}
+.cat-card-tools-y::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cat-card-tools-y::-webkit-scrollbar-thumb {
+  background: rgba(0, 113, 227, 0.25);
+  border-radius: 6px;
+}
+.cat-card-tools-y::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 113, 227, 0.55);
+}
+[data-theme="dark"] .cat-card-tools-y::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+}
+
 .cat-card-tools-y li {
   display: flex;
   align-items: center;
+  min-height: 26px;
+  flex-shrink: 0;
 }
 
 .cat-card-tools-y li a {
@@ -241,8 +268,10 @@ p.intro, #cintro, #cintro:empty {
   line-height: 1.35;
   letter-spacing: -0.01em;
   transition: color 0.15s ease;
-  word-break: normal;
-  overflow-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 .cat-card-tools-y li a:hover {
   color: #0056b3;
@@ -252,20 +281,6 @@ p.intro, #cintro, #cintro:empty {
 }
 [data-theme="dark"] .cat-card-tools-y li a:hover {
   color: #93c5fd;
-}
-
-.cat-card-more-link {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #0071e3 !important;
-  text-decoration: none !important;
-  margin-top: 0.25rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-.cat-card-more-link:hover {
-  text-decoration: underline !important;
 }
 
 /* ========================================================
@@ -469,7 +484,7 @@ input, select, textarea {
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* ========================================================
-   MOBILE VIEW: SINGLE COLUMN VERTICAL STACK
+   MOBILE VIEW: SLIM PROFILE & STACK
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -481,7 +496,6 @@ input, select, textarea {
     padding: 1.15rem 1rem !important;
   }
 
-  /* Single Column on Mobile */
   .cat-hub-grid { 
     display: flex !important;
     flex-direction: column !important;
@@ -535,8 +549,9 @@ input, select, textarea {
 
   .cat-card-tools-y {
     margin-top: 0 !important;
-    padding-top: 0.6rem !important;
-    gap: 0.5rem !important;
+    padding-top: 0.5rem !important;
+    max-height: 290px !important;
+    gap: 0.45rem !important;
   }
 
   .cat-card-tools-y li a {
@@ -914,7 +929,6 @@ footer a:hover { color: var(--link); }
         var meta = autoSketchCategory(c);
         var displayName = c === 'financial' ? 'Finance' : label(c);
         var list = toolsOf(c);
-        var displayTools = list.slice(0, 10);
 
         hs += '<div class="cat-hub-card ' + meta.theme + '">';
         hs += '  <a class="cat-hub-top" href="#/' + c + '">';
@@ -925,14 +939,11 @@ footer a:hover { color: var(--link); }
         hs += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
         hs += '  </a>';
 
-        if(displayTools.length > 0){
+        if(list.length > 0){
           hs += '  <ul class="cat-card-tools-y">';
-          displayTools.forEach(function(t){
+          list.forEach(function(t){
             hs += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
           });
-          if(list.length > 10){
-            hs += '    <li><a class="cat-card-more-link" href="#/' + c + '">+ ' + (list.length - 10) + ' more in ' + esc(displayName) + ' &rarr;</a></li>';
-          }
           hs += '  </ul>';
         }
 
