@@ -133,7 +133,7 @@ p.intro, #cintro, #cintro:empty {
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
 
-/* Carousel Outer Wrapper with Relative Positioning */
+/* Carousel Outer Wrapper */
 .cat-hub-carousel-wrap {
   position: relative;
   width: 100%;
@@ -199,7 +199,7 @@ p.intro, #cintro, #cintro:empty {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Sleek Scrollbar for Desktop X-Flow Track */
+/* Sleek Scrollbar for Desktop Track */
 .cat-hub-grid::-webkit-scrollbar {
   height: 6px;
 }
@@ -270,7 +270,7 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW SCROLLING TOOLS: EXACT 10 VISIBLE AT A TIME */
+/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
@@ -538,7 +538,7 @@ input, select, textarea {
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* ========================================================
-   MOBILE VIEW: SLIM PROFILE & VERTICAL STACK
+   MOBILE VIEW: SLIM PROFILE & COMPACT TOOLS GAP
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -605,16 +605,22 @@ input, select, textarea {
     margin-bottom: 0.45rem !important;
   }
 
+  /* SLIM, BALANCED GAP BETWEEN TOOLS ON MOBILE */
   .cat-card-tools-y {
     margin-top: 0 !important;
-    padding-top: 0.5rem !important;
+    padding-top: 0.45rem !important;
     max-height: 290px !important;
-    gap: 0.45rem !important;
+    gap: 0.22rem !important;
+  }
+
+  .cat-card-tools-y li {
+    min-height: unset !important;
+    padding: 0.08rem 0 !important;
   }
 
   .cat-card-tools-y li a {
-    font-size: 0.92rem !important;
-    line-height: 1.3 !important;
+    font-size: 0.94rem !important;
+    line-height: 1.28 !important;
   }
 
   .cat-bento-header-card {
@@ -890,7 +896,7 @@ footer a:hover { color: var(--link); }
       .then(function(j){
         if(!j.tree)return done();
         var p=j.tree.filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
-        try{localStorage.setItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
+        try{localStoragesetItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
         addFromTree(p); done();
       }).catch(done);
   }
