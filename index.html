@@ -60,21 +60,21 @@ main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 }
 
 .st { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.02em; }
-.crumb { font-size: .85rem; color: var(--muted); margin-bottom: 0.4rem; }
-.crumb a { color: var(--link); text-decoration: none; }
-h1 { font-size: 1.8rem; color: var(--text); margin: .4rem 0; font-weight: 800; letter-spacing: -0.025em; }
-.intro { color: var(--muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
 
-input, select, textarea, .sr input {
+/* CATEGORY PAGE HEADER - FIXED COMPACT SPACING */
+.crumb { font-size: .85rem; color: var(--muted); margin: 0 0 0.25rem 0 !important; }
+.crumb a { color: var(--link); text-decoration: none; }
+h1 { font-size: 1.7rem; color: var(--text); margin: 0.15rem 0 !important; font-weight: 800; letter-spacing: -0.025em; line-height: 1.2 !important; }
+.intro { color: var(--muted); margin: 0.25rem 0 0.75rem 0 !important; font-size: 0.92rem; line-height: 1.4 !important; }
+
+/* COMPLETELY COLLAPSE UNUSED SEARCH INPUT BLOCK */
+.sr { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
+.sr input { display: none !important; }
+
+input, select, textarea {
   font-size: 16px !important;
   -webkit-text-size-adjust: 100% !important;
   touch-action: manipulation !important;
-}
-
-.sr input {
-  width: 100%; padding: .75rem 1rem; border: 1px solid var(--border); border-radius: 12px;
-  background: var(--surface); color: var(--text); margin-bottom: 1.5rem; outline: none;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; align-items: start; }
@@ -108,9 +108,7 @@ input, select, textarea, .sr input {
 .feat b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
-/* ========================================================
-   CATEGORY CARDS LAYOUT & 3D STYLING
-   ======================================================== */
+/* CATEGORY CARDS LAYOUT */
 .cat-hub-header {
   display: flex;
   align-items: center;
@@ -143,7 +141,6 @@ input, select, textarea, .sr input {
   margin-bottom: 1rem;
 }
 
-/* Base Category Card (Desktop View) */
 .cat-hub-card {
   position: relative;
   display: flex;
@@ -169,10 +166,14 @@ input, select, textarea, .sr input {
   flex: 1 1 auto;
 }
 
-/* ========================================================
-   SLIM MOBILE ROW LAYOUT (SLIM IN Y-DIRECTION)
-   ======================================================== */
+/* SLIM MOBILE LAYOUT */
 @media (max-width: 640px) {
+  .card {
+    padding: 1.15rem 1rem !important;
+  }
+  #catView {
+    gap: 0.4rem !important; /* Tightens space between breadcrumb, heading, and intro */
+  }
   .cat-hub-grid { 
     grid-template-columns: 1fr;
     gap: 0.75rem; 
@@ -225,7 +226,7 @@ input, select, textarea, .sr input {
   }
 }
 
-/* Category Palettes */
+/* Category Color Palettes */
 .cat-theme-financial { background: linear-gradient(145deg, #e6fcf5 0%, #f0fdf4 60%, #ffffff 100%); border-color: #bbf7d0; }
 .cat-theme-math { background: linear-gradient(145deg, #eff6ff 0%, #f0f9ff 60%, #ffffff 100%); border-color: #bfdbfe; }
 .cat-theme-health { background: linear-gradient(145deg, #fff1f2 0%, #fdf2f8 60%, #ffffff 100%); border-color: #fecdd3; }
@@ -242,7 +243,6 @@ input, select, textarea, .sr input {
 [data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
 [data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
 
-/* 3D App Icon Squircle */
 .cat-3d-icon {
   width: 52px;
   height: 52px;
@@ -526,13 +526,10 @@ footer a:hover { color: var(--link); }
   function label(c){return pretty(c)}
   function link(c,cur,txt){return '<a href="#/'+c+'"'+(c===cur?' class="on"':'')+'>'+esc(txt||label(c))+'</a>'}
 
-  /* ========================================================
-     AUTOMATIC SYMBOL & PALETTE GENERATION ENGINE
-     ======================================================== */
+  /* AUTOMATIC SYMBOL & PALETTE GENERATOR */
   function autoSketchCategory(rawCategoryName) {
     var c = rawCategoryName.toLowerCase();
 
-    // 1. Keyword-based matching
     if (c.includes('finan') || c.includes('money') || c.includes('invest') || c.includes('tax') || c.includes('loan'))
       return { icon: '📈', theme: 'cat-theme-financial', iconClass: 'cat-icon-financial', desc: 'Investments, loans, taxes, and wealth calculations.' };
     
@@ -560,7 +557,6 @@ footer a:hover { color: var(--link); }
     if (c.includes('util') || c.includes('tool') || c.includes('time') || c.includes('date') || c.includes('everyday'))
       return { icon: '🛠️', theme: 'cat-theme-utility', iconClass: 'cat-icon-utility', desc: 'Converters, date & time, generators, and smart utilities.' };
 
-    // 2. Deterministic Hash Fallback
     var dynamicIcons = ['⚡', '🔮', '🎯', '🧭', '⚙️', '📊', '💡', '🚀', '🧩', '🏷️', '🔭', '📡'];
     var dynamicPalettes = [
       { theme: 'cat-theme-financial', iconClass: 'cat-icon-financial' },
@@ -643,7 +639,7 @@ footer a:hover { color: var(--link); }
         o+='</ul></section>';
       });
       document.getElementById('cols').innerHTML=o;
-      document.getElementById('q').value=''; document.getElementById('none').style.display='none';
+      document.getElementById('none').style.display='none';
     } else {
       home.style.display='none'; cv.style.display='block';
       document.title=label(cur)+' Calculators | thequantcals';
@@ -661,21 +657,8 @@ footer a:hover { color: var(--link); }
         o2+='</ul></section>';
       });
       document.getElementById('cols').innerHTML=o2;
-      document.getElementById('q').value=''; document.getElementById('none').style.display='none';
+      document.getElementById('none').style.display='none';
     }
-  }
-
-  var qInput = document.getElementById('q');
-  if(qInput) {
-    qInput.oninput=function(){
-      var v=this.value.toLowerCase(), shown=0;
-      document.querySelectorAll('#cols section').forEach(function(sec){
-        var any=0;
-        sec.querySelectorAll('li').forEach(function(li){var ok=li.textContent.toLowerCase().indexOf(v)>-1;li.style.display=ok?'':'none';if(ok)any++});
-        sec.style.display=any?'':'none'; shown+=any;
-      });
-      document.getElementById('none').style.display=shown?'none':'block';
-    };
   }
 
   window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
