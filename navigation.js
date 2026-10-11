@@ -30,7 +30,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT: FULLY SEPARATE CARD IN SIDEBAR
+         SEARCH COMPONENT: STANDALONE INDEPENDENT FRAME
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -41,23 +41,24 @@
         max-width: 100% !important;
         margin: 0.5rem 0 1rem 0 !important;
       }
-      /* COMPLETELY SEPARATE OUTSIDE BOX IN SIDEBAR */
+
+      /* Standalone Card in the Right Sidebar (Separate Frame) */
       .dyn-search-wrapper.in-sidebar {
         width: 100% !important;
         max-width: 100% !important;
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        margin-bottom: 16px !important; /* Visible clean gap between the 2 cards */
-        background: var(--surface, #ffffff) !important;
-        border: 1px solid var(--border, #e2e8f0) !important;
+        margin-bottom: 1.25rem !important; /* Visible clean gap above Popular Tools frame */
+        background: var(--bg-surface, var(--surface, #ffffff)) !important;
+        border: 1px solid var(--border-color, var(--border, #e2e8f0)) !important;
         border-radius: 16px !important;
-        padding: 12px 14px !important;
+        padding: 1.25rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
-        background: var(--surface, #1e293b) !important;
-        border-color: var(--border, #334155) !important;
+        background: var(--bg-surface, #1e293b) !important;
+        border-color: var(--border-color, #334155) !important;
       }
 
       .dyn-modern-search-box {
@@ -65,8 +66,8 @@
         align-items: center !important;
         width: 100% !important;
         height: 40px !important;
-        background: var(--bg, #f8fafc) !important;
-        border: 1.5px solid var(--border, #cbd5e1) !important;
+        background: var(--bg-primary, var(--bg, #f8fafc)) !important;
+        border: 1.5px solid var(--border-color, var(--border, #cbd5e1)) !important;
         border-radius: 20px !important;
         padding: 0 12px 0 14px !important;
         gap: 8px !important;
@@ -79,7 +80,7 @@
       }
       .dyn-modern-search-box:focus-within {
         border-color: #3b82f6 !important;
-        background: #ffffff !important;
+        background: var(--bg-surface, #ffffff) !important;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
       }
       [data-theme="dark"] .dyn-modern-search-box:focus-within {
@@ -90,7 +91,7 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: var(--muted, #64748b) !important;
+        color: var(--text-muted, #64748b) !important;
         font-size: 14px !important;
         flex-shrink: 0 !important;
       }
@@ -104,14 +105,14 @@
         padding: 0 !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
-        color: var(--text, #0f172a) !important;
+        color: var(--text-main, var(--text, #0f172a)) !important;
         outline: none !important;
       }
       [data-theme="dark"] .dyn-modern-input {
         color: #f8fafc !important;
       }
       .dyn-modern-input::placeholder {
-        color: var(--muted, #94a3b8) !important;
+        color: var(--text-muted, #94a3b8) !important;
         font-size: 13px !important;
       }
 
@@ -119,8 +120,8 @@
         display: none;
         align-items: center !important;
         justify-content: center !important;
-        background: var(--border, #e2e8f0) !important;
-        color: var(--muted, #475569) !important;
+        background: var(--border-color, #e2e8f0) !important;
+        color: var(--text-muted, #475569) !important;
         border: none !important;
         border-radius: 50% !important;
         width: 18px !important;
@@ -137,7 +138,7 @@
         color: #94a3b8 !important;
       }
       .dyn-modern-clear-btn:hover {
-        color: var(--text, #0f172a) !important;
+        color: #0f172a !important;
       }
 
       .dyn-search-dropdown {
@@ -147,8 +148,8 @@
         width: 100% !important; 
         max-height: 280px !important;
         overflow-y: auto !important; 
-        background: var(--surface, #ffffff) !important; 
-        border: 1px solid var(--border, #e2e8f0) !important; 
+        background: var(--bg-surface, #ffffff) !important; 
+        border: 1px solid var(--border-color, #e2e8f0) !important; 
         border-radius: 12px !important;
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
@@ -165,17 +166,17 @@
         padding: 0.65rem 0.85rem !important; 
         font-size: 0.88rem !important; 
         font-weight: 600 !important; 
-        color: var(--text, #1e293b) !important; 
+        color: var(--text-main, #1e293b) !important; 
         text-decoration: none !important; 
-        border-bottom: 1px solid var(--border, #f1f5f9) !important; 
+        border-bottom: 1px solid var(--border-color, #f1f5f9) !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a {
         color: #f8fafc !important;
         border-bottom: 1px solid #334155 !important;
       }
       .dyn-search-dropdown a:hover { 
-        background: var(--bg, #f8fafc) !important; 
-        color: var(--link, #2563eb) !important; 
+        background: var(--bg-primary, #f8fafc) !important; 
+        color: #2563eb !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a:hover {
         background: #0f172a !important;
@@ -282,8 +283,8 @@
         max-width: 250px !important;
         height: 100vh !important; 
         height: 100dvh !important;
-        background: #ffffff !important; 
-        border-left: 1px solid #e2e8f0 !important; 
+        background: var(--bg-surface, #ffffff) !important; 
+        border-left: 1px solid var(--border-color, #e2e8f0) !important; 
         padding: 0.6rem 0.8rem 2rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
@@ -328,12 +329,12 @@
       }
 
       .dyn-drawer-menu a {
-        text-decoration: none !important; color: #1e293b !important; font-weight: 600 !important; font-size: 0.92rem !important;
+        text-decoration: none !important; color: var(--text-main, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
         padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
         cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
-      .dyn-drawer-menu a:hover { background: #f1f5f9 !important; color: #0284c7 !important; }
+      .dyn-drawer-menu a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #0284c7 !important; }
       [data-theme="dark"] .dyn-drawer-menu a:hover { background: #1e293b !important; color: #38bdf8 !important; }
 
       .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
@@ -454,10 +455,10 @@
         clearBtn.style.display = "flex";
         const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
-          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--muted,#94a3b8);">No matching calculators found</div>`;
+          dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--text-muted,#94a3b8);">No matching calculators found</div>`;
         } else {
           dropdown.innerHTML = matches.map((m) => {
-            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:var(--muted,#94a3b8);">→</span></a>`;
+            return `<a href="${m.url}"><span>${m.name}</span> <span style="font-size:0.75rem;color:var(--text-muted,#94a3b8);">→</span></a>`;
           }).join("");
         }
         dropdown.style.display = "block";
@@ -475,7 +476,7 @@
       });
     }
 
-    // RELOCATE LOGIC: GUARANTEES SEPARATE CARD OUTSIDE POPULAR TOOLS
+    // RELOCATION LOGIC
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -505,7 +506,7 @@
         }
       }
 
-      // 3. Category Page or Native Sidebar slot
+      // 3. Category Page or Native Sidebar slot in index.html
       const sidebarSlot = document.getElementById("sidebarSearchSlot");
       if (sidebarSlot) {
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
@@ -515,35 +516,30 @@
         return;
       }
 
-      // 4. Standalone Tool Page: Target <aside> directly as its first child
-      const asideElement = document.querySelector("aside, .sidebar");
-      if (asideElement) {
+      // 4. Standalone Tool Page: Handle .layout-grid > aside.sidebar cleanly
+      const layoutGrid = document.querySelector(".layout-grid");
+      const sidebarAside = document.querySelector(".layout-grid > aside.sidebar, aside.sidebar");
+
+      if (sidebarAside) {
+        let colWrap = document.getElementById("dynSidebarColumn");
+        if (!colWrap) {
+          colWrap = document.createElement("div");
+          colWrap.id = "dynSidebarColumn";
+          colWrap.style.cssText = "display:flex;flex-direction:column;width:100%;min-width:0;position:sticky;top:calc(var(--header-height, 68px) + 2rem);";
+          
+          // Insert the column wrapper in the exact place of sidebarAside
+          sidebarAside.parentElement.insertBefore(colWrap, sidebarAside);
+          colWrap.appendChild(sidebarAside);
+
+          // Reset the aside's sticky property so colWrap controls sticking
+          sidebarAside.style.position = "static";
+          sidebarAside.style.top = "auto";
+        }
+
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-        if (asideElement.firstElementChild !== globalSearchNode) {
-          asideElement.insertBefore(globalSearchNode, asideElement.firstElementChild);
-        }
-        return;
-      }
-
-      // Fallback: If no <aside> tag is used, find the outer card holding Popular Tools and inject before it
-      const allTextNodes = Array.from(document.querySelectorAll("h2, h3, h4, .title, strong, b, div"));
-      let popularHeader = null;
-      for (let el of allTextNodes) {
-        if (el === globalSearchNode || el === document.body) continue;
-        const text = (el.textContent || "").trim();
-        if ((text.startsWith("🔥 Popular Tools") || text.startsWith("Popular Tools")) && el.children.length === 0) {
-          popularHeader = el;
-          break;
-        }
-      }
-
-      if (popularHeader) {
-        let outerCard = popularHeader.closest(".card, .box") || popularHeader.parentElement;
-        if (outerCard && outerCard.parentElement) {
-          globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-          if (outerCard.previousElementSibling !== globalSearchNode) {
-            outerCard.parentElement.insertBefore(globalSearchNode, outerCard);
-          }
+        // Prepend search inside colWrap, strictly BEFORE the sidebar card
+        if (colWrap.firstElementChild !== globalSearchNode) {
+          colWrap.insertBefore(globalSearchNode, sidebarAside);
         }
       }
     }
@@ -584,4 +580,3 @@
     initNavigation();
   }
 })();
-
