@@ -1,14 +1,5 @@
 (function () {
   function initNavigation() {
-    // 1. Ensure viewport meta tag forbids unprompted auto-zoom shift on mobile
-    let vMeta = document.querySelector('meta[name="viewport"]');
-    if (!vMeta) {
-      vMeta = document.createElement("meta");
-      vMeta.name = "viewport";
-      document.head.appendChild(vMeta);
-    }
-    vMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
-
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
@@ -28,12 +19,6 @@
         :root { 
           --nav-header-height: 68px; 
         }
-      }
-
-      html, body {
-        overflow-x: hidden !important;
-        width: 100% !important;
-        position: relative !important;
       }
 
       body { 
@@ -78,14 +63,14 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
-      /* Mobile default: strictly bounded and centered */
+      /* Mobile: centered within safe margins */
       .dyn-search-wrapper.in-home-desktop {
-        max-width: min(340px, calc(100% - 32px)) !important;
+        max-width: min(340px, calc(100% - 2rem)) !important;
         width: 100% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
 
-      /* Desktop: starts after 15% margin in X direction */
+      /* Desktop: starts precisely after 15% margin in X direction */
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-desktop {
           max-width: 320px !important;
@@ -121,7 +106,7 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
       }
 
-      /* 16px font-size prevents mobile keyboard auto-zoom completely */
+      /* Critical: 16px font-size prevents mobile keyboard auto-zoom completely */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -550,17 +535,23 @@
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      // Reset horizontal displacement immediately when input loses focus
-      function resetHorizontalDisplacement() {
-        setTimeout(() => {
-          window.scrollTo({ left: 0, top: window.scrollY, behavior: "instant" });
+      function forceSnapBack() {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, window.scrollY);
           document.documentElement.scrollLeft = 0;
           document.body.scrollLeft = 0;
-        }, 50);
+        });
       }
 
-      input.addEventListener("blur", resetHorizontalDisplacement);
-      input.addEventListener("focusout", resetHorizontalDisplacement);
+      input.addEventListener("blur", forceSnapBack);
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", () => {
+          if (document.activeElement !== input) {
+            forceSnapBack();
+          }
+        });
+      }
 
       const allTools = [
         { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
