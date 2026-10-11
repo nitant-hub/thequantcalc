@@ -1,15 +1,10 @@
 (function () {
-  const currentPath = window.location.pathname.toLowerCase();
-  const isToolPage = currentPath.includes("/tools/") || currentPath.includes("calculator.html");
-
   function initNavigation() {
-    // 1. Clean up old elements
-    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynDesktopSidebarWrap", "dynToolSidebar"].forEach((id) => {
+    ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
 
-    // 2. Inject styles
     let style = document.getElementById("injectedNavigationStyles");
     if (!style) {
       style = document.createElement("style");
@@ -30,14 +25,11 @@
         padding-top: var(--nav-header-height) !important; 
       }
 
-      /* Hide redundant in-card category search input */
       .sr input#q {
         display: none !important;
       }
 
-      /* ========================================================
-         SEARCH CONTAINER & SEPARATION (NO OVERLAPPING)
-         ======================================================== */
+      /* SEARCH BAR CONTAINER & SEPARATION */
       .dyn-search-wrapper {
         position: relative !important;
         width: 100% !important;
@@ -52,7 +44,7 @@
         display: block !important;
         clear: both !important;
         margin-top: 0 !important;
-        margin-bottom: 1.25rem !important; /* Clean space before Popular Tools */
+        margin-bottom: 16px !important;
       }
 
       .dyn-modern-search-box {
@@ -121,7 +113,6 @@
         color: var(--text, #0f172a) !important;
       }
 
-      /* SEARCH DROPDOWN */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -152,9 +143,7 @@
         color: var(--link, #2563eb) !important; 
       }
 
-      /* ========================================================
-         HEADER BAR
-         ======================================================== */
+      /* HEADER */
       header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -311,13 +300,13 @@
       }
     `;
 
-    // 3. Build Header and Drawer
+    // HEADER & DRAWER HTML
     const categories = [
-      { name: "FINANCE", path: "#/financial", slug: "financial", icon: "📈" },
-      { name: "MATH", path: "#/math", slug: "math", icon: "📐" },
-      { name: "UTILITY", path: "#/utility", slug: "utility", icon: "🧰" }
+      { name: "FINANCE", path: "/#/financial", slug: "financial", icon: "📈" },
+      { name: "MATH", path: "/#/math", slug: "math", icon: "📐" },
+      { name: "UTILITY", path: "/#/utility", slug: "utility", icon: "🧰" }
     ];
-    const moreUrl = "#/all";
+    const moreUrl = "/#/all";
 
     const desktopLinksHtml = categories
       .map((c) => `<a href="${c.path}" data-slug="${c.slug}" class="dyn-nav-item">${c.name}</a>`)
@@ -330,7 +319,7 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="#/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
+        <a href="/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
@@ -343,7 +332,7 @@
           <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         </div>
         <div id="dynDrawerSearchSlot"></div>
-        <a href="#/" class="dyn-drawer-link"><span>🏠</span> Home</a>
+        <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
     `;
@@ -379,7 +368,7 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // 4. Single Search Node
+    // SEARCH NODE
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -441,13 +430,15 @@
       });
     }
 
-    // 5. Intelligent Placement Logic
+    // SEARCH MOUNTING LOGIC
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
+      const path = window.location.pathname.toLowerCase();
       const hash = (window.location.hash || "").toLowerCase();
-      const isCategoryView = hash.startsWith("#/") && hash.length > 2;
+      const isTool = path.includes("/tools/") || path.includes("calculator.html");
+      const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // Mobile View: Inside Drawer
+      // 1. Mobile: inside drawer
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
@@ -457,17 +448,19 @@
         return;
       }
 
-      // Desktop View (Homepage): Below Calculator
-      if (!isCategoryView && !isToolPage) {
+      // 2. Desktop Homepage: below interactive calculator
+      if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
-        globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
-        if (homeSlot && globalSearchNode.parentElement !== homeSlot) {
-          homeSlot.appendChild(globalSearchNode);
+        if (homeSlot) {
+          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
+          if (globalSearchNode.parentElement !== homeSlot) {
+            homeSlot.appendChild(globalSearchNode);
+          }
+          return;
         }
-        return;
       }
 
-      // Desktop View (Category or Tool Page): Top of Sidebar just above Popular Tools
+      // 3. Desktop Category or Tool Page: Right Sidebar directly above Popular Tools
       const sidebarSlot = document.getElementById("sidebarSearchSlot");
       if (sidebarSlot) {
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
@@ -477,20 +470,27 @@
         return;
       }
 
-      // Fallback for custom tool pages without #sidebarSearchSlot
-      const popTools = Array.from(document.querySelectorAll(".box, .card, aside > div")).find((el) => {
+      // For standalone tool pages without #sidebarSearchSlot, target the Popular Tools card container directly
+      const popularToolsBox = Array.from(document.querySelectorAll(".box, .card, aside > div")).find((el) => {
         return (el.textContent || "").toLowerCase().includes("popular tools") && el !== globalSearchNode;
       });
-      if (popTools && popTools.parentElement) {
+
+      if (popularToolsBox && popularToolsBox.parentElement) {
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-        if (popTools.previousElementSibling !== globalSearchNode) {
-          popTools.parentElement.insertBefore(globalSearchNode, popTools);
+        if (popularToolsBox.previousElementSibling !== globalSearchNode) {
+          popularToolsBox.parentElement.insertBefore(globalSearchNode, popularToolsBox);
         }
       }
     }
 
     syncActiveTab();
     relocateSearch();
+
+    // Observe DOM changes so client-side transitions don't drop the search node
+    const observer = new MutationObserver(() => {
+      relocateSearch();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener("hashchange", () => {
       syncActiveTab();
