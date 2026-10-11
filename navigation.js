@@ -1,5 +1,14 @@
 (function () {
   function initNavigation() {
+    // 1. Ensure viewport meta tag forbids unprompted auto-zoom shift on mobile
+    let vMeta = document.querySelector('meta[name="viewport"]');
+    if (!vMeta) {
+      vMeta = document.createElement("meta");
+      vMeta.name = "viewport";
+      document.head.appendChild(vMeta);
+    }
+    vMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
@@ -21,9 +30,14 @@
         }
       }
 
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+      }
+
       body { 
         padding-top: var(--nav-header-height) !important; 
-        overflow-x: hidden !important;
       }
 
       .sr input#q {
@@ -64,12 +78,14 @@
       }
 
       /* 1. HOMEPAGE SEARCH COMPONENT */
+      /* Mobile default: strictly bounded and centered */
       .dyn-search-wrapper.in-home-desktop {
         max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
         margin: 1.25rem auto 1.5rem auto !important;
       }
 
+      /* Desktop: starts after 15% margin in X direction */
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-desktop {
           max-width: 320px !important;
@@ -104,22 +120,29 @@
         border-color: #3b82f6 !important;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
       }
+
+      /* 16px font-size prevents mobile keyboard auto-zoom completely */
+      .dyn-modern-input {
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        border: none !important;
+        background: transparent !important;
+        outline: none !important;
+        color: var(--text-main, #0f172a) !important;
+        touch-action: manipulation !important;
+      }
+
       .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
         flex: 1 1 auto !important;
         min-width: 0 !important;
         height: 100% !important;
-        border: none !important;
-        background: transparent !important;
-        outline: none !important;
-        font-size: 14px !important;
-        font-weight: 500 !important;
-        color: var(--text-main, #0f172a) !important;
       }
       @media (min-width: 768px) {
-        .dyn-search-wrapper.in-home-desktop .dyn-modern-input {
+        .dyn-modern-input {
           font-size: 13.5px !important;
         }
       }
+
       .dyn-search-wrapper.in-home-desktop .dyn-modern-btn {
         height: 32px !important;
         padding: 0 14px !important;
@@ -151,14 +174,6 @@
         border-radius: 6px !important;
         background: var(--bg-surface, #ffffff) !important;
         padding: 0 10px !important;
-        font-size: 14px !important;
-        color: var(--text-main, #0f172a) !important;
-        outline: none !important;
-      }
-      @media (min-width: 768px) {
-        .dyn-search-wrapper.in-cat-pane .dyn-modern-input {
-          font-size: 13px !important;
-        }
       }
       .dyn-search-wrapper.in-cat-pane .dyn-modern-btn {
         height: 36px !important;
@@ -201,23 +216,13 @@
       .dyn-search-wrapper.in-sidebar .dyn-modern-input {
         flex: 1 1 auto !important;
         height: 100% !important;
-        border: none !important;
-        background: transparent !important;
-        outline: none !important;
-        font-size: 14px !important;
-        color: var(--text-main, #0f172a) !important;
-      }
-      @media (min-width: 768px) {
-        .dyn-search-wrapper.in-sidebar .dyn-modern-input {
-          font-size: 13.5px !important;
-        }
       }
       .dyn-search-wrapper.in-sidebar .dyn-modern-btn {
         display: none !important;
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13.5px !important; }
 
       /* ========================================================
          ADVERTISEMENT BOX (300x250)
@@ -545,24 +550,17 @@
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
-      // AUTO-RESET ZOOM ON MOBILE WHEN KEYBOARD CLOSES
-      function resetMobileZoom() {
-        if (window.innerWidth <= 768) {
-          const viewportMeta = document.querySelector('meta[name="viewport"]');
-          if (viewportMeta) {
-            const originalContent = viewportMeta.content;
-            viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0";
-            setTimeout(() => {
-              viewportMeta.content = originalContent || "width=device-width, initial-scale=1.0";
-              window.scrollTo({ left: 0, behavior: "smooth" });
-            }, 100);
-          } else {
-            window.scrollTo({ left: 0, behavior: "smooth" });
-          }
-        }
+      // Reset horizontal displacement immediately when input loses focus
+      function resetHorizontalDisplacement() {
+        setTimeout(() => {
+          window.scrollTo({ left: 0, top: window.scrollY, behavior: "instant" });
+          document.documentElement.scrollLeft = 0;
+          document.body.scrollLeft = 0;
+        }, 50);
       }
 
-      input.addEventListener("blur", resetMobileZoom);
+      input.addEventListener("blur", resetHorizontalDisplacement);
+      input.addEventListener("focusout", resetHorizontalDisplacement);
 
       const allTools = [
         { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
@@ -665,7 +663,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: 15% margin on desktop, centered & locked on mobile
+      // 3. Desktop Homepage View: 15% margin on desktop, centered on mobile
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
