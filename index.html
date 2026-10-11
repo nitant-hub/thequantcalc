@@ -101,7 +101,7 @@ p.intro, #cintro, #cintro:empty {
 .sr input, #catView .sr input { display: none !important; }
 
 /* ========================================================
-   CATEGORY ENCLOSED IN APPLE BENTO CARD + TEXT-ONLY TOOLS
+   CATEGORY ENCLOSED IN APPLE BENTO CARD + TEXT TOOLS
    ======================================================== */
 .cols, #cols {
   display: flex !important;
@@ -179,19 +179,21 @@ p.intro, #cintro, #cintro:empty {
   text-decoration: none;
 }
 
-/* PURE MINIMALIST UNDERLINED TEXT TOOLS */
+/* RESPONSIVE AUTO-FITTING TWO-COLUMN LAYOUT */
 .cat-pure-text-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.65rem 1.75rem;
   margin: 0;
   padding: 0.2rem 0.5rem 0.2rem 0.6rem;
+  width: 100%;
 }
 
 .cat-pure-text-list li {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .cat-pure-text-list li a {
@@ -203,6 +205,8 @@ p.intro, #cintro, #cintro:empty {
   line-height: 1.4;
   letter-spacing: -0.01em;
   transition: color 0.15s ease;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .cat-pure-text-list li a:hover {
@@ -380,7 +384,7 @@ input, select, textarea {
 }
 
 /* ========================================================
-   MOBILE VIEW: FULL WIDTH (X) + SLIM Y-DIRECTION
+   MOBILE VIEW: FULL WIDTH (X) + SLIM Y-DIRECTION + SMART COLUMNS
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -488,13 +492,16 @@ input, select, textarea {
     gap: 1.35rem !important;
   }
 
+  /* AUTO-FIT COLUMNS ON MOBILE (Two columns for short names, single row for long names) */
   .cat-pure-text-list {
-    padding-left: 0.45rem !important;
-    gap: 0.55rem !important;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    padding-left: 0.35rem !important;
+    gap: 0.55rem 0.95rem !important;
   }
 
   .cat-pure-text-list li a {
-    font-size: 1rem !important;
+    font-size: 0.96rem !important;
+    line-height: 1.35 !important;
   }
 }
 
