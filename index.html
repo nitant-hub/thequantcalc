@@ -143,10 +143,7 @@ input, select, textarea, .sr input {
   margin-bottom: 1rem;
 }
 
-@media (max-width: 640px) {
-  .cat-hub-grid { grid-template-columns: 1fr; }
-}
-
+/* Base Category Card (Desktop View) */
 .cat-hub-card {
   position: relative;
   display: flex;
@@ -164,6 +161,68 @@ input, select, textarea, .sr input {
 .cat-hub-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 35px -10px rgba(0, 113, 227, 0.16), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.cat-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* ========================================================
+   SLIM MOBILE ROW LAYOUT (SLIM IN Y-DIRECTION)
+   ======================================================== */
+@media (max-width: 640px) {
+  .cat-hub-grid { 
+    grid-template-columns: 1fr;
+    gap: 0.75rem; 
+  }
+
+  .cat-hub-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    min-height: unset !important;
+    padding: 0.8rem 1rem !important;
+    border-radius: 16px !important;
+    gap: 0.85rem !important;
+  }
+
+  .cat-3d-icon {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 1.35rem !important;
+    margin-bottom: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  .cat-card-body {
+    min-width: 0 !important;
+  }
+
+  .cat-card-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.15rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .cat-card-desc {
+    font-size: 0.78rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .cat-action-circle {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 0.85rem !important;
+    align-self: center !important;
+    margin-left: auto !important;
+  }
 }
 
 /* Category Palettes */
@@ -558,8 +617,10 @@ footer a:hover { color: var(--link); }
 
         hs += '<a class="cat-hub-card ' + meta.theme + '" href="#/' + c + '">';
         hs += '  <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
-        hs += '  <div class="cat-card-title">' + esc(displayName) + '</div>';
-        hs += '  <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
+        hs += '  <div class="cat-card-body">';
+        hs += '    <div class="cat-card-title">' + esc(displayName) + '</div>';
+        hs += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
+        hs += '  </div>';
         hs += '  <div class="cat-action-circle">&rarr;</div>';
         hs += '</a>';
       });
