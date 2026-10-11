@@ -29,8 +29,18 @@
         display: none !important;
       }
 
+      /* Make the sidebar container clean so it can hold 2 separate cards */
+      aside.sidebar {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+
       /* ========================================================
-         SEARCH COMPONENT: STANDALONE INDEPENDENT FRAME
+         FRAME 1: SEARCH OPTION (INDEPENDENT CARD)
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -41,19 +51,16 @@
         max-width: 100% !important;
         margin: 0.5rem 0 1rem 0 !important;
       }
-
-      /* Standalone Card in the Right Sidebar (Separate Frame) */
       .dyn-search-wrapper.in-sidebar {
         width: 100% !important;
         max-width: 100% !important;
         display: block !important;
         clear: both !important;
-        margin-top: 0 !important;
-        margin-bottom: 1.25rem !important; /* Visible clean gap above Popular Tools frame */
-        background: var(--bg-surface, var(--surface, #ffffff)) !important;
-        border: 1px solid var(--border-color, var(--border, #e2e8f0)) !important;
+        margin: 0 !important;
+        background: var(--bg-surface, #ffffff) !important;
+        border: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 16px !important;
-        padding: 1.25rem !important;
+        padding: 1.15rem 1.25rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
       }
       [data-theme="dark"] .dyn-search-wrapper.in-sidebar {
@@ -66,8 +73,8 @@
         align-items: center !important;
         width: 100% !important;
         height: 40px !important;
-        background: var(--bg-primary, var(--bg, #f8fafc)) !important;
-        border: 1.5px solid var(--border-color, var(--border, #cbd5e1)) !important;
+        background: var(--bg-primary, #f8fafc) !important;
+        border: 1.5px solid var(--border-color, #cbd5e1) !important;
         border-radius: 20px !important;
         padding: 0 12px 0 14px !important;
         gap: 8px !important;
@@ -105,7 +112,7 @@
         padding: 0 !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
-        color: var(--text-main, var(--text, #0f172a)) !important;
+        color: var(--text-main, #0f172a) !important;
         outline: none !important;
       }
       [data-theme="dark"] .dyn-modern-input {
@@ -181,6 +188,23 @@
       [data-theme="dark"] .dyn-search-dropdown a:hover {
         background: #0f172a !important;
         color: #38bdf8 !important;
+      }
+
+      /* ========================================================
+         FRAME 2: POPULAR TOOLS + SYSTEM STATUS SEPARATE CARD
+         ======================================================== */
+      .dyn-tools-card {
+        background: var(--bg-surface, #ffffff) !important;
+        border: 1px solid var(--border-color, #e2e8f0) !important;
+        border-radius: 16px !important;
+        padding: 1.75rem !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+        display: block !important;
+        width: 100% !important;
+      }
+      [data-theme="dark"] .dyn-tools-card {
+        background: var(--bg-surface, #1e293b) !important;
+        border-color: var(--border-color, #334155) !important;
       }
 
       /* HEADER & NAVIGATION */
@@ -476,16 +500,18 @@
       });
     }
 
-    // RELOCATION LOGIC
+    // RELOCATE LOGIC: GUARANTEES 2 SEPARATE CARDS
     function relocateSearch() {
-      const isMobile = window.innerWidth < 768;
-      const path = window.location.pathname.toLowerCase();
+      const sidebarAside = document.querySelector("aside.sidebar");
+      const sidebarIsVisible = sidebarAside && window.getComputedStyle(sidebarAside).display !== "none";
+
       const hash = (window.location.hash || "").toLowerCase();
+      const path = window.location.pathname.toLowerCase();
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile: inside drawer
-      if (isMobile) {
+      // 1. Mobile Drawer: Only when sidebar is truly hidden
+      if (!sidebarIsVisible && window.innerWidth < 768) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper";
         if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
@@ -494,7 +520,7 @@
         return;
       }
 
-      // 2. Desktop Homepage: Home search slot under calculator
+      // 2. Desktop Homepage
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
@@ -506,7 +532,7 @@
         }
       }
 
-      // 3. Category Page or Native Sidebar slot in index.html
+      // 3. Category Page with dedicated slot
       const sidebarSlot = document.getElementById("sidebarSearchSlot");
       if (sidebarSlot) {
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
@@ -516,30 +542,25 @@
         return;
       }
 
-      // 4. Standalone Tool Page: Handle .layout-grid > aside.sidebar cleanly
-      const layoutGrid = document.querySelector(".layout-grid");
-      const sidebarAside = document.querySelector(".layout-grid > aside.sidebar, aside.sidebar");
-
+      // 4. Standalone Tool Page: Create 2 separate card boxes inside aside.sidebar
       if (sidebarAside) {
-        let colWrap = document.getElementById("dynSidebarColumn");
-        if (!colWrap) {
-          colWrap = document.createElement("div");
-          colWrap.id = "dynSidebarColumn";
-          colWrap.style.cssText = "display:flex;flex-direction:column;width:100%;min-width:0;position:sticky;top:calc(var(--header-height, 68px) + 2rem);";
-          
-          // Insert the column wrapper in the exact place of sidebarAside
-          sidebarAside.parentElement.insertBefore(colWrap, sidebarAside);
-          colWrap.appendChild(sidebarAside);
+        // Find or create the card container for Popular Tools & System Status
+        let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
+        if (!toolsCard) {
+          toolsCard = document.createElement("div");
+          toolsCard.className = "dyn-tools-card";
 
-          // Reset the aside's sticky property so colWrap controls sticking
-          sidebarAside.style.position = "static";
-          sidebarAside.style.top = "auto";
+          // Move all existing children of aside into toolsCard
+          while (sidebarAside.firstChild) {
+            toolsCard.appendChild(sidebarAside.firstChild);
+          }
+          sidebarAside.appendChild(toolsCard);
         }
 
+        // Now place the Search option as Card 1 above Card 2 (Popular Tools)
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
-        // Prepend search inside colWrap, strictly BEFORE the sidebar card
-        if (colWrap.firstElementChild !== globalSearchNode) {
-          colWrap.insertBefore(globalSearchNode, sidebarAside);
+        if (sidebarAside.firstElementChild !== globalSearchNode) {
+          sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
       }
     }
