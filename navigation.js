@@ -128,7 +128,7 @@
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 42px !important;
+        height: 40px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid #2563eb !important;
         border-radius: 0px !important;
@@ -358,10 +358,10 @@
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.8) !important; 
         border-radius: 20px !important;
-        padding: 0.75rem 0.75rem 0.85rem !important; 
+        padding: 0.6rem 0.6rem 0.7rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.3rem !important; 
+        gap: 0.2rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
@@ -387,10 +387,10 @@
       .dyn-close-btn { 
         background: #fee2e2 !important; 
         border: 1px solid #fca5a5 !important; 
-        border-radius: 10px !important;
-        width: 26px !important;
-        height: 26px !important;
-        font-size: 0.95rem !important; 
+        border-radius: 8px !important;
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.88rem !important; 
         font-weight: 800 !important;
         color: #ef4444 !important; 
         cursor: pointer !important; 
@@ -406,12 +406,12 @@
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.88rem !important;
-        padding: 0.38rem 0.5rem !important; 
-        border-radius: 10px !important; 
+        font-size: 0.85rem !important;
+        padding: 0.3rem 0.45rem !important; 
+        border-radius: 8px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.5rem !important;
+        gap: 0.45rem !important;
         cursor: pointer !important;
         transition: background 0.15s ease, transform 0.15s ease !important;
       }
@@ -682,7 +682,7 @@
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    window.addEventListener("hashchange",, () => {
+    window.addEventListener("hashchange", () => {
       syncActiveTab();
       relocateSearch();
     });
