@@ -345,14 +345,14 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (OPTIMIZED X-WIDTH & AUTO X-FLOW) */
+      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (SLIM COMPACT X-WIDTH & AUTO X-FLOW) */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 12px !important; 
-        right: -85vw !important; 
-        width: max-content !important;
-        min-width: 200px !important;
-        max-width: 82vw !important;
+        right: -75vw !important; 
+        width: auto !important;
+        min-width: 170px !important;
+        max-width: 72vw !important;
         height: auto !important; 
         max-height: 85vh !important;
         background: var(--bg-surface, #ffffff) !important; 
@@ -412,16 +412,13 @@
         border-radius: 8px !important; 
         display: flex !important; 
         align-items: center !important; 
+-webkit-box-align: center !important;
         gap: 0.45rem !important;
         white-space: nowrap !important;
-        overflow-x: auto !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
+        width: max-content !important;
+        min-width: 100% !important;
         cursor: pointer !important;
         transition: background 0.15s ease, transform 0.15s ease !important;
-      }
-      .dyn-drawer-menu a::-webkit-scrollbar {
-        display: none !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
       .dyn-drawer-menu a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #0284c7 !important; }
