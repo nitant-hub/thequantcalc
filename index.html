@@ -807,8 +807,7 @@ input, select, textarea {
   padding: 0;
 }
 
-/* --- COMFORTABLE STROKE TWINKLE ANIMATION --- */
-/* The text remains 100% solid and readable. Only the text outline (stroke) twinkles. */
+/* --- COMFORTABLE ALTERNATING STROKE TWINKLE (PING-PONG) --- */
 @keyframes strokeTwinkle {
   0%, 100% { 
     -webkit-text-stroke: 0.2px transparent;
@@ -824,16 +823,23 @@ input, select, textarea {
   50% { -webkit-text-stroke: 0.6px #60a5fa; text-shadow: 0 0 2px rgba(96, 165, 250, 0.2); }
 }
 
+/* Increased loop duration to 3s to allow both boxes time to take turns */
 .bento-manual-box .cat-pure-text-list li a {
-  animation: strokeTwinkle 2s infinite ease-in-out;
-  opacity: 1 !important; /* Forces text to stay completely solid/readable */
+  animation: strokeTwinkle 3s infinite ease-in-out;
+  opacity: 1 !important; 
 }
 
-/* Stagger the delays for a cascading effect */
-.bento-manual-box .cat-pure-text-list li:nth-child(1) a { animation-delay: 0s; }
-.bento-manual-box .cat-pure-text-list li:nth-child(2) a { animation-delay: 0.3s; }
-.bento-manual-box .cat-pure-text-list li:nth-child(3) a { animation-delay: 0.6s; }
+/* BOX 1 (Prime Tools) twinkles first */
+.bento-prime .cat-pure-text-list li:nth-child(1) a { animation-delay: 0s; }
+.bento-prime .cat-pure-text-list li:nth-child(2) a { animation-delay: 0.2s; }
+.bento-prime .cat-pure-text-list li:nth-child(3) a { animation-delay: 0.4s; }
 
+/* BOX 2 (Editor's Picks) waits exactly 1.5s until Box 1 is finishing, then twinkles */
+.bento-editors .cat-pure-text-list li:nth-child(1) a { animation-delay: 1.5s; }
+.bento-editors .cat-pure-text-list li:nth-child(2) a { animation-delay: 1.7s; }
+.bento-editors .cat-pure-text-list li:nth-child(3) a { animation-delay: 1.9s; }
+
+/* Stops the animation immediately if the user's mouse hovers over a link */
 .bento-manual-box .cat-pure-text-list li a:hover {
   animation: none;
   color: #0056b3;
@@ -843,7 +849,7 @@ input, select, textarea {
   color: #93c5fd;
   -webkit-text-stroke: 0px transparent;
 }
-/* -------------------------------------------- */
+/* ----------------------------------------------------------- */
 
 .side-split-row {
   display: flex;
