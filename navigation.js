@@ -74,7 +74,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT CORE & FULL WIDTH RECTANGLE
+         SEARCH COMPONENT CORE & SLIM RECTANGLE
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -123,18 +123,18 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* RECTANGULAR FULL-WIDTH ROW CONTAINER */
+      /* RECTANGULAR SLIM ROW CONTAINER */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 38px !important;
+        height: 34px !important;
         background: var(--bg-surface, #ffffff) !important;
-        border: 1.5px solid #2563eb !important;
-        border-radius: 0px !important;
-        padding: 0 10px !important;
+        border: 1px solid #2563eb !important;
+        border-radius: 6px !important;
+        padding: 0 8px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08) !important;
+        box-shadow: 0 1px 3px rgba(37, 99, 235, 0.06) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
         cursor: text !important;
         position: relative !important;
@@ -143,16 +143,15 @@
       [data-theme="dark"] .dyn-search-row {
         background: var(--bg-surface, #1e293b) !important;
         border-color: #3b82f6 !important;
-        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
       }
       .dyn-search-wrapper .dyn-search-row:focus-within {
         border-color: #1d4ed8 !important;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22) !important;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
       }
 
-      /* Modern Input Text taking 100% width */
+      /* Modern Input Text slim fit */
       .dyn-modern-input {
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 500 !important;
         border: none !important;
         border-radius: 0px !important;
@@ -211,7 +210,7 @@
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 0px !important;
+        border-radius: 6px !important;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
@@ -224,8 +223,8 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0.65rem 0.95rem !important; 
-        font-size: 0.88rem !important; 
+        padding: 0.55rem 0.8rem !important; 
+        font-size: 0.84rem !important; 
         font-weight: 600 !important; 
         color: var(--text-main, #1e293b) !important; 
         text-decoration: none !important; 
@@ -365,12 +364,12 @@
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #ef4444 !important; line-height: 1 !important; display: none !important; }
       
-      /* When active: perfectly matches the white surface color and seamlessly merges with the popup card */
+      /* When active: perfectly matches the white surface color and seamlessly merges with the popup top edge */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
-        border-bottom: none !important; /* Seamlessly connects with the popup top edge */
-        border-radius: 10px 10px 0 0 !important; /* Rounded top tab shape connected to the popup */
+        border-bottom: none !important;
+        border-radius: 10px 10px 0 0 !important;
         box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
         z-index: 1000001 !important;
       }
@@ -381,25 +380,25 @@
       .dyn-hamburger-btn.is-active span.bar { display: none !important; }
       .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
-      /* ========================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX
-         ======================================================== */
+      /* ========================================================================
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Slim X-Width)
+         ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: calc(var(--nav-header-height) + 4px) !important; 
+        top: 28px !important; /* Positioned precisely from the middle of the header bar vertically */
         right: -75vw !important; 
-        width: fit-content !important; 
-        min-width: 150px !important;
-        max-width: 75vw !important; 
+        width: max-content !important; 
+        min-width: 130px !important;
+        max-width: 58vw !important; /* Extremely slimmed down in the X direction to look professional and sleek */
         height: auto !important; 
-        max-height: 80vh !important;
+        max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.9) !important; 
-        border-radius: 16px !important; 
-        padding: 0.6rem 0.5rem 0.5rem 0.5rem !important; 
+        border-radius: 14px !important; 
+        padding: 0.45rem 0.4rem 0.4rem 0.4rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.15rem !important; 
+        gap: 0.12rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
@@ -415,17 +414,17 @@
       }
       .dyn-drawer-menu.open { right: 12px !important; }
 
-      /* Minimalist UX link items with automatic X-flow/scroll support for longer text */
+      /* Minimalist UX link items with slim padding and automatic X-flow/scroll support for longer text */
       .dyn-drawer-menu a {
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.82rem !important;
-        padding: 0.28rem 0.4rem !important; 
-        border-radius: 6px !important; 
+        font-size: 0.8rem !important;
+        padding: 0.24rem 0.35rem !important; 
+        border-radius: 5px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.35rem !important;
+        gap: 0.3rem !important;
         white-space: nowrap !important; 
         width: fit-content !important;
         min-width: 100% !important;
