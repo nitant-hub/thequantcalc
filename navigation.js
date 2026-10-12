@@ -345,14 +345,14 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (TIGHT Y-SPACING) */
+      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (OPTIMIZED X-WIDTH & AUTO X-FLOW) */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 12px !important; 
-        right: -75vw !important; 
-        width: 68vw !important; 
-        min-width: 220px !important;
-        max-width: 260px !important;
+        right: -85vw !important; 
+        width: max-content !important;
+        min-width: 200px !important;
+        max-width: 82vw !important;
         height: auto !important; 
         max-height: 85vh !important;
         background: var(--bg-surface, #ffffff) !important; 
@@ -366,6 +366,7 @@
         box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
+        overflow-x: auto !important;
         overscroll-behavior: contain !important;
         box-sizing: border-box !important;
       }
@@ -412,8 +413,15 @@
         display: flex !important; 
         align-items: center !important; 
         gap: 0.45rem !important;
+        white-space: nowrap !important;
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
         cursor: pointer !important;
         transition: background 0.15s ease, transform 0.15s ease !important;
+      }
+      .dyn-drawer-menu a::-webkit-scrollbar {
+        display: none !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
       .dyn-drawer-menu a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #0284c7 !important; }
