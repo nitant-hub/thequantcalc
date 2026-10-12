@@ -136,7 +136,7 @@ p.intro, #cintro, #cintro:empty {
 .cat-multi-flow-container {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.15rem;
   width: 100%;
 }
 
@@ -150,8 +150,8 @@ p.intro, #cintro, #cintro:empty {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
@@ -159,7 +159,7 @@ p.intro, #cintro, #cintro:empty {
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   color: var(--text);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
   cursor: pointer;
   z-index: 10;
@@ -197,8 +197,8 @@ p.intro, #cintro, #cintro:empty {
   flex-wrap: nowrap !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
-  gap: 1.25rem !important;
-  padding: 0.35rem 0.3rem 0.85rem 0.3rem !important;
+  gap: 1.15rem !important;
+  padding: 0.25rem 0.25rem 0.65rem 0.25rem !important;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -206,7 +206,7 @@ p.intro, #cintro, #cintro:empty {
 
 /* Sleek Scrollbar */
 .cat-hub-grid::-webkit-scrollbar {
-  height: 6px;
+  height: 5px;
 }
 .cat-hub-grid::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.04);
@@ -226,66 +226,88 @@ p.intro, #cintro, #cintro:empty {
   background: rgba(56, 189, 248, 0.4);
 }
 
+/* SLIM Y-DIRECTION CARD */
 .cat-hub-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1.4rem;
-  border-radius: 22px;
+  padding: 0.95rem 1.15rem;
+  border-radius: 18px;
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  flex: 0 0 295px !important;
-  width: 295px !important;
-  min-width: 295px !important;
+  box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  flex: 0 0 280px !important;
+  width: 280px !important;
+  min-width: 280px !important;
   scroll-snap-align: start;
 }
 .cat-hub-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 35px -10px rgba(0, 113, 227, 0.16), 0 1px 3px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 28px -8px rgba(0, 113, 227, 0.16);
 }
 
+/* SYMBOL & CATEGORY NAME IN ONE LINE */
 .cat-hub-top {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 0.75rem;
   text-decoration: none;
   color: inherit;
 }
 
+.cat-3d-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin-bottom: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
 .cat-card-body {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   flex: 1 1 auto;
+  min-width: 0;
 }
 
 .cat-card-title {
-  font-size: 1.22rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--text);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0;
   letter-spacing: -0.02em;
   text-decoration: none;
 }
+
 .cat-card-desc {
-  font-size: 0.84rem;
+  width: 100%;
+  font-size: 0.8rem;
   color: var(--muted);
-  line-height: 1.45;
+  line-height: 1.35;
   font-weight: 500;
-  margin-bottom: 0.75rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.45rem;
 }
 
-/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS (7-12 TOOLS FIXED Y-FLOW) */
+/* SLIM Y-FLOW TOOL LIST */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
-  margin-top: 0.25rem;
-  padding-top: 0.65rem;
-  padding-right: 0.35rem;
+  gap: 0.18rem;
+  margin-top: 0;
+  padding-top: 0.45rem;
+  padding-right: 0.25rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-height: 285px; /* Fits ~10-11 items before smooth vertical scrolling activates */
+  max-height: 220px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -315,17 +337,17 @@ p.intro, #cintro, #cintro:empty {
   display: flex;
   align-items: center;
   min-height: unset;
-  padding: 0.08rem 0;
+  padding: 0.04rem 0;
   flex-shrink: 0;
 }
 
 .cat-card-tools-y li a {
   color: #3b6fb6;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
-  line-height: 1.32;
+  line-height: 1.25;
   letter-spacing: -0.01em;
   transition: color 0.15s ease;
   white-space: nowrap;
@@ -490,19 +512,6 @@ p.intro, #cintro, #cintro:empty {
 [data-theme="dark"] .cat-theme-cyan { background: linear-gradient(145deg, #164e63 0%, #0f172a 100%); border-color: #0e7490; }
 [data-theme="dark"] .cat-theme-indigo { background: linear-gradient(145deg, #312e81 0%, #0f172a 100%); border-color: #4338ca; }
 
-.cat-3d-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.55rem;
-  margin-bottom: 0.9rem;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  flex-shrink: 0;
-}
-
 .cat-bento-header-card .cat-3d-icon {
   width: 44px;
   height: 44px;
@@ -561,7 +570,7 @@ input, select, textarea {
   }
 
   .cat-multi-flow-container {
-    gap: 1rem !important;
+    gap: 0.85rem !important;
   }
 
   .cat-hub-grid { 
@@ -623,17 +632,17 @@ input, select, textarea {
   .cat-card-tools-y {
     margin-top: 0 !important;
     padding-top: 0.45rem !important;
-    max-height: 285px !important;
-    gap: 0.22rem !important;
+    max-height: 220px !important;
+    gap: 0.18rem !important;
   }
 
   .cat-card-tools-y li {
     min-height: unset !important;
-    padding: 0.08rem 0 !important;
+    padding: 0.04rem 0 !important;
   }
 
   .cat-card-tools-y li a {
-    font-size: 0.94rem !important;
+    font-size: 0.92rem !important;
     line-height: 1.28 !important;
   }
 
@@ -1068,7 +1077,7 @@ footer a:hover { color: var(--link); }
       hs += '  </div>';
       hs += '</div>';
 
-      /* PROGRESSIVE ALLOCATION: Fill Row 1 First (up to 3-4 cards), Then activate Rows 2 and 3 */
+      /* PROGRESSIVE ALLOCATION: Fill Row 1 First (up to 4 cards), Then activate Rows 2 and 3 */
       var cardsPerRow = 4;
       var rowCount = Math.min(3, Math.ceil(cs.length / cardsPerRow)) || 1;
       var rows = [];
@@ -1107,10 +1116,10 @@ footer a:hover { color: var(--link); }
 
           if (track && prevBtn && nextBtn) {
             prevBtn.onclick = function() {
-              track.scrollBy({ left: -315, behavior: 'smooth' });
+              track.scrollBy({ left: -295, behavior: 'smooth' });
             };
             nextBtn.onclick = function() {
-              track.scrollBy({ left: 315, behavior: 'smooth' });
+              track.scrollBy({ left: 295, behavior: 'smooth' });
             };
             track.addEventListener('scroll', function() { updateRowArrows(index); });
             window.addEventListener('resize', function() { updateRowArrows(index); });
