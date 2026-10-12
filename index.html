@@ -807,34 +807,40 @@ input, select, textarea {
   padding: 0;
 }
 
-/* --- GENTLE PULSE ANIMATION FOR BENTO LINKS --- */
-@keyframes gentlePulse {
+/* --- ATTRACTIVE TWINKLE / BLINK ANIMATION FOR BENTO LINKS --- */
+@keyframes twinkleBlink {
   0%, 100% { 
     opacity: 1; 
-    text-shadow: 0 0 0px transparent; 
   }
   50% { 
-    opacity: 0.75; 
-    text-shadow: 0 0 8px rgba(0, 113, 227, 0.35); 
+    opacity: 0.2; /* Strong fade to create the blink effect */
+    text-shadow: 0 0 8px rgba(0, 113, 227, 0.8); 
   }
 }
-[data-theme="dark"] @keyframes gentlePulse {
-  0%, 100% { opacity: 1; text-shadow: 0 0 0px transparent; }
-  50% { opacity: 0.85; text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
+[data-theme="dark"] @keyframes twinkleBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; text-shadow: 0 0 8px rgba(56, 189, 248, 0.9); }
 }
 
 .bento-manual-box .cat-pure-text-list li a {
-  animation: gentlePulse 2.5s infinite ease-in-out;
+  animation: twinkleBlink 1.5s infinite ease-in-out;
 }
+
+/* Stagger the animation delays so they twinkle sequentially (cascading effect) */
+.bento-manual-box .cat-pure-text-list li:nth-child(1) a { animation-delay: 0s; }
+.bento-manual-box .cat-pure-text-list li:nth-child(2) a { animation-delay: 0.2s; }
+.bento-manual-box .cat-pure-text-list li:nth-child(3) a { animation-delay: 0.4s; }
+
 .bento-manual-box .cat-pure-text-list li a:hover {
-  animation: none; /* Stops pulsing so the user can easily click */
+  animation: none; /* Stops the blink entirely when the user hovers */
+  opacity: 1;
   color: #0056b3;
+  text-shadow: none;
 }
 [data-theme="dark"] .bento-manual-box .cat-pure-text-list li a:hover {
   color: #93c5fd;
 }
-/* ---------------------------------------------- */
-
+/* ------------------------------------------------------------ */
 
 .side-split-row {
   display: flex;
