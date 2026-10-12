@@ -101,7 +101,7 @@ p.intro, #cintro, #cintro:empty {
 .sr input, #catView .sr input { display: none !important; }
 
 /* ========================================================
-   HOMEPAGE: HORIZONTAL (X-DIRECTION) CAROUSEL WITH ARROWS
+   HOMEPAGE: HORIZONTAL (X-DIRECTION) OVERFLOW IN DESKTOP
    ======================================================== */
 .cat-hub-header {
   display: flex;
@@ -116,11 +116,6 @@ p.intro, #cintro, #cintro:empty {
   color: var(--text);
   letter-spacing: -0.02em;
 }
-.cat-hub-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
 .cat-hub-view-all {
   font-size: 0.9rem;
   font-weight: 700;
@@ -133,57 +128,6 @@ p.intro, #cintro, #cintro:empty {
 }
 .cat-hub-view-all:hover { transform: translateX(3px); }
 
-/* Carousel Outer Wrapper with Relative Positioning */
-.cat-hub-carousel-wrap {
-  position: relative;
-  width: 100%;
-}
-
-/* Floating Navigation Arrows */
-.cat-nav-btn {
-  position: absolute;
-  top: 42%;
-  transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-  color: var(--text);
-  font-size: 1.35rem;
-  font-weight: 700;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
-}
-.cat-nav-btn:hover {
-  background: #ffffff;
-  transform: translateY(-50%) scale(1.08);
-}
-.cat-nav-btn.prev { left: -14px; }
-.cat-nav-btn.next { right: -14px; }
-
-[data-theme="dark"] .cat-nav-btn {
-  background: rgba(21, 28, 46, 0.9);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
-}
-[data-theme="dark"] .cat-nav-btn:hover {
-  background: rgba(30, 41, 59, 1);
-}
-
-.cat-nav-btn.hidden {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-}
-
 /* Horizontal Track across X-axis */
 .cat-hub-grid {
   display: flex !important;
@@ -195,11 +139,10 @@ p.intro, #cintro, #cintro:empty {
   padding: 0.35rem 0.25rem 1rem 0.25rem !important;
   margin-bottom: 0.5rem !important;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Sleek Scrollbar for Desktop X-Flow Track */
+/* Custom Scrollbar for Desktop X-Flow Track */
 .cat-hub-grid::-webkit-scrollbar {
   height: 6px;
 }
@@ -270,7 +213,9 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW SCROLLING TOOLS: EXACT 10 VISIBLE AT A TIME */
+/* ========================================================
+   Y-FLOW SCROLLING TOOLS: EXACT 10 VISIBLE AT A TIME
+   ======================================================== */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
@@ -280,8 +225,8 @@ p.intro, #cintro, #cintro:empty {
   padding-top: 0.75rem;
   padding-right: 0.35rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-height: 310px;
-  overflow-y: auto;
+  max-height: 310px; /* Locks height to precisely 10 tools */
+  overflow-y: auto;   /* Smooth Y-overflow for all remaining tools */
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
@@ -289,6 +234,7 @@ p.intro, #cintro, #cintro:empty {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Sleek Slim Vertical Scrollbar for the 10-Tool Window */
 .cat-card-tools-y::-webkit-scrollbar {
   width: 4px;
 }
@@ -538,7 +484,7 @@ input, select, textarea {
 .feat span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
 /* ========================================================
-   MOBILE VIEW: SLIM PROFILE & VERTICAL STACK
+   MOBILE VIEW: SLIM PROFILE & STACK
    ======================================================== */
 @media (max-width: 767px) {
   html body #catView,
@@ -548,10 +494,6 @@ input, select, textarea {
     gap: 0px !important;
     row-gap: 0px !important;
     padding: 1.15rem 1rem !important;
-  }
-
-  .cat-nav-btn {
-    display: none !important;
   }
 
   .cat-hub-grid { 
@@ -761,7 +703,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Category Sections Container on Home (X-Direction Overflow Carousel with Arrows) -->
+    <!-- Category Sections Container on Home (X-Direction Overflow Carousel on Desktop) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
@@ -802,7 +744,7 @@ footer a:hover { color: var(--link); }
 </footer>
 <button class="top" id="top" aria-label="Back to top">&#8963;</button>
 
-<!-- Page Router, Registry, Dynamic Carousel Arrows & Iframe Resizer -->
+<!-- Page Router, Registry, Automatic Category Sketcher & Iframe Resizer -->
 <script>
 (function(){
   var REPO='nitant-hub/thequantcalc', BRANCH='main';
@@ -960,38 +902,6 @@ footer a:hover { color: var(--link); }
     };
   }
 
-  function updateCarouselArrows() {
-    var track = document.getElementById('homeCatGrid');
-    var prevBtn = document.getElementById('catPrevBtn');
-    var nextBtn = document.getElementById('catNextBtn');
-    if (!track || !prevBtn || !nextBtn) return;
-
-    if (window.innerWidth <= 767) {
-      prevBtn.classList.add('hidden');
-      nextBtn.classList.add('hidden');
-      return;
-    }
-
-    var canScroll = track.scrollWidth > track.clientWidth + 5;
-    if (!canScroll) {
-      prevBtn.classList.add('hidden');
-      nextBtn.classList.add('hidden');
-      return;
-    }
-
-    if (track.scrollLeft > 10) {
-      prevBtn.classList.remove('hidden');
-    } else {
-      prevBtn.classList.add('hidden');
-    }
-
-    if (track.scrollLeft < track.scrollWidth - track.clientWidth - 10) {
-      nextBtn.classList.remove('hidden');
-    } else {
-      nextBtn.classList.add('hidden');
-    }
-  }
-
   function render(){
     var m=location.hash.match(/^#\/([\w-]+)/), cs=cats(), cur='';
     if(m&&(m[1]==='all'||cs.indexOf(m[1])>-1))cur=m[1];
@@ -1011,15 +921,10 @@ footer a:hover { color: var(--link); }
       var hs = '';
       hs += '<div class="cat-hub-header">';
       hs += '  <h2 class="cat-hub-title">Browse by Category</h2>';
-      hs += '  <div class="cat-hub-controls">';
-      hs += '    <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
-      hs += '  </div>';
+      hs += '  <a class="cat-hub-view-all" href="#/all">View All &rarr;</a>';
       hs += '</div>';
 
-      hs += '<div class="cat-hub-carousel-wrap">';
-      hs += '  <button class="cat-nav-btn prev hidden" id="catPrevBtn" aria-label="Scroll left">&#8249;</button>';
-      hs += '  <div class="cat-hub-grid" id="homeCatGrid">';
-
+      hs += '<div class="cat-hub-grid">';
       cs.forEach(function(c){
         var meta = autoSketchCategory(c);
         var displayName = c === 'financial' ? 'Finance' : label(c);
@@ -1044,30 +949,9 @@ footer a:hover { color: var(--link); }
 
         hs += '</div>';
       });
-
-      hs += '  </div>';
-      hs += '  <button class="cat-nav-btn next hidden" id="catNextBtn" aria-label="Scroll right">&#8250;</button>';
       hs += '</div>';
 
       document.getElementById('homeSections').innerHTML = hs;
-
-      var track = document.getElementById('homeCatGrid');
-      var prevBtn = document.getElementById('catPrevBtn');
-      var nextBtn = document.getElementById('catNextBtn');
-
-      if (track && prevBtn && nextBtn) {
-        prevBtn.onclick = function() {
-          track.scrollBy({ left: -310, behavior: 'smooth' });
-        };
-        nextBtn.onclick = function() {
-          track.scrollBy({ left: 310, behavior: 'smooth' });
-        };
-        track.addEventListener('scroll', updateCarouselArrows);
-        window.addEventListener('resize', updateCarouselArrows);
-        setTimeout(updateCarouselArrows, 100);
-        setTimeout(updateCarouselArrows, 600);
-      }
-
       setTimeout(fitCalc, 50); setTimeout(fitCalc, 400);
     } else if(cur==='all'){
       home.style.display='none'; cv.style.display='block';
