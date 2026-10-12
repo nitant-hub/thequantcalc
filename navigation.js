@@ -74,12 +74,14 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT CORE & SLIM RECTANGLE
+         SEARCH COMPONENT CORE & SLIM X-AXIS GEOMETRY
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
         width: 100% !important;
+        max-width: calc(100% - 32px) !important; /* Slimmed down in X direction so it leaves space and never overlaps the close button */
+        margin: 0 auto 0.4rem auto !important;
         pointer-events: auto !important;
         z-index: 20 !important;
       }
@@ -100,9 +102,9 @@
 
       /* 2. CATEGORY VIEW */
       .dyn-search-wrapper.in-cat-pane {
-        max-width: 340px !important;
+        max-width: 100% !important;
         width: 100% !important;
-        margin-bottom: 0.5rem !important;
+        margin-bottom: 0.4rem !important;
       }
 
       /* 3. TOOL SIDEBAR */
@@ -128,7 +130,7 @@
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 34px !important;
+        height: 32px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid #2563eb !important;
         border-radius: 6px !important;
@@ -151,7 +153,7 @@
 
       /* Modern Input Text slim fit */
       .dyn-modern-input {
-        font-size: 14px !important;
+        font-size: 13.5px !important;
         font-weight: 500 !important;
         border: none !important;
         border-radius: 0px !important;
@@ -176,7 +178,7 @@
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 12.5px !important; }
 
       /* AD CONTAINER */
       .dyn-adsense-300x250 {
@@ -231,7 +233,7 @@
         border-bottom: 1px solid var(--border-color, #f1f5f9) !important; 
       }
       [data-theme="dark"] .dyn-search-dropdown a { color: #f8fafc !important; border-bottom: 1px solid #334155 !important; }
-      .dyn-search-dropdown a:hover { background: var(--bg-primary, #f8fafc) !important; color: #2563eb !important; }
+      .dyn-search-dropdown a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #2563eb !important; }
 
       aside.sidebar {
         background: transparent !important;
@@ -364,7 +366,7 @@
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #ef4444 !important; line-height: 1 !important; display: none !important; }
       
-      /* When active: perfectly matches the white surface color and seamlessly merges with the popup top edge */
+      /* When active: seamlessly merges with the popup top edge */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
@@ -385,17 +387,17 @@
          ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 28px !important; /* Positioned precisely from the middle of the header bar vertically */
+        top: 36px !important; /* Positioned slightly from the upper middle of the header bar vertically */
         right: -75vw !important; 
         width: max-content !important; 
-        min-width: 130px !important;
-        max-width: 58vw !important; /* Extremely slimmed down in the X direction to look professional and sleek */
+        min-width: 140px !important;
+        max-width: 52vw !important; /* Slimmed down further in the X direction so search input never touches or overlaps the close button */
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.9) !important; 
         border-radius: 14px !important; 
-        padding: 0.45rem 0.4rem 0.4rem 0.4rem !important; 
+        padding: 0.45rem 0.35rem 0.4rem 0.35rem !important; /* Extremely tight inner padding */
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.12rem !important; 
@@ -419,12 +421,12 @@
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.8rem !important;
-        padding: 0.24rem 0.35rem !important; 
+        font-size: 0.78rem !important;
+        padding: 0.22rem 0.3rem !important; 
         border-radius: 5px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.3rem !important;
+        gap: 0.25rem !important;
         white-space: nowrap !important; 
         width: fit-content !important;
         min-width: 100% !important;
@@ -530,7 +532,7 @@
       globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-search-row">
-          <input type="text" class="dyn-modern-input" placeholder="Search calculators..." autocomplete="off">
+          <input type="text" class="dyn-modern-input" placeholder="Search..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
