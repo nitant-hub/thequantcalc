@@ -184,7 +184,7 @@ p.intro, #cintro, #cintro:empty {
   visibility: hidden;
 }
 
-/* Horizontal Track across X-axis */
+/* Horizontal Track across X-axis (Desktop) */
 .cat-hub-grid {
   display: flex !important;
   flex-direction: row !important;
@@ -270,7 +270,7 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS (DESKTOP & GENERAL) */
+/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS (DESKTOP) */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
@@ -280,7 +280,7 @@ p.intro, #cintro, #cintro:empty {
   padding-top: 0.65rem;
   padding-right: 0.35rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-height: 285px; /* Fits ~10-11 tools before smooth Y-scrolling begins */
+  max-height: 285px; /* Fits ~10-11 items cleanly before Y-scroll activates */
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -606,11 +606,11 @@ input, select, textarea {
     margin-bottom: 0.45rem !important;
   }
 
-  /* SLIM, BALANCED GAP BETWEEN TOOLS ON MOBILE WITH 7-12 TOOLS FIXED Y-FLOW */
+  /* Compact gap and matching Y-flow limit on mobile */
   .cat-card-tools-y {
     margin-top: 0 !important;
     padding-top: 0.45rem !important;
-    max-height: 285px !important; /* Locks height after ~10-11 items on mobile */
+    max-height: 285px !important;
     gap: 0.22rem !important;
   }
 
@@ -775,7 +775,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Category Sections Container on Home (X-Direction Carousel on Desktop / Vertical Stack on Mobile) -->
+    <!-- Category Sections Container on Home (X-Direction Carousel on Desktop) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
