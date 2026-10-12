@@ -113,7 +113,7 @@
         margin: 0 !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
-        border-radius: 0px !important; /* Fully rectangular card */
+        border-radius: 0px !important;
         padding: 1rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         box-sizing: border-box !important;
@@ -131,7 +131,7 @@
         height: 42px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid #2563eb !important;
-        border-radius: 0px !important; /* Fully rectangular container */
+        border-radius: 0px !important;
         padding: 0 4px 0 12px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
@@ -178,20 +178,19 @@
         }
       }
 
-      /* RECTANGULAR SEARCH BUTTON */
+      /* SLIM RECTANGULAR SEARCH BUTTON */
       .dyn-modern-btn {
-        height: 34px !important;
-        padding: 0 14px !important;
+        height: 32px !important;
+        padding: 0 9px !important;
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 0px !important; /* Fully rectangular button */
-        font-size: 12.5px !important;
+        border-radius: 0px !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
-        letter-spacing: 0.3px !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
-        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.22) !important;
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2) !important;
         transition: transform 0.15s, box-shadow 0.15s !important;
         position: relative !important;
         z-index: 30 !important;
@@ -236,7 +235,7 @@
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 0px !important; /* Rectangular dropdown */
+        border-radius: 0px !important;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
@@ -370,24 +369,25 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER */
+      /* MOBILE DRAWER - DYNAMIC Y HEIGHT */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 0 !important; 
+        top: 12px !important; 
         right: -75vw !important; 
-        width: 60vw !important; 
-        min-width: 210px !important;
-        max-width: 250px !important;
-        height: 100vh !important; 
-        height: 100dvh !important;
+        width: 65vw !important; 
+        min-width: 220px !important;
+        max-width: 260px !important;
+        height: auto !important; 
+        max-height: 88vh !important;
         background: var(--bg-surface, #ffffff) !important; 
-        border-left: 1px solid var(--border-color, #e2e8f0) !important; 
-        padding: 0.6rem 0.8rem 2rem !important; 
+        border: 1px solid var(--border-color, #e2e8f0) !important; 
+        border-radius: 16px !important;
+        padding: 1rem 0.9rem 1.25rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.6rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.25) !important; 
+        box-shadow: -10px 10px 30px rgba(0,0,0,0.2) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
         overscroll-behavior: contain !important;
@@ -397,7 +397,7 @@
         background: #0f172a !important;
         border-left-color: #334155 !important;
       }
-      .dyn-drawer-menu.open { right: 0 !important; }
+      .dyn-drawer-menu.open { right: 12px !important; }
 
       .dyn-drawer-top-action {
         display: flex !important;
@@ -427,7 +427,7 @@
 
       .dyn-drawer-menu a {
         text-decoration: none !important; color: var(--text-main, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
-        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !gap: 0.55rem !important;
+        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
         cursor: pointer !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
@@ -510,7 +510,7 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // SEARCH COMPONENT
+    // SEARCH COMPONENT WITH SLIM BUTTON
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -518,8 +518,8 @@
       globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-search-row">
-          <input type="text" class="dyn-modern-input" placeholder="Search calculators..." autocomplete="off">
-          <button type="button" class="dyn-modern-btn">Search</button>
+          <input type="text" class="dyn-modern-input" placeholder="Search..." autocomplete="off">
+          <button type="button" class="dyn-modern-btn">🔍</button>
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
@@ -659,7 +659,7 @@
         }
       }
 
-      // 3. Desktop Homepage View: 15% margin on desktop, centered on mobile
+      // 3. Desktop Homepage View
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
