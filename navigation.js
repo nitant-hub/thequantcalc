@@ -80,8 +80,8 @@
         position: relative !important;
         box-sizing: border-box !important;
         width: 100% !important;
-        max-width: calc(100% - 32px) !important; /* Slimmed down in X direction so it leaves space and never overlaps the close button */
-        margin: 0 auto 0.4rem auto !important;
+        max-width: 100% !important;
+        margin: 0 0 0.4rem 0 !important;
         pointer-events: auto !important;
         z-index: 20 !important;
       }
@@ -125,11 +125,11 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* RECTANGULAR SLIM ROW CONTAINER */
+      /* RECTANGULAR SLIM ROW CONTAINER (Fixed explicit width so search box is slim and never touches the close button) */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
-        width: 100% !important;
+        width: 180px !important;
         height: 32px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid #2563eb !important;
@@ -153,7 +153,7 @@
 
       /* Modern Input Text slim fit */
       .dyn-modern-input {
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
         border: none !important;
         border-radius: 0px !important;
@@ -178,7 +178,7 @@
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 12.5px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 12px !important; }
 
       /* AD CONTAINER */
       .dyn-adsense-300x250 {
@@ -383,21 +383,21 @@
       .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
       /* ========================================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Slim X-Width)
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Optimized X-Width)
          ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 36px !important; /* Positioned slightly from the upper middle of the header bar vertically */
+        top: 36px !important; /* Positioned from the upper middle of the header bar vertically */
         right: -75vw !important; 
         width: max-content !important; 
         min-width: 140px !important;
-        max-width: 52vw !important; /* Slimmed down further in the X direction so search input never touches or overlaps the close button */
+        max-width: 75vw !important; 
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.9) !important; 
         border-radius: 14px !important; 
-        padding: 0.45rem 0.35rem 0.4rem 0.35rem !important; /* Extremely tight inner padding */
+        padding: 0.45rem 0.4rem 0.4rem 0.4rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.12rem !important; 
@@ -421,12 +421,12 @@
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.78rem !important;
-        padding: 0.22rem 0.3rem !important; 
+        font-size: 0.8rem !important;
+        padding: 0.24rem 0.35rem !important; 
         border-radius: 5px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.25rem !important;
+        gap: 0.3rem !important;
         white-space: nowrap !important; 
         width: fit-content !important;
         min-width: 100% !important;
@@ -724,7 +724,7 @@
       themeBtn.textContent = "☀️";
     }
     themeBtn.onclick = () => {
-      const isDark = rootEl.getAttribute("data-theme") === "dark";
+      const isDark = rootEl.getAttribute("data-theme", "dark") === "dark";
       const nextTheme = isDark ? "light" : "dark";
       rootEl.setAttribute("data-theme", nextTheme);
       localStorage.setItem("theme", nextTheme);
