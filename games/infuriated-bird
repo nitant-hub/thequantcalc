@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Infuriated Bird | thequantcals</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --btn-bg: #0071e3;
+  --btn-color: #ffffff;
+  --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  --radius: 16px;
+}
+
+[data-theme="dark"] {
+  --bg: #0b0f19;
+  --surface: #151c2e;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: #232d42;
+  --btn-bg: #38bdf8;
+  --btn-color: #0b0f19;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
+
+.game-container {
+  background: var(--surface);
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.scores {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.score-box {
+  background: #3b82f6;
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.score-box span {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+canvas {
+  width: 100%;
+  max-width: 320px;
+  height: 240px;
+  background: #71c5cf;
+  border-radius: 12px;
+  cursor: pointer;
+  display: block;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.9; }
+
+.instructions {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+</style>
+<script>
+if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark');
+</script>
+</head>
+<body>
+
+<div class="game-container">
+  <div class="header">
+    <div class="title">Infuriated Bird</div>
+    <div class="scores">
+      <div class="score-box">Score<span id="score">0</span></div>
+      <div class="score-box" style="background:#f59e0b;">Best<span id="best">0</span></div>
+    </div>
+  </div>
+
+  <canvas id="gameCanvas" width="320" height="240"></canvas>
+
+  <div class="controls-row">
+    <button class="btn" id="actionBtn" onclick="handleAction()">Start Game</button>
+    <div class="instructions">Tap / Click or Spacebar to Fly</div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+let score = 0;
+let best = localStorage.getItem('infuriated_bird_best') || 0;
+document.getElementById('best').textContent = best;
+
+let gameState = 'START'; // START, PLAYING, GAMEOVER
+
+let bird = {
+  x: 50,
+  y: 120,
+  radius: 12,
+  gravity: 0.35,
+  lift: -6.5,
+  velocity: 0
+};
+
+let pipes = [];
+let pipeWidth = 45;
+let pipeGap = 85;
+let frameCount = 0;
+
+function resetGame() {
+  bird.y = 120;
+  bird.velocity = 0;
+  pipes = [];
+  score = 0;
+  frameCount = 0;
+  document.getElementById('score').textContent = score;
+  document.getElementById('actionBtn').textContent = 'Playing...';
+}
+
+function handleAction() {
+  if (gameState === 'START' || gameState === 'GAMEOVER') {
+    gameState = 'PLAYING';
+    resetGame();
+  } else if (gameState === 'PLAYING') {
+    bird.velocity = bird.lift;
+  }
+}
+
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space' || e.code === 'ArrowUp') {
+    handleAction();
+    e.preventDefault();
+  }
+});
+
+canvas.addEventListener('click', () => {
+  handleAction();
+});
+
+function spawnPipe() {
+  let minHeight = 40;
+  let maxHeight = canvas.height - pipeGap - 40;
+  let height = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+  
+  pipes.push({
+    x: canvas.width,
+    top: height,
+    bottom: canvas.height - height - pipeGap,
+    passed: false
+  });
+}
+
+function update() {
+  if (gameState !== 'PLAYING') return;
+
+  frameCount++;
+  if (frameCount % 90 === 0) {
+    spawnPipe();
+  }
+
+  // Bird physics
+  bird.velocity += bird.gravity;
+  bird.y += bird.velocity;
+
+  // Floor & Ceiling collision
+  if (bird.y + bird.radius >= canvas.height - 20 || bird.y - bird.radius <= 0) {
+    gameOver();
+  }
+
+  // Pipes logic
+  for (let i = pipes.length - 1; i >= 0; i--) {
+    pipes[i].x -= 2;
+
+    // Check collision
+    if (
+      bird.x + bird.radius > pipes[i].x &&
+      bird.x - bird.radius < pipes[i].x + pipeWidth &&
+      (bird.y - bird.radius < pipes[i].top || bird.y + bird.radius > canvas.height - pipes[i].bottom)
+    ) {
+      gameOver();
+    }
+
+    // Score points
+    if (!pipes[i].passed && pipes[i].x + pipeWidth < bird.x) {
+      score++;
+      pipes[i].passed = true;
+      document.getElementById('score').textContent = score;
+      if (score > best) {
+        best = score;
+        localStorage.setItem('infuriated_bird_best', best);
+        document.getElementById('best').textContent = best;
+      }
+    }
+
+    // Remove off-screen pipes
+    if (pipes[i].x + pipeWidth < 0) {
+      pipes.splice(i, 1);
+    }
+  }
+}
+
+function draw() {
+  // Background sky
+  ctx.fillStyle = '#71c5cf';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw pipes
+  ctx.fillStyle = '#73bf2e';
+  ctx.strokeStyle = '#558022';
+  ctx.lineWidth = 2;
+  pipes.forEach(p => {
+    // Top pipe
+    ctx.fillRect(p.x, 0, pipeWidth, p.top);
+    ctx.strokeRect(p.x, 0, pipeWidth, p.top);
+    // Bottom pipe
+    ctx.fillRect(p.x, canvas.height - p.bottom, pipeWidth, p.bottom);
+    ctx.strokeRect(p.x, canvas.height - p.bottom, pipeWidth, p.bottom);
+  });
+
+  // Draw ground
+  ctx.fillStyle = '#ded895';
+  ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+  ctx.fillStyle = '#558022';
+  ctx.fillRect(0, canvas.height - 20, canvas.width, 6);
+
+  // Draw Bird (Angry Red Style)
+  ctx.fillStyle = '#e74c3c';
+  ctx.beginPath();
+  ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#c0392b';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Bird Beak
+  ctx.fillStyle = '#f39c12';
+  ctx.beginPath();
+  ctx.moveTo(bird.x + 8, bird.y - 2);
+  ctx.lineTo(bird.x + 18, bird.y + 2);
+  ctx.lineTo(bird.x + 8, bird.y + 6);
+  ctx.fill();
+
+  // Bird Eye & Angry Brow
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.arc(bird.x + 3, bird.y - 3, 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#000000';
+  ctx.beginPath();
+  ctx.arc(bird.x + 4, bird.y - 3, 1.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Start / Game Over Overlays
+  if (gameState === 'START') {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Tap to Play', canvas.width / 2, canvas.height / 2);
+  } else if (gameState === 'GAMEOVER') {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
+    ctx.font = '12px sans-serif';
+    ctx.fillText('Tap to Restart', canvas.width / 2, canvas.height / 2 + 15);
+  }
+}
+
+function gameOver() {
+  gameState = 'GAMEOVER';
+  document.getElementById('actionBtn').textContent = 'Play Again';
+}
+
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
