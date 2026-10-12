@@ -128,11 +128,11 @@
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 40px !important;
+        height: 38px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid #2563eb !important;
         border-radius: 0px !important;
-        padding: 0 12px !important;
+        padding: 0 10px !important;
         box-sizing: border-box !important;
         box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
@@ -152,7 +152,7 @@
 
       /* Modern Input Text taking 100% width */
       .dyn-modern-input {
-        font-size: 16px !important;
+        font-size: 15px !important;
         font-weight: 500 !important;
         border: none !important;
         border-radius: 0px !important;
@@ -172,12 +172,12 @@
       }
       @media (min-width: 768px) {
         .dyn-modern-input {
-          font-size: 13.5px !important;
+          font-size: 13px !important;
         }
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13.5px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 13px !important; }
 
       /* AD CONTAINER */
       .dyn-adsense-300x250 {
@@ -345,28 +345,30 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (COMPACT FIT, CONTENT-AWARE WIDTH, AUTO X-FLOW) */
+      /* ========================================================
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX
+         ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 60px !important; 
+        top: 60px !important; /* Positioned safely below the header bar so top elements are fully visible */
         right: -75vw !important; 
-        width: max-content !important;
-        min-width: 160px !important;
-        max-width: 78vw !important;
+        width: fit-content !important; /* Strictly fits width to contents without unnecessary X-axis expansion */
+        min-width: 140px !important;
+        max-width: 65vw !important; /* Restricts maximum X-axis footprint on mobile screens */
         height: auto !important; 
         max-height: 80vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.8) !important; 
-        border-radius: 18px !important;
-        padding: 0.5rem 0.6rem 0.6rem 0.6rem !important; 
+        border-radius: 16px !important; /* Apple smooth rounded aesthetic */
+        padding: 0.8rem 0.5rem 0.5rem 0.5rem !important; /* Clean inner padding without redundant top wrapper space */
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.15rem !important; 
+        gap: 0.15rem !important; /* Minimal vertical gap between elements */
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
+        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; /* Semi-3D Bento Grid styling */
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
-        overflow-x: auto !important;
+        overflow-x: auto !important; /* Enables automatic horizontal scroll if any category name is exceptionally long */
         overscroll-behavior: contain !important;
         box-sizing: border-box !important;
       }
@@ -377,22 +379,18 @@
       }
       .dyn-drawer-menu.open { right: 12px !important; }
 
-      .dyn-drawer-top-action {
-        position: absolute !important;
-        top: 8px !important;
-        right: 8px !important;
-        z-index: 10 !important;
-        display: flex !important;
-        align-items: center !important;
-      }
-
+      /* Removed empty top wrapper box completely; floating clean close button on top right corner */
       .dyn-close-btn { 
+        position: absolute !important;
+        top: 6px !important;
+        right: 6px !important;
+        z-index: 10 !important;
         background: #fee2e2 !important; 
         border: 1px solid #fca5a5 !important; 
-        border-radius: 8px !important;
-        width: 24px !important;
-        height: 24px !important;
-        font-size: 0.88rem !important; 
+        border-radius: 7px !important;
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 0.82rem !important; 
         font-weight: 800 !important;
         color: #ef4444 !important; 
         cursor: pointer !important; 
@@ -404,18 +402,19 @@
         flex-shrink: 0 !important;
       }
 
+      /* Minimalist UX link items with automatic X-flow/scroll support for longer text */
       .dyn-drawer-menu a {
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.84rem !important;
+        font-size: 0.82rem !important;
         padding: 0.28rem 0.4rem !important; 
-        border-radius: 7px !important; 
+        border-radius: 6px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.4rem !important;
-        white-space: nowrap !important;
-        width: max-content !important;
+        gap: 0.35rem !important;
+        white-space: nowrap !important; /* Keeps text on one line and triggers horizontal flow if text is too wide */
+        width: fit-content !important;
         min-width: 100% !important;
         cursor: pointer !important;
         transition: background 0.15s ease, transform 0.15s ease !important;
@@ -460,9 +459,7 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <div class="dyn-drawer-top-action">
-          <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
-        </div>
+        <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <div id="dynDrawerSearchSlot"></div>
         <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
