@@ -366,32 +366,33 @@
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #ef4444 !important; line-height: 1 !important; display: none !important; }
       
-      /* When active: seamlessly merges with the popup top edge */
+      /* When active: seamlessly merges with the popup top edge with ZERO partition/gap */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
-        border-bottom: none !important;
-        border-radius: 10px 10px 0 0 !important;
+        border-bottom: 1px solid var(--bg-surface, #ffffff) !important; /* Eliminates the partition line completely */
+        border-radius: 12px 12px 0 0 !important;
         box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
         z-index: 1000001 !important;
       }
       [data-theme="dark"] .dyn-hamburger-btn.is-active {
         background: #151c2e !important;
         border-color: rgba(255, 255, 255, 0.15) !important;
+        border-bottom-color: #151c2e !important;
       }
       .dyn-hamburger-btn.is-active span.bar { display: none !important; }
       .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
       /* ========================================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Precisely Tuned)
-         ======================================================== */
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Seamless Connection)
+         ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: calc(var(--nav-header-height) * 0.85) !important; /* Starts precisely 15% from the bottom of the header (leaving 85% from top / 15% from bottom) */
+        top: calc((var(--nav-header-height) * 0.85) - 1px) !important; /* Overlaps by 1px to guarantee zero partition gap */
         right: -75vw !important; 
         width: max-content !important; 
         min-width: 150px !important;
-        max-width: 87vw !important; /* Increased X-direction width by another 5% (total ~10% wider than original) */
+        max-width: 87vw !important; 
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
