@@ -384,14 +384,14 @@
 
       /* ========================================================================
          MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Precisely Tuned)
-         ======================================================================== */
+         ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: calc(var(--nav-header-height) * 0.15) !important; /* Starts precisely at 15% down the header bar height (just below the top boundary of the header controls) */
+        top: calc(var(--nav-header-height) * 0.85) !important; /* Starts precisely 15% from the bottom of the header (leaving 85% from top / 15% from bottom) */
         right: -75vw !important; 
         width: max-content !important; 
         min-width: 150px !important;
-        max-width: 83vw !important; /* Increased X-direction width by ~5% to accommodate full layouts comfortably */
+        max-width: 87vw !important; /* Increased X-direction width by another 5% (total ~10% wider than original) */
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
