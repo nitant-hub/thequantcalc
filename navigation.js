@@ -74,7 +74,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT CORE & SLIM X-AXIS GEOMETRY
+         SEARCH COMPONENT CORE
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -125,11 +125,11 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* RECTANGULAR SLIM ROW CONTAINER (Fixed explicit width so search box is slim and never touches the close button) */
+      /* RECTANGULAR ROW CONTAINER */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
-        width: 180px !important;
+        width: 100% !important;
         height: 32px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid #2563eb !important;
@@ -151,7 +151,7 @@
         box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
       }
 
-      /* Modern Input Text slim fit */
+      /* Modern Input Text */
       .dyn-modern-input {
         font-size: 13px !important;
         font-weight: 500 !important;
@@ -383,15 +383,15 @@
       .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
       /* ========================================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Optimized X-Width)
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Precisely Tuned)
          ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 36px !important; /* Positioned from the upper middle of the header bar vertically */
+        top: calc(var(--nav-header-height) * 0.15) !important; /* Starts precisely at 15% down the header bar height (just below the top boundary of the header controls) */
         right: -75vw !important; 
         width: max-content !important; 
-        min-width: 140px !important;
-        max-width: 75vw !important; 
+        min-width: 150px !important;
+        max-width: 83vw !important; /* Increased X-direction width by ~5% to accommodate full layouts comfortably */
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
@@ -724,7 +724,7 @@
       themeBtn.textContent = "☀️";
     }
     themeBtn.onclick = () => {
-      const isDark = rootEl.getAttribute("data-theme", "dark") === "dark";
+      const isDark = rootEl.getAttribute("data-theme") === "dark";
       const nextTheme = isDark ? "light" : "dark";
       rootEl.setAttribute("data-theme", nextTheme);
       localStorage.setItem("theme", nextTheme);
