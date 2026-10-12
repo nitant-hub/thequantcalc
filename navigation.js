@@ -365,14 +365,14 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* Increased 'X' cancel symbol size by another 25% (total ~1.5x original) with robust stroke weight and clarity */
+      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect */
       .dyn-hamburger-btn span.close-x { 
         font-size: 2.35rem !important; 
         font-weight: 900 !important; 
         color: #ef4444 !important; 
         line-height: 1 !important; 
         display: none !important; 
-        text-shadow: 0 0 2px rgba(239, 68, 68, 0.6) !important; 
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), 2px 3px 6px rgba(15, 23, 42, 0.35) !important; 
       }
       
       /* When active: seamlessly merges with the popup top edge with zero partition/gap */
@@ -681,7 +681,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot);
+            homeSlot.appendChild(globalSearchNode);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
