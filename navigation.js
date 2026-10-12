@@ -365,14 +365,14 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* Increased 'X' cancel symbol size by 25% with thicker stroke weight and crisp readability */
+      /* Increased 'X' cancel symbol size by another 25% (total ~1.5x original) with robust stroke weight and clarity */
       .dyn-hamburger-btn span.close-x { 
-        font-size: 1.88rem !important; 
+        font-size: 2.35rem !important; 
         font-weight: 900 !important; 
         color: #ef4444 !important; 
         line-height: 1 !important; 
         display: none !important; 
-        text-shadow: 0 0 1.5px rgba(239, 68, 68, 0.5) !important; 
+        text-shadow: 0 0 2px rgba(239, 68, 68, 0.6) !important; 
       }
       
       /* When active: seamlessly merges with the popup top edge with zero partition/gap */
@@ -394,7 +394,7 @@
 
       /* ========================================================================
          MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Seamless Connection)
-         ======================================================================== */
+         ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: calc((var(--nav-header-height) * 0.85) - 1px) !important; 
@@ -681,7 +681,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(globalSearchNode);
+            homeSlot.appendChild(homeSlot);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
