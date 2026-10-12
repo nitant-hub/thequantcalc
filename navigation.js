@@ -365,14 +365,14 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* Bold, high-visibility 'X' cancel symbol with increased size and stroke weight */
+      /* Increased 'X' cancel symbol size by 25% with thicker stroke weight and crisp readability */
       .dyn-hamburger-btn span.close-x { 
-        font-size: 1.5rem !important; 
+        font-size: 1.88rem !important; 
         font-weight: 900 !important; 
         color: #ef4444 !important; 
         line-height: 1 !important; 
         display: none !important; 
-        text-shadow: 0 0 1px rgba(239, 68, 68, 0.4) !important; 
+        text-shadow: 0 0 1.5px rgba(239, 68, 68, 0.5) !important; 
       }
       
       /* When active: seamlessly merges with the popup top edge with zero partition/gap */
