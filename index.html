@@ -199,7 +199,7 @@ p.intro, #cintro, #cintro:empty {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Sleek Scrollbar for Desktop Track */
+/* Scrollbar for Desktop Track */
 .cat-hub-grid::-webkit-scrollbar {
   height: 6px;
 }
@@ -280,7 +280,7 @@ p.intro, #cintro, #cintro:empty {
   padding-top: 0.65rem;
   padding-right: 0.35rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-height: 250px;
+  max-height: 285px; /* Fits ~10-11 tools before smooth Y-scrolling begins */
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -606,11 +606,11 @@ input, select, textarea {
     margin-bottom: 0.45rem !important;
   }
 
-  /* SLIM, BALANCED GAP BETWEEN TOOLS ON MOBILE */
+  /* SLIM, BALANCED GAP BETWEEN TOOLS ON MOBILE WITH 7-12 TOOLS FIXED Y-FLOW */
   .cat-card-tools-y {
     margin-top: 0 !important;
     padding-top: 0.45rem !important;
-    max-height: 250px !important;
+    max-height: 285px !important; /* Locks height after ~10-11 items on mobile */
     gap: 0.22rem !important;
   }
 
@@ -720,6 +720,13 @@ input, select, textarea {
 #homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
 #sidebarSearchSlot { width: 100%; margin-bottom: 1.25rem; }
 
+#homeSearchSlot:empty,
+#sidebarSearchSlot:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 footer {
   background: var(--surface); border-top: 1px solid var(--border);
   padding: 2.5rem 1.5rem; text-align: center; font-size: .9rem; color: var(--muted); margin-top: 3.5rem;
@@ -768,7 +775,7 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Category Sections Container on Home (X-Direction Overflow Carousel with Arrows) -->
+    <!-- Category Sections Container on Home (X-Direction Carousel on Desktop / Vertical Stack on Mobile) -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
   </div>
 
