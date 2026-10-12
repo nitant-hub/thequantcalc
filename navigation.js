@@ -6,7 +6,6 @@
       vMeta.name = "viewport";
       document.head.appendChild(vMeta);
     }
-    // Updated viewport to standard accessibility-friendly settings with user-scalable pinch-zoom enabled
     vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, user-scalable=yes");
 
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
@@ -82,7 +81,7 @@
         box-sizing: border-box !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 0.4rem 0 !important;
+        margin: 0 0 0.5rem 0 !important;
         pointer-events: auto !important;
         z-index: 20 !important;
       }
@@ -105,7 +104,7 @@
       .dyn-search-wrapper.in-cat-pane {
         max-width: 100% !important;
         width: 100% !important;
-        margin-bottom: 0.4rem !important;
+        margin-bottom: 0.5rem !important;
       }
 
       /* 3. TOOL SIDEBAR */
@@ -131,11 +130,11 @@
         display: flex !important;
         align-items: center !important;
         width: 100% !important;
-        height: 32px !important;
+        height: 38px !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid #2563eb !important;
-        border-radius: 6px !important;
-        padding: 0 8px !important;
+        border-radius: 8px !important;
+        padding: 0 10px !important;
         box-sizing: border-box !important;
         box-shadow: 0 1px 3px rgba(37, 99, 235, 0.06) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
@@ -152,10 +151,12 @@
         box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
       }
 
-      /* Modern Input Text */
+      /* Modern Input Text Typography & Readability */
       .dyn-modern-input {
-        font-size: 13px !important;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 14.5px !important;
         font-weight: 500 !important;
+        letter-spacing: -0.1px !important;
         border: none !important;
         border-radius: 0px !important;
         background: transparent !important;
@@ -174,12 +175,12 @@
       }
       @media (min-width: 768px) {
         .dyn-modern-input {
-          font-size: 13px !important;
+          font-size: 13.5px !important;
         }
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
-      .dyn-modern-input::placeholder { color: var(--text-muted, #94a3b8) !important; font-size: 12px !important; }
+      .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
       /* AD CONTAINER */
       .dyn-adsense-300x250 {
@@ -203,17 +204,17 @@
         color: #94a3b8 !important;
       }
 
-      /* SEARCH DROPDOWN */
+      /* SEARCH DROPDOWN TYPOGRAPHY */
       .dyn-search-dropdown {
         position: absolute !important; 
-        top: calc(100% + 4px) !important; 
+        top: calc(100% + 6px) !important; 
         left: 0 !important; 
         width: 100% !important; 
         max-height: 260px !important;
         overflow-y: auto !important; 
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 6px !important;
+        border-radius: 8px !important;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important; 
         display: none; 
         z-index: 1000005 !important;
@@ -226,9 +227,11 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
-        padding: 0.55rem 0.8rem !important; 
-        font-size: 0.84rem !important; 
+        padding: 0.65rem 0.9rem !important; 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 0.9rem !important; 
         font-weight: 600 !important; 
+        letter-spacing: -0.2px !important;
         color: var(--text-main, #1e293b) !important; 
         text-decoration: none !important; 
         border-bottom: 1px solid var(--border-color, #f1f5f9) !important; 
@@ -366,7 +369,7 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect & 25% larger size */
+      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect */
       .dyn-hamburger-btn span.close-x { 
         font-size: 2.35rem !important; 
         font-weight: 900 !important; 
@@ -401,17 +404,17 @@
         top: calc((var(--nav-header-height) * 0.85) - 1px) !important; 
         right: -75vw !important; 
         width: max-content !important; 
-        min-width: 150px !important;
+        min-width: 165px !important;
         max-width: 87vw !important; 
         height: auto !important; 
         max-height: 75vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.9) !important; 
         border-radius: 14px !important; 
-        padding: 0.45rem 0.4rem 0.4rem 0.4rem !important; 
+        padding: 0.55rem 0.5rem 0.5rem 0.5rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.12rem !important; 
+        gap: 0.25rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
@@ -427,26 +430,28 @@
       }
       .dyn-drawer-menu.open { right: 12px !important; }
 
-      /* Minimalist UX link items with slim padding and automatic X-flow/scroll support for longer text */
+      /* Professional Apple-Style High Readability Typography for Menu Items */
       .dyn-drawer-menu a {
         text-decoration: none !important; 
-        color: var(--text-main, #1e293b) !important; 
+        color: var(--text-main, #0f172a) !important; 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         font-weight: 600 !important; 
-        font-size: 0.8rem !important;
-        padding: 0.24rem 0.35rem !important; 
-        border-radius: 5px !important; 
+        font-size: 0.92rem !important;
+        letter-spacing: -0.2px !important;
+        padding: 0.38rem 0.5rem !important; 
+        border-radius: 7px !important; 
         display: flex !important; 
         align-items: center !important; 
-        gap: 0.3rem !important;
+        gap: 0.45rem !important;
         white-space: nowrap !important; 
         width: fit-content !important;
         min-width: 100% !important;
         cursor: pointer !important;
-        transition: background 0.15s ease, transform 0.15s ease !important;
+        transition: background 0.15s ease, color 0.15s ease !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
-      .dyn-drawer-menu a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #0284c7 !important; }
-      [data-theme="dark"] .dyn-drawer-menu a:hover { background: #1e293b !important; color: #38bdf8 !important; }
+      .dyn-drawer-menu a:hover { background: rgba(37, 99, 235, 0.08) !important; color: #2563eb !important; }
+      [data-theme="dark"] .dyn-drawer-menu a:hover { background: rgba(59, 130, 246, 0.15) !important; color: #38bdf8 !important; }
 
       .dyn-backdrop-overlay { position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.55) !important; z-index: 999998 !important; display: none !important; }
       .dyn-backdrop-overlay.open { display: block !important; }
