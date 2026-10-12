@@ -364,13 +364,22 @@
         background: rgba(255, 255, 255, 0.2) !important;
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
-      .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #ef4444 !important; line-height: 1 !important; display: none !important; }
       
-      /* When active: seamlessly merges with the popup top edge with ZERO partition/gap */
+      /* Bold, high-visibility 'X' cancel symbol with increased size and stroke weight */
+      .dyn-hamburger-btn span.close-x { 
+        font-size: 1.5rem !important; 
+        font-weight: 900 !important; 
+        color: #ef4444 !important; 
+        line-height: 1 !important; 
+        display: none !important; 
+        text-shadow: 0 0 1px rgba(239, 68, 68, 0.4) !important; 
+      }
+      
+      /* When active: seamlessly merges with the popup top edge with zero partition/gap */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
-        border-bottom: 1px solid var(--bg-surface, #ffffff) !important; /* Eliminates the partition line completely */
+        border-bottom: 1px solid var(--bg-surface, #ffffff) !important;
         border-radius: 12px 12px 0 0 !important;
         box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
         z-index: 1000001 !important;
@@ -388,7 +397,7 @@
          ======================================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: calc((var(--nav-header-height) * 0.85) - 1px) !important; /* Overlaps by 1px to guarantee zero partition gap */
+        top: calc((var(--nav-header-height) * 0.85) - 1px) !important; 
         right: -75vw !important; 
         width: max-content !important; 
         min-width: 150px !important;
