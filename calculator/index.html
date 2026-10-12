@@ -5,38 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Interactive Calculator</title>
 <style>
-  :root {
-    --bg-frame: #eff6fc;
-    --border-frame: #b9d5f2;
-    --tab-border: #bcd5ef;
-    --tab-bg: #e2edf8;
-    --tab-active: #1967d2;
-    --screen-bg: #ffffff;
-    --screen-blue: #3d649d;
-    --key-top: #edf5fd;
-    --key-bottom: #dbe9f8;
-    --key-border: #adc7e6;
-    --key-shadow: #b3cae3;
-    --key-text: #0f172a;
-    --ac-top: #ea3a3a;
-    --ac-bottom: #d32222;
-    --ac-border: #ba1a1a;
-    --ac-shadow: #991313;
-    --back-top: #f97316;
-    --back-bottom: #ea580c;
-    --back-border: #c2410c;
-    --back-shadow: #9a3412;
-    --eq-top: #2563eb;
-    --eq-bottom: #1d4ed8;
-    --eq-border: #1e40af;
-    --eq-shadow: #1e3a8a;
-  }
-
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
   }
@@ -50,112 +23,113 @@
     min-height: 100vh;
   }
 
-  .calc-container {
+  .calc-frame {
     width: 100%;
-    max-width: 600px;
-    background: var(--bg-frame);
-    border: 1.5px solid var(--border-frame);
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-    overflow: hidden;
+    max-width: 620px;
+    background: #eef5fc;
+    border: 1.5px solid #bdd6ee;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    padding: 10px 10px 14px 10px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
   }
 
-  /* TOP NAVIGATION TABS */
-  .mode-nav {
+  /* TOP ROW MODE BUTTONS - PURE WHITE BOXES */
+  .mode-tabs-bar {
     display: flex;
-    background: var(--tab-bg);
-    border-bottom: 1.5px solid var(--tab-border);
+    align-items: center;
+    gap: 6px;
     overflow-x: auto;
+    padding-bottom: 2px;
     scrollbar-width: none;
-    -ms-overflow-style: none;
-    position: relative;
   }
-  .mode-nav::-webkit-scrollbar {
+  .mode-tabs-bar::-webkit-scrollbar {
     display: none;
   }
 
-  .mode-btn {
-    padding: 9px 13px;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #1e293b;
-    border: none;
-    border-right: 1px solid var(--tab-border);
-    background: transparent;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .mode-btn:hover {
-    background: rgba(255, 255, 255, 0.6);
-  }
-  .mode-btn.active {
-    background: var(--tab-active);
-    color: #ffffff;
-  }
-  .mode-btn.history-tab {
-    margin-left: auto;
-    background: #0d1726;
-    color: #ffffff;
-    border-right: none;
-    position: sticky;
-    right: 0;
-    z-index: 5;
-  }
-
-  /* DISPLAY SECTION */
-  .display-wrap {
-    margin: 12px 14px 10px 14px;
-    border: 1px solid #b2c9e4;
+  .mode-pill {
+    background: #ffffff;
+    border: 1.5px solid #a8c5e2;
     border-radius: 4px;
-    overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  .display-main {
-    height: 38px;
-    background: var(--screen-bg);
-    padding: 6px 14px;
-    text-align: right;
-    font-size: 1.45rem;
+    padding: 6px 12px;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #0f172a;
-    line-height: 1.2;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.1s ease;
+  }
+  .mode-pill.active {
+    background: #1967d2 !important;
+    border-color: #1454ac !important;
+    color: #ffffff !important;
+  }
+
+  .mode-pill.history-btn {
+    background: #0d1b2a;
+    border-color: #0d1b2a;
+    color: #ffffff;
+    margin-left: auto;
+    position: sticky;
+    right: 0;
+    z-index: 2;
+  }
+
+  /* TWO-TONE DISPLAY SCREEN */
+  .screen-container {
+    border: 1.5px solid #a8c5e2;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .screen-top {
+    height: 38px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 1.45rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
     overflow-x: auto;
     white-space: nowrap;
   }
-  .display-sub {
-    height: 44px;
-    background: var(--screen-blue);
-    padding: 6px 14px;
-    text-align: right;
+  .screen-bottom {
+    height: 48px;
+    background: #395c96;
+    color: #ffffff;
     font-size: 1.15rem;
     font-weight: 600;
-    color: #ffffff;
-    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
     overflow-x: auto;
     white-space: nowrap;
   }
 
   /* HISTORY DRAWER */
-  .history-box {
+  .history-drawer {
     display: none;
-    max-height: 160px;
+    max-height: 150px;
     overflow-y: auto;
-    background: #e4edf8;
-    border-bottom: 1px solid #b7cde6;
-    padding: 8px 14px;
+    background: #ffffff;
+    border: 1px solid #a8c5e2;
+    border-radius: 4px;
+    padding: 8px 12px;
     font-size: 0.9rem;
   }
-  .history-item {
+  .history-row {
     display: flex;
     justify-content: space-between;
-    padding: 5px 0;
+    padding: 4px 0;
     border-bottom: 1px dashed #cbd5e1;
     color: #334155;
   }
-  .history-item span:last-child {
+  .history-row span:last-child {
     font-weight: 700;
     color: #0f172a;
   }
@@ -165,247 +139,245 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-    padding: 6px 14px 16px 14px;
   }
 
-  .key {
+  .btn {
     height: 52px;
-    border-radius: 8px;
-    border: 1px solid var(--key-border);
-    background: linear-gradient(180deg, var(--key-top) 0%, var(--key-bottom) 100%);
-    box-shadow: 0 3px 0 var(--key-shadow), 0 4px 6px rgba(0, 0, 0, 0.04);
+    border-radius: 6px;
+    border: 1px solid #adcbe8;
+    background: linear-gradient(180deg, #edf5fd 0%, #d8e8f8 100%);
+    box-shadow: 0 3px 0 #b3cae3, 0 3px 6px rgba(15, 23, 42, 0.05);
     font-size: 1.35rem;
     font-weight: 700;
-    color: var(--key-text);
+    color: #0f172a;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.05s ease, box-shadow 0.05s ease;
   }
-  .key:active {
+  .btn:active {
     transform: translateY(2px);
-    box-shadow: 0 1px 0 var(--key-shadow);
+    box-shadow: 0 1px 0 #b3cae3;
   }
 
-  /* ACTION KEYS */
-  .key.ac {
-    background: linear-gradient(180deg, var(--ac-top) 0%, var(--ac-bottom) 100%);
-    border-color: var(--ac-border);
-    box-shadow: 0 3px 0 var(--ac-shadow);
+  /* AC BUTTON - RED */
+  .btn.ac {
+    background: linear-gradient(180deg, #ea3a3a 0%, #d32222 100%);
+    border-color: #ba1a1a;
+    box-shadow: 0 3px 0 #991313;
     color: #ffffff;
     font-size: 1.05rem;
   }
-  .key.ac:active {
-    box-shadow: 0 1px 0 var(--ac-shadow);
+  .btn.ac:active {
+    box-shadow: 0 1px 0 #991313;
   }
 
-  .key.back {
-    background: linear-gradient(180deg, var(--back-top) 0%, var(--back-bottom) 100%);
-    border-color: var(--back-border);
-    box-shadow: 0 3px 0 var(--back-shadow);
+  /* BACK BUTTON - ORANGE */
+  .btn.back {
+    background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+    border-color: #c2410c;
+    box-shadow: 0 3px 0 #9a3412;
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
-  .key.back:active {
-    box-shadow: 0 1px 0 var(--back-shadow);
+  .btn.back:active {
+    box-shadow: 0 1px 0 #9a3412;
   }
 
-  .key.eq {
-    background: linear-gradient(180deg, var(--eq-top) 0%, var(--eq-bottom) 100%);
-    border-color: var(--eq-border);
-    box-shadow: 0 3px 0 var(--eq-shadow);
+  /* EQUALS BUTTON - BLUE */
+  .btn.eq {
+    background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+    border-color: #1e40af;
+    box-shadow: 0 3px 0 #1e3a8a;
     color: #ffffff;
   }
-  .key.eq:active {
-    box-shadow: 0 1px 0 var(--eq-shadow);
+  .btn.eq:active {
+    box-shadow: 0 1px 0 #1e3a8a;
   }
 
-  .key.op {
-    color: #1e3a8a;
+  .btn.op {
+    color: #0f172a;
+    font-size: 1.25rem;
   }
 </style>
 </head>
 <body>
 
-<div class="calc-container" id="calcContainer">
-  <!-- MODE SELECTION HEADER -->
-  <div class="mode-nav">
-    <button class="mode-btn active" onclick="setMode(this, 'Basic')">Basic</button>
-    <button class="mode-btn" onclick="setMode(this, 'Scientific')">Scientific</button>
-    <button class="mode-btn" onclick="setMode(this, 'GATE')">GATE</button>
-    <button class="mode-btn" onclick="setMode(this, 'FX-991CW')">FX-991CW</button>
-    <button class="mode-btn" onclick="setMode(this, 'FX-5800P')">FX-5800P</button>
-    <button class="mode-btn" onclick="setMode(this, 'HP Prime')">HP Prime</button>
-    <button class="mode-btn" onclick="setMode(this, 'TI-Nspire')">TI-84</button>
-    <button class="mode-btn history-tab" onclick="toggleHistory()">HISTORY</button>
+<div class="calc-frame" id="calcFrame">
+  <!-- MODE TABS (WHITE BUTTONS) -->
+  <div class="mode-tabs-bar">
+    <button class="mode-pill active" onclick="pickMode(this, 'Basic')">Basic</button>
+    <button class="mode-pill" onclick="pickMode(this, 'Scientific')">Scientific</button>
+    <button class="mode-pill" onclick="pickMode(this, 'GATE')">GATE</button>
+    <button class="mode-pill" onclick="pickMode(this, 'FX-991CW')">FX-991CW</button>
+    <button class="mode-pill" onclick="pickMode(this, 'FX-5800P')">FX-5800P</button>
+    <button class="mode-pill" onclick="pickMode(this, 'HP Prime')">HP Prime</button>
+    <button class="mode-pill" onclick="pickMode(this, 'TI-84')">TI-84</button>
+    <button class="mode-pill history-btn" onclick="toggleHistoryDrawer()">HISTORY</button>
   </div>
 
-  <!-- DUAL DISPLAY PANEL -->
-  <div class="display-wrap">
-    <div class="display-main" id="displayMain">0</div>
-    <div class="display-sub" id="displaySub"></div>
+  <!-- DISPLAY SCREEN -->
+  <div class="screen-container">
+    <div class="screen-top" id="screenTop">0</div>
+    <div class="screen-bottom" id="screenBottom"></div>
   </div>
 
-  <!-- HISTORY LOG DRAWER -->
-  <div class="history-box" id="historyBox"></div>
+  <!-- HISTORY DRAWER -->
+  <div class="history-drawer" id="historyDrawer"></div>
 
-  <!-- MAIN KEYPAD -->
+  <!-- KEYPAD -->
   <div class="keypad-grid">
-    <button class="key ac" onclick="pressAC()">AC</button>
-    <button class="key back" onclick="pressBack()">Back</button>
-    <button class="key op" onclick="pressOp('%')">%</button>
-    <button class="key op" onclick="pressOp('/')">/</button>
+    <button class="btn ac" onclick="pressAC()">AC</button>
+    <button class="btn back" onclick="pressBack()">Back</button>
+    <button class="btn op" onclick="pressOp('%')">%</button>
+    <button class="btn op" onclick="pressOp('/')">/</button>
 
-    <button class="key" onclick="pressNum('7')">7</button>
-    <button class="key" onclick="pressNum('8')">8</button>
-    <button class="key" onclick="pressNum('9')">9</button>
-    <button class="key op" onclick="pressOp('*')">*</button>
+    <button class="btn" onclick="pressNum('7')">7</button>
+    <button class="btn" onclick="pressNum('8')">8</button>
+    <button class="btn" onclick="pressNum('9')">9</button>
+    <button class="btn op" onclick="pressOp('*')">*</button>
 
-    <button class="key" onclick="pressNum('4')">4</button>
-    <button class="key" onclick="pressNum('5')">5</button>
-    <button class="key" onclick="pressNum('6')">6</button>
-    <button class="key op" onclick="pressOp('-')">-</button>
+    <button class="btn" onclick="pressNum('4')">4</button>
+    <button class="btn" onclick="pressNum('5')">5</button>
+    <button class="btn" onclick="pressNum('6')">6</button>
+    <button class="btn op" onclick="pressOp('-')">-</button>
 
-    <button class="key" onclick="pressNum('1')">1</button>
-    <button class="key" onclick="pressNum('2')">2</button>
-    <button class="key" onclick="pressNum('3')">3</button>
-    <button class="key op" onclick="pressOp('+')">+</button>
+    <button class="btn" onclick="pressNum('1')">1</button>
+    <button class="btn" onclick="pressNum('2')">2</button>
+    <button class="btn" onclick="pressNum('3')">3</button>
+    <button class="btn op" onclick="pressOp('+')">+</button>
 
-    <button class="key" style="grid-column: span 1;" onclick="pressNum('0')">0</button>
-    <button class="key" onclick="pressDot()">.</button>
-    <button class="key eq" style="grid-column: span 2;" onclick="pressEqual()">=</button>
+    <button class="btn" onclick="pressNum('0')">0</button>
+    <button class="btn" onclick="pressDot()">.</button>
+    <button class="btn eq" style="grid-column: span 2;" onclick="pressEquals()">=</button>
   </div>
 </div>
 
 <script>
-  var currentInput = '';
-  var isCalculated = false;
-  var historyLog = [];
+  var query = '';
+  var isResult = false;
+  var logData = [];
 
-  var displayMain = document.getElementById('displayMain');
-  var displaySub = document.getElementById('displaySub');
-  var historyBox = document.getElementById('historyBox');
-  var container = document.getElementById('calcContainer');
+  var topEl = document.getElementById('screenTop');
+  var bottomEl = document.getElementById('screenBottom');
+  var drawerEl = document.getElementById('historyDrawer');
+  var frameEl = document.getElementById('calcFrame');
 
-  function notifyParent() {
-    var totalH = container.offsetHeight + 16;
-    window.parent.postMessage({ frameHeight: totalH }, '*');
+  function resizeParent() {
+    var totalHeight = frameEl.offsetHeight + 18;
+    window.parent.postMessage({ frameHeight: totalHeight }, '*');
   }
 
-  function updateScreen() {
-    displayMain.textContent = currentInput || '0';
-    notifyParent();
+  function renderScreen() {
+    topEl.textContent = query || '0';
+    resizeParent();
   }
 
-  function pressNum(digit) {
-    if (isCalculated) {
-      currentInput = '';
-      isCalculated = false;
+  function pressNum(val) {
+    if (isResult) {
+      query = '';
+      isResult = false;
     }
-    if (currentInput === '0') currentInput = '';
-    currentInput += digit;
-    updateScreen();
+    if (query === '0') query = '';
+    query += val;
+    renderScreen();
   }
 
   function pressDot() {
-    if (isCalculated) {
-      currentInput = '0';
-      isCalculated = false;
+    if (isResult) {
+      query = '0';
+      isResult = false;
     }
-    var segments = currentInput.split(/[\+\-\*\/%]/);
-    var activeSegment = segments[segments.length - 1];
-    if (!activeSegment.includes('.')) {
-      currentInput += (activeSegment === '' ? '0.' : '.');
+    var tokens = query.split(/[\+\-\*\/%]/);
+    var cur = tokens[tokens.length - 1];
+    if (!cur.includes('.')) {
+      query += (cur === '' ? '0.' : '.');
     }
-    updateScreen();
+    renderScreen();
   }
 
-  function pressOp(operator) {
-    isCalculated = false;
-    if (!currentInput) {
-      if (operator === '-') currentInput = '-';
-      updateScreen();
+  function pressOp(op) {
+    isResult = false;
+    if (!query) {
+      if (op === '-') query = '-';
+      renderScreen();
       return;
     }
-    var endChar = currentInput.slice(-1);
-    if ('+-*/%'.includes(endChar)) {
-      currentInput = currentInput.slice(0, -1) + operator;
+    var last = query.slice(-1);
+    if ('+-*/%'.includes(last)) {
+      query = query.slice(0, -1) + op;
     } else {
-      currentInput += operator;
+      query += op;
     }
-    updateScreen();
+    renderScreen();
   }
 
   function pressAC() {
-    currentInput = '';
-    displayMain.textContent = '0';
-    displaySub.textContent = '';
-    isCalculated = false;
-    notifyParent();
+    query = '';
+    topEl.textContent = '0';
+    bottomEl.textContent = '';
+    isResult = false;
+    resizeParent();
   }
 
   function pressBack() {
-    if (isCalculated) {
+    if (isResult) {
       pressAC();
       return;
     }
-    currentInput = currentInput.slice(0, -1);
-    updateScreen();
+    query = query.slice(0, -1);
+    renderScreen();
   }
 
-  function pressEqual() {
-    if (!currentInput) return;
+  function pressEquals() {
+    if (!query) return;
     try {
-      var sanitized = currentInput.replace(/%/g, '/100');
-      var evalResult = Function('"use strict";return (' + sanitized + ')')();
+      var sanitized = query.replace(/%/g, '/100');
+      var ans = Function('"use strict";return (' + sanitized + ')')();
       
-      displaySub.textContent = currentInput + ' =';
-      historyLog.unshift({ q: currentInput, a: evalResult });
+      bottomEl.textContent = query + ' =';
+      logData.unshift({ q: query, a: ans });
       renderHistory();
 
-      currentInput = String(evalResult);
-      displayMain.textContent = currentInput;
-      isCalculated = true;
+      query = String(ans);
+      topEl.textContent = query;
+      isResult = true;
     } catch (e) {
-      displayMain.textContent = 'Error';
-      isCalculated = true;
+      topEl.textContent = 'Error';
+      isResult = true;
     }
-    notifyParent();
+    resizeParent();
   }
 
-  function setMode(tabElement, modeLabel) {
-    document.querySelectorAll('.mode-btn').forEach(function(b) {
-      if (!b.classList.contains('history-tab')) b.classList.remove('active');
+  function pickMode(btn, name) {
+    document.querySelectorAll('.mode-pill').forEach(function(p) {
+      if (!p.classList.contains('history-btn')) p.classList.remove('active');
     });
-    tabElement.classList.add('active');
-    displaySub.textContent = modeLabel + ' Active';
-    notifyParent();
+    btn.classList.add('active');
+    bottomEl.textContent = name + ' Mode';
+    resizeParent();
   }
 
-  function toggleHistory() {
-    if (historyBox.style.display === 'block') {
-      historyBox.style.display = 'none';
-    } else {
-      historyBox.style.display = 'block';
-    }
-    notifyParent();
+  function toggleHistoryDrawer() {
+    drawerEl.style.display = drawerEl.style.display === 'block' ? 'none' : 'block';
+    resizeParent();
   }
 
   function renderHistory() {
     var out = '';
-    historyLog.slice(0, 10).forEach(function(rec) {
-      out += '<div class="history-item"><span>' + rec.q + '</span><span>= ' + rec.a + '</span></div>';
+    logData.slice(0, 10).forEach(function(item) {
+      out += '<div class="history-row"><span>' + item.q + '</span><span>= ' + item.a + '</span></div>';
     });
-    historyBox.innerHTML = out || '<div style="color:#64748b;text-align:center;">No operations yet</div>';
+    drawerEl.innerHTML = out || '<div style="color:#64748b;text-align:center;">No history yet</div>';
   }
 
   window.addEventListener('load', function() {
-    notifyParent();
-    setTimeout(notifyParent, 150);
-    setTimeout(notifyParent, 500);
+    resizeParent();
+    setTimeout(resizeParent, 150);
+    setTimeout(resizeParent, 500);
   });
-  window.addEventListener('resize', notifyParent);
+  window.addEventListener('resize', resizeParent);
 </script>
 </body>
 </html>
