@@ -270,17 +270,17 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.75rem;
 }
 
-/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS (DESKTOP & GENERAL) */
+/* Y-FLOW TOOLS INSIDE HOMEPAGE CATEGORY CARDS */
 .cat-card-tools-y {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.28rem; /* Clean, compact spacing without large gaps */
+  gap: 0.5rem;
   margin-top: 0.25rem;
-  padding-top: 0.65rem;
+  padding-top: 0.75rem;
   padding-right: 0.35rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-height: 250px; /* Precise height for 10 tools before scroll */
+  max-height: 310px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -309,8 +309,7 @@ p.intro, #cintro, #cintro:empty {
 .cat-card-tools-y li {
   display: flex;
   align-items: center;
-  min-height: unset;
-  padding: 0.08rem 0;
+  min-height: 26px;
   flex-shrink: 0;
 }
 
@@ -320,7 +319,7 @@ p.intro, #cintro, #cintro:empty {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
-  line-height: 1.32;
+  line-height: 1.35;
   letter-spacing: -0.01em;
   transition: color 0.15s ease;
   white-space: nowrap;
@@ -610,7 +609,7 @@ input, select, textarea {
   .cat-card-tools-y {
     margin-top: 0 !important;
     padding-top: 0.45rem !important;
-    max-height: 250px !important;
+    max-height: 290px !important;
     gap: 0.22rem !important;
   }
 
@@ -897,7 +896,7 @@ footer a:hover { color: var(--link); }
       .then(function(j){
         if(!j.tree)return done();
         var p=j.tree.filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
-        try{localStorage.setItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
+        try{localStoragesetItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
         addFromTree(p); done();
       }).catch(done);
   }
