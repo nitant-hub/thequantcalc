@@ -342,79 +342,75 @@
         font-size: 1.05rem !important; cursor: pointer !important; color: #fff !important; width: 36px !important; height: 36px !important;
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
-      .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
-      .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* ====================================================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Tabbed / Tag Popup)
-         ================================================================================    */
+      /* Toggle Hamburger Button (Acts as Hamburger/Close toggle directly in header) */
+      .dyn-hamburger-btn { 
+        background: rgba(255, 255, 255, 0.1) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; 
+        border-radius: 8px !important; 
+        cursor: pointer !important; 
+        width: 36px !important; 
+        height: 36px !important; 
+        display: flex !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        justify-content: center !important; 
+        gap: 5px !important; 
+        padding: 0 !important; 
+        transition: background 0.2s ease !important;
+      }
+      .dyn-hamburger-btn:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+      }
+      .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
+      .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #fff !important; line-height: 1 !important; display: none !important; }
+      
+      /* When active (open), switch button appearance and color to blend with popup header */
+      .dyn-hamburger-btn.is-active {
+        background: var(--bg-surface, #ffffff) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      }
+      [data-theme="dark"] .dyn-hamburger-btn.is-active {
+        background: #151c2e !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+      }
+      .dyn-hamburger-btn.is-active span.bar { display: none !important; }
+      .dyn-hamburger-btn.is-active span.close-x { display: block !important; color: #ef4444 !important; }
+
+      /* ========================================================
+         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX
+         ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 48px !important; /* Positioned right below the header bar near the right side */
+        top: 60px !important; 
         right: -75vw !important; 
         width: fit-content !important; 
-        min-width: 140px !important;
-        max-width: 72vw !important; 
+        min-width: 150px !important;
+        max-width: 75vw !important; 
         height: auto !important; 
         max-height: 80vh !important;
         background: var(--bg-surface, #ffffff) !important; 
-        /* Apple UI + Semi-3D Bento Grid styling: Smooth rounded container with top-right tab notch cutout for the close button */
         border: 1px solid rgba(255, 255, 255, 0.9) !important; 
-        border-radius: 16px 0 16px 16px !important; 
-        padding: 0.5rem 0.5rem 0.5rem 0.5rem !important; 
+        border-radius: 16px !important; 
+        padding: 0.6rem 0.5rem 0.5rem 0.5rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.15rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: -6px 16px 32px -8px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
+        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
-        overflow-x: auto !important; /* Enables automatic X-axis flow/scroll if any category name is exceptionally long */
+        overflow-x: auto !important; 
         overscroll-behavior: contain !important;
         box-sizing: border-box !important;
       }
       [data-theme="dark"] .dyn-drawer-menu {
         background: #151c2e !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
-        box-shadow: -6px 16px 32px -8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
       }
-      .dyn-drawer-menu.open { right: 8px !important; }
-
-      /* Top-right tab tabbed container holding the 'X' cancel button exactly like the reference sketch */
-      .dyn-drawer-tab-notch {
-        position: absolute !important;
-        top: -27px !important;
-        right: 0px !important;
-        width: 36px !important;
-        height: 27px !important;
-        background: var(--bg-surface, #ffffff) !important;
-        border: 1px solid rgba(255, 255, 255, 0.9) !important;
-        border-bottom: none !important;
-        border-radius: 10px 10px 0 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-shadow: -2px -4px 10px rgba(15, 23, 42, 0.1) !important;
-      }
-      [data-theme="dark"] .dyn-drawer-tab-notch {
-        background: #151c2e !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-      }
-
-      .dyn-close-btn { 
-        background: transparent !important; 
-        border: none !important; 
-        width: 100% !important;
-        height: 100% !important;
-        font-size: 0.95rem !important; 
-        font-weight: 900 !important;
-        color: #ef4444 !important; 
-        cursor: pointer !important; 
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-      }
+      .dyn-drawer-menu.open { right: 12px !important; }
 
       /* Minimalist UX link items with automatic X-flow/scroll support for longer text */
       .dyn-drawer-menu a {
@@ -427,7 +423,7 @@
         display: flex !important; 
         align-items: center !important; 
         gap: 0.35rem !important;
-        white-space: nowrap !important; /* Keeps text on one line and triggers horizontal flow if text is too wide */
+        white-space: nowrap !important; 
         width: fit-content !important;
         min-width: 100% !important;
         cursor: pointer !important;
@@ -468,14 +464,14 @@
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
-          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Open Navigation"><span></span><span></span><span></span></button>
+          <button id="dynHamburgerToggleBtn" class="dyn-hamburger-btn" aria-label="Toggle Navigation">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            <span class="close-x">&times;</span>
+          </button>
         </div>
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <div class="dyn-drawer-tab-notch">
-          <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
-        </div>
         <div id="dynDrawerSearchSlot"></div>
         <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
@@ -503,18 +499,24 @@
       drawer.classList.remove("open"); 
       overlay.classList.remove("open");
       document.body.style.overflow = "";
-      hamburgerBtn.style.display = "flex"; // Restores standard hamburger icon when popup closes
+      hamburgerBtn.classList.remove("is-active");
     };
 
     const openDrawer = () => {
       drawer.classList.add("open");
       overlay.classList.add("open");
       document.body.style.overflow = "hidden";
-      hamburgerBtn.style.display = "none"; // Eliminates the header hamburger button entirely while keeping the 'X' cancel button inside the popup tab notch as requested
+      hamburgerBtn.classList.add("is-active");
     };
 
-    hamburgerBtn.onclick = openDrawer;
-    document.getElementById("dynCloseBtn").onclick = closeDrawer;
+    hamburgerBtn.onclick = () => {
+      if (drawer.classList.contains("open")) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    };
+
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
