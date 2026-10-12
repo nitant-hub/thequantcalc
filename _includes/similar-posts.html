@@ -1,189 +1,428 @@
-<div class="cf-container">
-  <div class="cf-title">👉 Swipe to try similar tools</div>
-  <div class="cf-stage" id="cfStage">
-    <button class="cf-arrow cf-left" id="cfPrev" aria-label="Previous">&#10094;</button>
-    <div class="cf-deck" id="cfDeck">
-      <div class="cf-loading">Scanning database...</div>
+<section class="related-section" aria-labelledby="related-title">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Keep exploring</p>
+      <h2 class="section-title" id="related-title">Related Tools</h2>
+      <p class="section-description">Smart tools to help you calculate faster.</p>
     </div>
-    <button class="cf-arrow cf-right" id="cfNext" aria-label="Next">&#10095;</button>
-    <div class="cf-dots" id="cfDots"></div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous tools">‹</button>
+      <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next tools">›</button>
+    </div>
   </div>
-</div>
+
+  <div class="carousel-viewport" id="carouselViewport" tabindex="0">
+    <div class="carousel-track" id="carouselTrack">
+      <p class="tool-loading">Loading related tools…</p>
+    </div>
+  </div>
+
+  <div class="carousel-footer">
+    <span class="carousel-status" id="carouselStatus" aria-live="polite">Explore tools</span>
+    <div class="carousel-dots" id="carouselDots" aria-label="Choose carousel position"></div>
+  </div>
+</section>
 
 <style>
-  .cf-container { margin-top: 40px; padding: 10px 0; user-select: none; }
-  .cf-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; }
+.related-section {
+  --card: rgba(255,255,255,.88);
+  --text: #172033;
+  --muted: #718096;
+  --accent: #2878ff;
+  --border: rgba(30,50,80,.10);
+  --shadow: 0 12px 32px rgba(30,50,80,.10);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  max-width: 1120px;
+  margin: 32px auto;
+  padding: 24px 18px 30px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: linear-gradient(145deg, #ffffff, #f1f5fb);
+  box-shadow: var(--shadow);
+}
+.related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
-  .cf-stage {
-    position: relative; height: 500px; background: #000; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    touch-action: pan-y; cursor: grab;
+.related-section .section-header {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 14px; margin-bottom: 22px;
+}
+.related-section .eyebrow {
+  margin: 0 0 7px; color: var(--accent); font-size: 11px; font-weight: 800;
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+.related-section .section-title {
+  margin: 0; font-size: clamp(23px, 4vw, 32px); line-height: 1.15; letter-spacing: -.8px;
+}
+.related-section .section-description {
+  margin: 9px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6;
+}
+.related-section .carousel-controls { display: flex; gap: 8px; flex-shrink: 0; }
+.related-section .carousel-btn {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  border: 1px solid var(--border); border-radius: 50%; background: white;
+  color: var(--text); font-size: 21px; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(30,50,80,.06);
+  transition: transform .2s ease, background .2s ease;
+}
+.related-section .carousel-btn:hover { transform: translateY(-2px); background: #edf4ff; }
+.related-section .carousel-btn:focus-visible,
+.related-section .tool-card:focus-visible,
+.related-section .carousel-viewport:focus-visible {
+  outline: 3px solid rgba(40,120,255,.5); outline-offset: 3px;
+}
+
+.related-section .carousel-viewport {
+  overflow: hidden; padding: 8px 2px 22px; touch-action: pan-y;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  overscroll-behavior-x: contain;
+}
+.related-section .carousel-viewport:active { cursor: grabbing; }
+.related-section .carousel-track { display: flex; gap: 16px; will-change: transform; }
+.related-section .tool-loading {
+  margin: 0; padding: 70px 0; width: 100%; text-align: center;
+  color: var(--muted); font-size: 14px; font-style: italic;
+}
+
+.related-section .tool-card {
+  position: relative; display: flex; flex: 0 0 calc((100% - 32px) / 3);
+  flex-direction: column; min-width: 0; min-height: 226px; padding: 21px;
+  overflow: hidden; color: inherit; text-decoration: none;
+  border: 1px solid rgba(255,255,255,.9); border-radius: 23px;
+  background: var(--card); box-shadow: 0 8px 24px rgba(30,50,80,.08);
+  transform: perspective(900px) rotateX(0deg);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  -webkit-tap-highlight-color: transparent; -webkit-user-drag: none;
+}
+.related-section .tool-card::before {
+  content: ""; position: absolute; top: -45px; right: -35px;
+  width: 125px; height: 125px; border-radius: 50%;
+  background: var(--glow, #e7efff); opacity: .85; filter: blur(1px);
+}
+.related-section .tool-card:hover {
+  z-index: 1; transform: perspective(900px) translateY(-5px) rotateX(2deg);
+  border-color: rgba(40,120,255,.22); box-shadow: 0 18px 35px rgba(30,50,80,.14);
+}
+.related-section .tool-icon {
+  position: relative; display: grid; place-items: center; width: 54px; height: 54px;
+  margin-bottom: 22px; border: 1px solid rgba(255,255,255,.8); border-radius: 17px;
+  background: linear-gradient(145deg, #ffffff, var(--glow, #e7efff));
+  box-shadow: 0 6px 15px rgba(30,50,80,.09), inset 0 1px 0 white; font-size: 27px;
+}
+.related-section .tool-category {
+  position: relative; margin: 0 0 8px; color: var(--accent); font-size: 10px;
+  font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+}
+.related-section .tool-title {
+  position: relative; margin: 0 0 9px; font-size: 18px; font-weight: 750;
+  line-height: 1.35; letter-spacing: -.25px;
+}
+.related-section .tool-description {
+  position: relative; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55;
+}
+.related-section .tool-open {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-top: auto; padding-top: 20px; color: var(--accent);
+  font-size: 13px; font-weight: 750;
+}
+.related-section .tool-open span:last-child { font-size: 20px; transition: transform .2s ease; }
+.related-section .tool-card:hover .tool-open span:last-child { transform: translateX(4px); }
+
+.related-section .carousel-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.related-section .carousel-status { color: var(--muted); font-size: 12px; }
+.related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 7px; flex-wrap: wrap; }
+.related-section .carousel-dot {
+  width: 7px; height: 7px; padding: 0; border: 0; border-radius: 10px;
+  background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
+}
+.related-section .carousel-dot[aria-current="true"] { width: 23px; background: var(--accent); }
+
+@media (max-width: 760px) {
+  .related-section { margin: 20px 10px; padding: 21px 14px 22px; border-radius: 23px; }
+  .related-section .section-header { align-items: center; margin-bottom: 15px; }
+  .related-section .section-title { letter-spacing: -.5px; }
+  .related-section .section-description { max-width: 290px; font-size: 13px; }
+  .related-section .carousel-controls { gap: 6px; }
+  .related-section .carousel-btn { width: 38px; height: 38px; }
+  .related-section .carousel-track { gap: 12px; }
+  .related-section .tool-card {
+    flex-basis: calc((100% - 12px) / 2); min-height: 225px; padding: 17px; border-radius: 20px;
   }
-  .cf-stage:active { cursor: grabbing; }
-  .cf-deck { position: relative; width: min(300px, 62vw); height: 420px; }
-  .cf-loading { color: #aaa; font-style: italic; text-align: center; padding-top: 190px; }
-
-  .cf-card {
-    position: absolute; inset: 0; box-sizing: border-box;
-    display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-    padding: 22px 16px; text-align: center; text-decoration: none; color: #fff;
-    border-radius: 0; overflow: hidden; -webkit-user-drag: none;
-    transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s, filter .45s;
+  .related-section .tool-icon {
+    width: 48px; height: 48px; margin-bottom: 17px; border-radius: 15px; font-size: 24px;
   }
-  .cf-icon { position: absolute; top: 20%; left: 0; right: 0; font-size: 80px; }
-  .cf-name { font-size: 24px; font-weight: 800; line-height: 1.15; margin-bottom: 18px; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
-  .cf-btn { background: #ffd400; color: #111; font-weight: 700; font-size: 14px; padding: 10px 22px; border-radius: 0; }
-  .cf-card:not(.cf-active) .cf-btn { visibility: hidden; }
-
-  .cf-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%); z-index: 200;
-    background: none; border: 0; color: #fff; font-size: 34px; cursor: pointer; padding: 14px;
+  .related-section .tool-title { font-size: 16px; }
+}
+@media (max-width: 430px) {
+  .related-section .section-header { gap: 8px; }
+  .related-section .section-description { max-width: 220px; }
+  .related-section .carousel-controls { gap: 5px; }
+  .related-section .carousel-btn { width: 34px; height: 34px; font-size: 19px; }
+  .related-section .carousel-track { gap: 10px; }
+  .related-section .tool-card { flex-basis: 84%; min-height: 215px; padding: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .related-section *, .related-section *::before, .related-section *::after {
+    transition-duration: .01ms !important; animation-duration: .01ms !important;
   }
-  .cf-left { left: 6px; }
-  .cf-right { right: 6px; }
-
-  .cf-dots { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; }
-  .cf-dots i { width: 18px; height: 3px; background: #555; }
-  .cf-dots i.cf-on { background: #ffd400; }
-
-  @media (max-width: 768px) {
-    .cf-stage { height: 460px; }
-    .cf-deck { height: 380px; }
-    .cf-arrow { font-size: 26px; padding: 8px; }
-  }
-  @media (prefers-reduced-motion: reduce) { .cf-card { transition: none; } }
+}
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    const deck = document.getElementById('cfDeck');
-    const currentUrl = window.location.pathname;
+(async () => {
+  const viewport = document.getElementById("carouselViewport");
+  const track = document.getElementById("carouselTrack");
+  const prev = document.getElementById("previousBtn");
+  const next = document.getElementById("nextBtn");
+  const dots = document.getElementById("carouselDots");
+  const status = document.getElementById("carouselStatus");
 
-    // Auto-detect category
-    let categoryKeyword = "";
-    let icon = "🛠️";
-    if (currentUrl.includes("finance")) { categoryKeyword = "finance"; icon = "💰"; }
-    else if (currentUrl.includes("health")) { categoryKeyword = "health"; icon = "❤️"; }
-    else if (currentUrl.includes("math")) { categoryKeyword = "math"; icon = "🧮"; }
+  /* ---------- 1. Find related tools from the sitemap ---------- */
 
-    // Card color pairs (gradient start, end)
-    const palette = [
-      ["#1b6ca8", "#0b2a4a"], ["#c2410c", "#4a1d0b"], ["#15803d", "#0a3a1f"],
-      ["#7e22ce", "#2e0f4d"], ["#0f766e", "#073b37"], ["#b91c1c", "#470c0c"],
-      ["#a16207", "#432a05"], ["#1d4ed8", "#0b1f5e"]
-    ];
+  const currentUrl = window.location.pathname;
+  const glows = ["#e2edff", "#dcfce7", "#f3e8ff", "#ffedd5", "#ffe4e6", "#cffafe", "#fef9c3", "#e0e7ff"];
+  const acronyms = ["EMI", "ROI", "CAGR", "SIP", "PPF", "GST", "NPV", "IRR", "FD", "RD", "BMI", "BMR", "TDS", "EPF"];
 
+  const categories = {
+    finance: { icon: "💰", label: "Finance", text: "Plan your money with a quick, accurate calculation." },
+    health:  { icon: "❤️", label: "Health", text: "Check your numbers quickly with this free health tool." },
+    math:    { icon: "🧮", label: "Mathematics", text: "Solve it instantly with this free math tool." },
+    other:   { icon: "🛠️", label: "Tools", text: "Open this free tool and get your result instantly." }
+  };
+
+  // Used only if the sitemap can't be loaded or has no matches
+  const fallback = [
+    { path: "/calculator/compound-interest-calculator/", title: "Compound Interest Calculator", cat: "finance", text: "Estimate investment growth and compound returns over time." },
+    { path: "/calculator/sip-calculator/", title: "SIP Calculator", cat: "finance", text: "Estimate the future value of your monthly investments." },
+    { path: "/calculator/age-calculator/", title: "Age Calculator", cat: "other", label: "Date & Time", icon: "🎂", text: "Calculate your exact age in years, months and days." },
+    { path: "/calculator/percentage-calculator/", title: "Percentage Calculator", cat: "math", text: "Solve percentages, percentage changes and comparisons." },
+    { path: "/calculator/emi-calculator/", title: "EMI Calculator", cat: "finance", icon: "🏠", text: "Estimate monthly loan payments, interest and total cost." },
+    { path: "/calculator/temperature-converter/", title: "Temperature Converter", cat: "other", label: "Physics", icon: "🌡️", text: "Convert Celsius, Fahrenheit and Kelvin with ease." }
+  ];
+
+  function categoryOf(path) {
+    const p = path.toLowerCase();
+    if (p.includes("finance")) return "finance";
+    if (p.includes("health")) return "health";
+    if (p.includes("math")) return "math";
+    return "other";
+  }
+
+  function titleFrom(path) {
+    const slug = path.split("/").filter(Boolean).pop() || "";
+    const clean = slug.replace(/\.html?$/i, "").replace(/^(finance|health|math)-/i, "").replace(/-/g, " ");
+    return clean.split(" ").filter(Boolean).map(w => {
+      const up = w.toUpperCase();
+      return acronyms.includes(up) ? up : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }).join(" ");
+  }
+
+  async function loadRelated() {
     try {
-      // Check local device memory first
       let xmlText = null;
-      try { xmlText = sessionStorage.getItem('cachedSitemap'); } catch (e) {}
-
+      try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
       if (!xmlText) {
-        const response = await fetch('/sitemap-pages.xml');
+        const response = await fetch("/sitemap-pages.xml");
         xmlText = await response.text();
-        try { sessionStorage.setItem('cachedSitemap', xmlText); } catch (e) {}
+        try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
       }
 
       const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
-      const urls = xmlDoc.getElementsByTagName("loc");
-      const acronyms = ["EMI", "ROI", "CAGR", "SIP", "PPF", "GST", "NPV", "IRR", "FD", "RD", "BMI", "BMR", "TDS", "EPF"];
+      const locs = xmlDoc.getElementsByTagName("loc");
+      const pageCat = categoryOf(currentUrl);
+      const found = [];
 
-      let matchedLinks = [];
-      for (let i = 0; i < urls.length; i++) {
-        const pagePath = new URL(urls[i].textContent).pathname;
-        if (pagePath !== currentUrl && pagePath.includes(categoryKeyword)) {
-          const rawName = pagePath.replace("/p/", "").replace(".html", "");
-          const cleanName = rawName.replace(/finance-|health-|math-/i, "").replace(/-/g, " ");
-          const title = cleanName.split(' ').map(function (word) {
-            const up = word.toUpperCase();
-            return acronyms.includes(up) ? up : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-          }).join(' ');
-          matchedLinks.push({ path: pagePath, title: title });
-        }
+      for (let i = 0; i < locs.length; i++) {
+        const path = new URL(locs[i].textContent).pathname;
+        if (path === currentUrl) continue;
+        const cat = categoryOf(path);
+        // Same category as this page; if the page has no category, keep only tool-like pages
+        const match = pageCat !== "other" ? cat === pageCat : /calculator|converter|tools/i.test(path);
+        if (match) found.push({ path: path, title: titleFrom(path), cat: cat });
       }
 
-      // Shuffle and keep 15 cards
-      matchedLinks = matchedLinks.sort(function () { return 0.5 - Math.random(); }).slice(0, 15);
-
-      if (!matchedLinks.length) {
-        deck.innerHTML = '<div class="cf-loading">No similar tools found.</div>';
-        return;
-      }
-      buildCoverflow(matchedLinks, icon, palette);
-    } catch (error) {
-      deck.innerHTML = '<div class="cf-loading">More utilities available on homepage.</div>';
+      const picked = found.sort(() => 0.5 - Math.random()).slice(0, 15);
+      return picked.length ? picked : fallback;
+    } catch (e) {
+      return fallback;
     }
+  }
+
+  /* ---------- 2. Build the cards ---------- */
+
+  const tools = await loadRelated();
+  track.innerHTML = "";
+
+  tools.forEach((tool, i) => {
+    const c = categories[tool.cat] || categories.other;
+    const a = document.createElement("a");
+    a.className = "tool-card";
+    a.href = tool.path;
+    a.draggable = false;
+    a.style.setProperty("--glow", glows[i % glows.length]);
+
+    const icon = document.createElement("div");
+    icon.className = "tool-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = tool.icon || c.icon;
+
+    const cat = document.createElement("p");
+    cat.className = "tool-category";
+    cat.textContent = tool.label || c.label;
+
+    const title = document.createElement("h3");
+    title.className = "tool-title";
+    title.textContent = tool.title;
+
+    const desc = document.createElement("p");
+    desc.className = "tool-description";
+    desc.textContent = tool.text || c.text;
+
+    const open = document.createElement("div");
+    open.className = "tool-open";
+    open.innerHTML = "<span>Open tool</span><span>→</span>";
+
+    a.append(icon, cat, title, desc, open);
+    track.appendChild(a);
   });
 
-  function buildCoverflow(links, icon, palette) {
-    const deck = document.getElementById('cfDeck');
-    const stage = document.getElementById('cfStage');
-    const dotsBox = document.getElementById('cfDots');
-    const n = links.length;
-    let active = 0, dragging = false, moved = false, startX = 0;
+  /* ---------- 3. Continuous carousel ---------- */
 
-    deck.innerHTML = '';
-    links.forEach(function (link, i) {
-      const c = palette[i % palette.length];
-      const a = document.createElement('a');
-      a.className = 'cf-card';
-      a.href = link.path;
-      a.draggable = false;
-      a.style.background = 'linear-gradient(160deg,' + c[0] + ',' + c[1] + ')';
-      a.innerHTML = '<div class="cf-icon">' + icon + '</div>' +
-                    '<div class="cf-name">' + link.title + '</div>' +
-                    '<span class="cf-btn">▷ OPEN TOOL</span>';
-      // Side card: bring to center. Center card: follow the link normally.
-      a.addEventListener('click', function (e) {
-        if (moved) { e.preventDefault(); return; }
-        if (i !== active) { e.preventDefault(); go(i); }
-      });
-      deck.appendChild(a);
-      dotsBox.appendChild(document.createElement('i'));
+  const cards = Array.from(track.querySelectorAll(".tool-card"));
+  let offset = 0, vel = 0, target = null, raf = null, last = 0;
+  let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0, wheelTimer = null;
+
+  function visibleCards() {
+    if (window.innerWidth <= 430) return 1;
+    if (window.innerWidth <= 760) return 2;
+    return 3;
+  }
+  function maxIndex() { return Math.max(0, cards.length - visibleCards()); }
+  function step() {
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return cards[0].offsetWidth + gap;
+  }
+  function maxOffset() { return maxIndex() * step(); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function current() { return clamp(Math.round(offset / step()), 0, maxIndex()); }
+
+  function buildDots() {
+    dots.innerHTML = "";
+    for (let i = 0; i <= maxIndex(); i++) {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "carousel-dot";
+      dot.setAttribute("aria-label", "Show tool group " + (i + 1));
+      dot.addEventListener("click", () => { target = i * step(); vel = 0; start(); });
+      dots.appendChild(dot);
+    }
+  }
+
+  function apply() {
+    track.style.transform = "translate3d(" + (-offset) + "px,0,0)";
+    const i = current();
+    Array.from(dots.children).forEach((dot, k) => {
+      dot.setAttribute("aria-current", String(k === i));
     });
+    prev.disabled = i === 0;
+    next.disabled = i === maxIndex();
+    prev.style.opacity = prev.disabled ? ".45" : "1";
+    next.style.opacity = next.disabled ? ".45" : "1";
+    status.textContent = "Group " + (i + 1) + " of " + (maxIndex() + 1) + " · " + cards.length + " tools";
+  }
 
-    const cards = deck.children, dots = dotsBox.children;
-
-    function render() {
-      const w = deck.offsetWidth;
-      for (let i = 0; i < n; i++) {
-        const off = ((i - active + n + n / 2) % n) - n / 2;
-        const abs = Math.abs(off), c = cards[i];
-        const scale = off === 0 ? 1 : Math.max(0.55, 1 - abs * 0.16);
-        const x = off * w * 0.62 + (off === 0 ? 0 : (off > 0 ? w * 0.1 : -w * 0.1));
-        c.style.transform = 'translateX(' + x + 'px) scale(' + scale + ')';
-        c.style.zIndex = 100 - Math.round(abs * 10);
-        c.style.opacity = abs > 3 ? 0 : 1;
-        c.style.pointerEvents = abs > 3 ? 'none' : 'auto';
-        c.style.filter = off === 0 ? 'none' : 'brightness(' + Math.max(0.35, 0.65 - abs * 0.12) + ')';
-        c.classList.toggle('cf-active', off === 0);
-        dots[i].className = off === 0 ? 'cf-on' : '';
+  // Momentum glide, then smooth settle on the nearest card
+  function tick(t) {
+    const dt = Math.min(40, t - last); last = t;
+    if (!dragging) {
+      if (target === null) {
+        offset += vel * dt;
+        vel *= Math.pow(0.995, dt);
+        const max = maxOffset();
+        if (offset < 0 || offset > max) {
+          target = offset < 0 ? 0 : max; vel = 0;
+        } else if (Math.abs(vel) < 0.03) {
+          target = clamp(Math.round(offset / step()), 0, maxIndex()) * step(); vel = 0;
+        }
+      }
+      if (target !== null) {
+        const d = target - offset;
+        offset += d * Math.min(1, dt * 0.02);
+        if (Math.abs(d) < 0.5) { offset = target; target = null; apply(); raf = null; return; }
       }
     }
-    function go(i) { active = (i + n) % n; render(); }
-
-    document.getElementById('cfPrev').addEventListener('click', function () { go(active - 1); });
-    document.getElementById('cfNext').addEventListener('click', function () { go(active + 1); });
-
-    // Swipe / drag (touch + mouse)
-    stage.addEventListener('pointerdown', function (e) {
-      if (e.target.closest('.cf-arrow')) return;
-      dragging = true; moved = false; startX = e.clientX;
-    });
-    stage.addEventListener('pointermove', function (e) {
-      if (dragging && Math.abs(e.clientX - startX) > 8) moved = true;
-    });
-    stage.addEventListener('pointerup', function (e) {
-      if (!dragging) return;
-      dragging = false;
-      const dx = e.clientX - startX;
-      if (dx > 40) go(active - 1);
-      else if (dx < -40) go(active + 1);
-      setTimeout(function () { moved = false; }, 0);
-    });
-    stage.addEventListener('pointercancel', function () { dragging = false; });
-    window.addEventListener('resize', render);
-
-    render();
+    apply();
+    raf = requestAnimationFrame(tick);
   }
+  function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+
+  prev.addEventListener("click", () => { target = (current() - 1) * step(); vel = 0; start(); });
+  next.addEventListener("click", () => { target = (current() + 1) * step(); vel = 0; start(); });
+
+  // Drag (touch + mouse): cards follow the finger
+  viewport.addEventListener("pointerdown", e => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragging = true; moved = false;
+    startX = lastX = e.clientX; lastT = e.timeStamp;
+    vel = 0; target = null;
+  });
+  window.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    if (Math.abs(e.clientX - startX) > 6) moved = true;
+    const dx = e.clientX - lastX;
+    const dtm = Math.max(1, e.timeStamp - lastT);
+    const max = maxOffset();
+    const outside = (offset - dx < 0) || (offset - dx > max);
+    offset -= outside ? dx * 0.35 : dx;
+    vel = vel * 0.6 + (-dx / dtm) * 0.4;
+    lastX = e.clientX; lastT = e.timeStamp;
+    apply();
+  });
+  function release(e) {
+    if (!dragging) return;
+    dragging = false;
+    if (e.timeStamp - lastT > 80) vel = 0;
+    vel = clamp(vel, -4, 4);
+    start();
+    setTimeout(() => { moved = false; }, 0);
+  }
+  window.addEventListener("pointerup", release);
+  window.addEventListener("pointercancel", release);
+
+  // A drag never opens a link by accident; a plain tap always does
+  track.addEventListener("click", e => {
+    if (moved) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  track.addEventListener("dragstart", e => e.preventDefault());
+
+  // Trackpad / shift+wheel / horizontal mouse wheel
+  viewport.addEventListener("wheel", e => {
+    const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (!dx) return;
+    e.preventDefault();
+    target = null; vel = 0;
+    offset = clamp(offset + dx, 0, maxOffset());
+    apply();
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(start, 90);
+  }, { passive: false });
+
+  // Arrow keys (viewport is focusable)
+  viewport.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft") { target = (current() - 1) * step(); vel = 0; start(); }
+    if (e.key === "ArrowRight") { target = (current() + 1) * step(); vel = 0; start(); }
+  });
+
+  window.addEventListener("resize", () => {
+    offset = clamp(offset, 0, maxOffset());
+    buildDots();
+    apply();
+  });
+
+  buildDots();
+  apply();
+})();
 </script>
