@@ -740,13 +740,23 @@ input, select, textarea {
 #calc { width: 100% !important; max-width: 100% !important; height: 420px; border: none; display: block; transition: height .15s ease; }
 
 #homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
-#sidebarSearchSlot { width: 100%; margin-bottom: 1.25rem; }
-
-#homeSearchSlot:empty,
-#sidebarSearchSlot:empty {
+#homeSearchSlot:empty {
   display: none !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* ELIMINATE EMPTY SIDEBAR SPACES & CONTAINERS */
+#sidebarSearchSlot,
+aside > div:empty,
+aside .box:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
 }
 
 footer {
@@ -814,9 +824,6 @@ footer a:hover { color: var(--link); }
 </main>
 
 <aside>
-  <!-- SEARCH BAR IN SIDEBAR (NON-HOMEPAGE PAGES) -->
-  <div id="sidebarSearchSlot"></div>
-
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   <div class="box"><h3>Popular Tools</h3><div>
     <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
@@ -1077,7 +1084,7 @@ footer a:hover { color: var(--link); }
       hs += '  </div>';
       hs += '</div>';
 
-      /* PROGRESSIVE ALLOCATION: Fill Row 1 First (up to 4 cards), Then activate Rows 2 and 3 */
+      /* PROGRESSIVE ALLOCATION: Fill Row 1 First (up to 4 cards), Then branch into Rows 2 and 3 */
       var cardsPerRow = 4;
       var rowCount = Math.min(3, Math.ceil(cs.length / cardsPerRow)) || 1;
       var rows = [];
