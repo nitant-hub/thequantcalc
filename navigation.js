@@ -350,17 +350,17 @@
          ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 60px !important; /* Positioned safely below the header bar so top elements are fully visible */
+        top: 60px !important; /* Positioned securely below the header bar so top elements remain fully visible */
         right: -75vw !important; 
         width: fit-content !important; /* Strictly fits width to contents without unnecessary X-axis expansion */
-        min-width: 140px !important;
-        max-width: 65vw !important; /* Restricts maximum X-axis footprint on mobile screens */
+        min-width: 150px !important;
+        max-width: 75vw !important; /* Restricts maximum X-axis footprint on mobile screens */
         height: auto !important; 
         max-height: 80vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.8) !important; 
         border-radius: 16px !important; /* Apple smooth rounded aesthetic */
-        padding: 0.8rem 0.5rem 0.5rem 0.5rem !important; /* Clean inner padding without redundant top wrapper space */
+        padding: 0.6rem 0.5rem 0.5rem 0.5rem !important; /* Clean inner padding */
         display: flex !important; 
         flex-direction: column !important; 
         gap: 0.15rem !important; /* Minimal vertical gap between elements */
@@ -378,29 +378,6 @@
         box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
       }
       .dyn-drawer-menu.open { right: 12px !important; }
-
-      /* Removed empty top wrapper box completely; floating clean close button on top right corner */
-      .dyn-close-btn { 
-        position: absolute !important;
-        top: 6px !important;
-        right: 6px !important;
-        z-index: 10 !important;
-        background: #fee2e2 !important; 
-        border: 1px solid #fca5a5 !important; 
-        border-radius: 7px !important;
-        width: 22px !important;
-        height: 22px !important;
-        font-size: 0.82rem !important; 
-        font-weight: 800 !important;
-        color: #ef4444 !important; 
-        cursor: pointer !important; 
-        line-height: 1 !important; 
-        padding: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-shrink: 0 !important;
-      }
 
       /* Minimalist UX link items with automatic X-flow/scroll support for longer text */
       .dyn-drawer-menu a {
@@ -459,7 +436,6 @@
       </header>
       <div class="dyn-backdrop-overlay" id="dynOverlay"></div>
       <aside class="dyn-drawer-menu" id="dynDrawer">
-        <button class="dyn-close-btn" id="dynCloseBtn" aria-label="Close menu">&times;</button>
         <div id="dynDrawerSearchSlot"></div>
         <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
@@ -481,19 +457,41 @@
 
     const drawer = document.getElementById("dynDrawer");
     const overlay = document.getElementById("dynOverlay");
+    const hamburgerBtn = document.getElementById("dynHamburgerToggleBtn");
+
+    // Transforms the header hamburger button into a clean "❌" cancel symbol when the menu is open, hiding the menu when clicked again
+    const updateHamburgerIcon = (isOpen) => {
+      if (isOpen) {
+        hamburgerBtn.innerHTML = `<span style="font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px;">&times;</span>`;
+        hamburgerBtn.setAttribute("aria-label", "Close Navigation");
+      } else {
+        hamburgerBtn.innerHTML = `<span></span><span></span><span></span>`;
+        hamburgerBtn.setAttribute("aria-label", "Open Navigation");
+      }
+    };
+
     const closeDrawer = () => { 
       drawer.classList.remove("open"); 
       overlay.classList.remove("open");
       document.body.style.overflow = "";
+      updateHamburgerIcon(false);
     };
+
     const openDrawer = () => {
       drawer.classList.add("open");
       overlay.classList.add("open");
       document.body.style.overflow = "hidden";
+      updateHamburgerIcon(true);
     };
 
-    document.getElementById("dynHamburgerToggleBtn").onclick = openDrawer;
-    document.getElementById("dynCloseBtn").onclick = closeDrawer;
+    hamburgerBtn.onclick = () => {
+      if (drawer.classList.contains("open")) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    };
+
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
