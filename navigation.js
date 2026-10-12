@@ -74,7 +74,7 @@
       }
 
       /* ========================================================
-         SEARCH COMPONENT CORE & RECTANGULAR GEOMETRY
+         SEARCH COMPONENT CORE & FULL WIDTH RECTANGLE
          ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
@@ -123,7 +123,7 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* RECTANGULAR ROW CONTAINER */
+      /* RECTANGULAR FULL-WIDTH ROW CONTAINER */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
@@ -132,8 +132,7 @@
         background: var(--bg-surface, #ffffff) !important;
         border: 1.5px solid #2563eb !important;
         border-radius: 0px !important;
-        padding: 0 4px 0 12px !important;
-        gap: 8px !important;
+        padding: 0 12px !important;
         box-sizing: border-box !important;
         box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08) !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
@@ -151,7 +150,7 @@
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22) !important;
       }
 
-      /* Modern Input Text */
+      /* Modern Input Text taking 100% width */
       .dyn-modern-input {
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -162,8 +161,7 @@
         color: var(--text-main, #0f172a) !important;
         touch-action: manipulation !important;
         -webkit-text-size-adjust: 100% !important;
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
+        width: 100% !important;
         height: 100% !important;
         cursor: text !important;
         pointer-events: auto !important;
@@ -176,28 +174,6 @@
         .dyn-modern-input {
           font-size: 13.5px !important;
         }
-      }
-
-      /* SLIM RECTANGULAR SEARCH BUTTON */
-      .dyn-modern-btn {
-        height: 32px !important;
-        padding: 0 9px !important;
-        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 0px !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        cursor: pointer !important;
-        flex-shrink: 0 !important;
-        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2) !important;
-        transition: transform 0.15s, box-shadow 0.15s !important;
-        position: relative !important;
-        z-index: 30 !important;
-      }
-      .dyn-modern-btn:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.38) !important;
       }
 
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
@@ -369,33 +345,34 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER - DYNAMIC Y HEIGHT */
+      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (TIGHT Y-SPACING) */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: 12px !important; 
         right: -75vw !important; 
-        width: 65vw !important; 
+        width: 68vw !important; 
         min-width: 220px !important;
         max-width: 260px !important;
         height: auto !important; 
-        max-height: 88vh !important;
+        max-height: 85vh !important;
         background: var(--bg-surface, #ffffff) !important; 
-        border: 1px solid var(--border-color, #e2e8f0) !important; 
-        border-radius: 16px !important;
-        padding: 1rem 0.9rem 1.25rem !important; 
+        border: 1px solid rgba(255, 255, 255, 0.8) !important; 
+        border-radius: 20px !important;
+        padding: 0.75rem 0.75rem 0.85rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.6rem !important; 
+        gap: 0.3rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-shadow: -10px 10px 30px rgba(0,0,0,0.2) !important; 
+        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
         overflow-y: auto !important; 
         overscroll-behavior: contain !important;
         box-sizing: border-box !important;
       }
       [data-theme="dark"] .dyn-drawer-menu {
-        background: #0f172a !important;
-        border-left-color: #334155 !important;
+        background: #151c2e !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
       }
       .dyn-drawer-menu.open { right: 12px !important; }
 
@@ -404,16 +381,16 @@
         justify-content: flex-end !important;
         align-items: center !important;
         width: 100% !important;
-        margin-bottom: 0.15rem !important;
+        margin-bottom: 0px !important;
       }
 
       .dyn-close-btn { 
         background: #fee2e2 !important; 
         border: 1px solid #fca5a5 !important; 
-        border-radius: 8px !important;
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 1.05rem !important; 
+        border-radius: 10px !important;
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.95rem !important; 
         font-weight: 800 !important;
         color: #ef4444 !important; 
         cursor: pointer !important; 
@@ -426,9 +403,17 @@
       }
 
       .dyn-drawer-menu a {
-        text-decoration: none !important; color: var(--text-main, #1e293b) !important; font-weight: 600 !important; font-size: 0.92rem !important;
-        padding: 0.5rem 0.6rem !important; border-radius: 6px !important; display: flex !important; align-items: center !important; gap: 0.55rem !important;
+        text-decoration: none !important; 
+        color: var(--text-main, #1e293b) !important; 
+        font-weight: 600 !important; 
+        font-size: 0.88rem !important;
+        padding: 0.38rem 0.5rem !important; 
+        border-radius: 10px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 0.5rem !important;
         cursor: pointer !important;
+        transition: background 0.15s ease, transform 0.15s ease !important;
       }
       [data-theme="dark"] .dyn-drawer-menu a { color: #f8fafc !important; }
       .dyn-drawer-menu a:hover { background: var(--bg-primary, #f1f5f9) !important; color: #0284c7 !important; }
@@ -510,7 +495,7 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // SEARCH COMPONENT WITH SLIM BUTTON
+    // SEARCH COMPONENT WITHOUT SEARCH BUTTON (FULL WIDTH INPUT)
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -518,15 +503,13 @@
       globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-search-row">
-          <input type="text" class="dyn-modern-input" placeholder="Search..." autocomplete="off">
-          <button type="button" class="dyn-modern-btn">🔍</button>
+          <input type="text" class="dyn-modern-input" placeholder="Search calculators..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
 
       const input = globalSearchNode.querySelector(".dyn-modern-input");
       const row = globalSearchNode.querySelector(".dyn-search-row");
-      const btn = globalSearchNode.querySelector(".dyn-modern-btn");
       const dropdown = globalSearchNode.querySelector(".dyn-search-dropdown");
 
       row.addEventListener("click", () => {
@@ -584,12 +567,6 @@
 
       input.addEventListener("input", (e) => {
         renderList(e.target.value.trim().toLowerCase());
-      });
-
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        renderList(input.value.trim().toLowerCase());
-        input.focus();
       });
 
       document.addEventListener("click", (e) => {
@@ -705,7 +682,7 @@
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    window.addEventListener("hashchange", () => {
+    window.addEventListener("hashchange",, () => {
       syncActiveTab();
       relocateSearch();
     });
