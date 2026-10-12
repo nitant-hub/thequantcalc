@@ -345,23 +345,23 @@
       .dyn-hamburger-btn { background: none !important; border: none !important; cursor: pointer !important; display: flex !important; flex-direction: column !important; gap: 5px !important; padding: 4px !important; }
       .dyn-hamburger-btn span { width: 22px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (SLIM COMPACT X-WIDTH & AUTO X-FLOW) */
+      /* MOBILE DRAWER: APPLE UI + SEMI-3D + BENTO GRID + MINIMALIST UX (COMPACT FIT, CONTENT-AWARE WIDTH, AUTO X-FLOW) */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 12px !important; 
+        top: 60px !important; 
         right: -75vw !important; 
-        width: auto !important;
-        min-width: 170px !important;
-        max-width: 72vw !important;
+        width: max-content !important;
+        min-width: 160px !important;
+        max-width: 78vw !important;
         height: auto !important; 
-        max-height: 85vh !important;
+        max-height: 80vh !important;
         background: var(--bg-surface, #ffffff) !important; 
         border: 1px solid rgba(255, 255, 255, 0.8) !important; 
-        border-radius: 20px !important;
-        padding: 0.6rem 0.6rem 0.7rem !important; 
+        border-radius: 18px !important;
+        padding: 0.5rem 0.6rem 0.6rem 0.6rem !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        gap: 0.2rem !important; 
+        gap: 0.15rem !important; 
         transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; 
         z-index: 1000000 !important; 
@@ -378,11 +378,12 @@
       .dyn-drawer-menu.open { right: 12px !important; }
 
       .dyn-drawer-top-action {
+        position: absolute !important;
+        top: 8px !important;
+        right: 8px !important;
+        z-index: 10 !important;
         display: flex !important;
-        justify-content: flex-end !important;
         align-items: center !important;
-        width: 100% !important;
-        margin-bottom: 0px !important;
       }
 
       .dyn-close-btn { 
@@ -407,13 +408,12 @@
         text-decoration: none !important; 
         color: var(--text-main, #1e293b) !important; 
         font-weight: 600 !important; 
-        font-size: 0.85rem !important;
-        padding: 0.3rem 0.45rem !important; 
-        border-radius: 8px !important; 
+        font-size: 0.84rem !important;
+        padding: 0.28rem 0.4rem !important; 
+        border-radius: 7px !important; 
         display: flex !important; 
         align-items: center !important; 
--webkit-box-align: center !important;
-        gap: 0.45rem !important;
+        gap: 0.4rem !important;
         white-space: nowrap !important;
         width: max-content !important;
         min-width: 100% !important;
