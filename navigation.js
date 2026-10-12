@@ -6,7 +6,8 @@
       vMeta.name = "viewport";
       document.head.appendChild(vMeta);
     }
-    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no");
+    // Updated viewport to standard accessibility-friendly settings with user-scalable pinch-zoom enabled
+    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, user-scalable=yes");
 
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
@@ -365,7 +366,7 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect */
+      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect & 25% larger size */
       .dyn-hamburger-btn span.close-x { 
         font-size: 2.35rem !important; 
         font-weight: 900 !important; 
