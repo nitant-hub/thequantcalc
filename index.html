@@ -297,7 +297,7 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.45rem;
 }
 
-/* TOOLS LIST CONTAINER WITH WHITE BACKGROUND (MATCHES PHOTO 2) */
+/* TOOLS LIST CONTAINER WITH WHITE BACKGROUND */
 .cat-card-tools-y {
   background: var(--surface) !important;
   border-radius: 12px;
@@ -748,6 +748,29 @@ input, select, textarea {
 .box a { color: var(--link); font-size: .93rem; font-weight: 600; text-decoration: none; }
 .box a:hover { text-decoration: underline; }
 
+/* SIDE-BY-SIDE SPLIT FOR POPULAR TOOLS & EDITOR'S PICKS */
+.side-split-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+.side-split-row .box {
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .side-split-row {
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .side-split-row .box {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+}
+
 .calc-card {
   padding-top: 1.25rem; padding-bottom: .6rem; padding-left: 0; padding-right: 0;
   overflow: hidden; max-width: 100% !important; box-sizing: border-box !important;
@@ -843,12 +866,35 @@ footer a:hover { color: var(--link); }
 
 <aside>
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
-  <div class="box"><h3>Popular Tools</h3><div>
-    <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
-    <a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a>
-    <a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a>
-  </div></div>
-  <div class="box"><h3>System Status</h3><div style="font-size:.88rem;color:var(--muted)">All tools process data locally inside your web browser.</div></div>
+  
+  <!-- SIDE-BY-SIDE SPLIT ROW ON DESKTOP -->
+  <div class="side-split-row">
+    <!-- Box 1: Popular Tools -->
+    <div class="box">
+      <h3>Popular Tools</h3>
+      <div>
+        <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a>
+        <a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a>
+        <a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a>
+      </div>
+    </div>
+
+    <!-- Box 2: Editor's Picks -->
+    <div class="box">
+      <h3>✨ Editor's Picks</h3>
+      <div>
+        <a href="/tools/cosmic-weight.html">🪐 Cosmic Weight Calculator</a>
+        <a href="/tools/Compound-Interest-Calculator.html">📈 Wealth Compounder</a>
+        <a href="/tools/accurate-age-calculator.html">📅 Precise Age Tracker</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Status -->
+  <div class="box">
+    <h3>System Status</h3>
+    <div style="font-size:.88rem;color:var(--muted)">All tools process data locally inside your web browser.</div>
+  </div>
 </aside>
 </div></div>
 
@@ -1056,7 +1102,12 @@ footer a:hover { color: var(--link); }
   function renderCardHTML(c) {
     var meta = autoSketchCategory(c);
     var displayName = c === 'financial' ? 'Finance' : label(c);
-    var list = toolsOf(c);
+    var fullList = toolsOf(c);
+
+    /* LIMIT HOMEPAGE DISPLAY TO 6 TOOLS PER CATEGORY */
+    var MAX_HOME_TOOLS = 6;
+    var displayList = fullList.slice(0, MAX_HOME_TOOLS);
+    var remainingCount = fullList.length - MAX_HOME_TOOLS;
 
     var card = '<div class="cat-hub-card ' + meta.theme + '">';
     card += '  <a class="cat-hub-top" href="#/' + c + '">';
@@ -1067,11 +1118,18 @@ footer a:hover { color: var(--link); }
     card += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
     card += '  </a>';
 
-    if (list.length > 0) {
+    if (displayList.length > 0) {
       card += '  <ul class="cat-card-tools-y">';
-      list.forEach(function(t){
+      displayList.forEach(function(t){
         card += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
       });
+
+      if (remainingCount > 0) {
+        card += '    <li style="margin-top: 4px; padding-top: 4px; border-top: 1px dashed rgba(0,0,0,0.08);">';
+        card += '      <a href="#/' + c + '" style="color: var(--link); font-size: 0.82rem; font-weight: 700; text-decoration: none;">+ ' + remainingCount + ' more tools &rarr;</a>';
+        card += '    </li>';
+      }
+
       card += '  </ul>';
     }
     card += '</div>';
