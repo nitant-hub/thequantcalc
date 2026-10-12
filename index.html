@@ -748,14 +748,72 @@ input, select, textarea {
 .box a { color: var(--link); font-size: .93rem; font-weight: 600; text-decoration: none; }
 .box a:hover { text-decoration: underline; }
 
-/* SIDE-BY-SIDE SPLIT FOR PRIME CALCULATORS/TOOLS & EDITOR'S PICKS */
+/* ========================================================
+   BENTO UI FOR MANUAL SIDEBAR BOXES (PRIME & EDITOR'S PICKS)
+   ======================================================== */
+.bento-manual-box {
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-sizing: border-box;
+}
+
+.bento-manual-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 28px -6px rgba(0, 113, 227, 0.16), 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.bento-prime {
+  border-left: 4.5px solid #6366f1 !important;
+  border-bottom: 3.5px solid #6366f1 !important;
+  background: linear-gradient(145deg, #eef2ff 0%, #f8faff 60%, #ffffff 100%);
+}
+
+.bento-editors {
+  border-left: 4.5px solid #06b6d4 !important;
+  border-bottom: 3.5px solid #06b6d4 !important;
+  background: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 60%, #ffffff 100%);
+}
+
+[data-theme="dark"] .bento-prime {
+  background: linear-gradient(145deg, #312e81 0%, #0f172a 100%);
+  border-color: #4338ca !important;
+}
+
+[data-theme="dark"] .bento-editors {
+  background: linear-gradient(145deg, #164e63 0%, #0f172a 100%);
+  border-color: #0e7490 !important;
+}
+
+.bento-manual-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.bento-manual-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: none;
+  padding: 0;
+}
+
 .side-split-row {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   width: 100%;
 }
-.side-split-row .box {
+.side-split-row .box, .side-split-row .bento-manual-box {
   margin-bottom: 0 !important;
 }
 
@@ -765,7 +823,7 @@ input, select, textarea {
     gap: 1rem;
     margin-bottom: 1.25rem;
   }
-  .side-split-row .box {
+  .side-split-row .box, .side-split-row .bento-manual-box {
     flex: 1 1 50%;
     min-width: 0;
   }
@@ -867,28 +925,37 @@ footer a:hover { color: var(--link); }
 <aside>
   <div class="box" id="catBox"><h3>Categories</h3><div id="sideCats"></div></div>
   
-  <!-- SIDE-BY-SIDE SPLIT ROW ON DESKTOP -->
+  <!-- ============================================== -->
+  <!-- ✏️ MANUALLY EDITED APPLE BENTO UI SECTION      -->
+  <!-- ============================================== -->
   <div class="side-split-row">
     <!-- Box 1: Prime Calculators/Tools -->
-    <div class="box">
-      <h3>⚡ Prime Calculators/Tools</h3>
-      <div>
-        <a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest Calculator</a>
-        <a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Percentage Calculator</a>
-        <a href="/tools/accurate-age-calculator.html">⭐ Accurate Age Calculator</a>
+    <div class="bento-manual-box bento-prime">
+      <div class="bento-manual-header">
+        <div class="cat-3d-icon cat-icon-indigo">⚡</div>
+        <h3>Prime Calculators/Tools</h3>
       </div>
+      <ul class="cat-pure-text-list" style="flex-direction: column; gap: 0.65rem;">
+        <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest Calculator</a></li>
+        <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Percentage Calculator</a></li>
+        <li><a href="/tools/accurate-age-calculator.html">⭐ Accurate Age Calculator</a></li>
+      </ul>
     </div>
 
     <!-- Box 2: Editor's Picks -->
-    <div class="box">
-      <h3>✨ Editor's Picks</h3>
-      <div>
-        <a href="/tools/cosmic-weight.html">🪐 Cosmic Weight Calculator</a>
-        <a href="/tools/Compound-Interest-Calculator.html">📈 Compound Interest Calculator</a>
-        <a href="/tools/accurate-age-calculator.html">📅 Accurate Age Calculator</a>
+    <div class="bento-manual-box bento-editors">
+      <div class="bento-manual-header">
+        <div class="cat-3d-icon cat-icon-cyan">✨</div>
+        <h3>Editor's Picks</h3>
       </div>
+      <ul class="cat-pure-text-list" style="flex-direction: column; gap: 0.65rem;">
+        <li><a href="/tools/cosmic-weight.html">🪐 Cosmic Weight Calculator</a></li>
+        <li><a href="/tools/Compound-Interest-Calculator.html">📈 Compound Interest Calculator</a></li>
+        <li><a href="/tools/accurate-age-calculator.html">📅 Accurate Age Calculator</a></li>
+      </ul>
     </div>
   </div>
+  <!-- ============================================== -->
 
   <!-- System Status -->
   <div class="box">
