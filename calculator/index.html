@@ -3,14 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Calculator</title>
+<title>Interactive Calculator</title>
 <style>
+  :root {
+    --bg-frame: #eff6fc;
+    --border-frame: #b9d5f2;
+    --tab-border: #bcd5ef;
+    --tab-bg: #e2edf8;
+    --tab-active: #1967d2;
+    --screen-bg: #ffffff;
+    --screen-blue: #3d649d;
+    --key-top: #edf5fd;
+    --key-bottom: #dbe9f8;
+    --key-border: #adc7e6;
+    --key-shadow: #b3cae3;
+    --key-text: #0f172a;
+    --ac-top: #ea3a3a;
+    --ac-bottom: #d32222;
+    --ac-border: #ba1a1a;
+    --ac-shadow: #991313;
+    --back-top: #f97316;
+    --back-bottom: #ea580c;
+    --back-border: #c2410c;
+    --back-shadow: #9a3412;
+    --eq-top: #2563eb;
+    --eq-bottom: #1d4ed8;
+    --eq-border: #1e40af;
+    --eq-shadow: #1e3a8a;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
 
   body {
@@ -18,72 +46,79 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 10px 4px;
+    padding: 6px 4px;
     min-height: 100vh;
   }
 
   .calc-container {
     width: 100%;
-    max-width: 620px;
-    background: #f1f6fc;
-    border: 1px solid #c9dcf0;
-    border-radius: 12px;
+    max-width: 600px;
+    background: var(--bg-frame);
+    border: 1.5px solid var(--border-frame);
+    border-radius: 10px;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
   }
 
-  /* TOP MODE TABS */
-  .mode-tabs-wrap {
+  /* TOP NAVIGATION TABS */
+  .mode-nav {
     display: flex;
-    background: #e3edf9;
-    border-bottom: 1px solid #bfd6f0;
+    background: var(--tab-bg);
+    border-bottom: 1.5px solid var(--tab-border);
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    position: relative;
   }
-  .mode-tabs-wrap::-webkit-scrollbar {
+  .mode-nav::-webkit-scrollbar {
     display: none;
   }
 
   .mode-btn {
-    padding: 8px 12px;
-    font-size: 0.85rem;
+    padding: 9px 13px;
+    font-size: 0.88rem;
     font-weight: 700;
     color: #1e293b;
     border: none;
-    border-right: 1px solid #bfd6f0;
+    border-right: 1px solid var(--tab-border);
     background: transparent;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .mode-btn:hover {
+    background: rgba(255, 255, 255, 0.6);
   }
   .mode-btn.active {
-    background: #1d68d8;
+    background: var(--tab-active);
     color: #ffffff;
   }
   .mode-btn.history-tab {
     margin-left: auto;
-    background: #0f172a;
+    background: #0d1726;
     color: #ffffff;
     border-right: none;
+    position: sticky;
+    right: 0;
+    z-index: 5;
   }
 
-  /* SCREEN DISPLAY */
-  .display-box {
+  /* DISPLAY SECTION */
+  .display-wrap {
     margin: 12px 14px 10px 14px;
-    background: #ffffff;
-    border: 1px solid #b7cde6;
-    border-radius: 6px;
+    border: 1px solid #b2c9e4;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
   }
-  .display-expr {
-    height: 34px;
-    padding: 6px 12px;
+  .display-main {
+    height: 38px;
+    background: var(--screen-bg);
+    padding: 6px 14px;
     text-align: right;
-    font-size: 1.25rem;
+    font-size: 1.45rem;
     font-weight: 700;
     color: #0f172a;
     line-height: 1.2;
@@ -91,11 +126,11 @@
     white-space: nowrap;
   }
   .display-sub {
-    height: 38px;
-    background: #3f669f;
-    padding: 4px 12px;
+    height: 44px;
+    background: var(--screen-blue);
+    padding: 6px 14px;
     text-align: right;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: #ffffff;
     line-height: 1.4;
@@ -103,86 +138,20 @@
     white-space: nowrap;
   }
 
-  /* KEYPAD GRID */
-  .keypad-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    padding: 8px 14px 16px 14px;
-  }
-
-  .key {
-    height: 48px;
-    border-radius: 8px;
-    border: 1px solid #adc7e6;
-    background: linear-gradient(180deg, #edf5fd 0%, #dbe9f8 100%);
-    box-shadow: 0 3px 0 #b3cae3, 0 4px 8px rgba(0, 0, 0, 0.05);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #0f172a;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
-  }
-  .key:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #b3cae3;
-  }
-
-  /* SPECIAL ACTION BUTTONS */
-  .key.ac {
-    background: linear-gradient(180deg, #ea3a3a 0%, #d32222 100%);
-    border-color: #ba1a1a;
-    box-shadow: 0 3px 0 #991313;
-    color: #ffffff;
-    font-size: 1rem;
-  }
-  .key.ac:active {
-    box-shadow: 0 1px 0 #991313;
-  }
-
-  .key.back {
-    background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
-    border-color: #c2410c;
-    box-shadow: 0 3px 0 #9a3412;
-    color: #ffffff;
-    font-size: 0.95rem;
-  }
-  .key.back:active {
-    box-shadow: 0 1px 0 #9a3412;
-  }
-
-  .key.eq {
-    background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-    border-color: #1e40af;
-    box-shadow: 0 3px 0 #1e3a8a;
-    color: #ffffff;
-  }
-  .key.eq:active {
-    box-shadow: 0 1px 0 #1e3a8a;
-  }
-
-  .key.op {
-    font-size: 1.2rem;
-    color: #1e3a8a;
-  }
-
-  /* HISTORY PANEL */
-  .history-panel {
+  /* HISTORY DRAWER */
+  .history-box {
     display: none;
-    max-height: 180px;
+    max-height: 160px;
     overflow-y: auto;
+    background: #e4edf8;
+    border-bottom: 1px solid #b7cde6;
     padding: 8px 14px;
-    background: #e9f2fb;
-    border-top: 1px solid #bfd6f0;
     font-size: 0.9rem;
   }
   .history-item {
     display: flex;
     justify-content: space-between;
-    padding: 4px 0;
+    padding: 5px 0;
     border-bottom: 1px dashed #cbd5e1;
     color: #334155;
   }
@@ -190,33 +159,98 @@
     font-weight: 700;
     color: #0f172a;
   }
+
+  /* KEYPAD GRID */
+  .keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 6px 14px 16px 14px;
+  }
+
+  .key {
+    height: 52px;
+    border-radius: 8px;
+    border: 1px solid var(--key-border);
+    background: linear-gradient(180deg, var(--key-top) 0%, var(--key-bottom) 100%);
+    box-shadow: 0 3px 0 var(--key-shadow), 0 4px 6px rgba(0, 0, 0, 0.04);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--key-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.05s ease, box-shadow 0.05s ease;
+  }
+  .key:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--key-shadow);
+  }
+
+  /* ACTION KEYS */
+  .key.ac {
+    background: linear-gradient(180deg, var(--ac-top) 0%, var(--ac-bottom) 100%);
+    border-color: var(--ac-border);
+    box-shadow: 0 3px 0 var(--ac-shadow);
+    color: #ffffff;
+    font-size: 1.05rem;
+  }
+  .key.ac:active {
+    box-shadow: 0 1px 0 var(--ac-shadow);
+  }
+
+  .key.back {
+    background: linear-gradient(180deg, var(--back-top) 0%, var(--back-bottom) 100%);
+    border-color: var(--back-border);
+    box-shadow: 0 3px 0 var(--back-shadow);
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  .key.back:active {
+    box-shadow: 0 1px 0 var(--back-shadow);
+  }
+
+  .key.eq {
+    background: linear-gradient(180deg, var(--eq-top) 0%, var(--eq-bottom) 100%);
+    border-color: var(--eq-border);
+    box-shadow: 0 3px 0 var(--eq-shadow);
+    color: #ffffff;
+  }
+  .key.eq:active {
+    box-shadow: 0 1px 0 var(--eq-shadow);
+  }
+
+  .key.op {
+    color: #1e3a8a;
+  }
 </style>
 </head>
 <body>
 
 <div class="calc-container" id="calcContainer">
-  <!-- TOP MODE TABS -->
-  <div class="mode-tabs-wrap">
-    <button class="mode-btn active" onclick="switchMode(this, 'Basic')">Basic</button>
-    <button class="mode-btn" onclick="switchMode(this, 'Scientific')">Scientific</button>
-    <button class="mode-btn" onclick="switchMode(this, 'GATE')">GATE</button>
-    <button class="mode-btn" onclick="switchMode(this, 'FX-991CW')">FX-991CW</button>
-    <button class="mode-btn" onclick="switchMode(this, 'FX-5800P')">FX-5800P</button>
-    <button class="mode-btn" onclick="switchMode(this, 'HP Prime')">HP Prime</button>
-    <button class="mode-btn" onclick="switchMode(this, 'TI-84')">TI-84</button>
+  <!-- MODE SELECTION HEADER -->
+  <div class="mode-nav">
+    <button class="mode-btn active" onclick="setMode(this, 'Basic')">Basic</button>
+    <button class="mode-btn" onclick="setMode(this, 'Scientific')">Scientific</button>
+    <button class="mode-btn" onclick="setMode(this, 'GATE')">GATE</button>
+    <button class="mode-btn" onclick="setMode(this, 'FX-991CW')">FX-991CW</button>
+    <button class="mode-btn" onclick="setMode(this, 'FX-5800P')">FX-5800P</button>
+    <button class="mode-btn" onclick="setMode(this, 'HP Prime')">HP Prime</button>
+    <button class="mode-btn" onclick="setMode(this, 'TI-Nspire')">TI-84</button>
     <button class="mode-btn history-tab" onclick="toggleHistory()">HISTORY</button>
   </div>
 
-  <!-- DUAL-COLOR DISPLAY -->
-  <div class="display-box">
-    <div class="display-expr" id="displayExpr">0</div>
+  <!-- DUAL DISPLAY PANEL -->
+  <div class="display-wrap">
+    <div class="display-main" id="displayMain">0</div>
     <div class="display-sub" id="displaySub"></div>
   </div>
 
-  <!-- HISTORY DRAWER -->
-  <div class="history-panel" id="historyPanel"></div>
+  <!-- HISTORY LOG DRAWER -->
+  <div class="history-box" id="historyBox"></div>
 
-  <!-- KEYPAD -->
+  <!-- MAIN KEYPAD -->
   <div class="keypad-grid">
     <button class="key ac" onclick="pressAC()">AC</button>
     <button class="key back" onclick="pressBack()">Back</button>
@@ -238,139 +272,140 @@
     <button class="key" onclick="pressNum('3')">3</button>
     <button class="key op" onclick="pressOp('+')">+</button>
 
-    <button class="key" onclick="pressNum('0')">0</button>
+    <button class="key" style="grid-column: span 1;" onclick="pressNum('0')">0</button>
     <button class="key" onclick="pressDot()">.</button>
-    <button class="key eq" style="grid-column: span 2;" onclick="pressEquals()">=</button>
+    <button class="key eq" style="grid-column: span 2;" onclick="pressEqual()">=</button>
   </div>
 </div>
 
 <script>
-  var expr = '';
-  var evaluated = false;
-  var historyList = [];
+  var currentInput = '';
+  var isCalculated = false;
+  var historyLog = [];
 
-  var displayExpr = document.getElementById('displayExpr');
+  var displayMain = document.getElementById('displayMain');
   var displaySub = document.getElementById('displaySub');
-  var historyPanel = document.getElementById('historyPanel');
+  var historyBox = document.getElementById('historyBox');
+  var container = document.getElementById('calcContainer');
 
-  function sendHeight() {
-    var h = document.getElementById('calcContainer').offsetHeight + 24;
-    window.parent.postMessage({ frameHeight: h }, '*');
+  function notifyParent() {
+    var totalH = container.offsetHeight + 16;
+    window.parent.postMessage({ frameHeight: totalH }, '*');
   }
 
-  function updateDisplay() {
-    displayExpr.textContent = expr || '0';
-    sendHeight();
+  function updateScreen() {
+    displayMain.textContent = currentInput || '0';
+    notifyParent();
   }
 
-  function pressNum(num) {
-    if (evaluated) {
-      expr = '';
-      evaluated = false;
+  function pressNum(digit) {
+    if (isCalculated) {
+      currentInput = '';
+      isCalculated = false;
     }
-    if (expr === '0') expr = '';
-    expr += num;
-    updateDisplay();
+    if (currentInput === '0') currentInput = '';
+    currentInput += digit;
+    updateScreen();
   }
 
   function pressDot() {
-    if (evaluated) {
-      expr = '0';
-      evaluated = false;
+    if (isCalculated) {
+      currentInput = '0';
+      isCalculated = false;
     }
-    var tokens = expr.split(/[\+\-\*\/%]/);
-    var currentToken = tokens[tokens.length - 1];
-    if (!currentToken.includes('.')) {
-      expr += (currentToken === '' ? '0.' : '.');
+    var segments = currentInput.split(/[\+\-\*\/%]/);
+    var activeSegment = segments[segments.length - 1];
+    if (!activeSegment.includes('.')) {
+      currentInput += (activeSegment === '' ? '0.' : '.');
     }
-    updateDisplay();
+    updateScreen();
   }
 
-  function pressOp(op) {
-    evaluated = false;
-    if (!expr) {
-      if (op === '-') expr = '-';
-      updateDisplay();
+  function pressOp(operator) {
+    isCalculated = false;
+    if (!currentInput) {
+      if (operator === '-') currentInput = '-';
+      updateScreen();
       return;
     }
-    var lastChar = expr.slice(-1);
-    if ('+-*/%'.includes(lastChar)) {
-      expr = expr.slice(0, -1) + op;
+    var endChar = currentInput.slice(-1);
+    if ('+-*/%'.includes(endChar)) {
+      currentInput = currentInput.slice(0, -1) + operator;
     } else {
-      expr += op;
+      currentInput += operator;
     }
-    updateDisplay();
+    updateScreen();
   }
 
   function pressAC() {
-    expr = '';
-    displayExpr.textContent = '0';
+    currentInput = '';
+    displayMain.textContent = '0';
     displaySub.textContent = '';
-    evaluated = false;
-    sendHeight();
+    isCalculated = false;
+    notifyParent();
   }
 
   function pressBack() {
-    if (evaluated) {
+    if (isCalculated) {
       pressAC();
       return;
     }
-    expr = expr.slice(0, -1);
-    updateDisplay();
+    currentInput = currentInput.slice(0, -1);
+    updateScreen();
   }
 
-  function pressEquals() {
-    if (!expr) return;
+  function pressEqual() {
+    if (!currentInput) return;
     try {
-      var sanitized = expr.replace(/%/g, '/100');
-      var result = Function('"use strict";return (' + sanitized + ')')();
+      var sanitized = currentInput.replace(/%/g, '/100');
+      var evalResult = Function('"use strict";return (' + sanitized + ')')();
       
-      displaySub.textContent = expr + ' =';
-      historyList.unshift({ eq: expr, ans: result });
+      displaySub.textContent = currentInput + ' =';
+      historyLog.unshift({ q: currentInput, a: evalResult });
       renderHistory();
 
-      expr = String(result);
-      displayExpr.textContent = expr;
-      evaluated = true;
+      currentInput = String(evalResult);
+      displayMain.textContent = currentInput;
+      isCalculated = true;
     } catch (e) {
-      displayExpr.textContent = 'Error';
-      evaluated = true;
+      displayMain.textContent = 'Error';
+      isCalculated = true;
     }
-    sendHeight();
+    notifyParent();
   }
 
-  function switchMode(btn, mode) {
+  function setMode(tabElement, modeLabel) {
     document.querySelectorAll('.mode-btn').forEach(function(b) {
       if (!b.classList.contains('history-tab')) b.classList.remove('active');
     });
-    btn.classList.add('active');
-    displaySub.textContent = mode + ' Mode';
-    sendHeight();
+    tabElement.classList.add('active');
+    displaySub.textContent = modeLabel + ' Active';
+    notifyParent();
   }
 
   function toggleHistory() {
-    if (historyPanel.style.display === 'block') {
-      historyPanel.style.display = 'none';
+    if (historyBox.style.display === 'block') {
+      historyBox.style.display = 'none';
     } else {
-      historyPanel.style.display = 'block';
+      historyBox.style.display = 'block';
     }
-    sendHeight();
+    notifyParent();
   }
 
   function renderHistory() {
-    var html = '';
-    historyList.slice(0, 15).forEach(function(item) {
-      html += '<div class="history-item"><span>' + item.eq + '</span><span>= ' + item.ans + '</span></div>';
+    var out = '';
+    historyLog.slice(0, 10).forEach(function(rec) {
+      out += '<div class="history-item"><span>' + rec.q + '</span><span>= ' + rec.a + '</span></div>';
     });
-    historyPanel.innerHTML = html || '<div style="color:#64748b;text-align:center;">No recent history</div>';
+    historyBox.innerHTML = out || '<div style="color:#64748b;text-align:center;">No operations yet</div>';
   }
 
   window.addEventListener('load', function() {
-    sendHeight();
-    setTimeout(sendHeight, 200);
+    notifyParent();
+    setTimeout(notifyParent, 150);
+    setTimeout(notifyParent, 500);
   });
-  window.addEventListener('resize', sendHeight);
+  window.addEventListener('resize', notifyParent);
 </script>
-
 </body>
 </html>
