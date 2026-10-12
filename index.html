@@ -807,40 +807,43 @@ input, select, textarea {
   padding: 0;
 }
 
-/* --- ATTRACTIVE TWINKLE / BLINK ANIMATION FOR BENTO LINKS --- */
-@keyframes twinkleBlink {
+/* --- COMFORTABLE STROKE TWINKLE ANIMATION --- */
+/* The text remains 100% solid and readable. Only the text outline (stroke) twinkles. */
+@keyframes strokeTwinkle {
   0%, 100% { 
-    opacity: 1; 
+    -webkit-text-stroke: 0.2px transparent;
+    text-shadow: none;
   }
   50% { 
-    opacity: 0.2; /* Strong fade to create the blink effect */
-    text-shadow: 0 0 8px rgba(0, 113, 227, 0.8); 
+    -webkit-text-stroke: 0.6px #0071e3; 
+    text-shadow: 0 0 2px rgba(0, 113, 227, 0.2); 
   }
 }
-[data-theme="dark"] @keyframes twinkleBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; text-shadow: 0 0 8px rgba(56, 189, 248, 0.9); }
+[data-theme="dark"] @keyframes strokeTwinkle {
+  0%, 100% { -webkit-text-stroke: 0.2px transparent; text-shadow: none; }
+  50% { -webkit-text-stroke: 0.6px #60a5fa; text-shadow: 0 0 2px rgba(96, 165, 250, 0.2); }
 }
 
 .bento-manual-box .cat-pure-text-list li a {
-  animation: twinkleBlink 1.5s infinite ease-in-out;
+  animation: strokeTwinkle 2s infinite ease-in-out;
+  opacity: 1 !important; /* Forces text to stay completely solid/readable */
 }
 
-/* Stagger the animation delays so they twinkle sequentially (cascading effect) */
+/* Stagger the delays for a cascading effect */
 .bento-manual-box .cat-pure-text-list li:nth-child(1) a { animation-delay: 0s; }
-.bento-manual-box .cat-pure-text-list li:nth-child(2) a { animation-delay: 0.2s; }
-.bento-manual-box .cat-pure-text-list li:nth-child(3) a { animation-delay: 0.4s; }
+.bento-manual-box .cat-pure-text-list li:nth-child(2) a { animation-delay: 0.3s; }
+.bento-manual-box .cat-pure-text-list li:nth-child(3) a { animation-delay: 0.6s; }
 
 .bento-manual-box .cat-pure-text-list li a:hover {
-  animation: none; /* Stops the blink entirely when the user hovers */
-  opacity: 1;
+  animation: none;
   color: #0056b3;
-  text-shadow: none;
+  -webkit-text-stroke: 0px transparent;
 }
 [data-theme="dark"] .bento-manual-box .cat-pure-text-list li a:hover {
   color: #93c5fd;
+  -webkit-text-stroke: 0px transparent;
 }
-/* ------------------------------------------------------------ */
+/* -------------------------------------------- */
 
 .side-split-row {
   display: flex;
