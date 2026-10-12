@@ -807,6 +807,35 @@ input, select, textarea {
   padding: 0;
 }
 
+/* --- GENTLE PULSE ANIMATION FOR BENTO LINKS --- */
+@keyframes gentlePulse {
+  0%, 100% { 
+    opacity: 1; 
+    text-shadow: 0 0 0px transparent; 
+  }
+  50% { 
+    opacity: 0.75; 
+    text-shadow: 0 0 8px rgba(0, 113, 227, 0.35); 
+  }
+}
+[data-theme="dark"] @keyframes gentlePulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 0px transparent; }
+  50% { opacity: 0.85; text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
+}
+
+.bento-manual-box .cat-pure-text-list li a {
+  animation: gentlePulse 2.5s infinite ease-in-out;
+}
+.bento-manual-box .cat-pure-text-list li a:hover {
+  animation: none; /* Stops pulsing so the user can easily click */
+  color: #0056b3;
+}
+[data-theme="dark"] .bento-manual-box .cat-pure-text-list li a:hover {
+  color: #93c5fd;
+}
+/* ---------------------------------------------- */
+
+
 .side-split-row {
   display: flex;
   flex-direction: column;
