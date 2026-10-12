@@ -343,7 +343,7 @@
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
       
-      /* Toggle Hamburger Button (Acts as Hamburger/Close toggle directly in header) */
+      /* Toggle Hamburger Button */
       .dyn-hamburger-btn { 
         background: rgba(255, 255, 255, 0.1) !important; 
         border: 1px solid rgba(255, 255, 255, 0.2) !important; 
@@ -363,27 +363,30 @@
         background: rgba(255, 255, 255, 0.2) !important;
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
-      .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #fff !important; line-height: 1 !important; display: none !important; }
+      .dyn-hamburger-btn span.close-x { font-size: 1.25rem !important; font-weight: 800 !important; color: #ef4444 !important; line-height: 1 !important; display: none !important; }
       
-      /* When active (open), switch button appearance and color to blend with popup header */
+      /* When active: perfectly matches the white surface color and seamlessly merges with the popup card */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
-        border-color: rgba(255, 255, 255, 0.9) !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        border-bottom: none !important; /* Seamlessly connects with the popup top edge */
+        border-radius: 10px 10px 0 0 !important; /* Rounded top tab shape connected to the popup */
+        box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
+        z-index: 1000001 !important;
       }
       [data-theme="dark"] .dyn-hamburger-btn.is-active {
         background: #151c2e !important;
         border-color: rgba(255, 255, 255, 0.15) !important;
       }
       .dyn-hamburger-btn.is-active span.bar { display: none !important; }
-      .dyn-hamburger-btn.is-active span.close-x { display: block !important; color: #ef4444 !important; }
+      .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
       /* ========================================================
          MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX
          ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
-        top: 60px !important; 
+        top: calc(var(--nav-header-height) + 4px) !important; 
         right: -75vw !important; 
         width: fit-content !important; 
         min-width: 150px !important;
@@ -460,7 +463,7 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="/" class="dyn-brand"><div class="dyn-logo-icon">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
+        <a href="/" class="dyn-brand"><div class="logo-symbol">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
