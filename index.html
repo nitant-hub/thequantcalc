@@ -297,23 +297,26 @@ p.intro, #cintro, #cintro:empty {
   margin-bottom: 0.45rem;
 }
 
-/* SLIM Y-FLOW TOOL LIST */
+/* TOOLS LIST WITH WHITE BACKGROUND MATCHING PHOTO 2 */
 .cat-card-tools-y {
+  background: var(--surface) !important;
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem 0.65rem 0.75rem !important;
+  margin-top: 0.45rem !important;
+  border-top: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.18rem;
-  margin-top: 0;
-  padding-top: 0.45rem;
-  padding-right: 0.25rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
   max-height: 220px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 [data-theme="dark"] .cat-card-tools-y {
-  border-top-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 .cat-card-tools-y::-webkit-scrollbar {
@@ -630,8 +633,8 @@ input, select, textarea {
   }
 
   .cat-card-tools-y {
-    margin-top: 0 !important;
-    padding-top: 0.45rem !important;
+    margin-top: 0.4rem !important;
+    padding: 0.45rem 0.65rem 0.55rem 0.65rem !important;
     max-height: 220px !important;
     gap: 0.18rem !important;
   }
@@ -746,10 +749,12 @@ input, select, textarea {
   padding: 0 !important;
 }
 
-/* ELIMINATE EMPTY SIDEBAR SPACES & CONTAINERS */
+/* ELIMINATE EMPTY SIDEBAR SPACES, STRAY BORDERS & HOMEPAGE CATEGORY BOX */
 #sidebarSearchSlot,
+#catBox,
 aside > div:empty,
-aside .box:empty {
+aside .box:empty,
+.box:has(#sideCats:empty) {
   display: none !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -1068,8 +1073,15 @@ footer a:hover { color: var(--link); }
     s+='<a href="#/all">All Calculators</a>';
     var sideCats = document.getElementById('sideCats');
     if (sideCats) sideCats.innerHTML=s;
+
     var catBox = document.getElementById('catBox');
-    if (catBox) catBox.style.display=(cur&&cur!=='all')?'':'none';
+    if (catBox) {
+      if (cur && cur !== 'all') {
+        catBox.style.setProperty('display', 'block', 'important');
+      } else {
+        catBox.style.setProperty('display', 'none', 'important');
+      }
+    }
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
     if(!cur){
