@@ -873,12 +873,19 @@ input, select, textarea {
   }
 }
 
+/* 🚀 CALCULATOR CONTAINER LOCK */
 .calc-card {
   padding-top: 1.25rem; padding-bottom: .6rem; padding-left: 0; padding-right: 0;
   overflow: hidden; max-width: 100% !important; box-sizing: border-box !important;
+  min-height: 460px; /* Locks height to prevent layout jumping */
 }
 .calc-card .st { padding-left: 1.25rem; margin-bottom: .4rem; }
-#calc { width: 100% !important; max-width: 100% !important; height: 420px; border: none; display: block; transition: height .15s ease; }
+#calc { width: 100% !important; max-width: 100% !important; height: 395px; min-height: 395px; border: none; display: block; transition: height .15s ease; }
+
+@media(max-width:600px) {
+  .calc-card { min-height: 430px; }
+  #calc { height: 375px; min-height: 375px; }
+}
 
 #homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
 #homeSearchSlot:empty {
