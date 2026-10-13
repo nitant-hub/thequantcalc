@@ -980,7 +980,7 @@ footer a:hover { color: var(--link); }
 </footer>
 <button class="top" id="top" aria-label="Back to top">&#8963;</button>
 
-<!-- Page Router, Registry, Progressive Multi-Row Flow Engine, Auto/Manual Glide & Iframe Resizer -->
+<!-- Page Router, Registry, Progressive Multi-Row Flow Engine, Static Load & Iframe Resizer -->
 <script>
 (function(){
   var REPO='nitant-hub/thequantcalc', BRANCH='main';
@@ -1061,7 +1061,7 @@ footer a:hover { color: var(--link); }
 
   function load(done){
     var c=null; try{c=JSON.parse(localStorage.getItem('qc_tree'))}catch(e){}
-    if(c&&c.p&&Date.now()-c.t<1800000){addFromTree(c.p);return done()}
+    if(c&&c.p){addFromTree(c.p);return;}
     fetch('https://api.github.com/repos/'+REPO+'/git/trees/'+BRANCH+'?recursive=1')
       .then(function(r){return r.json()})
       .then(function(j){
