@@ -1174,11 +1174,6 @@ footer a:hover { color: var(--link); }
     var displayName = c === 'financial' ? 'Finance' : label(c);
     var fullList = toolsOf(c);
 
-    /* LIMIT HOMEPAGE DISPLAY TO 6 TOOLS PER CATEGORY */
-    var MAX_HOME_TOOLS = 6;
-    var displayList = fullList.slice(0, MAX_HOME_TOOLS);
-    var remainingCount = fullList.length - MAX_HOME_TOOLS;
-
     var card = '<div class="cat-hub-card ' + meta.theme + '">';
     card += '  <a class="cat-hub-top" href="#/' + c + '">';
     card += '    <div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div>';
@@ -1188,18 +1183,11 @@ footer a:hover { color: var(--link); }
     card += '    <div class="cat-card-desc">' + esc(meta.desc) + '</div>';
     card += '  </a>';
 
-    if (displayList.length > 0) {
+    if (fullList.length > 0) {
       card += '  <ul class="cat-card-tools-y">';
-      displayList.forEach(function(t){
+      fullList.forEach(function(t){
         card += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>';
       });
-
-      if (remainingCount > 0) {
-        card += '    <li style="margin-top: 4px; padding-top: 4px; border-top: 1px dashed rgba(0,0,0,0.08);">';
-        card += '      <a href="#/' + c + '" style="color: var(--link); font-size: 0.82rem; font-weight: 700; text-decoration: none;">+ ' + remainingCount + ' more tools &rarr;</a>';
-        card += '    </li>';
-      }
-
       card += '  </ul>';
     }
     card += '</div>';
@@ -1237,7 +1225,6 @@ footer a:hover { color: var(--link); }
       hs += '  </div>';
       hs += '</div>';
 
-      /* PROGRESSIVE ALLOCATION: Fill Row 1 First (up to 4 cards), Then branch into Rows 2 and 3 */
       var cardsPerRow = 4;
       var rowCount = Math.min(3, Math.ceil(cs.length / cardsPerRow)) || 1;
       var rows = [];
@@ -1267,7 +1254,6 @@ footer a:hover { color: var(--link); }
 
       document.getElementById('homeSections').innerHTML = hs;
 
-      /* BIND EVENTS TO ACTIVE TRACKS */
       for (var k = 0; k < rowCount; k++) {
         (function(index) {
           var track = document.getElementById('homeCatGrid_' + index);
