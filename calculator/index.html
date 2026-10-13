@@ -179,7 +179,7 @@
 
         .bc-tab-pane { 
             display: none !important; 
-            gap: 4px 6px; /* Dynamically slim gap that allows buttons to stretch and fill all dead space */
+            gap: 6px; /* Equalized to 6px for both horizontal and vertical gap matching present layout */
             height: 100%;
             width: 100%;
             grid-auto-rows: 1fr; /* This automatically distributes all remaining row height equally to buttons */
@@ -403,7 +403,7 @@
             #btn-bc-history-tab { font-size: 10px !important; }
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
             
-            .bc-tab-pane { gap: 3px 5px !important; } /* Tighter mobile gap so buttons fill available space beautifully */
+            .bc-tab-pane { gap: 6px !important; } /* Equalized horizontal and vertical gap for perfect symmetry */
             
             .bc-btn { font-size: 11px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #94a8be, 0 3px 4px rgba(0,0,0,0.08); }
             .bc-btn:active { transform: translateY(1.5px); }
@@ -737,7 +737,7 @@
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">+/-</button>
             <button class="bc-btn bc-btn-num bc-span-2" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">PLOT</button>
+            <button class="bc-btn bc-btn-primary bc-span-2" onclick="BloggerCalc.calc()">PLOT</button>
         </div>
 
         <!-- 7. TI-NSPIRE -->
@@ -789,7 +789,7 @@
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">EE</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-4" onclick="BloggerCalc.calc()">enter</button>
+            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">enter</button>
         </div>
 
         <!-- 8. HP 12C -->
