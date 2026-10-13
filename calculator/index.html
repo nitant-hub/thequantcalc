@@ -289,7 +289,7 @@
             box-shadow: 0 1px 0 #91a8c0, 0 1px 2px rgba(15, 23, 42, 0.15) !important;
         }
 
-        /* 3. EQUALS (=) */
+        /* 3. EQUALS (=) - PRESERVED VIBRANT BLUE */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%) !important; 
@@ -308,7 +308,7 @@
             box-shadow: 0 1px 0 #1e40af, 0 1px 2px rgba(37, 99, 235, 0.4) !important;
         }
 
-        /* 4. CLEAR / AC */
+        /* 4. CLEAR / AC - PRESERVED CRIMSON RED */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important; 
@@ -327,7 +327,7 @@
             box-shadow: 0 1px 0 #991b1b, 0 1px 2px rgba(220, 38, 38, 0.4) !important;
         }
 
-        /* 5. BACKSPACE / DELETE */
+        /* 5. BACKSPACE / DELETE - PRESERVED AMBER */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
             background: linear-gradient(180deg, #f97316 0%, #ea580c 100%) !important;
@@ -417,8 +417,8 @@
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
 
         /* ========================================================
-           24 ADVANCED THEME FILTER VARIATIONS 
-           (Apple UI, Semi-3D, Bento Grid, Minimalist, etc.)
+           30 TOTAL THEME FILTERS (INCLUDING 6 GLASS TRANSPARENT)
+           WHILE KEEPING FUNCTIONAL BUTTON COLORS INTACT
            ======================================================== */
         /* 1. Black & White */
         .calc-theme-bw { background: #ffffff !important; border-color: #000000 !important; }
@@ -427,7 +427,6 @@
         .calc-theme-bw .bc-output-box { background: #000000 !important; color: #ffffff !important; }
         .calc-theme-bw .bc-btn { background: #f1f1f1 !important; color: #000000 !important; border-color: #000000 !important; box-shadow: 0 3px 0 #000000 !important; }
         .calc-theme-bw .bc-btn-num { background: #e5e5e5 !important; }
-        .calc-theme-bw .bc-btn-primary { background: #000000 !important; color: #ffffff !important; box-shadow: 0 3px 0 #555 !important; }
 
         /* 2. Graphite */
         .calc-theme-graphite { background: #262626 !important; border-color: #525252 !important; }
@@ -516,7 +515,67 @@
         .calc-theme-minimal .bc-output-box { background: #f5f5f5 !important; color: #171717 !important; box-shadow: none !important; }
         .calc-theme-minimal .bc-btn { background: #ffffff !important; color: #262626 !important; border-color: #e5e5e5 !important; box-shadow: none !important; border-radius: 2px !important; }
 
-        /* 12. Cyberpunk Neon */
+        /* 12. 100% Glass Frost (Transparent Glassmorphism) */
+        .calc-theme-glass-frost { background: rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(255, 255, 255, 0.4) !important; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important; }
+        .calc-theme-glass-frost .bc-tabs { border-bottom-color: rgba(255, 255, 255, 0.6) !important; }
+        .calc-theme-glass-frost .bc-tab-btn { background: rgba(255, 255, 255, 0.3) !important; color: #0f172a !important; border-color: rgba(255, 255, 255, 0.5) !important; }
+        .calc-theme-glass-frost .bc-tab-btn.active { background: rgba(255, 255, 255, 0.8) !important; color: #000000 !important; border-color: #ffffff !important; }
+        .calc-theme-glass-frost .bc-screen-container { background: rgba(255, 255, 255, 0.2) !important; border-color: rgba(255, 255, 255, 0.4) !important; }
+        .calc-theme-glass-frost .bc-input-box { background: transparent !important; color: #000000 !important; }
+        .calc-theme-glass-frost .bc-output-box { background: rgba(59, 89, 152, 0.6) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
+        .calc-theme-glass-frost .bc-btn { background: rgba(255, 255, 255, 0.35) !important; backdrop-filter: blur(4px); color: #000000 !important; border-color: rgba(255, 255, 255, 0.5) !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important; }
+
+        /* 13. 100% Glass Dark Obsidian */
+        .calc-theme-glass-dark { background: rgba(15, 23, 42, 0.45) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important; }
+        .calc-theme-glass-dark .bc-tabs { border-bottom-color: rgba(56, 189, 248, 0.5) !important; }
+        .calc-theme-glass-dark .bc-tab-btn { background: rgba(30, 41, 59, 0.5) !important; color: #38bdf8 !important; border-color: rgba(255, 255, 255, 0.08) !important; }
+        .calc-theme-glass-dark .bc-tab-btn.active { background: rgba(56, 189, 248, 0.8) !important; color: #0f172a !important; border-color: #38bdf8 !important; }
+        .calc-theme-glass-dark .bc-screen-container { background: rgba(15, 23, 42, 0.5) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
+        .calc-theme-glass-dark .bc-input-box { background: transparent !important; color: #f8fafc !important; }
+        .calc-theme-glass-dark .bc-output-box { background: rgba(30, 58, 138, 0.6) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
+        .calc-theme-glass-dark .bc-btn { background: rgba(30, 41, 59, 0.4) !important; backdrop-filter: blur(4px); color: #f8fafc !important; border-color: rgba(255, 255, 255, 0.1) !important; box-shadow: 0 4px 6px rgba(0,0,0,0.2) !important; }
+
+        /* 14. 100% Glass Emerald Aura */
+        .calc-theme-glass-emerald { background: rgba(6, 78, 59, 0.35) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(134, 239, 172, 0.3) !important; }
+        .calc-theme-glass-emerald .bc-tabs { border-bottom-color: #4ade80 !important; }
+        .calc-theme-glass-emerald .bc-tab-btn { background: rgba(4, 120, 87, 0.4) !important; color: #d1fae5 !important; border-color: rgba(134, 239, 172, 0.2) !important; }
+        .calc-theme-glass-emerald .bc-tab-btn.active { background: #22c55e !important; color: #ffffff !important; border-color: #22c55e !important; }
+        .calc-theme-glass-emerald .bc-screen-container { background: rgba(6, 78, 59, 0.3) !important; border-color: rgba(134, 239, 172, 0.3) !important; }
+        .calc-theme-glass-emerald .bc-input-box { background: transparent !important; color: #ecfdf5 !important; }
+        .calc-theme-glass-emerald .bc-output-box { background: rgba(22, 101, 52, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
+        .calc-theme-glass-emerald .bc-btn { background: rgba(6, 95, 70, 0.4) !important; backdrop-filter: blur(4px); color: #d1fae5 !important; border-color: rgba(134, 239, 172, 0.3) !important; }
+
+        /* 15. 100% Glass Rose Quartz */
+        .calc-theme-glass-rose { background: rgba(136, 19, 55, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(253, 164, 175, 0.3) !important; }
+        .calc-theme-glass-rose .bc-tabs { border-bottom-color: #fb7185 !important; }
+        .calc-theme-glass-rose .bc-tab-btn { background: rgba(159, 18, 57, 0.35) !important; color: #ffe4e6 !important; border-color: rgba(253, 164, 175, 0.2) !important; }
+        .calc-theme-glass-rose .bc-tab-btn.active { background: #f43f5e !important; color: #ffffff !important; border-color: #f43f5e !important; }
+        .calc-theme-glass-rose .bc-screen-container { background: rgba(136, 19, 55, 0.25) !important; border-color: rgba(253, 164, 175, 0.3) !important; }
+        .calc-theme-glass-rose .bc-input-box { background: transparent !important; color: #fff1f2 !important; }
+        .calc-theme-glass-rose .bc-output-box { background: rgba(159, 18, 57, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
+        .calc-theme-glass-rose .bc-btn { background: rgba(159, 18, 57, 0.3) !important; backdrop-filter: blur(4px); color: #ffe4e6 !important; border-color: rgba(253, 164, 175, 0.3) !important; }
+
+        /* 16. 100% Glass Amethyst */
+        .calc-theme-glass-amethyst { background: rgba(76, 29, 149, 0.3) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(196, 181, 253, 0.3) !important; }
+        .calc-theme-glass-amethyst .bc-tabs { border-bottom-color: #a78bfa !important; }
+        .calc-theme-glass-amethyst .bc-tab-btn { background: rgba(91, 33, 182, 0.35) !important; color: #ede9fe !important; border-color: rgba(196, 181, 253, 0.2) !important; }
+        .calc-theme-glass-amethyst .bc-tab-btn.active { background: #8b5cf6 !important; color: #ffffff !important; border-color: #8b5cf6 !important; }
+        .calc-theme-glass-amethyst .bc-screen-container { background: rgba(76, 29, 149, 0.25) !important; border-color: rgba(196, 181, 253, 0.3) !important; }
+        .calc-theme-glass-amethyst .bc-input-box { background: transparent !important; color: #f5f3ff !important; }
+        .calc-theme-glass-amethyst .bc-output-box { background: rgba(91, 33, 182, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
+        .calc-theme-glass-amethyst .bc-btn { background: rgba(91, 33, 182, 0.3) !important; backdrop-filter: blur(4px); color: #ede9fe !important; border-color: rgba(196, 181, 253, 0.3) !important; }
+
+        /* 17. 100% Glass Cyberpunk Neon */
+        .calc-theme-glass-cyber { background: rgba(9, 9, 11, 0.55) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(34, 197, 94, 0.4) !important; box-shadow: 0 0 20px rgba(34, 197, 94, 0.15) !important; }
+        .calc-theme-glass-cyber .bc-tabs { border-bottom-color: #22c55e !important; }
+        .calc-theme-glass-cyber .bc-tab-btn { background: rgba(24, 24, 27, 0.6) !important; color: #4ade80 !important; border-color: rgba(34, 197, 94, 0.3) !important; }
+        .calc-theme-glass-cyber .bc-tab-btn.active { background: #22c55e !important; color: #09090b !important; border-color: #22c55e !important; }
+        .calc-theme-glass-cyber .bc-screen-container { background: rgba(0, 0, 0, 0.5) !important; border-color: rgba(34, 197, 94, 0.4) !important; }
+        .calc-theme-glass-cyber .bc-input-box { background: transparent !important; color: #4ade80 !important; }
+        .calc-theme-glass-cyber .bc-output-box { background: rgba(5, 46, 22, 0.8) !important; backdrop-filter: blur(4px); color: #4ade80 !important; }
+        .calc-theme-glass-cyber .bc-btn { background: rgba(24, 24, 27, 0.5) !important; backdrop-filter: blur(4px); color: #86efac !important; border-color: rgba(34, 197, 94, 0.3) !important; }
+
+        /* 18. Cyberpunk Neon */
         .calc-theme-cyber { background: #09090b !important; border-color: #22c55e !important; }
         .calc-theme-cyber .bc-tabs { border-bottom-color: #22c55e !important; }
         .calc-theme-cyber .bc-tab-btn { background: #18181b !important; color: #22c55e !important; border-color: #27272a !important; }
@@ -526,7 +585,7 @@
         .calc-theme-cyber .bc-output-box { background: #052e16 !important; color: #4ade80 !important; box-shadow: inset 0 0 10px rgba(34,197,94,0.3); }
         .calc-theme-cyber .bc-btn { background: #18181b !important; color: #4ade80 !important; border-color: #27272a !important; box-shadow: 0 3px 0 #14532d !important; }
 
-        /* 13. Retro Cream / Vintage */
+        /* 19. Retro Cream / Vintage */
         .calc-theme-vintage { background: #fefae0 !important; border-color: #dda15e !important; }
         .calc-theme-vintage .bc-tabs { border-bottom-color: #bc6c25 !important; }
         .calc-theme-vintage .bc-tab-btn { background: #faedcd !important; color: #606c38 !important; border-color: #dda15e !important; }
@@ -534,7 +593,7 @@
         .calc-theme-vintage .bc-output-box { background: #dda15e !important; color: #283618 !important; }
         .calc-theme-vintage .bc-btn { background: linear-gradient(180deg, #fefae0 0%, #faedcd 100%) !important; color: #283618 !important; border-color: #dda15e !important; box-shadow: 0 3px 0 #bc6c25 !important; }
 
-        /* 14. Royal Purple */
+        /* 20. Royal Purple */
         .calc-theme-royal { background: #faf5ff !important; border-color: #d8b4fe !important; }
         .calc-theme-royal .bc-tabs { border-bottom-color: #9333ea !important; }
         .calc-theme-royal .bc-tab-btn { background: #f3e8ff !important; color: #7e22ce !important; border-color: #d8b4fe !important; }
@@ -542,7 +601,7 @@
         .calc-theme-royal .bc-output-box { background: #7e22ce !important; color: #ffffff !important; }
         .calc-theme-royal .bc-btn { background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%) !important; color: #581c87 !important; border-color: #d8b4fe !important; box-shadow: 0 3px 0 #9333ea !important; }
 
-        /* 15. Ocean Blue */
+        /* 21. Ocean Blue */
         .calc-theme-ocean { background: #ecfeff !important; border-color: #67e8f9 !important; }
         .calc-theme-ocean .bc-tabs { border-bottom-color: #0891b2 !important; }
         .calc-theme-ocean .bc-tab-btn { background: #cffafe !important; color: #0e7490 !important; border-color: #67e8f9 !important; }
@@ -550,7 +609,7 @@
         .calc-theme-ocean .bc-output-box { background: #0e7490 !important; color: #ffffff !important; }
         .calc-theme-ocean .bc-btn { background: linear-gradient(180deg, #ecfeff 0%, #cffafe 100%) !important; color: #164e63 !important; border-color: #67e8f9 !important; box-shadow: 0 3px 0 #0891b2 !important; }
 
-        /* 16. Coffee Latte */
+        /* 22. Coffee Latte */
         .calc-theme-latte { background: #fdf8f6 !important; border-color: #d7ccc8 !important; }
         .calc-theme-latte .bc-tabs { border-bottom-color: #8d6e63 !important; }
         .calc-theme-latte .bc-tab-btn { background: #efebe9 !important; color: #4e342e !important; border-color: #d7ccc8 !important; }
@@ -558,7 +617,7 @@
         .calc-theme-latte .bc-output-box { background: #6d4c41 !important; color: #ffffff !important; }
         .calc-theme-latte .bc-btn { background: linear-gradient(180deg, #fdf8f6 0%, #efebe9 100%) !important; color: #3e2723 !important; border-color: #d7ccc8 !important; box-shadow: 0 3px 0 #8d6e63 !important; }
 
-        /* 17. Rose Gold */
+        /* 23. Rose Gold */
         .calc-theme-rosegold { background: #fff1f2 !important; border-color: #fecdd3 !important; }
         .calc-theme-rosegold .bc-tabs { border-bottom-color: #e11d48 !important; }
         .calc-theme-rosegold .bc-tab-btn { background: #ffe4e6 !important; color: #be123c !important; border-color: #fecdd3 !important; }
@@ -566,7 +625,7 @@
         .calc-theme-rosegold .bc-output-box { background: #be123c !important; color: #ffffff !important; }
         .calc-theme-rosegold .bc-btn { background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%) !important; color: #881337 !important; border-color: #fecdd3 !important; box-shadow: 0 3px 0 #e11d48 !important; }
 
-        /* 18. Matrix Terminal */
+        /* 24. Matrix Terminal */
         .calc-theme-matrix { background: #022c22 !important; border-color: #10b981 !important; }
         .calc-theme-matrix .bc-tabs { border-bottom-color: #10b981 !important; }
         .calc-theme-matrix .bc-tab-btn { background: #064e3b !important; color: #6ee7b7 !important; border-color: #047857 !important; }
@@ -576,7 +635,7 @@
         .calc-theme-matrix .bc-output-box { background: #022c22 !important; color: #34d399 !important; }
         .calc-theme-matrix .bc-btn { background: #064e3b !important; color: #a7f3d0 !important; border-color: #047857 !important; box-shadow: 0 3px 0 #022c22 !important; }
 
-        /* 19. Solarized Light */
+        /* 25. Solarized Light */
         .calc-theme-solarized { background: #fdf6e3 !important; border-color: #eee8d5 !important; }
         .calc-theme-solarized .bc-tabs { border-bottom-color: #b58900 !important; }
         .calc-theme-solarized .bc-tab-btn { background: #eee8d5 !important; color: #657b83 !important; border-color: #93a1a1 !important; }
@@ -584,7 +643,7 @@
         .calc-theme-solarized .bc-output-box { background: #cb4b16 !important; color: #fdf6e3 !important; }
         .calc-theme-solarized .bc-btn { background: linear-gradient(180deg, #fdf6e3 0%, #eee8d5 100%) !important; color: #586e75 !important; border-color: #93a1a1 !important; box-shadow: 0 3px 0 #b58900 !important; }
 
-        /* 20. Midnight Blue */
+        /* 26. Midnight Blue */
         .calc-theme-midnight { background: #0f172a !important; border-color: #1e293b !important; }
         .calc-theme-midnight .bc-tabs { border-bottom-color: #3b82f6 !important; }
         .calc-theme-midnight .bc-tab-btn { background: #1e293b !important; color: #94a3b8 !important; border-color: #334155 !important; }
@@ -594,7 +653,7 @@
         .calc-theme-midnight .bc-output-box { background: #1d4ed8 !important; color: #ffffff !important; }
         .calc-theme-midnight .bc-btn { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important; color: #e2e8f0 !important; border-color: #334155 !important; box-shadow: 0 3px 0 #020617 !important; }
 
-        /* 21. Pastel Dream */
+        /* 27. Pastel Dream */
         .calc-theme-pastel { background: #fdf4ff !important; border-color: #f5d0fe !important; }
         .calc-theme-pastel .bc-tabs { border-bottom-color: #ec4899 !important; }
         .calc-theme-pastel .bc-tab-btn { background: #fae8ff !important; color: #db2777 !important; border-color: #f5d0fe !important; }
@@ -602,7 +661,7 @@
         .calc-theme-pastel .bc-output-box { background: #db2777 !important; color: #ffffff !important; }
         .calc-theme-pastel .bc-btn { background: linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%) !important; color: #831843 !important; border-color: #f5d0fe !important; box-shadow: 0 3px 0 #ec4899 !important; }
 
-        /* 22. Crimson Red */
+        /* 28. Crimson Red */
         .calc-theme-crimson { background: #fff5f5 !important; border-color: #feb2b2 !important; }
         .calc-theme-crimson .bc-tabs { border-bottom-color: #e53e3e !important; }
         .calc-theme-crimson .bc-tab-btn { background: #fed7d7 !important; color: #9b2c2c !important; border-color: #feb2b2 !important; }
@@ -610,7 +669,7 @@
         .calc-theme-crimson .bc-output-box { background: #c53030 !important; color: #ffffff !important; }
         .calc-theme-crimson .bc-btn { background: linear-gradient(180deg, #fff5f5 0%, #fed7d7 100%) !important; color: #742a2a !important; border-color: #feb2b2 !important; box-shadow: 0 3px 0 #e53e3e !important; }
 
-        /* 23. Lavender Mist */
+        /* 29. Lavender Mist */
         .calc-theme-lavender { background: #f5f3ff !important; border-color: #ddd6fe !important; }
         .calc-theme-lavender .bc-tabs { border-bottom-color: #7c3aed !important; }
         .calc-theme-lavender .bc-tab-btn { background: #ede9fe !important; color: #6d28d9 !important; border-color: #ddd6fe !important; }
@@ -618,7 +677,7 @@
         .calc-theme-lavender .bc-output-box { background: #6d28d9 !important; color: #ffffff !important; }
         .calc-theme-lavender .bc-btn { background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%) !important; color: #4c1d95 !important; border-color: #ddd6fe !important; box-shadow: 0 3px 0 #7c3aed !important; }
 
-        /* 24. Slate Minimal */
+        /* 30. Slate Minimal */
         .calc-theme-slate { background: #f1f5f9 !important; border-color: #cbd5e1 !important; }
         .calc-theme-slate .bc-tabs { border-bottom-color: #475569 !important; }
         .calc-theme-slate .bc-tab-btn { background: #e2e8f0 !important; color: #334155 !important; border-color: #cbd5e1 !important; }
@@ -647,7 +706,7 @@
     </style>
 
     <div class="bc-tabs" role="tablist">
-        <!-- 24-THEME FILTER DROPDOWN WITH PALETTE ICON -->
+        <!-- 30 TOTAL THEME FILTER DROPDOWN (INCLUDING GLASS & TRANSPARENT STYLES) -->
         <select class="bc-theme-select" aria-label="Calculator Theme Filters" onchange="BloggerCalc.setTheme(this.value)">
             <option value="" disabled selected>🎨 Filters</option>
             <option value="">Default Classic</option>
@@ -662,6 +721,12 @@
             <option value="calc-theme-semi3d">Semi-3D Neo</option>
             <option value="calc-theme-bento">Bento Grid Clean</option>
             <option value="calc-theme-minimal">Minimalist UX</option>
+            <option value="calc-theme-glass-frost">Glass Frost (Transparent)</option>
+            <option value="calc-theme-glass-dark">Glass Dark Obsidian</option>
+            <option value="calc-theme-glass-emerald">Glass Emerald Aura</option>
+            <option value="calc-theme-glass-rose">Glass Rose Quartz</option>
+            <option value="calc-theme-glass-amethyst">Glass Amethyst</option>
+            <option value="calc-theme-glass-cyber">Glass Cyber Neon</option>
             <option value="calc-theme-cyber">Cyberpunk Neon</option>
             <option value="calc-theme-vintage">Retro Cream</option>
             <option value="calc-theme-royal">Royal Purple</option>
