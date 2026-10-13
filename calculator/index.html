@@ -289,7 +289,7 @@
             box-shadow: 0 1px 0 #91a8c0, 0 1px 2px rgba(15, 23, 42, 0.15) !important;
         }
 
-        /* 3. EQUALS (=) - PRESERVED VIBRANT BLUE */
+        /* 3. EQUALS (=) - PERMANENTLY LOCKED VIBRANT BLUE */
         .bc-btn-primary,
         .bc-btn[aria-label="Calculate Equals"] { 
             background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%) !important; 
@@ -308,7 +308,7 @@
             box-shadow: 0 1px 0 #1e40af, 0 1px 2px rgba(37, 99, 235, 0.4) !important;
         }
 
-        /* 4. CLEAR / AC - PRESERVED CRIMSON RED */
+        /* 4. CLEAR / AC - PERMANENTLY LOCKED CRIMSON RED */
         .bc-btn-danger,
         .bc-btn[aria-label="Clear All"] { 
             background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important; 
@@ -327,7 +327,7 @@
             box-shadow: 0 1px 0 #991b1b, 0 1px 2px rgba(220, 38, 38, 0.4) !important;
         }
 
-        /* 5. BACKSPACE / DELETE - PRESERVED AMBER */
+        /* 5. BACKSPACE / DELETE - PERMANENTLY LOCKED SUNSET AMBER */
         .bc-btn-delete,
         .bc-btn[aria-label="Backspace"] {
             background: linear-gradient(180deg, #f97316 0%, #ea580c 100%) !important;
@@ -417,8 +417,7 @@
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
 
         /* ========================================================
-           30 TOTAL THEME FILTERS (INCLUDING 6 GLASS TRANSPARENT)
-           WHILE KEEPING FUNCTIONAL BUTTON COLORS INTACT
+           30 TOTAL THEME FILTERS (PRESERVING AC, BACK, EQUALS COLORS)
            ======================================================== */
         /* 1. Black & White */
         .calc-theme-bw { background: #ffffff !important; border-color: #000000 !important; }
@@ -685,6 +684,29 @@
         .calc-theme-slate .bc-output-box { background: #334155 !important; color: #ffffff !important; }
         .calc-theme-slate .bc-btn { background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important; color: #0f172a !important; border-color: #cbd5e1 !important; box-shadow: 0 3px 0 #475569 !important; }
 
+        /* PRESERVE PRIMARY, DANGER, & DELETE BUTTON COLORS ACROSS ALL THEMES */
+        [class*="calc-theme-"] .bc-btn-primary,
+        [class*="calc-theme-"] .bc-btn[aria-label="Calculate Equals"] {
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%) !important;
+            color: #ffffff !important;
+            border-color: #1d4ed8 !important;
+            box-shadow: 0 3px 0 #1e40af, 0 4px 6px rgba(37, 99, 235, 0.35) !important;
+        }
+        [class*="calc-theme-"] .bc-btn-danger,
+        [class*="calc-theme-"] .bc-btn[aria-label="Clear All"] {
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important;
+            color: #ffffff !important;
+            border-color: #b91c1c !important;
+            box-shadow: 0 3px 0 #991b1b, 0 4px 6px rgba(220, 38, 38, 0.35) !important;
+        }
+        [class*="calc-theme-"] .bc-btn-delete,
+        [class*="calc-theme-"] .bc-btn[aria-label="Backspace"] {
+            background: linear-gradient(180deg, #f97316 0%, #ea580c 100%) !important;
+            color: #ffffff !important;
+            border-color: #c2410c !important;
+            box-shadow: 0 3px 0 #9a3412, 0 4px 6px rgba(234, 88, 12, 0.35) !important;
+        }
+
         /* MOBILE VIEW */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
@@ -706,7 +728,7 @@
     </style>
 
     <div class="bc-tabs" role="tablist">
-        <!-- 30 TOTAL THEME FILTER DROPDOWN (INCLUDING GLASS & TRANSPARENT STYLES) -->
+        <!-- 30 TOTAL THEME FILTER DROPDOWN -->
         <select class="bc-theme-select" aria-label="Calculator Theme Filters" onchange="BloggerCalc.setTheme(this.value)">
             <option value="" disabled selected>🎨 Filters</option>
             <option value="">Default Classic</option>
