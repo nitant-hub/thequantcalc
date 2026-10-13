@@ -873,12 +873,13 @@ input, select, textarea {
   }
 }
 
-/* 🚀 CALCULATOR CONTAINER LOCK (FULL EDGE-TO-EDGE X OCCUPATION & ZERO TITLE GAP) */
+/* 🚀 CALCULATOR CONTAINER LOCK (EDGE-TO-EDGE FULL X-AXIS FRAME ELIMINATION) */
 .calc-card {
-  padding-top: 1rem !important; 
-  padding-bottom: 0px !important; 
-  padding-left: 0 !important; 
-  padding-right: 0 !important;
+  padding: 0 !important; 
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
   overflow: hidden; 
   max-width: 100% !important; 
   box-sizing: border-box !important;
@@ -933,7 +934,6 @@ footer a:hover { color: var(--link); }
 @media(max-width:480px){ .wrap { padding: 0 .6rem; } }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
-  .calc-card { padding-left: 0 !important; padding-right: 0 !important; }
 }
 @media(min-width:992px){ .grid { grid-template-columns: 2.5fr 1fr; } }
 </style>
