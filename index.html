@@ -873,31 +873,24 @@ input, select, textarea {
   }
 }
 
-/* 🚀 CALCULATOR CONTAINER LOCK (ZERO BOTTOM GAP) */
+/* 🚀 CALCULATOR CONTAINER LOCK (ZERO BOTTOM GAP & FULL AREA PRESERVED) */
 .calc-card {
   padding-top: 1.25rem; 
-  padding-bottom: 0px !important; 
+  padding-bottom: 1.15rem !important; 
   padding-left: 0; 
   padding-right: 0;
   overflow: hidden; 
   max-width: 100% !important; 
   box-sizing: border-box !important;
-  min-height: 350px !important; 
 }
 .calc-card .st { padding-left: 1.25rem; margin-bottom: .4rem; }
 #calc { 
   width: 100% !important; 
   max-width: 100% !important; 
-  height: 300px !important; 
-  min-height: 300px !important; 
+  height: 310px; 
   border: none; 
   display: block; 
   margin-bottom: 0 !important;
-}
-
-@media(max-width:600px) {
-  .calc-card { min-height: 330px !important; padding-bottom: 0 !important; }
-  #calc { height: 285px !important; min-height: 285px !important; margin-bottom: 0 !important; }
 }
 
 #homeSearchSlot { width: 100%; margin: -0.2rem 0 0.5rem 0; }
@@ -941,7 +934,7 @@ footer a:hover { color: var(--link); }
 @media(max-width:480px){ .wrap { padding: 0 .6rem; } }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
-  .calc-card { padding-left: 0; padding-right: 0; padding-bottom: 0 !important; }
+  .calc-card { padding-left: 0; padding-right: 0; }
 }
 @media(min-width:992px){ .grid { grid-template-columns: 2.5fr 1fr; } }
 </style>
@@ -1057,7 +1050,8 @@ footer a:hover { color: var(--link); }
 
   window.addEventListener('message', function(e) {
     if (e.data && e.data.frameHeight && calc) {
-      calc.style.height = e.data.frameHeight + 'px';
+      // Strips out the 8px padding buffer from the calculator to match the exact height
+      calc.style.height = (e.data.frameHeight - 8) + 'px';
     }
   });
 
@@ -1087,7 +1081,6 @@ footer a:hover { color: var(--link); }
     if(!calc || !calc.offsetParent)return;
     var h=measureCalc();
     if(h<200||h>2500)return;
-    h+=6;
     if(Math.abs(h-calc.offsetHeight)>2)calc.style.height=h+'px';
   }
   if(calc){
