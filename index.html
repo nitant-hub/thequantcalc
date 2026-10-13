@@ -995,9 +995,12 @@ footer a:hover { color: var(--link); }
 
   var calc=document.getElementById('calc');
 
+  var msgDriven = false;
   window.addEventListener('message', function(e) {
     if (e.data && e.data.frameHeight && calc) {
-      calc.style.height = (e.data.frameHeight - 2) + 'px';
+      msgDriven = true;
+      var h = e.data.frameHeight - 2;
+      if (Math.abs(h - calc.offsetHeight) > 2) calc.style.height = h + 'px';
     }
   });
 
@@ -1024,6 +1027,7 @@ footer a:hover { color: var(--link); }
     }catch(e){return 0}
   }
   function fitCalc(){
+    if(msgDriven)return;
     if(!calc || !calc.offsetParent)return;
     var h=measureCalc();
     if(h<200||h>2500)return;
