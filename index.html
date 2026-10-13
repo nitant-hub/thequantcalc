@@ -873,9 +873,9 @@ input, select, textarea {
   }
 }
 
-/* 🚀 CALCULATOR CONTAINER LOCK (EDGE-TO-EDGE X-AXIS FULL OCCUPATION) */
+/* 🚀 CALCULATOR CONTAINER LOCK (FULL EDGE-TO-EDGE X OCCUPATION & ZERO TITLE GAP) */
 .calc-card {
-  padding-top: 1.25rem; 
+  padding-top: 1rem !important; 
   padding-bottom: 0px !important; 
   padding-left: 0 !important; 
   padding-right: 0 !important;
@@ -883,7 +883,6 @@ input, select, textarea {
   max-width: 100% !important; 
   box-sizing: border-box !important;
 }
-.calc-card .st { padding-left: 1.25rem; margin-bottom: .6rem; }
 #calc { 
   width: 100% !important; 
   max-width: 100% !important; 
@@ -948,7 +947,6 @@ footer a:hover { color: var(--link); }
   <!-- HOME VIEW -->
   <div id="home" style="display:flex;flex-direction:column;gap:1.5rem">
     <section class="card calc-card">
-      <h2 class="st">🧮 Interactive Calculator</h2>
       <iframe id="calc" src="calculator/index.html" title="Interactive Calculator"></iframe>
     </section>
 
