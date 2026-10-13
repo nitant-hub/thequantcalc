@@ -179,9 +179,10 @@
 
         .bc-tab-pane { 
             display: none !important; 
-            gap: 2px 8px; /* Adjusted gap: 2px row gap (less space horizontally), 8px column gap (more space vertically) */
+            gap: 4px 6px; /* Dynamically slim gap that allows buttons to stretch and fill all dead space */
             height: 100%;
             width: 100%;
+            grid-auto-rows: 1fr; /* This automatically distributes all remaining row height equally to buttons */
         }
         .bc-tab-pane.active { display: grid !important; }
         #bc-history-tab.active { display: flex !important; }
@@ -201,7 +202,8 @@
             border: 1px solid #94a8be; 
             border-top: 1px solid #ffffff;
             border-radius: 4px; 
-            height: 38px; 
+            height: 100%; /* Dynamically matches grid row height rather than fixed rigid pixel sizing */
+            width: 100%;
             font-size: 15px !important; 
             font-weight: 900 !important; 
             letter-spacing: -0.2px;
@@ -367,6 +369,7 @@
 
         .bc-span-2 { grid-column: span 2; }
         .bc-span-3 { grid-column: span 3; }
+        .bc-span-4 { grid-column: span 4; }
         .bc-span-5 { grid-column: span 5; }
         .bc-span-6 { grid-column: span 6; }
         .bc-span-9 { grid-column: span 9; }
@@ -399,14 +402,16 @@
             .bc-tab-btn { font-size: 11px !important; padding: 5px 8px; font-weight: 800 !important; }
             #btn-bc-history-tab { font-size: 10px !important; }
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
-            .bc-btn { height: 34px !important; font-size: 11px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #94a8be, 0 3px 4px rgba(0,0,0,0.08); }
+            
+            .bc-tab-pane { gap: 3px 5px !important; } /* Tighter mobile gap so buttons fill available space beautifully */
+            
+            .bc-btn { font-size: 11px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #94a8be, 0 3px 4px rgba(0,0,0,0.08); }
             .bc-btn:active { transform: translateY(1.5px); }
             .bc-btn-num { font-size: 17px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #85a4c5, 0 3px 4px rgba(0,0,0,0.08) !important; }
             .bc-btn-op { font-size: 16px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #91a8c0, 0 3px 4px rgba(0,0,0,0.08) !important; }
             .bc-btn-primary { font-size: 18px !important; font-weight: 900 !important; box-shadow: 0 2px 0 #1e40af, 0 3px 4px rgba(37, 99, 235, 0.3) !important; }
             .bc-btn-danger { box-shadow: 0 2px 0 #991b1b, 0 3px 4px rgba(220, 38, 38, 0.3) !important; }
             .bc-btn-delete { box-shadow: 0 2px 0 #9a3412, 0 3px 4px rgba(234, 88, 12, 0.3) !important; }
-            .bc-tab-pane { gap: 1px 6px !important; } /* Adjusted mobile gap: 1px row gap, 6px column gap */
         }
     </style>
 
@@ -684,7 +689,7 @@
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
             <button class="bc-btn bc-btn-op" aria-label="Add" onclick="BloggerCalc.op('+')">+</button>
 
-            <button class="bc-btn bc-btn-primary bc-span-9" onclick="BloggerCalc.calc()" style="height:34px">RUN SCRIPT</button>
+            <button class="bc-btn bc-btn-primary bc-span-9" onclick="BloggerCalc.calc()">RUN SCRIPT</button>
         </div>
 
         <!-- 6. HP PRIME -->
@@ -732,7 +737,7 @@
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">+/-</button>
             <button class="bc-btn bc-btn-num bc-span-2" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-2" onclick="BloggerCalc.calc()">PLOT</button>
+            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">PLOT</button>
         </div>
 
         <!-- 7. TI-NSPIRE -->
@@ -784,7 +789,7 @@
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">EE</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">enter</button>
+            <button class="bc-btn bc-btn-primary bc-span-4" onclick="BloggerCalc.calc()">enter</button>
         </div>
 
         <!-- 8. HP 12C -->
