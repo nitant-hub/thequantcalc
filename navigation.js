@@ -460,6 +460,121 @@
         .dyn-desktop-nav { display: flex !important; }
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
+
+      /* ========================================================
+         RELATED CAROUSEL STYLES
+         ======================================================== */
+      .related-section {
+        --card: rgba(255,255,255,.88);
+        --text: #172033;
+        --muted: #718096;
+        --accent: #2878ff;
+        --border: rgba(30,50,80,.10);
+        --shadow: 0 12px 32px rgba(30,50,80,.10);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--text);
+        max-width: 100%;
+        margin: 0 0 16px 0;
+        padding: 16px 12px 20px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: linear-gradient(145deg, #ffffff, #f1f5fb);
+        box-shadow: var(--shadow);
+        box-sizing: border-box !important;
+      }
+      [data-theme="dark"] .related-section {
+        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
+        --card: rgba(30,41,59,.88);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255,255,255,.1);
+      }
+      .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
+
+      .related-section .section-header {
+        display: flex; align-items: end; justify-content: space-between;
+        gap: 10px; margin-bottom: 16px;
+      }
+      .related-section .eyebrow {
+        margin: 0 0 4px; color: var(--accent); font-size: 10px; font-weight: 800;
+        letter-spacing: 1.2px; text-transform: uppercase;
+      }
+      .related-section .section-title {
+        margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: -.5px;
+      }
+      .related-section .section-description {
+        margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4;
+      }
+      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
+      .related-section .carousel-btn {
+        display: grid; place-items: center; width: 32px; height: 32px;
+        border: 1px solid var(--border); border-radius: 50%; background: white;
+        color: var(--text); font-size: 18px; cursor: pointer;
+        box-shadow: 0 2px 8px rgba(30,50,80,.06);
+        transition: transform .2s ease, background .2s ease;
+      }
+      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
+      .related-section .carousel-btn:hover { transform: translateY(-2px); background: #edf4ff; }
+      
+      .related-section .carousel-viewport {
+        overflow: hidden; padding: 4px 2px 14px; touch-action: pan-y;
+        cursor: grab; user-select: none; -webkit-user-select: none;
+      }
+      .related-section .carousel-viewport:active { cursor: grabbing; }
+      .related-section .carousel-track { display: flex; gap: 12px; will-change: transform; }
+      .related-section .tool-loading {
+        margin: 0; padding: 40px 0; width: 100%; text-align: center;
+        color: var(--muted); font-size: 13px; font-style: italic;
+      }
+
+      .related-section .tool-card {
+        position: relative; display: flex; flex: 0 0 100%;
+        flex-direction: column; min-width: 0; min-height: 190px; padding: 16px;
+        overflow: hidden; color: inherit; text-decoration: none;
+        border: 1px solid rgba(255,255,255,.9); border-radius: 16px;
+        background: var(--card); box-shadow: 0 6px 18px rgba(30,50,80,.08);
+        transition: transform .25s ease, box-shadow .25s ease;
+      }
+      [data-theme="dark"] .related-section .tool-card { border-color: rgba(255,255,255,.05); }
+      .related-section .tool-card::before {
+        content: ""; position: absolute; top: -35px; right: -25px;
+        width: 95px; height: 95px; border-radius: 50%;
+        background: var(--glow, #e7efff); opacity: .85; filter: blur(1px);
+      }
+      .related-section .tool-icon {
+        position: relative; display: grid; place-items: center; width: 44px; height: 44px;
+        margin-bottom: 14px; border: 1px solid rgba(255,255,255,.8); border-radius: 12px;
+        background: linear-gradient(145deg, #ffffff, var(--glow, #e7efff));
+        box-shadow: 0 4px 10px rgba(30,50,80,.09); font-size: 22px;
+      }
+      .related-section .tool-category {
+        position: relative; margin: 0 0 6px; color: var(--accent); font-size: 9px;
+        font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      }
+      .related-section .tool-title {
+        position: relative; margin: 0 0 6px; font-size: 15px; font-weight: 750;
+        line-height: 1.3;
+      }
+      .related-section .tool-description {
+        position: relative; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45;
+      }
+      .related-section .tool-open {
+        position: relative; display: flex; align-items: center; justify-content: space-between;
+        gap: 8px; margin-top: auto; padding-top: 14px; color: var(--accent);
+        font-size: 12px; font-weight: 750;
+      }
+
+      .related-section .carousel-footer {
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;
+      }
+      .related-section .carousel-status { color: var(--muted); font-size: 11px; }
+      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
+      .related-section .carousel-dot {
+        width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
+        background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
+      }
+      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: var(--accent); }
     `;
 
     const categories = [
@@ -540,7 +655,6 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
-    // SEARCH COMPONENT WITHOUT SEARCH BUTTON (FULL WIDTH INPUT)
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -627,53 +741,232 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // CONNECT EXTERNAL similar-posts.html INTO SIDEBAR
-    let carouselLoaded = false;
-    async function loadSimilarPosts(toolsCard) {
-      if (carouselLoaded) return;
-      carouselLoaded = true;
+    // EMBEDDED CAROUSEL LOGIC
+    let carouselInitialized = false;
+    function initCarouselLogic() {
+      if (carouselInitialized) return;
+      const viewport = document.getElementById("carouselViewport");
+      const track = document.getElementById("carouselTrack");
+      if (!viewport || !track) return;
+      carouselInitialized = true;
 
-      try {
-        const paths = ["/similar-posts.html", "../similar-posts.html", "similar-posts.html"];
-        let html = "";
-        for (const p of paths) {
-          const res = await fetch(p);
-          if (res.ok) {
-            html = await res.text();
-            break;
+      (async () => {
+        const prev = document.getElementById("previousBtn");
+        const next = document.getElementById("nextBtn");
+        const dots = document.getElementById("carouselDots");
+        const status = document.getElementById("carouselStatus");
+        if (!prev || !next || !dots || !status) return;
+
+        const currentUrl = window.location.pathname;
+        const glows = ["#e2edff", "#dcfce7", "#f3e8ff", "#ffedd5", "#ffe4e6", "#cffafe", "#fef9c3", "#e0e7ff"];
+        const acronyms = ["EMI", "ROI", "CAGR", "SIP", "PPF", "GST", "NPV", "IRR", "FD", "RD", "BMI", "BMR", "TDS", "EPF"];
+
+        const categoriesMap = {
+          finance: { icon: "💰", label: "Finance", text: "Plan your money with a quick, accurate calculation." },
+          health:  { icon: "❤️", label: "Health", text: "Check your numbers quickly with this free health tool." },
+          math:    { icon: "🧮", label: "Mathematics", text: "Solve it instantly with this free math tool." },
+          other:   { icon: "🛠️", label: "Tools", text: "Open this free tool and get your result instantly." }
+        };
+
+        const fallback = [
+          { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", cat: "finance", text: "Estimate investment growth and compound returns over time." },
+          { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", cat: "math", text: "Calculate exam scores and percentages instantly." },
+          { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", cat: "other", label: "Date & Time", icon: "🎂", text: "Calculate your exact age in years, months and days." },
+          { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", cat: "other", label: "Physics", icon: "🌌", text: "Find out your weight on different planets." }
+        ];
+
+        function categoryOf(path) {
+          const p = path.toLowerCase();
+          if (p.includes("finance")) return "finance";
+          if (p.includes("health")) return "health";
+          if (p.includes("math")) return "math";
+          return "other";
+        }
+
+        function titleFrom(path) {
+          const slug = path.split("/").filter(Boolean).pop() || "";
+          const clean = slug.replace(/\.html?$/i, "").replace(/^(finance|health|math)-/i, "").replace(/-/g, " ");
+          return clean.split(" ").filter(Boolean).map(w => {
+            const up = w.toUpperCase();
+            return acronyms.includes(up) ? up : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+          }).join(" ");
+        }
+
+        async function loadRelated() {
+          try {
+            let xmlText = null;
+            try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
+            if (!xmlText) {
+              const response = await fetch("/sitemap-pages.xml");
+              xmlText = await response.text();
+              try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
+            }
+
+            const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
+            const locs = xmlDoc.getElementsByTagName("loc");
+            const pageCat = categoryOf(currentUrl);
+            const found = [];
+
+            for (let i = 0; i < locs.length; i++) {
+              const path = new URL(locs[i].textContent).pathname;
+              if (path === currentUrl) continue;
+              const cat = categoryOf(path);
+              const match = pageCat !== "other" ? cat === pageCat : /calculator|converter|tools/i.test(path);
+              if (match) found.push({ path: path, title: titleFrom(path), cat: cat });
+            }
+
+            const picked = found.sort(() => 0.5 - Math.random()).slice(0, 15);
+            return picked.length ? picked : fallback;
+          } catch (e) {
+            return fallback;
           }
         }
-        if (!html) return;
 
-        // Remove ONLY Popular Tools while keeping System Status intact
-        Array.from(toolsCard.children).forEach((child) => {
-          const txt = (child.textContent || "").toLowerCase();
-          if (!txt.includes("system status") && !txt.includes("all tools process locally")) {
-            child.remove();
-          }
+        const tools = await loadRelated();
+        track.innerHTML = "";
+
+        tools.forEach((tool, i) => {
+          const c = categoriesMap[tool.cat] || categoriesMap.other;
+          const a = document.createElement("a");
+          a.className = "tool-card";
+          a.href = tool.path;
+          a.draggable = false;
+          a.style.setProperty("--glow", glows[i % glows.length]);
+
+          const icon = document.createElement("div");
+          icon.className = "tool-icon";
+          icon.setAttribute("aria-hidden", "true");
+          icon.textContent = tool.icon || c.icon;
+
+          const cat = document.createElement("p");
+          cat.className = "tool-category";
+          cat.textContent = tool.label || c.label;
+
+          const title = document.createElement("h3");
+          title.className = "tool-title";
+          title.textContent = tool.title;
+
+          const desc = document.createElement("p");
+          desc.className = "tool-description";
+          desc.textContent = tool.text || c.text;
+
+          const open = document.createElement("div");
+          open.className = "tool-open";
+          open.innerHTML = "<span>Open tool</span><span>→</span>";
+
+          a.append(icon, cat, title, desc, open);
+          track.appendChild(a);
         });
 
-        // Parse and inject HTML, CSS, and execute JS from similar-posts.html
-        const wrapper = document.createElement("div");
-        wrapper.innerHTML = html;
+        const cards = Array.from(track.querySelectorAll(".tool-card"));
+        let offset = 0, vel = 0, target = null, raf = null, last = 0;
+        let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0, wheelTimer = null;
 
-        const scripts = Array.from(wrapper.querySelectorAll("script"));
-        scripts.forEach((s) => s.remove());
+        function visibleCards() { return 1; }
+        function maxIndex() { return Math.max(0, cards.length - visibleCards()); }
+        function step() {
+          const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+          return cards[0].offsetWidth + gap;
+        }
+        function maxOffset() { return maxIndex() * step(); }
+        function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+        function current() { return clamp(Math.round(offset / step()), 0, maxIndex()); }
 
-        toolsCard.insertBefore(wrapper, toolsCard.firstChild);
-
-        scripts.forEach((oldScript) => {
-          const newScript = document.createElement("script");
-          if (oldScript.src) {
-            newScript.src = oldScript.src;
-          } else {
-            newScript.textContent = oldScript.textContent;
+        function buildDots() {
+          dots.innerHTML = "";
+          for (let i = 0; i <= maxIndex(); i++) {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "carousel-dot";
+            dot.setAttribute("aria-label", "Show tool group " + (i + 1));
+            dot.addEventListener("click", () => { target = i * step(); vel = 0; start(); });
+            dots.appendChild(dot);
           }
-          document.body.appendChild(newScript);
+        }
+
+        function apply() {
+          track.style.transform = "translate3d(" + (-offset) + "px,0,0)";
+          const i = current();
+          Array.from(dots.children).forEach((dot, k) => {
+            dot.setAttribute("aria-current", String(k === i));
+          });
+          prev.disabled = i === 0;
+          next.disabled = i === maxIndex();
+          prev.style.opacity = prev.disabled ? ".45" : "1";
+          next.style.opacity = next.disabled ? ".45" : "1";
+          status.textContent = "Tool " + (i + 1) + " of " + cards.length;
+        }
+
+        function tick(t) {
+          const dt = Math.min(40, t - last); last = t;
+          if (!dragging) {
+            if (target === null) {
+              offset += vel * dt;
+              vel *= Math.pow(0.995, dt);
+              const max = maxOffset();
+              if (offset < 0 || offset > max) {
+                target = offset < 0 ? 0 : max; vel = 0;
+              } else if (Math.abs(vel) < 0.03) {
+                target = clamp(Math.round(offset / step()), 0, maxIndex()) * step(); vel = 0;
+              }
+            }
+            if (target !== null) {
+              const d = target - offset;
+              offset += d * Math.min(1, dt * 0.02);
+              if (Math.abs(d) < 0.5) { offset = target; target = null; apply(); raf = null; return; }
+            }
+          }
+          apply();
+          raf = requestAnimationFrame(tick);
+        }
+        function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+
+        prev.addEventListener("click", () => { target = (current() - 1) * step(); vel = 0; start(); });
+        next.addEventListener("click", () => { target = (current() + 1) * step(); vel = 0; start(); });
+
+        viewport.addEventListener("pointerdown", e => {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          dragging = true; moved = false;
+          startX = lastX = e.clientX; lastT = e.timeStamp;
+          vel = 0; target = null;
         });
-      } catch (err) {
-        carouselLoaded = false;
-      }
+        window.addEventListener("pointermove", e => {
+          if (!dragging) return;
+          if (Math.abs(e.clientX - startX) > 6) moved = true;
+          const dx = e.clientX - lastX;
+          const dtm = Math.max(1, e.timeStamp - lastT);
+          const max = maxOffset();
+          const outside = (offset - dx < 0) || (offset - dx > max);
+          offset -= outside ? dx * 0.35 : dx;
+          vel = vel * 0.6 + (-dx / dtm) * 0.4;
+          lastX = e.clientX; lastT = e.timeStamp;
+          apply();
+        });
+        function release(e) {
+          if (!dragging) return;
+          dragging = false;
+          if (e.timeStamp - lastT > 80) vel = 0;
+          vel = clamp(vel, -4, 4);
+          start();
+          setTimeout(() => { moved = false; }, 0);
+        }
+        window.addEventListener("pointerup", release);
+        window.addEventListener("pointercancel", release);
+
+        track.addEventListener("click", e => {
+          if (moved) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+        track.addEventListener("dragstart", e => e.preventDefault());
+
+        window.addEventListener("resize", () => {
+          offset = clamp(offset, 0, maxOffset());
+          buildDots();
+          apply();
+        });
+
+        buildDots();
+        apply();
+      })();
     }
 
     function relocateSearch() {
@@ -694,7 +987,7 @@
         return;
       }
 
-      // 2. Desktop Category Page (SWAPPED: AdSense on TOP, Search BELOW)
+      // 2. Desktop Category Page
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -743,7 +1036,7 @@
         }
       }
 
-      // 4. Standalone Tool Page (SWAPPED: Search on TOP, AdSense BELOW)
+      // 4. Standalone Tool Page
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -756,8 +1049,46 @@
           sidebarAside.appendChild(toolsCard);
         }
 
-        // Load external similar-posts.html into toolsCard
-        loadSimilarPosts(toolsCard);
+        // Cleanly replace Popular Tools with Carousel while keeping System Status untouched
+        if (!toolsCard.querySelector(".related-section")) {
+          const children = Array.from(toolsCard.children);
+          for (const child of children) {
+            const txt = (child.textContent || "").toLowerCase();
+            if (!txt.includes("system status") && !txt.includes("all tools process locally")) {
+              child.remove();
+            }
+          }
+
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = `
+            <section class="related-section" aria-labelledby="related-title">
+              <div class="section-header">
+                <div>
+                  <p class="eyebrow">Keep exploring</p>
+                  <h2 class="section-title" id="related-title">Related Tools</h2>
+                  <p class="section-description">Smart tools to help you calculate faster.</p>
+                </div>
+                <div class="carousel-controls">
+                  <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous tools">‹</button>
+                  <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next tools">›</button>
+                </div>
+              </div>
+
+              <div class="carousel-viewport" id="carouselViewport" tabindex="0">
+                <div class="carousel-track" id="carouselTrack">
+                  <p class="tool-loading">Loading related tools…</p>
+                </div>
+              </div>
+
+              <div class="carousel-footer">
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">Explore tools</span>
+                <div class="carousel-dots" id="carouselDots" aria-label="Choose carousel position"></div>
+              </div>
+            </section>
+          `;
+          toolsCard.insertBefore(tempDiv.firstElementChild, toolsCard.firstChild);
+          initCarouselLogic();
+        }
 
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
