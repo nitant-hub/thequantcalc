@@ -86,7 +86,6 @@
         z-index: 20 !important;
       }
 
-      /* 1. HOMEPAGE SEARCH COMPONENT */
       .dyn-search-wrapper.in-home-desktop {
         max-width: min(340px, calc(100% - 32px)) !important;
         width: 100% !important;
@@ -100,14 +99,12 @@
         }
       }
 
-      /* 2. CATEGORY VIEW */
       .dyn-search-wrapper.in-cat-pane {
         max-width: 100% !important;
         width: 100% !important;
         margin-bottom: 0.5rem !important;
       }
 
-      /* 3. TOOL SIDEBAR */
       .dyn-search-wrapper.in-sidebar {
         max-width: 100% !important;
         display: block !important;
@@ -125,7 +122,6 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* RECTANGULAR ROW CONTAINER */
       .dyn-search-row {
         display: flex !important;
         align-items: center !important;
@@ -151,7 +147,6 @@
         box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
       }
 
-      /* Modern Input Text Typography & Readability */
       .dyn-modern-input {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         font-size: 14.5px !important;
@@ -182,7 +177,6 @@
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
-      /* AD CONTAINER */
       .dyn-adsense-300x250 {
         width: 100% !important;
         max-width: 320px !important;
@@ -204,7 +198,6 @@
         color: #94a3b8 !important;
       }
 
-      /* SEARCH DROPDOWN TYPOGRAPHY */
       .dyn-search-dropdown {
         position: absolute !important; 
         top: calc(100% + 6px) !important; 
@@ -349,7 +342,6 @@
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
       
-      /* Toggle Hamburger Button */
       .dyn-hamburger-btn { 
         background: rgba(255, 255, 255, 0.1) !important; 
         border: 1px solid rgba(255, 255, 255, 0.2) !important; 
@@ -370,7 +362,6 @@
       }
       .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
-      /* 3D Styled 'X' Cancel Symbol with Transparent Shadow Effect */
       .dyn-hamburger-btn span.close-x { 
         font-size: 2.35rem !important; 
         font-weight: 900 !important; 
@@ -380,7 +371,6 @@
         text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), 2px 3px 6px rgba(15, 23, 42, 0.35) !important; 
       }
       
-      /* When active: seamlessly merges with the popup top edge with zero partition/gap */
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
@@ -397,9 +387,6 @@
       .dyn-hamburger-btn.is-active span.bar { display: none !important; }
       .dyn-hamburger-btn.is-active span.close-x { display: block !important; }
 
-      /* ========================================================================
-         MOBILE DRAWER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Seamless Connection)
-         ======================================================== */
       .dyn-drawer-menu {
         position: fixed !important; 
         top: calc((var(--nav-header-height) * 0.85) - 1px) !important; 
@@ -431,7 +418,6 @@
       }
       .dyn-drawer-menu.open { right: 12px !important; }
 
-      /* Professional Apple-Style High Readability Typography for Menu Items */
       .dyn-drawer-menu a {
         text-decoration: none !important; 
         color: var(--text-main, #0f172a) !important; 
@@ -463,7 +449,7 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (3 LINKS SWIPE / MULTI-TOOL)
+         RELATED TOOLS CAROUSEL (CLEAN 3-TOOL SWIPE + EXACT ALIGNMENT)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -495,15 +481,22 @@
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
       .related-section .section-header {
-        display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        display: flex; 
+        flex-direction: column; 
+        gap: 8px; 
+        margin-bottom: 12px; 
+        padding-bottom: 8px; 
+        border-bottom: 1px solid rgba(226, 232, 240, 0.6);
       }
       [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
 
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
       
+      /* LINE 1: Section title in one full line */
       .related-section .title-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+        width: 100%;
+        display: block;
       }
       .related-section .section-title {
         margin: 0 !important; 
@@ -521,7 +514,15 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* COMPACT LIST VIEW BUTTON */
+      /* LINE 2: List button on left, Navigation arrows on right */
+      .related-section .controls-row {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        gap: 8px; 
+        width: 100%;
+      }
+
       .dyn-list-toggle-btn {
         background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
@@ -539,39 +540,102 @@
         box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
         transition: transform 0.15s ease, background 0.15s ease !important;
         white-space: nowrap !important;
+        flex-shrink: 0 !important;
       }
       .dyn-list-toggle-btn:hover {
         background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
         transform: translateY(-1px) !important;
       }
 
-      .related-section .controls-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+      .related-section .carousel-controls { 
+        display: flex; 
+        gap: 6px; 
+        flex-shrink: 0; 
       }
+      .related-section .carousel-btn {
+        display: grid; 
+        place-items: center; 
+        width: 30px; 
+        height: 30px;
+        border: 1px solid rgba(226, 232, 240, 0.9); 
+        border-radius: 8px; 
+        background: #ffffff;
+        color: #0f172a; 
+        font-size: 18px; 
+        font-weight: 900; 
+        cursor: pointer; 
+        padding: 0; 
+        line-height: 1;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
+      [data-theme="dark"] .related-section .carousel-btn { 
+        background: #334155; 
+        color: #fff; 
+        border-color: rgba(255, 255, 255, 0.15); 
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); 
+      }
+      [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
 
+      /* LINE 3: Horizontal Carousel Viewport with strictly isolated layout */
       .related-section .carousel-viewport {
-        overflow: hidden; padding: 2px 0; touch-action: pan-y;
-        cursor: grab; user-select: none; -webkit-user-select: none;
+        overflow: hidden; 
+        width: 100%;
+        max-width: 100%;
+        padding: 2px 0; 
+        touch-action: pan-y;
+        cursor: grab; 
+        user-select: none; 
+        -webkit-user-select: none;
+        box-sizing: border-box;
       }
       .related-section .carousel-viewport:active { cursor: grabbing; }
-      .related-section .carousel-track { display: flex; will-change: transform; width: 100%; }
+      
+      .related-section .carousel-track { 
+        display: flex !important; 
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        will-change: transform; 
+        width: 100%; 
+        box-sizing: border-box;
+      }
       .related-section .tool-loading {
-        margin: 0; padding: 20px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 14px; font-style: italic;
+        margin: 0; 
+        padding: 20px 0; 
+        width: 100%; 
+        text-align: center;
+        color: var(--muted); 
+        font-size: 14px; 
+        font-style: italic;
       }
 
-      /* MULTI-TOOL GROUP (3 TOOLS STACKED IN ONE SLIDE) */
+      /* Slide unit: holds 3 stacked tools vertically */
       .related-section .tool-group {
-        display: flex; flex: 0 0 100%; width: 100%; min-width: 100%; flex-direction: column; gap: 8px; box-sizing: border-box;
+        display: flex !important; 
+        flex: 0 0 100% !important; 
+        width: 100% !important; 
+        min-width: 100% !important; 
+        max-width: 100% !important;
+        flex-direction: column !important; 
+        gap: 8px !important; 
+        box-sizing: border-box !important;
       }
+
       .related-section .tool-card {
-        position: relative; display: flex; flex-direction: column; padding: 8px 10px;
-        overflow: hidden; color: inherit; text-decoration: none;
+        position: relative; 
+        display: flex; 
+        flex-direction: column; 
+        padding: 8px 10px;
+        overflow: hidden; 
+        color: inherit; 
+        text-decoration: none;
         background: rgba(255, 255, 255, 0.7) !important; 
         border: 1px solid rgba(226, 232, 240, 0.8) !important; 
         border-radius: 10px !important;
         box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
         transition: transform 0.2s ease, border-color 0.2s ease !important;
+        box-sizing: border-box;
       }
       [data-theme="dark"] .related-section .tool-card {
         background: rgba(30, 41, 59, 0.7) !important;
@@ -586,42 +650,67 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 2px !important; font-size: 13.5px !important; font-weight: 750 !important;
-        color: #2563eb !important; line-height: 1.3 !important; text-decoration: underline !important;
+        position: relative; 
+        margin: 0 0 2px !important; 
+        font-size: 13.5px !important; 
+        font-weight: 750 !important;
+        color: #2563eb !important; 
+        line-height: 1.3 !important; 
+        text-decoration: underline !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 11.5px !important; line-height: 1.35 !important;
-        font-weight: 400 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+        position: relative; 
+        margin: 0 !important; 
+        color: var(--muted) !important; 
+        font-size: 11.5px !important; 
+        line-height: 1.35 !important;
+        font-weight: 400 !important; 
+        white-space: nowrap !important; 
+        overflow: hidden !important; 
+        text-overflow: ellipsis !important;
       }
       .related-section .tool-open { display: none !important; }
 
-      /* FOOTER WITH STATUS (1/2/3/4) ON LEFT AND DOTS ON RIGHT */
+      /* LINE 4: Status count on left, Dots on right */
       .related-section .carousel-footer {
-        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(226, 232, 240, 0.6);
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        gap: 6px; 
+        margin-top: 10px; 
+        padding-top: 8px; 
+        border-top: 1px solid rgba(226, 232, 240, 0.6);
+        box-sizing: border-box;
       }
       [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
 
-      .related-section .carousel-status { color: var(--muted); font-size: 12px !important; font-weight: 600 !important; }
-      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
+      .related-section .carousel-status { 
+        color: var(--muted); 
+        font-size: 12px !important; 
+        font-weight: 600 !important; 
+      }
+      .related-section .carousel-dots { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 5px; 
+      }
       .related-section .carousel-dot {
-        width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
-        background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
+        width: 6px; 
+        height: 6px; 
+        padding: 0; 
+        border: 0; 
+        border-radius: 10px;
+        background: #cbd5e1; 
+        cursor: pointer; 
+        transition: width .25s ease, background .25s ease;
       }
-      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: #2563eb; }
-
-      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
-      .related-section .carousel-btn {
-        display: grid; place-items: center; width: 34px; height: 34px;
-        border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 10px; background: #ffffff;
-        color: #0f172a; font-size: 20px; font-weight: 900; cursor: pointer; padding: 0; line-height: 1;
-        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      .related-section .carousel-dot[aria-current="true"] { 
+        width: 18px; 
+        background: #2563eb; 
       }
-      .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
-      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
-      [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
 
       /* VERTICAL LIST POPUP MODAL */
       #dynAllToolsModal {
@@ -1040,7 +1129,7 @@
         function step() { return viewport.clientWidth; }
         function maxOffset() { return maxIndex() * step(); }
         function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-        function current() { return clamp(Math.round(offset / step()), 0, maxIndex()); }
+        function current() { return clamp(Math.round(offset / (step() || 1)), 0, maxIndex()); }
 
         function buildDots() {
           dots.innerHTML = "";
@@ -1069,7 +1158,7 @@
           next.disabled = i === maxIndex();
           prev.style.opacity = prev.disabled ? ".4" : "1";
           next.style.opacity = next.disabled ? ".4" : "1";
-          status.textContent = "Group " + (i + 1) + " of " + cardGroups.length;
+          status.textContent = (i + 1) + " of " + cardGroups.length;
         }
 
         function tick(t) {
@@ -1082,7 +1171,7 @@
               if (offset < 0 || offset > max) {
                 target = offset < 0 ? 0 : max; vel = 0;
               } else if (Math.abs(vel) < 0.03) {
-                target = clamp(Math.round(offset / step()), 0, maxIndex()) * step(); vel = 0;
+                target = clamp(Math.round(offset / (step() || 1)), 0, maxIndex()) * step(); vel = 0;
               }
             }
             if (target !== null) {
@@ -1202,8 +1291,10 @@
               tempDiv.innerHTML = `
                 <section class="related-section" aria-labelledby="related-title-m">
                   <div class="section-header">
-                    <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                    <div class="controls-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
+                    <div class="title-row">
+                      <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                    </div>
+                    <div class="controls-row">
                       <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                       <div class="carousel-controls">
                         <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
@@ -1219,7 +1310,7 @@
                   </div>
 
                   <div class="carousel-footer">
-                    <span class="carousel-status" id="carouselStatus" aria-live="polite">Group 1</span>
+                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 3</span>
                     <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
                   </div>
                 </section>
@@ -1305,8 +1396,10 @@
           tempDiv.innerHTML = `
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
-                <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
-                <div class="controls-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
+                <div class="title-row">
+                  <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
+                </div>
+                <div class="controls-row">
                   <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                   <div class="carousel-controls">
                     <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
@@ -1322,7 +1415,7 @@
               </div>
 
               <div class="carousel-footer">
-                <span class="carousel-status" id="carouselStatus" aria-live="polite">Group 1</span>
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 3</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
