@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         CATEGORY VIEW LAYOUT
+         DESKTOP 2-COLUMN HORIZONTAL SPLIT (MATCHING CALCULATOR.NET RATIO)
          ======================================================== */
       #catView {
         display: flex !important;
@@ -54,19 +54,71 @@
         gap: 1.25rem !important;
       }
       @media (min-width: 768px) {
+        .dyn-outer-container {
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+          box-sizing: border-box !important;
+        }
+
+        .dyn-split-container {
+          display: grid !important;
+          grid-template-columns: minmax(0, 67.5%) minmax(240px, 31%) !important;
+          justify-content: space-between !important;
+          align-items: start !important;
+          gap: 12px !important;
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+          box-sizing: border-box !important;
+        }
+
+        .dyn-split-container > .dyn-full-row {
+          grid-column: 1 / -1 !important;
+          width: 100% !important;
+        }
+
+        .dyn-split-container > .dyn-left-split {
+          grid-column: 1 / 2 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        .dyn-split-container > aside.sidebar {
+          grid-column: 2 / 3 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
+          box-sizing: border-box !important;
+        }
+
         #catView.dyn-cat-split {
           flex-direction: row !important;
           justify-content: space-between !important;
           align-items: flex-start !important;
-          gap: 2rem !important;
+          gap: 12px !important;
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
         }
         #catView.dyn-cat-split > .dyn-cat-left-pane {
-          flex: 1 1 0% !important;
+          flex: 1 1 67.5% !important;
+          width: 67.5% !important;
           min-width: 0 !important;
         }
         #catView.dyn-cat-split > .dyn-cat-right-pane {
-          flex: 0 0 320px !important;
-          width: 320px !important;
+          flex: 0 0 31% !important;
+          width: 31% !important;
+          max-width: 300px !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 1rem !important;
@@ -179,7 +231,7 @@
 
       .dyn-adsense-300x250 {
         width: 100% !important;
-        max-width: 320px !important;
+        max-width: 100% !important;
         height: 250px !important;
         background: #f1f5f9 !important;
         border: 1px solid #e2e8f0 !important;
@@ -498,7 +550,6 @@
         width: 100% !important;
       }
 
-      /* LINE 1: Single-line title without global h3 bottom border */
       .related-section .title-row {
         width: 100% !important;
         display: block !important;
@@ -521,7 +572,6 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* LINE 2: List view on left, Arrows on right */
       .related-section .controls-row {
         display: flex !important; 
         align-items: center !important; 
@@ -576,7 +626,6 @@
         border-color: rgba(255, 255, 255, 0.15) !important; 
       }
 
-      /* LINE 3: Strict Horizontal Viewport & Track (Zero Overflow) */
       .related-section .carousel-viewport {
         overflow: hidden !important; 
         width: 100% !important;
@@ -609,7 +658,6 @@
         font-style: italic !important;
       }
 
-      /* 3-Tool Slide Group */
       .related-section .tool-group {
         display: flex !important; 
         flex: 0 0 100% !important; 
@@ -679,7 +727,6 @@
         text-overflow: ellipsis !important;
       }
 
-      /* LINE 4: Status (1 of 2) on Left, Dots on Right */
       .related-section .carousel-footer {
         display: flex !important; 
         align-items: center !important; 
@@ -989,7 +1036,7 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    /* ONLY YOUR 4 REAL TOOLS (NO SIP OR EMI CALCULATOR) */
+    /* ONLY YOUR 4 REAL TOOLS */
     const fallbackTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
@@ -1114,7 +1161,6 @@
               a.append(title, desc);
               groupDiv.appendChild(a);
             } else {
-              /* Empty slot placeholder when fewer than 3 tools in this slide */
               const emptyCard = document.createElement("div");
               emptyCard.className = "tool-card is-empty";
               emptyCard.innerHTML = `<div class="tool-title">&nbsp;</div><p class="tool-description">&nbsp;</p>`;
@@ -1184,7 +1230,7 @@
             }
             if (target !== null) {
               const d = target - offset;
-              offset += d * Math.min(1, dt * 0.02);
+              offset += d * Math.min(1, dt * 0.015);
               if (Math.abs(d) < 0.5) { offset = target; target = null; apply(); raf = null; return; }
             }
           }
@@ -1205,9 +1251,10 @@
           start();
         }
 
+        /* 12-SECOND AUTO-SCROLL INTERVAL (WITHIN 9 TO 15 SECOND RANGE) */
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
-          autoFlowTimer = setInterval(stepAutoFlow, 5000);
+          autoFlowTimer = setInterval(stepAutoFlow, 12000);
         }
 
         prev.addEventListener("click", () => { 
@@ -1282,9 +1329,25 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      /* ALWAYS REPLACE POPULAR TOOLS WITH CAROUSEL ON BOTH MOBILE & DESKTOP */
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
+        /* Apply 67.5% Left Split / 31% Right Split layout on tool page container */
+        const splitContainer = sidebarAside.parentElement;
+        if (splitContainer && splitContainer !== document.body) {
+          splitContainer.classList.add("dyn-split-container");
+          if (splitContainer.parentElement && splitContainer.parentElement !== document.body && splitContainer.parentElement !== document.documentElement) {
+            splitContainer.parentElement.classList.add("dyn-outer-container");
+          }
+          Array.from(splitContainer.children).forEach((child) => {
+            if (child === sidebarAside) return;
+            if (child.tagName === "NAV" || child.classList.contains("breadcrumb") || (child.offsetHeight > 0 && child.offsetHeight < 45)) {
+              child.classList.add("dyn-full-row");
+            } else {
+              child.classList.add("dyn-left-split");
+            }
+          });
+        }
+
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         if (!toolsCard) {
           toolsCard = document.createElement("div");
