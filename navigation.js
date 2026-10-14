@@ -718,7 +718,7 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // EMBEDDED COMPACT CAROUSEL LOGIC
+    // EMBEDDED COMPACT CAROUSEL LOGIC WITH AUTO-FLOW IN X DIRECTION
     let carouselInitialized = false;
     function initCarouselLogic() {
       if (carouselInitialized) return;
@@ -799,6 +799,7 @@
         const cards = Array.from(track.querySelectorAll(".tool-card"));
         let offset = 0, vel = 0, target = null, raf = null, last = 0;
         let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0;
+        let autoFlowTimer = null;
 
         function visibleCards() { return 1; }
         function maxIndex() { return Math.max(0, cards.length - visibleCards()); }
@@ -817,7 +818,12 @@
             dot.type = "button";
             dot.className = "carousel-dot";
             dot.setAttribute("aria-label", "Show tool " + (i + 1));
-            dot.addEventListener("click", () => { target = i * step(); vel = 0; start(); });
+            dot.addEventListener("click", () => { 
+              target = i * step(); 
+              vel = 0; 
+              start(); 
+              resetAutoFlow();
+            });
             dots.appendChild(dot);
           }
         }
@@ -859,14 +865,42 @@
         }
         function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
 
-        prev.addEventListener("click", () => { target = (current() - 1) * step(); vel = 0; start(); });
-        next.addEventListener("click", () => { target = (current() + 1) * step(); vel = 0; start(); });
+        // AUTO-FLOW IN X DIRECTION FUNCTIONALITY
+        function stepAutoFlow() {
+          if (dragging) return;
+          let nextIdx = current() + 1;
+          if (nextIdx > maxIndex()) {
+            nextIdx = 0;
+          }
+          target = nextIdx * step();
+          vel = 0;
+          start();
+        }
+
+        function resetAutoFlow() {
+          clearInterval(autoFlowTimer);
+          autoFlowTimer = setInterval(stepAutoFlow, 3500);
+        }
+
+        prev.addEventListener("click", () => { 
+          target = (current() - 1) * step(); 
+          vel = 0; 
+          start(); 
+          resetAutoFlow();
+        });
+        next.addEventListener("click", () => { 
+          target = (current() + 1) * step(); 
+          vel = 0; 
+          start(); 
+          resetAutoFlow();
+        });
 
         viewport.addEventListener("pointerdown", e => {
           if (e.pointerType === "mouse" && e.button !== 0) return;
           dragging = true; moved = false;
           startX = lastX = e.clientX; lastT = e.timeStamp;
           vel = 0; target = null;
+          clearInterval(autoFlowTimer);
         });
         window.addEventListener("pointermove", e => {
           if (!dragging) return;
@@ -887,6 +921,7 @@
           vel = clamp(vel, -4, 4);
           start();
           setTimeout(() => { moved = false; }, 0);
+          resetAutoFlow();
         }
         window.addEventListener("pointerup", release);
         window.addEventListener("pointercancel", release);
@@ -904,6 +939,7 @@
 
         buildDots();
         apply();
+        resetAutoFlow();
       })();
     }
 
@@ -923,21 +959,16 @@
         }
         if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
 
-        // Also check main content area on mobile for Popular Tools to replace with carousel
-        const mainContent = document.querySelector("main") || document.body;
-        let mobileToolsCard = mainContent.querySelector(".dyn-tools-card, .sidebar, aside");
-        // Fallback search for text matching Popular Tools in mobile body
+        // Mobile View Popular Tools Replacement
         const allHeadings = Array.from(document.querySelectorAll("h2, h3, h4, strong"));
         for (const h of allHeadings) {
           if ((h.textContent || "").toLowerCase().includes("popular tools")) {
             let container = h.parentElement;
             if (container && !container.querySelector(".related-section")) {
-              // Clear old popular tools list in mobile view
               const children = Array.from(container.children);
               for (const child of children) {
                 if (child !== h) child.remove();
               }
-              h.textContent = "🔥 Related Tools / Calculators";
               
               const tempDiv = document.createElement("div");
               tempDiv.innerHTML = `
@@ -1020,7 +1051,7 @@
         }
       }
 
-      // 4. Standalone Tool Page (Desktop Sidebar)
+      // 4. Standalone Tool Page
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1033,7 +1064,6 @@
           sidebarAside.appendChild(toolsCard);
         }
 
-        // Replace Popular Tools with Compact Sidebar Widget matching Photo 2
         if (!toolsCard.querySelector(".related-section")) {
           const children = Array.from(toolsCard.children);
           for (const child of children) {
@@ -1100,7 +1130,7 @@
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
       rootEl.setAttribute("data-theme", "dark");
-      themeViewBtnText = "☀️";
+      themeBtn.textContent = "☀️";
     }
     themeBtn.onclick = () => {
       const isDark = rootEl.getAttribute("data-theme") === "dark";
