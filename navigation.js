@@ -449,136 +449,114 @@
       }
 
       /* ========================================================
-         RELATED TOOLS CAROUSEL (CLEAN 3-TOOL SWIPE + EXACT ALIGNMENT)
+         COMPACT CAROUSEL SIDEBAR COMPONENT (MATCHES PREVIOUS POPULAR TOOLS EXACT SIZE)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
         --text: #0f172a;
-        --muted: #475569;
+        --muted: #64748b;
         --accent: #2563eb;
-        --border: rgba(255,255,255,0.8);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --border: rgba(30,50,80,.08);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         color: var(--text);
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 12px 0 !important;
-        padding: 14px !important;
+        margin: 0 0 10px 0 !important;
+        padding: 10px 12px !important;
         overflow: hidden !important;
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        border-radius: 16px;
-        background: linear-gradient(145deg, #ffffff, #f8fafc);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #ffffff;
         box-sizing: border-box !important;
-        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
       }
       [data-theme="dark"] .related-section {
-        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
+        background: #1e293b !important;
         --card: rgba(30,41,59,.95);
         --text: #f8fafc;
         --muted: #94a3b8;
-        --border: rgba(255,255,255,0.08);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+        --border: rgba(255,255,255,.08);
       }
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
+      /* HEADER: Strict 2-Line Hierarchy */
       .related-section .section-header {
         display: flex; 
         flex-direction: column; 
-        gap: 8px; 
-        margin-bottom: 12px; 
-        padding-bottom: 8px; 
-        border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        gap: 6px; 
+        margin-bottom: 8px; 
+        padding-bottom: 6px; 
+        border-bottom: 1px solid var(--border);
       }
-      [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
-
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
       
-      /* LINE 1: Section title in one full line */
+      /* LINE 1: Pure single line title */
       .related-section .title-row {
         width: 100%;
         display: block;
       }
       .related-section .section-title {
         margin: 0 !important; 
-        font-size: 15.5px !important; 
+        font-size: 14.5px !important; 
         font-weight: 800 !important; 
         letter-spacing: -0.3px !important; 
-        color: #0f172a !important;
+        color: var(--text);
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-      }
-      [data-theme="dark"] .related-section .section-title { 
-        color: #f8fafc !important; 
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* LINE 2: List button on left, Navigation arrows on right */
+      /* LINE 2: List toggle on Left, Arrows on Right */
       .related-section .controls-row {
         display: flex; 
         align-items: center; 
         justify-content: space-between; 
-        gap: 8px; 
         width: 100%;
       }
 
       .dyn-list-toggle-btn {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+        background: #2563eb !important;
         color: #ffffff !important;
         border: none !important;
         border-radius: 6px !important;
-        padding: 4px 8px !important;
-        font-size: 10.5px !important;
+        padding: 3px 8px !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: inline-flex !important;
         align-items: center !important;
-        justify-content: center !important;
         gap: 3px !important;
-        width: auto !important;
-        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
-        transition: transform 0.15s ease, background 0.15s ease !important;
         white-space: nowrap !important;
         flex-shrink: 0 !important;
-      }
-      .dyn-list-toggle-btn:hover {
-        background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
-        transform: translateY(-1px) !important;
       }
 
       .related-section .carousel-controls { 
         display: flex; 
-        gap: 6px; 
+        gap: 5px; 
         flex-shrink: 0; 
       }
       .related-section .carousel-btn {
         display: grid; 
         place-items: center; 
-        width: 30px; 
-        height: 30px;
-        border: 1px solid rgba(226, 232, 240, 0.9); 
-        border-radius: 8px; 
-        background: #ffffff;
-        color: #0f172a; 
-        font-size: 18px; 
-        font-weight: 900; 
+        width: 24px; 
+        height: 24px;
+        border: 1px solid var(--border); 
+        border-radius: 6px; 
+        background: #f8fafc;
+        color: var(--text); 
+        font-size: 16px; 
+        font-weight: 800; 
         cursor: pointer; 
         padding: 0; 
         line-height: 1;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
       [data-theme="dark"] .related-section .carousel-btn { 
         background: #334155; 
         color: #fff; 
         border-color: rgba(255, 255, 255, 0.15); 
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); 
       }
-      [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
 
-      /* LINE 3: Horizontal Carousel Viewport with strictly isolated layout */
+      /* LINE 3: Horizontal Carousel Track (1 tool per slide to match original height) */
       .related-section .carousel-viewport {
         overflow: hidden; 
         width: 100%;
@@ -602,48 +580,30 @@
       }
       .related-section .tool-loading {
         margin: 0; 
-        padding: 20px 0; 
+        padding: 12px 0; 
         width: 100%; 
         text-align: center;
         color: var(--muted); 
-        font-size: 14px; 
+        font-size: 12px; 
         font-style: italic;
-      }
-
-      /* Slide unit: holds 3 stacked tools vertically */
-      .related-section .tool-group {
-        display: flex !important; 
-        flex: 0 0 100% !important; 
-        width: 100% !important; 
-        min-width: 100% !important; 
-        max-width: 100% !important;
-        flex-direction: column !important; 
-        gap: 8px !important; 
-        box-sizing: border-box !important;
       }
 
       .related-section .tool-card {
         position: relative; 
         display: flex; 
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
         flex-direction: column; 
-        padding: 8px 10px;
+        padding: 2px 0;
         overflow: hidden; 
         color: inherit; 
         text-decoration: none;
-        background: rgba(255, 255, 255, 0.7) !important; 
-        border: 1px solid rgba(226, 232, 240, 0.8) !important; 
-        border-radius: 10px !important;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
-        transition: transform 0.2s ease, border-color 0.2s ease !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
         box-sizing: border-box;
-      }
-      [data-theme="dark"] .related-section .tool-card {
-        background: rgba(30, 41, 59, 0.7) !important;
-        border-color: rgba(51, 65, 85, 0.8) !important;
-      }
-      .related-section .tool-card:hover {
-        transform: translateY(-1px);
-        border-color: #2563eb !important;
       }
       .related-section .tool-card::before { display: none !important; }
       .related-section .tool-icon { display: none !important; }
@@ -651,11 +611,11 @@
       
       .related-section .tool-title {
         position: relative; 
-        margin: 0 0 2px !important; 
+        margin: 0 0 3px !important; 
         font-size: 13.5px !important; 
-        font-weight: 750 !important;
+        font-weight: 700 !important;
         color: #2563eb !important; 
-        line-height: 1.3 !important; 
+        line-height: 1.35 !important; 
         text-decoration: underline !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
@@ -664,42 +624,42 @@
         position: relative; 
         margin: 0 !important; 
         color: var(--muted) !important; 
-        font-size: 11.5px !important; 
-        line-height: 1.35 !important;
+        font-size: 12px !important; 
+        line-height: 1.4 !important;
         font-weight: 400 !important; 
-        white-space: nowrap !important; 
-        overflow: hidden !important; 
-        text-overflow: ellipsis !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
       }
       .related-section .tool-open { display: none !important; }
 
-      /* LINE 4: Status count on left, Dots on right */
+      /* LINE 4: Status (1 of X) on Left, Dots on Right */
       .related-section .carousel-footer {
         display: flex; 
         align-items: center; 
         justify-content: space-between; 
         gap: 6px; 
-        margin-top: 10px; 
-        padding-top: 8px; 
-        border-top: 1px solid rgba(226, 232, 240, 0.6);
+        margin-top: 8px; 
+        padding-top: 6px; 
+        border-top: 1px solid var(--border);
         box-sizing: border-box;
       }
-      [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
 
       .related-section .carousel-status { 
         color: var(--muted); 
-        font-size: 12px !important; 
+        font-size: 11px !important; 
         font-weight: 600 !important; 
       }
       .related-section .carousel-dots { 
         display: flex; 
         justify-content: center; 
         align-items: center; 
-        gap: 5px; 
+        gap: 4px; 
       }
       .related-section .carousel-dot {
-        width: 6px; 
-        height: 6px; 
+        width: 5px; 
+        height: 5px; 
         padding: 0; 
         border: 0; 
         border-radius: 10px;
@@ -708,11 +668,11 @@
         transition: width .25s ease, background .25s ease;
       }
       .related-section .carousel-dot[aria-current="true"] { 
-        width: 18px; 
+        width: 14px; 
         background: #2563eb; 
       }
 
-      /* VERTICAL LIST POPUP MODAL */
+      /* POPUP MODAL FOR ALL TOOLS */
       #dynAllToolsModal {
         position: fixed !important;
         inset: 0 !important;
@@ -730,35 +690,30 @@
       .dyn-modal-content {
         background: var(--bg-surface, #ffffff) !important;
         width: 100% !important;
-        max-width: 480px !important;
-        max-height: 85vh !important;
-        border-radius: 20px !important;
+        max-width: 440px !important;
+        max-height: 80vh !important;
+        border-radius: 16px !important;
         border: 1px solid rgba(255, 255, 255, 0.8) !important;
         box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25) !important;
         display: flex !important;
         flex-direction: column !important;
         overflow: hidden !important;
-        animation: dynModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       [data-theme="dark"] .dyn-modal-content {
         background: #1e293b !important;
         border-color: rgba(255, 255, 255, 0.1) !important;
       }
-      @keyframes dynModalPop {
-        0% { opacity: 0; transform: scale(0.95) translateY(10px); }
-        100% { opacity: 1; transform: scale(1) translateY(0); }
-      }
       .dyn-modal-header {
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
-        padding: 1.25rem 1.5rem !important;
+        padding: 1rem 1.25rem !important;
         border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
       }
       [data-theme="dark"] .dyn-modal-header { border-bottom-color: #334155 !important; }
       .dyn-modal-header h3 {
         margin: 0 !important;
-        font-size: 1.15rem !important;
+        font-size: 1.05rem !important;
         font-weight: 800 !important;
         color: var(--text-main, #0f172a) !important;
       }
@@ -767,54 +722,46 @@
         background: rgba(100, 116, 139, 0.1) !important;
         border: none !important;
         border-radius: 50% !important;
-        width: 32px !important;
-        height: 32px !important;
+        width: 28px !important;
+        height: 28px !important;
         display: grid !important;
         place-items: center !important;
-        font-size: 1.25rem !important;
+        font-size: 1.15rem !important;
         font-weight: 700 !important;
         color: var(--text-muted, #64748b) !important;
         cursor: pointer !important;
-        transition: background 0.2s ease;
       }
-      .dyn-modal-close:hover { background: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; }
       .dyn-modal-body {
-        padding: 1.25rem 1.5rem !important;
+        padding: 1rem 1.25rem !important;
         overflow-y: auto !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.85rem !important;
+        gap: 0.75rem !important;
       }
       .dyn-modal-item {
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.25rem !important;
-        padding: 0.85rem 1rem !important;
+        gap: 0.2rem !important;
+        padding: 0.75rem 0.9rem !important;
         background: var(--bg-surface, #f8fafc) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         text-decoration: none !important;
-        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
       }
       [data-theme="dark"] .dyn-modal-item {
         background: #0f172a !important;
         border-color: #334155 !important;
       }
-      .dyn-modal-item:hover {
-        transform: translateY(-2px) !important;
-        border-color: #2563eb !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1) !important;
-      }
       .dyn-modal-item-title {
-        font-size: 0.98rem !important;
-        font-weight: 750 !important;
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
         color: #2563eb !important;
       }
       [data-theme="dark"] .dyn-modal-item-title { color: #38bdf8 !important; }
       .dyn-modal-item-desc {
-        font-size: 0.84rem !important;
+        font-size: 0.8rem !important;
         color: var(--text-muted, #64748b) !important;
-        line-height: 1.4 !important;
+        line-height: 1.35 !important;
         margin: 0 !important;
       }
       [data-theme="dark"] .dyn-modal-item-desc { color: #94a3b8 !important; }
@@ -916,7 +863,7 @@
       globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-search-row">
-          <input type="text" class="dyn-modern-input" placeholder="Search..." autocomplete="off">
+          <input type="text" class="dyn modern-input" placeholder="Search..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
@@ -995,13 +942,12 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    const fallbackTools = [
+    /* REAL 4 TOOLS ONLY (NO EXTRA PLACEHOLDERS) */
+    const realFourTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
-      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." },
-      { path: "/tools/sip-calculator.html", title: "SIP Calculator", text: "Estimate returns on monthly investments." },
-      { path: "/tools/emi-calculator.html", title: "EMI Calculator", text: "Calculate monthly loan payments." }
+      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
     ];
 
     async function fetchRelatedTools() {
@@ -1030,10 +976,10 @@
           }
         }
 
-        const picked = found.sort(() => 0.5 - Math.random()).slice(0, 9);
-        return picked.length >= 3 ? picked : fallbackTools;
+        return found.length ? found : realFourTools.filter(t => t.path !== currentUrl);
       } catch (e) {
-        return fallbackTools;
+        const currentUrl = window.location.pathname;
+        return realFourTools.filter(t => t.path !== currentUrl);
       }
     }
 
@@ -1090,42 +1036,30 @@
         const tools = await fetchRelatedTools();
         track.innerHTML = "";
 
-        const groups = [];
-        for (let i = 0; i < tools.length; i += 3) {
-          groups.push(tools.slice(i, i + 3));
-        }
+        tools.forEach((tool) => {
+          const a = document.createElement("a");
+          a.className = "tool-card";
+          a.href = tool.path;
+          a.draggable = false;
 
-        groups.forEach((group) => {
-          const groupDiv = document.createElement("div");
-          groupDiv.className = "tool-group";
+          const title = document.createElement("h3");
+          title.className = "tool-title";
+          title.textContent = tool.title;
 
-          group.forEach((tool) => {
-            const a = document.createElement("a");
-            a.className = "tool-card";
-            a.href = tool.path;
-            a.draggable = false;
+          const desc = document.createElement("p");
+          desc.className = "tool-description";
+          desc.textContent = tool.text;
 
-            const title = document.createElement("h3");
-            title.className = "tool-title";
-            title.textContent = tool.title;
-
-            const desc = document.createElement("p");
-            desc.className = "tool-description";
-            desc.textContent = tool.text;
-
-            a.append(title, desc);
-            groupDiv.appendChild(a);
-          });
-
-          track.appendChild(groupDiv);
+          a.append(title, desc);
+          track.appendChild(a);
         });
 
-        const cardGroups = Array.from(track.querySelectorAll(".tool-group"));
+        const cards = Array.from(track.querySelectorAll(".tool-card"));
         let offset = 0, vel = 0, target = null, raf = null, last = 0;
         let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0;
         let autoFlowTimer = null;
 
-        function maxIndex() { return Math.max(0, cardGroups.length - 1); }
+        function maxIndex() { return Math.max(0, cards.length - 1); }
         function step() { return viewport.clientWidth; }
         function maxOffset() { return maxIndex() * step(); }
         function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -1137,7 +1071,7 @@
             const dot = document.createElement("button");
             dot.type = "button";
             dot.className = "carousel-dot";
-            dot.setAttribute("aria-label", "Show group " + (i + 1));
+            dot.setAttribute("aria-label", "Show tool " + (i + 1));
             dot.addEventListener("click", () => { 
               target = i * step(); 
               vel = 0; 
@@ -1158,7 +1092,7 @@
           next.disabled = i === maxIndex();
           prev.style.opacity = prev.disabled ? ".4" : "1";
           next.style.opacity = next.disabled ? ".4" : "1";
-          status.textContent = (i + 1) + " of " + cardGroups.length;
+          status.textContent = (i + 1) + " of " + cards.length;
         }
 
         function tick(t) {
