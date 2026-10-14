@@ -476,7 +476,7 @@
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 0 12px 0 !important;
-        padding: 16px !important;
+        padding: 14px !important;
         overflow: hidden !important;
         border: 1px solid rgba(226, 232, 240, 0.8);
         border-radius: 16px;
@@ -495,8 +495,7 @@
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
       .related-section .section-header {
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 8px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
       }
       [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
 
@@ -504,11 +503,11 @@
       .related-section .section-description { display: none !important; }
       
       .related-section .title-row {
-        display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
       }
       .related-section .section-title {
         margin: 0 !important; 
-        font-size: 15px !important; 
+        font-size: 15.5px !important; 
         font-weight: 800 !important; 
         letter-spacing: -0.3px !important; 
         color: #0f172a !important;
@@ -522,30 +521,34 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* LIST BUTTON INSIDE RED SQUARE PORTION */
+      /* LIST BUTTON JUST BELOW TITLE (ONE-LINE FULL SPACE AVAILABLE FOR ARROWS) */
       .dyn-list-toggle-btn {
         background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 8px !important;
-        padding: 4px 8px !important;
-        font-size: 11px !important;
+        border-radius: 6px !important;
+        padding: 5px 10px !important;
+        font-size: 11.5px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        gap: 3px !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        width: 100% !important;
         box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
         transition: transform 0.15s ease, background 0.15s ease !important;
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
       }
       .dyn-list-toggle-btn:hover {
         background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
         transform: translateY(-1px) !important;
       }
 
-      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
+      .related-section .controls-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+      }
+
+      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
       .related-section .carousel-btn {
         display: grid; place-items: center; width: 34px; height: 34px;
         border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 10px; background: #ffffff;
@@ -579,21 +582,21 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 15.5px !important; font-weight: 750 !important;
+        position: relative; margin: 0 0 6px !important; font-size: 16px !important; font-weight: 750 !important;
         color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
         letter-spacing: -0.2px !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 14px !important; line-height: 1.45 !important;
         font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
       .related-section .tool-open { display: none !important; }
 
       .related-section .carousel-footer {
-        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(226, 232, 240, 0.6);
+        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(226, 232, 240, 0.6);
       }
       [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
 
@@ -1180,11 +1183,14 @@
                   <div class="section-header">
                     <div class="title-row">
                       <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                     </div>
-                    <div class="carousel-controls">
-                      <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
-                      <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
+                    <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
+                    <div class="controls-row">
+                      <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
+                      <div class="carousel-controls">
+                        <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                        <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
+                      </div>
                     </div>
                   </div>
 
@@ -1195,7 +1201,6 @@
                   </div>
 
                   <div class="carousel-footer">
-                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                     <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
                   </div>
                 </section>
@@ -1286,11 +1291,14 @@
               <div class="section-header">
                 <div class="title-row">
                   <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
-                  <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                 </div>
-                <div class="carousel-controls">
-                  <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
-                  <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
+                <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
+                <div class="controls-row">
+                  <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
+                  <div class="carousel-controls">
+                    <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                    <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
+                  </div>
                 </div>
               </div>
 
@@ -1301,7 +1309,6 @@
               </div>
 
               <div class="carousel-footer">
-                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
