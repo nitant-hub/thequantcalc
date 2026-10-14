@@ -463,7 +463,7 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY & LARGER ARROWS)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY & PROMINENT ARROWS)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -471,7 +471,7 @@
         --muted: #334155;
         --accent: #0284c7;
         --border: rgba(30,50,80,.12);
-        font-family: Arial, Helvetica, sans-serif, system-ui;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         color: var(--text);
         width: 100% !important;
         max-width: 100% !important;
@@ -479,7 +479,7 @@
         padding: 14px 14px 16px !important;
         overflow: hidden !important;
         border: 1px solid var(--border);
-        border-radius: 10px;
+        border-radius: 12px;
         background: #ffffff;
         box-sizing: border-box !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
@@ -506,11 +506,13 @@
 
       .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
       .related-section .carousel-btn {
-        display: grid; place-items: center; width: 32px; height: 32px;
-        border: 1px solid var(--border); border-radius: 6px; background: #f8fafc;
-        color: #1e293b; font-size: 20px; font-weight: 800; cursor: pointer; padding: 0; line-height: 1;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+        display: grid; place-items: center; width: 34px; height: 34px;
+        border: 1px solid var(--border); border-radius: 8px; background: #f1f5f9;
+        color: #0f172a; font-size: 22px; font-weight: 800; cursor: pointer; padding: 0; line-height: 1;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.1);
+        transition: background 0.2s ease, transform 0.1s ease;
       }
+      .related-section .carousel-btn:hover { background: #e2e8f0; transform: scale(1.05); }
       [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
       
       .related-section .carousel-viewport {
@@ -521,7 +523,7 @@
       .related-section .carousel-track { display: flex; gap: 10px; will-change: transform; }
       .related-section .tool-loading {
         margin: 0; padding: 20px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 13.5px; font-style: italic;
+        color: var(--muted); font-size: 14px; font-style: italic;
       }
 
       .related-section .tool-card {
@@ -535,8 +537,9 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 16px !important; font-weight: 750 !important;
+        position: relative; margin: 0 0 6px !important; font-size: 16.5px !important; font-weight: 750 !important;
         color: #0066cc !important; line-height: 1.35 !important; text-decoration: underline !important;
+        letter-spacing: -0.2px !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
@@ -1124,7 +1127,7 @@
     observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener("hashchange", () => {
-      syncActiveTrust();
+      syncActiveTab();
       relocateSearch();
     });
     window.addEventListener("resize", relocateSearch);
