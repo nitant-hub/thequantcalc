@@ -521,14 +521,14 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* COMPACT LIST VIEW BUTTON JUST BELOW TITLE */
+      /* COMPACT LIST VIEW BUTTON (BELOW TITLE, ONE-LINE, MATCHING PREVIOUS WIDTH) */
       .dyn-list-toggle-btn {
         background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
         border: none !important;
         border-radius: 6px !important;
-        padding: 4px 10px !important;
-        font-size: 11px !important;
+        padding: 4px 8px !important;
+        font-size: 10.5px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: inline-flex !important;
@@ -583,14 +583,14 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 16px !important; font-weight: 750 !important;
+        position: relative; margin: 0 0 6px !important; font-size: 15.5px !important; font-weight: 750 !important;
         color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
         letter-spacing: -0.2px !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 14px !important; line-height: 1.45 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
         font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
@@ -1185,10 +1185,9 @@
                   <div class="section-header">
                     <div class="title-row">
                       <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                     </div>
                     <div class="controls-row">
-                      <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
+                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                       <div class="carousel-controls">
                         <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
                         <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
@@ -1203,6 +1202,7 @@
                   </div>
 
                   <div class="carousel-footer">
+                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                     <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
                   </div>
                 </section>
@@ -1293,10 +1293,9 @@
               <div class="section-header">
                 <div class="title-row">
                   <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
-                  <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                 </div>
                 <div class="controls-row">
-                  <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
+                  <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                   <div class="carousel-controls">
                     <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
                     <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
@@ -1311,6 +1310,7 @@
               </div>
 
               <div class="carousel-footer">
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
