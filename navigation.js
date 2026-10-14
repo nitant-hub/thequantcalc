@@ -6,7 +6,7 @@
       vMeta.name = "viewport";
       document.head.appendChild(vMeta);
     }
-    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, user-scalable=yes");
+    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
 
     ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
       const el = document.getElementById(id);
@@ -865,7 +865,6 @@
         }
         function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
 
-        // AUTO-FLOW IN X DIRECTION FUNCTIONALITY
         function stepAutoFlow() {
           if (dragging) return;
           let nextIdx = current() + 1;
@@ -950,7 +949,7 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile Drawer View
+      // 1. Mobile View (Drawer & Main content replacement)
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
@@ -959,7 +958,6 @@
         }
         if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
 
-        // Mobile View Popular Tools Replacement
         const allHeadings = Array.from(document.querySelectorAll("h2, h3, h4, strong"));
         for (const h of allHeadings) {
           if ((h.textContent || "").toLowerCase().includes("popular tools")) {
@@ -1051,7 +1049,7 @@
         }
       }
 
-      // 4. Standalone Tool Page
+      // 4. Standalone Tool Page (Desktop Sidebar)
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
