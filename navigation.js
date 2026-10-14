@@ -251,9 +251,10 @@
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 16px !important;
-        padding: 1.75rem !important;
+        padding: 1.25rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         width: 100% !important;
+        box-sizing: border-box !important;
       }
       [data-theme="dark"] .dyn-tools-card {
         background: var(--bg-surface, #1e293b) !important;
@@ -462,119 +463,95 @@
       }
 
       /* ========================================================
-         RELATED CAROUSEL STYLES
+         COMPACT COMPONENT SIDEBAR CAROUSEL
          ======================================================== */
       .related-section {
-        --card: rgba(255,255,255,.88);
+        --card: rgba(255,255,255,.95);
         --text: #172033;
         --muted: #718096;
         --accent: #2878ff;
-        --border: rgba(30,50,80,.10);
-        --shadow: 0 12px 32px rgba(30,50,80,.10);
+        --border: rgba(30,50,80,.08);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         color: var(--text);
-        max-width: 100%;
-        margin: 0 0 16px 0;
-        padding: 16px 12px 20px;
-        overflow: hidden;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 12px 0 !important;
+        padding: 12px 12px 14px !important;
+        overflow: hidden !important;
         border: 1px solid var(--border);
-        border-radius: 16px;
-        background: linear-gradient(145deg, #ffffff, #f1f5fb);
-        box-shadow: var(--shadow);
+        border-radius: 10px;
+        background: #f8fafc;
         box-sizing: border-box !important;
       }
       [data-theme="dark"] .related-section {
-        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
-        --card: rgba(30,41,59,.88);
+        background: #1e293b !important;
+        --card: rgba(30,41,59,.95);
         --text: #f8fafc;
         --muted: #94a3b8;
-        --border: rgba(255,255,255,.1);
+        --border: rgba(255,255,255,.08);
       }
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
       .related-section .section-header {
-        display: flex; align-items: end; justify-content: space-between;
-        gap: 10px; margin-bottom: 16px;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 8px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
       }
-      .related-section .eyebrow {
-        margin: 0 0 4px; color: var(--accent); font-size: 10px; font-weight: 800;
-        letter-spacing: 1.2px; text-transform: uppercase;
-      }
+      .related-section .eyebrow { display: none !important; }
+      .related-section .section-description { display: none !important; }
       .related-section .section-title {
-        margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: -.5px;
+        margin: 0 !important; font-size: 13px !important; font-weight: 700 !important; letter-spacing: -0.2px !important; color: var(--text);
       }
-      .related-section .section-description {
-        margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4;
-      }
-      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
+      .related-section .carousel-controls { display: flex; gap: 4px; flex-shrink: 0; }
       .related-section .carousel-btn {
-        display: grid; place-items: center; width: 32px; height: 32px;
-        border: 1px solid var(--border); border-radius: 50%; background: white;
-        color: var(--text); font-size: 18px; cursor: pointer;
-        box-shadow: 0 2px 8px rgba(30,50,80,.06);
-        transition: transform .2s ease, background .2s ease;
+        display: grid; place-items: center; width: 22px; height: 22px;
+        border: 1px solid var(--border); border-radius: 4px; background: white;
+        color: var(--text); font-size: 14px; cursor: pointer; padding: 0; line-height: 1;
       }
       [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
-      .related-section .carousel-btn:hover { transform: translateY(-2px); background: #edf4ff; }
       
       .related-section .carousel-viewport {
-        overflow: hidden; padding: 4px 2px 14px; touch-action: pan-y;
+        overflow: hidden; padding: 2px 0; touch-action: pan-y;
         cursor: grab; user-select: none; -webkit-user-select: none;
       }
       .related-section .carousel-viewport:active { cursor: grabbing; }
-      .related-section .carousel-track { display: flex; gap: 12px; will-change: transform; }
+      .related-section .carousel-track { display: flex; gap: 10px; will-change: transform; }
       .related-section .tool-loading {
-        margin: 0; padding: 40px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 13px; font-style: italic;
+        margin: 0; padding: 20px 0; width: 100%; text-align: center;
+        color: var(--muted); font-size: 11px; font-style: italic;
       }
 
       .related-section .tool-card {
         position: relative; display: flex; flex: 0 0 100%;
-        flex-direction: column; min-width: 0; min-height: 190px; padding: 16px;
+        flex-direction: column; min-width: 0; padding: 0;
         overflow: hidden; color: inherit; text-decoration: none;
-        border: 1px solid rgba(255,255,255,.9); border-radius: 16px;
-        background: var(--card); box-shadow: 0 6px 18px rgba(30,50,80,.08);
-        transition: transform .25s ease, box-shadow .25s ease;
+        background: transparent !important; border: none !important; box-shadow: none !important;
       }
-      [data-theme="dark"] .related-section .tool-card { border-color: rgba(255,255,255,.05); }
-      .related-section .tool-card::before {
-        content: ""; position: absolute; top: -35px; right: -25px;
-        width: 95px; height: 95px; border-radius: 50%;
-        background: var(--glow, #e7efff); opacity: .85; filter: blur(1px);
-      }
-      .related-section .tool-icon {
-        position: relative; display: grid; place-items: center; width: 44px; height: 44px;
-        margin-bottom: 14px; border: 1px solid rgba(255,255,255,.8); border-radius: 12px;
-        background: linear-gradient(145deg, #ffffff, var(--glow, #e7efff));
-        box-shadow: 0 4px 10px rgba(30,50,80,.09); font-size: 22px;
-      }
-      .related-section .tool-category {
-        position: relative; margin: 0 0 6px; color: var(--accent); font-size: 9px;
-        font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
-      }
+      .related-section .tool-card::before { display: none !important; }
+      .related-section .tool-icon { display: none !important; }
+      .related-section .tool-category { display: none !important; }
+      
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px; font-size: 15px; font-weight: 750;
-        line-height: 1.3;
+        position: relative; margin: 0 0 3px !important; font-size: 12.5px !important; font-weight: 600 !important;
+        color: #2563eb !important; line-height: 1.3 !important; text-decoration: underline !important;
       }
+      [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
+
       .related-section .tool-description {
-        position: relative; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 11.5px !important; line-height: 1.35 !important;
+        display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
-      .related-section .tool-open {
-        position: relative; display: flex; align-items: center; justify-content: space-between;
-        gap: 8px; margin-top: auto; padding-top: 14px; color: var(--accent);
-        font-size: 12px; font-weight: 750;
-      }
+      .related-section .tool-open { display: none !important; }
 
       .related-section .carousel-footer {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;
+        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border);
       }
-      .related-section .carousel-status { color: var(--muted); font-size: 11px; }
-      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
+      .related-section .carousel-status { color: var(--muted); font-size: 10px !important; }
+      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 4px; }
       .related-section .carousel-dot {
-        width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
+        width: 5px; height: 5px; padding: 0; border: 0; border-radius: 10px;
         background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
       }
-      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: var(--accent); }
+      .related-section .carousel-dot[aria-current="true"] { width: 14px; background: var(--accent); }
     `;
 
     const categories = [
@@ -741,7 +718,7 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // EMBEDDED CAROUSEL LOGIC
+    // EMBEDDED COMPACT CAROUSEL LOGIC
     let carouselInitialized = false;
     function initCarouselLogic() {
       if (carouselInitialized) return;
@@ -758,39 +735,13 @@
         if (!prev || !next || !dots || !status) return;
 
         const currentUrl = window.location.pathname;
-        const glows = ["#e2edff", "#dcfce7", "#f3e8ff", "#ffedd5", "#ffe4e6", "#cffafe", "#fef9c3", "#e0e7ff"];
-        const acronyms = ["EMI", "ROI", "CAGR", "SIP", "PPF", "GST", "NPV", "IRR", "FD", "RD", "BMI", "BMR", "TDS", "EPF"];
-
-        const categoriesMap = {
-          finance: { icon: "💰", label: "Finance", text: "Plan your money with a quick, accurate calculation." },
-          health:  { icon: "❤️", label: "Health", text: "Check your numbers quickly with this free health tool." },
-          math:    { icon: "🧮", label: "Mathematics", text: "Solve it instantly with this free math tool." },
-          other:   { icon: "🛠️", label: "Tools", text: "Open this free tool and get your result instantly." }
-        };
 
         const fallback = [
-          { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", cat: "finance", text: "Estimate investment growth and compound returns over time." },
-          { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", cat: "math", text: "Calculate exam scores and percentages instantly." },
-          { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", cat: "other", label: "Date & Time", icon: "🎂", text: "Calculate your exact age in years, months and days." },
-          { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", cat: "other", label: "Physics", icon: "🌌", text: "Find out your weight on different planets." }
+          { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
+          { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+          { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
+          { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
         ];
-
-        function categoryOf(path) {
-          const p = path.toLowerCase();
-          if (p.includes("finance")) return "finance";
-          if (p.includes("health")) return "health";
-          if (p.includes("math")) return "math";
-          return "other";
-        }
-
-        function titleFrom(path) {
-          const slug = path.split("/").filter(Boolean).pop() || "";
-          const clean = slug.replace(/\.html?$/i, "").replace(/^(finance|health|math)-/i, "").replace(/-/g, " ");
-          return clean.split(" ").filter(Boolean).map(w => {
-            const up = w.toUpperCase();
-            return acronyms.includes(up) ? up : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-          }).join(" ");
-        }
 
         async function loadRelated() {
           try {
@@ -804,18 +755,20 @@
 
             const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
             const locs = xmlDoc.getElementsByTagName("loc");
-            const pageCat = categoryOf(currentUrl);
             const found = [];
 
             for (let i = 0; i < locs.length; i++) {
               const path = new URL(locs[i].textContent).pathname;
               if (path === currentUrl) continue;
-              const cat = categoryOf(path);
-              const match = pageCat !== "other" ? cat === pageCat : /calculator|converter|tools/i.test(path);
-              if (match) found.push({ path: path, title: titleFrom(path), cat: cat });
+              if (/calculator|converter|tools/i.test(path)) {
+                const slug = path.split("/").filter(Boolean).pop() || "";
+                const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
+                const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+                found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
+              }
             }
 
-            const picked = found.sort(() => 0.5 - Math.random()).slice(0, 15);
+            const picked = found.sort(() => 0.5 - Math.random()).slice(0, 10);
             return picked.length ? picked : fallback;
           } catch (e) {
             return fallback;
@@ -825,22 +778,11 @@
         const tools = await loadRelated();
         track.innerHTML = "";
 
-        tools.forEach((tool, i) => {
-          const c = categoriesMap[tool.cat] || categoriesMap.other;
+        tools.forEach((tool) => {
           const a = document.createElement("a");
           a.className = "tool-card";
           a.href = tool.path;
           a.draggable = false;
-          a.style.setProperty("--glow", glows[i % glows.length]);
-
-          const icon = document.createElement("div");
-          icon.className = "tool-icon";
-          icon.setAttribute("aria-hidden", "true");
-          icon.textContent = tool.icon || c.icon;
-
-          const cat = document.createElement("p");
-          cat.className = "tool-category";
-          cat.textContent = tool.label || c.label;
 
           const title = document.createElement("h3");
           title.className = "tool-title";
@@ -848,19 +790,15 @@
 
           const desc = document.createElement("p");
           desc.className = "tool-description";
-          desc.textContent = tool.text || c.text;
+          desc.textContent = tool.text;
 
-          const open = document.createElement("div");
-          open.className = "tool-open";
-          open.innerHTML = "<span>Open tool</span><span>→</span>";
-
-          a.append(icon, cat, title, desc, open);
+          a.append(title, desc);
           track.appendChild(a);
         });
 
         const cards = Array.from(track.querySelectorAll(".tool-card"));
         let offset = 0, vel = 0, target = null, raf = null, last = 0;
-        let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0, wheelTimer = null;
+        let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0;
 
         function visibleCards() { return 1; }
         function maxIndex() { return Math.max(0, cards.length - visibleCards()); }
@@ -878,7 +816,7 @@
             const dot = document.createElement("button");
             dot.type = "button";
             dot.className = "carousel-dot";
-            dot.setAttribute("aria-label", "Show tool group " + (i + 1));
+            dot.setAttribute("aria-label", "Show tool " + (i + 1));
             dot.addEventListener("click", () => { target = i * step(); vel = 0; start(); });
             dots.appendChild(dot);
           }
@@ -892,9 +830,9 @@
           });
           prev.disabled = i === 0;
           next.disabled = i === maxIndex();
-          prev.style.opacity = prev.disabled ? ".45" : "1";
-          next.style.opacity = next.disabled ? ".45" : "1";
-          status.textContent = "Tool " + (i + 1) + " of " + cards.length;
+          prev.style.opacity = prev.disabled ? ".4" : "1";
+          next.style.opacity = next.disabled ? ".4" : "1";
+          status.textContent = (i + 1) + " of " + cards.length;
         }
 
         function tick(t) {
@@ -1049,7 +987,7 @@
           sidebarAside.appendChild(toolsCard);
         }
 
-        // Cleanly replace Popular Tools with Carousel while keeping System Status untouched
+        // Replace Popular Tools with Compact Sidebar Widget matching Photo 2
         if (!toolsCard.querySelector(".related-section")) {
           const children = Array.from(toolsCard.children);
           for (const child of children) {
@@ -1063,26 +1001,22 @@
           tempDiv.innerHTML = `
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
-                <div>
-                  <p class="eyebrow">Keep exploring</p>
-                  <h2 class="section-title" id="related-title">Related Tools</h2>
-                  <p class="section-description">Smart tools to help you calculate faster.</p>
-                </div>
+                <h3 class="section-title" id="related-title">🔥 Related Tools</h3>
                 <div class="carousel-controls">
-                  <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous tools">‹</button>
-                  <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next tools">›</button>
+                  <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                  <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
                 </div>
               </div>
 
               <div class="carousel-viewport" id="carouselViewport" tabindex="0">
                 <div class="carousel-track" id="carouselTrack">
-                  <p class="tool-loading">Loading related tools…</p>
+                  <p class="tool-loading">Loading...</p>
                 </div>
               </div>
 
               <div class="carousel-footer">
-                <span class="carousel-status" id="carouselStatus" aria-live="polite">Explore tools</span>
-                <div class="carousel-dots" id="carouselDots" aria-label="Choose carousel position"></div>
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
+                <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
           `;
