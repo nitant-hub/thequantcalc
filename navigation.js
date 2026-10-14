@@ -906,7 +906,6 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // SHARED TOOLS LOADER FOR BOTH CAROUSEL & POPUP LIST
     const fallbackTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
@@ -949,7 +948,6 @@
       }
     }
 
-    // EMBEDDED MULTI-TOOL CAROUSEL LOGIC (3 TOOLS PER SLIDE)
     let carouselInitialized = false;
     function initCarouselLogic() {
       if (carouselInitialized) return;
@@ -958,7 +956,6 @@
       if (!viewport || !track) return;
       carouselInitialized = true;
 
-      // Setup Modal Popup Triggers
       const modal = document.getElementById("dynAllToolsModal");
       const closeBtn = document.getElementById("dynModalCloseBtn");
       const modalBody = document.getElementById("dynModalBodyList");
