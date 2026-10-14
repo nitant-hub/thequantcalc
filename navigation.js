@@ -645,7 +645,7 @@
         return;
       }
 
-      // 2. Desktop Category Page (Split View with Ad)
+      // 2. Desktop Category Page (SWAPPED: AdSense on TOP, Search BELOW)
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -671,11 +671,11 @@
           }
 
           globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-          if (rightPane.firstElementChild !== globalSearchNode) {
-            rightPane.insertBefore(globalSearchNode, rightPane.firstChild);
+          if (rightPane.firstElementChild !== globalAdsenseNode) {
+            rightPane.insertBefore(globalAdsenseNode, rightPane.firstChild);
           }
-          if (globalAdsenseNode.parentElement !== rightPane) {
-            rightPane.appendChild(globalAdsenseNode);
+          if (globalSearchNode.parentElement !== rightPane) {
+            rightPane.appendChild(globalSearchNode);
           }
           return;
         }
@@ -694,7 +694,7 @@
         }
       }
 
-      // 4. Standalone Tool Page
+      // 4. Standalone Tool Page (SWAPPED: Search on TOP, AdSense BELOW)
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -709,12 +709,12 @@
 
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
-        if (sidebarAside.firstElementChild !== globalAdsenseNode) {
-          sidebarAside.insertBefore(globalAdsenseNode, sidebarAside.firstChild);
+        if (sidebarAside.firstElementChild !== globalSearchNode) {
+          sidebarAside.insertBefore(globalSearchNode, sidebarAside.firstChild);
         }
 
-        if (globalSearchNode.previousElementSibling !== globalAdsenseNode) {
-          sidebarAside.insertBefore(globalSearchNode, toolsCard);
+        if (globalAdsenseNode.previousElementSibling !== globalSearchNode) {
+          sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
         }
       }
     }
