@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         DESKTOP 2-COLUMN HORIZONTAL SPLIT (MATCHING CALCULATOR.NET PADDING/MARGIN)
+         DESKTOP 2-COLUMN HORIZONTAL SPLIT (MATCHING CALCULATOR.NET RATIO)
          ======================================================== */
       #catView {
         display: flex !important;
@@ -55,27 +55,27 @@
       }
       @media (min-width: 768px) {
         .dyn-outer-container {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
           box-sizing: border-box !important;
         }
 
         .dyn-split-container {
           display: grid !important;
-          grid-template-columns: minmax(0, 1fr) 300px !important;
-          justify-content: flex-start !important;
+          grid-template-columns: minmax(0, 67.5%) minmax(240px, 31%) !important;
+          justify-content: space-between !important;
           align-items: start !important;
-          gap: 16px !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
+          gap: 12px !important;
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
           box-sizing: border-box !important;
         }
 
@@ -94,9 +94,9 @@
 
         .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
-          width: 300px !important;
-          max-width: 300px !important;
-          min-width: 300px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
           box-sizing: border-box !important;
         }
 
@@ -104,22 +104,20 @@
           flex-direction: row !important;
           justify-content: space-between !important;
           align-items: flex-start !important;
-          gap: 16px !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
+          gap: 12px !important;
+          width: 98% !important;
+          max-width: 1260px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
         }
         #catView.dyn-cat-split > .dyn-cat-left-pane {
-          flex: 1 1 0% !important;
-          width: auto !important;
+          flex: 1 1 67.5% !important;
+          width: 67.5% !important;
           min-width: 0 !important;
         }
         #catView.dyn-cat-split > .dyn-cat-right-pane {
-          flex: 0 0 300px !important;
-          width: 300px !important;
+          flex: 0 0 31% !important;
+          width: 31% !important;
           max-width: 300px !important;
           display: flex !important;
           flex-direction: column !important;
@@ -147,8 +145,8 @@
       }
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-desktop {
-          max-width: 300px !important;
-          margin-left: auto !important;
+          max-width: 320px !important;
+          margin-left: 15% !important;
           margin-right: auto !important;
         }
       }
@@ -233,7 +231,7 @@
 
       .dyn-adsense-300x250 {
         width: 100% !important;
-        max-width: 300px !important;
+        max-width: 100% !important;
         height: 250px !important;
         background: #f1f5f9 !important;
         border: 1px solid #e2e8f0 !important;
@@ -293,9 +291,9 @@
         display: flex !important;
         flex-direction: column !important;
         gap: 16px !important;
-        width: 300px !important;
-        max-width: 300px !important;
-        min-width: 300px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         box-sizing: border-box !important;
       }
       .dyn-tools-card {
@@ -304,9 +302,9 @@
         border-radius: 16px !important;
         padding: 1rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-        width: 300px !important;
-        max-width: 300px !important;
-        min-width: 300px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
       }
@@ -520,9 +518,9 @@
         --border: rgba(226, 232, 240, 0.85);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
-        width: 300px !important;
-        max-width: 300px !important;
-        min-width: 300px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         margin: 0 0 10px 0 !important;
         padding: 10px 12px !important;
         overflow: hidden !important;
@@ -1038,6 +1036,7 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
+    /* ONLY YOUR 4 REAL TOOLS */
     const fallbackTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
@@ -1252,10 +1251,10 @@
           start();
         }
 
-        /* 14-SECOND AUTO-SCROLL INTERVAL (SET WITHIN 9 TO 15 SECONDS RANGE) */
+        /* 12-SECOND AUTO-SCROLL INTERVAL (WITHIN 9 TO 15 SECOND RANGE) */
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
-          autoFlowTimer = setInterval(stepAutoFlow, 14000);
+          autoFlowTimer = setInterval(stepAutoFlow, 12000);
         }
 
         prev.addEventListener("click", () => { 
@@ -1332,6 +1331,7 @@
 
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
+        /* Apply 67.5% Left Split / 31% Right Split layout on tool page container */
         const splitContainer = sidebarAside.parentElement;
         if (splitContainer && splitContainer !== document.body) {
           splitContainer.classList.add("dyn-split-container");
@@ -1400,7 +1400,7 @@
         }
       }
 
-      /* 1. Mobile View Search & Ad Placement (Untouched per strict mobile rule) */
+      /* 1. Mobile View Search & Ad Placement */
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
@@ -1436,7 +1436,7 @@
             catView.appendChild(rightPane);
           }
 
-(globalSearchNode.className = "dyn-search-wrapper in-cat-pane")
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
           if (rightPane.firstElementChild !== globalAdsenseNode) {
             rightPane.insertBefore(globalAdsenseNode, rightPane.firstChild);
           }
@@ -1453,7 +1453,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot);
+            homeSlot.appendChild(globalSearchNode);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
