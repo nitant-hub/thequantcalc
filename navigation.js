@@ -627,6 +627,55 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
+    // CONNECT EXTERNAL similar-posts.html INTO SIDEBAR
+    let carouselLoaded = false;
+    async function loadSimilarPosts(toolsCard) {
+      if (carouselLoaded) return;
+      carouselLoaded = true;
+
+      try {
+        const paths = ["/similar-posts.html", "../similar-posts.html", "similar-posts.html"];
+        let html = "";
+        for (const p of paths) {
+          const res = await fetch(p);
+          if (res.ok) {
+            html = await res.text();
+            break;
+          }
+        }
+        if (!html) return;
+
+        // Remove ONLY Popular Tools while keeping System Status intact
+        Array.from(toolsCard.children).forEach((child) => {
+          const txt = (child.textContent || "").toLowerCase();
+          if (!txt.includes("system status") && !txt.includes("all tools process locally")) {
+            child.remove();
+          }
+        });
+
+        // Parse and inject HTML, CSS, and execute JS from similar-posts.html
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = html;
+
+        const scripts = Array.from(wrapper.querySelectorAll("script"));
+        scripts.forEach((s) => s.remove());
+
+        toolsCard.insertBefore(wrapper, toolsCard.firstChild);
+
+        scripts.forEach((oldScript) => {
+          const newScript = document.createElement("script");
+          if (oldScript.src) {
+            newScript.src = oldScript.src;
+          } else {
+            newScript.textContent = oldScript.textContent;
+          }
+          document.body.appendChild(newScript);
+        });
+      } catch (err) {
+        carouselLoaded = false;
+      }
+    }
+
     function relocateSearch() {
       const isMobile = window.innerWidth < 768;
       const path = window.location.pathname.toLowerCase();
@@ -706,6 +755,9 @@
           }
           sidebarAside.appendChild(toolsCard);
         }
+
+        // Load external similar-posts.html into toolsCard
+        loadSimilarPosts(toolsCard);
 
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
