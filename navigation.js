@@ -495,7 +495,8 @@
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
       .related-section .section-header {
-        display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
       }
       [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
 
@@ -503,11 +504,11 @@
       .related-section .section-description { display: none !important; }
       
       .related-section .title-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+        display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;
       }
       .related-section .section-title {
         margin: 0 !important; 
-        font-size: 15.5px !important; 
+        font-size: 15px !important; 
         font-weight: 800 !important; 
         letter-spacing: -0.3px !important; 
         color: #0f172a !important;
@@ -521,43 +522,40 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* LIST BUTTON JUST BELOW TITLE (ONE-LINE FULL SPACE AVAILABLE FOR ARROWS) */
+      /* COMPACT LIST BUTTON (IN SAME LINE WITH TITLE & ARROWS) */
       .dyn-list-toggle-btn {
         background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
         border: none !important;
         border-radius: 6px !important;
-        padding: 5px 10px !important;
-        font-size: 11.5px !important;
+        padding: 4px 8px !important;
+        font-size: 10.5px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 4px !important;
-        width: 100% !important;
+        gap: 3px !important;
         box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
         transition: transform 0.15s ease, background 0.15s ease !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
       }
       .dyn-list-toggle-btn:hover {
         background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
         transform: translateY(-1px) !important;
       }
 
-      .related-section .controls-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
-      }
-
-      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
+      .related-section .carousel-controls { display: flex; gap: 4px; flex-shrink: 0; }
       .related-section .carousel-btn {
-        display: grid; place-items: center; width: 34px; height: 34px;
-        border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 10px; background: #ffffff;
-        color: #0f172a; font-size: 20px; font-weight: 900; cursor: pointer; padding: 0; line-height: 1;
-        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+        display: grid; place-items: center; width: 28px; height: 28px;
+        border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 8px; background: #ffffff;
+        color: #0f172a; font-size: 16px; font-weight: 900; cursor: pointer; padding: 0; line-height: 1;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
-      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
       [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
       
       .related-section .carousel-viewport {
@@ -582,19 +580,20 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 16px !important; font-weight: 750 !important;
+        position: relative; margin: 0 0 6px !important; font-size: 15.5px !important; font-weight: 750 !important;
         color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
         letter-spacing: -0.2px !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 14px !important; line-height: 1.45 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
         font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
       .related-section .tool-open { display: none !important; }
 
+      /* FOOTER WITH STATUS (1/2/3/4) ON LEFT AND DOTS ON RIGHT */
       .related-section .carousel-footer {
         display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(226, 232, 240, 0.6);
       }
@@ -1183,14 +1182,11 @@
                   <div class="section-header">
                     <div class="title-row">
                       <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                     </div>
-                    <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
-                    <div class="controls-row">
-                      <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
-                      <div class="carousel-controls">
-                        <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
-                        <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
-                      </div>
+                    <div class="carousel-controls">
+                      <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                      <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
                     </div>
                   </div>
 
@@ -1201,6 +1197,7 @@
                   </div>
 
                   <div class="carousel-footer">
+                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                     <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
                   </div>
                 </section>
@@ -1291,14 +1288,11 @@
               <div class="section-header">
                 <div class="title-row">
                   <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
+                  <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                 </div>
-                <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
-                <div class="controls-row">
-                  <div class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</div>
-                  <div class="carousel-controls">
-                    <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
-                    <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
-                  </div>
+                <div class="carousel-controls">
+                  <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                  <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
                 </div>
               </div>
 
@@ -1309,6 +1303,7 @@
               </div>
 
               <div class="carousel-footer">
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
