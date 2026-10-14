@@ -463,7 +463,7 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY & LARGER ARROWS)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -500,15 +500,16 @@
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
       .related-section .section-title {
-        margin: 0 !important; font-size: 15px !important; font-weight: 750 !important; letter-spacing: -0.2px !important; color: #1e293b;
+        margin: 0 !important; font-size: 15.5px !important; font-weight: 800 !important; letter-spacing: -0.3px !important; color: #1e293b;
       }
       [data-theme="dark"] .related-section .section-title { color: #f8fafc !important; }
 
-      .related-section .carousel-controls { display: flex; gap: 4px; flex-shrink: 0; }
+      .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
       .related-section .carousel-btn {
-        display: grid; place-items: center; width: 24px; height: 24px;
-        border: 1px solid var(--border); border-radius: 4px; background: #f8fafc;
-        color: #1e293b; font-size: 16px; font-weight: 700; cursor: pointer; padding: 0; line-height: 1;
+        display: grid; place-items: center; width: 32px; height: 32px;
+        border: 1px solid var(--border); border-radius: 6px; background: #f8fafc;
+        color: #1e293b; font-size: 20px; font-weight: 800; cursor: pointer; padding: 0; line-height: 1;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
       }
       [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
       
@@ -520,7 +521,7 @@
       .related-section .carousel-track { display: flex; gap: 10px; will-change: transform; }
       .related-section .tool-loading {
         margin: 0; padding: 20px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 13px; font-style: italic;
+        color: var(--muted); font-size: 13.5px; font-style: italic;
       }
 
       .related-section .tool-card {
@@ -534,13 +535,13 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 5px !important; font-size: 15px !important; font-weight: 700 !important;
+        position: relative; margin: 0 0 6px !important; font-size: 16px !important; font-weight: 750 !important;
         color: #0066cc !important; line-height: 1.35 !important; text-decoration: underline !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 14px !important; line-height: 1.45 !important;
         font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
@@ -549,7 +550,7 @@
       .related-section .carousel-footer {
         display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
       }
-      .related-section .carousel-status { color: var(--muted); font-size: 11.5px !important; font-weight: 600 !important; }
+      .related-section .carousel-status { color: var(--muted); font-size: 12px !important; font-weight: 600 !important; }
       .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
       .related-section .carousel-dot {
         width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
@@ -1046,7 +1047,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot) /* fallback */;
+            homeSlot.appendChild(homeSlot);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
@@ -1123,7 +1124,7 @@
     observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener("hashchange", () => {
-      syncActiveTab();
+      syncActiveTrust();
       relocateSearch();
     });
     window.addEventListener("resize", relocateSearch);
