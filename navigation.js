@@ -504,14 +504,17 @@
       .related-section .section-description { display: none !important; }
       
       .related-section .title-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+        display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;
       }
       .related-section .section-title {
         margin: 0 !important; 
-        font-size: 16.5px !important; 
+        font-size: 15px !important; 
         font-weight: 800 !important; 
-        letter-spacing: -0.4px !important; 
+        letter-spacing: -0.3px !important; 
         color: #0f172a !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
       }
       [data-theme="dark"] .related-section .section-title { 
@@ -525,16 +528,17 @@
         color: #ffffff !important;
         border: none !important;
         border-radius: 8px !important;
-        padding: 5px 9px !important;
-        font-size: 11.5px !important;
+        padding: 4px 8px !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 3px !important;
         box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
         transition: transform 0.15s ease, background 0.15s ease !important;
         white-space: nowrap !important;
+        flex-shrink: 0 !important;
       }
       .dyn-list-toggle-btn:hover {
         background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
