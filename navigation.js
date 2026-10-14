@@ -463,15 +463,15 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TYPOGRAPHY)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
         --text: #0f172a;
-        --muted: #475569;
-        --accent: #2563eb;
+        --muted: #334155;
+        --accent: #0284c7;
         --border: rgba(30,50,80,.12);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif, system-ui;
         color: var(--text);
         width: 100% !important;
         max-width: 100% !important;
@@ -479,10 +479,10 @@
         padding: 14px 14px 16px !important;
         overflow: hidden !important;
         border: 1px solid var(--border);
-        border-radius: 12px;
-        background: #f8fafc;
+        border-radius: 10px;
+        background: #ffffff;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
       }
       [data-theme="dark"] .related-section {
         background: #1e293b !important;
@@ -500,14 +500,15 @@
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
       .related-section .section-title {
-        margin: 0 !important; font-size: 14.5px !important; font-weight: 850 !important; letter-spacing: -0.3px !important; color: var(--text);
+        margin: 0 !important; font-size: 15px !important; font-weight: 750 !important; letter-spacing: -0.2px !important; color: #1e293b;
       }
-      .related-section .carousel-controls { display: flex; gap: 5px; flex-shrink: 0; }
+      [data-theme="dark"] .related-section .section-title { color: #f8fafc !important; }
+
+      .related-section .carousel-controls { display: flex; gap: 4px; flex-shrink: 0; }
       .related-section .carousel-btn {
-        display: grid; place-items: center; width: 26px; height: 26px;
-        border: 1px solid var(--border); border-radius: 6px; background: white;
-        color: var(--text); font-size: 15px; font-weight: 700; cursor: pointer; padding: 0; line-height: 1;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+        display: grid; place-items: center; width: 24px; height: 24px;
+        border: 1px solid var(--border); border-radius: 4px; background: #f8fafc;
+        color: #1e293b; font-size: 16px; font-weight: 700; cursor: pointer; padding: 0; line-height: 1;
       }
       [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
       
@@ -519,7 +520,7 @@
       .related-section .carousel-track { display: flex; gap: 10px; will-change: transform; }
       .related-section .tool-loading {
         margin: 0; padding: 20px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 12px; font-style: italic;
+        color: var(--muted); font-size: 13px; font-style: italic;
       }
 
       .related-section .tool-card {
@@ -533,15 +534,14 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 5px !important; font-size: 14px !important; font-weight: 750 !important;
-        color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
-        letter-spacing: -0.2px !important;
+        position: relative; margin: 0 0 5px !important; font-size: 15px !important; font-weight: 700 !important;
+        color: #0066cc !important; line-height: 1.35 !important; text-decoration: underline !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 12.5px !important; line-height: 1.45 !important;
-        font-weight: 500 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
+        font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
       .related-section .tool-open { display: none !important; }
@@ -549,13 +549,13 @@
       .related-section .carousel-footer {
         display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
       }
-      .related-section .carousel-status { color: var(--muted); font-size: 11px !important; font-weight: 600 !important; }
+      .related-section .carousel-status { color: var(--muted); font-size: 11.5px !important; font-weight: 600 !important; }
       .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
       .related-section .carousel-dot {
         width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
         background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
       }
-      .related-section .carousel-dot[aria-current="true"] { width: 16px; background: var(--accent); }
+      .related-section .carousel-dot[aria-current="true"] { width: 16px; background: #0066cc; }
     `;
 
     const categories = [
@@ -1046,7 +1046,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(globalSearchNode);
+            homeSlot.appendChild(homeSlot) /* fallback */;
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
