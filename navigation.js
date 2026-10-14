@@ -545,12 +545,16 @@
         transform: translateY(-1px) !important;
       }
 
+      .related-section .controls-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+      }
+
       .related-section .carousel-viewport {
         overflow: hidden; padding: 2px 0; touch-action: pan-y;
         cursor: grab; user-select: none; -webkit-user-select: none;
       }
       .related-section .carousel-viewport:active { cursor: grabbing; }
-      .related-section .carousel-track { display: flex; flex-direction: column; gap: 10px; will-change: transform; }
+      .related-section .carousel-track { display: flex; will-change: transform; width: 100%; }
       .related-section .tool-loading {
         margin: 0; padding: 20px 0; width: 100%; text-align: center;
         color: var(--muted); font-size: 14px; font-style: italic;
@@ -558,7 +562,7 @@
 
       /* MULTI-TOOL GROUP (3 TOOLS STACKED IN ONE SLIDE) */
       .related-section .tool-group {
-        display: flex; flex: 0 0 100%; flex-direction: column; gap: 10px; min-width: 0;
+        display: flex; flex: 0 0 100%; width: 100%; min-width: 100%; flex-direction: column; gap: 8px; box-sizing: border-box;
       }
       .related-section .tool-card {
         position: relative; display: flex; flex-direction: column; padding: 8px 10px;
@@ -1000,7 +1004,6 @@
         const tools = await fetchRelatedTools();
         track.innerHTML = "";
 
-        // Group tools in chunks of 3
         const groups = [];
         for (let i = 0; i < tools.length; i += 3) {
           groups.push(tools.slice(i, i + 3));
@@ -1037,10 +1040,7 @@
         let autoFlowTimer = null;
 
         function maxIndex() { return Math.max(0, cardGroups.length - 1); }
-        function step() {
-          const gap = parseFloat(getComputedStyle(track).rowGap) || 10;
-          return cardGroups[0].offsetWidth + gap;
-        }
+        function step() { return viewport.clientWidth; }
         function maxOffset() { return maxIndex() * step(); }
         function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
         function current() { return clamp(Math.round(offset / step()), 0, maxIndex()); }
@@ -1165,7 +1165,7 @@
         track.addEventListener("dragstart", e => e.preventDefault());
 
         window.addEventListener("resize", () => {
-          offset = clamp(offset, 0, maxOffset());
+          offset = clamp(current() * step(), 0, maxOffset());
           buildDots();
           apply();
         });
@@ -1183,7 +1183,6 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // 1. Mobile View (Drawer & Main content replacement)
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
@@ -1207,7 +1206,7 @@
                 <section class="related-section" aria-labelledby="related-title-m">
                   <div class="section-header">
                     <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                    <div class="title-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
+                    <div class="controls-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
                       <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                       <div class="carousel-controls">
                         <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
@@ -1237,7 +1236,6 @@
         return;
       }
 
-      // 2. Desktop Category Page
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -1273,7 +1271,6 @@
         }
       }
 
-      // 3. Desktop Homepage View
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
@@ -1286,7 +1283,6 @@
         }
       }
 
-      // 4. Standalone Tool Page (Desktop Sidebar)
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1313,7 +1309,7 @@
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
                 <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
-                <div class="title-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
+                <div class="controls-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
                   <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                   <div class="carousel-controls">
                     <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
