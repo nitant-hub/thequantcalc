@@ -1001,7 +1001,7 @@
           tempDiv.innerHTML = `
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
-                <h3 class="section-title" id="related-title">🔥 Related Tools</h3>
+                <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
                 <div class="carousel-controls">
                   <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
                   <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
