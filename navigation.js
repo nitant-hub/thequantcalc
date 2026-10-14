@@ -8,7 +8,7 @@
     }
     vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
 
-    ["siteDynamicHeader", "dynDrawer", "dynOverlay"].forEach((id) => {
+    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynAllToolsModal"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
@@ -463,7 +463,7 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (APPLE UI + BENTO + 3D)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (APPLE UI + BENTO + 3D + LIST POPUP)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -496,14 +496,16 @@
 
       .related-section .section-header {
         display: flex; align-items: center; justify-content: space-between;
-        gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        gap: 8px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
       }
       [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
 
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
       
-      /* ENHANCED TITLE WITH APPLE UI + 3D TOUCH */
+      .related-section .title-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+      }
       .related-section .section-title {
         margin: 0 !important; 
         font-size: 16.5px !important; 
@@ -515,6 +517,28 @@
       [data-theme="dark"] .related-section .section-title { 
         color: #f8fafc !important; 
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      /* LIST BUTTON INSIDE RED SQUARE PORTION */
+      .dyn-list-toggle-btn {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 5px 9px !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3) !important;
+        transition: transform 0.15s ease, background 0.15s ease !important;
+        white-space: nowrap !important;
+      }
+      .dyn-list-toggle-btn:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+        transform: translateY(-1px) !important;
       }
 
       .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
@@ -576,6 +600,113 @@
         background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
       }
       .related-section .carousel-dot[aria-current="true"] { width: 18px; background: #2563eb; }
+
+      /* VERTICAL LIST POPUP MODAL */
+      #dynAllToolsModal {
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        z-index: 10000000 !important;
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1rem !important;
+        backdrop-filter: blur(4px);
+      }
+      #dynAllToolsModal.open {
+        display: flex !important;
+      }
+      .dyn-modal-content {
+        background: var(--bg-surface, #ffffff) !important;
+        width: 100% !important;
+        max-width: 480px !important;
+        max-height: 85vh !important;
+        border-radius: 20px !important;
+        border: 1px solid rgba(255, 255, 255, 0.8) !important;
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        animation: dynModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      [data-theme="dark"] .dyn-modal-content {
+        background: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+      }
+      @keyframes dynModalPop {
+        0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .dyn-modal-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 1.25rem 1.5rem !important;
+        border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
+      }
+      [data-theme="dark"] .dyn-modal-header { border-bottom-color: #334155 !important; }
+      .dyn-modal-header h3 {
+        margin: 0 !important;
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
+        color: var(--text-main, #0f172a) !important;
+      }
+      [data-theme="dark"] .dyn-modal-header h3 { color: #f8fafc !important; }
+      .dyn-modal-close {
+        background: rgba(100, 116, 139, 0.1) !important;
+        border: none !important;
+        border-radius: 50% !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: grid !important;
+        place-items: center !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        color: var(--text-muted, #64748b) !important;
+        cursor: pointer !important;
+        transition: background 0.2s ease;
+      }
+      .dyn-modal-close:hover { background: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; }
+      .dyn-modal-body {
+        padding: 1.25rem 1.5rem !important;
+        overflow-y: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.85rem !important;
+      }
+      .dyn-modal-item {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.25rem !important;
+        padding: 0.85rem 1rem !important;
+        background: var(--bg-surface, #f8fafc) !important;
+        border: 1px solid var(--border-color, #e2e8f0) !important;
+        border-radius: 12px !important;
+        text-decoration: none !important;
+        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
+      }
+      [data-theme="dark"] .dyn-modal-item {
+        background: #0f172a !important;
+        border-color: #334155 !important;
+      }
+      .dyn-modal-item:hover {
+        transform: translateY(-2px) !important;
+        border-color: #2563eb !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1) !important;
+      }
+      .dyn-modal-item-title {
+        font-size: 0.98rem !important;
+        font-weight: 750 !important;
+        color: #2563eb !important;
+      }
+      [data-theme="dark"] .dyn-modal-item-title { color: #38bdf8 !important; }
+      .dyn-modal-item-desc {
+        font-size: 0.84rem !important;
+        color: var(--text-muted, #64748b) !important;
+        line-height: 1.4 !important;
+        margin: 0 !important;
+      }
+      [data-theme="dark"] .dyn-modal-item-desc { color: #94a3b8 !important; }
     `;
 
     const categories = [
@@ -612,6 +743,17 @@
         <a href="/" class="dyn-drawer-link"><span>🏠</span> Home</a>
         ${mobileLinksHtml}
       </aside>
+      <div id="dynAllToolsModal">
+        <div class="dyn-modal-content">
+          <div class="dyn-modal-header">
+            <h3>🔥 All Related Tools & Calculators</h3>
+            <button class="dyn-modal-close" id="dynModalCloseBtn">&times;</button>
+          </div>
+          <div class="dyn-modal-body" id="dynModalBodyList">
+            <p style="text-align:center;color:var(--text-muted,#64748b);font-style:italic;">Loading list...</p>
+          </div>
+        </div>
+      </div>
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
 
@@ -742,7 +884,48 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    // EMBEDDED COMPACT CAROUSEL LOGIC WITH AUTO-FLOW IN X DIRECTION
+    // SHARED TOOLS LOADER FOR BOTH CAROUSEL & POPUP LIST
+    const fallbackTools = [
+      { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
+      { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+      { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
+      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
+    ];
+
+    async function fetchRelatedTools() {
+      try {
+        let xmlText = null;
+        try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
+        if (!xmlText) {
+          const response = await fetch("/sitemap-pages.xml");
+          xmlText = await response.text();
+          try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
+        }
+
+        const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
+        const locs = xmlDoc.getElementsByTagName("loc");
+        const currentUrl = window.location.pathname;
+        const found = [];
+
+        for (let i = 0; i < locs.length; i++) {
+          const path = new URL(locs[i].textContent).pathname;
+          if (path === currentUrl) continue;
+          if (/calculator|converter|tools/i.test(path)) {
+            const slug = path.split("/").filter(Boolean).pop() || "";
+            const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
+            const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+            found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
+          }
+        }
+
+        const picked = found.sort(() => 0.5 - Math.random()).slice(0, 10);
+        return picked.length ? picked : fallbackTools;
+      } catch (e) {
+        return fallbackTools;
+      }
+    }
+
+    // EMBEDDED COMPACT CAROUSEL LOGIC WITH AUTO-FLOW IN X DIRECTION & MODAL POPUP TRIGGER
     let carouselInitialized = false;
     function initCarouselLogic() {
       if (carouselInitialized) return;
@@ -751,6 +934,42 @@
       if (!viewport || !track) return;
       carouselInitialized = true;
 
+      // Setup Modal Popup Triggers
+      const modal = document.getElementById("dynAllToolsModal");
+      const closeBtn = document.getElementById("dynModalCloseBtn");
+      const modalBody = document.getElementById("dynModalBodyList");
+
+      document.querySelectorAll(".dyn-list-toggle-btn").forEach(btn => {
+        btn.onclick = async () => {
+          modal.classList.add("open");
+          document.body.style.overflow = "hidden";
+          modalBody.innerHTML = `<p style="text-align:center;color:var(--text-muted,#64748b);font-style:italic;padding:1rem;">Loading list...</p>`;
+          
+          const toolsList = await fetchRelatedTools();
+          modalBody.innerHTML = toolsList.map(t => `
+            <a href="${t.path}" class="dyn-modal-item">
+              <span class="dyn-modal-item-title">${t.title}</span>
+              <p class="dyn-modal-item-desc">${t.text}</p>
+            </a>
+          `).join("");
+        };
+      });
+
+      if (closeBtn) {
+        closeBtn.onclick = () => {
+          modal.classList.remove("open");
+          document.body.style.overflow = "";
+        };
+      }
+      if (modal) {
+        modal.onclick = (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("open");
+            document.body.style.overflow = "";
+          }
+        };
+      }
+
       (async () => {
         const prev = document.getElementById("previousBtn");
         const next = document.getElementById("nextBtn");
@@ -758,48 +977,7 @@
         const status = document.getElementById("carouselStatus");
         if (!prev || !next || !dots || !status) return;
 
-        const currentUrl = window.location.pathname;
-
-        const fallback = [
-          { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
-          { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
-          { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
-          { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
-        ];
-
-        async function loadRelated() {
-          try {
-            let xmlText = null;
-            try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
-            if (!xmlText) {
-              const response = await fetch("/sitemap-pages.xml");
-              xmlText = await response.text();
-              try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
-            }
-
-            const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
-            const locs = xmlDoc.getElementsByTagName("loc");
-            const found = [];
-
-            for (let i = 0; i < locs.length; i++) {
-              const path = new URL(locs[i].textContent).pathname;
-              if (path === currentUrl) continue;
-              if (/calculator|converter|tools/i.test(path)) {
-                const slug = path.split("/").filter(Boolean).pop() || "";
-                const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
-                const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-                found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
-              }
-            }
-
-            const picked = found.sort(() => 0.5 - Math.random()).slice(0, 10);
-            return picked.length ? picked : fallback;
-          } catch (e) {
-            return fallback;
-          }
-        }
-
-        const tools = await loadRelated();
+        const tools = await fetchRelatedTools();
         track.innerHTML = "";
 
         tools.forEach((tool) => {
@@ -996,7 +1174,10 @@
               tempDiv.innerHTML = `
                 <section class="related-section" aria-labelledby="related-title-m">
                   <div class="section-header">
-                    <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                    <div class="title-row">
+                      <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
+                    </div>
                     <div class="carousel-controls">
                       <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
                       <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
@@ -1099,7 +1280,10 @@
           tempDiv.innerHTML = `
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
-                <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
+                <div class="title-row">
+                  <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
+                  <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
+                </div>
                 <div class="carousel-controls">
                   <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
                   <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
