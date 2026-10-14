@@ -922,6 +922,52 @@
           drawerSlot.appendChild(globalSearchNode);
         }
         if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
+
+        // Also check main content area on mobile for Popular Tools to replace with carousel
+        const mainContent = document.querySelector("main") || document.body;
+        let mobileToolsCard = mainContent.querySelector(".dyn-tools-card, .sidebar, aside");
+        // Fallback search for text matching Popular Tools in mobile body
+        const allHeadings = Array.from(document.querySelectorAll("h2, h3, h4, strong"));
+        for (const h of allHeadings) {
+          if ((h.textContent || "").toLowerCase().includes("popular tools")) {
+            let container = h.parentElement;
+            if (container && !container.querySelector(".related-section")) {
+              // Clear old popular tools list in mobile view
+              const children = Array.from(container.children);
+              for (const child of children) {
+                if (child !== h) child.remove();
+              }
+              h.textContent = "🔥 Related Tools / Calculators";
+              
+              const tempDiv = document.createElement("div");
+              tempDiv.innerHTML = `
+                <section class="related-section" aria-labelledby="related-title-m">
+                  <div class="section-header">
+                    <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                    <div class="carousel-controls">
+                      <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
+                      <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
+                    </div>
+                  </div>
+
+                  <div class="carousel-viewport" id="carouselViewport" tabindex="0">
+                    <div class="carousel-track" id="carouselTrack">
+                      <p class="tool-loading">Loading...</p>
+                    </div>
+                  </div>
+
+                  <div class="carousel-footer">
+                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
+                    <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
+                  </div>
+                </section>
+              `;
+              container.replaceChild(tempDiv.firstElementChild, h);
+              initCarouselLogic();
+            }
+            break;
+          }
+        }
         return;
       }
 
@@ -974,7 +1020,7 @@
         }
       }
 
-      // 4. Standalone Tool Page
+      // 4. Standalone Tool Page (Desktop Sidebar)
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1054,7 +1100,7 @@
     const rootEl = document.documentElement;
     if (localStorage.getItem("theme") === "dark") {
       rootEl.setAttribute("data-theme", "dark");
-      themeBtn.textContent = "☀️";
+      themeViewBtnText = "☀️";
     }
     themeBtn.onclick = () => {
       const isDark = rootEl.getAttribute("data-theme") === "dark";
