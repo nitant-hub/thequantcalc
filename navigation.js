@@ -463,7 +463,7 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (APPLE UI + BENTO + 3D + LIST POPUP)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (3 LINKS SWIPE / MULTI-TOOL)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -521,7 +521,7 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* COMPACT LIST VIEW BUTTON (BELOW TITLE, ONE-LINE, MATCHING PREVIOUS WIDTH) */
+      /* COMPACT LIST VIEW BUTTON */
       .dyn-list-toggle-btn {
         background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
@@ -545,9 +545,67 @@
         transform: translateY(-1px) !important;
       }
 
-      .related-section .controls-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+      .related-section .carousel-viewport {
+        overflow: hidden; padding: 2px 0; touch-action: pan-y;
+        cursor: grab; user-select: none; -webkit-user-select: none;
       }
+      .related-section .carousel-viewport:active { cursor: grabbing; }
+      .related-section .carousel-track { display: flex; flex-direction: column; gap: 10px; will-change: transform; }
+      .related-section .tool-loading {
+        margin: 0; padding: 20px 0; width: 100%; text-align: center;
+        color: var(--muted); font-size: 14px; font-style: italic;
+      }
+
+      /* MULTI-TOOL GROUP (3 TOOLS STACKED IN ONE SLIDE) */
+      .related-section .tool-group {
+        display: flex; flex: 0 0 100%; flex-direction: column; gap: 10px; min-width: 0;
+      }
+      .related-section .tool-card {
+        position: relative; display: flex; flex-direction: column; padding: 8px 10px;
+        overflow: hidden; color: inherit; text-decoration: none;
+        background: rgba(255, 255, 255, 0.7) !important; 
+        border: 1px solid rgba(226, 232, 240, 0.8) !important; 
+        border-radius: 10px !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+        transition: transform 0.2s ease, border-color 0.2s ease !important;
+      }
+      [data-theme="dark"] .related-section .tool-card {
+        background: rgba(30, 41, 59, 0.7) !important;
+        border-color: rgba(51, 65, 85, 0.8) !important;
+      }
+      .related-section .tool-card:hover {
+        transform: translateY(-1px);
+        border-color: #2563eb !important;
+      }
+      .related-section .tool-card::before { display: none !important; }
+      .related-section .tool-icon { display: none !important; }
+      .related-section .tool-category { display: none !important; }
+      
+      .related-section .tool-title {
+        position: relative; margin: 0 0 2px !important; font-size: 13.5px !important; font-weight: 750 !important;
+        color: #2563eb !important; line-height: 1.3 !important; text-decoration: underline !important;
+      }
+      [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
+
+      .related-section .tool-description {
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 11.5px !important; line-height: 1.35 !important;
+        font-weight: 400 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+      }
+      .related-section .tool-open { display: none !important; }
+
+      /* FOOTER WITH STATUS (1/2/3/4) ON LEFT AND DOTS ON RIGHT */
+      .related-section .carousel-footer {
+        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(226, 232, 240, 0.6);
+      }
+      [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
+
+      .related-section .carousel-status { color: var(--muted); font-size: 12px !important; font-weight: 600 !important; }
+      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
+      .related-section .carousel-dot {
+        width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
+        background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
+      }
+      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: #2563eb; }
 
       .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
       .related-section .carousel-btn {
@@ -560,55 +618,6 @@
       .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
       [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
       [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
-      
-      .related-section .carousel-viewport {
-        overflow: hidden; padding: 2px 0; touch-action: pan-y;
-        cursor: grab; user-select: none; -webkit-user-select: none;
-      }
-      .related-section .carousel-viewport:active { cursor: grabbing; }
-      .related-section .carousel-track { display: flex; gap: 10px; will-change: transform; }
-      .related-section .tool-loading {
-        margin: 0; padding: 20px 0; width: 100%; text-align: center;
-        color: var(--muted); font-size: 14px; font-style: italic;
-      }
-
-      .related-section .tool-card {
-        position: relative; display: flex; flex: 0 0 100%;
-        flex-direction: column; min-width: 0; padding: 0;
-        overflow: hidden; color: inherit; text-decoration: none;
-        background: transparent !important; border: none !important; box-shadow: none !important;
-      }
-      .related-section .tool-card::before { display: none !important; }
-      .related-section .tool-icon { display: none !important; }
-      .related-section .tool-category { display: none !important; }
-      
-      .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 15.5px !important; font-weight: 750 !important;
-        color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
-        letter-spacing: -0.2px !important;
-      }
-      [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
-
-      .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
-        font-weight: 400 !important;
-        display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
-      }
-      .related-section .tool-open { display: none !important; }
-
-      /* FOOTER WITH STATUS (1/2/3/4) ON LEFT AND DOTS ON RIGHT */
-      .related-section .carousel-footer {
-        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(226, 232, 240, 0.6);
-      }
-      [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
-
-      .related-section .carousel-status { color: var(--muted); font-size: 12px !important; font-weight: 600 !important; }
-      .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
-      .related-section .carousel-dot {
-        width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
-        background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
-      }
-      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: #2563eb; }
 
       /* VERTICAL LIST POPUP MODAL */
       #dynAllToolsModal {
@@ -898,7 +907,9 @@
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
-      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
+      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." },
+      { path: "/tools/sip-calculator.html", title: "SIP Calculator", text: "Estimate returns on monthly investments." },
+      { path: "/tools/emi-calculator.html", title: "EMI Calculator", text: "Calculate monthly loan payments." }
     ];
 
     async function fetchRelatedTools() {
@@ -927,14 +938,14 @@
           }
         }
 
-        const picked = found.sort(() => 0.5 - Math.random()).slice(0, 10);
-        return picked.length ? picked : fallbackTools;
+        const picked = found.sort(() => 0.5 - Math.random()).slice(0, 9);
+        return picked.length >= 3 ? picked : fallbackTools;
       } catch (e) {
         return fallbackTools;
       }
     }
 
-    // EMBEDDED COMPACT CAROUSEL LOGIC WITH AUTO-FLOW IN X DIRECTION & MODAL POPUP TRIGGER
+    // EMBEDDED MULTI-TOOL CAROUSEL LOGIC (3 TOOLS PER SLIDE)
     let carouselInitialized = false;
     function initCarouselLogic() {
       if (carouselInitialized) return;
@@ -989,34 +1000,46 @@
         const tools = await fetchRelatedTools();
         track.innerHTML = "";
 
-        tools.forEach((tool) => {
-          const a = document.createElement("a");
-          a.className = "tool-card";
-          a.href = tool.path;
-          a.draggable = false;
+        // Group tools in chunks of 3
+        const groups = [];
+        for (let i = 0; i < tools.length; i += 3) {
+          groups.push(tools.slice(i, i + 3));
+        }
 
-          const title = document.createElement("h3");
-          title.className = "tool-title";
-          title.textContent = tool.title;
+        groups.forEach((group) => {
+          const groupDiv = document.createElement("div");
+          groupDiv.className = "tool-group";
 
-          const desc = document.createElement("p");
-          desc.className = "tool-description";
-          desc.textContent = tool.text;
+          group.forEach((tool) => {
+            const a = document.createElement("a");
+            a.className = "tool-card";
+            a.href = tool.path;
+            a.draggable = false;
 
-          a.append(title, desc);
-          track.appendChild(a);
+            const title = document.createElement("h3");
+            title.className = "tool-title";
+            title.textContent = tool.title;
+
+            const desc = document.createElement("p");
+            desc.className = "tool-description";
+            desc.textContent = tool.text;
+
+            a.append(title, desc);
+            groupDiv.appendChild(a);
+          });
+
+          track.appendChild(groupDiv);
         });
 
-        const cards = Array.from(track.querySelectorAll(".tool-card"));
+        const cardGroups = Array.from(track.querySelectorAll(".tool-group"));
         let offset = 0, vel = 0, target = null, raf = null, last = 0;
         let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0;
         let autoFlowTimer = null;
 
-        function visibleCards() { return 1; }
-        function maxIndex() { return Math.max(0, cards.length - visibleCards()); }
+        function maxIndex() { return Math.max(0, cardGroups.length - 1); }
         function step() {
-          const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-          return cards[0].offsetWidth + gap;
+          const gap = parseFloat(getComputedStyle(track).rowGap) || 10;
+          return cardGroups[0].offsetWidth + gap;
         }
         function maxOffset() { return maxIndex() * step(); }
         function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -1028,7 +1051,7 @@
             const dot = document.createElement("button");
             dot.type = "button";
             dot.className = "carousel-dot";
-            dot.setAttribute("aria-label", "Show tool " + (i + 1));
+            dot.setAttribute("aria-label", "Show group " + (i + 1));
             dot.addEventListener("click", () => { 
               target = i * step(); 
               vel = 0; 
@@ -1049,7 +1072,7 @@
           next.disabled = i === maxIndex();
           prev.style.opacity = prev.disabled ? ".4" : "1";
           next.style.opacity = next.disabled ? ".4" : "1";
-          status.textContent = (i + 1) + " of " + cards.length;
+          status.textContent = "Group " + (i + 1) + " of " + cardGroups.length;
         }
 
         function tick(t) {
@@ -1089,7 +1112,7 @@
 
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
-          autoFlowTimer = setInterval(stepAutoFlow, 3500);
+          autoFlowTimer = setInterval(stepAutoFlow, 4500);
         }
 
         prev.addEventListener("click", () => { 
@@ -1183,10 +1206,8 @@
               tempDiv.innerHTML = `
                 <section class="related-section" aria-labelledby="related-title-m">
                   <div class="section-header">
-                    <div class="title-row">
-                      <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                    </div>
-                    <div class="controls-row">
+                    <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
+                    <div class="title-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
                       <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                       <div class="carousel-controls">
                         <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
@@ -1202,7 +1223,7 @@
                   </div>
 
                   <div class="carousel-footer">
-                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
+                    <span class="carousel-status" id="carouselStatus" aria-live="polite">Group 1</span>
                     <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
                   </div>
                 </section>
@@ -1291,10 +1312,8 @@
           tempDiv.innerHTML = `
             <section class="related-section" aria-labelledby="related-title">
               <div class="section-header">
-                <div class="title-row">
-                  <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
-                </div>
-                <div class="controls-row">
+                <h3 class="section-title" id="related-title">🔥 Related Tools / Calculators</h3>
+                <div class="title-row" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;">
                   <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
                   <div class="carousel-controls">
                     <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
@@ -1310,7 +1329,7 @@
               </div>
 
               <div class="carousel-footer">
-                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 4</span>
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">Group 1</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
