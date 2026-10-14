@@ -463,57 +463,71 @@
       }
 
       /* ========================================================
-         COMPACT COMPONENT SIDEBAR CAROUSEL (ENHANCED TOP TYPOGRAPHY & PROMINENT ARROWS)
+         COMPACT COMPONENT SIDEBAR CAROUSEL (APPLE UI + BENTO + 3D)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
         --text: #0f172a;
-        --muted: #334155;
-        --accent: #0284c7;
-        --border: rgba(30,50,80,.12);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        --muted: #475569;
+        --accent: #2563eb;
+        --border: rgba(255,255,255,0.8);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 0 12px 0 !important;
-        padding: 14px 14px 16px !important;
+        padding: 16px !important;
         overflow: hidden !important;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        border-radius: 16px;
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
         box-sizing: border-box !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
       }
       [data-theme="dark"] .related-section {
-        background: #1e293b !important;
+        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
         --card: rgba(30,41,59,.95);
         --text: #f8fafc;
-        --muted: #cbd5e1;
-        --border: rgba(255,255,255,.1);
+        --muted: #94a3b8;
+        --border: rgba(255,255,255,0.08);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
       }
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
       .related-section .section-header {
         display: flex; align-items: center; justify-content: space-between;
-        gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+        gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
       }
+      [data-theme="dark"] .related-section .section-header { border-bottom-color: rgba(51, 65, 85, 0.6); }
+
       .related-section .eyebrow { display: none !important; }
       .related-section .section-description { display: none !important; }
+      
+      /* ENHANCED TITLE WITH APPLE UI + 3D TOUCH */
       .related-section .section-title {
-        margin: 0 !important; font-size: 15.5px !important; font-weight: 800 !important; letter-spacing: -0.3px !important; color: #1e293b;
+        margin: 0 !important; 
+        font-size: 16.5px !important; 
+        font-weight: 800 !important; 
+        letter-spacing: -0.4px !important; 
+        color: #0f172a !important;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
       }
-      [data-theme="dark"] .related-section .section-title { color: #f8fafc !important; }
+      [data-theme="dark"] .related-section .section-title { 
+        color: #f8fafc !important; 
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
 
       .related-section .carousel-controls { display: flex; gap: 6px; flex-shrink: 0; }
       .related-section .carousel-btn {
         display: grid; place-items: center; width: 34px; height: 34px;
-        border: 1px solid var(--border); border-radius: 8px; background: #f1f5f9;
-        color: #0f172a; font-size: 22px; font-weight: 800; cursor: pointer; padding: 0; line-height: 1;
-        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.1);
-        transition: background 0.2s ease, transform 0.1s ease;
+        border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 10px; background: #ffffff;
+        color: #0f172a; font-size: 20px; font-weight: 900; cursor: pointer; padding: 0; line-height: 1;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .related-section .carousel-btn:hover { background: #e2e8f0; transform: scale(1.05); }
-      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; }
+      .related-section .carousel-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
+      [data-theme="dark"] .related-section .carousel-btn { background: #334155; color: #fff; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+      [data-theme="dark"] .related-section .carousel-btn:hover { background: #475569; }
       
       .related-section .carousel-viewport {
         overflow: hidden; padding: 2px 0; touch-action: pan-y;
@@ -537,29 +551,31 @@
       .related-section .tool-category { display: none !important; }
       
       .related-section .tool-title {
-        position: relative; margin: 0 0 6px !important; font-size: 16.5px !important; font-weight: 750 !important;
-        color: #0066cc !important; line-height: 1.35 !important; text-decoration: underline !important;
+        position: relative; margin: 0 0 6px !important; font-size: 15.5px !important; font-weight: 750 !important;
+        color: #2563eb !important; line-height: 1.35 !important; text-decoration: underline !important;
         letter-spacing: -0.2px !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 14px !important; line-height: 1.45 !important;
+        position: relative; margin: 0 !important; color: var(--muted) !important; font-size: 13.5px !important; line-height: 1.45 !important;
         font-weight: 400 !important;
         display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important;
       }
       .related-section .tool-open { display: none !important; }
 
       .related-section .carousel-footer {
-        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(226, 232, 240, 0.6);
       }
+      [data-theme="dark"] .related-section .carousel-footer { border-top-color: rgba(51, 65, 85, 0.6); }
+
       .related-section .carousel-status { color: var(--muted); font-size: 12px !important; font-weight: 600 !important; }
       .related-section .carousel-dots { display: flex; justify-content: center; align-items: center; gap: 5px; }
       .related-section .carousel-dot {
         width: 6px; height: 6px; padding: 0; border: 0; border-radius: 10px;
         background: #cbd5e1; cursor: pointer; transition: width .25s ease, background .25s ease;
       }
-      .related-section .carousel-dot[aria-current="true"] { width: 16px; background: #0066cc; }
+      .related-section .carousel-dot[aria-current="true"] { width: 18px; background: #2563eb; }
     `;
 
     const categories = [
