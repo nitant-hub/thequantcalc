@@ -239,14 +239,21 @@
         display: flex !important;
         flex-direction: column !important;
         gap: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
       }
       .dyn-tools-card {
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 16px !important;
-        padding: 1.25rem !important;
+        padding: 1rem !important;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
         box-sizing: border-box !important;
       }
       [data-theme="dark"] .dyn-tools-card {
@@ -449,124 +456,138 @@
       }
 
       /* ========================================================
-         COMPACT CAROUSEL SIDEBAR COMPONENT (MATCHES PREVIOUS POPULAR TOOLS EXACT SIZE)
+         COMPACT 3-TOOL CAROUSEL (EXACT POPULAR TOOLS FOOTPRINT & MOBILE FIT)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
         --text: #0f172a;
-        --muted: #64748b;
+        --muted: #475569;
         --accent: #2563eb;
-        --border: rgba(30,50,80,.08);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        --border: rgba(226, 232, 240, 0.85);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
         width: 100% !important;
         max-width: 100% !important;
+        min-width: 0 !important;
         margin: 0 0 10px 0 !important;
         padding: 10px 12px !important;
         overflow: hidden !important;
         border: 1px solid var(--border);
-        border-radius: 12px;
-        background: #ffffff;
+        border-radius: 14px;
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
         box-sizing: border-box !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
       }
       [data-theme="dark"] .related-section {
-        background: #1e293b !important;
+        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
         --card: rgba(30,41,59,.95);
         --text: #f8fafc;
         --muted: #94a3b8;
-        --border: rgba(255,255,255,.08);
+        --border: rgba(255,255,255,0.08);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
       }
       .related-section *, .related-section *::before, .related-section *::after { box-sizing: border-box; }
 
-      /* HEADER: Strict 2-Line Hierarchy */
       .related-section .section-header {
-        display: flex; 
-        flex-direction: column; 
-        gap: 6px; 
-        margin-bottom: 8px; 
-        padding-bottom: 6px; 
-        border-bottom: 1px solid var(--border);
+        display: flex !important; 
+        flex-direction: column !important; 
+        gap: 6px !important; 
+        margin-bottom: 8px !important; 
+        padding-bottom: 6px !important; 
+        border-bottom: 1px solid var(--border) !important;
+        width: 100% !important;
       }
-      .related-section .eyebrow { display: none !important; }
-      .related-section .section-description { display: none !important; }
-      
-      /* LINE 1: Pure single line title */
+
+      /* LINE 1: Single-line title without global h3 bottom border */
       .related-section .title-row {
-        width: 100%;
-        display: block;
+        width: 100% !important;
+        display: block !important;
       }
       .related-section .section-title {
         margin: 0 !important; 
+        padding: 0 !important;
+        border: none !important;
         font-size: 14.5px !important; 
         font-weight: 800 !important; 
         letter-spacing: -0.3px !important; 
-        color: var(--text);
+        color: var(--text) !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+      }
+      [data-theme="dark"] .related-section .section-title { 
+        color: #f8fafc !important; 
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-      /* LINE 2: List toggle on Left, Arrows on Right */
+      /* LINE 2: List view on left, Arrows on right */
       .related-section .controls-row {
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between; 
-        width: 100%;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: space-between !important; 
+        gap: 8px !important; 
+        width: 100% !important;
       }
 
       .dyn-list-toggle-btn {
-        background: #2563eb !important;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
         color: #ffffff !important;
         border: none !important;
         border-radius: 6px !important;
         padding: 3px 8px !important;
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
         display: inline-flex !important;
         align-items: center !important;
+        justify-content: center !important;
         gap: 3px !important;
+        width: auto !important;
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25) !important;
         white-space: nowrap !important;
         flex-shrink: 0 !important;
       }
 
       .related-section .carousel-controls { 
-        display: flex; 
-        gap: 5px; 
-        flex-shrink: 0; 
+        display: flex !important; 
+        gap: 5px !important; 
+        flex-shrink: 0 !important; 
       }
       .related-section .carousel-btn {
-        display: grid; 
-        place-items: center; 
-        width: 24px; 
-        height: 24px;
-        border: 1px solid var(--border); 
-        border-radius: 6px; 
-        background: #f8fafc;
-        color: var(--text); 
-        font-size: 16px; 
-        font-weight: 800; 
-        cursor: pointer; 
-        padding: 0; 
-        line-height: 1;
+        display: grid !important; 
+        place-items: center !important; 
+        width: 26px !important; 
+        height: 26px !important;
+        border: 1px solid var(--border) !important; 
+        border-radius: 7px !important; 
+        background: #ffffff !important;
+        color: var(--text) !important; 
+        font-size: 16px !important; 
+        font-weight: 900 !important; 
+        cursor: pointer !important; 
+        padding: 0 !important; 
+        line-height: 1 !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08) !important;
       }
       [data-theme="dark"] .related-section .carousel-btn { 
-        background: #334155; 
-        color: #fff; 
-        border-color: rgba(255, 255, 255, 0.15); 
+        background: #334155 !important; 
+        color: #fff !important; 
+        border-color: rgba(255, 255, 255, 0.15) !important; 
       }
 
-      /* LINE 3: Horizontal Carousel Track (1 tool per slide to match original height) */
+      /* LINE 3: Strict Horizontal Viewport & Track (Zero Overflow) */
       .related-section .carousel-viewport {
-        overflow: hidden; 
-        width: 100%;
-        max-width: 100%;
-        padding: 2px 0; 
+        overflow: hidden !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 1px 0 !important; 
         touch-action: pan-y;
         cursor: grab; 
         user-select: none; 
         -webkit-user-select: none;
-        box-sizing: border-box;
+        position: relative !important;
       }
       .related-section .carousel-viewport:active { cursor: grabbing; }
       
@@ -574,102 +595,126 @@
         display: flex !important; 
         flex-direction: row !important;
         flex-wrap: nowrap !important;
+        gap: 0px !important;
         will-change: transform; 
-        width: 100%; 
-        box-sizing: border-box;
+        width: 100% !important; 
       }
       .related-section .tool-loading {
-        margin: 0; 
-        padding: 12px 0; 
-        width: 100%; 
-        text-align: center;
-        color: var(--muted); 
-        font-size: 12px; 
-        font-style: italic;
+        margin: 0 !important; 
+        padding: 12px 0 !important; 
+        width: 100% !important; 
+        text-align: center !important;
+        color: var(--muted) !important; 
+        font-size: 12px !important; 
+        font-style: italic !important;
+      }
+
+      /* 3-Tool Slide Group */
+      .related-section .tool-group {
+        display: flex !important; 
+        flex: 0 0 100% !important; 
+        width: 100% !important; 
+        min-width: 100% !important; 
+        max-width: 100% !important;
+        flex-direction: column !important; 
+        gap: 5px !important; 
+        padding: 0 1px !important;
+        box-sizing: border-box !important;
       }
 
       .related-section .tool-card {
-        position: relative; 
-        display: flex; 
-        flex: 0 0 100% !important;
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        flex-direction: column; 
-        padding: 2px 0;
-        overflow: hidden; 
-        color: inherit; 
-        text-decoration: none;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        box-sizing: border-box;
+        position: relative !important; 
+        display: flex !important; 
+        flex-direction: column !important; 
+        padding: 5px 8px !important;
+        overflow: hidden !important; 
+        color: inherit !important; 
+        text-decoration: none !important;
+        background: rgba(255, 255, 255, 0.75) !important; 
+        border: 1px solid var(--border) !important; 
+        border-radius: 8px !important;
+        min-height: 40px !important;
+        justify-content: center !important;
       }
-      .related-section .tool-card::before { display: none !important; }
-      .related-section .tool-icon { display: none !important; }
-      .related-section .tool-category { display: none !important; }
+      [data-theme="dark"] .related-section .tool-card {
+        background: rgba(30, 41, 59, 0.75) !important;
+      }
+      .related-section .tool-card.is-empty {
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+      .related-section .tool-card::before,
+      .related-section .tool-icon,
+      .related-section .tool-category,
+      .related-section .tool-open { 
+        display: none !important; 
+      }
       
       .related-section .tool-title {
-        position: relative; 
-        margin: 0 0 3px !important; 
-        font-size: 13.5px !important; 
+        position: relative !important; 
+        margin: 0 0 1px 0 !important; 
+        padding: 0 !important;
+        border: none !important;
+        font-size: 12.5px !important; 
         font-weight: 700 !important;
         color: #2563eb !important; 
-        line-height: 1.35 !important; 
+        line-height: 1.25 !important; 
         text-decoration: underline !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
       .related-section .tool-description {
-        position: relative; 
+        position: relative !important; 
         margin: 0 !important; 
+        padding: 0 !important;
         color: var(--muted) !important; 
-        font-size: 12px !important; 
-        line-height: 1.4 !important;
+        font-size: 11px !important; 
+        line-height: 1.25 !important;
         font-weight: 400 !important; 
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
-        overflow: hidden !important;
+        white-space: nowrap !important; 
+        overflow: hidden !important; 
+        text-overflow: ellipsis !important;
       }
-      .related-section .tool-open { display: none !important; }
 
-      /* LINE 4: Status (1 of X) on Left, Dots on Right */
+      /* LINE 4: Status (1 of 2) on Left, Dots on Right */
       .related-section .carousel-footer {
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between; 
-        gap: 6px; 
-        margin-top: 8px; 
-        padding-top: 6px; 
-        border-top: 1px solid var(--border);
-        box-sizing: border-box;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: space-between !important; 
+        gap: 6px !important; 
+        margin-top: 6px !important; 
+        padding-top: 5px !important; 
+        border-top: 1px solid var(--border) !important;
+        width: 100% !important;
       }
 
       .related-section .carousel-status { 
-        color: var(--muted); 
+        color: var(--muted) !important; 
         font-size: 11px !important; 
         font-weight: 600 !important; 
       }
       .related-section .carousel-dots { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 4px; 
+        display: flex !important; 
+        justify-content: center !important; 
+        align-items: center !important; 
+        gap: 4px !important; 
       }
       .related-section .carousel-dot {
-        width: 5px; 
-        height: 5px; 
-        padding: 0; 
-        border: 0; 
-        border-radius: 10px;
-        background: #cbd5e1; 
-        cursor: pointer; 
-        transition: width .25s ease, background .25s ease;
+        width: 5px !important; 
+        height: 5px !important; 
+        padding: 0 !important; 
+        border: 0 !important; 
+        border-radius: 10px !important;
+        background: #cbd5e1 !important; 
+        cursor: pointer !important; 
+        transition: width .25s ease, background .25s ease !important;
       }
       .related-section .carousel-dot[aria-current="true"] { 
-        width: 14px; 
-        background: #2563eb; 
+        width: 14px !important; 
+        background: #2563eb !important; 
       }
 
       /* POPUP MODAL FOR ALL TOOLS */
@@ -713,6 +758,8 @@
       [data-theme="dark"] .dyn-modal-header { border-bottom-color: #334155 !important; }
       .dyn-modal-header h3 {
         margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
         font-size: 1.05rem !important;
         font-weight: 800 !important;
         color: var(--text-main, #0f172a) !important;
@@ -863,7 +910,7 @@
       globalSearchNode.className = "dyn-search-wrapper";
       globalSearchNode.innerHTML = `
         <div class="dyn-search-row">
-          <input type="text" class="dyn modern-input" placeholder="Search..." autocomplete="off">
+          <input type="text" class="dyn-modern-input" placeholder="Search..." autocomplete="off">
         </div>
         <div class="dyn-search-dropdown"></div>
       `;
@@ -942,8 +989,8 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    /* REAL 4 TOOLS ONLY (NO EXTRA PLACEHOLDERS) */
-    const realFourTools = [
+    /* ONLY YOUR 4 REAL TOOLS (NO SIP OR EMI CALCULATOR) */
+    const fallbackTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
@@ -956,30 +1003,33 @@
         try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
         if (!xmlText) {
           const response = await fetch("/sitemap-pages.xml");
-          xmlText = await response.text();
-          try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
-        }
-
-        const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
-        const locs = xmlDoc.getElementsByTagName("loc");
-        const currentUrl = window.location.pathname;
-        const found = [];
-
-        for (let i = 0; i < locs.length; i++) {
-          const path = new URL(locs[i].textContent).pathname;
-          if (path === currentUrl) continue;
-          if (/calculator|converter|tools/i.test(path)) {
-            const slug = path.split("/").filter(Boolean).pop() || "";
-            const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
-            const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-            found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
+          if (response.ok) {
+            xmlText = await response.text();
+            try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
           }
         }
 
-        return found.length ? found : realFourTools.filter(t => t.path !== currentUrl);
+        if (xmlText) {
+          const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
+          const locs = xmlDoc.getElementsByTagName("loc");
+          const currentUrl = window.location.pathname;
+          const found = [];
+
+          for (let i = 0; i < locs.length; i++) {
+            const path = new URL(locs[i].textContent).pathname;
+            if (path === currentUrl) continue;
+            if (/calculator|converter|tools/i.test(path)) {
+              const slug = path.split("/").filter(Boolean).pop() || "";
+              const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
+              const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+              found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
+            }
+          }
+          if (found.length > 0) return found;
+        }
+        return fallbackTools;
       } catch (e) {
-        const currentUrl = window.location.pathname;
-        return realFourTools.filter(t => t.path !== currentUrl);
+        return fallbackTools;
       }
     }
 
@@ -1036,34 +1086,56 @@
         const tools = await fetchRelatedTools();
         track.innerHTML = "";
 
-        tools.forEach((tool) => {
-          const a = document.createElement("a");
-          a.className = "tool-card";
-          a.href = tool.path;
-          a.draggable = false;
+        const groups = [];
+        for (let i = 0; i < tools.length; i += 3) {
+          groups.push(tools.slice(i, i + 3));
+        }
 
-          const title = document.createElement("h3");
-          title.className = "tool-title";
-          title.textContent = tool.title;
+        groups.forEach((group) => {
+          const groupDiv = document.createElement("div");
+          groupDiv.className = "tool-group";
 
-          const desc = document.createElement("p");
-          desc.className = "tool-description";
-          desc.textContent = tool.text;
+          for (let k = 0; k < 3; k++) {
+            const tool = group[k];
+            if (tool) {
+              const a = document.createElement("a");
+              a.className = "tool-card";
+              a.href = tool.path;
+              a.draggable = false;
 
-          a.append(title, desc);
-          track.appendChild(a);
+              const title = document.createElement("div");
+              title.className = "tool-title";
+              title.textContent = tool.title;
+
+              const desc = document.createElement("p");
+              desc.className = "tool-description";
+              desc.textContent = tool.text;
+
+              a.append(title, desc);
+              groupDiv.appendChild(a);
+            } else {
+              /* Empty slot placeholder when fewer than 3 tools in this slide */
+              const emptyCard = document.createElement("div");
+              emptyCard.className = "tool-card is-empty";
+              emptyCard.innerHTML = `<div class="tool-title">&nbsp;</div><p class="tool-description">&nbsp;</p>`;
+              groupDiv.appendChild(emptyCard);
+            }
+          }
+
+          track.appendChild(groupDiv);
         });
 
-        const cards = Array.from(track.querySelectorAll(".tool-card"));
+        const cardGroups = Array.from(track.querySelectorAll(".tool-group"));
+        let activeIdx = 0;
         let offset = 0, vel = 0, target = null, raf = null, last = 0;
         let dragging = false, moved = false, startX = 0, lastX = 0, lastT = 0;
         let autoFlowTimer = null;
 
-        function maxIndex() { return Math.max(0, cards.length - 1); }
-        function step() { return viewport.clientWidth; }
+        function maxIndex() { return Math.max(0, cardGroups.length - 1); }
+        function step() { return viewport.getBoundingClientRect().width || viewport.clientWidth || 1; }
         function maxOffset() { return maxIndex() * step(); }
         function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-        function current() { return clamp(Math.round(offset / (step() || 1)), 0, maxIndex()); }
+        function current() { return clamp(Math.round(offset / step()), 0, maxIndex()); }
 
         function buildDots() {
           dots.innerHTML = "";
@@ -1071,8 +1143,9 @@
             const dot = document.createElement("button");
             dot.type = "button";
             dot.className = "carousel-dot";
-            dot.setAttribute("aria-label", "Show tool " + (i + 1));
+            dot.setAttribute("aria-label", "Show group " + (i + 1));
             dot.addEventListener("click", () => { 
+              activeIdx = i;
               target = i * step(); 
               vel = 0; 
               start(); 
@@ -1085,6 +1158,7 @@
         function apply() {
           track.style.transform = "translate3d(" + (-offset) + "px,0,0)";
           const i = current();
+          activeIdx = i;
           Array.from(dots.children).forEach((dot, k) => {
             dot.setAttribute("aria-current", String(k === i));
           });
@@ -1092,7 +1166,7 @@
           next.disabled = i === maxIndex();
           prev.style.opacity = prev.disabled ? ".4" : "1";
           next.style.opacity = next.disabled ? ".4" : "1";
-          status.textContent = (i + 1) + " of " + cards.length;
+          status.textContent = (i + 1) + " of " + cardGroups.length;
         }
 
         function tick(t) {
@@ -1105,7 +1179,7 @@
               if (offset < 0 || offset > max) {
                 target = offset < 0 ? 0 : max; vel = 0;
               } else if (Math.abs(vel) < 0.03) {
-                target = clamp(Math.round(offset / (step() || 1)), 0, maxIndex()) * step(); vel = 0;
+                target = clamp(Math.round(offset / step()), 0, maxIndex()) * step(); vel = 0;
               }
             }
             if (target !== null) {
@@ -1125,6 +1199,7 @@
           if (nextIdx > maxIndex()) {
             nextIdx = 0;
           }
+          activeIdx = nextIdx;
           target = nextIdx * step();
           vel = 0;
           start();
@@ -1132,17 +1207,19 @@
 
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
-          autoFlowTimer = setInterval(stepAutoFlow, 4500);
+          autoFlowTimer = setInterval(stepAutoFlow, 5000);
         }
 
         prev.addEventListener("click", () => { 
-          target = (current() - 1) * step(); 
+          activeIdx = Math.max(0, current() - 1);
+          target = activeIdx * step(); 
           vel = 0; 
           start(); 
           resetAutoFlow();
         });
         next.addEventListener("click", () => { 
-          target = (current() + 1) * step(); 
+          activeIdx = Math.min(maxIndex(), current() + 1);
+          target = activeIdx * step(); 
           vel = 0; 
           start(); 
           resetAutoFlow();
@@ -1185,7 +1262,9 @@
         track.addEventListener("dragstart", e => e.preventDefault());
 
         window.addEventListener("resize", () => {
-          offset = clamp(current() * step(), 0, maxOffset());
+          target = null;
+          vel = 0;
+          offset = clamp(activeIdx * step(), 0, maxOffset());
           buildDots();
           apply();
         });
@@ -1203,108 +1282,7 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      if (isMobile) {
-        const drawerSlot = document.getElementById("dynDrawerSearchSlot");
-        globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-        if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
-          drawerSlot.appendChild(globalSearchNode);
-        }
-        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
-
-        const allHeadings = Array.from(document.querySelectorAll("h2, h3, h4, strong"));
-        for (const h of allHeadings) {
-          if ((h.textContent || "").toLowerCase().includes("popular tools")) {
-            let container = h.parentElement;
-            if (container && !container.querySelector(".related-section")) {
-              const children = Array.from(container.children);
-              for (const child of children) {
-                if (child !== h) child.remove();
-              }
-              
-              const tempDiv = document.createElement("div");
-              tempDiv.innerHTML = `
-                <section class="related-section" aria-labelledby="related-title-m">
-                  <div class="section-header">
-                    <div class="title-row">
-                      <h3 class="section-title" id="related-title-m">🔥 Related Tools / Calculators</h3>
-                    </div>
-                    <div class="controls-row">
-                      <button class="dyn-list-toggle-btn" type="button">📋 List view</button>
-                      <div class="carousel-controls">
-                        <button class="carousel-btn" id="previousBtn" type="button" aria-label="Previous">‹</button>
-                        <button class="carousel-btn" id="nextBtn" type="button" aria-label="Next">›</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="carousel-viewport" id="carouselViewport" tabindex="0">
-                    <div class="carousel-track" id="carouselTrack">
-                      <p class="tool-loading">Loading...</p>
-                    </div>
-                  </div>
-
-                  <div class="carousel-footer">
-                    <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 3</span>
-                    <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
-                  </div>
-                </section>
-              `;
-              container.replaceChild(tempDiv.firstElementChild, h);
-              initCarouselLogic();
-            }
-            break;
-          }
-        }
-        return;
-      }
-
-      if (isCategory) {
-        const catView = document.getElementById("catView");
-        if (catView) {
-          let leftPane = catView.querySelector(".dyn-cat-left-pane");
-          let rightPane = catView.querySelector(".dyn-cat-right-pane");
-
-          if (!leftPane || !rightPane) {
-            leftPane = document.createElement("div");
-            leftPane.className = "dyn-cat-left-pane";
-
-            rightPane = document.createElement("div");
-            rightPane.className = "dyn-cat-right-pane";
-
-            const elementsToMove = ["crumb", "ch1", "cintro", "cols", "none"];
-            elementsToMove.forEach((id) => {
-              const el = document.getElementById(id);
-              if (el && el.parentElement === catView) leftPane.appendChild(el);
-            });
-
-            catView.classList.add("dyn-cat-split");
-            catView.appendChild(leftPane);
-            catView.appendChild(rightPane);
-          }
-
-          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-          if (rightPane.firstElementChild !== globalAdsenseNode) {
-            rightPane.insertBefore(globalAdsenseNode, rightPane.firstChild);
-          }
-          if (globalSearchNode.parentElement !== rightPane) {
-            rightPane.appendChild(globalSearchNode);
-          }
-          return;
-        }
-      }
-
-      if (!isCategory && !isTool) {
-        const homeSlot = document.getElementById("homeSearchSlot");
-        if (homeSlot) {
-          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
-          if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot);
-          }
-          if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
-          return;
-        }
-      }
-
+      /* ALWAYS REPLACE POPULAR TOOLS WITH CAROUSEL ON BOTH MOBILE & DESKTOP */
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1349,7 +1327,7 @@
               </div>
 
               <div class="carousel-footer">
-                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 3</span>
+                <span class="carousel-status" id="carouselStatus" aria-live="polite">1 of 2</span>
                 <div class="carousel-dots" id="carouselDots" aria-label="Position"></div>
               </div>
             </section>
@@ -1357,14 +1335,78 @@
           toolsCard.insertBefore(tempDiv.firstElementChild, toolsCard.firstChild);
           initCarouselLogic();
         }
+      }
 
+      /* 1. Mobile View Search & Ad Placement */
+      if (isMobile) {
+        const drawerSlot = document.getElementById("dynDrawerSearchSlot");
+        globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+        if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
+          drawerSlot.appendChild(globalSearchNode);
+        }
+        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
+        return;
+      }
+
+      /* 2. Desktop Category Page */
+      if (isCategory) {
+        const catView = document.getElementById("catView");
+        if (catView) {
+          let leftPane = catView.querySelector(".dyn-cat-left-pane");
+          let rightPane = catView.querySelector(".dyn-cat-right-pane");
+
+          if (!leftPane || !rightPane) {
+            leftPane = document.createElement("div");
+            leftPane.className = "dyn-cat-left-pane";
+
+            rightPane = document.createElement("div");
+            rightPane.className = "dyn-cat-right-pane";
+
+            const elementsToMove = ["crumb", "ch1", "cintro", "cols", "none"];
+            elementsToMove.forEach((id) => {
+              const el = document.getElementById(id);
+              if (el && el.parentElement === catView) leftPane.appendChild(el);
+            });
+
+            catView.classList.add("dyn-cat-split");
+            catView.appendChild(leftPane);
+            catView.appendChild(rightPane);
+          }
+
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          if (rightPane.firstElementChild !== globalAdsenseNode) {
+            rightPane.insertBefore(globalAdsenseNode, rightPane.firstChild);
+          }
+          if (globalSearchNode.parentElement !== rightPane) {
+            rightPane.appendChild(globalSearchNode);
+          }
+          return;
+        }
+      }
+
+      /* 3. Desktop Homepage View */
+      if (!isCategory && !isTool) {
+        const homeSlot = document.getElementById("homeSearchSlot");
+        if (homeSlot) {
+          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
+          if (globalSearchNode.parentElement !== homeSlot) {
+            homeSlot.appendChild(globalSearchNode);
+          }
+          if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
+          return;
+        }
+      }
+
+      /* 4. Desktop Sidebar Search & Ad Placement */
+      if (sidebarAside) {
+        const toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
         if (sidebarAside.firstElementChild !== globalSearchNode) {
           sidebarAside.insertBefore(globalSearchNode, sidebarAside.firstChild);
         }
 
-        if (globalAdsenseNode.previousElementSibling !== globalSearchNode) {
+        if (toolsCard && globalAdsenseNode.previousElementSibling !== globalSearchNode) {
           sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
         }
       }
