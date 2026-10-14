@@ -53,12 +53,13 @@
         }
         .bc-tabs::-webkit-scrollbar { display: none; } 
 
-        /* FILTER BUTTON (SLIM, SAME SIZE AS TAB BUTTONS) */
+        /* SLIM FILTER BUTTON (MATCHES TAB BUTTON DIMENSIONS) */
         .bc-theme-select {
             font-family: inherit;
-            padding: 6px 8px;
+            padding: 6px 9px;
             background: #0f172a !important;
             border: 1px solid #0f172a !important;
+            border-bottom: none !important;
             border-radius: 4px 4px 0 0;
             font-size: 13px !important;
             font-weight: 800 !important;
@@ -69,6 +70,7 @@
             white-space: nowrap;
             text-align: center;
             letter-spacing: -0.2px;
+            box-shadow: 0 -2px 3px rgba(0,0,0,0.06);
         }
 
         .bc-tab-btn {
@@ -126,7 +128,7 @@
             }
             .bc-theme-select {
                 font-size: 14.5px !important;
-                padding: 6px 8px;
+                padding: 6px 9px;
             }
             #btn-bc-history-tab {
                 font-size: 14.5px !important;
@@ -183,8 +185,47 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
         }
         
-        .bc-mem-indicator { font-size: 12px; font-weight: 900; color: #dceefb; z-index: 10; }
-        #bc-live-out { z-index: 10; font-weight: 900; }
+        /* LEFT-SIDE OUTPUT CONTROLS (COPY BUTTON + MEMORY INDICATOR) */
+        .bc-out-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .bc-copy-btn {
+            font-family: inherit;
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            line-height: 1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.15);
+            color: inherit !important;
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transition: background 0.12s ease, transform 0.05s ease, border-color 0.12s ease;
+        }
+        .bc-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.28);
+        }
+        .bc-copy-btn:active {
+            transform: translateY(1px);
+        }
+        .bc-copy-btn.copied {
+            background: #16a34a !important;
+            color: #ffffff !important;
+            border-color: #bbf7d0 !important;
+        }
+
+        .bc-mem-indicator { font-size: 12px; font-weight: 900; color: inherit; opacity: 0.9; z-index: 10; }
+        #bc-live-out { z-index: 10; font-weight: 900; margin-left: auto; padding-left: 8px; }
 
         .bc-input-box::-webkit-scrollbar, .bc-output-box::-webkit-scrollbar { height: 3px; }
         .bc-input-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
@@ -219,7 +260,7 @@
         .bc-grid-cas { grid-template-columns: repeat(10, 1fr); }
         .bc-grid-fin { grid-template-columns: repeat(8, 1fr); }
 
-        /* MODERN TACTILE 3D BUTTON ENGINE */
+        /* MODERN TACTILE 3D BUTTON ENGINE (DEFAULT CLASSIC) */
         .bc-btn {
             font-family: inherit; 
             border: 1px solid #94a8be; 
@@ -390,13 +431,6 @@
             font-weight: 900 !important;
         }
 
-        /* HP 12C "COMP" KEY (same look as before, now class based) */
-        .bc-btn-comp,
-        .bc-btn-comp:hover {
-            background: #3b5998;
-            color: #ffffff !important;
-        }
-
         .bc-span-2 { grid-column: span 2; }
         .bc-span-3 { grid-column: span 3; }
         .bc-span-4 { grid-column: span 4; }
@@ -405,7 +439,7 @@
         .bc-span-9 { grid-column: span 9; }
         .bc-span-10 { grid-column: span 10; }
 
-        /* HISTORY */
+        /* HISTORY (INTERACTIVE CLICKABLE ENTRIES + INDIVIDUAL DELETE × BUTTON) */
         #bc-history-tab { 
             background: #ffffff; 
             border: 1px solid #9fb4cb; 
@@ -422,12 +456,81 @@
         .bc-history-back-btn { background: #3b5998; color: #ffffff; }
         .bc-clear-history { background: #dc2626; color: #ffffff; }
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 14px; }
-        .hist-entry { margin-bottom: 4px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 3px; text-align: left; color: #000000; font-weight: 900; }
-        .hist-entry strong { color: #3b5998; font-weight: 900 !important; }
+        .hist-entry {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 4px;
+            border-bottom: 1px dashed #cbd5e1;
+            padding: 5px 6px;
+            border-radius: 4px;
+            text-align: left;
+            color: #000000;
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.12s ease, transform 0.05s ease;
+        }
+        .hist-entry:hover {
+            background: #eef3f8;
+        }
+        .hist-entry:active {
+            transform: translateY(1px);
+            background: #dce8f5;
+        }
+        .hist-content {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .hist-entry strong {
+            color: #3b5998;
+            font-weight: 900 !important;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: rgba(59, 89, 152, 0.1);
+            transition: background 0.12s ease, color 0.12s ease;
+        }
+        .hist-entry strong:hover {
+            background: #2563eb;
+            color: #ffffff !important;
+        }
+        .hist-del-btn {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border-radius: 4px;
+            border: 1px solid #fca5a5;
+            border-top: 1px solid #ffffff;
+            background: linear-gradient(180deg, #ffffff 0%, #fee2e2 100%);
+            color: #dc2626;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 0 #b91c1c, 0 2px 4px rgba(185, 28, 28, 0.2);
+            transition: background 0.1s ease, color 0.1s ease, transform 0.05s ease, box-shadow 0.05s ease;
+        }
+        .hist-del-btn:hover {
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+            color: #ffffff;
+            border-color: #b91c1c;
+        }
+        .hist-del-btn:active {
+            transform: translateY(1.5px);
+            box-shadow: 0 0.5px 0 #991b1b;
+        }
         .hist-empty { color: #64748b; text-align: center; font-style: italic; padding-top: 40px; }
 
         /* ========================================================
-           FILTER POP-UP PANEL (WITH 3D CANCEL ❌ BUTTON)
+           POP-UP FILTER PANEL WITH DUAL-SHADOW 3D ❌ CANCEL BUTTON
            ======================================================== */
         .bc-filter-panel {
             position: absolute;
@@ -439,7 +542,7 @@
             border: 1px solid #9fb4cb;
             border-radius: 6px;
             padding: 8px;
-            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
         }
         .bc-filter-panel.open { display: flex; }
 
@@ -460,13 +563,15 @@
             letter-spacing: 0.3px;
         }
 
-        /* 3D CANCEL BUTTON: solid edge shadow + soft glow shadow */
+        /* 3D ❌ CANCEL BUTTON WITH TWO DIFFERENT SHADOWS:
+           Shadow 1: Solid 3D bottom ledge (0 3px 0 #b91c1c)
+           Shadow 2: Soft ambient drop glow (0 6px 12px rgba(185, 28, 28, 0.38)) */
         .bc-filter-close {
             width: 34px;
             height: 34px;
             padding: 0;
             border-radius: 8px;
-            border: 1px solid #fca5a5;
+            border: 1px solid #f87171;
             border-top: 1px solid #ffffff;
             background: linear-gradient(180deg, #ffffff 0%, #fee2e2 100%);
             font-size: 16px;
@@ -475,12 +580,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 3px 0 #b91c1c, 0 6px 10px rgba(185, 28, 28, 0.35);
-            transition: transform 0.04s ease, box-shadow 0.04s ease;
+            box-shadow: 0 3px 0 #b91c1c, 0 6px 12px rgba(185, 28, 28, 0.38);
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+        .bc-filter-close:hover {
+            background: linear-gradient(180deg, #fff5f5 0%, #fecaca 100%);
         }
         .bc-filter-close:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #b91c1c, 0 2px 4px rgba(185, 28, 28, 0.35);
+            box-shadow: 0 1px 0 #b91c1c, 0 2px 5px rgba(185, 28, 28, 0.42);
         }
 
         .bc-filter-list {
@@ -506,7 +614,7 @@
             font-family: inherit;
             font-size: 12px;
             font-weight: 800;
-            color: #000000;
+            color: #0f172a;
             text-align: left;
             cursor: pointer;
             background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
@@ -515,7 +623,10 @@
             border-radius: 4px;
             box-shadow: 0 2px 0 #94a8be;
         }
-        .bc-filter-item:active { transform: translateY(1px); box-shadow: 0 1px 0 #94a8be; }
+        .bc-filter-item:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #94a8be;
+        }
         .bc-filter-item.sel {
             background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
             border-color: #2563eb;
@@ -536,40 +647,66 @@
         }
 
         /* ========================================================
-           FILTER THEMES - COLOURFUL BUTTONS (like the default calculator)
-           Every theme gives numbers, operators, functions, actions and
-           special keys their own tint. AC, Back and = stay red/orange/blue.
+           30 COLOURFUL THEME ENGINE (DYNAMIC MULTI-TONE KEY GROUPS)
+           Functions, Numbers, Operators, Actions, Deg/Rad, and
+           Special keys each get their own distinct color/shade
+           in every filter, while AC, Back, and = stay locked!
            ======================================================== */
-
-        /* Theme defaults (each theme below overrides what it needs) */
         [class*="calc-theme-"] {
-            --h: 215;          /* base hue */
-            --s: 55;           /* base saturation % */
-            --lt: 97;          /* button top lightness */
-            --lb: 91;          /* button bottom lightness */
-            --dir: 1;          /* 1 = light theme, -1 = dark theme */
-            --edge: 26;        /* 3D bottom edge darkness */
-            --bdo: -14;        /* border lightness offset */
-            --tx: #0f172a;     /* button text colour */
-            --a: 1;            /* button opacity (glass themes use less) */
-            --lift: 3px;       /* 3D depth */
+            --h: 215;
+            --s: 60;
+            --lt: 97;
+            --lb: 91;
+            --dir: 1;
+            --edge: 26;
+            --bdo: -14;
+            --tx: #0f172a;
+            --a: 1;
+            --lift: 3px;
             --sh2: 0 4px 5px rgba(15, 23, 42, 0.12);
         }
 
-        /* Category palettes: function keys */
-        [class*="calc-theme-"] .bc-btn { --ch: var(--h); --cs: calc(var(--s) * 0.3); --co: 0; }
-        /* numbers */
-        [class*="calc-theme-"] .bc-btn-num { --ch: var(--h); --cs: var(--s); --co: 8; }
-        /* operators */
-        [class*="calc-theme-"] .bc-btn-op { --ch: calc(var(--h) + 45); --cs: var(--s); --co: 5; }
-        /* actions (Ans, M+, MR ...) and Deg / Rad */
+        /* 1. Scientific / Standard Function Keys */
+        [class*="calc-theme-"] .bc-btn {
+            --ch: var(--h);
+            --cs: calc(var(--s) * 0.32);
+            --co: 0;
+        }
+        /* 2. Number Keys (0-9, .) - Richer Primary Tint */
+        [class*="calc-theme-"] .bc-btn-num {
+            --ch: var(--h);
+            --cs: calc(var(--s) * 1.15);
+            --co: 9;
+        }
+        /* 3. Operator Keys (+, -, *, /, %) - Shifted Accent Hue */
+        [class*="calc-theme-"] .bc-btn-op,
+        [class*="calc-theme-"] .bc-btn[aria-label="Add"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Subtract"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Multiply"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Divide"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Modulo"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Modulo or Percent"],
+        [class*="calc-theme-"] .bc-btn[aria-label="Percent"] {
+            --ch: calc(var(--h) + 42);
+            --cs: calc(var(--s) * 0.95);
+            --co: 5;
+        }
+        /* 4. Memory / Action / Deg / Rad Keys - Complementary Cool Tint */
         [class*="calc-theme-"] .bc-btn-action,
         [class*="calc-theme-"] .bc-btn-deg,
-        [class*="calc-theme-"] .bc-btn-rad { --ch: calc(var(--h) - 45); --cs: calc(var(--s) * 0.9); --co: 5; }
-        /* special keys */
-        [class*="calc-theme-"] .bc-btn-special { --ch: calc(var(--h) + 90); --cs: var(--s); --co: 7; }
+        [class*="calc-theme-"] .bc-btn-rad {
+            --ch: calc(var(--h) - 38);
+            --cs: calc(var(--s) * 0.9);
+            --co: 5;
+        }
+        /* 5. Special Keys (FILE, PRGM, A-X, CAS, f) - Warm Golden/Contrast Tint */
+        [class*="calc-theme-"] .bc-btn-special {
+            --ch: calc(var(--h) + 95);
+            --cs: calc(var(--s) * 1.1);
+            --co: 7;
+        }
 
-        /* One common paint rule that uses the palette above */
+        /* Apply Computed Multi-Tone Gradients & 3D Edges */
         [class*="calc-theme-"] .bc-btn {
             background: linear-gradient(180deg,
                 hsl(var(--ch) calc(var(--cs) * 1%) calc((var(--lt) - var(--dir) * var(--co)) * 1%) / var(--a)),
@@ -583,24 +720,31 @@
             box-shadow: 0 1px 0 hsl(var(--ch) calc(var(--cs) * 1%) calc((var(--lb) - var(--dir) * var(--co) - var(--edge)) * 1%)), var(--sh2) !important;
         }
 
-        /* Selected Deg / Rad key */
+        /* Active Deg / Rad Highlight Across All Themes */
         [class*="calc-theme-"] .bc-btn-deg.active,
         [class*="calc-theme-"] .bc-btn-rad.active {
-            background: linear-gradient(180deg, hsl(var(--h) 65% 38%) 0%, hsl(var(--h) 65% 28%) 100%) !important;
+            background: linear-gradient(180deg, hsl(var(--h) 70% 38%) 0%, hsl(var(--h) 70% 26%) 100%) !important;
             color: #ffffff !important;
-            border-color: hsl(var(--h) 65% 20%) !important;
-            border-top-color: hsl(var(--h) 65% 55%) !important;
-            box-shadow: 0 var(--lift) 0 hsl(var(--h) 65% 14%), 0 4px 6px rgba(15, 23, 42, 0.35) !important;
+            border-color: hsl(var(--h) 70% 18%) !important;
+            border-top-color: hsl(var(--h) 70% 56%) !important;
+            box-shadow: 0 var(--lift) 0 hsl(var(--h) 70% 13%), 0 4px 6px rgba(15, 23, 42, 0.35) !important;
         }
 
-        /* 1. Black & White (grey shades by design, keys still use different shades) */
-        .calc-theme-bw { background: #ffffff !important; border-color: #000000 !important; --h: 0; --s: 0; --lt: 96; --lb: 90; --tx: #000000; }
+        /* Light Output Bar Themes: Adjust Copy Button Contrast */
+        .calc-theme-minimal .bc-copy-btn,
+        .calc-theme-vintage .bc-copy-btn {
+            border-color: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* 1. Black & White (Distinct Multi-Shade Greyscale) */
+        .calc-theme-bw { background: #ffffff !important; border-color: #000000 !important; --h: 0; --s: 0; --lt: 97; --lb: 91; --tx: #000000; }
         .calc-theme-bw .bc-tabs { border-bottom-color: #000000 !important; }
         .calc-theme-bw .bc-tab-btn.active { background: #000000 !important; border-color: #000000 !important; color: #ffffff !important; }
         .calc-theme-bw .bc-output-box { background: #000000 !important; color: #ffffff !important; }
 
         /* 2. Graphite */
-        .calc-theme-graphite { background: #262626 !important; border-color: #525252 !important; --h: 220; --s: 22; --dir: -1; --lt: 30; --lb: 20; --edge: 12; --bdo: 12; --tx: #f5f5f5; }
+        .calc-theme-graphite { background: #262626 !important; border-color: #525252 !important; --h: 215; --s: 28; --dir: -1; --lt: 28; --lb: 19; --edge: 12; --bdo: 12; --tx: #f5f5f5; }
         .calc-theme-graphite .bc-tabs { border-bottom-color: #737373 !important; }
         .calc-theme-graphite .bc-tab-btn { background: #404040 !important; color: #e5e5e5 !important; border-color: #525252 !important; }
         .calc-theme-graphite .bc-tab-btn.active { background: #737373 !important; color: #ffffff !important; border-color: #737373 !important; }
@@ -609,35 +753,35 @@
         .calc-theme-graphite .bc-output-box { background: #525252 !important; color: #ffffff !important; }
 
         /* 3. Gritty Industrial */
-        .calc-theme-gritty { background: #d4d4d8 !important; border-color: #71717a !important; --h: 40; --s: 22; --lt: 92; --lb: 78; --edge: 26; --tx: #18181b; }
+        .calc-theme-gritty { background: #d4d4d8 !important; border-color: #71717a !important; --h: 38; --s: 32; --lt: 93; --lb: 80; --edge: 26; --tx: #18181b; }
         .calc-theme-gritty .bc-tabs { border-bottom-color: #52525b !important; }
         .calc-theme-gritty .bc-tab-btn { background: #e4e4e7 !important; border-color: #a1a1aa !important; color: #27272a !important; }
         .calc-theme-gritty .bc-tab-btn.active { background: #52525b !important; color: #f4f4f5 !important; border-color: #52525b !important; }
         .calc-theme-gritty .bc-output-box { background: #71717a !important; color: #ffffff !important; }
 
         /* 4. New York Metro */
-        .calc-theme-ny { background: #1e293b !important; border-color: #38bdf8 !important; --h: 205; --s: 60; --dir: -1; --lt: 30; --lb: 20; --edge: 12; --bdo: 12; --tx: #f8fafc; }
+        .calc-theme-ny { background: #1e293b !important; border-color: #38bdf8 !important; --h: 205; --s: 65; --dir: -1; --lt: 28; --lb: 19; --edge: 12; --bdo: 12; --tx: #f8fafc; }
         .calc-theme-ny .bc-tabs { border-bottom-color: #38bdf8 !important; }
         .calc-theme-ny .bc-tab-btn { background: #0f172a !important; color: #38bdf8 !important; border-color: #334155 !important; }
         .calc-theme-ny .bc-tab-btn.active { background: #38bdf8 !important; color: #0f172a !important; border-color: #38bdf8 !important; }
         .calc-theme-ny .bc-output-box { background: #0f172a !important; color: #38bdf8 !important; }
 
         /* 5. Sunset Amber */
-        .calc-theme-sunset { background: #fff7ed !important; border-color: #fdba74 !important; --h: 28; --s: 90; --lt: 96; --lb: 88; --tx: #7c2d12; }
+        .calc-theme-sunset { background: #fff7ed !important; border-color: #fdba74 !important; --h: 28; --s: 88; --lt: 97; --lb: 89; --tx: #7c2d12; }
         .calc-theme-sunset .bc-tabs { border-bottom-color: #f97316 !important; }
         .calc-theme-sunset .bc-tab-btn { background: #ffedd5 !important; color: #c2410c !important; border-color: #fdba74 !important; }
         .calc-theme-sunset .bc-tab-btn.active { background: #f97316 !important; color: #ffffff !important; border-color: #f97316 !important; }
         .calc-theme-sunset .bc-output-box { background: #ea580c !important; color: #ffffff !important; }
 
         /* 6. Emerald Forest */
-        .calc-theme-emerald { background: #f0fdf4 !important; border-color: #86efac !important; --h: 145; --s: 60; --lt: 96; --lb: 89; --tx: #14532d; }
+        .calc-theme-emerald { background: #f0fdf4 !important; border-color: #86efac !important; --h: 145; --s: 65; --lt: 97; --lb: 89; --tx: #14532d; }
         .calc-theme-emerald .bc-tabs { border-bottom-color: #22c55e !important; }
         .calc-theme-emerald .bc-tab-btn { background: #dcfce7 !important; color: #15803d !important; border-color: #86efac !important; }
         .calc-theme-emerald .bc-tab-btn.active { background: #22c55e !important; color: #ffffff !important; border-color: #22c55e !important; }
         .calc-theme-emerald .bc-output-box { background: #16a34a !important; color: #ffffff !important; }
 
         /* 7. Apple Light UI */
-        .calc-theme-apple-light { background: #f5f5f7 !important; border-color: #d2d2d7 !important; border-radius: 12px !important; --h: 212; --s: 45; --lt: 99; --lb: 95; --edge: 12; --bdo: -8; --tx: #1d1d1f; --sh2: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .calc-theme-apple-light { background: #f5f5f7 !important; border-color: #d2d2d7 !important; border-radius: 12px !important; --h: 212; --s: 55; --lt: 99; --lb: 94; --edge: 12; --bdo: -8; --tx: #1d1d1f; --sh2: 0 1px 3px rgba(0, 0, 0, 0.1); }
         .calc-theme-apple-light .bc-tabs { border-bottom-color: #0071e3 !important; }
         .calc-theme-apple-light .bc-tab-btn { background: #ffffff !important; color: #1d1d1f !important; border-color: #d2d2d7 !important; border-radius: 8px 8px 0 0 !important; }
         .calc-theme-apple-light .bc-tab-btn.active { background: #0071e3 !important; color: #ffffff !important; border-color: #0071e3 !important; }
@@ -646,7 +790,7 @@
         .calc-theme-apple-light .bc-btn { border-radius: 6px !important; }
 
         /* 8. Apple Dark UI */
-        .calc-theme-apple-dark { background: #000000 !important; border-color: #38383a !important; border-radius: 12px !important; --h: 212; --s: 22; --dir: -1; --lt: 22; --lb: 17; --edge: 10; --bdo: 10; --tx: #ffffff; --sh2: 0 0 0 rgba(0, 0, 0, 0); }
+        .calc-theme-apple-dark { background: #000000 !important; border-color: #38383a !important; border-radius: 12px !important; --h: 212; --s: 35; --dir: -1; --lt: 22; --lb: 16; --edge: 10; --bdo: 10; --tx: #ffffff; --sh2: 0 0 0 rgba(0, 0, 0, 0); }
         .calc-theme-apple-dark .bc-tabs { border-bottom-color: #0a84ff !important; }
         .calc-theme-apple-dark .bc-tab-btn { background: #1c1c1e !important; color: #f5f5f7 !important; border-color: #38383a !important; border-radius: 8px 8px 0 0 !important; }
         .calc-theme-apple-dark .bc-tab-btn.active { background: #0a84ff !important; color: #ffffff !important; border-color: #0a84ff !important; }
@@ -656,14 +800,14 @@
         .calc-theme-apple-dark .bc-btn { border-radius: 6px !important; }
 
         /* 9. Semi-3D Neo */
-        .calc-theme-semi3d { background: #e0e7ff !important; border-color: #818cf8 !important; --h: 238; --s: 80; --lt: 96; --lb: 88; --edge: 30; --tx: #1e1b4b; --sh2: 0 6px 8px rgba(79, 70, 229, 0.2); }
+        .calc-theme-semi3d { background: #e0e7ff !important; border-color: #818cf8 !important; --h: 238; --s: 82; --lt: 97; --lb: 89; --edge: 30; --tx: #1e1b4b; --sh2: 0 6px 8px rgba(79, 70, 229, 0.2); }
         .calc-theme-semi3d .bc-tabs { border-bottom-color: #4f46e5 !important; }
         .calc-theme-semi3d .bc-tab-btn { background: #c7d2fe !important; color: #312e81 !important; border-color: #818cf8 !important; }
         .calc-theme-semi3d .bc-tab-btn.active { background: #4f46e5 !important; color: #ffffff !important; border-color: #4f46e5 !important; }
         .calc-theme-semi3d .bc-output-box { background: #3730a3 !important; color: #ffffff !important; }
 
         /* 10. Bento Grid Clean */
-        .calc-theme-bento { background: #f8fafc !important; border-color: #cbd5e1 !important; border-radius: 16px !important; --h: 200; --s: 60; --lt: 98; --lb: 94; --edge: 16; --bdo: -10; --tx: #0f172a; --sh2: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .calc-theme-bento { background: #f8fafc !important; border-color: #cbd5e1 !important; border-radius: 16px !important; --h: 200; --s: 65; --lt: 98; --lb: 93; --edge: 16; --bdo: -10; --tx: #0f172a; --sh2: 0 2px 4px rgba(0, 0, 0, 0.05); }
         .calc-theme-bento .bc-tabs { border-bottom-color: #0284c7 !important; }
         .calc-theme-bento .bc-tab-btn { background: #ffffff !important; color: #0f172a !important; border-color: #e2e8f0 !important; border-radius: 10px 10px 0 0 !important; }
         .calc-theme-bento .bc-tab-btn.active { background: #0284c7 !important; color: #ffffff !important; border-color: #0284c7 !important; }
@@ -672,7 +816,7 @@
         .calc-theme-bento .bc-btn { border-radius: 10px !important; }
 
         /* 11. Minimalist UX */
-        .calc-theme-minimal { background: #fafafa !important; border-color: #e5e5e5 !important; box-shadow: none !important; --h: 0; --s: 0; --lt: 99; --lb: 95; --edge: 10; --bdo: -8; --tx: #262626; --sh2: 0 0 0 rgba(0, 0, 0, 0); }
+        .calc-theme-minimal { background: #fafafa !important; border-color: #e5e5e5 !important; box-shadow: none !important; --h: 210; --s: 28; --lt: 99; --lb: 94; --edge: 10; --bdo: -8; --tx: #262626; --sh2: 0 0 0 rgba(0, 0, 0, 0); }
         .calc-theme-minimal .bc-tabs { border-bottom-color: #262626 !important; }
         .calc-theme-minimal .bc-tab-btn { background: #fafafa !important; color: #525252 !important; border-color: transparent !important; }
         .calc-theme-minimal .bc-tab-btn.active { background: transparent !important; color: #171717 !important; border-bottom: 2px solid #171717 !important; }
@@ -680,8 +824,8 @@
         .calc-theme-minimal .bc-output-box { background: #f5f5f5 !important; color: #171717 !important; box-shadow: none !important; }
         .calc-theme-minimal .bc-btn { border-radius: 2px !important; }
 
-        /* 12. Glass Frost */
-        .calc-theme-glass-frost { background: rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(255, 255, 255, 0.4) !important; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important; --h: 215; --s: 65; --lt: 98; --lb: 90; --a: 0.55; --tx: #000000; --sh2: 0 4px 6px rgba(0, 0, 0, 0.06); }
+        /* 12. 100% Glass Frost */
+        .calc-theme-glass-frost { background: rgba(255, 255, 255, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(255, 255, 255, 0.4) !important; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important; --h: 215; --s: 70; --lt: 98; --lb: 90; --a: 0.6; --tx: #000000; --sh2: 0 4px 6px rgba(0, 0, 0, 0.06); }
         .calc-theme-glass-frost .bc-tabs { border-bottom-color: rgba(255, 255, 255, 0.6) !important; }
         .calc-theme-glass-frost .bc-tab-btn { background: rgba(255, 255, 255, 0.3) !important; color: #0f172a !important; border-color: rgba(255, 255, 255, 0.5) !important; }
         .calc-theme-glass-frost .bc-tab-btn.active { background: rgba(255, 255, 255, 0.8) !important; color: #000000 !important; border-color: #ffffff !important; }
@@ -689,8 +833,8 @@
         .calc-theme-glass-frost .bc-input-box { background: transparent !important; color: #000000 !important; }
         .calc-theme-glass-frost .bc-output-box { background: rgba(59, 89, 152, 0.6) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
 
-        /* 13. Glass Dark Obsidian */
-        .calc-theme-glass-dark { background: rgba(15, 23, 42, 0.45) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important; --h: 210; --s: 55; --dir: -1; --lt: 32; --lb: 22; --edge: 12; --bdo: 12; --a: 0.6; --tx: #f8fafc; --sh2: 0 4px 6px rgba(0, 0, 0, 0.2); }
+        /* 13. 100% Glass Dark Obsidian */
+        .calc-theme-glass-dark { background: rgba(15, 23, 42, 0.45) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important; --h: 210; --s: 60; --dir: -1; --lt: 30; --lb: 20; --edge: 12; --bdo: 12; --a: 0.62; --tx: #f8fafc; --sh2: 0 4px 6px rgba(0, 0, 0, 0.2); }
         .calc-theme-glass-dark .bc-tabs { border-bottom-color: rgba(56, 189, 248, 0.5) !important; }
         .calc-theme-glass-dark .bc-tab-btn { background: rgba(30, 41, 59, 0.5) !important; color: #38bdf8 !important; border-color: rgba(255, 255, 255, 0.08) !important; }
         .calc-theme-glass-dark .bc-tab-btn.active { background: rgba(56, 189, 248, 0.8) !important; color: #0f172a !important; border-color: #38bdf8 !important; }
@@ -698,8 +842,8 @@
         .calc-theme-glass-dark .bc-input-box { background: transparent !important; color: #f8fafc !important; }
         .calc-theme-glass-dark .bc-output-box { background: rgba(30, 58, 138, 0.6) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
 
-        /* 14. Glass Emerald Aura */
-        .calc-theme-glass-emerald { background: rgba(6, 78, 59, 0.35) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(134, 239, 172, 0.3) !important; --h: 150; --s: 60; --dir: -1; --lt: 30; --lb: 21; --edge: 12; --bdo: 12; --a: 0.6; --tx: #d1fae5; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
+        /* 14. 100% Glass Emerald Aura */
+        .calc-theme-glass-emerald { background: rgba(6, 78, 59, 0.35) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(134, 239, 172, 0.3) !important; --h: 150; --s: 65; --dir: -1; --lt: 28; --lb: 19; --edge: 12; --bdo: 12; --a: 0.62; --tx: #d1fae5; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
         .calc-theme-glass-emerald .bc-tabs { border-bottom-color: #4ade80 !important; }
         .calc-theme-glass-emerald .bc-tab-btn { background: rgba(4, 120, 87, 0.4) !important; color: #d1fae5 !important; border-color: rgba(134, 239, 172, 0.2) !important; }
         .calc-theme-glass-emerald .bc-tab-btn.active { background: #22c55e !important; color: #ffffff !important; border-color: #22c55e !important; }
@@ -707,8 +851,8 @@
         .calc-theme-glass-emerald .bc-input-box { background: transparent !important; color: #ecfdf5 !important; }
         .calc-theme-glass-emerald .bc-output-box { background: rgba(22, 101, 52, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
 
-        /* 15. Glass Rose Quartz */
-        .calc-theme-glass-rose { background: rgba(136, 19, 55, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(253, 164, 175, 0.3) !important; --h: 345; --s: 55; --dir: -1; --lt: 32; --lb: 23; --edge: 12; --bdo: 12; --a: 0.6; --tx: #ffe4e6; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
+        /* 15. 100% Glass Rose Quartz */
+        .calc-theme-glass-rose { background: rgba(136, 19, 55, 0.25) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(253, 164, 175, 0.3) !important; --h: 345; --s: 60; --dir: -1; --lt: 30; --lb: 21; --edge: 12; --bdo: 12; --a: 0.62; --tx: #ffe4e6; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
         .calc-theme-glass-rose .bc-tabs { border-bottom-color: #fb7185 !important; }
         .calc-theme-glass-rose .bc-tab-btn { background: rgba(159, 18, 57, 0.35) !important; color: #ffe4e6 !important; border-color: rgba(253, 164, 175, 0.2) !important; }
         .calc-theme-glass-rose .bc-tab-btn.active { background: #f43f5e !important; color: #ffffff !important; border-color: #f43f5e !important; }
@@ -716,8 +860,8 @@
         .calc-theme-glass-rose .bc-input-box { background: transparent !important; color: #fff1f2 !important; }
         .calc-theme-glass-rose .bc-output-box { background: rgba(159, 18, 57, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
 
-        /* 16. Glass Amethyst */
-        .calc-theme-glass-amethyst { background: rgba(76, 29, 149, 0.3) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(196, 181, 253, 0.3) !important; --h: 265; --s: 55; --dir: -1; --lt: 33; --lb: 24; --edge: 12; --bdo: 12; --a: 0.6; --tx: #ede9fe; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
+        /* 16. 100% Glass Amethyst */
+        .calc-theme-glass-amethyst { background: rgba(76, 29, 149, 0.3) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border: 1px solid rgba(196, 181, 253, 0.3) !important; --h: 265; --s: 60; --dir: -1; --lt: 31; --lb: 22; --edge: 12; --bdo: 12; --a: 0.62; --tx: #ede9fe; --sh2: 0 4px 6px rgba(0, 0, 0, 0.18); }
         .calc-theme-glass-amethyst .bc-tabs { border-bottom-color: #a78bfa !important; }
         .calc-theme-glass-amethyst .bc-tab-btn { background: rgba(91, 33, 182, 0.35) !important; color: #ede9fe !important; border-color: rgba(196, 181, 253, 0.2) !important; }
         .calc-theme-glass-amethyst .bc-tab-btn.active { background: #8b5cf6 !important; color: #ffffff !important; border-color: #8b5cf6 !important; }
@@ -725,8 +869,8 @@
         .calc-theme-glass-amethyst .bc-input-box { background: transparent !important; color: #f5f3ff !important; }
         .calc-theme-glass-amethyst .bc-output-box { background: rgba(91, 33, 182, 0.7) !important; backdrop-filter: blur(4px); color: #ffffff !important; }
 
-        /* 17. Glass Cyberpunk Neon */
-        .calc-theme-glass-cyber { background: rgba(9, 9, 11, 0.55) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(34, 197, 94, 0.4) !important; box-shadow: 0 0 20px rgba(34, 197, 94, 0.15) !important; --h: 140; --s: 70; --dir: -1; --lt: 22; --lb: 14; --edge: 10; --bdo: 14; --a: 0.65; --tx: #86efac; --sh2: 0 4px 6px rgba(0, 0, 0, 0.25); }
+        /* 17. 100% Glass Cyberpunk Neon */
+        .calc-theme-glass-cyber { background: rgba(9, 9, 11, 0.55) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; border: 1px solid rgba(34, 197, 94, 0.4) !important; box-shadow: 0 0 20px rgba(34, 197, 94, 0.15) !important; --h: 140; --s: 72; --dir: -1; --lt: 20; --lb: 13; --edge: 10; --bdo: 14; --a: 0.65; --tx: #86efac; --sh2: 0 4px 6px rgba(0, 0, 0, 0.25); }
         .calc-theme-glass-cyber .bc-tabs { border-bottom-color: #22c55e !important; }
         .calc-theme-glass-cyber .bc-tab-btn { background: rgba(24, 24, 27, 0.6) !important; color: #4ade80 !important; border-color: rgba(34, 197, 94, 0.3) !important; }
         .calc-theme-glass-cyber .bc-tab-btn.active { background: #22c55e !important; color: #09090b !important; border-color: #22c55e !important; }
@@ -734,7 +878,6 @@
         .calc-theme-glass-cyber .bc-input-box { background: transparent !important; color: #4ade80 !important; }
         .calc-theme-glass-cyber .bc-output-box { background: rgba(5, 46, 22, 0.8) !important; backdrop-filter: blur(4px); color: #4ade80 !important; }
 
-        /* Glass blur on keys */
         .calc-theme-glass-frost .bc-btn,
         .calc-theme-glass-dark .bc-btn,
         .calc-theme-glass-emerald .bc-btn,
@@ -743,7 +886,7 @@
         .calc-theme-glass-cyber .bc-btn { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 
         /* 18. Cyberpunk Neon */
-        .calc-theme-cyber { background: #09090b !important; border-color: #22c55e !important; --h: 140; --s: 65; --dir: -1; --lt: 17; --lb: 11; --edge: 9; --bdo: 14; --tx: #4ade80; }
+        .calc-theme-cyber { background: #09090b !important; border-color: #22c55e !important; --h: 140; --s: 70; --dir: -1; --lt: 17; --lb: 11; --edge: 9; --bdo: 14; --tx: #4ade80; }
         .calc-theme-cyber .bc-tabs { border-bottom-color: #22c55e !important; }
         .calc-theme-cyber .bc-tab-btn { background: #18181b !important; color: #22c55e !important; border-color: #27272a !important; }
         .calc-theme-cyber .bc-tab-btn.active { background: #22c55e !important; color: #09090b !important; border-color: #22c55e !important; }
@@ -752,35 +895,35 @@
         .calc-theme-cyber .bc-output-box { background: #052e16 !important; color: #4ade80 !important; box-shadow: inset 0 0 10px rgba(34,197,94,0.3); }
 
         /* 19. Retro Cream / Vintage */
-        .calc-theme-vintage { background: #fefae0 !important; border-color: #dda15e !important; --h: 40; --s: 70; --lt: 96; --lb: 88; --tx: #283618; }
+        .calc-theme-vintage { background: #fefae0 !important; border-color: #dda15e !important; --h: 40; --s: 72; --lt: 97; --lb: 89; --tx: #283618; }
         .calc-theme-vintage .bc-tabs { border-bottom-color: #bc6c25 !important; }
         .calc-theme-vintage .bc-tab-btn { background: #faedcd !important; color: #606c38 !important; border-color: #dda15e !important; }
         .calc-theme-vintage .bc-tab-btn.active { background: #bc6c25 !important; color: #fefae0 !important; border-color: #bc6c25 !important; }
         .calc-theme-vintage .bc-output-box { background: #dda15e !important; color: #283618 !important; }
 
         /* 20. Royal Purple */
-        .calc-theme-royal { background: #faf5ff !important; border-color: #d8b4fe !important; --h: 280; --s: 70; --lt: 97; --lb: 90; --tx: #581c87; }
+        .calc-theme-royal { background: #faf5ff !important; border-color: #d8b4fe !important; --h: 280; --s: 72; --lt: 97; --lb: 90; --tx: #581c87; }
         .calc-theme-royal .bc-tabs { border-bottom-color: #9333ea !important; }
         .calc-theme-royal .bc-tab-btn { background: #f3e8ff !important; color: #7e22ce !important; border-color: #d8b4fe !important; }
         .calc-theme-royal .bc-tab-btn.active { background: #9333ea !important; color: #ffffff !important; border-color: #9333ea !important; }
         .calc-theme-royal .bc-output-box { background: #7e22ce !important; color: #ffffff !important; }
 
         /* 21. Ocean Blue */
-        .calc-theme-ocean { background: #ecfeff !important; border-color: #67e8f9 !important; --h: 190; --s: 75; --lt: 96; --lb: 89; --tx: #164e63; }
+        .calc-theme-ocean { background: #ecfeff !important; border-color: #67e8f9 !important; --h: 190; --s: 78; --lt: 97; --lb: 89; --tx: #164e63; }
         .calc-theme-ocean .bc-tabs { border-bottom-color: #0891b2 !important; }
         .calc-theme-ocean .bc-tab-btn { background: #cffafe !important; color: #0e7490 !important; border-color: #67e8f9 !important; }
         .calc-theme-ocean .bc-tab-btn.active { background: #0891b2 !important; color: #ffffff !important; border-color: #0891b2 !important; }
         .calc-theme-ocean .bc-output-box { background: #0e7490 !important; color: #ffffff !important; }
 
         /* 22. Coffee Latte */
-        .calc-theme-latte { background: #fdf8f6 !important; border-color: #d7ccc8 !important; --h: 20; --s: 40; --lt: 96; --lb: 88; --tx: #3e2723; }
+        .calc-theme-latte { background: #fdf8f6 !important; border-color: #d7ccc8 !important; --h: 22; --s: 45; --lt: 97; --lb: 89; --tx: #3e2723; }
         .calc-theme-latte .bc-tabs { border-bottom-color: #8d6e63 !important; }
         .calc-theme-latte .bc-tab-btn { background: #efebe9 !important; color: #4e342e !important; border-color: #d7ccc8 !important; }
         .calc-theme-latte .bc-tab-btn.active { background: #8d6e63 !important; color: #ffffff !important; border-color: #8d6e63 !important; }
         .calc-theme-latte .bc-output-box { background: #6d4c41 !important; color: #ffffff !important; }
 
         /* 23. Rose Gold */
-        .calc-theme-rosegold { background: #fff1f2 !important; border-color: #fecdd3 !important; --h: 350; --s: 75; --lt: 97; --lb: 91; --tx: #881337; }
+        .calc-theme-rosegold { background: #fff1f2 !important; border-color: #fecdd3 !important; --h: 350; --s: 78; --lt: 97; --lb: 90; --tx: #881337; }
         .calc-theme-rosegold .bc-tabs { border-bottom-color: #e11d48 !important; }
         .calc-theme-rosegold .bc-tab-btn { background: #ffe4e6 !important; color: #be123c !important; border-color: #fecdd3 !important; }
         .calc-theme-rosegold .bc-tab-btn.active { background: #e11d48 !important; color: #ffffff !important; border-color: #e11d48 !important; }
@@ -796,14 +939,14 @@
         .calc-theme-matrix .bc-output-box { background: #022c22 !important; color: #34d399 !important; }
 
         /* 25. Solarized Light */
-        .calc-theme-solarized { background: #fdf6e3 !important; border-color: #eee8d5 !important; --h: 45; --s: 60; --lt: 96; --lb: 89; --tx: #586e75; }
+        .calc-theme-solarized { background: #fdf6e3 !important; border-color: #eee8d5 !important; --h: 45; --s: 65; --lt: 97; --lb: 89; --tx: #586e75; }
         .calc-theme-solarized .bc-tabs { border-bottom-color: #b58900 !important; }
         .calc-theme-solarized .bc-tab-btn { background: #eee8d5 !important; color: #657b83 !important; border-color: #93a1a1 !important; }
         .calc-theme-solarized .bc-tab-btn.active { background: #b58900 !important; color: #fdf6e3 !important; border-color: #b58900 !important; }
         .calc-theme-solarized .bc-output-box { background: #cb4b16 !important; color: #fdf6e3 !important; }
 
         /* 26. Midnight Blue */
-        .calc-theme-midnight { background: #0f172a !important; border-color: #1e293b !important; --h: 220; --s: 65; --dir: -1; --lt: 25; --lb: 17; --edge: 10; --bdo: 12; --tx: #e2e8f0; }
+        .calc-theme-midnight { background: #0f172a !important; border-color: #1e293b !important; --h: 220; --s: 68; --dir: -1; --lt: 24; --lb: 16; --edge: 10; --bdo: 12; --tx: #e2e8f0; }
         .calc-theme-midnight .bc-tabs { border-bottom-color: #3b82f6 !important; }
         .calc-theme-midnight .bc-tab-btn { background: #1e293b !important; color: #94a3b8 !important; border-color: #334155 !important; }
         .calc-theme-midnight .bc-tab-btn.active { background: #3b82f6 !important; color: #ffffff !important; border-color: #3b82f6 !important; }
@@ -812,34 +955,34 @@
         .calc-theme-midnight .bc-output-box { background: #1d4ed8 !important; color: #ffffff !important; }
 
         /* 27. Pastel Dream */
-        .calc-theme-pastel { background: #fdf4ff !important; border-color: #f5d0fe !important; --h: 310; --s: 70; --lt: 97; --lb: 91; --tx: #831843; }
+        .calc-theme-pastel { background: #fdf4ff !important; border-color: #f5d0fe !important; --h: 310; --s: 72; --lt: 97; --lb: 90; --tx: #831843; }
         .calc-theme-pastel .bc-tabs { border-bottom-color: #ec4899 !important; }
         .calc-theme-pastel .bc-tab-btn { background: #fae8ff !important; color: #db2777 !important; border-color: #f5d0fe !important; }
         .calc-theme-pastel .bc-tab-btn.active { background: #ec4899 !important; color: #ffffff !important; border-color: #ec4899 !important; }
         .calc-theme-pastel .bc-output-box { background: #db2777 !important; color: #ffffff !important; }
 
         /* 28. Crimson Red */
-        .calc-theme-crimson { background: #fff5f5 !important; border-color: #feb2b2 !important; --h: 0; --s: 75; --lt: 97; --lb: 91; --tx: #742a2a; }
+        .calc-theme-crimson { background: #fff5f5 !important; border-color: #feb2b2 !important; --h: 0; --s: 75; --lt: 97; --lb: 90; --tx: #742a2a; }
         .calc-theme-crimson .bc-tabs { border-bottom-color: #e53e3e !important; }
         .calc-theme-crimson .bc-tab-btn { background: #fed7d7 !important; color: #9b2c2c !important; border-color: #feb2b2 !important; }
         .calc-theme-crimson .bc-tab-btn.active { background: #e53e3e !important; color: #ffffff !important; border-color: #e53e3e !important; }
         .calc-theme-crimson .bc-output-box { background: #c53030 !important; color: #ffffff !important; }
 
         /* 29. Lavender Mist */
-        .calc-theme-lavender { background: #f5f3ff !important; border-color: #ddd6fe !important; --h: 255; --s: 75; --lt: 97; --lb: 91; --tx: #4c1d95; }
+        .calc-theme-lavender { background: #f5f3ff !important; border-color: #ddd6fe !important; --h: 255; --s: 75; --lt: 97; --lb: 90; --tx: #4c1d95; }
         .calc-theme-lavender .bc-tabs { border-bottom-color: #7c3aed !important; }
         .calc-theme-lavender .bc-tab-btn { background: #ede9fe !important; color: #6d28d9 !important; border-color: #ddd6fe !important; }
         .calc-theme-lavender .bc-tab-btn.active { background: #7c3aed !important; color: #ffffff !important; border-color: #7c3aed !important; }
         .calc-theme-lavender .bc-output-box { background: #6d28d9 !important; color: #ffffff !important; }
 
         /* 30. Slate Minimal */
-        .calc-theme-slate { background: #f1f5f9 !important; border-color: #cbd5e1 !important; --h: 215; --s: 38; --lt: 96; --lb: 89; --tx: #0f172a; }
+        .calc-theme-slate { background: #f1f5f9 !important; border-color: #cbd5e1 !important; --h: 215; --s: 45; --lt: 97; --lb: 89; --tx: #0f172a; }
         .calc-theme-slate .bc-tabs { border-bottom-color: #475569 !important; }
         .calc-theme-slate .bc-tab-btn { background: #e2e8f0 !important; color: #334155 !important; border-color: #cbd5e1 !important; }
         .calc-theme-slate .bc-tab-btn.active { background: #475569 !important; color: #ffffff !important; border-color: #475569 !important; }
         .calc-theme-slate .bc-output-box { background: #334155 !important; color: #ffffff !important; }
 
-        /* PRESERVE PRIMARY, DANGER, & DELETE BUTTON COLORS ACROSS ALL THEMES */
+        /* PRESERVE PRIMARY (=), DANGER (AC), & DELETE (BACK) BUTTON COLORS ACROSS ALL THEMES */
         [class*="calc-theme-"] .bc-btn-primary,
         [class*="calc-theme-"] .bc-btn[aria-label="Calculate Equals"] {
             background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%) !important;
@@ -881,7 +1024,7 @@
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
             .bc-tab-btn { font-size: 11px !important; padding: 5px 8px; font-weight: 800 !important; }
-            .bc-theme-select { font-size: 11px !important; padding: 5px 6px; }
+            .bc-theme-select { font-size: 11px !important; padding: 5px 8px; }
             #btn-bc-history-tab { font-size: 10px !important; }
             .bc-keypad-container { height: 235px; min-height: 235px; max-height: 235px; }
             
@@ -895,13 +1038,11 @@
             .bc-btn-danger { box-shadow: 0 2px 0 #991b1b, 0 3px 4px rgba(220, 38, 38, 0.3) !important; }
             .bc-btn-delete { box-shadow: 0 2px 0 #9a3412, 0 3px 4px rgba(234, 88, 12, 0.3) !important; }
 
-            /* themed keys: slightly lower 3D depth on phones */
+            .bc-copy-btn { font-size: 10px !important; padding: 3px 6px; }
             .blogger-calc-classic[class*="calc-theme-"] { --lift: 2px; }
-
             .bc-filter-panel { padding: 5px; }
         }
 
-        /* Flat-style themes keep their own depth (placed after the mobile rule on purpose) */
         .blogger-calc-classic.calc-theme-apple-light,
         .blogger-calc-classic.calc-theme-apple-dark { --lift: 1px; }
         .blogger-calc-classic.calc-theme-bento { --lift: 2px; }
@@ -909,7 +1050,7 @@
     </style>
 
     <div class="bc-tabs" role="tablist">
-        <!-- FILTER BUTTON (opens the filter pop-up with the ❌ cancel button) -->
+        <!-- SLIM FILTER BUTTON (OPENS POP-UP MODAL) -->
         <button type="button" class="bc-theme-select" id="bc-filter-btn" aria-label="Calculator Theme Filters" onclick="BloggerCalc.openFilters()">🎨 Filters</button>
 
         <button class="bc-tab-btn active" role="tab" id="btn-bc-basic" onclick="BloggerCalc.switchTab('bc-basic', this)">Basic</button>
@@ -926,7 +1067,10 @@
     <div class="bc-screen-container">
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
-            <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
+            <div class="bc-out-meta">
+                <button type="button" class="bc-copy-btn" id="bc-copy-btn" aria-label="Copy Result to Clipboard" title="Copy result to clipboard (Ctrl+C)" onclick="BloggerCalc.copyResult()">📋 Copy</button>
+                <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
+            </div>
             <span id="bc-live-out"></span>
         </div>
     </div>
@@ -1327,7 +1471,7 @@
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
 
             <button class="bc-btn bc-btn-special bc-span-2">f (Orange)</button>
-            <button class="bc-btn bc-btn-special bc-btn-comp bc-span-2" onclick="BloggerCalc.finComp()">COMP</button>
+            <button class="bc-btn bc-btn-special bc-span-2" style="background: #3b5998; color:#fff !important;" onclick="BloggerCalc.finComp()">COMP</button>
             <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">ENTER</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
@@ -1338,7 +1482,7 @@
         <div class="bc-tab-pane" role="tabpanel" id="bc-history-tab">
             <div class="bc-history-header">
                 <button class="bc-clear-history" onclick="BloggerCalc.clearHistory()">Clear Log</button>
-                <div class="bc-history-title">History Log</div>
+                <div class="bc-history-title">History Log (Tap to Load)</div>
                 <button class="bc-history-back-btn" onclick="BloggerCalc.historyBack()">← Back</button>
             </div>
             <div id="bc-history-list" class="bc-history-list" aria-live="polite">
@@ -1347,11 +1491,11 @@
         </div>
     </div>
 
-    <!-- FILTER POP-UP (opens over the calculator, has the 3D ❌ cancel button) -->
-    <div class="bc-filter-panel" id="bc-filter-panel" role="dialog" aria-label="Choose calculator filter">
+    <!-- FILTER POP-UP MODAL WITH DUAL-SHADOW 3D ❌ CANCEL BUTTON -->
+    <div class="bc-filter-panel" id="bc-filter-panel" role="dialog" aria-label="Choose Calculator Filter">
         <div class="bc-filter-head">
             <div class="bc-filter-title">🎨 Choose Filter</div>
-            <button type="button" class="bc-filter-close" aria-label="Close filters" onclick="BloggerCalc.closeFilters()">❌</button>
+            <button type="button" class="bc-filter-close" aria-label="Cancel and Close Filters" onclick="BloggerCalc.closeFilters()">❌</button>
         </div>
         <div class="bc-filter-list" id="bc-filter-list"></div>
     </div>
@@ -1361,11 +1505,17 @@
             const bcDisp = document.getElementById('bc-display');
             const bcLiveOut = document.getElementById('bc-live-out');
             const bcMemInd = document.getElementById('bc-memory-indicator');
+            const bcCopyBtn = document.getElementById('bc-copy-btn');
             const bcHistList = document.getElementById('bc-history-list');
             const widgetEl = document.getElementById('blogger-calc-widget');
             const filterPanel = document.getElementById('bc-filter-panel');
             const filterList = document.getElementById('bc-filter-list');
             
+            const THEME_STORAGE_KEY = 'bc_saved_theme';
+            const TAB_STORAGE_KEY = 'bc_saved_tab';
+            const LAST_CALC_TAB_KEY = 'bc_saved_last_calc_tab';
+            const HISTORY_STORAGE_KEY = 'bc_saved_history';
+
             let bcInput = '';
             let isDegree = true;
             let memoryValue = 0;
@@ -1374,9 +1524,164 @@
             let bcLastActiveTabId = 'bc-basic';
             let currentTheme = '';
             let filtersBuilt = false;
+            let copyResetTimer = null;
 
             let finTvm = { n: 0, i: 0, pv: 0, pmt: 0, fv: 0 };
             let isCompMode = false;
+
+            const FILTERS = [
+                ['', 'Default Classic', '#2563eb'],
+                ['calc-theme-bw', 'Black & White', '#111111'],
+                ['calc-theme-graphite', 'Graphite', '#525252'],
+                ['calc-theme-gritty', 'Gritty Industrial', '#71717a'],
+                ['calc-theme-ny', 'New York Metro', '#38bdf8'],
+                ['calc-theme-sunset', 'Sunset Amber', '#f97316'],
+                ['calc-theme-emerald', 'Emerald Forest', '#22c55e'],
+                ['calc-theme-apple-light', 'Apple UI (Light)', '#0071e3'],
+                ['calc-theme-apple-dark', 'Apple UI (Dark)', '#0a84ff'],
+                ['calc-theme-semi3d', 'Semi-3D Neo', '#4f46e5'],
+                ['calc-theme-bento', 'Bento Grid Clean', '#0284c7'],
+                ['calc-theme-minimal', 'Minimalist UX', '#262626'],
+                ['calc-theme-glass-frost', 'Glass Frost', '#93c5fd'],
+                ['calc-theme-glass-dark', 'Glass Dark Obsidian', '#38bdf8'],
+                ['calc-theme-glass-emerald', 'Glass Emerald Aura', '#4ade80'],
+                ['calc-theme-glass-rose', 'Glass Rose Quartz', '#fb7185'],
+                ['calc-theme-glass-amethyst', 'Glass Amethyst', '#a78bfa'],
+                ['calc-theme-glass-cyber', 'Glass Cyber Neon', '#22c55e'],
+                ['calc-theme-cyber', 'Cyberpunk Neon', '#16a34a'],
+                ['calc-theme-vintage', 'Retro Cream', '#bc6c25'],
+                ['calc-theme-royal', 'Royal Purple', '#9333ea'],
+                ['calc-theme-ocean', 'Ocean Blue', '#0891b2'],
+                ['calc-theme-latte', 'Coffee Latte', '#8d6e63'],
+                ['calc-theme-rosegold', 'Rose Gold', '#e11d48'],
+                ['calc-theme-matrix', 'Matrix Terminal', '#10b981'],
+                ['calc-theme-solarized', 'Solarized Light', '#b58900'],
+                ['calc-theme-midnight', 'Midnight Blue', '#3b82f6'],
+                ['calc-theme-pastel', 'Pastel Dream', '#ec4899'],
+                ['calc-theme-crimson', 'Crimson Red', '#e53e3e'],
+                ['calc-theme-lavender', 'Lavender Mist', '#7c3aed'],
+                ['calc-theme-slate', 'Slate Minimal', '#475569']
+            ];
+
+            function saveHistoryToStorage() {
+                try {
+                    if (!historyEmpty && bcHistList.querySelectorAll('.hist-entry').length > 0) {
+                        localStorage.setItem(HISTORY_STORAGE_KEY, bcHistList.innerHTML);
+                    } else {
+                        localStorage.removeItem(HISTORY_STORAGE_KEY);
+                    }
+                } catch (e) {}
+            }
+
+            /* Upgrade any legacy history items so they have the individual × delete button */
+            function upgradeSavedHistoryEntries() {
+                bcHistList.querySelectorAll('.hist-entry').forEach(function(entry) {
+                    if (!entry.querySelector('.hist-del-btn')) {
+                        const contentSpan = document.createElement('span');
+                        contentSpan.className = 'hist-content';
+                        contentSpan.innerHTML = entry.innerHTML;
+                        const delBtn = document.createElement('button');
+                        delBtn.type = 'button';
+                        delBtn.className = 'hist-del-btn';
+                        delBtn.setAttribute('aria-label', 'Delete History Entry');
+                        delBtn.setAttribute('title', 'Delete this entry');
+                        delBtn.textContent = '×';
+                        entry.innerHTML = '';
+                        entry.appendChild(contentSpan);
+                        entry.appendChild(delBtn);
+                    }
+                });
+            }
+
+            /* Clickable History Log Delegation (deletes row on ×, loads result on <strong>, or loads expression on row) */
+            bcHistList.addEventListener('click', function(e) {
+                const entry = e.target.closest('.hist-entry');
+                if (!entry) return;
+
+                /* 1. Handle Individual Row Delete (×) Button */
+                const delBtn = e.target.closest('.hist-del-btn');
+                if (delBtn) {
+                    e.stopPropagation();
+                    entry.remove();
+                    if (bcHistList.querySelectorAll('.hist-entry').length === 0) {
+                        bcHistList.innerHTML = '<div class="hist-empty">No calculations yet</div>';
+                        historyEmpty = true;
+                    }
+                    saveHistoryToStorage();
+                    return;
+                }
+
+                /* 2. Handle Loading Result or Full Expression */
+                const clickedResult = e.target.closest('strong');
+                const encodedExpr = entry.getAttribute('data-expr');
+                const encodedRes = entry.getAttribute('data-res');
+                const entryTab = entry.getAttribute('data-tab');
+
+                let valueToLoad = '';
+                if (clickedResult && encodedRes) {
+                    valueToLoad = decodeURIComponent(encodedRes);
+                } else if (encodedExpr) {
+                    valueToLoad = decodeURIComponent(encodedExpr);
+                } else if (encodedRes) {
+                    valueToLoad = decodeURIComponent(encodedRes);
+                } else {
+                    const contentEl = entry.querySelector('.hist-content') || entry;
+                    const text = contentEl.textContent || '';
+                    if (clickedResult) {
+                        valueToLoad = clickedResult.textContent.replace(/^y\s*=\s*/, '').trim();
+                    } else {
+                        valueToLoad = text.split('=')[0].replace(/^Plotted:\s*/, '').trim();
+                    }
+                }
+
+                if (!valueToLoad) return;
+
+                const targetTab = (entryTab && document.getElementById(entryTab) && entryTab !== 'bc-history-tab')
+                    ? entryTab
+                    : bcLastActiveTabId;
+                const targetBtn = document.getElementById('btn-' + targetTab);
+                api.switchTab(targetTab, targetBtn);
+
+                bcInput = valueToLoad;
+                if (encodedRes) {
+                    bcLiveOut.innerText = '= ' + cleanBloggerEntities(decodeURIComponent(encodedRes));
+                } else {
+                    bcLiveOut.innerText = '';
+                }
+                bcUpdate();
+            });
+
+            function buildFilters() {
+                if (filtersBuilt) return;
+                FILTERS.forEach(function(f) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'bc-filter-item';
+                    btn.setAttribute('data-theme', f[0]);
+
+                    const dot = document.createElement('span');
+                    dot.className = 'bc-filter-dot';
+                    dot.style.background = f[2];
+
+                    const name = document.createElement('span');
+                    name.className = 'bc-filter-name';
+                    name.textContent = f[1];
+
+                    btn.appendChild(dot);
+                    btn.appendChild(name);
+                    btn.addEventListener('click', function() {
+                        api.pickTheme(f[0]);
+                    });
+                    filterList.appendChild(btn);
+                });
+                filtersBuilt = true;
+            }
+
+            function markSelectedFilter() {
+                filterList.querySelectorAll('.bc-filter-item').forEach(function(el) {
+                    el.classList.toggle('sel', el.getAttribute('data-theme') === currentTheme);
+                });
+            }
 
             let extEnginesLoaded = false;
             function bcLoadAdvancedEngines() {
@@ -1505,76 +1810,81 @@
                 }
             }
 
-            /* ---------- FILTER LIST (name, css class, colour dot) ---------- */
-            const FILTERS = [
-                ['', 'Default Classic', '#2563eb'],
-                ['calc-theme-bw', 'Black & White', '#111111'],
-                ['calc-theme-graphite', 'Graphite', '#525252'],
-                ['calc-theme-gritty', 'Gritty Industrial', '#71717a'],
-                ['calc-theme-ny', 'New York Metro', '#38bdf8'],
-                ['calc-theme-sunset', 'Sunset Amber', '#f97316'],
-                ['calc-theme-emerald', 'Emerald Forest', '#22c55e'],
-                ['calc-theme-apple-light', 'Apple UI Light', '#0071e3'],
-                ['calc-theme-apple-dark', 'Apple UI Dark', '#0a84ff'],
-                ['calc-theme-semi3d', 'Semi-3D Neo', '#4f46e5'],
-                ['calc-theme-bento', 'Bento Grid Clean', '#0284c7'],
-                ['calc-theme-minimal', 'Minimalist UX', '#262626'],
-                ['calc-theme-glass-frost', 'Glass Frost', '#93c5fd'],
-                ['calc-theme-glass-dark', 'Glass Obsidian', '#38bdf8'],
-                ['calc-theme-glass-emerald', 'Glass Emerald', '#4ade80'],
-                ['calc-theme-glass-rose', 'Glass Rose Quartz', '#fb7185'],
-                ['calc-theme-glass-amethyst', 'Glass Amethyst', '#a78bfa'],
-                ['calc-theme-glass-cyber', 'Glass Cyber Neon', '#22c55e'],
-                ['calc-theme-cyber', 'Cyberpunk Neon', '#16a34a'],
-                ['calc-theme-vintage', 'Retro Cream', '#bc6c25'],
-                ['calc-theme-royal', 'Royal Purple', '#9333ea'],
-                ['calc-theme-ocean', 'Ocean Blue', '#0891b2'],
-                ['calc-theme-latte', 'Coffee Latte', '#8d6e63'],
-                ['calc-theme-rosegold', 'Rose Gold', '#e11d48'],
-                ['calc-theme-matrix', 'Matrix Terminal', '#10b981'],
-                ['calc-theme-solarized', 'Solarized Light', '#b58900'],
-                ['calc-theme-midnight', 'Midnight Blue', '#3b82f6'],
-                ['calc-theme-pastel', 'Pastel Dream', '#ec4899'],
-                ['calc-theme-crimson', 'Crimson Red', '#e53e3e'],
-                ['calc-theme-lavender', 'Lavender Mist', '#7c3aed'],
-                ['calc-theme-slate', 'Slate Minimal', '#475569']
-            ];
-
-            function buildFilters() {
-                if (filtersBuilt) return;
-                FILTERS.forEach(function(f) {
-                    const b = document.createElement('button');
-                    b.type = 'button';
-                    b.className = 'bc-filter-item';
-                    b.setAttribute('data-theme', f[0]);
-                    const dot = document.createElement('span');
-                    dot.className = 'bc-filter-dot';
-                    dot.style.background = f[2];
-                    const nm = document.createElement('span');
-                    nm.className = 'bc-filter-name';
-                    nm.textContent = f[1];
-                    b.appendChild(dot);
-                    b.appendChild(nm);
-                    b.addEventListener('click', function() { api.pickTheme(f[0]); });
-                    filterList.appendChild(b);
-                });
-                filtersBuilt = true;
+            function fallbackCopyText(text) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.top = '-9999px';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch (e) {}
+                document.body.removeChild(ta);
             }
 
-            function markSelectedFilter() {
-                filterList.querySelectorAll('.bc-filter-item').forEach(function(el) {
-                    el.classList.toggle('sel', el.getAttribute('data-theme') === currentTheme);
-                });
+            function showCopiedConfirmation() {
+                if (!bcCopyBtn) return;
+                bcCopyBtn.textContent = '✓ Copied!';
+                bcCopyBtn.classList.add('copied');
+                if (copyResetTimer) clearTimeout(copyResetTimer);
+                copyResetTimer = setTimeout(function() {
+                    bcCopyBtn.textContent = '📋 Copy';
+                    bcCopyBtn.classList.remove('copied');
+                }, 1500);
             }
 
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') { filterPanel.classList.remove('open'); }
-            });
+            /* Normalize pasted expressions (Ctrl+V) into internal calculator syntax */
+            function sanitizePastedExpression(rawText, activeTabId) {
+                if (!rawText) return '';
+                let str = String(rawText).trim();
+                str = str.replace(/^=\s*/, '');
+                /* Remove thousand-separator commas inside numbers (e.g. 1,234,567.89 -> 1234567.89) */
+                str = str.replace(/(\d),(?=\d{3}(\D|$))/g, '$1');
+
+                const isCasOrGraph = (activeTabId === 'bc-graph' || activeTabId === 'bc-cas' || activeTabId === 'bc-prog');
+                const supMap = {'⁰':'^0','¹':'^1','²':'^2','³':'^3','⁴':'^4','⁵':'^5','6':'^6','⁷':'^7','⁸':'^8','⁹':'^9'};
+                str = str.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function(ch) { return supMap[ch] || ''; });
+
+                str = str
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/')
+                    .replace(/[−–—]/g, '-')
+                    .replace(/\^/g, '**')
+                    .replace(/π/g, isCasOrGraph ? 'pi' : 'Math.PI');
+
+                if (!isCasOrGraph) {
+                    str = str
+                        .replace(/√\(/g, 'Math.sqrt(')
+                        .replace(/√(\d+\.?\d*)/g, 'Math.sqrt($1)')
+                        .replace(/\bsin\(/gi, 'bcTrig.sin(')
+                        .replace(/\bcos\(/gi, 'bcTrig.cos(')
+                        .replace(/\btan\(/gi, 'bcTrig.tan(')
+                        .replace(/\bln\(/gi, 'Math.log(')
+                        .replace(/\blog\(/gi, 'Math.log10(')
+                        .replace(/\bsqrt\(/gi, 'Math.sqrt(');
+                } else {
+                    str = str
+                        .replace(/√\(/g, 'sqrt(')
+                        .replace(/√(\d+\.?\d*)/g, 'sqrt($1)');
+                }
+
+                str = str.replace(/\s+/g, '');
+                str = str.replace(/[^0-9a-zA-Z+\-*/().,%\[\];=_!<>]/g, '');
+                return str;
+            }
 
             const api = {
                 setTheme: function(themeClass) {
                     currentTheme = themeClass || '';
                     widgetEl.className = ('blogger-calc-classic ' + currentTheme).trim();
+                    try {
+                        if (currentTheme) {
+                            localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
+                        } else {
+                            localStorage.removeItem(THEME_STORAGE_KEY);
+                        }
+                    } catch (e) {}
                 },
                 openFilters: function() {
                     buildFilters();
@@ -1585,4 +1895,349 @@
                     filterPanel.classList.remove('open');
                 },
                 pickTheme: function(themeClass) {
-                    this.setTheme(themeCl
+                    this.setTheme(themeClass);
+                    markSelectedFilter();
+                    this.closeFilters();
+                },
+                copyResult: function() {
+                    let rawOut = (bcLiveOut.innerText || '').trim();
+                    let textToCopy = '';
+
+                    if (rawOut.startsWith('=')) {
+                        textToCopy = rawOut.replace(/^=\s*/, '').trim();
+                    } else if (rawOut.includes(' = ') && !/Loading|Syntax|Select/i.test(rawOut)) {
+                        textToCopy = rawOut.split(' = ').pop().trim();
+                    } else {
+                        textToCopy = (bcDisp.textContent || '0').trim();
+                    }
+
+                    if (!textToCopy) textToCopy = '0';
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy).then(showCopiedConfirmation).catch(function() {
+                            fallbackCopyText(textToCopy);
+                            showCopiedConfirmation();
+                        });
+                    } else {
+                        fallbackCopyText(textToCopy);
+                        showCopiedConfirmation();
+                    }
+                },
+                switchTab: function(tabId, btnElement) {
+                    const targetPane = document.getElementById(tabId);
+                    const targetBtn = btnElement || document.getElementById('btn-' + tabId);
+                    if (!targetPane || !targetBtn) return;
+
+                    if (tabId !== 'bc-history-tab') {
+                        bcLastActiveTabId = tabId;
+                        try { localStorage.setItem(LAST_CALC_TAB_KEY, bcLastActiveTabId); } catch (e) {}
+                    }
+                    try { localStorage.setItem(TAB_STORAGE_KEY, tabId); } catch (e) {}
+
+                    document.querySelectorAll('.bc-tab-pane').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.bc-tab-btn').forEach(el => el.classList.remove('active'));
+                    targetPane.classList.add('active');
+                    targetBtn.classList.add('active');
+
+                    if (['bc-cas', 'bc-adv', 'bc-prog', 'bc-graph'].includes(tabId)) {
+                        bcLoadAdvancedEngines();
+                    }
+
+                    let outBox = document.getElementById('bc-output-box');
+                    let canvas = document.getElementById('bc-graph-canvas');
+                    if(tabId === 'bc-graph') {
+                        outBox.style.height = '140px'; if(canvas) canvas.style.display = 'block';
+                    } else {
+                        outBox.style.height = '38px'; if(canvas) canvas.style.display = 'none';
+                    }
+                },
+                historyBack: function() {
+                    const returnBtn = document.getElementById('btn-' + bcLastActiveTabId);
+                    if (returnBtn) { this.switchTab(bcLastActiveTabId, returnBtn); }
+                },
+                setAngle: function(unit) {
+                    isDegree = (unit === 'deg');
+                    document.querySelectorAll('.bc-btn-deg').forEach(b => b.classList.toggle('active', unit === 'deg'));
+                    document.querySelectorAll('.bc-btn-rad').forEach(b => b.classList.toggle('active', unit === 'rad'));
+                    bcUpdate(); 
+                },
+                num: function(val) {
+                    if (bcDisp.textContent === '0' && !val.includes('Math') && !val.includes('bcTrig') && val !== '.' && val !== 'Ans') { bcInput = val; } 
+                    else { bcInput += val; }
+                    bcUpdate();
+                },
+                op: function(operator) { bcInput += operator; bcUpdate(); },
+                func: function(functionCall) { bcInput += functionCall; bcUpdate(); },
+                ans: function() { this.num(lastAnswer.toString()); },
+                toggleSign: function() {
+                    if(bcInput.startsWith('(-')) bcInput = bcInput.substring(2);
+                    else bcInput = '(-' + bcInput; bcUpdate();
+                },
+                clear: function() { bcInput = ''; bcDisp.textContent = '0'; bcLiveOut.innerText = ''; },
+                back: function() {
+                    bcInput = bcInput.toString().slice(0, -1);
+                    if(bcInput === '') bcDisp.textContent = '0'; else bcUpdate();
+                },
+                mem: function(action) {
+                    let currentVal = 0;
+                    try { currentVal = secureEvaluate(bcInput) || 0; } catch(e){}
+                    if(action === 'mc') memoryValue = 0;
+                    if(action === 'mr') this.num(memoryValue.toString());
+                    if(action === 'ms') memoryValue = currentVal;
+                    if(action === 'm+') memoryValue += currentVal;
+                    if(action === 'm-') memoryValue -= currentVal;
+                    bcMemInd.innerText = memoryValue !== 0 ? 'M = ' + memoryValue : '';
+                },
+                finComp: function() {
+                    isCompMode = true; bcLiveOut.innerText = 'Select variable (PV, FV, PMT)';
+                },
+                finKey: function(v) {
+                    if(isCompMode) {
+                        let n = finTvm.n, i = finTvm.i / 100, pv = finTvm.pv, pmt = finTvm.pmt, fv = finTvm.fv;
+                        let res = 0;
+                        if(v==='pv') { res = i===0 ? -(fv + pmt*n) : -(pmt * (1 - Math.pow(1+i, -n))/i + fv * Math.pow(1+i, -n)); }
+                        if(v==='fv') { res = i===0 ? -(pv + pmt*n) : -(pv * Math.pow(1+i, n) + pmt * (Math.pow(1+i, n) - 1)/i); }
+                        if(v==='pmt') { res = i===0 ? -(fv + pv)/n : (-fv - pv * Math.pow(1+i, n)) * i / (Math.pow(1+i, n) - 1); }
+                        finTvm[v] = res; bcInput = res.toFixed(2);
+                        bcLiveOut.innerText = v.toUpperCase() + ' = ' + res.toFixed(2);
+                        isCompMode = false; bcUpdate();
+                    } else {
+                        finTvm[v] = parseFloat(bcInput) || parseFloat(bcLiveOut.innerText.split('= ')[1]) || 0;
+                        bcLiveOut.innerText = v.toUpperCase() + ' SET TO ' + finTvm[v];
+                        bcInput = ''; bcDisp.textContent = '0';
+                    }
+                },
+                clearHistory: function() {
+                    bcHistList.innerHTML = '<div class="hist-empty">No calculations yet</div>';
+                    historyEmpty = true;
+                    try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
+                },
+                calc: function() {
+                    if(!bcInput) return;
+                    let openParentheses = (bcInput.match(/\(/g) || []).length;
+                    let closeParentheses = (bcInput.match(/\)/g) || []).length;
+                    while(openParentheses > closeParentheses) { bcInput += ')'; openParentheses--; }
+
+                    let rawExpr = bcInput;
+                    let activeTab = document.querySelector('.bc-tab-pane.active').id;
+                    let calcInput = bcSmartSyntax(bcInput.replace(/\(\-/g, '(-1*'));
+                    
+                    try {
+                        bcUpdate(); 
+                        let oldVisual = bcDisp.textContent; 
+                        let result = '';
+
+                        if (activeTab === 'bc-cas' || activeTab === 'bc-adv') {
+                            if(extEnginesLoaded && typeof Algebrite !== 'undefined') {
+                                let algInput = calcInput.replace(/\*\*/g, '^');
+                                result = Algebrite.run(algInput);
+                                if(result === '' || result.includes('Stop')) throw new Error("Parse Error");
+                            } else { throw new Error("Loading"); }
+                        } 
+                        else if (activeTab === 'bc-graph') {
+                            if(extEnginesLoaded && typeof math !== 'undefined') {
+                                let expr = calcInput.replace(/\*\*/g, '^');
+                                drawGraph(expr); bcLiveOut.innerText = 'y = ' + expr;
+                                if (historyEmpty) { bcHistList.innerHTML = ''; historyEmpty = false; }
+                                bcHistList.innerHTML = '<div class="hist-entry" data-expr="' + encodeURIComponent(rawExpr) + '" data-tab="bc-graph" title="Tap to reload graph expression"><span class="hist-content">Plotted: <strong title="Tap to load expression">y = ' + oldVisual + '</strong></span><button type="button" class="hist-del-btn" aria-label="Delete History Entry" title="Delete this entry">×</button></div>' + bcHistList.innerHTML;
+                                saveHistoryToStorage();
+                                return; 
+                            } else { throw new Error("Loading"); }
+                        }
+                        else if (activeTab === 'bc-prog') {
+                            if(extEnginesLoaded && typeof math !== 'undefined') {
+                                let mRes = math.evaluate(calcInput.replace(/\*\*/g, '^'));
+                                result = (mRes && typeof mRes.entries !== 'undefined') ? mRes.entries[mRes.entries.length - 1] : mRes;
+                            } else { throw new Error("Loading"); }
+                        }
+                        else {
+                            result = secureEvaluate(calcInput);
+                            if(!isFinite(result) || isNaN(result)) throw new Error("Math Error");
+                            result = Math.round(result * 1e12) / 1e12; 
+                        }
+                        
+                        lastAnswer = result; 
+                        let cleanResStr = cleanBloggerEntities(result.toString());
+                        if (historyEmpty) { bcHistList.innerHTML = ''; historyEmpty = false; }
+                        bcHistList.innerHTML = '<div class="hist-entry" data-expr="' + encodeURIComponent(rawExpr) + '" data-res="' + encodeURIComponent(cleanResStr) + '" data-tab="' + activeTab + '" title="Tap row to load expression, or tap result to load answer"><span class="hist-content">' + oldVisual + ' = <strong title="Tap to load result">' + cleanResStr + '</strong></span><button type="button" class="hist-del-btn" aria-label="Delete History Entry" title="Delete this entry">×</button></div>' + bcHistList.innerHTML;
+                        saveHistoryToStorage();
+                        
+                        bcInput = result.toString();
+                        bcUpdate(); 
+                        bcLiveOut.innerText = '= ' + cleanResStr;
+                    } catch (e) {
+                        bcLiveOut.innerText = (e.message === "Loading") ? "Wait: Loading Engines..." : "Syntax Error";
+                    }
+                }
+            };
+
+            /* Clipboard Paste (Ctrl+V / Cmd+V / Browser Paste) Support for Expressions */
+            document.addEventListener('paste', function(e) {
+                const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) {
+                    return;
+                }
+                if (filterPanel && filterPanel.classList.contains('open')) return;
+
+                const clipboardData = e.clipboardData || window.clipboardData;
+                if (!clipboardData) return;
+                const pastedText = clipboardData.getData('text');
+                if (!pastedText) return;
+
+                const activePane = document.querySelector('.bc-tab-pane.active');
+                let activeTabId = activePane ? activePane.id : 'bc-basic';
+                if (activeTabId === 'bc-history-tab') {
+                    api.historyBack();
+                    const updatedPane = document.querySelector('.bc-tab-pane.active');
+                    activeTabId = updatedPane ? updatedPane.id : bcLastActiveTabId;
+                }
+
+                const cleaned = sanitizePastedExpression(pastedText, activeTabId);
+                if (!cleaned) return;
+
+                e.preventDefault();
+                if (bcDisp.textContent === '0' || !bcInput) {
+                    bcInput = cleaned;
+                } else {
+                    bcInput += cleaned;
+                }
+                bcUpdate();
+            });
+
+            /* Physical Keyboard Event Listener for Desktop Users */
+            document.addEventListener('keydown', function(e) {
+                /* Ignore if typing inside an external form input */
+                const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) {
+                    return;
+                }
+
+                /* Support Ctrl+C / Cmd+C to copy calculator output when no page text is selected */
+                if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'c' || e.key === 'C')) {
+                    const sel = window.getSelection ? window.getSelection().toString() : '';
+                    if (!sel) {
+                        e.preventDefault();
+                        api.copyResult();
+                    }
+                    return;
+                }
+
+                if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+                const key = e.key;
+
+                /* Handle Escape: close filter panel if open, otherwise clear display */
+                if (key === 'Escape') {
+                    e.preventDefault();
+                    if (filterPanel && filterPanel.classList.contains('open')) {
+                        api.closeFilters();
+                    } else {
+                        api.clear();
+                    }
+                    return;
+                }
+
+                /* Ignore calculator keys while the filter selection modal is open */
+                if (filterPanel && filterPanel.classList.contains('open')) return;
+
+                /* If user starts typing while viewing History, return to last active calculator tab */
+                const activePane = document.querySelector('.bc-tab-pane.active');
+                const activeTabId = activePane ? activePane.id : 'bc-basic';
+                const ensureCalculatorTab = function() {
+                    if (activeTabId === 'bc-history-tab') {
+                        api.historyBack();
+                    }
+                };
+
+                if (/^[0-9]$/.test(key) || key === '.') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.num(key);
+                } else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '%') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.op(key);
+                } else if (key === '^') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.op('**');
+                } else if (key === '(' || key === ')' || key === ',' || key === '[' || key === ']') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.num(key);
+                } else if (key === ';') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.op(';');
+                } else if (key === '!') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.func('bcFact');
+                } else if (key === 'Enter' || key === '=') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.calc();
+                } else if (key === 'Backspace') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.back();
+                } else if (key === 'Delete') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.clear();
+                } else if (/^[xyztXYZT]$/.test(key)) {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.num(key.toLowerCase());
+                } else if (key === 'i' || key === 'I') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    api.num('i');
+                } else if (key === 'e' || key === 'E') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    const tabNow = document.querySelector('.bc-tab-pane.active').id;
+                    api.num((tabNow === 'bc-graph' || tabNow === 'bc-cas') ? 'e' : 'Math.E');
+                } else if (key === 'p' || key === 'P') {
+                    e.preventDefault();
+                    ensureCalculatorTab();
+                    const tabNow = document.querySelector('.bc-tab-pane.active').id;
+                    api.num((tabNow === 'bc-graph' || tabNow === 'bc-cas') ? 'pi' : 'Math.PI');
+                }
+            });
+
+            /* Restore saved theme filter, history log, and active tab on page load */
+            try {
+                const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+                if (savedTheme && FILTERS.some(function(f) { return f[0] === savedTheme; })) {
+                    api.setTheme(savedTheme);
+                }
+
+                const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+                if (savedHistory && savedHistory.trim() !== '') {
+                    bcHistList.innerHTML = savedHistory;
+                    upgradeSavedHistoryEntries();
+                    historyEmpty = (bcHistList.querySelectorAll('.hist-entry').length === 0);
+                }
+
+                const savedLastCalcTab = localStorage.getItem(LAST_CALC_TAB_KEY);
+                if (savedLastCalcTab && document.getElementById(savedLastCalcTab)) {
+                    bcLastActiveTabId = savedLastCalcTab;
+                }
+
+                const savedTab = localStorage.getItem(TAB_STORAGE_KEY);
+                if (savedTab && document.getElementById(savedTab)) {
+                    const tabBtn = document.getElementById('btn-' + savedTab);
+                    if (tabBtn) {
+                        api.switchTab(savedTab, tabBtn);
+                    }
+                }
+            } catch (e) {}
+
+            return api;
+        })();
+    </script>
+</div>
+
+</body>
+</html>
