@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         DESKTOP TOOL POST LAYOUT & MARGIN FIX (MATCHES PHOTOS 2/3)
+         DESKTOP TOOL POST EDGE-TO-EDGE MARGIN & PADDING FIX
          ======================================================== */
       #catView {
         display: flex !important;
@@ -72,33 +72,33 @@
         }
 
         body.dyn-is-tool-page .dyn-top-tool-wrap {
-          padding-left: 0px !important;
-          padding-right: 0px !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
         }
 
-        /* EXACT SPLIT RATIO & LEFT/RIGHT PADDING TO MATCH CALCULATOR.NET */
         body.dyn-is-tool-page .dyn-split-container {
           display: grid !important;
-          grid-template-columns: minmax(0, 68.5%) minmax(250px, 29.5%) !important;
+          grid-template-columns: minmax(0, 68%) minmax(250px, 31%) !important;
           justify-content: space-between !important;
           align-items: start !important;
-          gap: 16px !important;
+          gap: 10px !important;
           width: 100% !important;
           max-width: 100% !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
-          padding-left: 12px !important;
-          padding-right: 12px !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
           box-sizing: border-box !important;
         }
 
+        /* 1. SHIFT BREADCRUMB INWARD AWAY FROM EXTREME EDGE */
         body.dyn-is-tool-page .dyn-breadcrumb-el,
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
           width: 100% !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
-          padding-left: 0px !important;
+          padding-left: 22px !important;
           box-sizing: border-box !important;
         }
 
@@ -112,6 +112,7 @@
           box-sizing: border-box !important;
         }
 
+        /* 2. SIDEBAR FITS COLUMN 100% WITHOUT CUTOFF */
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
           width: 100% !important;
@@ -144,7 +145,7 @@
       }
 
       /* ========================================================
-         EDGE-TO-EDGE CAROUSEL & TOOL LINKS
+         EDGE-TO-EDGE CAROUSEL & TOOL LINKS (BOTH MOBILE & DESKTOP)
          ======================================================== */
       body.dyn-is-tool-page .dyn-tools-card {
         padding: 0 !important;
@@ -153,51 +154,48 @@
       body.dyn-is-tool-page .dyn-tools-card > .related-section {
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 0 10px 0 !important;
-        padding: 10px 10px !important;
-        overflow: hidden !important;
-        border: 1px solid var(--border, rgba(226, 232, 240, 0.85));
-        border-radius: 13px;
-        background: linear-gradient(145deg, #ffffff, #f8fafc);
-        box-sizing: border-box !important;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+        margin: 0 0 8px 0 !important;
+        padding: 8px 2px !important;
+        border: none !important;
+        border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
+        border-radius: 14px 14px 0 0 !important;
+        box-shadow: none !important;
       }
       [data-theme="dark"] body.dyn-is-tool-page .dyn-tools-card > .related-section {
-        background: linear-gradient(145deg, #1e293b, #0f172a) !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
+        border-bottom-color: var(--border-color, #334155) !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .section-header,
       body.dyn-is-tool-page .dyn-tools-card > .related-section .carousel-footer {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
-        padding: 0 !important;
+        padding: 0 2px !important;
         gap: 6px !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
-        padding: 6px 10px !important;
-        min-height: 44px !important;
-        border-radius: 8px !important;
+        padding: 7px 6px !important;
+        min-height: 48px !important;
+        border-radius: 7px !important;
         width: 100% !important;
         max-width: 100% !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
-        font-size: 13px !important;
-        font-weight: 700 !important;
-        line-height: 1.25 !important;
+        font-size: 14.5px !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
-        font-size: 11.5px !important;
-        font-weight: 400 !important;
-        line-height: 1.25 !important;
+        font-size: 12.2px !important;
+        font-weight: 500 !important;
+        line-height: 1.3 !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
-        padding-bottom: 0 !important;
+        padding-bottom: 12px !important;
       }
 
       /* ========================================================
@@ -1550,7 +1548,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot);
+            homeSlot.appendChild(globalSearchNode);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
