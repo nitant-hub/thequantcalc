@@ -91,13 +91,14 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. ALIGN BREADCRUMB NEATLY WITH CARD & HEADER */
+        /* 1. SHIFT BREADCRUMB (RED BOX) INWARD AWAY FROM EXTREME EDGE */
+        body.dyn-is-tool-page .dyn-breadcrumb-el,
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
           width: 100% !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
-          padding-left: 10px !important;
+          padding-left: 22px !important;
           box-sizing: border-box !important;
         }
 
@@ -124,16 +125,53 @@
           box-sizing: border-box !important;
         }
 
-        /* 3. EXPAND CAROUSEL EDGE-TO-EDGE INSIDE OUTER FRAME */
+        /* 3. CAROUSEL & 3 TOOL CARDS (YELLOW BOXES) FIT EDGE-TO-EDGE */
         body.dyn-is-tool-page .dyn-tools-card {
-          padding: 3px !important;
+          padding: 0 !important;
+          border-radius: 14px !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 0 8px 0 !important;
+          padding: 8px 2px !important;
+          border: none !important;
+          border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
+          border-radius: 14px 14px 0 0 !important;
+          box-shadow: none !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .section-header,
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .carousel-footer {
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
+          padding: 0 2px !important;
+          gap: 6px !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
+          padding: 7px 6px !important;
+          min-height: 48px !important;
+          border-radius: 7px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
+          font-size: 14.5px !important;
+          font-weight: 800 !important;
+          line-height: 1.3 !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
+          font-size: 12.2px !important;
+          font-weight: 500 !important;
+          line-height: 1.3 !important;
         }
         body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
-          padding-left: 10px !important;
-          padding-right: 10px !important;
+          padding-left: 12px !important;
+          padding-right: 12px !important;
         }
         body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
-          padding-bottom: 8px !important;
+          padding-bottom: 12px !important;
         }
 
         #catView.dyn-cat-split {
@@ -1364,6 +1402,16 @@
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
+
+        /* Target the breadcrumb element directly so it shifts inward cleanly */
+        document.querySelectorAll(".breadcrumb, .crumb, #crumb, nav, div, p").forEach((el) => {
+          if (el.children.length <= 4) {
+            const txt = (el.textContent || "").trim().toLowerCase();
+            if (txt.startsWith("home") && txt.includes("/") && el.offsetHeight > 0 && el.offsetHeight < 50) {
+              el.classList.add("dyn-breadcrumb-el");
+            }
+          }
+        });
 
         let curr = sidebarAside.parentElement;
         let topWrap = null;
