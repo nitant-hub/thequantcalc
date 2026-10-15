@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         DESKTOP TOOL POST EDGE-TO-EDGE MARGIN & PADDING FIX
+         DESKTOP TOOL POST: TIGHT ARTICLE LEFT/RIGHT MARGINS (MATCHES PHOTOS 2 & 3)
          ======================================================== */
       #catView {
         display: flex !important;
@@ -72,16 +72,16 @@
         }
 
         body.dyn-is-tool-page .dyn-top-tool-wrap {
-          padding-left: 6px !important;
-          padding-right: 6px !important;
+          padding-left: 2px !important;
+          padding-right: 4px !important;
         }
 
         body.dyn-is-tool-page .dyn-split-container {
           display: grid !important;
-          grid-template-columns: minmax(0, 68%) minmax(250px, 31%) !important;
+          grid-template-columns: minmax(0, 69%) minmax(250px, 30%) !important;
           justify-content: space-between !important;
           align-items: start !important;
-          gap: 10px !important;
+          gap: 8px !important;
           width: 100% !important;
           max-width: 100% !important;
           margin-left: 0 !important;
@@ -91,17 +91,18 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. SHIFT BREADCRUMB INWARD AWAY FROM EXTREME EDGE */
+        /* 1. BREADCRUMB ALIGNED NEATLY WITH ARTICLE START */
         body.dyn-is-tool-page .dyn-breadcrumb-el,
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
           width: 100% !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
-          padding-left: 22px !important;
+          padding-left: 10px !important;
           box-sizing: border-box !important;
         }
 
+        /* 2. REDUCE LEFT & RIGHT INNER MARGIN OF ARTICLE / LEFT SPLIT TO MATCH PHOTOS 2 & 3 */
         body.dyn-is-tool-page .dyn-split-container > .dyn-left-split {
           grid-column: 1 / 2 !important;
           width: 100% !important;
@@ -109,10 +110,21 @@
           min-width: 0 !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
+          padding-left: 8px !important;
+          padding-right: 8px !important;
           box-sizing: border-box !important;
         }
 
-        /* 2. SIDEBAR FITS COLUMN 100% WITHOUT CUTOFF */
+        body.dyn-is-tool-page .dyn-split-container > .dyn-left-split .card,
+        body.dyn-is-tool-page .dyn-split-container > .dyn-left-split article,
+        body.dyn-is-tool-page .dyn-split-container > .dyn-left-split section {
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+        /* 3. SIDEBAR FITS COLUMN 100% WITHOUT CUTOFF */
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
           width: 100% !important;
