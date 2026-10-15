@@ -71,15 +71,14 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. BREADCRUMB PADDED SLIGHTLY INWARDS FROM LEFT */
         body.dyn-is-tool-page .dyn-top-tool-wrap {
-          padding-left: 14px !important;
-          padding-right: 4px !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
         }
 
         body.dyn-is-tool-page .dyn-split-container {
           display: grid !important;
-          grid-template-columns: minmax(0, 68.5%) minmax(240px, 30.5%) !important;
+          grid-template-columns: minmax(0, 68%) minmax(250px, 31%) !important;
           justify-content: space-between !important;
           align-items: start !important;
           gap: 10px !important;
@@ -92,11 +91,14 @@
           box-sizing: border-box !important;
         }
 
+        /* 1. ALIGN BREADCRUMB NEATLY WITH CARD & HEADER */
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
           width: 100% !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
+          padding-left: 10px !important;
+          box-sizing: border-box !important;
         }
 
         body.dyn-is-tool-page .dyn-split-container > .dyn-left-split {
@@ -109,17 +111,29 @@
           box-sizing: border-box !important;
         }
 
-        /* 2. RIGHT SIDEBAR WIDGETS EXPANDED EDGE-TO-EDGE IN 300px FRAME */
+        /* 2. SIDEBAR FITS COLUMN 100% WITHOUT CUTOFF */
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
-          width: 300px !important;
-          max-width: 300px !important;
-          min-width: 300px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
           padding-left: 0 !important;
           padding-right: 0 !important;
           box-sizing: border-box !important;
+        }
+
+        /* 3. EXPAND CAROUSEL EDGE-TO-EDGE INSIDE OUTER FRAME */
+        body.dyn-is-tool-page .dyn-tools-card {
+          padding: 3px !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+        }
+        body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
+          padding-bottom: 8px !important;
         }
 
         #catView.dyn-cat-split {
@@ -524,7 +538,7 @@
       }
 
       /* ========================================================
-         COMPACT CAROUSEL SIDEBAR COMPONENT (EDGE-TO-EDGE IN 300px FRAME)
+         COMPACT CAROUSEL SIDEBAR COMPONENT (EDGE-TO-EDGE FULL FRAME FIT)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -534,14 +548,14 @@
         --border: rgba(226, 232, 240, 0.85);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
-        width: 300px !important;
-        max-width: 300px !important;
-        min-width: 300px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         margin: 0 0 10px 0 !important;
-        padding: 10px 12px !important;
+        padding: 10px 10px !important;
         overflow: hidden !important;
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 13px;
         background: linear-gradient(145deg, #ffffff, #f8fafc);
         box-sizing: border-box !important;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
@@ -1482,7 +1496,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(homeSlot);
+            homeSlot.appendChild(globalSearchNode);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
@@ -1510,7 +1524,6 @@
     const observer = new MutationObserver(() => {
       relocateSearch();
     });
-    observer.update = () => {};
     observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener("hashchange", () => {
