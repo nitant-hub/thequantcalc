@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         DESKTOP TOOL POST EDGE-TO-EDGE MARGIN FIX (MATCHES PHOTOS 2 & 3)
+         DESKTOP TOOL POST EDGE-TO-EDGE MARGIN & PADDING FIX
          ======================================================== */
       #catView {
         display: flex !important;
@@ -71,8 +71,9 @@
           box-sizing: border-box !important;
         }
 
+        /* 1. BREADCRUMB PADDED SLIGHTLY INWARDS FROM LEFT */
         body.dyn-is-tool-page .dyn-top-tool-wrap {
-          padding-left: 4px !important;
+          padding-left: 14px !important;
           padding-right: 4px !important;
         }
 
@@ -108,13 +109,16 @@
           box-sizing: border-box !important;
         }
 
+        /* 2. RIGHT SIDEBAR WIDGETS EXPANDED EDGE-TO-EDGE IN 300px FRAME */
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          min-width: 0 !important;
+          width: 300px !important;
+          max-width: 300px !important;
+          min-width: 300px !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
           box-sizing: border-box !important;
         }
 
@@ -520,7 +524,7 @@
       }
 
       /* ========================================================
-         COMPACT 3-TOOL CAROUSEL (EXACT POPULAR TOOLS FOOTPRINT & MOBILE FIT)
+         COMPACT CAROUSEL SIDEBAR COMPONENT (EDGE-TO-EDGE IN 300px FRAME)
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -530,9 +534,9 @@
         --border: rgba(226, 232, 240, 0.85);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: var(--text);
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
+        width: 300px !important;
+        max-width: 300px !important;
+        min-width: 300px !important;
         margin: 0 0 10px 0 !important;
         padding: 10px 12px !important;
         overflow: hidden !important;
@@ -678,7 +682,7 @@
         max-width: 100% !important;
         flex-direction: column !important; 
         gap: 5px !important; 
-        padding: 0 1px !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
       }
 
@@ -686,15 +690,18 @@
         position: relative !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        padding: 5px 8px !important;
+        padding: 6px 10px !important;
         overflow: hidden !important; 
         color: inherit !important; 
         text-decoration: none !important;
         background: rgba(255, 255, 255, 0.75) !important; 
         border: 1px solid var(--border) !important; 
         border-radius: 8px !important;
-        min-height: 40px !important;
+        min-height: 44px !important;
         justify-content: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
       }
       [data-theme="dark"] .related-section .tool-card {
         background: rgba(30, 41, 59, 0.75) !important;
@@ -715,7 +722,7 @@
         margin: 0 0 1px 0 !important; 
         padding: 0 !important;
         border: none !important;
-        font-size: 12.5px !important; 
+        font-size: 13px !important; 
         font-weight: 700 !important;
         color: #2563eb !important; 
         line-height: 1.25 !important; 
@@ -731,7 +738,7 @@
         margin: 0 !important; 
         padding: 0 !important;
         color: var(--muted) !important; 
-        font-size: 11px !important; 
+        font-size: 11.5px !important; 
         line-height: 1.25 !important;
         font-weight: 400 !important; 
         white-space: nowrap !important; 
@@ -1262,7 +1269,7 @@
           start();
         }
 
-        /* 12-SECOND AUTO-SCROLL INTERVAL (WITHIN 9 TO 15 SECOND RANGE) */
+        /* 12-SECOND AUTO-SCROLL INTERVAL */
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
           autoFlowTimer = setInterval(stepAutoFlow, 12000);
@@ -1344,7 +1351,6 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
-        /* Strip outer margins/paddings on all ancestor wrappers up to body for desktop tool pages */
         let curr = sidebarAside.parentElement;
         let topWrap = null;
         while (curr && curr !== document.body && curr !== document.documentElement) {
@@ -1476,7 +1482,7 @@
         if (homeSlot) {
           globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
           if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(globalSearchNode);
+            homeSlot.appendChild(homeSlot);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
           return;
@@ -1504,6 +1510,7 @@
     const observer = new MutationObserver(() => {
       relocateSearch();
     });
+    observer.update = () => {};
     observer.observe(document.body, { childList: true, subtree: true });
 
     window.addEventListener("hashchange", () => {
