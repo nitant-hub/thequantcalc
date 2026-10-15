@@ -46,7 +46,7 @@
       }
 
       /* ========================================================
-         DESKTOP 2-COLUMN HORIZONTAL SPLIT (MATCHING CALCULATOR.NET RATIO)
+         DESKTOP TOOL POST EDGE-TO-EDGE MARGIN FIX (MATCHES PHOTOS 2 & 3)
          ======================================================== */
       #catView {
         display: flex !important;
@@ -54,49 +54,67 @@
         gap: 1.25rem !important;
       }
       @media (min-width: 768px) {
-        .dyn-outer-container {
-          width: 98% !important;
-          max-width: 1260px !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding-left: 6px !important;
-          padding-right: 6px !important;
+        body.dyn-is-tool-page {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+        body.dyn-is-tool-page .dyn-tool-reset-wrap {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
           box-sizing: border-box !important;
         }
 
-        .dyn-split-container {
+        body.dyn-is-tool-page .dyn-top-tool-wrap {
+          padding-left: 4px !important;
+          padding-right: 4px !important;
+        }
+
+        body.dyn-is-tool-page .dyn-split-container {
           display: grid !important;
-          grid-template-columns: minmax(0, 67.5%) minmax(240px, 31%) !important;
+          grid-template-columns: minmax(0, 68.5%) minmax(240px, 30.5%) !important;
           justify-content: space-between !important;
           align-items: start !important;
-          gap: 12px !important;
-          width: 98% !important;
-          max-width: 1260px !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding-left: 6px !important;
-          padding-right: 6px !important;
+          gap: 10px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
           box-sizing: border-box !important;
         }
 
-        .dyn-split-container > .dyn-full-row {
+        body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
           width: 100% !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
         }
 
-        .dyn-split-container > .dyn-left-split {
+        body.dyn-is-tool-page .dyn-split-container > .dyn-left-split {
           grid-column: 1 / 2 !important;
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
           box-sizing: border-box !important;
         }
 
-        .dyn-split-container > aside.sidebar {
+        body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
           box-sizing: border-box !important;
         }
 
@@ -104,21 +122,15 @@
           flex-direction: row !important;
           justify-content: space-between !important;
           align-items: flex-start !important;
-          gap: 12px !important;
-          width: 98% !important;
-          max-width: 1260px !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
+          gap: 2rem !important;
         }
         #catView.dyn-cat-split > .dyn-cat-left-pane {
-          flex: 1 1 67.5% !important;
-          width: 67.5% !important;
+          flex: 1 1 0% !important;
           min-width: 0 !important;
         }
         #catView.dyn-cat-split > .dyn-cat-right-pane {
-          flex: 0 0 31% !important;
-          width: 31% !important;
-          max-width: 300px !important;
+          flex: 0 0 320px !important;
+          width: 320px !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 1rem !important;
@@ -1036,7 +1048,6 @@
       globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
     }
 
-    /* ONLY YOUR 4 REAL TOOLS */
     const fallbackTools = [
       { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
       { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
@@ -1331,13 +1342,23 @@
 
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
-        /* Apply 67.5% Left Split / 31% Right Split layout on tool page container */
+        document.body.classList.add("dyn-is-tool-page");
+
+        /* Strip outer margins/paddings on all ancestor wrappers up to body for desktop tool pages */
+        let curr = sidebarAside.parentElement;
+        let topWrap = null;
+        while (curr && curr !== document.body && curr !== document.documentElement) {
+          curr.classList.add("dyn-tool-reset-wrap");
+          topWrap = curr;
+          curr = curr.parentElement;
+        }
+        if (topWrap) {
+          topWrap.classList.add("dyn-top-tool-wrap");
+        }
+
         const splitContainer = sidebarAside.parentElement;
         if (splitContainer && splitContainer !== document.body) {
           splitContainer.classList.add("dyn-split-container");
-          if (splitContainer.parentElement && splitContainer.parentElement !== document.body && splitContainer.parentElement !== document.documentElement) {
-            splitContainer.parentElement.classList.add("dyn-outer-container");
-          }
           Array.from(splitContainer.children).forEach((child) => {
             if (child === sidebarAside) return;
             if (child.tagName === "NAV" || child.classList.contains("breadcrumb") || (child.offsetHeight > 0 && child.offsetHeight < 45)) {
@@ -1398,9 +1419,11 @@
           toolsCard.insertBefore(tempDiv.firstElementChild, toolsCard.firstChild);
           initCarouselLogic();
         }
+      } else {
+        document.body.classList.remove("dyn-is-tool-page");
       }
 
-      /* 1. Mobile View Search & Ad Placement */
+      /* 1. Mobile View Search & Ad Placement (Untouched) */
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
