@@ -91,7 +91,7 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. SHIFT BREADCRUMB (RED BOX) INWARD AWAY FROM EXTREME EDGE */
+        /* 1. SHIFT BREADCRUMB INWARD AWAY FROM EXTREME EDGE */
         body.dyn-is-tool-page .dyn-breadcrumb-el,
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
@@ -125,55 +125,6 @@
           box-sizing: border-box !important;
         }
 
-        /* 3. CAROUSEL & 3 TOOL CARDS (YELLOW BOXES) FIT EDGE-TO-EDGE */
-        body.dyn-is-tool-page .dyn-tools-card {
-          padding: 0 !important;
-          border-radius: 14px !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 0 8px 0 !important;
-          padding: 8px 2px !important;
-          border: none !important;
-          border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
-          border-radius: 14px 14px 0 0 !important;
-          box-shadow: none !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .section-header,
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .carousel-footer {
-          padding-left: 6px !important;
-          padding-right: 6px !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
-          padding: 0 2px !important;
-          gap: 6px !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
-          padding: 7px 6px !important;
-          min-height: 48px !important;
-          border-radius: 7px !important;
-          width: 100% !important;
-          max-width: 100% !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
-          font-size: 14.5px !important;
-          font-weight: 800 !important;
-          line-height: 1.3 !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
-          font-size: 12.2px !important;
-          font-weight: 500 !important;
-          line-height: 1.3 !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
-          padding-left: 12px !important;
-          padding-right: 12px !important;
-        }
-        body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
-          padding-bottom: 12px !important;
-        }
-
         #catView.dyn-cat-split {
           flex-direction: row !important;
           justify-content: space-between !important;
@@ -191,6 +142,60 @@
           flex-direction: column !important;
           gap: 1rem !important;
         }
+      }
+
+      /* ========================================================
+         EDGE-TO-EDGE CAROUSEL & TOOL LINKS (BOTH MOBILE & DESKTOP)
+         ======================================================== */
+      body.dyn-is-tool-page .dyn-tools-card {
+        padding: 0 !important;
+        border-radius: 14px !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 8px 0 !important;
+        padding: 8px 2px !important;
+        border: none !important;
+        border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
+        border-radius: 14px 14px 0 0 !important;
+        box-shadow: none !important;
+      }
+      [data-theme="dark"] body.dyn-is-tool-page .dyn-tools-card > .related-section {
+        border-bottom-color: var(--border-color, #334155) !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .section-header,
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .carousel-footer {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
+        padding: 0 2px !important;
+        gap: 6px !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
+        padding: 7px 6px !important;
+        min-height: 48px !important;
+        border-radius: 7px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
+        font-size: 14.5px !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
+        font-size: 12.2px !important;
+        font-weight: 500 !important;
+        line-height: 1.3 !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+      body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
+        padding-bottom: 12px !important;
       }
 
       /* ========================================================
@@ -576,7 +581,7 @@
       }
 
       /* ========================================================
-         COMPACT CAROUSEL SIDEBAR COMPONENT (EDGE-TO-EDGE FULL FRAME FIT)
+         COMPACT CAROUSEL SIDEBAR COMPONENT
          ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
@@ -1403,7 +1408,6 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
-        /* Target the breadcrumb element directly so it shifts inward cleanly */
         document.querySelectorAll(".breadcrumb, .crumb, #crumb, nav, div, p").forEach((el) => {
           if (el.children.length <= 4) {
             const txt = (el.textContent || "").trim().toLowerCase();
