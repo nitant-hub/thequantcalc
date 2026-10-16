@@ -1926,6 +1926,56 @@
             window.bcLogY = function(x, y) { return Math.log(x) / Math.log(y); };
             window.bcNthRoot = function(x, y) { return Math.pow(x, 1/y); };
 
+            /* ---------- Translate calculator button names into Algebrite syntax ---------- */
+            function bcRewriteCalls(str, name, wrap) {
+                let idx, guard = 0;
+                while ((idx = str.indexOf(name + '(')) !== -1 && guard++ < 200) {
+                    const open = idx + name.length;
+                    let depth = 0, end = -1;
+                    for (let k = open; k < str.length; k++) {
+                        if (str[k] === '(') { depth++; }
+                        else if (str[k] === ')') { depth--; if (depth === 0) { end = k; break; } }
+                    }
+                    if (end === -1) { end = str.length; }
+                    const inner = str.slice(open + 1, end);
+                    str = str.slice(0, idx) + wrap(inner) + str.slice(end + 1);
+                }
+                return str;
+            }
+
+            function bcSplitTopComma(inner) {
+                let depth = 0;
+                for (let k = 0; k < inner.length; k++) {
+                    const c = inner[k];
+                    if (c === '(') { depth++; } else if (c === ')') { depth--; }
+                    else if (c === ',' && depth === 0) { return [inner.slice(0, k), inner.slice(k + 1)]; }
+                }
+                return [inner, '10'];
+            }
+
+            function bcToAlgebrite(str) {
+                const deg = isDegree;
+                ['sin', 'cos', 'tan'].forEach(function(f) {
+                    str = bcRewriteCalls(str, 'bcTrig.' + f, function(a) { return deg ? f + '((' + a + ')*pi/180)' : f + '(' + a + ')'; });
+                });
+                [['asin', 'arcsin'], ['acos', 'arccos'], ['atan', 'arctan']].forEach(function(p) {
+                    str = bcRewriteCalls(str, 'bcTrig.' + p[0], function(a) { return deg ? '(' + p[1] + '(' + a + ')*180/pi)' : p[1] + '(' + a + ')'; });
+                });
+                str = bcRewriteCalls(str, 'Math.sqrt', function(a) { return 'sqrt(' + a + ')'; });
+                str = bcRewriteCalls(str, 'Math.cbrt', function(a) { return '((' + a + ')^(1/3))'; });
+                str = bcRewriteCalls(str, 'Math.log10', function(a) { return '(log(' + a + ')/log(10))'; });
+                str = bcRewriteCalls(str, 'Math.log2', function(a) { return '(log(' + a + ')/log(2))'; });
+                str = bcRewriteCalls(str, 'Math.log', function(a) { return 'log(' + a + ')'; });
+                str = bcRewriteCalls(str, 'Math.exp', function(a) { return 'exp(' + a + ')'; });
+                str = bcRewriteCalls(str, 'Math.abs', function(a) { return 'abs(' + a + ')'; });
+                str = bcRewriteCalls(str, 'bcLogY', function(a) { const p = bcSplitTopComma(a); return '(log(' + p[0] + ')/log(' + p[1] + '))'; });
+                str = bcRewriteCalls(str, 'bcFact', function(a) { return 'factorial(' + a + ')'; });
+                /* constants: keep them as separate factors so "pi x" never becomes the single name "pix" */
+                str = str.replace(/([A-Za-z0-9_)])?Math\.PI/g, function(m, p) { return (p ? p + '*' : '') + '(pi)'; });
+                str = str.replace(/([A-Za-z0-9_)])?Math\.E(?![A-Za-z])/g, function(m, p) { return (p ? p + '*' : '') + '(exp(1))'; });
+                return str.replace(/\)(?=[A-Za-z0-9])/g, ')*');
+            }
+
             function drawGraph(exprStr) {
                 let container = document.getElementById('bc-output-box');
                 let canvas = document.getElementById('bc-graph-canvas');
@@ -3002,10 +3052,19 @@
                         let oldVisual = bcDisp.textContent; 
                         let result = '';
 
-                        if (activeTab === 'bc-cas' || activeTab === 'bc-adv' || (activeTab === 'bc-graph' && primeCasMode)) {
+                        let advNumeric = false;
+                        if (activeTab === 'bc-adv') {
+                            /* Plain number maths (e.g. sqrt(49)) uses the built-in evaluator: instant, exact and works offline */
+                            try {
+                                const nv = secureEvaluate(calcInput);
+                                if (typeof nv === 'number' && isFinite(nv)) { result = Math.round(nv * 1e12) / 1e12; advNumeric = true; }
+                            } catch (numErr) { advNumeric = false; }
+                        }
+                        if (advNumeric) { /* result already set */ }
+                        else if (activeTab === 'bc-cas' || activeTab === 'bc-adv' || (activeTab === 'bc-graph' && primeCasMode)) {
                             engineNeed('alg');
                             {
-                                let algInput = calcInput.replace(/\*\*/g, '^');
+                                let algInput = bcToAlgebrite(calcInput.replace(/\*\*/g, '^'));
                                 result = Algebrite.run(algInput);
                                 if(result === '' || result.includes('Stop')) throw new Error("Parse Error");
                                 if (activeTab === 'bc-graph') {
