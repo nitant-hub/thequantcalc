@@ -1,3 +1,6 @@
+I think in this code edit.
+
+
 (function () {
   function initNavigation() {
     let vMeta = document.querySelector('meta[name="viewport"]');
@@ -399,7 +402,7 @@
       }
 
       /* HEADER & NAVIGATION */
-                  header#siteDynamicHeader {
+      header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
         background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%) !important;
@@ -409,7 +412,7 @@
         padding: 0 1.5rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
-     .dyn-brand { display: flex !important; align-items: center !important; gap: 0.65rem !important; text-decoration: none !important; }
+      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.65rem !important; text-decoration: none !important; }
       .dyn-logo-icon {
         background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 36px !important; height: 36px !important;
         border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;
