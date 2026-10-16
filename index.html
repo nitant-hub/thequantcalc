@@ -884,7 +884,16 @@ footer a:hover { color: var(--link); }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
 }
-@media(min-width:992px){ .grid { grid-template-columns: 2.5fr 1fr; } }
+  @media(min-width:992px) { 
+  /* Force single full-width column ONLY on the Home Page */
+  .grid:has(#home[style*="display: flex"]) { 
+    grid-template-columns: 1fr; 
+  }
+  /* Keep the split layout for Category pages */
+  .grid:has(#catView[style*="display: block"]) { 
+    grid-template-columns: 2.5fr 1fr; 
+  } 
+}  
 </style>
 <script>if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')</script>
 </head>
