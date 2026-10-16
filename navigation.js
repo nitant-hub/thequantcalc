@@ -1,5 +1,3 @@
-I think in this code edit.
-
 
 (function () {
   function initNavigation() {
