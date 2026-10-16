@@ -1020,6 +1020,105 @@
             box-shadow: 0 1px 0 #9a3412, 0 1px 2px rgba(234, 88, 12, 0.4) !important;
         }
 
+        /* ========================================================
+           HISTORY EXPORT BUTTON + QUICK-INSERT TEMPLATE MENUS
+           ======================================================== */
+        .bc-history-footer {
+            display: flex;
+            padding-top: 5px;
+            margin-top: 5px;
+            border-top: 1px solid #d0dce7;
+            flex-shrink: 0;
+        }
+        #bc-fin-f.f-on { outline: 3px solid #1d4ed8; outline-offset: -3px; filter: brightness(1.12); }
+        .bc-export-history {
+            flex: 1;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: 1px solid #15803d;
+            background: #16a34a;
+            color: #ffffff;
+            box-shadow: 0 2px 0 #166534;
+        }
+        .bc-export-history:active { transform: translateY(1px); box-shadow: 0 1px 0 #166534; }
+        .bc-export-history.done { background: #2563eb; border-color: #1d4ed8; box-shadow: 0 2px 0 #1e40af; }
+
+        .bc-btn.bc-cas-on {
+            background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%) !important;
+            color: #ffffff !important;
+            border-color: #0f172a !important;
+        }
+
+        .bc-menu-panel {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 61;
+            display: none;
+            flex-direction: column;
+            background: #eef3f8;
+            border: 1px solid #9fb4cb;
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+            color: #0f172a;
+        }
+        .bc-menu-panel.open { display: flex; }
+        .bc-menu-panel .bc-filter-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 8px; }
+        .bc-menu-chips { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 6px; flex-shrink: 0; scrollbar-width: none; }
+        .bc-menu-chips::-webkit-scrollbar { display: none; }
+        .bc-menu-chip {
+            font-family: inherit; font-size: 12px; font-weight: 800;
+            padding: 5px 11px; border-radius: 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+            border: 1px solid #94a8be; background: #ffffff; color: #0f172a;
+        }
+        .bc-menu-chip.sel { background: #2563eb; border-color: #1d4ed8; color: #ffffff; }
+        .bc-menu-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .bc-menu-cas {
+            width: 100%; margin-bottom: 6px; padding: 6px 8px; cursor: pointer;
+            font-family: inherit; font-size: 12px; font-weight: 900; text-align: left;
+            border: 1px solid #94a8be; border-radius: 4px; background: #ffffff; color: #0f172a;
+            box-shadow: 0 2px 0 #94a8be;
+        }
+        .bc-menu-cas.on { background: #1e3a8a; border-color: #0f172a; color: #ffffff; box-shadow: 0 2px 0 #020617; }
+        .bc-menu-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; align-content: start; padding: 2px 2px 6px; }
+        @media (min-width: 601px) { .bc-menu-list { grid-template-columns: repeat(3, 1fr); } }
+        .bc-menu-item {
+            display: flex; flex-direction: column; gap: 2px; min-width: 0; text-align: left; cursor: pointer;
+            padding: 6px 8px; font-family: inherit; color: #0f172a;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            border: 1px solid #94a8be; border-top: 1px solid #ffffff; border-radius: 4px; box-shadow: 0 2px 0 #94a8be;
+        }
+        .bc-menu-item:active { transform: translateY(1px); box-shadow: 0 1px 0 #94a8be; }
+        .bc-menu-item b { font-size: 12px; font-weight: 800; }
+        .bc-menu-item span { font-size: 10.5px; font-weight: 600; color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bc-menu-form { display: flex; flex-direction: column; gap: 6px; padding: 2px 2px 6px; }
+        .bc-menu-form-title { font-size: 13px; font-weight: 900; color: #0f172a; }
+        .bc-menu-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 6px; }
+        .bc-menu-field { display: flex; flex-direction: column; gap: 2px; font-size: 11px; font-weight: 800; color: #334155; min-width: 0; }
+        .bc-menu-field input, .bc-menu-mat input {
+            font-family: inherit; font-size: 16px !important; font-weight: 800; color: #000000; background: #ffffff;
+            border: 1px solid #94a8be; border-radius: 4px; padding: 3px 5px; width: 100%; min-width: 0; box-sizing: border-box;
+        }
+        .bc-menu-field input.bad, .bc-menu-mat input.bad { border-color: #dc2626; background: #fee2e2; }
+        .bc-menu-matwrap { grid-column: 1 / -1; }
+        .bc-menu-mat { display: grid; gap: 3px; }
+        .bc-menu-mat input { text-align: center; padding: 3px 2px; }
+        .bc-menu-preview {
+            font-size: 12px; font-weight: 800; color: #1e3a8a; background: #ffffff;
+            border: 1px dashed #94a8be; border-radius: 4px; padding: 5px 7px; word-break: break-all; max-height: 58px; overflow-y: auto;
+        }
+        .bc-menu-actions { display: flex; gap: 6px; }
+        .bc-menu-btn { flex: 1; font-family: inherit; font-size: 13px; font-weight: 900; text-transform: uppercase; padding: 7px 8px; border-radius: 4px; cursor: pointer; }
+        .bc-menu-btn.back { background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); border: 1px solid #94a8be; color: #0f172a; box-shadow: 0 2px 0 #94a8be; }
+        .bc-menu-btn.ins { background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%); border: 1px solid #1d4ed8; color: #ffffff; box-shadow: 0 3px 0 #1e40af; }
+        .bc-menu-btn.ins:disabled { opacity: 0.45; cursor: not-allowed; }
+        .bc-menu-btn:active:not(:disabled) { transform: translateY(1px); }
+
         /* MOBILE VIEW */
         @media (max-width: 600px) {
             .blogger-calc-classic { padding: 5px; } 
@@ -1041,6 +1140,9 @@
             .bc-copy-btn { font-size: 10px !important; padding: 3px 6px; }
             .blogger-calc-classic[class*="calc-theme-"] { --lift: 2px; }
             .bc-filter-panel { padding: 5px; }
+            .bc-menu-panel { padding: 5px; }
+            .bc-menu-chip { font-size: 11px; padding: 4px 9px; }
+            .bc-menu-item b { font-size: 11px; }
         }
 
         .blogger-calc-classic.calc-theme-apple-light,
@@ -1283,8 +1385,8 @@
 
         <!-- 5. FX-5800P -->
         <div class="bc-tab-pane bc-grid-prog" role="tabpanel" id="bc-prog">
-            <button class="bc-btn bc-btn-special bc-span-2">FILE</button>
-            <button class="bc-btn bc-btn-special bc-span-2">PRGM</button>
+            <button class="bc-btn bc-btn-special bc-span-2" onclick="BloggerCalc.openMenu('prog-file')">FILE</button>
+            <button class="bc-btn bc-btn-special bc-span-2" onclick="BloggerCalc.openMenu('prog-prgm')">PRGM</button>
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('a')">A</button>
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('b')">B</button>
             <button class="bc-btn bc-btn-special" onclick="BloggerCalc.func('c')">C</button>
@@ -1338,8 +1440,8 @@
             <button class="bc-btn" onclick="BloggerCalc.func('Symb')">Symb</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Plot')">Plot</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Num')">Num</button>
-            <button class="bc-btn bc-span-2">Menu</button>
-            <button class="bc-btn bc-btn-special bc-span-2">CAS Toggle</button>
+            <button class="bc-btn bc-span-2" onclick="BloggerCalc.openMenu('prime-menu')">Menu</button>
+            <button class="bc-btn bc-btn-special bc-span-2" id="bc-cas-toggle" onclick="BloggerCalc.openMenu('prime-cas')">CAS Toggle</button>
             <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">DEL</button>
 
             <button class="bc-btn" onclick="BloggerCalc.num('x')">X</button>
@@ -1372,18 +1474,18 @@
             <button class="bc-btn" onclick="BloggerCalc.num('3')">3</button>
             <button class="bc-btn bc-btn-op" aria-label="Subtract" onclick="BloggerCalc.op('-')">-</button>
 
-            <button class="bc-btn" onclick="BloggerCalc.clear()">On/C</button>
+            <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">On/C</button>
             <button class="bc-btn" onclick="BloggerCalc.ans()">Ans</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">+/-</button>
             <button class="bc-btn bc-btn-num bc-span-2" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-2" onclick="BloggerCalc.calc()">PLOT</button>
+            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">PLOT</button>
         </div>
 
         <!-- 7. TI-NSPIRE -->
         <div class="bc-tab-pane bc-grid-cas" role="tabpanel" id="bc-cas">
-            <button class="bc-btn bc-span-2">doc</button>
-            <button class="bc-btn bc-span-2">menu</button>
+            <button class="bc-btn bc-span-2" onclick="BloggerCalc.openMenu('nspire-doc')">doc</button>
+            <button class="bc-btn bc-span-2" onclick="BloggerCalc.openMenu('nspire-menu')">menu</button>
             <button class="bc-btn" onclick="BloggerCalc.func('roots(')">solve</button>
             <button class="bc-btn" onclick="BloggerCalc.func('factor(')">factor</button>
             <button class="bc-btn" onclick="BloggerCalc.func('expand(')">expand</button>
@@ -1423,13 +1525,13 @@
             <button class="bc-btn" onclick="BloggerCalc.op('+')">+</button>
             <button class="bc-btn" onclick="BloggerCalc.op('-')">-</button>
 
-            <button class="bc-btn" onclick="BloggerCalc.clear()">clear</button>
+            <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">clear</button>
             <button class="bc-btn" onclick="BloggerCalc.op('=')">=</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">(-)</button>
             <button class="bc-btn" onclick="BloggerCalc.op('*10**')">EE</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
             <button class="bc-btn bc-btn-num" aria-label="Decimal" onclick="BloggerCalc.num('.')">.</button>
-            <button class="bc-btn bc-btn-primary bc-span-3" onclick="BloggerCalc.calc()">enter</button>
+            <button class="bc-btn bc-btn-primary bc-span-4" onclick="BloggerCalc.calc()">enter</button>
         </div>
 
         <!-- 8. HP 12C -->
@@ -1441,36 +1543,36 @@
             <button class="bc-btn" onclick="BloggerCalc.finKey('fv')">FV</button>
             <button class="bc-btn" onclick="BloggerCalc.toggleSign()">CHS</button>
             <button class="bc-btn bc-btn-delete" onclick="BloggerCalc.back()">←</button>
-            <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.clear()">CLX</button>
+            <button class="bc-btn bc-btn-danger" onclick="BloggerCalc.finClear()">CLX</button>
 
-            <button class="bc-btn">AMORT</button>
-            <button class="bc-btn">INT</button>
-            <button class="bc-btn">NPV</button>
-            <button class="bc-btn">IRR</button>
-            <button class="bc-btn">CF0</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('amort')">AMORT</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('int')">INT</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('npv')">NPV</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('irr')">IRR</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('cf0')">CF0</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('7')">7</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('8')">8</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('9')">9</button>
 
-            <button class="bc-btn">PRICE</button>
-            <button class="bc-btn">YTM</button>
-            <button class="bc-btn">SL</button>
-            <button class="bc-btn">SOYD</button>
-            <button class="bc-btn">DB</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('price')">PRICE</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('ytm')">YTM</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('sl')">SL</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('soyd')">SOYD</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('db')">DB</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('4')">4</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('5')">5</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('6')">6</button>
 
             <button class="bc-btn" onclick="BloggerCalc.op('**')">yˣ</button>
             <button class="bc-btn" onclick="BloggerCalc.func('1/')">1/x</button>
-            <button class="bc-btn" onclick="BloggerCalc.op('%')">%T</button>
-            <button class="bc-btn" onclick="BloggerCalc.op('%')">Δ%</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('pctt')">%T</button>
+            <button class="bc-btn" onclick="BloggerCalc.finFn('dpct')">Δ%</button>
             <button class="bc-btn bc-btn-op" aria-label="Percent" onclick="BloggerCalc.op('%')">%</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
 
-            <button class="bc-btn bc-btn-special bc-span-2">f (Orange)</button>
+            <button class="bc-btn bc-btn-special bc-span-2" id="bc-fin-f" aria-pressed="false" onclick="BloggerCalc.finShift()">f (Orange)</button>
             <button class="bc-btn bc-btn-special bc-span-2" style="background: #3b5998; color:#fff !important;" onclick="BloggerCalc.finComp()">COMP</button>
             <button class="bc-btn bc-btn-primary" onclick="BloggerCalc.calc()">ENTER</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('0')">0</button>
@@ -1488,6 +1590,9 @@
             <div id="bc-history-list" class="bc-history-list" aria-live="polite">
                 <div class="hist-empty">No calculations yet</div>
             </div>
+            <div class="bc-history-footer">
+                <button type="button" class="bc-export-history" id="bc-export-history" aria-label="Download history as a text file" onclick="BloggerCalc.exportHistory()">⬇ Export .txt</button>
+            </div>
         </div>
     </div>
 
@@ -1498,6 +1603,16 @@
             <button type="button" class="bc-filter-close" aria-label="Cancel and Close Filters" onclick="BloggerCalc.closeFilters()">❌</button>
         </div>
         <div class="bc-filter-list" id="bc-filter-list"></div>
+    </div>
+
+    <!-- QUICK-INSERT TEMPLATE MENU (FX-5800P FILE / PRGM, HP Prime Menu / CAS Toggle, TI-Nspire doc / menu) -->
+    <div class="bc-menu-panel" id="bc-menu-panel" role="dialog" aria-label="Quick-insert formula and matrix templates">
+        <div class="bc-filter-head">
+            <div class="bc-filter-title" id="bc-menu-title">Templates</div>
+            <button type="button" class="bc-filter-close" aria-label="Cancel and Close Menu" onclick="BloggerCalc.closeMenu()">❌</button>
+        </div>
+        <div class="bc-menu-chips" id="bc-menu-chips"></div>
+        <div class="bc-menu-body" id="bc-menu-body"></div>
     </div>
 
     <script>
@@ -1515,6 +1630,13 @@
             const TAB_STORAGE_KEY = 'bc_saved_tab';
             const LAST_CALC_TAB_KEY = 'bc_saved_last_calc_tab';
             const HISTORY_STORAGE_KEY = 'bc_saved_history';
+            const ANGLE_STORAGE_KEY = 'bc_saved_angle';
+            const MEMORY_STORAGE_KEY = 'bc_saved_memory';
+            const ANS_STORAGE_KEY = 'bc_saved_ans';
+            const menuPanel = document.getElementById('bc-menu-panel');
+            const menuTitleEl = document.getElementById('bc-menu-title');
+            const menuChipsEl = document.getElementById('bc-menu-chips');
+            const menuBodyEl = document.getElementById('bc-menu-body');
 
             let bcInput = '';
             let isDegree = true;
@@ -1528,6 +1650,17 @@
 
             let finTvm = { n: 0, i: 0, pv: 0, pmt: 0, fv: 0 };
             let isCompMode = false;
+            let cfList = [];
+            let cfEntry = false;
+            let finStaleValue = null;
+            let finShiftOn = false;
+            let finDp = null;
+            let amortPos = 0;
+            let pctPending = null;
+            let primeCasMode = false;
+            let menuState = null;
+            let menuInputs = {};
+            let exportResetTimer = null;
 
             const FILTERS = [
                 ['', 'Default Classic', '#2563eb'],
@@ -1683,23 +1816,85 @@
                 });
             }
 
-            let extEnginesLoaded = false;
+            /* ---------- ENGINE LOADER (math.js + Algebrite) ----------
+               Each engine loads on its own, tries backup CDNs, times out, and can be retried. */
+            const ENGINE_SOURCES = {
+                math: {
+                    test: function() { return typeof math !== 'undefined' && typeof math.evaluate === 'function'; },
+                    urls: [
+                        'https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js',
+                        'https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.js',
+                        'https://unpkg.com/mathjs@11.8.0/lib/browser/math.js'
+                    ]
+                },
+                alg: {
+                    test: function() { return typeof Algebrite !== 'undefined' && typeof Algebrite.run === 'function'; },
+                    urls: [
+                        'https://cdn.jsdelivr.net/npm/algebrite@1.4.0/dist/algebrite.bundle-for-browser.js',
+                        'https://unpkg.com/algebrite@1.4.0/dist/algebrite.bundle-for-browser.js'
+                    ]
+                }
+            };
+            const engineState = { math: 'idle', alg: 'idle' };   /* idle | loading | ready | failed */
+
+            function engineReady(name) { return ENGINE_SOURCES[name].test(); }
+
+            function engineStatusRefresh() {
+                const cur = bcLiveOut.innerText;
+                const stuck = /Loading Modules|Wait: Loading|could not load/.test(cur);
+                if (engineReady('math') && engineReady('alg')) {
+                    if (stuck) { bcLiveOut.innerText = 'Modules ready - tap = again'; }
+                    setTimeout(function() { if (/Modules ready/.test(bcLiveOut.innerText)) { bcLiveOut.innerText = ''; } }, 2500);
+                } else if (engineState.math === 'failed' || engineState.alg === 'failed') {
+                    if (!engineState.math || engineState.math !== 'loading') {
+                        if (engineState.math !== 'loading' && engineState.alg !== 'loading') {
+                            bcLiveOut.innerText = 'Engine could not load - check internet, then tap = to retry';
+                        }
+                    }
+                }
+            }
+
+            function engineLoad(name) {
+                if (engineReady(name)) { engineState[name] = 'ready'; return; }
+                if (engineState[name] === 'loading') return;
+                engineState[name] = 'loading';
+                const urls = ENGINE_SOURCES[name].urls;
+                let idx = 0;
+                function tryNext() {
+                    if (engineReady(name)) { engineState[name] = 'ready'; engineStatusRefresh(); return; }
+                    if (idx >= urls.length) { engineState[name] = 'failed'; engineStatusRefresh(); return; }
+                    const sc = document.createElement('script');
+                    let settled = false;
+                    const timer = setTimeout(function() { if (!settled) { settled = true; sc.remove(); tryNext(); } }, 15000);
+                    sc.onload = function() {
+                        if (settled) return;
+                        settled = true; clearTimeout(timer);
+                        if (engineReady(name)) { engineState[name] = 'ready'; engineStatusRefresh(); }
+                        else { tryNext(); }
+                    };
+                    sc.onerror = function() {
+                        if (settled) return;
+                        settled = true; clearTimeout(timer); sc.remove(); tryNext();
+                    };
+                    sc.src = urls[idx++];
+                    document.head.appendChild(sc);
+                }
+                tryNext();
+            }
+
             function bcLoadAdvancedEngines() {
-                if (extEnginesLoaded) return;
-                bcLiveOut.innerText = "Loading Modules...";
-                
-                let s1 = document.createElement('script');
-                s1.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js";
-                let s2 = document.createElement('script');
-                s2.src = "https://unpkg.com/algebrite@1.4.0/dist/algebrite.bundle-for-browser.js";
-                
-                s2.onload = () => {
-                    extEnginesLoaded = true;
-                    bcLiveOut.innerText = "Modules Ready";
-                    setTimeout(() => { if(bcLiveOut.innerText === "Modules Ready") bcLiveOut.innerText = ""; }, 1500);
-                };
-                document.head.appendChild(s1);
-                document.head.appendChild(s2);
+                if (engineReady('math') && engineReady('alg')) { engineState.math = engineState.alg = 'ready'; return; }
+                if (engineState.math !== 'loading' && engineState.alg !== 'loading') { bcLiveOut.innerText = 'Loading Modules...'; }
+                engineLoad('math');
+                engineLoad('alg');
+            }
+
+            /* Called by = when an engine is missing: restarts a failed download and tells the user what is happening */
+            function engineNeed(name) {
+                if (engineReady(name)) { return; }
+                if (engineState[name] === 'failed') { engineState[name] = 'idle'; engineLoad(name); throw new Error('Retrying'); }
+                if (engineState[name] === 'idle') { engineLoad(name); }
+                throw new Error('Loading');
             }
 
             function cleanBloggerEntities(str) {
@@ -1843,7 +2038,7 @@
                 str = str.replace(/(\d),(?=\d{3}(\D|$))/g, '$1');
 
                 const isCasOrGraph = (activeTabId === 'bc-graph' || activeTabId === 'bc-cas' || activeTabId === 'bc-prog');
-                const supMap = {'⁰':'^0','¹':'^1','²':'^2','³':'^3','⁴':'^4','⁵':'^5','6':'^6','⁷':'^7','⁸':'^8','⁹':'^9'};
+                const supMap = {'⁰':'^0','¹':'^1','²':'^2','³':'^3','⁴':'^4','⁵':'^5','⁶':'^6','⁷':'^7','⁸':'^8','⁹':'^9'};
                 str = str.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function(ch) { return supMap[ch] || ''; });
 
                 str = str
@@ -1872,6 +2067,668 @@
                 str = str.replace(/\s+/g, '');
                 str = str.replace(/[^0-9a-zA-Z+\-*/().,%\[\];=_!<>]/g, '');
                 return str;
+            }
+
+            /* ---------- STATE PERSISTENCE (Deg/Rad, Memory, Ans) ---------- */
+            function saveCalcState() {
+                try {
+                    localStorage.setItem(ANGLE_STORAGE_KEY, isDegree ? 'deg' : 'rad');
+                    if (memoryValue !== 0) { localStorage.setItem(MEMORY_STORAGE_KEY, String(memoryValue)); }
+                    else { localStorage.removeItem(MEMORY_STORAGE_KEY); }
+                    localStorage.setItem(ANS_STORAGE_KEY, String(lastAnswer));
+                } catch (e) {}
+            }
+
+            /* ---------- HISTORY HELPER (used by HP 12C results) ---------- */
+            function addHistoryEntry(visual, rawValue, resultText, tabId) {
+                if (historyEmpty) { bcHistList.innerHTML = ''; historyEmpty = false; }
+                const row = document.createElement('div');
+                row.className = 'hist-entry';
+                row.setAttribute('data-expr', encodeURIComponent(rawValue));
+                row.setAttribute('data-res', encodeURIComponent(resultText));
+                row.setAttribute('data-tab', tabId);
+                row.setAttribute('title', 'Tap result to load it');
+                const content = document.createElement('span');
+                content.className = 'hist-content';
+                content.appendChild(document.createTextNode(visual + ' = '));
+                const strong = document.createElement('strong');
+                strong.setAttribute('title', 'Tap to load result');
+                strong.textContent = resultText;
+                content.appendChild(strong);
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'hist-del-btn';
+                del.setAttribute('aria-label', 'Delete History Entry');
+                del.setAttribute('title', 'Delete this entry');
+                del.textContent = '×';
+                row.appendChild(content);
+                row.appendChild(del);
+                bcHistList.insertBefore(row, bcHistList.firstChild);
+                saveHistoryToStorage();
+            }
+
+            /* ---------- HP 12C FINANCE ENGINE ---------- */
+            const FIN_LABELS = { n: 'n', i: 'i%', pv: 'PV', pmt: 'PMT', fv: 'FV' };
+
+            function fmtShort(x) { return String(Number(Number(x).toFixed(4))); }
+            function finNum(x, dp) {
+                if (finDp !== null) { dp = finDp; }
+                const s = Number(x).toFixed(dp);
+                return /^-0(\.0+)?$/.test(s) ? s.slice(1) : s;
+            }
+            function finShow(text) { bcLiveOut.innerText = text; }
+
+            /* Value of whatever is typed on the display (handles the CHS sign key and open brackets) */
+            function finReadInput() {
+                if (!bcInput) return null;
+                let s = String(bcInput);
+                let open = (s.match(/\(/g) || []).length;
+                const close = (s.match(/\)/g) || []).length;
+                while (open > close) { s += ')'; open--; }
+                try {
+                    const v = secureEvaluate(bcSmartSyntax(s.replace(/\(\-/g, '(-1*')));
+                    return (typeof v === 'number' && isFinite(v)) ? v : null;
+                } catch (e) { return null; }
+            }
+
+            /* Put a computed number on the display; the next typed digit starts a fresh number */
+            function finPutResult(val) {
+                bcInput = String(Number(Number(val).toFixed(finDp !== null ? finDp : 8)));
+                finStaleValue = bcInput;
+                bcUpdate();
+            }
+
+            function bisect(f, a, b) {
+                let fa = f(a);
+                for (let k = 0; k < 200; k++) {
+                    const m = (a + b) / 2;
+                    const fm = f(m);
+                    if (fa * fm <= 0) { b = m; } else { a = m; fa = fm; }
+                    if (Math.abs(b - a) < 1e-14) break;
+                }
+                return (a + b) / 2;
+            }
+
+            /* Finds the root of f nearest to 0: scans upward (positive rates) first, then downward */
+            function findRoot(f, scale) {
+                const f0 = f(0);
+                if (isFinite(f0) && Math.abs(f0) < 1e-10 * scale) return 0;
+                const pos = [1e-6, 1e-4, 0.0005, 0.001, 0.0025, 0.005, 0.0075, 0.01, 0.015, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3, 0.5, 0.75, 1, 1.5, 2, 3, 5, 10, 25, 100];
+                const neg = [-1e-6, -1e-4, -0.0005, -0.001, -0.0025, -0.005, -0.01, -0.02, -0.05, -0.1, -0.2, -0.3, -0.5, -0.7, -0.9, -0.99];
+                const sweeps = [pos, neg];
+                for (let s = 0; s < sweeps.length; s++) {
+                    let prev = 0, fprev = f0;
+                    for (let k = 0; k < sweeps[s].length; k++) {
+                        const x = sweeps[s][k];
+                        const fx = f(x);
+                        if (isFinite(fprev) && isFinite(fx) && fprev * fx <= 0) { return bisect(f, prev, x); }
+                        prev = x; fprev = fx;
+                    }
+                }
+                return null;
+            }
+
+            /* PV + PMT*(1-(1+i)^-n)/i + FV*(1+i)^-n = 0   (i as a decimal rate per period) */
+            function tvmF(i, n, pv, pmt, fv) {
+                if (i === 0) { return pv + pmt * n + fv; }
+                const lg = Math.log1p(i);
+                return pv + pmt * (-Math.expm1(-n * lg)) / i + fv * Math.exp(-n * lg);
+            }
+
+            function finSolve(v) {
+                const t = finTvm, i = t.i / 100;
+                if (v === 'n') {
+                    if (i === 0) { return t.pmt === 0 ? NaN : -(t.pv + t.fv) / t.pmt; }
+                    const ratio = (t.pmt - t.fv * i) / (t.pv * i + t.pmt);
+                    return (ratio > 0 && isFinite(ratio)) ? Math.log(ratio) / Math.log1p(i) : NaN;
+                }
+                if (v === 'i') {
+                    if (!(t.n > 0)) return NaN;
+                    const scale = 1 + Math.abs(t.pv) + Math.abs(t.fv) + Math.abs(t.pmt * t.n);
+                    const r = findRoot(function(x) { return tvmF(x, t.n, t.pv, t.pmt, t.fv); }, scale);
+                    return r === null ? NaN : r * 100;
+                }
+                const lg = Math.log1p(i);
+                if (v === 'pv') {
+                    return i === 0 ? -(t.fv + t.pmt * t.n) : -(t.pmt * (-Math.expm1(-t.n * lg)) / i + t.fv * Math.exp(-t.n * lg));
+                }
+                if (v === 'fv') {
+                    return i === 0 ? -(t.pv + t.pmt * t.n) : -(t.pv * Math.exp(t.n * lg) + t.pmt * Math.expm1(t.n * lg) / i);
+                }
+                if (v === 'pmt') {
+                    return i === 0 ? -(t.pv + t.fv) / t.n : -(t.pv * Math.exp(t.n * lg) + t.fv) * i / Math.expm1(t.n * lg);
+                }
+                return NaN;
+            }
+
+            function finCompute(v) {
+                const res = finSolve(v);
+                isCompMode = false;
+                if (typeof res !== 'number' || !isFinite(res)) {
+                    finShow('Error: cannot solve ' + FIN_LABELS[v] + ' - check the other four values');
+                    return;
+                }
+                const others = ['n', 'i', 'pv', 'pmt', 'fv'].filter(function(k) { return k !== v; })
+                    .map(function(k) { return FIN_LABELS[k] + '=' + fmtShort(finTvm[k]); }).join(', ');
+                finTvm[v] = res;
+                finPutResult(res);
+                const dp = (v === 'i') ? 4 : 2;
+                finShow(FIN_LABELS[v] + ' = ' + finNum(res, dp));
+                addHistoryEntry('COMP ' + FIN_LABELS[v] + ' [' + others + ']', finNum(res, dp), finNum(res, dp), 'bc-fin');
+            }
+
+            function finCf0() {
+                const v = finReadInput();
+                if (v === null) { finShow('Type the first cash flow (CF0), then tap CF0'); return; }
+                cfList = [v];
+                cfEntry = true;
+                bcInput = ''; bcDisp.textContent = '0';
+                finShow('CF0 = ' + fmtShort(v) + ' (type CFj + ENTER, then NPV or IRR)');
+            }
+
+            /* A typed amount that was never ENTERed counts as the last cash flow when NPV / IRR is tapped */
+            function finCollectPending() {
+                if (cfEntry && bcInput) {
+                    const v = finReadInput();
+                    if (v !== null) { cfList.push(v); }
+                    bcInput = ''; bcDisp.textContent = '0';
+                }
+            }
+
+            function finNpv() {
+                finCollectPending();
+                if (!cfList.length) { finShow('Enter CF0 first (type amount, tap CF0)'); return; }
+                const r = finTvm.i / 100;
+                let sum = 0;
+                for (let j = 0; j < cfList.length; j++) { sum += cfList[j] / Math.pow(1 + r, j); }
+                cfEntry = false;
+                if (!isFinite(sum)) { finShow('Error: NPV cannot be calculated'); return; }
+                finPutResult(sum);
+                finShow('NPV = ' + finNum(sum, 2));
+                addHistoryEntry('NPV @ i=' + fmtShort(finTvm.i) + '% [CF: ' + cfList.map(fmtShort).join(', ') + ']', finNum(sum, 2), finNum(sum, 2), 'bc-fin');
+            }
+
+            function finIrr() {
+                finCollectPending();
+                if (cfList.length < 2) { finShow('IRR needs CF0 and at least one CFj'); return; }
+                const hasPos = cfList.some(function(c) { return c > 0; });
+                const hasNeg = cfList.some(function(c) { return c < 0; });
+                if (!(hasPos && hasNeg)) { finShow('IRR needs both + and - cash flows'); return; }
+                const scale = cfList.reduce(function(s, c) { return s + Math.abs(c); }, 0) || 1;
+                const r = findRoot(function(x) {
+                    let s = 0;
+                    for (let j = 0; j < cfList.length; j++) { s += cfList[j] / Math.pow(1 + x, j); }
+                    return s;
+                }, scale);
+                cfEntry = false;
+                if (r === null) { finShow('Error: no IRR found for these cash flows'); return; }
+                const pct = r * 100;
+                finPutResult(pct);
+                finShow('IRR = ' + finNum(pct, 4));
+                addHistoryEntry('IRR [CF: ' + cfList.map(fmtShort).join(', ') + ']', finNum(pct, 4), finNum(pct, 4), 'bc-fin');
+            }
+
+            /* Simple interest: n = days, i = annual %, PV = principal (HP 12C shows 360-day first, 365-day second) */
+            function finInt() {
+                const t = finTvm;
+                if (!t.n || !t.i || !t.pv) { finShow('INT needs n (days), i (annual %) and PV'); return; }
+                const i360 = -t.pv * (t.i / 100) * t.n / 360;
+                const i365 = -t.pv * (t.i / 100) * t.n / 365;
+                finPutResult(i360);
+                finShow('INT = ' + finNum(i360, 2) + ' (365-day: ' + finNum(i365, 2) + ')');
+                addHistoryEntry('INT [n=' + fmtShort(t.n) + ' days, i=' + fmtShort(t.i) + '%, PV=' + fmtShort(t.pv) + ', 365-day=' + finNum(i365, 2) + ']', finNum(i360, 2), finNum(i360, 2), 'bc-fin');
+            }
+
+            /* Depreciation for year x (typed on the display): cost = PV, salvage = FV, life = n, DB factor % = i */
+            function finDepr(kind) {
+                const NAMES = { sl: 'SL', soyd: 'SOYD', db: 'DB' };
+                const t = finTvm;
+                const life = t.n, cost = Math.abs(t.pv), salv = Math.abs(t.fv);
+                const x = finReadInput();
+                if (!(life > 0)) { finShow('Set n = asset life in years first'); return; }
+                if (salv > cost) { finShow('Error: salvage (FV) is larger than cost (PV)'); return; }
+                if (kind === 'soyd' && !Number.isInteger(life)) { finShow('SOYD needs a whole-number life (n)'); return; }
+                if (kind === 'db' && !(t.i > 0)) { finShow('DB needs i = declining factor % (e.g. 200)'); return; }
+                if (x === null || !Number.isInteger(x) || x < 1 || x > Math.ceil(life)) {
+                    finShow('Type the year x (1 to ' + Math.ceil(life) + '), then tap ' + NAMES[kind]);
+                    return;
+                }
+                const base = cost - salv;
+                let cum = 0, book = cost, d = 0;
+                for (let k = 1; k <= x; k++) {
+                    if (kind === 'sl') { d = base / life; }
+                    else if (kind === 'soyd') { d = base * (life - k + 1) / (life * (life + 1) / 2); }
+                    else { d = book * (t.i / 100) / life; }
+                    d = (kind === 'db') ? Math.min(d, Math.max(0, book - salv)) : Math.min(d, base - cum);
+                    d = Math.max(0, d);
+                    cum += d; book -= d;
+                }
+                const rdv = base - cum;
+                finPutResult(d);
+                finShow(NAMES[kind] + ' yr ' + x + ' = ' + finNum(d, 2) + ' (RDV ' + finNum(rdv, 2) + ')');
+                addHistoryEntry(NAMES[kind] + ' year ' + x + ' [cost ' + fmtShort(cost) + ', salvage ' + fmtShort(salv) + ', life ' + fmtShort(life) + (kind === 'db' ? ', factor ' + fmtShort(t.i) + '%' : '') + ', RDV ' + finNum(rdv, 2) + ']', finNum(d, 2), finNum(d, 2), 'bc-fin');
+            }
+
+
+            function finSetShift(on) {
+                finShiftOn = !!on;
+                const b = document.getElementById('bc-fin-f');
+                if (b) { b.classList.toggle('f-on', finShiftOn); b.setAttribute('aria-pressed', finShiftOn ? 'true' : 'false'); }
+            }
+
+            /* Typed number of periods per year (default 2 = semi-annual coupons), whole number only */
+            function finPerYear() {
+                const x = finReadInput();
+                return (x !== null && Number.isInteger(x) && x >= 1) ? x : 2;
+            }
+
+            /* Amortization: x (typed) periods, continuing after the periods already amortized. Needs n, i, PV, PMT. */
+            function finAmort() {
+                const t = finTvm, r = t.i / 100;
+                const x = finReadInput();
+                if (x === null || !Number.isInteger(x) || x < 1) { finShow('Type the number of periods to amortize (e.g. 12), then AMORT'); return; }
+                if (!(t.n > 0) || !t.pv || !t.pmt) { finShow('AMORT needs n, i (per period %), PV and PMT'); return; }
+                if (amortPos + x > t.n + 1e-9) { finShow('Only ' + Math.max(0, Math.floor(t.n - amortPos)) + ' periods remain (n = ' + fmtShort(t.n) + ')'); return; }
+                let bal = t.pv;
+                for (let k = 0; k < amortPos; k++) { bal = bal + bal * r + t.pmt; }
+                let tInt = 0, tPrin = 0;
+                for (let k = 0; k < x; k++) {
+                    const it = bal * r;
+                    tInt += it; tPrin += -t.pmt - it;
+                    bal = bal + it + t.pmt;
+                }
+                const from = amortPos + 1, to = amortPos + x;
+                amortPos = to;
+                const iv = Math.abs(tInt), pr = Math.abs(tPrin);
+                finPutResult(iv);
+                finShow('AMORT ' + from + '-' + to + ': Interest ' + finNum(iv, 2) + ' | Principal ' + finNum(pr, 2) + ' | Balance ' + finNum(bal, 2));
+                addHistoryEntry('AMORT periods ' + from + '-' + to + ' [n=' + fmtShort(t.n) + ', i=' + fmtShort(t.i) + '%, PV=' + fmtShort(t.pv) + ', PMT=' + fmtShort(t.pmt) + ', principal ' + finNum(pr, 2) + ', balance ' + finNum(bal, 2) + ']', finNum(iv, 2), finNum(iv, 2), 'bc-fin');
+            }
+
+            /* Bond price per 100 (periodic): n = coupon periods left, i = ANNUAL yield %, PMT = coupon per period, FV = redemption value.
+               Typed x = coupons per year (default 2). */
+            function finPrice() {
+                const t = finTvm;
+                const m = finPerYear();
+                const y = t.i / 100 / m;
+                if (!(t.n > 0) || !t.pmt || !t.fv) { finShow('PRICE needs n (coupon periods), i (annual yield %), PMT (coupon) and FV (redemption)'); return; }
+                const cpn = Math.abs(t.pmt), red = Math.abs(t.fv);
+                const price = (y === 0) ? cpn * t.n + red : cpn * (-Math.expm1(-t.n * Math.log1p(y))) / y + red * Math.exp(-t.n * Math.log1p(y));
+                if (!isFinite(price)) { finShow('Error: PRICE cannot be calculated'); return; }
+                finPutResult(price);
+                finShow('PRICE = ' + finNum(price, 4) + ' (' + m + ' coupons/yr)');
+                addHistoryEntry('PRICE [n=' + fmtShort(t.n) + ', yield=' + fmtShort(t.i) + '%, coupon=' + fmtShort(cpn) + ', redemption=' + fmtShort(red) + ', ' + m + '/yr]', finNum(price, 4), finNum(price, 4), 'bc-fin');
+            }
+
+            /* Yield to maturity (annual %): n = coupon periods left, PV = price paid, PMT = coupon per period, FV = redemption.
+               Typed x = coupons per year (default 2). */
+            function finYtm() {
+                const t = finTvm;
+                const m = finPerYear();
+                if (!(t.n > 0) || !t.pv || !t.pmt || !t.fv) { finShow('YTM needs n, PV (price), PMT (coupon) and FV (redemption)'); return; }
+                const price = Math.abs(t.pv), cpn = Math.abs(t.pmt), red = Math.abs(t.fv);
+                const scale = 1 + price + red + cpn * t.n;
+                const r = findRoot(function(x) { return tvmF(x, t.n, -price, cpn, red); }, scale);
+                if (r === null) { finShow('Error: no yield found for these values'); return; }
+                const annual = r * m * 100;
+                finPutResult(annual);
+                finShow('YTM = ' + finNum(annual, 4) + '% a year (' + m + ' coupons/yr)');
+                addHistoryEntry('YTM [n=' + fmtShort(t.n) + ', price=' + fmtShort(price) + ', coupon=' + fmtShort(cpn) + ', redemption=' + fmtShort(red) + ', ' + m + '/yr]', finNum(annual, 4), finNum(annual, 4), 'bc-fin');
+            }
+
+            /* %T = part as % of total; Δ% = change from old to new. Type the base, tap the key, type the second number, tap the key again (or ENTER). */
+            function finPct(kind) {
+                const v = finReadInput();
+                const label = kind === 'pctt' ? '%T' : 'Δ%';
+                if (pctPending && pctPending.kind === kind && v !== null) {
+                    const b = pctPending.base;
+                    pctPending = null;
+                    if (b === 0) { finShow('Error: ' + label + ' base cannot be 0'); return; }
+                    const res = kind === 'pctt' ? v / b * 100 : (v - b) / b * 100;
+                    finPutResult(res);
+                    finShow(label + ' = ' + finNum(res, 4) + '%');
+                    addHistoryEntry(label + (kind === 'pctt' ? ' [total ' + fmtShort(b) + ', part ' + fmtShort(v) + ']' : ' [old ' + fmtShort(b) + ', new ' + fmtShort(v) + ']'), finNum(res, 4) + '%', finNum(res, 4), 'bc-fin');
+                    return;
+                }
+                if (v === null) { finShow(kind === 'pctt' ? '%T: type the total first, then tap %T' : 'Δ%: type the old value first, then tap Δ%'); return; }
+                pctPending = { kind: kind, base: v };
+                bcInput = ''; bcDisp.textContent = '0';
+                finShow(kind === 'pctt' ? 'Total = ' + fmtShort(v) + '. Type the part, then tap %T again' : 'Old = ' + fmtShort(v) + '. Type the new value, then tap Δ% again');
+            }
+
+            /* f (orange) shift: f+digit = decimal places, f+n AMORT, f+i INT, f+PV NPV, f+PMT RND, f+FV IRR, f+CLX clear all registers */
+            function finShiftKey(v) {
+                finSetShift(false);
+                if (v === 'n') { finAmort(); }
+                else if (v === 'i') { finInt(); }
+                else if (v === 'pv') { finNpv(); }
+                else if (v === 'fv') { finIrr(); }
+                else if (v === 'pmt') {
+                    const x = finReadInput();
+                    if (x === null) { finShow('RND: type or compute a number first'); return; }
+                    const dp = finDp !== null ? finDp : 2;
+                    finPutResult(Number(x.toFixed(dp)));
+                    finShow('RND = ' + finNum(x, dp));
+                }
+            }
+
+            /* ---------- HISTORY EXPORT (.txt) ---------- */
+            const TAB_NAMES = {
+                'bc-basic': 'Basic', 'bc-sci-desktop': 'Scientific', 'bc-gate': 'GATE', 'bc-adv': 'FX-991CW',
+                'bc-prog': 'FX-5800P', 'bc-graph': 'HP Prime', 'bc-cas': 'TI-Nspire', 'bc-fin': 'HP 12C'
+            };
+
+            /* ---------- QUICK-INSERT TEMPLATE MENUS ---------- */
+            const MENU_DEFS = {
+                'prog-file':   { title: 'FILE · Formulas',        eng: 'm', cats: ['Algebra', 'Geometry', 'Physics', 'Finance'] },
+                'prog-prgm':   { title: 'PRGM · Matrix & Stats',  eng: 'm', cats: ['Matrix', 'Statistics', 'Number'] },
+                'prime-menu':  { title: 'Prime Menu · Plots',     eng: 'p', cats: ['Lines', 'Curves', 'Trig'] },
+                'prime-cas':   { title: 'Prime CAS · Symbolic',   eng: 'c', cats: ['Algebra', 'Calculus', 'Matrix'], cas: true },
+                'nspire-doc':  { title: 'doc · Matrix & Constants', eng: 'c', cats: ['Matrix', 'Constants'] },
+                'nspire-menu': { title: 'menu · Algebra & Calculus', eng: 'c', cats: ['Algebra', 'Calculus'] }
+            };
+
+            const MAT_DEF = {
+                2: { A: [['1', '2'], ['3', '4']], B: [['5', '6'], ['7', '8']] },
+                3: { A: [['2', '1', '1'], ['1', '3', '2'], ['1', '0', '0']], B: [['1', '0', '2'], ['0', '1', '0'], ['3', '0', '1']] }
+            };
+
+            const NUM_RE = /^[+-]?(\d+\.?\d*|\.\d+)$/;
+            const TEXT_RE = /^[0-9a-zA-Z+\-*\/^().,]*$/;
+
+            function pNum(k, def, label) { return { k: k, def: String(def), label: label || k, type: 'num' }; }
+            function pTxt(k, def, label) { return { k: k, def: String(def), label: label || k, type: 'text' }; }
+            function pMat(k, label) { return { k: k, label: label || ('Matrix ' + k), type: 'matrix' }; }
+            function wrapNum(s) { const n = Number(s); return n < 0 ? '(' + n + ')' : String(n); }
+            function matLit(rows, eng) {
+                const rs = rows.map(function(r) { return eng === 'c' ? '(' + r.join(',') + ')' : '[' + r.join(',') + ']'; });
+                return eng === 'c' ? '(' + rs.join(',') + ')' : '[' + rs.join(',') + ']';
+            }
+
+            const TEMPLATES = [];
+            function T(eng, cat, name, params, build) { TEMPLATES.push({ eng: eng, cat: cat, name: name, params: params, build: build }); }
+
+            /* math.js (FX-5800P) */
+            T('m', 'Algebra', 'Quadratic root (+)', [pNum('a', 1), pNum('b', -3), pNum('c', 2)],
+                function(v) { return '(-' + v.b + '+sqrt(' + v.b + '^2-4*' + v.a + '*' + v.c + '))/(2*' + v.a + ')'; });
+            T('m', 'Algebra', 'Quadratic root (-)', [pNum('a', 1), pNum('b', -3), pNum('c', 2)],
+                function(v) { return '(-' + v.b + '-sqrt(' + v.b + '^2-4*' + v.a + '*' + v.c + '))/(2*' + v.a + ')'; });
+            T('m', 'Algebra', 'Solve 2×2 system', [pNum('a', 2), pNum('b', 1), pNum('c', 1), pNum('d', 3), pNum('e', 5, 'e (rhs 1)'), pNum('f', 10, 'f (rhs 2)')],
+                function(v) { return 'lusolve([[' + v.a + ',' + v.b + '],[' + v.c + ',' + v.d + ']],[' + v.e + ',' + v.f + '])'; });
+            T('m', 'Algebra', 'Compound interest', [pNum('P', 1000, 'Principal'), pNum('r', 5, 'Rate %'), pNum('n', 10, 'Years')],
+                function(v) { return v.P + '*(1+' + v.r + '/100)^' + v.n; });
+            T('m', 'Algebra', 'Percent change', [pNum('nw', 120, 'New'), pNum('old', 100, 'Old')],
+                function(v) { return '(' + v.nw + '-' + v.old + ')/' + v.old + '*100'; });
+            T('m', 'Algebra', 'Distance 2 points', [pNum('x1', 0), pNum('y1', 0), pNum('x2', 3), pNum('y2', 4)],
+                function(v) { return 'sqrt((' + v.x2 + '-' + v.x1 + ')^2+(' + v.y2 + '-' + v.y1 + ')^2)'; });
+            T('m', 'Geometry', 'Circle area', [pNum('r', 5, 'Radius')], function(v) { return 'pi*' + v.r + '^2'; });
+            T('m', 'Geometry', 'Sphere volume', [pNum('r', 5, 'Radius')], function(v) { return '4/3*pi*' + v.r + '^3'; });
+            T('m', 'Geometry', 'Cylinder volume', [pNum('r', 3, 'Radius'), pNum('h', 10, 'Height')], function(v) { return 'pi*' + v.r + '^2*' + v.h; });
+            T('m', 'Geometry', 'Hypotenuse', [pNum('a', 3), pNum('b', 4)], function(v) { return 'sqrt(' + v.a + '^2+' + v.b + '^2)'; });
+            T('m', 'Geometry', 'Triangle area (Heron)', [pNum('a', 3), pNum('b', 4), pNum('c', 5)],
+                function(v) { const s = '((' + v.a + '+' + v.b + '+' + v.c + ')/2)'; return 'sqrt(' + s + '*(' + s + '-' + v.a + ')*(' + s + '-' + v.b + ')*(' + s + '-' + v.c + '))'; });
+            T('m', 'Physics', 'Kinetic energy', [pNum('m', 2, 'Mass kg'), pNum('v', 10, 'Speed m/s')], function(v) { return '0.5*' + v.m + '*' + v.v + '^2'; });
+            T('m', 'Physics', 'Projectile range', [pNum('v', 20, 'Speed m/s'), pNum('th', 45, 'Angle deg')], function(v) { return v.v + '^2*sin(2*' + v.th + '*pi/180)/9.81'; });
+            T('m', 'Physics', 'Free-fall distance', [pNum('t', 3, 'Time s')], function(v) { return '0.5*9.81*' + v.t + '^2'; });
+            T('m', 'Physics', 'Electric power V²/R', [pNum('V', 230, 'Volts'), pNum('R', 50, 'Ohms')], function(v) { return v.V + '^2/' + v.R; });
+            T('m', 'Finance', 'Loan EMI (monthly)', [pNum('P', 100000, 'Loan'), pNum('rate', 8, 'Rate % / yr'), pNum('yrs', 10, 'Years')],
+                function(v) { const r = '(' + v.rate + '/1200)', n = '(' + v.yrs + '*12)'; return v.P + '*' + r + '*(1+' + r + ')^' + n + '/((1+' + r + ')^' + n + '-1)'; });
+            T('m', 'Finance', 'Simple interest', [pNum('P', 1000, 'Principal'), pNum('r', 5, 'Rate %'), pNum('t', 3, 'Years')], function(v) { return v.P + '*' + v.r + '*' + v.t + '/100'; });
+            T('m', 'Matrix', 'Determinant', [pMat('A')], function(v) { return 'det(' + v.A + ')'; });
+            T('m', 'Matrix', 'Inverse', [pMat('A')], function(v) { return 'inv(' + v.A + ')'; });
+            T('m', 'Matrix', 'Transpose', [pMat('A')], function(v) { return 'transpose(' + v.A + ')'; });
+            T('m', 'Matrix', 'Trace', [pMat('A')], function(v) { return 'trace(' + v.A + ')'; });
+            T('m', 'Matrix', 'A × B', [pMat('A'), pMat('B')], function(v) { return v.A + '*' + v.B; });
+            T('m', 'Matrix', 'A + B', [pMat('A'), pMat('B')], function(v) { return v.A + '+' + v.B; });
+            T('m', 'Matrix', 'A − B', [pMat('A'), pMat('B')], function(v) { return v.A + '-' + v.B; });
+            T('m', 'Matrix', 'Identity matrix', [pNum('n', 3, 'Size')], function(v) { return 'identity(' + v.n + ')'; });
+            T('m', 'Statistics', 'Mean', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'mean([' + v.list + '])'; });
+            T('m', 'Statistics', 'Median', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'median([' + v.list + '])'; });
+            T('m', 'Statistics', 'Std deviation (sample)', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'std([' + v.list + '])'; });
+            T('m', 'Statistics', 'Variance (sample)', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'variance([' + v.list + '])'; });
+            T('m', 'Statistics', 'Sum', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'sum([' + v.list + '])'; });
+            T('m', 'Statistics', 'Range (max - min)', [pTxt('list', '2,4,4,4,5,5,7,9', 'Numbers (comma separated)')], function(v) { return 'max([' + v.list + '])-min([' + v.list + '])'; });
+            T('m', 'Number', 'Factorial n!', [pNum('n', 5)], function(v) { return 'factorial(' + v.n + ')'; });
+            T('m', 'Number', 'Combinations nCr', [pNum('n', 10), pNum('r', 3)], function(v) { return 'combinations(' + v.n + ',' + v.r + ')'; });
+            T('m', 'Number', 'Permutations nPr', [pNum('n', 10), pNum('r', 3)], function(v) { return 'permutations(' + v.n + ',' + v.r + ')'; });
+            T('m', 'Number', 'GCD', [pNum('a', 48), pNum('b', 18)], function(v) { return 'gcd(' + v.a + ',' + v.b + ')'; });
+            T('m', 'Number', 'LCM', [pNum('a', 12), pNum('b', 18)], function(v) { return 'lcm(' + v.a + ',' + v.b + ')'; });
+
+            /* HP Prime plots: expressions in x */
+            T('p', 'Lines', 'Line  m·x + c', [pNum('m', 2), pNum('c', 1)], function(v) { return v.m + '*x+' + v.c; });
+            T('p', 'Lines', 'Absolute value', [], function() { return 'abs(x)'; });
+            T('p', 'Lines', 'Reciprocal  k/x', [pNum('k', 1)], function(v) { return v.k + '/x'; });
+            T('p', 'Curves', 'Parabola  ax²+bx+c', [pNum('a', 1), pNum('b', 0), pNum('c', -4)], function(v) { return v.a + '*x^2+' + v.b + '*x+' + v.c; });
+            T('p', 'Curves', 'Cubic  ax³+bx²+cx+d', [pNum('a', 1), pNum('b', 0), pNum('c', -3), pNum('d', 0)], function(v) { return v.a + '*x^3+' + v.b + '*x^2+' + v.c + '*x+' + v.d; });
+            T('p', 'Curves', 'Square root', [], function() { return 'sqrt(x)'; });
+            T('p', 'Curves', 'Exponential  a·e^(kx)', [pNum('a', 1), pNum('k', 0.5)], function(v) { return v.a + '*exp(' + v.k + '*x)'; });
+            T('p', 'Curves', 'Natural log', [], function() { return 'log(x)'; });
+            T('p', 'Curves', 'Gaussian bell', [pNum('s', 1, 'Sigma')], function(v) { return 'exp(-x^2/(2*' + v.s + '^2))'; });
+            T('p', 'Trig', 'Sine  A·sin(wx)', [pNum('A', 2), pNum('w', 1)], function(v) { return v.A + '*sin(' + v.w + '*x)'; });
+            T('p', 'Trig', 'Cosine  A·cos(wx)', [pNum('A', 2), pNum('w', 1)], function(v) { return v.A + '*cos(' + v.w + '*x)'; });
+            T('p', 'Trig', 'Tangent', [], function() { return 'tan(x)'; });
+            T('p', 'Trig', 'Damped wave', [pNum('k', 0.2), pNum('w', 3)], function(v) { return 'exp(-' + v.k + '*x)*sin(' + v.w + '*x)'; });
+
+            /* Algebrite CAS (HP Prime CAS mode and TI-Nspire) */
+            T('c', 'Algebra', 'Roots of polynomial', [pTxt('poly', 'x^2-5*x+6', 'Polynomial in x')], function(v) { return 'roots(' + v.poly + ')'; });
+            T('c', 'Algebra', 'Factor', [pTxt('ex', 'x^2-1', 'Expression')], function(v) { return 'factor(' + v.ex + ')'; });
+            T('c', 'Algebra', 'Expand', [pTxt('ex', '(x+1)^3', 'Expression')], function(v) { return 'expand(' + v.ex + ')'; });
+            T('c', 'Algebra', 'Simplify', [pTxt('ex', '(x^2-1)/(x-1)', 'Expression')], function(v) { return 'simplify(' + v.ex + ')'; });
+            T('c', 'Calculus', 'Derivative  d/dx', [pTxt('ex', 'x^3+2*x', 'Expression')], function(v) { return 'd(' + v.ex + ',x)'; });
+            T('c', 'Calculus', 'Integral  ∫dx', [pTxt('ex', 'x^2', 'Expression')], function(v) { return 'integral(' + v.ex + ',x)'; });
+            T('c', 'Calculus', 'Definite integral', [pTxt('ex', 'x^2', 'Expression'), pNum('a', 0, 'From'), pNum('b', 3, 'To')], function(v) { return 'defint(' + v.ex + ',x,' + v.a + ',' + v.b + ')'; });
+            T('c', 'Calculus', 'Taylor series', [pTxt('ex', 'sin(x)', 'Expression'), pNum('n', 5, 'Terms'), pNum('a', 0, 'About x =')], function(v) { return 'taylor(' + v.ex + ',x,' + v.n + ',' + v.a + ')'; });
+            T('c', 'Matrix', 'Determinant', [pMat('A')], function(v) { return 'det(' + v.A + ')'; });
+            T('c', 'Matrix', 'Inverse', [pMat('A')], function(v) { return 'inv(' + v.A + ')'; });
+            T('c', 'Matrix', 'Transpose', [pMat('A')], function(v) { return 'transpose(' + v.A + ')'; });
+            T('c', 'Matrix', 'A × B', [pMat('A'), pMat('B')], function(v) { return 'dot(' + v.A + ',' + v.B + ')'; });
+            T('c', 'Matrix', 'A + B', [pMat('A'), pMat('B')], function(v) { return v.A + '+' + v.B; });
+            T('c', 'Matrix', 'Identity matrix', [pNum('n', 3, 'Size')], function(v) { return 'unit(' + v.n + ')'; });
+            T('c', 'Constants', 'π  (pi)', [], function() { return 'pi'; });
+            T('c', 'Constants', 'e  (Euler)', [], function() { return 'exp(1)'; });
+            T('c', 'Constants', 'i  (imaginary)', [], function() { return 'i'; });
+            T('c', 'Constants', 'g  9.80665 m/s²', [], function() { return '9.80665'; });
+            T('c', 'Constants', 'c  299792458 m/s', [], function() { return '299792458'; });
+            T('c', 'Constants', 'R  8.314462618', [], function() { return '8.314462618'; });
+            T('c', 'Constants', 'N_A  6.02214076e23', [], function() { return '6.02214076*10^23'; });
+            T('c', 'Constants', 'h  Planck', [], function() { return '6.62607015*10^(-34)'; });
+
+            function mk(tag, cls, text) {
+                const e = document.createElement(tag);
+                if (cls) e.className = cls;
+                if (text !== undefined) e.textContent = text;
+                return e;
+            }
+            function tplHasMatrix(t) { return t.params.some(function(p) { return p.type === 'matrix'; }); }
+
+            function defaultExpr(t, size) {
+                const v = {};
+                t.params.forEach(function(p) {
+                    if (p.type === 'matrix') { v[p.k] = matLit((MAT_DEF[size][p.k] || MAT_DEF[size].A), t.eng); }
+                    else if (p.type === 'text') { v[p.k] = p.def; }
+                    else { v[p.k] = wrapNum(p.def); }
+                });
+                return t.build(v);
+            }
+
+            function readMenuValues() {
+                const t = menuState.tpl;
+                const vals = {};
+                let ok = true;
+                t.params.forEach(function(p) {
+                    if (p.type === 'matrix') {
+                        const n = menuState.size, rows = [];
+                        for (let r = 0; r < n; r++) {
+                            const row = [];
+                            for (let c = 0; c < n; c++) {
+                                const inp = menuInputs[p.k + '_' + r + '_' + c];
+                                const good = NUM_RE.test(inp.value.trim());
+                                inp.classList.toggle('bad', !good);
+                                if (!good) { ok = false; }
+                                row.push(good ? String(Number(inp.value.trim())) : '0');
+                            }
+                            rows.push(row);
+                        }
+                        vals[p.k] = matLit(rows, t.eng);
+                    } else if (p.type === 'text') {
+                        const s = menuInputs[p.k].value.replace(/\s+/g, '');
+                        const good = s.length > 0 && TEXT_RE.test(s);
+                        menuInputs[p.k].classList.toggle('bad', !good);
+                        if (!good) { ok = false; }
+                        vals[p.k] = s;
+                    } else {
+                        const s = menuInputs[p.k].value.trim();
+                        const good = NUM_RE.test(s);
+                        menuInputs[p.k].classList.toggle('bad', !good);
+                        if (!good) { ok = false; }
+                        vals[p.k] = good ? wrapNum(s) : '0';
+                    }
+                });
+                return { ok: ok, vals: vals };
+            }
+
+            function commitTemplate(expr) {
+                const tail = bcInput ? bcInput.slice(-1) : '';
+                if (bcInput && /[+\-*\/^(,\[=;]/.test(tail)) { bcInput += expr; } else { bcInput = expr; }
+                api.closeMenu();
+                bcUpdate();
+                bcLiveOut.innerText = 'Template inserted - press the run key';
+            }
+
+            function renderMenuForm() {
+                const t = menuState.tpl;
+                menuChipsEl.style.display = 'none';
+                menuBodyEl.innerHTML = '';
+                menuInputs = {};
+                const form = mk('div', 'bc-menu-form');
+                form.appendChild(mk('div', 'bc-menu-form-title', t.name));
+
+                const hasMat = tplHasMatrix(t);
+                if (hasMat) {
+                    const sizes = mk('div', 'bc-menu-chips');
+                    sizes.style.paddingBottom = '0';
+                    [2, 3].forEach(function(n) {
+                        const b = mk('button', 'bc-menu-chip' + (menuState.size === n ? ' sel' : ''), n + '×' + n);
+                        b.type = 'button';
+                        b.addEventListener('click', function() { menuState.size = n; renderMenuForm(); });
+                        sizes.appendChild(b);
+                    });
+                    form.appendChild(sizes);
+                }
+
+                const preview = mk('div', 'bc-menu-preview');
+                const ins = mk('button', 'bc-menu-btn ins', 'Insert');
+                ins.type = 'button';
+                function refresh() {
+                    const r = readMenuValues();
+                    preview.textContent = r.ok ? t.build(r.vals) : 'Check the highlighted fields';
+                    ins.disabled = !r.ok;
+                }
+                function submit() {
+                    const r = readMenuValues();
+                    if (r.ok) { commitTemplate(t.build(r.vals)); }
+                }
+                function wire(inp) {
+                    inp.type = 'text';
+                    inp.setAttribute('autocomplete', 'off');
+                    inp.setAttribute('autocapitalize', 'off');
+                    inp.setAttribute('spellcheck', 'false');
+                    inp.addEventListener('input', refresh);
+                    inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
+                }
+
+                const fields = mk('div', 'bc-menu-fields');
+                const allMat = t.params.length > 0 && t.params.every(function(p) { return p.type === 'matrix'; });
+                if (allMat) { fields.style.gridTemplateColumns = 'repeat(' + t.params.length + ', 1fr)'; }
+                t.params.forEach(function(p) {
+                    if (p.type === 'matrix') {
+                        const n = menuState.size;
+                        const wrap = mk('div', 'bc-menu-field' + (allMat ? '' : ' bc-menu-matwrap'));
+                        wrap.appendChild(mk('span', null, p.label));
+                        const grid = mk('div', 'bc-menu-mat');
+                        grid.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+                        const def = MAT_DEF[n][p.k] || MAT_DEF[n].A;
+                        for (let r = 0; r < n; r++) {
+                            for (let c = 0; c < n; c++) {
+                                const inp = mk('input');
+                                inp.value = def[r][c];
+                                inp.setAttribute('aria-label', p.label + ' row ' + (r + 1) + ' column ' + (c + 1));
+                                wire(inp);
+                                menuInputs[p.k + '_' + r + '_' + c] = inp;
+                                grid.appendChild(inp);
+                            }
+                        }
+                        wrap.appendChild(grid);
+                        fields.appendChild(wrap);
+                    } else {
+                        const wrap = mk('label', 'bc-menu-field' + (p.type === 'text' ? ' bc-menu-matwrap' : ''));
+                        wrap.appendChild(mk('span', null, p.label));
+                        const inp = mk('input');
+                        inp.value = p.def;
+                        wire(inp);
+                        menuInputs[p.k] = inp;
+                        wrap.appendChild(inp);
+                        fields.appendChild(wrap);
+                    }
+                });
+                form.appendChild(fields);
+                form.appendChild(preview);
+
+                const actions = mk('div', 'bc-menu-actions');
+                const back = mk('button', 'bc-menu-btn back', '← Back');
+                back.type = 'button';
+                back.addEventListener('click', function() { menuState.view = 'list'; renderMenu(); });
+                ins.addEventListener('click', submit);
+                actions.appendChild(back);
+                actions.appendChild(ins);
+                form.appendChild(actions);
+                menuBodyEl.appendChild(form);
+                refresh();
+            }
+
+            function renderMenu() {
+                const def = MENU_DEFS[menuState.kind];
+                menuTitleEl.textContent = def.title;
+                if (menuState.view === 'form') { renderMenuForm(); return; }
+                menuChipsEl.innerHTML = '';
+                menuBodyEl.innerHTML = '';
+                menuChipsEl.style.display = def.cats.length > 1 ? 'flex' : 'none';
+                def.cats.forEach(function(cat) {
+                    const chip = mk('button', 'bc-menu-chip' + (menuState.cat === cat ? ' sel' : ''), cat);
+                    chip.type = 'button';
+                    chip.addEventListener('click', function() { menuState.cat = cat; renderMenu(); });
+                    menuChipsEl.appendChild(chip);
+                });
+                if (def.cas) {
+                    const sw = mk('button', 'bc-menu-cas' + (primeCasMode ? ' on' : ''),
+                        primeCasMode ? 'CAS mode: ON · the PLOT key evaluates (tap to switch off)' : 'CAS mode: OFF · the PLOT key draws graphs (tap to switch on)');
+                    sw.type = 'button';
+                    sw.addEventListener('click', function() { setPrimeCas(!primeCasMode); renderMenu(); });
+                    menuBodyEl.appendChild(sw);
+                }
+                const list = mk('div', 'bc-menu-list');
+                TEMPLATES.filter(function(t) { return t.eng === def.eng && t.cat === menuState.cat; }).forEach(function(t) {
+                    const item = mk('button', 'bc-menu-item');
+                    item.type = 'button';
+                    item.appendChild(mk('b', null, t.name));
+                    item.appendChild(mk('span', null, defaultExpr(t, menuState.size)));
+                    item.addEventListener('click', function() {
+                        if (!t.params.length) { commitTemplate(t.build({})); return; }
+                        menuState.tpl = t;
+                        menuState.view = 'form';
+                        renderMenu();
+                    });
+                    list.appendChild(item);
+                });
+                menuBodyEl.appendChild(list);
+            }
+
+            function setPrimeCas(on) {
+                primeCasMode = !!on;
+                const b = document.getElementById('bc-cas-toggle');
+                if (b) { b.classList.toggle('bc-cas-on', primeCasMode); }
+                if (primeCasMode) { bcLoadAdvancedEngines(); }
+                bcLiveOut.innerText = primeCasMode ? 'CAS mode ON - PLOT key evaluates' : 'CAS mode OFF - PLOT key draws graphs';
             }
 
             const api = {
@@ -1907,6 +2764,8 @@
                         textToCopy = rawOut.replace(/^=\s*/, '').trim();
                     } else if (rawOut.includes(' = ') && !/Loading|Syntax|Select/i.test(rawOut)) {
                         textToCopy = rawOut.split(' = ').pop().trim();
+                        const numWithNote = textToCopy.match(/^(-?\d+(?:\.\d+)?)\s*\(.*\)$/);
+                        if (numWithNote) { textToCopy = numWithNote[1]; }
                     } else {
                         textToCopy = (bcDisp.textContent || '0').trim();
                     }
@@ -1959,9 +2818,26 @@
                     isDegree = (unit === 'deg');
                     document.querySelectorAll('.bc-btn-deg').forEach(b => b.classList.toggle('active', unit === 'deg'));
                     document.querySelectorAll('.bc-btn-rad').forEach(b => b.classList.toggle('active', unit === 'rad'));
+                    saveCalcState();
                     bcUpdate(); 
                 },
                 num: function(val) {
+                    if (finShiftOn && document.querySelector('.bc-tab-pane.active').id === 'bc-fin') {
+                        finSetShift(false);
+                        if (!/^[0-9]$/.test(val)) { finShow('f cancelled'); }
+                        if (/^[0-9]$/.test(val)) {
+                            finDp = Number(val);
+                            finShow('Display set to ' + finDp + ' decimal places');
+                            const cur = finReadInput();
+                            if (cur !== null && finStaleValue !== null) { finPutResult(cur); }
+                        }
+                        return;
+                    }
+                    if (finStaleValue !== null) {
+                        const wasStale = (bcInput === finStaleValue);
+                        finStaleValue = null;
+                        if (wasStale && document.querySelector('.bc-tab-pane.active').id === 'bc-fin') { bcInput = ''; bcDisp.textContent = '0'; }
+                    }
                     if (bcDisp.textContent === '0' && !val.includes('Math') && !val.includes('bcTrig') && val !== '.' && val !== 'Ans') { bcInput = val; } 
                     else { bcInput += val; }
                     bcUpdate();
@@ -1987,24 +2863,121 @@
                     if(action === 'm+') memoryValue += currentVal;
                     if(action === 'm-') memoryValue -= currentVal;
                     bcMemInd.innerText = memoryValue !== 0 ? 'M = ' + memoryValue : '';
+                    saveCalcState();
                 },
                 finComp: function() {
-                    isCompMode = true; bcLiveOut.innerText = 'Select variable (PV, FV, PMT)';
+                    isCompMode = !isCompMode;
+                    finShow(isCompMode ? 'COMP: tap n, i, PV, PMT or FV to solve' : 'COMP cancelled');
                 },
                 finKey: function(v) {
-                    if(isCompMode) {
-                        let n = finTvm.n, i = finTvm.i / 100, pv = finTvm.pv, pmt = finTvm.pmt, fv = finTvm.fv;
-                        let res = 0;
-                        if(v==='pv') { res = i===0 ? -(fv + pmt*n) : -(pmt * (1 - Math.pow(1+i, -n))/i + fv * Math.pow(1+i, -n)); }
-                        if(v==='fv') { res = i===0 ? -(pv + pmt*n) : -(pv * Math.pow(1+i, n) + pmt * (Math.pow(1+i, n) - 1)/i); }
-                        if(v==='pmt') { res = i===0 ? -(fv + pv)/n : (-fv - pv * Math.pow(1+i, n)) * i / (Math.pow(1+i, n) - 1); }
-                        finTvm[v] = res; bcInput = res.toFixed(2);
-                        bcLiveOut.innerText = v.toUpperCase() + ' = ' + res.toFixed(2);
-                        isCompMode = false; bcUpdate();
-                    } else {
-                        finTvm[v] = parseFloat(bcInput) || parseFloat(bcLiveOut.innerText.split('= ')[1]) || 0;
-                        bcLiveOut.innerText = v.toUpperCase() + ' SET TO ' + finTvm[v];
+                    if (finShiftOn) { finShiftKey(v); return; }
+                    if (isCompMode) { finCompute(v); return; }
+                    const val = finReadInput();
+                    if (val === null) {
+                        finShow(FIN_LABELS[v] + ' = ' + finNum(finTvm[v], v === 'i' ? 4 : 2) + ' (stored)');
+                        return;
+                    }
+                    finTvm[v] = val;
+                    amortPos = 0;
+                    finShow(FIN_LABELS[v] + ' SET TO ' + fmtShort(val));
+                    bcInput = ''; bcDisp.textContent = '0';
+                },
+                finShift: function() { finSetShift(!finShiftOn); finShow(finShiftOn ? 'f: tap a digit (decimals), n AMORT, i INT, PV NPV, PMT RND, FV IRR, CLX clear all' : 'f cancelled'); },
+                finFn: function(name) {
+                    isCompMode = false;
+                    finSetShift(false);
+                    if (name !== 'pctt' && name !== 'dpct') { pctPending = null; }
+                    if (name === 'amort') { finAmort(); }
+                    else if (name === 'price') { finPrice(); }
+                    else if (name === 'ytm') { finYtm(); }
+                    else if (name === 'pctt' || name === 'dpct') { finPct(name); }
+                    else if (name === 'cf0') { finCf0(); }
+                    else if (name === 'npv') { finNpv(); }
+                    else if (name === 'irr') { finIrr(); }
+                    else if (name === 'int') { finInt(); }
+                    else { finDepr(name); }
+                },
+                finEnter: function() {
+                    const v = finReadInput();
+                    if (v === null) { finShow('Type a cash flow, then ENTER (or tap NPV / IRR)'); return; }
+                    cfList.push(v);
+                    bcInput = ''; bcDisp.textContent = '0';
+                    finShow('CF' + (cfList.length - 1) + ' = ' + fmtShort(v) + ' (CFj count: ' + (cfList.length - 1) + ')');
+                },
+                finClear: function() {
+                    isCompMode = false;
+                    if (finShiftOn) {
+                        finSetShift(false);
+                        finTvm = { n: 0, i: 0, pv: 0, pmt: 0, fv: 0 };
+                        cfList = []; cfEntry = false; amortPos = 0; pctPending = null;
                         bcInput = ''; bcDisp.textContent = '0';
+                        finShow('All financial registers cleared');
+                        return;
+                    }
+                    pctPending = null;
+                    if (cfEntry && !bcInput) {
+                        cfEntry = false;
+                        finShow('Cash-flow entry closed (' + cfList.length + ' flows kept)');
+                        return;
+                    }
+                    this.clear();
+                },
+                openMenu: function(kind) {
+                    if (!MENU_DEFS[kind]) return;
+                    filterPanel.classList.remove('open');
+                    menuState = { kind: kind, cat: MENU_DEFS[kind].cats[0], view: 'list', tpl: null, size: 2 };
+                    if (MENU_DEFS[kind].cas && !primeCasMode) { setPrimeCas(true); }
+                    renderMenu();
+                    menuPanel.classList.add('open');
+                },
+                closeMenu: function() {
+                    menuPanel.classList.remove('open');
+                    menuState = null;
+                },
+                exportHistory: function() {
+                    const btn = document.getElementById('bc-export-history');
+                    const flash = function(text, good) {
+                        if (!btn) return;
+                        btn.textContent = text;
+                        btn.classList.toggle('done', !!good);
+                        if (exportResetTimer) { clearTimeout(exportResetTimer); }
+                        exportResetTimer = setTimeout(function() {
+                            btn.textContent = '⬇ Export .txt';
+                            btn.classList.remove('done');
+                        }, 1800);
+                    };
+                    const entries = Array.prototype.slice.call(bcHistList.querySelectorAll('.hist-entry')).reverse();
+                    if (!entries.length) { flash('Nothing to export yet', false); return; }
+                    const now = new Date();
+                    const pad = function(n) { return (n < 10 ? '0' : '') + n; };
+                    const stamp = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+                    const lines = [
+                        'thequantcals Calculator - History Export',
+                        'Exported: ' + now.toLocaleString(),
+                        'Angle mode: ' + (isDegree ? 'Degrees' : 'Radians') + ' | Memory: ' + memoryValue + ' | Ans: ' + lastAnswer,
+                        'Entries: ' + entries.length + ' (oldest first)',
+                        '------------------------------------------------'
+                    ];
+                    entries.forEach(function(el, idx) {
+                        const holder = el.querySelector('.hist-content') || el;
+                        const text = (holder.textContent || '').replace(/\s+/g, ' ').trim();
+                        const tab = TAB_NAMES[el.getAttribute('data-tab')] || '';
+                        lines.push((idx + 1) + '. ' + (tab ? '[' + tab + '] ' : '') + text);
+                    });
+                    lines.push('');
+                    try {
+                        const blob = new Blob([lines.join('\r\n')], { type: 'text/plain;charset=utf-8' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'calculator-history-' + stamp + '.txt';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+                        flash('✓ Saved ' + entries.length + ' entries', true);
+                    } catch (err) {
+                        flash('Export not supported here', false);
                     }
                 },
                 clearHistory: function() {
@@ -2013,6 +2986,8 @@
                     try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
                 },
                 calc: function() {
+                    if (pctPending && document.querySelector('.bc-tab-pane.active').id === 'bc-fin') { finPct(pctPending.kind); return; }
+                    if (cfEntry && document.querySelector('.bc-tab-pane.active').id === 'bc-fin') { api.finEnter(); return; }
                     if(!bcInput) return;
                     let openParentheses = (bcInput.match(/\(/g) || []).length;
                     let closeParentheses = (bcInput.match(/\)/g) || []).length;
@@ -2027,28 +3002,36 @@
                         let oldVisual = bcDisp.textContent; 
                         let result = '';
 
-                        if (activeTab === 'bc-cas' || activeTab === 'bc-adv') {
-                            if(extEnginesLoaded && typeof Algebrite !== 'undefined') {
+                        if (activeTab === 'bc-cas' || activeTab === 'bc-adv' || (activeTab === 'bc-graph' && primeCasMode)) {
+                            engineNeed('alg');
+                            {
                                 let algInput = calcInput.replace(/\*\*/g, '^');
                                 result = Algebrite.run(algInput);
                                 if(result === '' || result.includes('Stop')) throw new Error("Parse Error");
-                            } else { throw new Error("Loading"); }
+                                if (activeTab === 'bc-graph') {
+                                    const plotCanvas = document.getElementById('bc-graph-canvas');
+                                    if (plotCanvas) { plotCanvas.getContext('2d').clearRect(0, 0, plotCanvas.width, plotCanvas.height); }
+                                }
+                            }
                         } 
                         else if (activeTab === 'bc-graph') {
-                            if(extEnginesLoaded && typeof math !== 'undefined') {
+                            engineNeed('math');
+                            {
                                 let expr = calcInput.replace(/\*\*/g, '^');
                                 drawGraph(expr); bcLiveOut.innerText = 'y = ' + expr;
                                 if (historyEmpty) { bcHistList.innerHTML = ''; historyEmpty = false; }
                                 bcHistList.innerHTML = '<div class="hist-entry" data-expr="' + encodeURIComponent(rawExpr) + '" data-tab="bc-graph" title="Tap to reload graph expression"><span class="hist-content">Plotted: <strong title="Tap to load expression">y = ' + oldVisual + '</strong></span><button type="button" class="hist-del-btn" aria-label="Delete History Entry" title="Delete this entry">×</button></div>' + bcHistList.innerHTML;
                                 saveHistoryToStorage();
                                 return; 
-                            } else { throw new Error("Loading"); }
+                            }
                         }
                         else if (activeTab === 'bc-prog') {
-                            if(extEnginesLoaded && typeof math !== 'undefined') {
+                            engineNeed('math');
+                            {
                                 let mRes = math.evaluate(calcInput.replace(/\*\*/g, '^'));
-                                result = (mRes && typeof mRes.entries !== 'undefined') ? mRes.entries[mRes.entries.length - 1] : mRes;
-                            } else { throw new Error("Loading"); }
+                                if (mRes && Array.isArray(mRes.entries)) { mRes = mRes.entries[mRes.entries.length - 1]; }
+                                result = (typeof mRes === 'number') ? mRes : math.format(mRes, { precision: 14 });
+                            }
                         }
                         else {
                             result = secureEvaluate(calcInput);
@@ -2057,6 +3040,7 @@
                         }
                         
                         lastAnswer = result; 
+                        saveCalcState();
                         let cleanResStr = cleanBloggerEntities(result.toString());
                         if (historyEmpty) { bcHistList.innerHTML = ''; historyEmpty = false; }
                         bcHistList.innerHTML = '<div class="hist-entry" data-expr="' + encodeURIComponent(rawExpr) + '" data-res="' + encodeURIComponent(cleanResStr) + '" data-tab="' + activeTab + '" title="Tap row to load expression, or tap result to load answer"><span class="hist-content">' + oldVisual + ' = <strong title="Tap to load result">' + cleanResStr + '</strong></span><button type="button" class="hist-del-btn" aria-label="Delete History Entry" title="Delete this entry">×</button></div>' + bcHistList.innerHTML;
@@ -2066,7 +3050,7 @@
                         bcUpdate(); 
                         bcLiveOut.innerText = '= ' + cleanResStr;
                     } catch (e) {
-                        bcLiveOut.innerText = (e.message === "Loading") ? "Wait: Loading Engines..." : "Syntax Error";
+                        bcLiveOut.innerText = (e.message === "Loading") ? "Wait: Loading Engines..." : (e.message === "Retrying") ? "Engine download retrying - wait, then tap = again" : "Syntax Error";
                     }
                 }
             };
@@ -2078,6 +3062,7 @@
                     return;
                 }
                 if (filterPanel && filterPanel.classList.contains('open')) return;
+                if (menuPanel && menuPanel.classList.contains('open')) return;
 
                 const clipboardData = e.clipboardData || window.clipboardData;
                 if (!clipboardData) return;
@@ -2129,7 +3114,9 @@
                 /* Handle Escape: close filter panel if open, otherwise clear display */
                 if (key === 'Escape') {
                     e.preventDefault();
-                    if (filterPanel && filterPanel.classList.contains('open')) {
+                    if (menuPanel && menuPanel.classList.contains('open')) {
+                        api.closeMenu();
+                    } else if (filterPanel && filterPanel.classList.contains('open')) {
                         api.closeFilters();
                     } else {
                         api.clear();
@@ -2139,6 +3126,7 @@
 
                 /* Ignore calculator keys while the filter selection modal is open */
                 if (filterPanel && filterPanel.classList.contains('open')) return;
+                if (menuPanel && menuPanel.classList.contains('open')) return;
 
                 /* If user starts typing while viewing History, return to last active calculator tab */
                 const activePane = document.querySelector('.bc-tab-pane.active');
@@ -2233,6 +3221,25 @@
                     }
                 }
             } catch (e) {}
+
+            /* Restore saved angle mode, memory and Ans (read everything first, then apply) */
+            try {
+                const savedAngle = localStorage.getItem(ANGLE_STORAGE_KEY);
+                const savedMem = localStorage.getItem(MEMORY_STORAGE_KEY);
+                const savedAns = localStorage.getItem(ANS_STORAGE_KEY);
+                if (savedMem !== null && savedMem !== '' && isFinite(Number(savedMem))) {
+                    memoryValue = Number(savedMem);
+                    bcMemInd.innerText = memoryValue !== 0 ? 'M = ' + memoryValue : '';
+                }
+                if (savedAns !== null && savedAns !== '') {
+                    lastAnswer = (savedAns.trim() !== '' && isFinite(Number(savedAns))) ? Number(savedAns) : savedAns;
+                }
+                if (savedAngle === 'rad' || savedAngle === 'deg') { api.setAngle(savedAngle); }
+            } catch (e) {}
+
+            menuPanel.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') { e.stopPropagation(); api.closeMenu(); }
+            });
 
             return api;
         })();
