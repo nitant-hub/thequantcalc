@@ -399,17 +399,16 @@
       }
 
       /* HEADER & NAVIGATION */
-            header#siteDynamicHeader {
+                  header#siteDynamicHeader {
         position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
-        height: 40px !important; min-height: 40px !important; max-height: 40px !important;
-        z-index: 999999 !important; box-sizing: border-box !important;
+        height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
         background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%) !important;
         border-bottom: 1px solid rgba(99, 179, 255, 0.25) !important;
         box-shadow: 0 4px 20px rgba(10, 20, 80, 0.4) !important;
         display: flex !important; align-items: center !important; justify-content: space-between !important;
-        padding: 0 1rem !important;
+        padding: 0 1.5rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
-      }   
+      }
      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.65rem !important; text-decoration: none !important; }
       .dyn-logo-icon {
         background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 36px !important; height: 36px !important;
