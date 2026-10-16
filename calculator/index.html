@@ -453,6 +453,10 @@
         .bc-history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d0dce7; padding-bottom: 4px; margin-bottom: 6px; flex-shrink: 0; }
         .bc-history-title { font-weight: 900; color: #3b5998; font-size: 13px; text-transform: uppercase; }
         .bc-history-back-btn, .bc-clear-history { font-size: 11px; font-weight: 900; cursor: pointer; padding: 3px 8px; border-radius: 3px; border: 1px solid transparent; text-transform: uppercase; box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
+        .bc-history-back-btn, .bc-clear-history { white-space: nowrap; flex-shrink: 0; line-height: 1.2; }
+        .bc-history-header { gap: 6px; }
+        .bc-history-title { flex: 1 1 auto; min-width: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(8px, 2.9vw, 13px); letter-spacing: 0; }
+        @media (max-width: 340px) { .bc-history-back-btn, .bc-clear-history { font-size: 9px; padding: 3px 5px; } .bc-history-header { gap: 4px; } }
         .bc-history-back-btn { background: #3b5998; color: #ffffff; }
         .bc-clear-history { background: #dc2626; color: #ffffff; }
         .bc-history-list { flex-grow: 1; overflow-y: auto; font-family: inherit; font-size: 14px; }
