@@ -21,11 +21,11 @@
     }
     style.textContent = `
       :root { 
-        --nav-header-height: 56px; 
+        --nav-header-height: 42px; 
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 68px; 
+          --nav-header-height: 44px; 
         }
       }
 
@@ -38,7 +38,7 @@
       }
 
       body { 
-        padding-top: var(--nav-header-height) !important; 
+        padding-top: 0 !important; 
       }
 
       .sr input#q {
@@ -57,7 +57,6 @@
       }
 
       @media (min-width: 768px) {
-        /* Force Category Page outer container to stack like Photos 3 & 4 */
         .dyn-cat-parent-stack {
           display: flex !important;
           flex-direction: column !important;
@@ -128,7 +127,7 @@
           display: grid !important;
           grid-template-columns: minmax(0, 69%) minmax(250px, 30%) !important;
           justify-content: space-between !important;
-          align-items: start !important;
+          align-items: stretch !important;
           gap: 8px !important;
           width: 100% !important;
           max-width: 100% !important;
@@ -139,7 +138,6 @@
           box-sizing: border-box !important;
         }
 
-        /* 1. BREADCRUMB ALIGNED NEATLY WITH ARTICLE START */
         body.dyn-is-tool-page .dyn-breadcrumb-el,
         body.dyn-is-tool-page .dyn-split-container > .dyn-full-row {
           grid-column: 1 / -1 !important;
@@ -150,7 +148,6 @@
           box-sizing: border-box !important;
         }
 
-        /* 2. REDUCE LEFT & RIGHT INNER MARGIN OF ARTICLE / LEFT SPLIT */
         body.dyn-is-tool-page .dyn-split-container > .dyn-left-split {
           grid-column: 1 / 2 !important;
           width: 100% !important;
@@ -172,9 +169,11 @@
           margin-right: 0 !important;
         }
 
-        /* 3. SIDEBAR FITS COLUMN 100% WITHOUT CUTOFF */
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
+          position: sticky !important;
+          top: 12px !important;
+          align-self: start !important;
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
@@ -186,9 +185,6 @@
         }
       }
 
-      /* ========================================================
-         EDGE-TO-EDGE CAROUSEL & TOOL LINKS (BOTH MOBILE & DESKTOP)
-         ======================================================== */
       body.dyn-is-tool-page .dyn-tools-card {
         padding: 0 !important;
         border-radius: 14px !important;
@@ -240,9 +236,6 @@
         padding-bottom: 12px !important;
       }
 
-      /* ========================================================
-         SEARCH COMPONENT CORE
-         ======================================================== */
       .dyn-search-wrapper {
         position: relative !important;
         box-sizing: border-box !important;
@@ -429,48 +422,55 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* HEADER & NAVIGATION */
+      /* SLIM SCROLLING HEADER (MATCHES PHOTO 2 HEIGHT & PHOTO 3 BRAND COLOR) */
       header#siteDynamicHeader {
-        position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important;
+        position: relative !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
         background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%) !important;
         border-bottom: 1px solid rgba(99, 179, 255, 0.25) !important;
         box-shadow: 0 4px 20px rgba(10, 20, 80, 0.4) !important;
         display: flex !important; align-items: center !important; justify-content: space-between !important;
-        padding: 0 1.5rem !important;
+        padding: 0 1.25rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
-      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.65rem !important; text-decoration: none !important; }
-      .dyn-logo-icon {
-        background: linear-gradient(135deg, #2563eb, #7c3aed) !important; width: 36px !important; height: 36px !important;
-        border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;
-        color: #fff !important; font-weight: 800 !important; font-size: 1.2rem !important;
+      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.45rem !important; text-decoration: none !important; }
+      .logo-symbol {
+        color: #3b82f6 !important;
+        font-weight: 900 !important;
+        font-size: 1.25rem !important;
+        line-height: 1 !important;
       }
       .dyn-brand-text {
-        font-size: 1.3rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
+        font-size: 1.24rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
         background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%) !important;
         -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
+        line-height: 1 !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-brand-text {
+          font-size: 1.35rem !important;
+        }
       }
 
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
-        gap: 0.8rem; 
+        gap: 0.55rem; 
         height: 100%; 
         margin-left: auto; 
-        margin-right: 1.2rem; 
+        margin-right: 1rem; 
       }
       .dyn-desktop-nav a.dyn-nav-item {
         text-decoration: none !important; 
-        font-size: 1.08rem !important; 
+        font-size: 0.9rem !important; 
         font-weight: 800 !important; 
-        letter-spacing: 0.5px !important; 
+        letter-spacing: 0.45px !important; 
         color: #f8fafc !important;
         height: 100% !important; 
         display: flex !important; 
         align-items: center !important; 
-        padding: 0 0.95rem !important;
-        border-bottom: 3.5px solid transparent !important; 
+        padding: 0 0.8rem !important;
+        border-bottom: 3px solid transparent !important; 
         text-transform: uppercase !important;
         cursor: pointer !important;
         transition: all 0.16s ease !important;
@@ -481,7 +481,7 @@
       }
       .dyn-desktop-nav a.dyn-nav-item.is-active { 
         color: #38bdf8 !important; 
-        border-bottom: 3.5px solid #38bdf8 !important; 
+        border-bottom: 3px solid #38bdf8 !important; 
         background: rgba(30,58,138,0.55) !important; 
       }
 
@@ -490,9 +490,9 @@
         border: 1px solid rgba(255, 255, 255, 0.45) !important; 
         color: #ffffff !important;
         font-weight: 900 !important; 
-        font-size: 0.96rem !important; 
-        letter-spacing: 0.6px !important;
-        padding: 0.45rem 1.15rem !important; 
+        font-size: 0.84rem !important; 
+        letter-spacing: 0.5px !important;
+        padding: 0.26rem 0.95rem !important; 
         border-radius: 20px !important;
         height: auto !important; 
         text-transform: uppercase !important;
@@ -510,35 +510,35 @@
         box-shadow: 0 5px 18px rgba(236, 72, 153, 0.65) !important;
       }
 
-      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.75rem !important; }
+      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.6rem !important; }
       .dyn-theme-btn {
-        background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important;
-        font-size: 1.05rem !important; cursor: pointer !important; color: #fff !important; width: 36px !important; height: 36px !important;
+        background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 7px !important;
+        font-size: 0.92rem !important; cursor: pointer !important; color: #fff !important; width: 30px !important; height: 30px !important;
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
       
       .dyn-hamburger-btn { 
         background: rgba(255, 255, 255, 0.1) !important; 
         border: 1px solid rgba(255, 255, 255, 0.2) !important; 
-        border-radius: 8px !important; 
+        border-radius: 7px !important; 
         cursor: pointer !important; 
-        width: 36px !important; 
-        height: 36px !important; 
+        width: 30px !important; 
+        height: 30px !important; 
         display: flex !important; 
         flex-direction: column !important; 
         align-items: center !important; 
         justify-content: center !important; 
-        gap: 5px !important; 
+        gap: 4px !important; 
         padding: 0 !important; 
         transition: background 0.2s ease !important;
       }
       .dyn-hamburger-btn:hover {
         background: rgba(255, 255, 255, 0.2) !important;
       }
-      .dyn-hamburger-btn span.bar { width: 18px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
+      .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
       
       .dyn-hamburger-btn span.close-x { 
-        font-size: 2.35rem !important; 
+        font-size: 2rem !important; 
         font-weight: 900 !important; 
         color: #ef4444 !important; 
         line-height: 1 !important; 
@@ -550,7 +550,7 @@
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid rgba(255, 255, 255, 0.9) !important;
         border-bottom: 1px solid var(--bg-surface, #ffffff) !important;
-        border-radius: 12px 12px 0 0 !important;
+        border-radius: 10px 10px 0 0 !important;
         box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
         z-index: 1000001 !important;
       }
@@ -623,9 +623,6 @@
         .dyn-hamburger-btn, .dyn-drawer-menu, .dyn-backdrop-overlay { display: none !important; }
       }
 
-      /* ========================================================
-         COMPACT CAROUSEL SIDEBAR COMPONENT
-         ======================================================== */
       .related-section {
         --card: rgba(255,255,255,.95);
         --text: #0f172a;
@@ -883,7 +880,6 @@
         background: #2563eb !important; 
       }
 
-      /* POPUP MODAL FOR ALL TOOLS */
       #dynAllToolsModal {
         position: fixed !important;
         inset: 0 !important;
@@ -1369,7 +1365,6 @@
           start();
         }
 
-        /* 12-SECOND AUTO-SCROLL INTERVAL */
         function resetAutoFlow() {
           clearInterval(autoFlowTimer);
           autoFlowTimer = setInterval(stepAutoFlow, 12000);
@@ -1447,7 +1442,6 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      /* Ensure #catView parent container stacks vertically like Photos 3 & 4 */
       const catViewEl = document.getElementById("catView");
       if (catViewEl) {
         let anc = catViewEl.parentElement;
@@ -1561,7 +1555,6 @@
         document.body.classList.remove("dyn-is-tool-page");
       }
 
-      /* 1. Mobile View Search & Ad Placement (Untouched) */
       if (isMobile) {
         const drawerSlot = document.getElementById("dynDrawerSearchSlot");
         globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
@@ -1572,7 +1565,6 @@
         return;
       }
 
-      /* 2. Desktop Category Page */
       if (isCategory) {
         const catView = document.getElementById("catView");
         if (catView) {
@@ -1608,7 +1600,6 @@
         }
       }
 
-      /* 3. Desktop Homepage View */
       if (!isCategory && !isTool) {
         const homeSlot = document.getElementById("homeSearchSlot");
         if (homeSlot) {
@@ -1621,7 +1612,6 @@
         }
       }
 
-      /* 4. Desktop Sidebar Search & Ad Placement */
       if (sidebarAside) {
         const toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
