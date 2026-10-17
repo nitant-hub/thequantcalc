@@ -1,4 +1,3 @@
-
 (function () {
   function initNavigation() {
     let vMeta = document.querySelector('meta[name="viewport"]');
@@ -47,14 +46,62 @@
       }
 
       /* ========================================================
-         DESKTOP TOOL POST: TIGHT ARTICLE LEFT/RIGHT MARGINS (MATCHES PHOTOS 2 & 3)
+         CATEGORY VIEW & DESKTOP TOOL POST LAYOUT (MATCHES PHOTOS 3 & 4)
          ======================================================== */
       #catView {
         display: flex !important;
         flex-direction: column !important;
         gap: 1.25rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
+
       @media (min-width: 768px) {
+        /* Force Category Page outer container to stack like Photos 3 & 4 */
+        .dyn-cat-parent-stack {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 1.25rem !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .dyn-cat-parent-stack > *,
+        .dyn-cat-fullwidth-item {
+          width: 100% !important;
+          max-width: 100% !important;
+          grid-column: 1 / -1 !important;
+          flex: 0 0 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        #catView.dyn-cat-split {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: flex-start !important;
+          gap: 2rem !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        #catView.dyn-cat-split > .dyn-cat-left-pane {
+          flex: 1 1 0% !important;
+          min-width: 280px !important;
+        }
+
+        #catView.dyn-cat-split > .dyn-cat-right-pane {
+          flex: 0 0 300px !important;
+          width: 300px !important;
+          max-width: 300px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 0.75rem !important;
+          margin-left: auto !important;
+        }
+
         body.dyn-is-tool-page {
           padding-left: 0 !important;
           padding-right: 0 !important;
@@ -103,7 +150,7 @@
           box-sizing: border-box !important;
         }
 
-        /* 2. REDUCE LEFT & RIGHT INNER MARGIN OF ARTICLE / LEFT SPLIT TO MATCH PHOTOS 2 & 3 */
+        /* 2. REDUCE LEFT & RIGHT INNER MARGIN OF ARTICLE / LEFT SPLIT */
         body.dyn-is-tool-page .dyn-split-container > .dyn-left-split {
           grid-column: 1 / 2 !important;
           width: 100% !important;
@@ -136,24 +183,6 @@
           padding-left: 0 !important;
           padding-right: 0 !important;
           box-sizing: border-box !important;
-        }
-
-        #catView.dyn-cat-split {
-          flex-direction: row !important;
-          justify-content: space-between !important;
-          align-items: flex-start !important;
-          gap: 2rem !important;
-        }
-        #catView.dyn-cat-split > .dyn-cat-left-pane {
-          flex: 1 1 0% !important;
-          min-width: 0 !important;
-        }
-        #catView.dyn-cat-split > .dyn-cat-right-pane {
-          flex: 0 0 320px !important;
-          width: 320px !important;
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 1rem !important;
         }
       }
 
@@ -240,7 +269,7 @@
       .dyn-search-wrapper.in-cat-pane {
         max-width: 100% !important;
         width: 100% !important;
-        margin-bottom: 0.5rem !important;
+        margin-bottom: 0 !important;
       }
 
       .dyn-search-wrapper.in-sidebar {
@@ -316,7 +345,7 @@
       .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
       .dyn-adsense-300x250 {
-        width: 100% !important;
+        width: 300px !important;
         max-width: 100% !important;
         height: 250px !important;
         background: #f1f5f9 !important;
@@ -329,6 +358,7 @@
         font-size: 12px !important;
         font-weight: 500 !important;
         box-sizing: border-box !important;
+        flex-shrink: 0 !important;
       }
       [data-theme="dark"] .dyn-adsense-300x250 {
         background: #1e293b !important;
@@ -1416,6 +1446,29 @@
       const hash = (window.location.hash || "").toLowerCase();
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
+
+      /* Ensure #catView parent container stacks vertically like Photos 3 & 4 */
+      const catViewEl = document.getElementById("catView");
+      if (catViewEl) {
+        let anc = catViewEl.parentElement;
+        while (anc && anc !== document.body && anc !== document.documentElement) {
+          const txt = (anc.textContent || "").toLowerCase();
+          if (txt.includes("prime calculators") || txt.includes("editor's picks") || txt.includes("system status")) {
+            if (isCategory) {
+              anc.classList.add("dyn-cat-parent-stack");
+            } else {
+              anc.classList.remove("dyn-cat-parent-stack");
+            }
+            break;
+          }
+          if (isCategory) {
+            anc.classList.add("dyn-cat-fullwidth-item");
+          } else {
+            anc.classList.remove("dyn-cat-fullwidth-item");
+          }
+          anc = anc.parentElement;
+        }
+      }
 
       const sidebarAside = document.querySelector("aside.sidebar");
       if (sidebarAside) {
