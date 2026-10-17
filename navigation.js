@@ -25,7 +25,7 @@
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 44px; 
+          --nav-header-height: 52px; 
         }
       }
 
@@ -422,7 +422,7 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* SLIM SCROLLING HEADER (MATCHES PHOTO 2 HEIGHT & PHOTO 3 BRAND COLOR) */
+      /* SLIM SCROLLING HEADER (52PX DESKTOP / 42PX MOBILE & PHOTO BRAND COLORS) */
       header#siteDynamicHeader {
         position: relative !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -437,18 +437,32 @@
       .logo-symbol {
         color: #3b82f6 !important;
         font-weight: 900 !important;
-        font-size: 1.25rem !important;
+        font-size: 1.3rem !important;
         line-height: 1 !important;
       }
       .dyn-brand-text {
-        font-size: 1.24rem !important; font-weight: 800 !important; letter-spacing: -0.4px !important;
-        background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%) !important;
-        -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
+        font-size: 1.28rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.4px !important;
         line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+      }
+      .dyn-brand-text .b-the {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+      }
+      .dyn-brand-text .b-quant {
+        color: #38bdf8 !important;
+        -webkit-text-fill-color: #38bdf8 !important;
+      }
+      .dyn-brand-text .b-cals {
+        color: #34d399 !important;
+        -webkit-text-fill-color: #34d399 !important;
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
-          font-size: 1.35rem !important;
+          font-size: 1.45rem !important;
         }
       }
 
@@ -462,7 +476,7 @@
       }
       .dyn-desktop-nav a.dyn-nav-item {
         text-decoration: none !important; 
-        font-size: 0.9rem !important; 
+        font-size: 0.90rem !important; 
         font-weight: 800 !important; 
         letter-spacing: 0.45px !important; 
         color: #f8fafc !important;
@@ -994,7 +1008,7 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="/" class="dyn-brand"><div class="logo-symbol">&sum;</div><span class="dyn-brand-text">thequantcals</span></a>
+        <a href="/" class="dyn-brand"><div class="logo-symbol">&sum;</div><span class="dyn-brand-text"><span class="b-the">the</span><span class="b-quant">quant</span><span class="b-cals">cals</span></span></a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
