@@ -25,7 +25,7 @@
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 52px; 
+          --nav-header-height: 55px; 
         }
       }
 
@@ -422,7 +422,7 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* SLIM SCROLLING HEADER (52PX DESKTOP / 42PX MOBILE & PHOTO BRAND COLORS) */
+      /* SLIM SCROLLING HEADER (55PX DESKTOP / 42PX MOBILE & PHOTO BRAND COLORS) */
       header#siteDynamicHeader {
         position: relative !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -462,7 +462,7 @@
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
-          font-size: 1.45rem !important;
+          font-size: 1.60rem !important;
         }
       }
 
