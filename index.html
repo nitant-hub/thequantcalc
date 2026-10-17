@@ -48,8 +48,8 @@ html { scroll-padding-top: 75px; }
 body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
 .wrap { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; flex: 1; }
-.grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+.grid { display: grid; grid-template-columns: 1fr !important; gap: 1.5rem; }
+main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; width: 100%; }
 
 .card { 
   background: var(--surface); 
@@ -460,7 +460,7 @@ p.intro, #cintro, #cintro:empty {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 6.5rem;
+  column-gap: 4.5rem;
   row-gap: 0.75rem;
   margin: 0;
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -884,15 +884,11 @@ footer a:hover { color: var(--link); }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
 }
-  @media(min-width:992px) { 
-  /* Force single full-width column ONLY on the Home Page */
-  .grid:has(#home[style*="display: flex"]) { 
-    grid-template-columns: 1fr; 
+@media(min-width:992px) { 
+  /* Keep single full-width column on BOTH Home Page and Category Pages (Matches Photos 3 & 4) */
+  .grid { 
+    grid-template-columns: 1fr !important; 
   }
-  /* Keep the split layout for Category pages */
-  .grid:has(#catView[style*="display: block"]) { 
-    grid-template-columns: 2.5fr 1fr; 
-  } 
 }  
 </style>
 <script>if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')</script>
@@ -1218,11 +1214,7 @@ footer a:hover { color: var(--link); }
 
     var catBox = document.getElementById('catBox');
     if (catBox) {
-      if (cur && cur !== 'all') {
-        catBox.style.setProperty('display', 'block', 'important');
-      } else {
-        catBox.style.setProperty('display', 'none', 'important');
-      }
+      catBox.style.setProperty('display', 'none', 'important');
     }
 
     var home=document.getElementById('home'), cv=document.getElementById('catView');
