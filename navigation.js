@@ -462,7 +462,7 @@
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
-          font-size: 1.60rem !important;
+          font-size: 2.00rem !important;
         }
       }
 
