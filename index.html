@@ -101,20 +101,30 @@ p.intro, #cintro, #cintro:empty {
 .sr input, #catView .sr input { display: none !important; }
 
 /* ========================================================
-   HOMEPAGE: SPLIT LAYOUT & PROGRESSIVE FLOWS
+   HOMEPAGE: SPLIT LAYOUT & PROGRESSIVE FLOWS (AUTO-WRAP)
    ======================================================== */
 #home-top-section {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-wrap: wrap; /* CRITICAL: Drops the sidebar down if space runs out */
+  gap: 1.5rem;     /* Equivalent to ~30px */
+  justify-content: center; /* Keeps everything centered */
   width: 100%;
 }
+
+.home-calc-wrapper {
+  flex: 1 1 auto;
+  min-width: 650px; /* Prevents calculator from squashing */
+  max-width: 100%;  /* Ensures it doesn't overflow container */
+}
+
 .home-side-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 100%;
+  width: 300px;    /* Locks the AdSense width */
+  flex-shrink: 0;  /* Prevents the ad from cutting */
 }
+
 #homeMobileSearchSlot {
   width: 100%;
 }
@@ -122,18 +132,14 @@ p.intro, #cintro, #cintro:empty {
   display: none;
 }
 
-@media (min-width: 768px) {
-  #home-top-section {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+/* For mobile phones (forces a stack and allows calculator to resize for small screens) */
+@media (max-width: 768px) {
   .home-calc-wrapper {
-    flex: 1 1 0%;
-    min-width: 0;
+    min-width: 100%; 
   }
   .home-side-wrapper {
-    flex: 0 0 300px;
-    width: 300px;
+    width: 100%;
+    align-items: center; /* Centers AdSense on mobile */
   }
 }
 
