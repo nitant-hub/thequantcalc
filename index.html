@@ -112,8 +112,8 @@ p.intro, #cintro, #cintro:empty {
 }
 
 .home-calc-wrapper {
-  flex: 1 1 auto;
-  min-width: 650px; 
+  flex: 1 1 650px; /* Allows the calculator to shrink down to 650px before wrapping */
+  min-width: 0; 
   max-width: 100%;  
 }
 
@@ -121,8 +121,9 @@ p.intro, #cintro, #cintro:empty {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 300px;
-  flex-shrink: 0;
+  flex: 1 1 300px; /* Forces 300px width on desktop, stretches 100% when wrapped */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 #homeMobileSearchSlot {
@@ -135,11 +136,11 @@ p.intro, #cintro, #cintro:empty {
 /* For mobile phones */
 @media (max-width: 768px) {
   .home-calc-wrapper {
-    min-width: 100%; 
+    flex-basis: 100%;
   }
   .home-side-wrapper {
+    flex-basis: 100%;
     width: 100%;
-    align-items: stretch; 
   }
 }
 
