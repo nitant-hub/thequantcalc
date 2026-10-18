@@ -247,7 +247,7 @@
       .dyn-search-wrapper.in-home-bottom {
         max-width: 100% !important;
         width: 100% !important;
-        margin: 0 auto !important;
+        margin: 0 0 0.5rem 0 !important; /* Left Aligned Constraint */
       }
       .dyn-search-wrapper.in-home-bottom .dyn-search-row {
         height: 48px !important;
