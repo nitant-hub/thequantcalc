@@ -353,6 +353,7 @@
       /* Home Page ONLY Responsive Override */
       #homeSideWrapper .dyn-adsense-slot {
         width: 100% !important;
+        max-width: 100% !important;
         min-height: 250px !important;
         height: auto !important;
       }
