@@ -252,7 +252,7 @@
       .dyn-search-wrapper.in-home-bottom .dyn-search-row {
         height: 48px !important;
         border: 2px solid #3b82f6 !important;
-        border-radius: 24px !important;
+        border-radius: 8px !important; /* Changed to rectangular */
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15) !important;
         padding: 0 18px !important;
       }
