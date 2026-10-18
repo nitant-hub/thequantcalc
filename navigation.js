@@ -45,9 +45,6 @@
         display: none !important;
       }
 
-      /* ========================================================
-         CATEGORY VIEW & DESKTOP TOOL POST LAYOUT (MATCHES PHOTOS 3 & 4)
-         ======================================================== */
       #catView {
         display: flex !important;
         flex-direction: column !important;
@@ -246,19 +243,6 @@
         z-index: 20 !important;
       }
 
-      .dyn-search-wrapper.in-home-desktop {
-        max-width: min(340px, calc(100% - 32px)) !important;
-        width: 100% !important;
-        margin: 1.25rem auto 1.5rem auto !important;
-      }
-      @media (min-width: 768px) {
-        .dyn-search-wrapper.in-home-desktop {
-          max-width: 320px !important;
-          margin-left: 15% !important;
-          margin-right: auto !important;
-        }
-      }
-
       .dyn-search-wrapper.in-cat-pane {
         max-width: 100% !important;
         width: 100% !important;
@@ -352,6 +336,7 @@
         font-weight: 500 !important;
         box-sizing: border-box !important;
         flex-shrink: 0 !important;
+        margin: 0 auto;
       }
       [data-theme="dark"] .dyn-adsense-300x250 {
         background: #1e293b !important;
@@ -422,7 +407,6 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* SLIM SCROLLING HEADER (55PX DESKTOP / 42PX MOBILE & PHOTO BRAND COLORS) */
       header#siteDynamicHeader {
         position: relative !important; top: 0 !important; left: 0 !important; width: 100% !important;
         height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
@@ -1570,12 +1554,26 @@
       }
 
       if (isMobile) {
-        const drawerSlot = document.getElementById("dynDrawerSearchSlot");
-        globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-        if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
-          drawerSlot.appendChild(globalSearchNode);
+        if (!isCategory && !isTool) {
+          const homeSideWrapper = document.getElementById("homeSideWrapper");
+          const homeMobileSearchSlot = document.getElementById("homeMobileSearchSlot");
+          
+          if (homeSideWrapper && globalAdsenseNode.parentElement !== homeSideWrapper) {
+            homeSideWrapper.appendChild(globalAdsenseNode);
+          }
+          
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          if (homeMobileSearchSlot && globalSearchNode.parentElement !== homeMobileSearchSlot) {
+            homeMobileSearchSlot.appendChild(globalSearchNode);
+          }
+        } else {
+          const drawerSlot = document.getElementById("dynDrawerSearchSlot");
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
+            drawerSlot.appendChild(globalSearchNode);
+          }
+          if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
         }
-        if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
         return;
       }
 
@@ -1615,13 +1613,19 @@
       }
 
       if (!isCategory && !isTool) {
-        const homeSlot = document.getElementById("homeSearchSlot");
-        if (homeSlot) {
-          globalSearchNode.className = "dyn-search-wrapper in-home-desktop";
-          if (globalSearchNode.parentElement !== homeSlot) {
-            homeSlot.appendChild(globalSearchNode);
+        const homeSideWrapper = document.getElementById("homeSideWrapper");
+        if (homeSideWrapper) {
+          if (globalAdsenseNode.parentElement !== homeSideWrapper) {
+            homeSideWrapper.appendChild(globalAdsenseNode);
           }
-          if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
+          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          if (globalSearchNode.parentElement !== homeSideWrapper) {
+            homeSideWrapper.appendChild(globalSearchNode);
+          }
+          
+          if (homeSideWrapper.firstElementChild !== globalAdsenseNode) {
+            homeSideWrapper.insertBefore(globalAdsenseNode, homeSideWrapper.firstChild);
+          }
           return;
         }
       }
@@ -1644,7 +1648,9 @@
     relocateSearch();
 
     const observer = new MutationObserver(() => {
+      observer.disconnect();
       relocateSearch();
+      observer.observe(document.body, { childList: true, subtree: true });
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
