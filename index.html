@@ -112,7 +112,7 @@ p.intro, #cintro, #cintro:empty {
 }
 
 .home-calc-wrapper {
-  flex: 1 1 650px; /* Allows the calculator to shrink down to 650px before wrapping */
+  flex: 1 1 650px; 
   min-width: 0; 
   max-width: 100%;  
 }
@@ -121,15 +121,17 @@ p.intro, #cintro, #cintro:empty {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  flex: 1 1 300px; /* Forces 300px width on desktop, stretches 100% when wrapped */
+  flex: 1 1 300px; 
   max-width: 100%;
   box-sizing: border-box;
 }
 
-#homeMobileSearchSlot {
+#homeSearchSlot {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
-#homeMobileSearchSlot:empty {
+#homeSearchSlot:empty {
   display: none;
 }
 
@@ -141,6 +143,7 @@ p.intro, #cintro, #cintro:empty {
   .home-side-wrapper {
     flex-basis: 100%;
     width: 100%;
+    align-items: stretch; 
   }
 }
 
@@ -921,7 +924,7 @@ footer a:hover { color: var(--link); }
   <!-- HOME VIEW -->
   <div id="home" style="display:flex;flex-direction:column;gap:1.5rem">
     
-    <!-- Top Section for Calculator & Sidebar Ad/Search -->
+    <!-- Top Section for Calculator & Sidebar Ad -->
     <div id="home-top-section">
       <div class="home-calc-wrapper">
         <section class="card calc-card">
@@ -929,7 +932,7 @@ footer a:hover { color: var(--link); }
         </section>
       </div>
       <div class="home-side-wrapper" id="homeSideWrapper">
-        <!-- AdSense and Search Slots correctly populated by navigation.js -->
+        <!-- AdSense Slot correctly populated by navigation.js -->
       </div>
     </div>
 
@@ -941,8 +944,8 @@ footer a:hover { color: var(--link); }
       <div style="background:rgba(255,251,235,0.7);color:#92400e;border-color:#fde68a"><b>Free</b><span>Forever</span></div>
     </div>
 
-    <!-- Search Bar Slot specifically below features for Mobile -->
-    <div id="homeMobileSearchSlot"></div>
+    <!-- Central Search Bar Slot specifically below features -->
+    <div id="homeSearchSlot"></div>
 
     <!-- Dynamic Progressive Rows on Homepage -->
     <div id="homeSections" style="display:flex;flex-direction:column;gap:1.5rem"></div>
