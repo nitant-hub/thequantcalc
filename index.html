@@ -106,23 +106,23 @@ p.intro, #cintro, #cintro:empty {
 #home-top-section {
   display: flex;
   flex-wrap: wrap; /* CRITICAL: Drops the sidebar down if space runs out */
-  gap: 1.5rem;     /* Equivalent to ~30px */
-  justify-content: center; /* Keeps everything centered */
+  gap: 1.5rem;     
+  justify-content: center; 
   width: 100%;
 }
 
 .home-calc-wrapper {
   flex: 1 1 auto;
-  min-width: 650px; /* Prevents calculator from squashing */
-  max-width: 100%;  /* Ensures it doesn't overflow container */
+  min-width: 650px; 
+  max-width: 100%;  
 }
 
 .home-side-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 300px;    /* Locks the AdSense width */
-  flex-shrink: 0;  /* Prevents the ad from cutting */
+  width: 300px;
+  flex-shrink: 0;
 }
 
 #homeMobileSearchSlot {
@@ -132,14 +132,14 @@ p.intro, #cintro, #cintro:empty {
   display: none;
 }
 
-/* For mobile phones (forces a stack and allows calculator to resize for small screens) */
+/* For mobile phones */
 @media (max-width: 768px) {
   .home-calc-wrapper {
     min-width: 100%; 
   }
   .home-side-wrapper {
     width: 100%;
-    align-items: center; /* Centers AdSense on mobile */
+    align-items: stretch; 
   }
 }
 
