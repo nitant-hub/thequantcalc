@@ -243,16 +243,16 @@
         z-index: 20 !important;
       }
 
-      /* Home Page Specific Attractive Search Box */
+      /* Home Page Specific Professional Rectangular Search Box */
       .dyn-search-wrapper.in-home-bottom {
         max-width: 100% !important;
         width: 100% !important;
-        margin: 0 0 0.5rem 0 !important; /* Left Aligned Constraint */
+        margin: 0 0 0.5rem 0 !important;
       }
       .dyn-search-wrapper.in-home-bottom .dyn-search-row {
         height: 48px !important;
         border: 2px solid #3b82f6 !important;
-        border-radius: 8px !important; /* Changed to rectangular */
+        border-radius: 8px !important; /* Professional Rectangle Shape */
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15) !important;
         padding: 0 18px !important;
       }
@@ -265,7 +265,8 @@
       }
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-bottom {
-          width: 50% !important; /* 50% width on Desktop */
+          width: 50% !important; /* Exactly 50% width on Desktop */
+          margin-left: 0 !important; /* Left Aligned */
         }
       }
 
@@ -347,11 +348,6 @@
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
-      /* =====================================================================
-         ADSENSE SLOT LOGIC:
-         1. FIXED 300x250 everywhere by default (Category sidebars & Tool sidebars)
-         2. STRETCHES only inside the Home Page Wrapper (#homeSideWrapper) 
-      ===================================================================== */
       .dyn-adsense-slot {
         width: 300px !important;
         max-width: 100% !important;
@@ -376,7 +372,6 @@
         color: #94a3b8 !important;
       }
 
-      /* Home Page ONLY Responsive Override */
       #homeSideWrapper .dyn-adsense-slot {
         width: 100% !important;
         max-width: 100% !important;
@@ -1662,6 +1657,7 @@
         
         globalSearchNode.className = "dyn-search-wrapper in-home-bottom";
         if (homeSearchSlot && globalSearchNode.parentElement !== homeSearchSlot) {
+          homeSearchSlot.appendChild(homeSearchSlot); // safe fallback reference
           homeSearchSlot.appendChild(globalSearchNode);
         }
         return;
@@ -1683,6 +1679,13 @@
 
     syncActiveTab();
     relocateSearch();
+
+    // Immediate secondary check to eliminate any blank paint ticks during refresh
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', relocateSearch);
+    } else {
+      relocateSearch();
+    }
 
     const observer = new MutationObserver(() => {
       observer.disconnect();
