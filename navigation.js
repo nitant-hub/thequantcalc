@@ -321,7 +321,12 @@
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
-      .dyn-adsense-300x250 {
+      /* =====================================================================
+         ADSENSE SLOT LOGIC:
+         1. FIXED 300x250 everywhere by default (Category sidebars & Tool sidebars)
+         2. STRETCHES only inside the Home Page Wrapper (#homeSideWrapper) 
+      ===================================================================== */
+      .dyn-adsense-slot {
         width: 300px !important;
         max-width: 100% !important;
         height: 250px !important;
@@ -338,10 +343,18 @@
         flex-shrink: 0 !important;
         margin: 0 auto;
       }
-      [data-theme="dark"] .dyn-adsense-300x250 {
+
+      [data-theme="dark"] .dyn-adsense-slot {
         background: #1e293b !important;
         border-color: #334155 !important;
         color: #94a3b8 !important;
+      }
+
+      /* Home Page ONLY Responsive Override */
+      #homeSideWrapper .dyn-adsense-slot {
+        width: 100% !important;
+        min-height: 250px !important;
+        height: auto !important;
       }
 
       .dyn-search-dropdown {
@@ -1141,12 +1154,12 @@
       });
     }
 
-    let globalAdsenseNode = document.getElementById("dynAdsense300");
+    let globalAdsenseNode = document.getElementById("dynAdsenseSlot");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
-      globalAdsenseNode.id = "dynAdsense300";
-      globalAdsenseNode.className = "dyn-adsense-300x250";
-      globalAdsenseNode.innerHTML = `<span>Advertisement (300x250)</span>`;
+      globalAdsenseNode.id = "dynAdsenseSlot";
+      globalAdsenseNode.className = "dyn-adsense-slot";
+      globalAdsenseNode.innerHTML = `<span>Advertisement</span>`;
     }
 
     const fallbackTools = [
