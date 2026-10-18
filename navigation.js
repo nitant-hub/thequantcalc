@@ -243,6 +243,32 @@
         z-index: 20 !important;
       }
 
+      /* Home Page Specific Attractive Search Box */
+      .dyn-search-wrapper.in-home-bottom {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+      }
+      .dyn-search-wrapper.in-home-bottom .dyn-search-row {
+        height: 48px !important;
+        border: 2px solid #3b82f6 !important;
+        border-radius: 24px !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15) !important;
+        padding: 0 18px !important;
+      }
+      .dyn-search-wrapper.in-home-bottom .dyn-modern-input {
+        font-size: 16px !important;
+      }
+      [data-theme="dark"] .dyn-search-wrapper.in-home-bottom .dyn-search-row {
+        border-color: #38bdf8 !important;
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15) !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-search-wrapper.in-home-bottom {
+          width: 50% !important; /* 50% width on Desktop */
+        }
+      }
+
       .dyn-search-wrapper.in-cat-pane {
         max-width: 100% !important;
         width: 100% !important;
@@ -1570,15 +1596,15 @@
       if (isMobile) {
         if (!isCategory && !isTool) {
           const homeSideWrapper = document.getElementById("homeSideWrapper");
-          const homeMobileSearchSlot = document.getElementById("homeMobileSearchSlot");
+          const homeSearchSlot = document.getElementById("homeSearchSlot");
           
           if (homeSideWrapper && globalAdsenseNode.parentElement !== homeSideWrapper) {
             homeSideWrapper.appendChild(globalAdsenseNode);
           }
           
-          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-          if (homeMobileSearchSlot && globalSearchNode.parentElement !== homeMobileSearchSlot) {
-            homeMobileSearchSlot.appendChild(globalSearchNode);
+          globalSearchNode.className = "dyn-search-wrapper in-home-bottom";
+          if (homeSearchSlot && globalSearchNode.parentElement !== homeSearchSlot) {
+            homeSearchSlot.appendChild(globalSearchNode);
           }
         } else {
           const drawerSlot = document.getElementById("dynDrawerSearchSlot");
@@ -1628,20 +1654,17 @@
 
       if (!isCategory && !isTool) {
         const homeSideWrapper = document.getElementById("homeSideWrapper");
-        if (homeSideWrapper) {
-          if (globalAdsenseNode.parentElement !== homeSideWrapper) {
-            homeSideWrapper.appendChild(globalAdsenseNode);
-          }
-          globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-          if (globalSearchNode.parentElement !== homeSideWrapper) {
-            homeSideWrapper.appendChild(globalSearchNode);
-          }
-          
-          if (homeSideWrapper.firstElementChild !== globalAdsenseNode) {
-            homeSideWrapper.insertBefore(globalAdsenseNode, homeSideWrapper.firstChild);
-          }
-          return;
+        const homeSearchSlot = document.getElementById("homeSearchSlot");
+        
+        if (homeSideWrapper && globalAdsenseNode.parentElement !== homeSideWrapper) {
+          homeSideWrapper.appendChild(globalAdsenseNode);
         }
+        
+        globalSearchNode.className = "dyn-search-wrapper in-home-bottom";
+        if (homeSearchSlot && globalSearchNode.parentElement !== homeSearchSlot) {
+          homeSearchSlot.appendChild(globalSearchNode);
+        }
+        return;
       }
 
       if (sidebarAside) {
