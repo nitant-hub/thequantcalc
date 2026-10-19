@@ -1290,12 +1290,16 @@
         @keyframes bqblink { 50% { opacity: 0; } }
 
         .bc-screen-container { position: relative; }
-        .bq-paper-btn { position: absolute; top: 5px; right: 5px; z-index: 3; font: 700 10px/1 inherit; padding: 3px 6px; border-radius: 5px; border: 1px solid currentColor; background: transparent; color: inherit; opacity: .55; cursor: pointer; }
-        .bq-paper-btn.on, .bq-paper-btn:hover { opacity: 1; }
+        .bq-tools { display: flex; align-items: center; gap: 4px; padding: 5px 6px; flex: 0 0 auto; border-bottom: 1px solid rgba(128, 128, 128, .3); color: inherit; }
+        .bq-tsp { flex: 1 1 auto; }
+        .bq-tb { font: 700 11px/1 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; min-width: 30px; min-height: 28px; padding: 4px 7px; border-radius: 6px; border: 1px solid currentColor; background: transparent; color: inherit; opacity: .72; cursor: pointer; white-space: nowrap; }
+        .bq-tb.on, .bq-tb:hover { opacity: 1; }
+        .bq-tb[aria-pressed="true"] { opacity: 1; background: rgba(128, 128, 128, .3); }
+        .bq-tb:disabled { opacity: .3; cursor: default; }
+        .bq-tb:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
+        @media (max-width: 360px) { .bq-tb { padding: 4px 5px; font-size: 10px; min-width: 26px; } .bq-tools { gap: 3px; padding: 4px; } }
         .bq-paper[hidden] { display: none; }
         .bq-paper { overflow-y: auto; overflow-x: hidden; text-align: left; color: inherit; }
-        .bq-pbar { display: flex; gap: 4px; }
-        .bq-pbar button { font: 700 10px/1 inherit; padding: 3px 6px; border-radius: 5px; border: 1px solid currentColor; background: transparent; color: inherit; opacity: .7; cursor: pointer; }
         .bq-pexpr, .bq-pres { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; min-width: 0; }
         .bq-pexpr { overflow-x: auto; white-space: nowrap; }
         .bq-pdel { background: none; border: 0; color: inherit; opacity: .6; cursor: pointer; }
@@ -1308,20 +1312,17 @@
         .bq-pexpr .bq-rw + .bq-rad::before { content: "\221a"; }
         .bq-pexpr .fx-caret { display: none; }
         /* ===== DISPLAY: stacked calculation log + typeset input / result (layout for every look) ===== */
-        .bc-screen-container #bc-display { text-align: left; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: 22px !important; font-weight: 500; height: auto !important; min-height: 38px; line-height: 1.4; padding: 8px 12px 4px; }
+        .bc-screen-container #bc-display { text-align: left; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: calc(22px * var(--bq-z, 1)) !important; font-weight: 500; height: auto !important; min-height: 38px; line-height: 1.4; padding: 8px 12px 4px; }
         .bc-screen-container #bc-display.bq-tall { line-height: 1.6 !important; }
         .bc-screen-container .bc-output-box:not(.bq-plot) { height: auto !important; min-height: 44px; overflow-y: visible; padding: 4px 12px 8px; align-items: flex-end; }
-        .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { display: flex; flex-direction: column; align-items: flex-end; text-align: right; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: 26px; font-weight: 600; line-height: 1.15; white-space: normal; overflow-wrap: anywhere; }
+        .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { display: flex; flex-direction: column; align-items: flex-end; text-align: right; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: calc(26px * var(--bq-z, 1)); font-weight: 600; line-height: 1.15; white-space: normal; overflow-wrap: anywhere; }
         #bc-live-out .bq-frac { font-size: .9em; margin: 0; }
         #bc-live-out .bq-n { border-bottom: 1.5px solid currentColor; padding: 0 .25em .04em; }
         #bc-live-out .bq-d { padding: .04em .25em 0; }
         #bc-live-out .bq-dec { font-size: .75em; font-weight: 500; opacity: .85; margin-top: .15em; }
         #bc-display .bq-ans, .bq-pexpr .bq-ans { display: inline-block; border: 1.5px solid currentColor; border-radius: 4px; padding: 0 .3em; font-size: .85em; line-height: 1.25; vertical-align: middle; }
-        .bq-paper-btn { left: auto; right: 5px; }
         .bq-paper { max-height: 170px; padding: 8px 8px 0; border-bottom: 1px solid rgba(128, 128, 128, .35); }
-        .bq-pbar { position: static; margin: 0 0 4px; }
-        .bq-paper-btn { top: 5px; }
-        .bq-card { padding: 6px 4px 8px; border-bottom: 1px solid rgba(128, 128, 128, .3); font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; }
+        .bq-card { font-size: calc(20px * var(--bq-z, 1)); padding: 6px 4px 8px; border-bottom: 1px solid rgba(128, 128, 128, .3); font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; }
         .bq-chead { display: flex; align-items: center; gap: 8px; font: 600 12px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; opacity: .85; margin-bottom: 4px; }
         .bq-chip { padding: 3px 8px; border-radius: 6px; background: rgba(128, 128, 128, .28); }
         .bq-chead .bq-pdel { margin-left: auto; font-size: inherit; padding: 2px 4px; }
@@ -1340,11 +1341,11 @@
         .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn { background: #3a3633; color: #e7e5e4 !important; border-color: #4b4541; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn:hover { background: #4a4541; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-mem-indicator { color: #a8a29e; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper-btn, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-pbar button { color: #d6d3d1; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tools { color: #d6d3d1; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box::-webkit-scrollbar-thumb, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper::-webkit-scrollbar-thumb { background: #57514d; }
         .bq-paper { color: #e7e5e4; }
         .blogger-calc-classic[class*="calc-theme-"] .bq-paper { color: inherit; }
-        @media (max-width: 420px) { .bc-screen-container #bc-display { font-size: 20px !important; } .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { font-size: 23px; } }
+        @media (max-width: 420px) { .bc-screen-container #bc-display { font-size: calc(20px * var(--bq-z, 1)) !important; } .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { font-size: calc(23px * var(--bq-z, 1)); } }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -1363,7 +1364,15 @@
     </div>
 
     <div class="bc-screen-container">
-        <button type="button" class="bq-paper-btn on" id="bc-paper-btn" aria-expanded="true" aria-controls="bc-paper" title="Show or hide previous calculations" onclick="BloggerCalc.togglePaper()">Log</button>
+        <div class="bq-tools" id="bc-tools" role="toolbar" aria-label="Display controls">
+            <button type="button" class="bq-tb on" id="bc-paper-btn" aria-expanded="true" aria-controls="bc-paper" title="Show or hide previous calculations" onclick="BloggerCalc.togglePaper()">Log</button>
+            <button type="button" class="bq-tb" id="bc-sd-btn" aria-pressed="false" title="Switch the result between fraction and decimal" onclick="BloggerCalc.toggleSD()">S⇔D</button>
+            <span class="bq-tsp"></span>
+            <button type="button" class="bq-tb" id="bc-zoom-out" aria-label="Zoom out display" title="Zoom out display" onclick="BloggerCalc.zoomDisp(-1)">A−</button>
+            <button type="button" class="bq-tb" id="bc-zoom-pct" aria-label="Reset display zoom" title="Reset display zoom" onclick="BloggerCalc.zoomDisp(0)">100%</button>
+            <button type="button" class="bq-tb" id="bc-zoom-in" aria-label="Zoom in display" title="Zoom in display" onclick="BloggerCalc.zoomDisp(1)">A+</button>
+            <button type="button" class="bq-tb" id="bc-log-clear" aria-label="Clear all calculation history" title="Clear all calculation history" onclick="BloggerCalc.clearHistory()">Clear</button>
+        </div>
         <div class="bq-paper" id="bc-paper" aria-label="Calculation log"></div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
@@ -3759,6 +3768,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             function bqPaint() {
                 const t = bcDisp.textContent;
                 if (t !== '0' && /[\u221a\u221b+\-\u2212\u00d7\u00f7*\/=xyz^\u00b2\u00b3]|sqrt|cbrt/.test(t)) { bcDisp.innerHTML = bqMath(t); }
+                if (bcLiveOut.dataset.bqsd !== undefined && !fxActive()) { const pv = bcLiveOut.dataset.bqsd; delete bcLiveOut.dataset.bqsd; delete bcLiveOut.dataset.copy; bcLiveOut.innerText = '= ' + pv; }
                 bcDisp.scrollLeft = bcDisp.scrollWidth;
                 document.getElementById('bc-output-box').classList.remove('bq-error');
             }
@@ -3767,7 +3777,55 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 try { new MutationObserver(sync).observe(bcDisp, { childList: true }); } catch (e) {}
             })();
             /* ---------- DISPLAY: calculation log inside the screen (reads the existing history rows; nothing stored here except a time stamp attribute) ---------- */
-            let bqPaperZoom = 0;
+            let bqPaperBuilt = false, bqSD = false, bqZ = 1;
+            try { bqSD = localStorage.getItem('bc_sd_mode') === '1'; const zz = parseFloat(localStorage.getItem('bc_disp_zoom')); if (zz >= 0.8 && zz <= 1.8) { bqZ = zz; } } catch (e) {}
+            function bqZoom(d) {
+                bqZ = d === 0 ? 1 : Math.min(1.8, Math.max(0.8, Math.round((bqZ + d * 0.1) * 10) / 10));
+                try { localStorage.setItem('bc_disp_zoom', String(bqZ)); } catch (e) {}
+                bqApplyZoom();
+            }
+            function bqApplyZoom() {
+                document.querySelector('.bc-screen-container').style.setProperty('--bq-z', String(bqZ));
+                document.getElementById('bc-zoom-pct').textContent = Math.round(bqZ * 100) + '%';
+                document.getElementById('bc-zoom-out').disabled = bqZ <= 0.8;
+                document.getElementById('bc-zoom-in').disabled = bqZ >= 1.8;
+            }
+            function bqSyncInk() {
+                try { const c = getComputedStyle(bcDisp).color; document.getElementById('bc-tools').style.color = c; document.getElementById('bc-paper').style.color = c; } catch (e) {}
+            }
+            /* S<->D on every non-FX tab: the exact fraction comes from the same maths engine as the FX-991CW tab and is only shown when its decimal agrees with this tab's own result */
+            function bqSDRender() {
+                const btn = document.getElementById('bc-sd-btn');
+                if (fxActive()) { return; }
+                btn.setAttribute('aria-pressed', String(bqSD));
+                const live = bcLiveOut;
+                if (live.dataset.bqsd !== undefined) { const prev = live.dataset.bqsd; delete live.dataset.bqsd; delete live.dataset.copy; live.innerText = '= ' + prev; }
+                if (!bqSD) { return; }
+                const pane = document.querySelector('.bc-tab-pane.active'); const row = bcHistList.querySelector('.hist-entry');
+                if (!pane || !row || !window.FXEngine || /^(bc-fin|bc-graph|bc-history-tab|bc-adv)$/.test(pane.id) || row.getAttribute('data-tab') !== pane.id) { return; }
+                try {
+                    const expr = decodeURIComponent(row.getAttribute('data-expr') || ''), res = decodeURIComponent(row.getAttribute('data-res') || '');
+                    if (!expr || !res || (live.innerText || '').trim() !== '= ' + res.trim()) { return; }
+                    const E = window.FXEngine, st = Object.assign({}, E.DEFAULT_SETTINGS);
+                    const r = E.calc(expr, E.newEnv(), st);
+                    if (!E.isQ(r.value)) { return; }
+                    const ft = E.formatValue(r.value, st, false, true);
+                    const f = bqFracHtml(ft.replace(/−/g, '-'));
+                    if (!f) { return; }
+                    const shown = parseFloat(res.replace(/[,\s]/g, '').replace(/−/g, '-'));
+                    const exact = E.toNum(r.value);
+                    if (!isFinite(shown) || Math.abs(shown - exact) > 1e-9 * Math.max(1, Math.abs(exact))) { return; }
+                    live.innerHTML = f.html;
+                    const dsp = document.createElement('span'); dsp.className = 'bq-dec'; dsp.textContent = '= ' + res; live.appendChild(dsp);
+                    live.dataset.bqsd = res; live.dataset.copy = '= ' + ft;
+                } catch (e) { /* keep the plain decimal */ }
+            }
+            function bqToggleSD() {
+                if (fxActive()) { fx.key('sd'); return; }
+                bqSD = !bqSD;
+                try { localStorage.setItem('bc_sd_mode', bqSD ? '1' : '0'); } catch (e) {}
+                bqSDRender();
+            }
             const BQ_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             function bqStamp() {
                 const rows = bcHistList.querySelectorAll('.hist-entry:not([data-ts])');
@@ -3801,24 +3859,23 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 const btn = document.getElementById('bc-paper-btn');
                 const open = btn.classList.contains('on');
                 box.hidden = !open;
+                bqSyncInk();
                 if (!open) { return; }
+                const wasBottom = !bqPaperBuilt || (box.scrollHeight - box.scrollTop - box.clientHeight < 12);
+                const oldTop = box.scrollTop;
                 box.innerHTML = '';
-                const bar = document.createElement('div'); bar.className = 'bq-pbar';
                 const mk = function(txt, label, fn) { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.setAttribute('aria-label', label); b.title = label; b.onclick = fn; return b; };
-                bar.appendChild(mk('A\u2212', 'Smaller text', function() { bqPaperZoom = Math.max(-2, bqPaperZoom - 1); bqPaperRefresh(); }));
-                bar.appendChild(mk('A+', 'Larger text', function() { bqPaperZoom = Math.min(3, bqPaperZoom + 1); bqPaperRefresh(); }));
-                bar.appendChild(mk('Clear', 'Clear all history', function() { BloggerCalc.clearHistory(); bqPaperRefresh(); }));
-                box.appendChild(bar);
-                const rows = bcHistList.querySelectorAll('.hist-entry');
+                const all = bcHistList.querySelectorAll('.hist-entry');
+                const rows = Array.prototype.slice.call(all, 0, 40).reverse();
                 let shown = 0;
-                for (let i = 0; i < rows.length && shown < 40; i++) {
+                for (let i = 0; i < rows.length; i++) {
                     const r = rows[i];
                     let expr, res;
                     try { expr = decodeURIComponent(r.getAttribute('data-expr') || ''); res = decodeURIComponent(r.getAttribute('data-res') || ''); } catch (e) { continue; }
                     if (!expr) { continue; }
                     shown++;
                     const tabId = r.getAttribute('data-tab') || '';
-                    const card = document.createElement('div'); card.className = 'bq-card'; card.style.fontSize = (20 + bqPaperZoom * 3) + 'px';
+                    const card = document.createElement('div'); card.className = 'bq-card';
                     const head = document.createElement('div'); head.className = 'bq-chead';
                     const chip = document.createElement('span'); chip.className = 'bq-chip'; chip.textContent = (typeof TAB_NAMES !== 'undefined' && TAB_NAMES[tabId]) || '=';
                     const tm = document.createElement('span'); tm.className = 'bq-ctime'; tm.textContent = bqTime(r.getAttribute('data-ts'));
@@ -3841,15 +3898,20 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     }
                     box.appendChild(card);
                 }
+                bqPaperBuilt = true;
+                box.scrollTop = wasBottom ? box.scrollHeight : oldTop;
                 if (!shown) { const em = document.createElement('div'); em.className = 'bq-pempty'; em.textContent = 'No previous calculations yet'; box.appendChild(em); }
             }
             try { new MutationObserver(function() { bqPaperRefresh(); }).observe(bcHistList, { childList: true }); } catch (e) {}
             try { if (localStorage.getItem('bc_log_open') === '0') { const bb = document.getElementById('bc-paper-btn'); bb.classList.remove('on'); bb.setAttribute('aria-expanded', 'false'); } } catch (e) {}
-            setTimeout(bqPaperRefresh, 0);
+            bqApplyZoom();
+            try { const sw = document.getElementById('blogger-calc-widget'); if (sw) { new MutationObserver(bqSyncInk).observe(sw, { attributes: true, attributeFilter: ['class'] }); } } catch (e) {}
+            setTimeout(function() { bqPaperRefresh(); bqSyncInk(); }, 0);
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
                 box.classList.toggle('bq-error', /(error|invalid|cannot|undefined|not defined|syntax)/i.test(txt) && !/^[=\u2248]/.test(txt));
+                bqSDRender();
             }
 
             function bcUpdate() {
@@ -5562,6 +5624,8 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     historyEmpty = true;
                     try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
                 },
+                zoomDisp: function(d) { bqZoom(d); },
+                toggleSD: function() { bqToggleSD(); },
                 togglePaper: function() {
                     const btn = document.getElementById('bc-paper-btn');
                     const on = !btn.classList.contains('on'); btn.classList.toggle('on', on); btn.setAttribute('aria-expanded', String(on));
