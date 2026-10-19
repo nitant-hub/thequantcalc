@@ -311,7 +311,7 @@
       }
       [data-theme="dark"] .dyn-search-row {
         background: var(--bg-surface, #1e293b) !important;
-        border-color: #3b82f6 !important;
+        border-color: #38bdf8 !important;
       }
       .dyn-search-wrapper .dyn-search-row:focus-within {
         border-color: #1d4ed8 !important;
@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Pitch Black with Dark Bento Card Background Tint & Cyan Glow
+         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist Glassy Black UX
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,11 +453,11 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(145deg, #030712 0%, #090d16 100%) !important;
-        backdrop-filter: blur(16px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+        background: linear-gradient(180deg, rgba(13, 17, 28, 0.96) 0%, rgba(3, 7, 18, 0.98) 100%) !important;
+        backdrop-filter: blur(20px) saturate(190%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
         border-bottom: 1px solid rgba(56, 189, 248, 0.45) !important;
-        box-shadow: 0 4px 22px -2px rgba(56, 189, 248, 0.15), 0 8px 28px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+        box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(56, 189, 248, 0.25) !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
@@ -485,7 +485,7 @@
         align-items: baseline !important;
         position: relative !important;
         padding-bottom: 3px !important;
-        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) !important;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) !important;
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
@@ -548,23 +548,25 @@
         align-items: center !important; 
         padding: 0 0.85rem !important;
         border-radius: 10px !important;
-        border: 1px solid transparent !important; 
+        border: 1px solid rgba(255, 255, 255, 0.08) !important; 
+        background: rgba(255, 255, 255, 0.03) !important;
         text-transform: uppercase !important;
         cursor: pointer !important;
         transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
       }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
         color: #38bdf8 !important; 
-        background: rgba(255, 255, 255, 0.08) !important; 
-        border-color: rgba(56, 189, 248, 0.25) !important;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25) !important;
+        background: rgba(56, 189, 248, 0.1) !important; 
+        border-color: rgba(56, 189, 248, 0.35) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
         transform: translateY(-1px) !important;
       }
       .dyn-desktop-nav a.dyn-nav-item.is-active { 
         color: #38bdf8 !important; 
-        background: rgba(30, 58, 138, 0.45) !important; 
-        border: 1px solid rgba(56, 189, 248, 0.4) !important;
-        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15) !important;
+        background: rgba(30, 58, 138, 0.5) !important; 
+        border: 1px solid rgba(56, 189, 248, 0.45) !important;
+        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
       }
 
       .dyn-more-pill-btn {
@@ -579,7 +581,7 @@
         height: auto !important; 
         text-transform: uppercase !important;
         text-decoration: none !important;
-        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+        box-shadow: 0 4px 14px rgba(0, 102, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -588,12 +590,12 @@
       }
       .dyn-more-pill-btn:hover { 
         transform: translateY(-1px) scale(1.03) !important;
-        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
       }
 
       .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.55rem !important; }
       .dyn-theme-btn {
-        background: rgba(255, 255, 255, 0.08) !important; 
+        background: rgba(255, 255, 255, 0.06) !important; 
         border: 1px solid rgba(255, 255, 255, 0.16) !important; 
         border-radius: 9px !important;
         font-size: 0.95rem !important; 
@@ -604,17 +606,17 @@
         display: flex !important; 
         align-items: center !important; 
         justify-content: center !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
         transition: all 0.15s ease !important;
       }
       .dyn-theme-btn:hover {
-        background: rgba(255, 255, 255, 0.15) !important;
+        background: rgba(56, 189, 248, 0.15) !important;
         border-color: rgba(56, 189, 248, 0.4) !important;
         transform: translateY(-1px) !important;
       }
       
       .dyn-hamburger-btn { 
-        background: rgba(255, 255, 255, 0.08) !important; 
+        background: rgba(255, 255, 255, 0.06) !important; 
         border: 1px solid rgba(255, 255, 255, 0.16) !important; 
         border-radius: 9px !important; 
         cursor: pointer !important; 
@@ -626,11 +628,11 @@
         justify-content: center !important; 
         gap: 4px !important; 
         padding: 0 !important; 
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
         transition: all 0.2s ease !important;
       }
       .dyn-hamburger-btn:hover {
-        background: rgba(255, 255, 255, 0.15) !important;
+        background: rgba(56, 189, 248, 0.15) !important;
       }
       .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #f8fafc !important; border-radius: 2px !important; display: block !important; }
       
