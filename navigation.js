@@ -21,11 +21,11 @@
     }
     style.textContent = `
       :root { 
-        --nav-header-height: 42px; 
+        --nav-header-height: 45px; 
       }
       @media (min-width: 768px) {
         :root { 
-          --nav-header-height: 55px; 
+          --nav-header-height: 60px; 
         }
       }
 
@@ -252,7 +252,7 @@
       .dyn-search-wrapper.in-home-bottom .dyn-search-row {
         height: 48px !important;
         border: 2px solid #3b82f6 !important;
-        border-radius: 8px !important; /* Professional Rectangle Shape */
+        border-radius: 8px !important;
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15) !important;
         padding: 0 18px !important;
       }
@@ -265,8 +265,8 @@
       }
       @media (min-width: 768px) {
         .dyn-search-wrapper.in-home-bottom {
-          width: 50% !important; /* Exactly 50% width on Desktop */
-          margin-left: 0 !important; /* Left Aligned */
+          width: 50% !important;
+          margin-left: 0 !important;
         }
       }
 
@@ -442,47 +442,58 @@
         border-color: var(--border-color, #334155) !important;
       }
 
+      /* =====================================================================
+         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Photo 1 & Photo 2)
+      ===================================================================== */
       header#siteDynamicHeader {
-        position: relative !important; top: 0 !important; left: 0 !important; width: 100% !important;
-        height: var(--nav-header-height) !important; z-index: 999999 !important; box-sizing: border-box !important;
-        background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%) !important;
-        border-bottom: 1px solid rgba(99, 179, 255, 0.25) !important;
-        box-shadow: 0 4px 20px rgba(10, 20, 80, 0.4) !important;
-        display: flex !important; align-items: center !important; justify-content: space-between !important;
+        position: relative !important; 
+        top: 0 !important; 
+        left: 0 !important; 
+        width: 100% !important;
+        height: var(--nav-header-height) !important; 
+        z-index: 999999 !important; 
+        box-sizing: border-box !important;
+        background: linear-gradient(135deg, rgba(2, 8, 24, 0.95) 0%, rgba(13, 31, 92, 0.92) 50%, rgba(10, 20, 60, 0.95) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+        box-shadow: 0 6px 24px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: space-between !important;
         padding: 0 1.25rem !important;
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
       }
-      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.45rem !important; text-decoration: none !important; }
-      .logo-symbol {
-        color: #3b82f6 !important;
-        font-weight: 900 !important;
-        font-size: 1.3rem !important;
-        line-height: 1 !important;
-      }
+      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.5rem !important; text-decoration: none !important; }
+      
       .dyn-brand-text {
-        font-size: 1.28rem !important;
+        font-size: 2.00rem !important;
         font-weight: 800 !important;
-        letter-spacing: -0.4px !important;
+        letter-spacing: -0.6px !important;
         line-height: 1 !important;
         display: inline-flex !important;
         align-items: center !important;
       }
+      @media (min-width: 768px) {
+        .dyn-brand-text {
+          font-size: 2.50rem !important;
+        }
+      }
+
       .dyn-brand-text .b-the {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3) !important;
       }
       .dyn-brand-text .b-quant {
         color: #38bdf8 !important;
         -webkit-text-fill-color: #38bdf8 !important;
+        text-shadow: 0 2px 12px rgba(56, 189, 248, 0.5) !important;
       }
       .dyn-brand-text .b-cals {
         color: #34d399 !important;
         -webkit-text-fill-color: #34d399 !important;
-      }
-      @media (min-width: 768px) {
-        .dyn-brand-text {
-          font-size: 2.00rem !important;
-        }
+        text-shadow: 0 2px 12px rgba(52, 211, 153, 0.5) !important;
       }
 
       .dyn-desktop-nav { 
@@ -546,7 +557,7 @@
       .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.6rem !important; }
       .dyn-theme-btn {
         background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 7px !important;
-        font-size: 0.92rem !important; cursor: pointer !important; color: #fff !important; width: 30px !important; height: 30px !important;
+        font-size: 0.92rem !important; cursor: pointer !important; color: #fff !important; width: 32px !important; height: 32px !important;
         display: flex !important; align-items: center !important; justify-content: center !important;
       }
       
@@ -555,8 +566,8 @@
         border: 1px solid rgba(255, 255, 255, 0.2) !important; 
         border-radius: 7px !important; 
         cursor: pointer !important; 
-        width: 30px !important; 
-        height: 30px !important; 
+        width: 32px !important; 
+        height: 32px !important; 
         display: flex !important; 
         flex-direction: column !important; 
         align-items: center !important; 
@@ -1027,7 +1038,7 @@
     const navContainer = document.createElement("div");
     navContainer.innerHTML = `
       <header id="siteDynamicHeader">
-        <a href="/" class="dyn-brand"><div class="logo-symbol">&sum;</div><span class="dyn-brand-text"><span class="b-the">the</span><span class="b-quant">quant</span><span class="b-cals">cals</span></span></a>
+        <a href="/" class="dyn-brand"><span class="dyn-brand-text"><span class="b-the">The</span><span class="b-quant">Quant</span><span class="b-cals">Calc</span></span></a>
         <nav class="dyn-desktop-nav">${desktopLinksHtml}</nav>
         <div class="dyn-right-controls">
           <button id="dynThemeToggleBtn" class="dyn-theme-btn" aria-label="Toggle Theme">🌙</button>
@@ -1657,7 +1668,6 @@
         
         globalSearchNode.className = "dyn-search-wrapper in-home-bottom";
         if (homeSearchSlot && globalSearchNode.parentElement !== homeSearchSlot) {
-          homeSearchSlot.appendChild(homeSearchSlot); // safe fallback reference
           homeSearchSlot.appendChild(globalSearchNode);
         }
         return;
@@ -1680,7 +1690,6 @@
     syncActiveTab();
     relocateSearch();
 
-    // Immediate secondary check to eliminate any blank paint ticks during refresh
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', relocateSearch);
     } else {
