@@ -21,7 +21,7 @@
     }
     style.textContent = `
       :root { 
-        --nav-header-height: 45px; 
+        --nav-header-height: 48px; 
       }
       @media (min-width: 768px) {
         :root { 
@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Photo 1 & Photo 2)
+         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Photo 1 Style)
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,95 +453,162 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(135deg, rgba(2, 8, 24, 0.95) 0%, rgba(13, 31, 92, 0.92) 50%, rgba(10, 20, 60, 0.95) 100%) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
-        box-shadow: 0 6px 24px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 254, 0.90) 100%) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border-bottom: 1px solid rgba(203, 213, 225, 0.85) !important;
+        box-shadow: 0 10px 25px -6px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03), inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
         padding: 0 1.25rem !important;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif !important;
       }
-      .dyn-brand { display: flex !important; align-items: center !important; gap: 0.5rem !important; text-decoration: none !important; }
+      [data-theme="dark"] header#siteDynamicHeader {
+        background: linear-gradient(180deg, rgba(21, 28, 46, 0.94) 0%, rgba(13, 18, 30, 0.90) 100%) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 10px 25px -6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+      }
+
+      .dyn-brand { 
+        display: inline-flex !important; 
+        flex-direction: column !important; 
+        align-items: flex-start !important; 
+        justify-content: center !important;
+        text-decoration: none !important; 
+        position: relative !important;
+        padding: 2px 0 !important;
+      }
       
       .dyn-brand-text {
-        font-size: 2.00rem !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.6px !important;
+        font-size: 1.75rem !important;
+        font-weight: 900 !important;
+        font-style: italic !important;
+        letter-spacing: -0.035em !important;
         line-height: 1 !important;
         display: inline-flex !important;
-        align-items: center !important;
+        align-items: baseline !important;
+        position: relative !important;
+        padding-bottom: 3px !important;
+        filter: drop-shadow(0 1px 1px rgba(15, 23, 42, 0.06)) !important;
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
-          font-size: 2.50rem !important;
+          font-size: 2.35rem !important;
+          padding-bottom: 4px !important;
         }
       }
 
+      /* Photo 1 Exact Color Palette: Deep Navy ("The") + Royal Blue ("Quant") + Emerald Green ("Calc") */
       .dyn-brand-text .b-the {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3) !important;
+        color: #0b192c !important;
+        -webkit-text-fill-color: #0b192c !important;
       }
+      [data-theme="dark"] .dyn-brand-text .b-the {
+        color: #f8fafc !important;
+        -webkit-text-fill-color: #f8fafc !important;
+      }
+
       .dyn-brand-text .b-quant {
-        color: #38bdf8 !important;
-        -webkit-text-fill-color: #38bdf8 !important;
-        text-shadow: 0 2px 12px rgba(56, 189, 248, 0.5) !important;
+        background: linear-gradient(135deg, #0052cc 0%, #0077ff 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        color: #0066ff !important;
       }
+
       .dyn-brand-text .b-cals {
-        color: #34d399 !important;
-        -webkit-text-fill-color: #34d399 !important;
-        text-shadow: 0 2px 12px rgba(52, 211, 153, 0.5) !important;
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        color: #10b981 !important;
+      }
+
+      /* Photo 1 Signature Blue-to-Green Tapered Arc Swoosh */
+      .dyn-brand-text::after {
+        content: "" !important;
+        position: absolute !important;
+        bottom: -1px !important;
+        left: 6% !important;
+        width: 90% !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, transparent 0%, #0066ff 25%, #06b6d4 60%, #10b981 100%) !important;
+        border-radius: 100% 100% 0 0 / 100% 100% 0 0 !important;
+        transform: skewX(-18deg) !important;
+        opacity: 0.95 !important;
+        pointer-events: none !important;
+      }
+      @media (min-width: 768px) {
+        .dyn-brand-text::after {
+          height: 3.5px !important;
+          bottom: -1px !important;
+        }
       }
 
       .dyn-desktop-nav { 
         display: none; 
         align-items: center; 
-        gap: 0.55rem; 
+        gap: 0.45rem; 
         height: 100%; 
         margin-left: auto; 
         margin-right: 1rem; 
       }
       .dyn-desktop-nav a.dyn-nav-item {
         text-decoration: none !important; 
-        font-size: 0.90rem !important; 
+        font-size: 0.86rem !important; 
         font-weight: 800 !important; 
-        letter-spacing: 0.45px !important; 
-        color: #f8fafc !important;
-        height: 100% !important; 
+        letter-spacing: 0.35px !important; 
+        color: #1e293b !important;
+        height: 36px !important; 
         display: flex !important; 
         align-items: center !important; 
-        padding: 0 0.8rem !important;
-        border-bottom: 3px solid transparent !important; 
+        padding: 0 0.85rem !important;
+        border-radius: 10px !important;
+        border: 1px solid transparent !important; 
         text-transform: uppercase !important;
         cursor: pointer !important;
-        transition: all 0.16s ease !important;
+        transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item {
+        color: #e2e8f0 !important;
       }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
-        color: #38bdf8 !important; 
-        background: rgba(255,255,255,0.09) !important; 
+        color: #0066ff !important; 
+        background: rgba(255, 255, 255, 0.85) !important; 
+        border-color: rgba(203, 213, 225, 0.7) !important;
+        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.05), inset 0 1px 0 #ffffff !important;
+        transform: translateY(-1px) !important;
+      }
+      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item:hover {
+        color: #38bdf8 !important;
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
       }
       .dyn-desktop-nav a.dyn-nav-item.is-active { 
-        color: #38bdf8 !important; 
-        border-bottom: 3px solid #38bdf8 !important; 
-        background: rgba(30,58,138,0.55) !important; 
+        color: #0066ff !important; 
+        background: #ffffff !important; 
+        border: 1px solid rgba(0, 102, 255, 0.25) !important;
+        box-shadow: 0 4px 10px rgba(0, 102, 255, 0.1), inset 0 1px 0 #ffffff !important;
+      }
+      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item.is-active {
+        color: #38bdf8 !important;
+        background: rgba(30, 58, 138, 0.45) !important;
+        border-color: rgba(56, 189, 248, 0.35) !important;
       }
 
       .dyn-more-pill-btn {
-        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important; 
-        border: 1px solid rgba(255, 255, 255, 0.45) !important; 
+        background: linear-gradient(135deg, #0066ff 0%, #10b981 100%) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.6) !important; 
         color: #ffffff !important;
-        font-weight: 900 !important; 
-        font-size: 0.84rem !important; 
-        letter-spacing: 0.5px !important;
-        padding: 0.26rem 0.95rem !important; 
+        font-weight: 800 !important; 
+        font-size: 0.82rem !important; 
+        letter-spacing: 0.45px !important;
+        padding: 0.32rem 0.95rem !important; 
         border-radius: 20px !important;
         height: auto !important; 
         text-transform: uppercase !important;
         text-decoration: none !important;
-        box-shadow: 0 3px 14px rgba(236, 72, 153, 0.45) !important;
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -549,37 +616,63 @@
         transition: all 0.2s ease !important;
       }
       .dyn-more-pill-btn:hover { 
-        background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%) !important; 
         transform: translateY(-1px) scale(1.03) !important;
-        box-shadow: 0 5px 18px rgba(236, 72, 153, 0.65) !important;
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
       }
 
-      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.6rem !important; }
+      .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.55rem !important; }
       .dyn-theme-btn {
-        background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 7px !important;
-        font-size: 0.92rem !important; cursor: pointer !important; color: #fff !important; width: 32px !important; height: 32px !important;
-        display: flex !important; align-items: center !important; justify-content: center !important;
+        background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important; 
+        border: 1px solid rgba(203, 213, 225, 0.9) !important; 
+        border-radius: 9px !important;
+        font-size: 0.95rem !important; 
+        cursor: pointer !important; 
+        color: #0f172a !important; 
+        width: 34px !important; 
+        height: 34px !important;
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: center !important;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06), inset 0 1px 0 #ffffff !important;
+        transition: all 0.15s ease !important;
+      }
+      .dyn-theme-btn:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 8px rgba(15, 23, 42, 0.1), inset 0 1px 0 #ffffff !important;
+      }
+      [data-theme="dark"] .dyn-theme-btn {
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        color: #f8fafc !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
       }
       
       .dyn-hamburger-btn { 
-        background: rgba(255, 255, 255, 0.1) !important; 
-        border: 1px solid rgba(255, 255, 255, 0.2) !important; 
-        border-radius: 7px !important; 
+        background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important; 
+        border: 1px solid rgba(203, 213, 225, 0.9) !important; 
+        border-radius: 9px !important; 
         cursor: pointer !important; 
-        width: 32px !important; 
-        height: 32px !important; 
+        width: 34px !important; 
+        height: 34px !important; 
         display: flex !important; 
         flex-direction: column !important; 
         align-items: center !important; 
         justify-content: center !important; 
         gap: 4px !important; 
         padding: 0 !important; 
-        transition: background 0.2s ease !important;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06), inset 0 1px 0 #ffffff !important;
+        transition: all 0.2s ease !important;
       }
       .dyn-hamburger-btn:hover {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: #ffffff !important;
       }
-      .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #fff !important; border-radius: 2px !important; display: block !important; }
+      .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #0f172a !important; border-radius: 2px !important; display: block !important; }
+      [data-theme="dark"] .dyn-hamburger-btn {
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+      }
+      [data-theme="dark"] .dyn-hamburger-btn span.bar { background: #f8fafc !important; }
       
       .dyn-hamburger-btn span.close-x { 
         font-size: 2rem !important; 
@@ -592,7 +685,7 @@
       
       .dyn-hamburger-btn.is-active {
         background: var(--bg-surface, #ffffff) !important;
-        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(203, 213, 225, 0.9) !important;
         border-bottom: 1px solid var(--bg-surface, #ffffff) !important;
         border-radius: 10px 10px 0 0 !important;
         box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.12) !important;
