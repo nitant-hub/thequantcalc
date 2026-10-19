@@ -1272,8 +1272,79 @@
         .hist-entry { padding: 6px 8px; }
         .hist-content { overflow-wrap: anywhere; font-weight: 600; }
         .hist-entry strong { font-size: 1.05em; }
-        #btn-bc-history-tab { text-transform: none !important; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bc-tab-btn.active { box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.85), 0 -2px 3px rgba(0, 0, 0, 0.06); }
+
+        /* ===== DISPLAY: typeset maths (layout only, no colours) ===== */
+        #bc-display .bq-h, #bc-display .bq-rw { display: none; }
+        #bc-display .bq-fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.05; font-size: .78em; margin: 0 .2em; }
+        #bc-display .bq-fn { padding: 0 .2em .1em; }
+        #bc-display .bq-fd { padding: .1em .2em 0; }
+        #bc-display .bq-fb { display: block; font-size: 0; height: 0; border-top: 1.5px solid currentColor; }
+        #bc-display .bq-hat { display: none; }
+        #bc-display .bq-sup { font-size: .68em; vertical-align: .6em; line-height: 0; }
+        #bc-display .bq-ph { display: inline-block; width: .7em; height: .9em; border: 1px dashed currentColor; opacity: .45; vertical-align: middle; }
+        #bc-display .bq-rw + .bq-rad::before { content: "\221a"; margin-right: 1px; }
+        #bc-display .bq-rw.bq-cb + .bq-rad::before { content: "\221b"; }
+        #bc-display .fx-caret { display: inline-block; width: 0; height: 1.05em; border-left: 2px solid currentColor; vertical-align: middle; animation: bqblink 1s steps(2) infinite; }
+        #bc-display.bq-tall { height: auto !important; line-height: 1.5 !important; }
+        @keyframes bqblink { 50% { opacity: 0; } }
+
+        .bc-screen-container { position: relative; }
+        .bq-paper-btn { position: absolute; top: 5px; right: 5px; z-index: 3; font: 700 10px/1 inherit; padding: 3px 6px; border-radius: 5px; border: 1px solid currentColor; background: transparent; color: inherit; opacity: .55; cursor: pointer; }
+        .bq-paper-btn.on, .bq-paper-btn:hover { opacity: 1; }
+        .bq-paper[hidden] { display: none; }
+        .bq-paper { overflow-y: auto; overflow-x: hidden; text-align: left; color: inherit; }
+        .bq-pbar { display: flex; gap: 4px; }
+        .bq-pbar button { font: 700 10px/1 inherit; padding: 3px 6px; border-radius: 5px; border: 1px solid currentColor; background: transparent; color: inherit; opacity: .7; cursor: pointer; }
+        .bq-pexpr, .bq-pres { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; min-width: 0; }
+        .bq-pexpr { overflow-x: auto; white-space: nowrap; }
+        .bq-pdel { background: none; border: 0; color: inherit; opacity: .6; cursor: pointer; }
+        .bq-pempty { opacity: .6; font-size: 13px; padding: 6px 4px; }
+        .bq-pexpr .bq-h, .bq-pexpr .bq-rw, .bq-pexpr .bq-hat { display: none; }
+        .bq-pexpr .bq-fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.05; margin: 0 .2em; }
+        .bq-pexpr .bq-fb { display: block; font-size: 0; height: 0; border-top: 1.5px solid currentColor; }
+        .bq-pexpr .bq-sup { font-size: .68em; vertical-align: .6em; line-height: 0; }
+        .bq-pexpr .bq-rad { border-top: 1.5px solid currentColor; }
+        .bq-pexpr .bq-rw + .bq-rad::before { content: "\221a"; }
+        .bq-pexpr .fx-caret { display: none; }
+        /* ===== DISPLAY: stacked calculation log + typeset input / result (layout for every look) ===== */
+        .bc-screen-container #bc-display { text-align: left; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: 22px !important; font-weight: 500; height: auto !important; min-height: 38px; line-height: 1.4; padding: 8px 12px 4px; }
+        .bc-screen-container #bc-display.bq-tall { line-height: 1.6 !important; }
+        .bc-screen-container .bc-output-box:not(.bq-plot) { height: auto !important; min-height: 44px; overflow-y: visible; padding: 4px 12px 8px; align-items: flex-end; }
+        .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { display: flex; flex-direction: column; align-items: flex-end; text-align: right; font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: 26px; font-weight: 600; line-height: 1.15; white-space: normal; overflow-wrap: anywhere; }
+        #bc-live-out .bq-frac { font-size: .9em; margin: 0; }
+        #bc-live-out .bq-n { border-bottom: 1.5px solid currentColor; padding: 0 .25em .04em; }
+        #bc-live-out .bq-d { padding: .04em .25em 0; }
+        #bc-live-out .bq-dec { font-size: .75em; font-weight: 500; opacity: .85; margin-top: .15em; }
+        #bc-display .bq-ans, .bq-pexpr .bq-ans { display: inline-block; border: 1.5px solid currentColor; border-radius: 4px; padding: 0 .3em; font-size: .85em; line-height: 1.25; vertical-align: middle; }
+        .bq-paper-btn { left: auto; right: 5px; }
+        .bq-paper { max-height: 170px; padding: 8px 8px 0; border-bottom: 1px solid rgba(128, 128, 128, .35); }
+        .bq-pbar { position: static; margin: 0 0 4px; }
+        .bq-paper-btn { top: 5px; }
+        .bq-card { padding: 6px 4px 8px; border-bottom: 1px solid rgba(128, 128, 128, .3); font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; }
+        .bq-chead { display: flex; align-items: center; gap: 8px; font: 600 12px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; opacity: .85; margin-bottom: 4px; }
+        .bq-chip { padding: 3px 8px; border-radius: 6px; background: rgba(128, 128, 128, .28); }
+        .bq-chead .bq-pdel { margin-left: auto; font-size: inherit; padding: 2px 4px; }
+        .bq-pexpr { display: block; width: 100%; text-align: left; }
+        .bq-pres { display: flex; flex-direction: column; align-items: flex-end; width: 100%; max-width: none; margin-top: 4px; text-align: right; }
+        .bq-pres .bq-frac { display: inline-flex; flex-direction: column; text-align: center; line-height: 1.1; font-size: .95em; }
+        .bq-pres .bq-n { border-bottom: 1.5px solid currentColor; padding: 0 .25em .04em; }
+        .bq-pres .bq-d { padding: .04em .25em 0; }
+        .bq-pres .bq-dec { font-size: .8em; font-weight: 500; opacity: .85; margin-top: .15em; }
+        .bq-pexpr .bq-fr { font-size: .85em; }
+
+        /* Default look: dark screen, like a notebook page (other looks keep their own colours) */
+        .blogger-calc-classic:not([class*="calc-theme-"]) { --bq-disp-bg: #262322; --bq-expr: #f5f5f4; --bq-result: #fafaf9; --bq-secondary: #a8a29e; --bq-border: #3d3835; --bq-error: #fca5a5; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box { color: #f5f5f4 !important; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) { background: transparent; border-top: 0; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn { background: #3a3633; color: #e7e5e4 !important; border-color: #4b4541; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn:hover { background: #4a4541; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-mem-indicator { color: #a8a29e; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper-btn, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-pbar button { color: #d6d3d1; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box::-webkit-scrollbar-thumb, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper::-webkit-scrollbar-thumb { background: #57514d; }
+        .bq-paper { color: #e7e5e4; }
+        .blogger-calc-classic[class*="calc-theme-"] .bq-paper { color: inherit; }
+        @media (max-width: 420px) { .bc-screen-container #bc-display { font-size: 20px !important; } .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { font-size: 23px; } }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -1282,16 +1353,18 @@
 
         <button class="bc-tab-btn active" role="tab" id="btn-bc-basic" onclick="BloggerCalc.switchTab('bc-basic', this)">Basic</button>
         <button class="bc-tab-btn" role="tab" id="btn-bc-sci-desktop" onclick="BloggerCalc.switchTab('bc-sci-desktop', this)">Scientific</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-gate" onclick="BloggerCalc.switchTab('bc-gate', this)">Exam Practice</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-adv" onclick="BloggerCalc.switchTab('bc-adv', this)">Advanced Scientific</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-prog" onclick="BloggerCalc.switchTab('bc-prog', this)">Programmable Scientific</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-graph" onclick="BloggerCalc.switchTab('bc-graph', this)">Advanced Graphing</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-cas" onclick="BloggerCalc.switchTab('bc-cas', this)">Graphing &amp; Mathematics</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-fin" onclick="BloggerCalc.switchTab('bc-fin', this)">Financial</button>
-        <button class="bc-tab-btn" role="tab" id="btn-bc-history-tab" onclick="BloggerCalc.switchTab('bc-history-tab', this)">History</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-gate" onclick="BloggerCalc.switchTab('bc-gate', this)">GATE</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-adv" onclick="BloggerCalc.switchTab('bc-adv', this)">FX-991CW</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-prog" onclick="BloggerCalc.switchTab('bc-prog', this)">FX-5800P</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-graph" onclick="BloggerCalc.switchTab('bc-graph', this)">HP Prime</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-cas" onclick="BloggerCalc.switchTab('bc-cas', this)">TI-Nspire</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-fin" onclick="BloggerCalc.switchTab('bc-fin', this)">HP 12C</button>
+        <button class="bc-tab-btn" role="tab" id="btn-bc-history-tab" onclick="BloggerCalc.switchTab('bc-history-tab', this)">HISTORY</button>
     </div>
 
     <div class="bc-screen-container">
+        <button type="button" class="bq-paper-btn on" id="bc-paper-btn" aria-expanded="true" aria-controls="bc-paper" title="Show or hide previous calculations" onclick="BloggerCalc.togglePaper()">Log</button>
+        <div class="bq-paper" id="bc-paper" aria-label="Calculation log"></div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
             <div class="bc-out-meta">
@@ -1757,7 +1830,7 @@
 
 
     <!-- FX-991CW MENU / CATALOG / mode panels -->
-    <div class="bc-menu-panel" id="bc-fx-panel" role="dialog" aria-label="Advanced Scientific menu and modes">
+    <div class="bc-menu-panel" id="bc-fx-panel" role="dialog" aria-label="FX-991CW menu and modes">
         <div class="bc-filter-head">
             <div class="bc-filter-title" id="bc-fx-title">MENU</div>
             <button type="button" class="bc-filter-close" aria-label="Close panel" onclick="BloggerCalc.fxClosePanel()">❌</button>
@@ -3476,7 +3549,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             }
 
             /* ---------- DISPLAY: maths typography (wraps text in spans; textContent stays identical) ---------- */
-            function bqMath(src) {
+            function bqMathOld(src) {
                 const esc = function(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
                 const ENDS = /[0-9A-Za-z\u03c0)!%.\u00b2\u00b3\u00b9\u2070-\u2079\]]/;
                 function conv(s) {
@@ -3505,12 +3578,274 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 }
                 return conv(String(src));
             }
+            /* ---------- DISPLAY: proper maths typesetting (display only; every source character is kept, in order) ---------- */
+            function bqTypeset(src, opts) {
+                opts = opts || {};
+                const tight = !!opts.tight;
+                const source = String(src);
+                const esc = function(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+                let s = source, caretPos = s.indexOf('\u0001');
+                if (caretPos >= 0) { s = s.replace('\u0001', ''); }
+                const CARET = '<span class="fx-caret"></span>';
+                /* tokens */
+                const toks = [];
+                const re = /(\s+)|(\d+(?:\.\d*)?|\.\d+)|([⁰¹²³⁴-⁹⁺-⁾ⁿˣʸ]+)|([A-Za-zπ_]+)|([\s\S])/g;
+                let m, pre = '';
+                while ((m = re.exec(s)) !== null) {
+                    if (m[1]) { pre += m[1]; continue; }
+                    const t = m[2] ? 'num' : m[3] ? 'sup' : m[4] ? 'id' : 'ch';
+                    toks.push({ t: t, v: m[0], s: m.index, e: m.index + m[0].length, pre: pre });
+                    pre = '';
+                }
+                const tail = pre;
+                const n = toks.length;
+                let p = 0;
+                let caretDone = caretPos < 0;
+                /* caret placement: before the token that starts at/after caretPos, or inside a token */
+                function leafText(tk) {
+                    let out = esc(tk.pre);
+                    if (!caretDone && caretPos >= tk.s - tk.pre.length && caretPos <= tk.s) { out += CARET; caretDone = true; return out + esc(tk.v); }
+                    if (!caretDone && caretPos > tk.s && caretPos < tk.e) { const k = caretPos - tk.s; caretDone = true; return out + esc(tk.v.slice(0, k)) + CARET + esc(tk.v.slice(k)); }
+                    return out + esc(tk.v);
+                }
+                const isOpTok = function(tk, set) { return tk && tk.t === 'ch' && set.indexOf(tk.v) >= 0; };
+                const isDiv = function(tk) { return isOpTok(tk, '/÷'); };
+                const isMul = function(tk) { return isOpTok(tk, '*×·'); };
+                const isSign = function(tk) { return isOpTok(tk, '+-−'); };
+                const isRoot = function(tk) { return isOpTok(tk, '√∛'); };
+                const startsAtom = function(tk) { return !!tk && (tk.t === 'num' || tk.t === 'id' || isOpTok(tk, '(') || isRoot(tk)); };
+                const endsOperand = function(i) { const pt = toks[i - 1]; return !!pt && (pt.t === 'num' || pt.t === 'id' || pt.t === 'sup' || isOpTok(pt, ')!%')); };
+                const ph = '<span class="bq-ph"></span>';
+                function leaf(i) {
+                    const tk = toks[i];
+                    if (tk.t === 'ch' && '+-−×÷*/='.indexOf(tk.v) >= 0 && endsOperand(i)) { return '<span class="bq-op">' + leafText(tk) + '</span>'; }
+                    if (tk.t === 'id' && (tk.v === 'x' || tk.v === 'y' || tk.v === 'z') && !(toks[i + 1] && toks[i + 1].t === 'id')) { return '<i class="bq-var">' + leafText(tk) + '</i>'; }
+                    if (tk.t === 'id' && tk.v === 'Ans') { return '<span class="bq-ans">' + leafText(tk) + '</span>'; }
+                    return leafText(tk);
+                }
+                function hid(i) { return '<span class="bq-h">' + leafText(toks[i]) + '</span>'; }
+                function group() { /* at '(' : returns {h, hp, single} */
+                    const openIdx = p; p++;
+                    let inner = parseExpr();
+                    while (p < n && isOpTok(toks[p], ',;')) { inner += leaf(p); p++; inner += parseExpr(); }
+                    let closeIdx = -1;
+                    if (p < n && isOpTok(toks[p], ')')) { closeIdx = p; p++; }
+                    const o = leafText(toks[openIdx]);
+                    const oh = '<span class="bq-h">' + o + '</span>';
+                    const c = closeIdx >= 0 ? leafText(toks[closeIdx]) : '';
+                    const ch = closeIdx >= 0 ? '<span class="bq-h">' + c + '</span>' : '';
+                    return { h: o + inner + c, hp: oh + inner + ch, single: true };
+                }
+                function atom(need) {
+                    const tk = toks[p];
+                    if (!tk) { return { h: need ? ph : '', hp: need ? ph : '', single: false }; }
+                    if (tk.t === 'num') { const h = leaf(p); p++; return { h: h, hp: h, single: false }; }
+                    if (tk.t === 'id') {
+                        const i = p; p++;
+                        if (p < n && isOpTok(toks[p], '(')) {
+                            if ((tk.v === 'sqrt' || tk.v === 'cbrt') && !caretPos_in(tk)) {
+                                const g = group();
+                                const word = '<span class="bq-rw' + (tk.v === 'cbrt' ? ' bq-cb' : '') + '">' + leafText(tk) + '</span>';
+                                const h = word + '<span class="bq-rad">' + g.hp + '</span>';
+                                return { h: h, hp: h, single: false };
+                            }
+                            const g = group(); const h = leaf(i) + g.h; return { h: h, hp: h, single: false };
+                        }
+                        const h = leaf(i); return { h: h, hp: h, single: false };
+                    }
+                    if (isOpTok(tk, '(')) { return group(); }
+                    if (isRoot(tk)) {
+                        const i = p; p++;
+                        const a = atom(true);
+                        const h = leaf(i) + '<span class="bq-rad">' + a.hp + '</span>';
+                        return { h: h, hp: h, single: false };
+                    }
+                    /* anything else (operator, ')' or ',') where an operand was expected */
+                    return { h: need ? ph : '', hp: need ? ph : '', single: false, empty: true };
+                }
+                function caretPos_in(tk) { return false; }
+                function powerOperand() {
+                    let h = '';
+                    if (p < n && isSign(toks[p])) { h += leaf(p); p++; }
+                    const a = atom(true);
+                    h += a.hp;
+                    if (p < n && toks[p].t === 'ch' && '!%'.indexOf(toks[p].v) >= 0) { h += leaf(p); p++; }
+                    if (p < n && isOpTok(toks[p], '^')) { const i = p; p++; const inner = powerOperand(); h += '<span class="bq-hat">' + leafText(toks[i]) + '</span><sup class="bq-sup">' + inner + '</sup>'; }
+                    return h;
+                }
+                function unit() { /* one atom with postfix and power */
+                    const a = atom(false);
+                    let h = a.h, hp = a.hp, single = a.single;
+                    for (;;) {
+                        const tk = toks[p];
+                        if (!tk) break;
+                        if (tk.t === 'sup' || (tk.t === 'ch' && '!%'.indexOf(tk.v) >= 0)) { const l = leaf(p); p++; h += l; hp += l; single = false; continue; }
+                        if (isOpTok(tk, '^')) {
+                            const i = p; p++;
+                            const inner = powerOperand();
+                            const part = '<span class="bq-hat">' + leafText(toks[i]) + '</span><sup class="bq-sup">' + inner + '</sup>';
+                            h += part; hp += part; single = false; continue;
+                        }
+                        break;
+                    }
+                    return { h: h, hp: hp, single: single };
+                }
+                function factor(chain) {
+                    let lead = '';
+                    while (p < n && isSign(toks[p]) && toks[p + 1] && (toks[p + 1].t !== 'ch' || '(√∛'.indexOf(toks[p + 1].v) >= 0)) { lead += leaf(p); p++; }
+                    let u = unit();
+                    let h = lead + u.h, hp = lead + u.hp, single = !lead && u.single;
+                    if (chain) {
+                        while (p < n && startsAtom(toks[p]) && !(toks[p].t === 'id' && /^(nPr|nCr)$/.test(toks[p].v))) {
+                            const nx = unit(); h += nx.h; hp += nx.hp; single = false;
+                        }
+                    }
+                    return { h: h, hp: hp, single: single };
+                }
+                function frac(acc, rhs, divIdx) {
+                    const tk = toks[divIdx];
+                    let num = acc.single ? acc.hp : acc.h;
+                    if (!caretDone && caretPos >= tk.s - tk.pre.length && caretPos <= tk.s) { num += CARET; caretDone = true; }
+                    const den = rhs.single ? rhs.hp : rhs.h;
+                    const bar = '<span class="bq-fb">' + esc(tk.pre) + esc(tk.v) + '</span>';
+                    const h = '<span class="bq-fr"><span class="bq-fn">' + (num || ph) + '</span>' + bar + '<span class="bq-fd">' + (den || ph) + '</span></span>';
+                    return { h: h, hp: h, single: false };
+                }
+                function term() {
+                    let acc = factor(tight);
+                    if (acc.h === '' && p < n && !(isDiv(toks[p]) || isMul(toks[p]))) { return acc; }
+                    for (;;) {
+                        const tk = toks[p];
+                        if (!tk) break;
+                        if (isDiv(tk)) { const i = p; p++; const rhs = factor(tight); if (rhs.h === '' && !(p >= n)) { /* operand missing */ } acc = frac(acc, rhs, i); continue; }
+                        if (isMul(tk)) { const i = p; p++; const rhs = factor(tight); acc = { h: acc.h + leaf(i) + rhs.h, hp: acc.h + leaf(i) + rhs.h, single: false }; continue; }
+                        if (!tight && startsAtom(tk) && !(tk.t === 'id' && /^(nPr|nCr)$/.test(tk.v))) { const rhs = factor(false); acc = { h: acc.h + rhs.h, hp: acc.h + rhs.h, single: false }; continue; }
+                        break;
+                    }
+                    return acc;
+                }
+                function parseExpr() {
+                    let out = '';
+                    while (p < n) {
+                        const tk = toks[p];
+                        if (isOpTok(tk, '),;]') ) { break; }
+                        const before = p;
+                        if (isSign(tk)) { out += leaf(p); p++; continue; }
+                        const t = term();
+                        out += t.h;
+                        if (p === before) { out += leaf(p); p++; }
+                    }
+                    return out;
+                }
+                let html = '';
+                while (p < n) {
+                    const before = p;
+                    html += parseExpr();
+                    if (p < n && p === before) { html += leaf(p); p++; }
+                    else if (p < n) { html += leaf(p); p++; }
+                }
+                if (!caretDone) { html += CARET; }
+                html += esc(tail);
+                /* safety net: the plain text of the result must equal the source text, otherwise fall back */
+                const plain = html.replace(/<[^>]*>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                if (plain !== source.replace('\u0001', '')) { return null; }
+                return html;
+            }
+            function bqMath(src, tight) {
+                let h = null;
+                try { h = bqTypeset(src, { tight: !!tight }); } catch (e) { h = null; }
+                return h === null ? bqMathOld(src) : h;
+            }
             function bqPaint() {
                 const t = bcDisp.textContent;
-                if (t !== '0' && /[\u221a\u221b+\-\u2212\u00d7\u00f7*\/=xyz]/.test(t)) { bcDisp.innerHTML = bqMath(t); }
+                if (t !== '0' && /[\u221a\u221b+\-\u2212\u00d7\u00f7*\/=xyz^\u00b2\u00b3]|sqrt|cbrt/.test(t)) { bcDisp.innerHTML = bqMath(t); }
                 bcDisp.scrollLeft = bcDisp.scrollWidth;
                 document.getElementById('bc-output-box').classList.remove('bq-error');
             }
+            (function() {
+                const sync = function() { bcDisp.classList.toggle('bq-tall', !!bcDisp.querySelector('.bq-fr, .bq-rad')); };
+                try { new MutationObserver(sync).observe(bcDisp, { childList: true }); } catch (e) {}
+            })();
+            /* ---------- DISPLAY: calculation log inside the screen (reads the existing history rows; nothing stored here except a time stamp attribute) ---------- */
+            let bqPaperZoom = 0;
+            const BQ_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            function bqStamp() {
+                const rows = bcHistList.querySelectorAll('.hist-entry:not([data-ts])');
+                const now = Date.now();
+                for (let i = rows.length - 1; i >= 0; i--) { rows[i].setAttribute('data-ts', String(now)); }
+            }
+            function bqTime(ms) {
+                const d = new Date(Number(ms)); if (!isFinite(d.getTime())) { return ''; }
+                const z = function(n) { return (n < 10 ? '0' : '') + n; };
+                return z(d.getHours()) + ':' + z(d.getMinutes()) + ' ' + z(d.getDate()) + '-' + BQ_MON[d.getMonth()];
+            }
+            /* decimal of a simple fraction a/b (display only, 10 significant digits like the engine's Norm setting) */
+            function bqDec(num, den) {
+                const n = Number(num), d = Number(den);
+                if (!isFinite(n) || !isFinite(d) || d === 0 || Math.abs(n) > 9007199254740991 || d > 9007199254740991) { return ''; }
+                let t = (n / d).toPrecision(10);
+                if (t.indexOf('e') < 0 && t.indexOf('.') >= 0) { t = t.replace(/0+$/, '').replace(/\.$/, ''); }
+                return t.replace('-', '\u2212');
+            }
+            function bqFracHtml(text) {
+                const m = /^(-?)(\d+)\/(\d+)$/.exec(text);
+                if (!m) { return null; }
+                const h = '<span class="bq-frac"><span class="bq-n">' + (m[1] ? '\u2212' : '') + m[2] + '</span><span class="bq-d">' + m[3] + '</span></span>';
+                const dec = bqDec(m[1] + m[2], m[3]);
+                return { html: h, dec: dec };
+            }
+            function bqPaperRefresh() {
+                const box = document.getElementById('bc-paper');
+                if (!box) { return; }
+                bqStamp();
+                const btn = document.getElementById('bc-paper-btn');
+                const open = btn.classList.contains('on');
+                box.hidden = !open;
+                if (!open) { return; }
+                box.innerHTML = '';
+                const bar = document.createElement('div'); bar.className = 'bq-pbar';
+                const mk = function(txt, label, fn) { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.setAttribute('aria-label', label); b.title = label; b.onclick = fn; return b; };
+                bar.appendChild(mk('A\u2212', 'Smaller text', function() { bqPaperZoom = Math.max(-2, bqPaperZoom - 1); bqPaperRefresh(); }));
+                bar.appendChild(mk('A+', 'Larger text', function() { bqPaperZoom = Math.min(3, bqPaperZoom + 1); bqPaperRefresh(); }));
+                bar.appendChild(mk('Clear', 'Clear all history', function() { BloggerCalc.clearHistory(); bqPaperRefresh(); }));
+                box.appendChild(bar);
+                const rows = bcHistList.querySelectorAll('.hist-entry');
+                let shown = 0;
+                for (let i = 0; i < rows.length && shown < 40; i++) {
+                    const r = rows[i];
+                    let expr, res;
+                    try { expr = decodeURIComponent(r.getAttribute('data-expr') || ''); res = decodeURIComponent(r.getAttribute('data-res') || ''); } catch (e) { continue; }
+                    if (!expr) { continue; }
+                    shown++;
+                    const tabId = r.getAttribute('data-tab') || '';
+                    const card = document.createElement('div'); card.className = 'bq-card'; card.style.fontSize = (20 + bqPaperZoom * 3) + 'px';
+                    const head = document.createElement('div'); head.className = 'bq-chead';
+                    const chip = document.createElement('span'); chip.className = 'bq-chip'; chip.textContent = (typeof TAB_NAMES !== 'undefined' && TAB_NAMES[tabId]) || '=';
+                    const tm = document.createElement('span'); tm.className = 'bq-ctime'; tm.textContent = bqTime(r.getAttribute('data-ts'));
+                    const del = document.createElement('button'); del.type = 'button'; del.className = 'bq-pdel'; del.title = 'Delete this entry'; del.setAttribute('aria-label', 'Delete this entry');
+                    del.innerHTML = '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false"><path d="M3 4.5h10M6.2 4.5V3h3.6v1.5M4.4 4.5l.6 8.5h6l.6-8.5M6.8 7v4M9.2 7v4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                    del.onclick = (function(rr) { return function() { const b = rr.querySelector('.hist-del-btn'); if (b) { b.click(); } bqPaperRefresh(); }; })(r);
+                    head.appendChild(chip); head.appendChild(tm); head.appendChild(del);
+                    card.appendChild(head);
+                    const e = document.createElement('button'); e.type = 'button'; e.className = 'bq-pexpr'; e.title = 'Tap to reuse this calculation';
+                    e.innerHTML = bqMath(expr, tabId === 'bc-adv');
+                    e.onclick = (function(rr) { return function() { const c = rr.querySelector('.hist-content'); if (c) { c.click(); } }; })(r);
+                    card.appendChild(e);
+                    if (res) {
+                        const v = document.createElement('button'); v.type = 'button'; v.className = 'bq-pres'; v.title = 'Tap to use this result';
+                        const f = bqFracHtml(res.replace(/^[=\u2248]\s*/, '').replace(/\u2212/g, '-'));
+                        if (f) { v.innerHTML = f.html + (f.dec ? '<span class="bq-dec">= ' + f.dec + '</span>' : ''); }
+                        else { v.textContent = '= ' + res; }
+                        v.onclick = (function(rr) { return function() { const st = rr.querySelector('strong'); if (st) { st.click(); } }; })(r);
+                        card.appendChild(v);
+                    }
+                    box.appendChild(card);
+                }
+                if (!shown) { const em = document.createElement('div'); em.className = 'bq-pempty'; em.textContent = 'No previous calculations yet'; box.appendChild(em); }
+            }
+            try { new MutationObserver(function() { bqPaperRefresh(); }).observe(bcHistList, { childList: true }); } catch (e) {}
+            try { if (localStorage.getItem('bc_log_open') === '0') { const bb = document.getElementById('bc-paper-btn'); bb.classList.remove('on'); bb.setAttribute('aria-expanded', 'false'); } } catch (e) {}
+            setTimeout(bqPaperRefresh, 0);
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
@@ -3965,8 +4300,8 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
 
             /* ---------- HISTORY EXPORT (.txt) ---------- */
             const TAB_NAMES = {
-                'bc-basic': 'Basic', 'bc-sci-desktop': 'Scientific', 'bc-gate': 'Exam Practice', 'bc-adv': 'Advanced Scientific',
-                'bc-prog': 'Programmable Scientific', 'bc-graph': 'Advanced Graphing', 'bc-cas': 'Graphing & Mathematics', 'bc-fin': 'Financial'
+                'bc-basic': 'Basic', 'bc-sci-desktop': 'Scientific', 'bc-gate': 'GATE', 'bc-adv': 'FX-991CW',
+                'bc-prog': 'FX-5800P', 'bc-graph': 'HP Prime', 'bc-cas': 'TI-Nspire', 'bc-fin': 'HP 12C'
             };
 
             /* ---------- QUICK-INSERT TEMPLATE MENUS ---------- */
@@ -4322,7 +4657,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             setTimeout(fitDefaultLabels, 0);
             setTimeout(fitDefaultLabels, 400);
 
-            const FX_CTX = { box: document.getElementById('bc-output-box'), math: function(t) { return bqMath(t); }, disp: bcDisp, live: bcLiveOut, mem: bcMemInd, addHistory: function(v, r, t, tab) { addHistoryEntry(v, r, t, tab); } };
+            const FX_CTX = { box: document.getElementById('bc-output-box'), math: function(t) { return bqMath(t, true); }, disp: bcDisp, live: bcLiveOut, mem: bcMemInd, addHistory: function(v, r, t, tab) { addHistoryEntry(v, r, t, tab); } };
             let fxShown = false;
             const fxActive = function() { const p = document.querySelector('.bc-tab-pane.active'); return !!fx && !!p && p.id === 'bc-adv'; };
             /* ===== FX-991CW tab: editor, display, menus and mode panels (uses window.FXEngine) ===== */
@@ -4426,7 +4761,9 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 const m = FRAC.exec(text);
                 if (!m) return null;
                 const frac = '<span class="bq-frac"><span class="bq-n">' + m[3] + '</span><span class="bq-d">' + m[4] + '</span></span>';
-                return esc(prefix) + (m[1] ? '−' : '') + (m[2] ? esc(m[2]) : '') + frac;
+                let dec = '';
+                try { if (S.res && typeof S.res.value !== 'boolean') { const d = E.formatValue(S.res.value, S.st, true); if (d && d !== text && !FRAC.test(d)) dec = '<span class="bq-dec">= ' + esc(d) + '</span>'; } } catch (e) { dec = ''; }
+                return (m[1] ? '−' : '') + (m[2] ? esc(m[2]) : '') + frac + dec;
               }
               function render() {
                 const b = S.buf;
@@ -5224,6 +5561,12 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     bcHistList.innerHTML = '<div class="hist-empty">No calculations yet</div>';
                     historyEmpty = true;
                     try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
+                },
+                togglePaper: function() {
+                    const btn = document.getElementById('bc-paper-btn');
+                    const on = !btn.classList.contains('on'); btn.classList.toggle('on', on); btn.setAttribute('aria-expanded', String(on));
+                    try { localStorage.setItem('bc_log_open', on ? '1' : '0'); } catch (e) {}
+                    bqPaperRefresh();
                 },
                 calc: function() {
                     if (fxActive()) { fx.key('exe'); return; }
