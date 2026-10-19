@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist Glassy Black UX
+         HEADER: Apple Glassy Semi-3D + Dark Bento Card Gradient Background
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,11 +453,11 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(180deg, rgba(13, 17, 28, 0.96) 0%, rgba(3, 7, 18, 0.98) 100%) !important;
+        background: linear-gradient(145deg, #164e63 0%, #312e81 50%, #0f172a 100%) !important;
         backdrop-filter: blur(20px) saturate(190%) !important;
         -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.45) !important;
-        box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(56, 189, 248, 0.25) !important;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.5) !important;
+        box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(56, 189, 248, 0.3) !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
