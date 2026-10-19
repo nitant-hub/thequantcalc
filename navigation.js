@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Background Color Matched to Dark Bento Cards in Photo
+         HEADER: Background matched to dark Bento card gradient from photo
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -494,27 +494,27 @@
         }
       }
 
-      /* Screenshot Title Style adapted for Dark Slate-Navy Header */
+      /* Pure black/white contrast typography matching previous version */
       .dyn-brand-text .b-the {
+        color: #0b192c !important;
+        -webkit-text-fill-color: #0b192c !important;
+      }
+      [data-theme="dark"] .dyn-brand-text .b-the,
+      header#siteDynamicHeader .dyn-brand-text .b-the {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
       }
 
       .dyn-brand-text .b-quant {
-        background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
         color: #38bdf8 !important;
+        -webkit-text-fill-color: #38bdf8 !important;
       }
 
       .dyn-brand-text .b-cals {
-        background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        color: #10b981 !important;
+        color: #34d399 !important;
+        -webkit-text-fill-color: #34d399 !important;
       }
 
-      /* Screenshot Signature Blue-to-Green Tapered Arc Swoosh */
       .dyn-brand-text::after {
         content: "" !important;
         position: absolute !important;
