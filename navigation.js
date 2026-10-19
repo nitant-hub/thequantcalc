@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Sleek Dark Slate-Navy Frosted Glass + Glowing Cyan Border
+         HEADER: Background Color Matched to Dark Bento Cards in Photo
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,7 +453,7 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(180deg, rgba(15, 23, 42, 0.94) 0%, rgba(2, 6, 23, 0.96) 100%) !important;
+        background: linear-gradient(145deg, #164e63 0%, #312e81 50%, #0f172a 100%) !important;
         backdrop-filter: blur(16px) saturate(180%) !important;
         -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
         border-bottom: 1px solid rgba(56, 189, 248, 0.55) !important;
