@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Background matched to dark Bento card gradient from photo
+         HEADER: Pitch Black with Dark Bento Card Background Tint & Cyan Glow
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,11 +453,11 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(145deg, #164e63 0%, #312e81 50%, #0f172a 100%) !important;
+        background: linear-gradient(145deg, #030712 0%, #090d16 100%) !important;
         backdrop-filter: blur(16px) saturate(180%) !important;
         -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.55) !important;
-        box-shadow: 0 4px 22px -2px rgba(56, 189, 248, 0.22), 0 8px 28px rgba(2, 6, 23, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.45) !important;
+        box-shadow: 0 4px 22px -2px rgba(56, 189, 248, 0.15), 0 8px 28px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
@@ -485,7 +485,7 @@
         align-items: baseline !important;
         position: relative !important;
         padding-bottom: 3px !important;
-        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35)) !important;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) !important;
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
@@ -494,13 +494,7 @@
         }
       }
 
-      /* Pure black/white contrast typography matching previous version */
       .dyn-brand-text .b-the {
-        color: #0b192c !important;
-        -webkit-text-fill-color: #0b192c !important;
-      }
-      [data-theme="dark"] .dyn-brand-text .b-the,
-      header#siteDynamicHeader .dyn-brand-text .b-the {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
       }
