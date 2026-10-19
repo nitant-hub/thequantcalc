@@ -21,7 +21,7 @@
     }
     style.textContent = `
       :root { 
-        --nav-header-height: 48px; 
+        --nav-header-height: 50px; 
       }
       @media (min-width: 768px) {
         :root { 
@@ -443,7 +443,7 @@
       }
 
       /* =====================================================================
-         HEADER: Apple UI + Semi-3D + Bento Grid + Minimalist UX (Photo 1 Style)
+         HEADER: Sleek Dark Slate-Navy Frosted Glass + Glowing Cyan Border
       ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
@@ -453,21 +453,16 @@
         height: var(--nav-header-height) !important; 
         z-index: 999999 !important; 
         box-sizing: border-box !important;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 254, 0.90) 100%) !important;
-        backdrop-filter: blur(20px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-        border-bottom: 1px solid rgba(203, 213, 225, 0.85) !important;
-        box-shadow: 0 10px 25px -6px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03), inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.94) 0%, rgba(2, 6, 23, 0.96) 100%) !important;
+        backdrop-filter: blur(16px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.55) !important;
+        box-shadow: 0 4px 22px -2px rgba(56, 189, 248, 0.22), 0 8px 28px rgba(2, 6, 23, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: space-between !important;
         padding: 0 1.25rem !important;
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif !important;
-      }
-      [data-theme="dark"] header#siteDynamicHeader {
-        background: linear-gradient(180deg, rgba(21, 28, 46, 0.94) 0%, rgba(13, 18, 30, 0.90) 100%) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 10px 25px -6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
       }
 
       .dyn-brand { 
@@ -490,7 +485,7 @@
         align-items: baseline !important;
         position: relative !important;
         padding-bottom: 3px !important;
-        filter: drop-shadow(0 1px 1px rgba(15, 23, 42, 0.06)) !important;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35)) !important;
       }
       @media (min-width: 768px) {
         .dyn-brand-text {
@@ -499,31 +494,27 @@
         }
       }
 
-      /* Photo 1 Exact Color Palette: Deep Navy ("The") + Royal Blue ("Quant") + Emerald Green ("Calc") */
+      /* Screenshot Title Style adapted for Dark Slate-Navy Header */
       .dyn-brand-text .b-the {
-        color: #0b192c !important;
-        -webkit-text-fill-color: #0b192c !important;
-      }
-      [data-theme="dark"] .dyn-brand-text .b-the {
-        color: #f8fafc !important;
-        -webkit-text-fill-color: #f8fafc !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
       }
 
       .dyn-brand-text .b-quant {
-        background: linear-gradient(135deg, #0052cc 0%, #0077ff 100%) !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
-        color: #0066ff !important;
+        color: #38bdf8 !important;
       }
 
       .dyn-brand-text .b-cals {
-        background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+        background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         color: #10b981 !important;
       }
 
-      /* Photo 1 Signature Blue-to-Green Tapered Arc Swoosh */
+      /* Screenshot Signature Blue-to-Green Tapered Arc Swoosh */
       .dyn-brand-text::after {
         content: "" !important;
         position: absolute !important;
@@ -557,7 +548,7 @@
         font-size: 0.86rem !important; 
         font-weight: 800 !important; 
         letter-spacing: 0.35px !important; 
-        color: #1e293b !important;
+        color: #f8fafc !important;
         height: 36px !important; 
         display: flex !important; 
         align-items: center !important; 
@@ -568,37 +559,23 @@
         cursor: pointer !important;
         transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
       }
-      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item {
-        color: #e2e8f0 !important;
-      }
       .dyn-desktop-nav a.dyn-nav-item:hover { 
-        color: #0066ff !important; 
-        background: rgba(255, 255, 255, 0.85) !important; 
-        border-color: rgba(203, 213, 225, 0.7) !important;
-        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.05), inset 0 1px 0 #ffffff !important;
+        color: #38bdf8 !important; 
+        background: rgba(255, 255, 255, 0.08) !important; 
+        border-color: rgba(56, 189, 248, 0.25) !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25) !important;
         transform: translateY(-1px) !important;
       }
-      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item:hover {
-        color: #38bdf8 !important;
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
-      }
       .dyn-desktop-nav a.dyn-nav-item.is-active { 
-        color: #0066ff !important; 
-        background: #ffffff !important; 
-        border: 1px solid rgba(0, 102, 255, 0.25) !important;
-        box-shadow: 0 4px 10px rgba(0, 102, 255, 0.1), inset 0 1px 0 #ffffff !important;
-      }
-      [data-theme="dark"] .dyn-desktop-nav a.dyn-nav-item.is-active {
-        color: #38bdf8 !important;
-        background: rgba(30, 58, 138, 0.45) !important;
-        border-color: rgba(56, 189, 248, 0.35) !important;
+        color: #38bdf8 !important; 
+        background: rgba(30, 58, 138, 0.45) !important; 
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15) !important;
       }
 
       .dyn-more-pill-btn {
         background: linear-gradient(135deg, #0066ff 0%, #10b981 100%) !important; 
-        border: 1px solid rgba(255, 255, 255, 0.6) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.45) !important; 
         color: #ffffff !important;
         font-weight: 800 !important; 
         font-size: 0.82rem !important; 
@@ -608,7 +585,7 @@
         height: auto !important; 
         text-transform: uppercase !important;
         text-decoration: none !important;
-        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -617,39 +594,34 @@
       }
       .dyn-more-pill-btn:hover { 
         transform: translateY(-1px) scale(1.03) !important;
-        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
       }
 
       .dyn-right-controls { display: flex !important; align-items: center !important; gap: 0.55rem !important; }
       .dyn-theme-btn {
-        background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important; 
-        border: 1px solid rgba(203, 213, 225, 0.9) !important; 
+        background: rgba(255, 255, 255, 0.08) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.16) !important; 
         border-radius: 9px !important;
         font-size: 0.95rem !important; 
         cursor: pointer !important; 
-        color: #0f172a !important; 
+        color: #f8fafc !important; 
         width: 34px !important; 
         height: 34px !important;
         display: flex !important; 
         align-items: center !important; 
         justify-content: center !important;
-        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06), inset 0 1px 0 #ffffff !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         transition: all 0.15s ease !important;
       }
       .dyn-theme-btn:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: rgba(56, 189, 248, 0.4) !important;
         transform: translateY(-1px) !important;
-        box-shadow: 0 4px 8px rgba(15, 23, 42, 0.1), inset 0 1px 0 #ffffff !important;
-      }
-      [data-theme="dark"] .dyn-theme-btn {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-        border-color: rgba(255, 255, 255, 0.15) !important;
-        color: #f8fafc !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
       }
       
       .dyn-hamburger-btn { 
-        background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important; 
-        border: 1px solid rgba(203, 213, 225, 0.9) !important; 
+        background: rgba(255, 255, 255, 0.08) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.16) !important; 
         border-radius: 9px !important; 
         cursor: pointer !important; 
         width: 34px !important; 
@@ -660,19 +632,13 @@
         justify-content: center !important; 
         gap: 4px !important; 
         padding: 0 !important; 
-        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06), inset 0 1px 0 #ffffff !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         transition: all 0.2s ease !important;
       }
       .dyn-hamburger-btn:hover {
-        background: #ffffff !important;
+        background: rgba(255, 255, 255, 0.15) !important;
       }
-      .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #0f172a !important; border-radius: 2px !important; display: block !important; }
-      [data-theme="dark"] .dyn-hamburger-btn {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-        border-color: rgba(255, 255, 255, 0.15) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-      }
-      [data-theme="dark"] .dyn-hamburger-btn span.bar { background: #f8fafc !important; }
+      .dyn-hamburger-btn span.bar { width: 16px !important; height: 2px !important; background: #f8fafc !important; border-radius: 2px !important; display: block !important; }
       
       .dyn-hamburger-btn span.close-x { 
         font-size: 2rem !important; 
