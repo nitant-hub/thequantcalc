@@ -1334,18 +1334,135 @@
         .bq-pres .bq-dec { font-size: .8em; font-weight: 500; opacity: .85; margin-top: .15em; }
         .bq-pexpr .bq-fr { font-size: .85em; }
 
-        /* Default look: dark screen, like a notebook page (other looks keep their own colours) */
-        .blogger-calc-classic:not([class*="calc-theme-"]) { --bq-disp-bg: #262322; --bq-expr: #f5f5f4; --bq-result: #fafaf9; --bq-secondary: #a8a29e; --bq-border: #3d3835; --bq-error: #fca5a5; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box { color: #f5f5f4 !important; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) { background: transparent; border-top: 0; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn { background: #3a3633; color: #e7e5e4 !important; border-color: #4b4541; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn:hover { background: #4a4541; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-mem-indicator { color: #a8a29e; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tools { color: #d6d3d1; }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box::-webkit-scrollbar-thumb, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper::-webkit-scrollbar-thumb { background: #57514d; }
-        .bq-paper { color: #e7e5e4; }
-        .blogger-calc-classic[class*="calc-theme-"] .bq-paper { color: inherit; }
         @media (max-width: 420px) { .bc-screen-container #bc-display { font-size: calc(20px * var(--bq-z, 1)) !important; } .bc-screen-container .bc-output-box:not(.bq-plot) #bc-live-out { font-size: calc(23px * var(--bq-z, 1)); } }
+
+        /* ===== NAVIGATION: More pop-up ===== */
+        .blogger-calc-classic { position: relative; }
+        #btn-bc-history-tab { right: var(--bq-more-w, 64px); }
+        .bq-more-btn { position: sticky; right: 0; z-index: 11; background: #0f172a !important; color: #ffffff !important; border-color: #0f172a !important; font-size: 12px !important; }
+        .bq-more-btn[aria-expanded="true"] { background: #1e3a8a !important; border-color: #1e3a8a !important; }
+        @media (min-width: 601px) { .bq-more-btn { font-size: 14.5px !important; padding: 6px 9px; } }
+        .bq-more { position: absolute; right: 6px; z-index: 60; width: min(300px, calc(100% - 12px)); overflow-y: auto; background: #ffffff; color: #111827; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 12px 32px rgba(15, 23, 42, .22), 0 2px 6px rgba(15, 23, 42, .1); padding: 6px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+        .bq-more[hidden] { display: none; }
+        .bq-mrow { display: flex; gap: 10px; align-items: flex-start; padding: 6px 8px; border-radius: 9px; }
+        .bq-mrow + .bq-mrow { border-top: 1px solid #f1f5f9; }
+        .bq-mic { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; color: #fff; display: flex; align-items: center; justify-content: center; font: 800 13px/1 -apple-system, "Segoe UI", Arial, sans-serif; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18); }
+        .bq-mbody { min-width: 0; flex: 1 1 auto; }
+        .bq-mname { font-weight: 700; font-size: 14.5px; line-height: 1.2; }
+        .bq-mchips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+        .bq-mchip { font: 600 12px/1.1 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; padding: 5px 9px; min-height: 28px; border-radius: 999px; border: 1px solid #dbe3ee; background: #f8fafc; color: #1e293b; cursor: pointer; }
+        .bq-mchip:hover, .bq-mchip:focus-visible { background: #e8f0fe; border-color: #93b4f5; color: #1d4ed8; outline: none; }
+
+        /* ===== DISPLAY: Apple-style, semi-3D bento tiles (Default look only; the 30 filters keep their own colours) ===== */
+        .bq-tools { flex-wrap: wrap; row-gap: 4px; }
+        .bq-paper { touch-action: pan-y; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: 0 1 auto; min-height: 0; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-screen-container { display: flex; flex-direction: column; gap: 6px; padding: 6px; background: linear-gradient(180deg, #f6f7fb 0%, #eaedf3 100%); border: 1px solid #d5dae4; border-radius: 16px; box-shadow: inset 0 1px 0 #ffffff, 0 8px 18px rgba(30, 41, 59, .10), 0 1px 3px rgba(30, 41, 59, .10); }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tools { background: transparent; border: 0; padding: 0 0 1px; color: #3a3a3c; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tb { font-weight: 700; border-radius: 999px; border: 1px solid #dcdfe8; background: linear-gradient(180deg, #ffffff, #f0f2f7); color: #3a3a3c; opacity: 1; box-shadow: 0 1px 0 #ffffff inset, 0 1px 2px rgba(30, 41, 59, .12); }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tb:active { transform: translateY(1px); box-shadow: 0 1px 1px rgba(30, 41, 59, .12) inset; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-paper-btn { background: linear-gradient(180deg, #f2f8ff, #dcecff); border-color: #b9d6fb; color: #0a62d6; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-paper-btn.on { background: linear-gradient(180deg, #3b9bff, #0a7aff); border-color: #0a6ae0; color: #ffffff; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-sd-btn { background: linear-gradient(180deg, #f5f3ff, #e4defd); border-color: #cdc4f8; color: #4b3fc4; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-sd-btn[aria-pressed="true"] { background: linear-gradient(180deg, #7b6df0, #5a4bdc); border-color: #4a3dc4; color: #ffffff; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-draw-btn { background: linear-gradient(180deg, #f1fbf5, #d9f3e3); border-color: #b6e3c8; color: #17803d; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-solve-btn { background: linear-gradient(180deg, #fff7ec, #ffe8c8); border-color: #f5d3a1; color: #b45309; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-log-clear { background: linear-gradient(180deg, #fff3f2, #ffdcda); border-color: #f5bcb8; color: #c4271f; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-tb:disabled { opacity: .45; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper { background: #ffffff; color: #1d1d1f; border: 1px solid #e3e6ee; border-radius: 12px; box-shadow: inset 0 1px 0 #ffffff, 0 2px 6px rgba(30, 41, 59, .07); padding: 4px 10px 0; max-height: 168px; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-card { border-bottom-color: #eceef4; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-chip { background: #eef0f6; color: #3a3a3c; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-chead { color: #6e6e73; opacity: 1; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-pempty { color: #6e6e73; opacity: 1; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-dec { color: #6e6e73; opacity: 1; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box { background: #ffffff; color: #1d1d1f !important; border: 1px solid #e3e6ee; border-radius: 12px; box-shadow: inset 0 1px 0 #ffffff, 0 2px 6px rgba(30, 41, 59, .07); }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-display { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 500; letter-spacing: -.01em; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) { background: linear-gradient(180deg, #ffffff, #f4f6fb); border: 1px solid #e3e6ee; border-radius: 12px; box-shadow: inset 0 1px 0 #ffffff, 0 2px 6px rgba(30, 41, 59, .07); color: #1d1d1f !important; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) #bc-live-out { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 600; letter-spacing: -.02em; color: #1d1d1f; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn { background: linear-gradient(180deg, #ffffff, #eef1f6); color: #3a3a3c !important; border: 1px solid #dcdfe8; box-shadow: 0 1px 2px rgba(30, 41, 59, .12); border-radius: 999px; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-copy-btn:hover { background: #e8ecf4; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box:not(.bq-plot) .bc-mem-indicator { color: #6e6e73; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-output-box.bq-error #bc-live-out { color: #d70015; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-input-box::-webkit-scrollbar-thumb, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-paper::-webkit-scrollbar-thumb { background: #c7ccd8; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-display .bq-ans { color: #0a62d6; border-color: #7db3f5; background: #eef5ff; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-display .fx-caret { border-left-color: #0a7aff; }
+        @media (max-width: 340px) { .bq-tb { padding: 4px 4px; font-size: 9.5px; min-width: 24px; } .bq-tools { gap: 2px; padding: 3px; } }
+
+        /* ===== TOOLS SHEET: Scratchpad + Solver (scoped to #bc-sheet) ===== */
+        #bc-sheet { position: absolute; left: 0; right: 0; top: 0; z-index: 90; display: flex; flex-direction: column; background: #f3f5f9; color: #1d1d1f; border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; overflow: hidden; box-shadow: 0 10px 30px rgba(15, 23, 42, .28); }
+        #bc-sheet[hidden] { display: none; }
+        #bc-sheet * { box-sizing: border-box; }
+        #bc-sheet button { font-family: inherit; cursor: pointer; }
+        #bc-sheet button:focus-visible, #bc-sheet select:focus-visible, #bc-sheet textarea:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+        .bq-sh-head { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #ffffff; border-bottom: 1px solid #e2e6ee; flex: 0 0 auto; }
+        .bq-seg { display: flex; gap: 4px; flex: 1 1 auto; background: #eceff5; padding: 3px; border-radius: 12px; }
+        .bq-segb { flex: 1 1 0; border: 0; background: transparent; color: #3a3a3c; font-weight: 700; font-size: 13.5px; padding: 8px 6px; border-radius: 9px; min-height: 38px; }
+        .bq-segb.on { background: #ffffff; color: #0b57d0; box-shadow: 0 1px 3px rgba(15, 23, 42, .18); }
+        .bq-sh-x { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid #dfe3ec; background: #ffffff; color: #3a3a3c; font-size: 16px; }
+        .bq-sh-body { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 12px 12px 18px; }
+        .bq-pane[hidden] { display: none; }
+        .bq-padwrap { position: relative; border: 1px solid #d9deea; border-radius: 12px; overflow: hidden; background: #fbfcfe; box-shadow: 0 1px 3px rgba(15, 23, 42, .08); }
+        .bq-canvas { display: block; width: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
+        .bq-ptools { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; padding: 4px; max-width: calc(100% - 12px); background: rgba(255, 255, 255, .96); border: 1px solid #e0e4ee; border-radius: 14px; box-shadow: 0 6px 18px rgba(15, 23, 42, .16); }
+        .bq-pt { width: 36px; height: 36px; border: 0; border-radius: 10px; background: transparent; font-size: 17px; color: #3a3a3c; line-height: 1; }
+        .bq-pt.on { background: #2563eb; color: #ffffff; }
+        .bq-pt:disabled { opacity: .35; cursor: default; }
+        .bq-zoom { position: absolute; right: 8px; bottom: 8px; border: 1px solid #dfe3ec; background: rgba(255, 255, 255, .95); border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; color: #3a3a3c; }
+        .bq-hint { text-align: center; font-size: 12px; color: #6e6e73; margin-top: 8px; }
+        .bq-hint2 { margin-top: 4px; }
+        .bq-sv-title { display: flex; align-items: center; gap: 8px; font-size: 18px; margin-bottom: 8px; }
+        .bq-badge-ic { width: 32px; height: 32px; border-radius: 9px; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .2); }
+        .bq-beta { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: 999px; background: #e7edfb; color: #1d4ed8; border: 1px solid #c9d7f5; }
+        .bq-h1 { font-size: 22px; line-height: 1.2; margin: 6px 0 4px; letter-spacing: -.02em; }
+        .bq-sub { margin: 0 0 12px; color: #5b6070; font-size: 14.5px; line-height: 1.4; }
+        .bq-inputcard { background: #ffffff; border: 1px solid #d9deea; border-radius: 16px; padding: 10px; box-shadow: 0 2px 8px rgba(15, 23, 42, .06); }
+        .bq-inputcard:focus-within { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, .18); }
+        .bq-ta { display: block; width: 100%; border: 0; outline: none; resize: none; background: transparent; font: 500 16px/1.4 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1d1d1f; min-height: 56px; }
+        .bq-ibar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
+        .bq-fxb { border: 1px solid #cfd6e4; background: #ffffff; border-radius: 999px; padding: 9px 16px; font-weight: 700; font-size: 14px; color: #1d1d1f; min-height: 40px; font-style: italic; }
+        .bq-fxb.on { background: #eef3ff; border-color: #93b4f5; color: #1d4ed8; }
+        .bq-solveb { display: inline-flex; align-items: center; gap: 8px; border: 0; background: #2563eb; color: #fff; border-radius: 999px; padding: 10px 20px; font-weight: 700; font-size: 15px; min-height: 42px; box-shadow: 0 2px 6px rgba(37, 99, 235, .4); }
+        .bq-solveb:disabled { opacity: .7; cursor: progress; }
+        .bq-spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .45); border-top-color: #fff; animation: bqspin .8s linear infinite; }
+        .bq-spin[hidden] { display: none; }
+        @keyframes bqspin { to { transform: rotate(360deg); } }
+        .bq-drawer { margin-top: 8px; background: #ffffff; border: 1px solid #d9deea; border-radius: 14px; padding: 8px; }
+        .bq-drawer[hidden] { display: none; }
+        .bq-ktabs { display: flex; gap: 4px; overflow-x: auto; margin-bottom: 8px; }
+        .bq-ktab { flex: 0 0 auto; border: 1px solid #dfe3ec; background: #f5f7fb; border-radius: 999px; padding: 7px 12px; font-size: 12.5px; font-weight: 700; color: #3a3a3c; white-space: nowrap; }
+        .bq-ktab.on { background: #2563eb; border-color: #2563eb; color: #fff; }
+        .bq-kgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; }
+        .bq-key { min-height: 42px; border: 1px solid #dfe3ec; border-radius: 10px; background: linear-gradient(180deg, #ffffff, #f0f2f7); font-size: 15px; font-weight: 600; color: #1d1d1f; padding: 4px; box-shadow: 0 1px 2px rgba(15, 23, 42, .1); }
+        .bq-key.wide { grid-column: span 2; font-size: 13px; }
+        .bq-key:active { transform: translateY(1px); }
+        .bq-h3 { margin: 18px 0 8px; font-size: 16px; }
+        .bq-sctl { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .bq-shuf { width: 42px; height: 42px; border: 1px solid #d9deea; background: #fff; border-radius: 12px; font-size: 18px; }
+        .bq-sel { flex: 1 1 auto; min-width: 0; height: 42px; border: 1px solid #d9deea; background: #fff; border-radius: 12px; padding: 0 10px; font-size: 14px; color: #1d1d1f; }
+        .bq-samples { display: flex; flex-direction: column; gap: 8px; }
+        .bq-sample { text-align: left; border: 1px solid #d9deea; background: #ffffff; border-radius: 14px; padding: 12px 14px; font-size: 15px; color: #1d1d1f; min-height: 46px; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); }
+        .bq-sample:hover { border-color: #93b4f5; background: #f8faff; }
+        .bq-out { margin-top: 14px; }
+        .bq-err { background: #fff1f0; border: 1px solid #f5c2bd; color: #a8261c; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.4; }
+        .bq-ans { background: linear-gradient(180deg, #f3f8ff, #e8f0ff); border: 1px solid #bcd0f7; border-radius: 16px; padding: 10px 12px 12px; box-shadow: 0 2px 8px rgba(37, 99, 235, .1); }
+        .bq-anstop { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .bq-anslabel { font-size: 12px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #1d4ed8; margin-right: auto; }
+        .bq-tg { display: flex; background: #dfe8fb; border-radius: 999px; padding: 2px; }
+        .bq-tgb { border: 0; background: transparent; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 700; color: #3a3a3c; min-height: 32px; }
+        .bq-tgb.on { background: #2563eb; color: #fff; }
+        .bq-tgb:disabled { opacity: .4; cursor: default; }
+        .bq-cp { border: 1px solid #bcd0f7; background: #fff; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 700; color: #1d4ed8; min-height: 32px; }
+        .bq-bigans { margin-top: 6px; font-size: 1.25em; overflow-x: auto; overflow-y: hidden; }
+        .bq-bigans .katex-display { margin: .3em 0; }
+        .bq-steps { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: bqs; }
+        .bq-step { display: flex; gap: 10px; background: #ffffff; border: 1px solid #dfe3ec; border-radius: 14px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); }
+        .bq-n { flex: 0 0 auto; align-self: flex-start; font-size: 11.5px; font-weight: 800; color: #1d4ed8; background: #e7edfb; border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+        .bq-sbody { min-width: 0; flex: 1 1 auto; }
+        .bq-stitle { font-weight: 700; font-size: 14.5px; margin-bottom: 2px; }
+        .bq-stext { color: #4b5160; font-size: 13.5px; line-height: 1.4; }
+        .bq-smath { overflow-x: auto; overflow-y: hidden; margin-top: 4px; }
+        .bq-smath .katex-display { margin: .35em 0; text-align: left; }
+        @media (max-width: 380px) { .bq-h1 { font-size: 19px; } .bq-pt { width: 32px; height: 34px; } .bq-step { flex-direction: column; gap: 6px; } }
+        @media (prefers-reduced-motion: reduce) { .bq-spin { animation-duration: 2s; } }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -1361,12 +1478,17 @@
         <button class="bc-tab-btn" role="tab" id="btn-bc-cas" onclick="BloggerCalc.switchTab('bc-cas', this)">TI-Nspire</button>
         <button class="bc-tab-btn" role="tab" id="btn-bc-fin" onclick="BloggerCalc.switchTab('bc-fin', this)">HP 12C</button>
         <button class="bc-tab-btn" role="tab" id="btn-bc-history-tab" onclick="BloggerCalc.switchTab('bc-history-tab', this)">HISTORY</button>
+        <button type="button" class="bc-tab-btn bq-more-btn" id="btn-bc-more" aria-haspopup="true" aria-expanded="false" aria-controls="bc-more-pop" onclick="BloggerCalc.toggleMore(event)">More <span aria-hidden="true">&#9662;</span></button>
     </div>
+
+    <div class="bq-more" id="bc-more-pop" role="menu" aria-label="More calculators" hidden></div>
 
     <div class="bc-screen-container">
         <div class="bq-tools" id="bc-tools" role="toolbar" aria-label="Display controls">
             <button type="button" class="bq-tb on" id="bc-paper-btn" aria-expanded="true" aria-controls="bc-paper" title="Show or hide previous calculations" onclick="BloggerCalc.togglePaper()">Log</button>
             <button type="button" class="bq-tb" id="bc-sd-btn" aria-pressed="false" title="Switch the result between fraction and decimal" onclick="BloggerCalc.toggleSD()">S⇔D</button>
+            <button type="button" class="bq-tb" id="bc-draw-btn" title="Open the scratchpad" onclick="BloggerCalc.openDraw()">Draw</button>
+            <button type="button" class="bq-tb" id="bc-solve-btn" title="Open the step-by-step solver" onclick="BloggerCalc.openSolve()">Solve</button>
             <span class="bq-tsp"></span>
             <button type="button" class="bq-tb" id="bc-zoom-out" aria-label="Zoom out display" title="Zoom out display" onclick="BloggerCalc.zoomDisp(-1)">A−</button>
             <button type="button" class="bq-tb" id="bc-zoom-pct" aria-label="Reset display zoom" title="Reset display zoom" onclick="BloggerCalc.zoomDisp(0)">100%</button>
@@ -3903,10 +4025,82 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 if (!shown) { const em = document.createElement('div'); em.className = 'bq-pempty'; em.textContent = 'No previous calculations yet'; box.appendChild(em); }
             }
             try { new MutationObserver(function() { bqPaperRefresh(); }).observe(bcHistList, { childList: true }); } catch (e) {}
-            try { if (localStorage.getItem('bc_log_open') === '0') { const bb = document.getElementById('bc-paper-btn'); bb.classList.remove('on'); bb.setAttribute('aria-expanded', 'false'); } } catch (e) {}
             bqApplyZoom();
             try { const sw = document.getElementById('blogger-calc-widget'); if (sw) { new MutationObserver(bqSyncInk).observe(sw, { attributes: true, attributeFilter: ['class'] }); } } catch (e) {}
             setTimeout(function() { bqPaperRefresh(); bqSyncInk(); }, 0);
+            /* ---------- NAVIGATION: "More" pop-up (opens existing FX-991CW modes and tabs; changes nothing until an item is chosen) ---------- */
+            const BQ_MORE = [
+                { n: 'Algebra', g: '\u03a3', c: '#5856d6', chips: [['Equations', { fx: 'eqn' }], ['Inequalities', { fx: 'ineq' }], ['Systems', { fx: 'eqn' }]] },
+                { n: 'Statistics', g: '\u2587', c: '#34c759', chips: [['Mean \u00b7 Median \u00b7 SD \u00b7 Regression', { fx: 'stat' }]] },
+                { n: 'Probability', g: '\u2685', c: '#0a84ff', chips: [['Distributions', { fx: 'dist' }]] },
+                { n: 'Linear Algebra', g: '\u25a6', c: '#af52de', chips: [['Matrices', { fx: 'mat' }], ['Vectors', { fx: 'vct' }]] },
+                { n: 'Complex Numbers', g: 'i', c: '#30b0c7', chips: [['Arithmetic & conversions', { fx: 'cplx' }]] },
+                { n: 'Graphing', g: '\u223f', c: '#ff2d55', chips: [['Graph (HP Prime)', { tab: 'bc-graph' }], ['Tables', { fx: 'table' }]] },
+                { n: 'Number Systems', g: '01', c: '#ff9500', chips: [['Bin \u00b7 Oct \u00b7 Dec \u00b7 Hex', { fx: 'base' }]] },
+                { n: 'Developer Tools', g: '</>', c: '#5e5ce6', chips: [['Bitwise (Base-N)', { fx: 'base' }], ['Programs (FX-5800P)', { tab: 'bc-prog' }]] },
+                { n: 'Settings', g: '\u2699', c: '#8e8e93', chips: [['Precision & angle', { fx: 'set' }], ['Appearance', { filters: 1 }]] }
+            ];
+            function bqMoreBuild() {
+                const pop = document.getElementById('bc-more-pop');
+                if (pop.firstChild) { return; }
+                BQ_MORE.forEach(function(it) {
+                    const row = document.createElement('div'); row.className = 'bq-mrow';
+                    const ic = document.createElement('span'); ic.className = 'bq-mic'; ic.textContent = it.g; ic.style.background = it.c; ic.setAttribute('aria-hidden', 'true');
+                    const body = document.createElement('div'); body.className = 'bq-mbody';
+                    const nm = document.createElement('div'); nm.className = 'bq-mname'; nm.textContent = it.n;
+                    const chips = document.createElement('div'); chips.className = 'bq-mchips';
+                    it.chips.forEach(function(ch) {
+                        const b = document.createElement('button'); b.type = 'button'; b.className = 'bq-mchip'; b.setAttribute('role', 'menuitem'); b.textContent = ch[0];
+                        b.onclick = function() { bqMoreGo(ch[1]); };
+                        chips.appendChild(b);
+                    });
+                    body.appendChild(nm); body.appendChild(chips); row.appendChild(ic); row.appendChild(body); pop.appendChild(row);
+                });
+            }
+            function bqMoreClose(focusBack) {
+                const pop = document.getElementById('bc-more-pop'), btn = document.getElementById('btn-bc-more');
+                pop.hidden = true; btn.setAttribute('aria-expanded', 'false');
+                if (focusBack) { btn.focus(); }
+            }
+            function bqMoreGo(a) {
+                bqMoreClose(false);
+                if (a.filters) { api.openFilters(); return; }
+                const tabId = a.fx ? 'bc-adv' : a.tab;
+                api.switchTab(tabId, document.getElementById('btn-' + tabId));
+                if (a.fx && fx) { try { fx.openMode(a.fx); } catch (e) {} }
+            }
+            function bqMoreToggle(ev) {
+                const pop = document.getElementById('bc-more-pop'), btn = document.getElementById('btn-bc-more');
+                if (ev) { ev.stopPropagation(); }
+                if (!pop.hidden) { bqMoreClose(true); return; }
+                bqMoreBuild();
+                const root = document.getElementById('blogger-calc-widget'), tabs = document.querySelector('.bc-tabs');
+                const rr = root.getBoundingClientRect(), tr = tabs.getBoundingClientRect();
+                pop.style.top = (tr.bottom - rr.top + 2) + 'px';
+                pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
+                const avail = Math.max(150, Math.min((window.innerHeight || 600) - tr.bottom - 8, rr.bottom - tr.bottom - 8));
+                pop.style.maxHeight = avail + 'px';
+                const first = pop.querySelector('.bq-mchip'); if (first) { first.focus(); }
+            }
+            document.addEventListener('pointerdown', function(e) {
+                const pop = document.getElementById('bc-more-pop');
+                if (pop && !pop.hidden && !pop.contains(e.target) && !e.target.closest('#btn-bc-more')) { bqMoreClose(false); }
+            });
+            document.addEventListener('keydown', function(e) {
+                const pop = document.getElementById('bc-more-pop');
+                if (!pop || pop.hidden) { return; }
+                if (e.key === 'Escape') { e.preventDefault(); bqMoreClose(true); return; }
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    const items = Array.prototype.slice.call(pop.querySelectorAll('.bq-mchip')); const i = items.indexOf(document.activeElement);
+                    e.preventDefault(); items[(i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length].focus();
+                }
+            });
+            function bqMoreSizes() {
+                const b = document.getElementById('btn-bc-more'), t = document.querySelector('.bc-tabs');
+                if (b && t && b.offsetWidth) { t.style.setProperty('--bq-more-w', (b.offsetWidth + 3) + 'px'); }
+            }
+            window.addEventListener('resize', bqMoreSizes);
+            setTimeout(bqMoreSizes, 0); setTimeout(bqMoreSizes, 600);
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
@@ -5349,7 +5543,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
 
               panelEl.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closePanel(); } });
               load();
-              return { key, keydown, paste, loadText, onShow, render, panelOpen, closePanel, openMenu, save, state: S };
+              return { key, keydown, paste, loadText, onShow, render, panelOpen, closePanel, openMenu, openMode, save, state: S };
             })(FX_CTX);
 
             const api = {
@@ -5624,12 +5818,14 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     historyEmpty = true;
                     try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
                 },
+                toggleMore: function(ev) { bqMoreToggle(ev); },
+                openDraw: function() { if (window.BQTools) { window.BQTools.open('draw'); } },
+                openSolve: function() { if (window.BQTools) { window.BQTools.open('solve'); } },
                 zoomDisp: function(d) { bqZoom(d); },
                 toggleSD: function() { bqToggleSD(); },
                 togglePaper: function() {
                     const btn = document.getElementById('bc-paper-btn');
                     const on = !btn.classList.contains('on'); btn.classList.toggle('on', on); btn.setAttribute('aria-expanded', String(on));
-                    try { localStorage.setItem('bc_log_open', on ? '1' : '0'); } catch (e) {}
                     bqPaperRefresh();
                 },
                 calc: function() {
@@ -5916,6 +6112,868 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             return api;
         })();
     </script>
+<script>
+/* ===== TOOLS: step-by-step solver engine + scratchpad (KaTeX and Nerdamer are loaded lazily from a CDN when the Solver is first opened) ===== */
+/* MathStepEngine: step-by-step solutions with exact rational arithmetic (BigInt) for the routines it explains itself.
+   Nerdamer is used only for parsing/expanding/factoring/differentiating/integrating and for numeric evaluation; every
+   explained routine is cross-checked against it before a result is returned. */
+(function (root) {
+  'use strict';
+  const gcd = (a, b) => { a = a < 0n ? -a : a; b = b < 0n ? -b : b; while (b) { const t = a % b; a = b; b = t; } return a; };
+  class Q {
+    constructor(n, d) { n = BigInt(n); d = d === undefined ? 1n : BigInt(d); if (d === 0n) throw new Error('Division by zero'); if (d < 0n) { n = -n; d = -d; } const g = gcd(n, d) || 1n; this.n = n / g; this.d = d / g; }
+    add(o) { return new Q(this.n * o.d + o.n * this.d, this.d * o.d); }
+    sub(o) { return new Q(this.n * o.d - o.n * this.d, this.d * o.d); }
+    mul(o) { return new Q(this.n * o.n, this.d * o.d); }
+    div(o) { return new Q(this.n * o.d, this.d * o.n); }
+    neg() { return new Q(-this.n, this.d); }
+    eq(o) { return this.n === o.n && this.d === o.d; }
+    isInt() { return this.d === 1n; }
+    isZero() { return this.n === 0n; }
+    sign() { return this.n < 0n ? -1 : this.n > 0n ? 1 : 0; }
+    abs() { return new Q(this.n < 0n ? -this.n : this.n, this.d); }
+    num() { return Number(this.n) / Number(this.d); }
+    pow(k) { let r = new Q(1), b = this; let e = k < 0 ? -k : k; while (e > 0) { if (e & 1) r = r.mul(b); b = b.mul(b); e >>= 1; } return k < 0 ? new Q(1).div(r) : r; }
+    str() { return this.d === 1n ? this.n.toString() : this.n + '/' + this.d; }
+    tex() { const s = this.n < 0n ? '-' : ''; const n = this.n < 0n ? -this.n : this.n; return this.d === 1n ? s + n : s + '\\frac{' + n + '}{' + this.d + '}'; }
+    dec(sig) {
+      sig = sig || 10;
+      if (this.d === 1n) return this.n.toString();
+      let t = this.num().toPrecision(sig);
+      if (t.indexOf('e') < 0 && t.indexOf('.') >= 0) t = t.replace(/0+$/, '').replace(/\.$/, '');
+      return t;
+    }
+    static parse(s) {
+      s = String(s).trim().replace(/^\(|\)$/g, '').replace(/\s+/g, '');
+      let m = /^([+-]?)(\d+)\/(\d+)$/.exec(s); if (m) return new Q((m[1] === '-' ? -1n : 1n) * BigInt(m[2]), BigInt(m[3]));
+      m = /^([+-]?)(\d*)\.?(\d*)$/.exec(s);
+      if (m && (m[2] || m[3])) { const f = m[3] || ''; return new Q((m[1] === '-' ? -1n : 1n) * BigInt((m[2] || '0') + f), 10n ** BigInt(f.length)); }
+      m = /^([+-]?)\(?(\d+)\)?\/\(?(\d+)\)?$/.exec(s); if (m) return new Q((m[1] === '-' ? -1n : 1n) * BigInt(m[2]), BigInt(m[3]));
+      return null;
+    }
+  }
+  const isqrt = (n) => { if (n < 0n) return null; if (n < 2n) return n; let x = BigInt(Math.floor(Math.sqrt(Number(n)))); while (x * x > n) x--; while ((x + 1n) * (x + 1n) <= n) x++; return x; };
+  const isSquare = (n) => { if (n < 0n) return false; const r = isqrt(n); return r * r === n; };
+  function sqrtSimp(n) { /* n = k^2 * m, m squarefree (trial division) */
+    let k = 1n, m = n;
+    for (let p = 2n; p * p <= m && p < 1000000n; p += (p === 2n ? 1n : 2n)) { while (m % (p * p) === 0n) { m /= p * p; k *= p; } }
+    return { k, m };
+  }
+  const trimDec = (x, sig) => { let t = x.toPrecision(sig || 10); if (t.indexOf('e') < 0 && t.indexOf('.') >= 0) t = t.replace(/0+$/, '').replace(/\.$/, ''); return t; };
+
+  /* ---------- expression -> TeX (own small parser, so the original wording is shown before any simplification) ---------- */
+  const FN_TEX = { sin: '\\sin', cos: '\\cos', tan: '\\tan', asin: '\\arcsin', acos: '\\arccos', atan: '\\arctan', ln: '\\ln', log: '\\ln', log10: '\\log_{10}', exp: '\\exp', abs: '\\left|', sinh: '\\sinh', cosh: '\\cosh', tanh: '\\tanh' };
+  function toTex(src) {
+    const s = String(src).replace(/\s+/g, '');
+    let i = 0;
+    const peek = () => s[i];
+    function expr() {
+      let out = '';
+      let first = true;
+      while (i < s.length && s[i] !== ')' && s[i] !== ',') {
+        let sign = '';
+        if (s[i] === '+' || s[i] === '-') { sign = s[i]; i++; }
+        const t = term();
+        out += (first ? (sign === '-' ? '-' : '') : (sign === '-' ? ' - ' : ' + ')) + t;
+        first = false;
+        if (i < s.length && s[i] !== '+' && s[i] !== '-' && s[i] !== ')' && s[i] !== ',') break;
+      }
+      return out;
+    }
+    function term() {
+      let left = factor();
+      for (;;) {
+        const c = s[i];
+        if (c === '*') { i++; const r = factor(); left = left + ' \\cdot ' + r; }
+        else if (c === '/') { i++; const r = factor(); left = '\\frac{' + stripParen(left) + '}{' + stripParen(r) + '}'; }
+        else if (c !== undefined && /[A-Za-z(\d.]/.test(c) && c !== ')' ) { const r = factor(); left = left + ' ' + r; }
+        else break;
+      }
+      return left;
+    }
+    function stripParen(t) { return /^\\left\(.*\\right\)$/.test(t) && balanced(t.slice(6, -7)) ? t.slice(6, -7) : t; }
+    function balanced(t) { let d = 0; for (let k = 0; k < t.length; k++) { if (t.startsWith('\\left(', k)) d++; else if (t.startsWith('\\right)', k)) { d--; if (d < 0) return false; } } return d === 0; }
+    function factor() {
+      let base = atom();
+      if (s[i] === '^') { i++; let neg = ''; if (s[i] === '-') { neg = '-'; i++; } const e = s[i] === '(' ? paren(true) : atomSimple(); base = base + '^{' + neg + e + '}'; }
+      return base;
+    }
+    function paren(bare) { i++; const e = expr(); if (s[i] === ')') i++; return bare ? e : '\\left(' + e + '\\right)'; }
+    function atomSimple() { const m = /^(\d+\.?\d*|\.\d+|[A-Za-z]+)/.exec(s.slice(i)); if (!m) return ''; i += m[0].length; return m[0] === 'pi' ? '\\pi' : m[0]; }
+    function atom() {
+      const c = s[i];
+      if (c === undefined) return '';
+      if (c === '(') return paren(false);
+      if (c === '-' || c === '+') { i++; return (c === '-' ? '-' : '') + atom(); }
+      const num = /^(\d+\.?\d*|\.\d+)/.exec(s.slice(i)); if (num) { i += num[0].length; return num[0]; }
+      const id = /^[A-Za-z][A-Za-z0-9]*/.exec(s.slice(i));
+      if (id) {
+        let name = id[0];
+        if (name === 'pi') { i += 2; return '\\pi'; }
+        if (s[i + name.length] === '(' ) {
+          i += name.length;
+          if (name === 'sqrt') { const e = paren(true); return '\\sqrt{' + e + '}'; }
+          if (name === 'cbrt') { const e = paren(true); return '\\sqrt[3]{' + e + '}'; }
+          if (name === 'abs') { const e = paren(true); return '\\left|' + e + '\\right|'; }
+          const e = paren(true); return (FN_TEX[name] || '\\operatorname{' + name + '}') + '\\left(' + e + '\\right)';
+        }
+        /* single letters multiply: xy -> x y ; keep multi-letter known names */
+        if (name.length > 1 && !/^(pi|sqrt)$/.test(name)) { i += 1; return name[0]; }
+        i += name.length; return name;
+      }
+      i++; return c;
+    }
+    let out = ''; 
+    while (i < s.length) { const part = expr(); out += part; if (i < s.length) { out += s[i] === ',' ? ',\\; ' : ''; i++; } }
+    return out;
+  }
+  const polyTex = (cs, v) => { /* cs ascending Q coefficients */
+    let out = '';
+    for (let p = cs.length - 1; p >= 0; p--) {
+      const c = cs[p]; if (c.isZero()) continue;
+      const neg = c.sign() < 0, a = c.abs();
+      const coef = (a.eq(new Q(1)) && p > 0) ? '' : a.tex();
+      const vx = p === 0 ? '' : (p === 1 ? v : v + '^{' + p + '}');
+      const term = (p === 0 ? a.tex() : coef + vx);
+      out += out === '' ? (neg ? '-' : '') + term : (neg ? ' - ' : ' + ') + term;
+    }
+    return out === '' ? '0' : out;
+  };
+
+  /* ---------- engine ---------- */
+  function MathStepEngine(nerdamer) { this.N = nerdamer; }
+  const P = MathStepEngine.prototype;
+  const SUP = { '\u2070': '0', '\u00b9': '1', '\u00b2': '2', '\u00b3': '3', '\u2074': '4', '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9', '\u207b': '-' };
+  P.normalize = function (raw) {
+    let s = String(raw || '').trim();
+    s = s.replace(/[\u2212\u2013\u2014]/g, '-').replace(/[\u00d7\u00b7\u22c5]/g, '*').replace(/\u00f7/g, '/').replace(/\u03c0/g, 'pi').replace(/\u221a/g, 'sqrt').replace(/\u2264/g, '<=').replace(/\u2265/g, '>=');
+    s = s.replace(/[\u2070\u00b9\u00b2\u00b3\u2074-\u2079\u207b]+/g, (m) => '^' + m.split('').map((c) => SUP[c]).join(''));
+    s = s.replace(/\bln\s*\(/gi, 'log(').replace(/(^|[^a-z])log\s*\(/gi, '$1log10(');
+    s = s.replace(/\u0060/g, '');
+    return s;
+  };
+  P.vars = function (e) {
+    const found = {}; const re = /[A-Za-z][A-Za-z0-9]*/g; let m; const FN = /^(sqrt|cbrt|sin|cos|tan|asin|acos|atan|sinh|cosh|tanh|log|log10|exp|abs|pi|e|i)$/;
+    while ((m = re.exec(e)) !== null) { const w = m[0]; if (FN.test(w)) continue; if (w.length > 1) { w.split('').forEach((c) => { found[c] = 1; }); } else found[w] = 1; }
+    return Object.keys(found);
+  };
+  P.expandStr = function (e) { return this.N('expand(' + e + ')').toString(); };
+  P.coeffs = function (e, v) { /* ascending Q[] or null */
+    try {
+      const ex = this.expandStr(e);
+      const cs = this.N.coeffs(ex, v).symbol.elements.map((x) => x.toString());
+      const out = cs.map((c) => Q.parse(c)); if (out.some((q) => q === null)) return null;
+      while (out.length > 1 && out[out.length - 1].isZero()) out.pop();
+      return out;
+    } catch (err) { return null; }
+  };
+  P.evalDec = function (e) { try { const t = this.N(e).evaluate().text('decimals'); const f = parseFloat(t); return isFinite(f) ? trimDec(f, 10) : t; } catch (err) { return null; } };
+  P.nTex = function (e) { try { return this.N(e).toTeX(); } catch (err) { return toTex(e); } };
+  const step = (title, text, tex) => ({ title, text, tex: tex === undefined ? [] : [].concat(tex) });
+  const root1 = (m, k) => (k === 1n ? '' : k.toString()) + '\\sqrt{' + m + '}';
+
+  P.solve = function (raw) {
+    try {
+      const input = this.normalize(raw);
+      if (!input) return { ok: false, message: 'Type a problem first.' };
+      if (!/triangle/i.test(input)) {
+        const ok = /^(solve|find|calculate|compute|evaluate|simplify|factor|factorise|factorize|expand|differentiate|derivative|derive|diff|integrate|integral|the|of|from|to|for|with|respect|sqrt|cbrt|sin|cos|tan|asin|acos|atan|sinh|cosh|tanh|log|log10|exp|abs|pi|dx|dy|dt)$/i;
+        const bad = (input.match(/[A-Za-z]{3,}/g) || []).filter((w) => !ok.test(w));
+        if (bad.length) return { ok: false, message: 'I could not understand \u201c' + bad[0] + '\u201d. Enter a maths problem such as \u201cSolve x^2 - 5x + 6 = 0\u201d, \u201cEvaluate 3 + 4*5\u201d or \u201cIntegrate 3x^2 + 2x\u201d.' };
+      }
+      const r = this.route(input);
+      if (r) { r.input = input; return r; }
+      return { ok: false, message: 'I could not work out a step-by-step method for that. Try a simpler form, e.g. "Solve x^2 - 5x + 6 = 0" or "Evaluate 3 + 4*5".' };
+    } catch (err) { return { ok: false, message: 'That input could not be parsed. Check brackets and operators.' }; }
+  };
+  P.route = function (s) {
+    const verb = /^\s*(solve|find|calculate|compute|evaluate|simplify|factori[sz]e|factor|expand|differentiate|derivative of|derive|diff|integrate|integral of|find the derivative of|find the integral of)\b\s*(?:for\s+[a-z]\s*[:,]?)?\s*/i.exec(s);
+    const v = verb ? verb[1].toLowerCase() : '';
+    const body = verb ? s.slice(verb[0].length).replace(/^of\s+/i, '').replace(/[.?]+$/, '').trim() : s.replace(/[.?]+$/, '').trim();
+    if (/triangle/i.test(s)) { const g = this.geometry(s); if (g) return g; }
+    if (/^(differentiate|derivative of|derive|diff|find the derivative of)$/.test(v)) return this.calculus(body, 'diff');
+    if (/^(integrate|integral of|find the integral of)$/.test(v) || /^\u222b/.test(body)) return this.calculus(body.replace(/^\u222b\s*/, ''), 'int');
+    if (/^factori[sz]e$|^factor$/.test(v)) return this.factor(body);
+    if (/^expand$/.test(v)) return this.fallback(body, 'expand');
+    if (v === 'solve' || (!v && body.indexOf('=') >= 0)) return this.equation(body);
+    const vs = this.vars(body);
+    if (!vs.length) return this.evaluate(body);
+    return this.fallback(body, v === 'simplify' ? 'simplify' : 'auto');
+  };
+
+  /* ---------- Routine C: arithmetic / order of operations ---------- */
+  function tokenize(e) {
+    const t = []; const re = /\s*(\d+\.?\d*|\.\d+|[()+\-*/^])/y; let m; re.lastIndex = 0; let pos = 0;
+    while (pos < e.length) { re.lastIndex = pos; m = re.exec(e); if (!m) { if (/^\s*$/.test(e.slice(pos))) break; return null; } t.push(m[1]); pos = re.lastIndex; }
+    return t;
+  }
+  const tokStr = (t) => t.map((x) => (x instanceof Q ? (x.sign() < 0 ? '(' + x.str() + ')' : x.str()) : x)).join('');
+  const tokTex = (t) => {
+    let out = '';
+    t.forEach((x) => { if (x instanceof Q) out += x.sign() < 0 ? '\\left(' + x.tex() + '\\right)' : x.tex(); else out += x === '*' ? ' \\times ' : x === '/' ? ' \\div ' : x === '(' ? '\\left(' : x === ')' ? '\\right)' : x === '^' ? '^' : x === '+' ? ' + ' : x === '-' ? ' - ' : x; });
+    return out.replace(/\^(\\left\(|[^{\s]+)/g, (m0, a) => '^{' + (a === '\\left(' ? '(' : a) + '}').replace(/\^\{\(([^)]*)\\right\)/g, '^{($1)}');
+  };
+  P.evaluate = function (body) {
+    const steps = []; const e = body.replace(/\s+/g, '');
+    if (!e) return null;
+    const pure = /^[\d.+\-*/^()]+$/.test(e);
+    if (pure) {
+      let tk = tokenize(e); if (!tk) return null;
+      /* numbers to Q, handle unary minus */
+      let toks = []; for (let k = 0; k < tk.length; k++) { const x = tk[k]; if (/^[\d.]/.test(x)) toks.push(Q.parse(x)); else toks.push(x); }
+      const prevIsOperand = (arr, idx) => idx > 0 && (arr[idx - 1] instanceof Q || arr[idx - 1] === ')');
+      /* unary minus -> merge into number when it follows an operator or '(' or starts */
+      const unary = (arr) => { const out = []; for (let k = 0; k < arr.length; k++) { const x = arr[k]; if ((x === '-' || x === '+') && !prevIsOperand(out, out.length) && arr[k + 1] instanceof Q) { if (arr[k + 2] === '^' && x === '-') { out.push(new Q(-1), '*', arr[k + 1]); k++; } else { out.push(x === '-' ? arr[k + 1].neg() : arr[k + 1]); k++; } } else out.push(x); } return out; };
+      toks = unary(toks);
+      const original = tokTex(toks);
+      steps.push(step('Read the expression', 'Order of operations (PEMDAS): brackets, then powers, then multiplication and division from left to right, then addition and subtraction from left to right.', original));
+      let guard = 0;
+      const show = (title, text) => steps.push(step(title, text, tokTex(toks)));
+      /* brackets: evaluate innermost bracket group fully */
+      const evalFlat = (arr) => {
+        let a = arr.slice();
+        const pw = () => { for (let k = a.length - 2; k >= 1; k--) { if (a[k] === '^' && a[k - 1] instanceof Q && a[k + 1] instanceof Q) { const ex = a[k + 1]; if (!ex.isInt() || ex.n > 4000n || ex.n < -4000n) throw new Error('exponent'); a.splice(k - 1, 3, a[k - 1].pow(Number(ex.n))); return true; } } return false; };
+        while (pw()) { /* all powers, right to left */ }
+        const md = () => { for (let k = 1; k < a.length - 1; k++) { if ((a[k] === '*' || a[k] === '/') && a[k - 1] instanceof Q && a[k + 1] instanceof Q) { const r = a[k] === '*' ? a[k - 1].mul(a[k + 1]) : a[k - 1].div(a[k + 1]); a.splice(k - 1, 3, r); return true; } } return false; };
+        while (md()) { /* left to right */ }
+        const as = () => { for (let k = 1; k < a.length - 1; k++) { if ((a[k] === '+' || a[k] === '-') && a[k - 1] instanceof Q && a[k + 1] instanceof Q) { const r = a[k] === '+' ? a[k - 1].add(a[k + 1]) : a[k - 1].sub(a[k + 1]); a.splice(k - 1, 3, r); return true; } } return false; };
+        while (as()) { /* left to right */ }
+        return a;
+      };
+      try {
+        let didBracket = false;
+        while (toks.indexOf('(') >= 0 && guard++ < 50) {
+          let open = -1; for (let k = 0; k < toks.length; k++) { if (toks[k] === '(') open = k; if (toks[k] === ')' && open >= 0) { const inner = toks.slice(open + 1, k); const r = evalFlat(inner); if (r.length !== 1 || !(r[0] instanceof Q)) return null; toks.splice(open, k - open + 1, r[0]); break; } }
+          if (open >= 0 && toks.indexOf(')') < 0 && toks.indexOf('(') >= 0) return null;
+          didBracket = true; show('Brackets first', 'Work out the innermost brackets.');
+          /* implicit multiplication like 2(3+4) */
+          for (let k = 1; k < toks.length; k++) { if (toks[k - 1] instanceof Q && (toks[k] instanceof Q)) toks.splice(k, 0, '*'); }
+        }
+        if (toks.some((x) => x === '(' || x === ')')) return null;
+        /* powers, then multiplication/division, then addition/subtraction, shown as separate steps */
+        const phase = (name, title, text, fn) => { const before = tokStr(toks); toks = fn(toks); if (tokStr(toks) !== before) show(title, text); };
+        const onlyOps = (ops, allowPow) => (arr) => {
+          let a = arr.slice(); let changed = true;
+          while (changed) { changed = false;
+            if (allowPow) { for (let k = a.length - 2; k >= 1; k--) { if (a[k] === '^' && a[k - 1] instanceof Q && a[k + 1] instanceof Q) { const ex = a[k + 1]; if (!ex.isInt() || ex.n > 4000n || ex.n < -4000n) throw new Error('exponent'); a.splice(k - 1, 3, a[k - 1].pow(Number(ex.n))); changed = true; break; } } }
+            else { for (let k = 1; k < a.length - 1; k++) { if (ops.indexOf(a[k]) >= 0 && a[k - 1] instanceof Q && a[k + 1] instanceof Q) { const x = a[k - 1], y = a[k + 1]; const r = a[k] === '*' ? x.mul(y) : a[k] === '/' ? x.div(y) : a[k] === '+' ? x.add(y) : x.sub(y); a.splice(k - 1, 3, r); changed = true; break; } } }
+          }
+          return a;
+        };
+        /* expand a single power into repeated multiplication when it is the whole expression's only power */
+        const powIdx = toks.indexOf('^');
+        if (powIdx === 1 && toks.length === 3 && toks[0] instanceof Q && toks[2] instanceof Q && toks[2].isInt() && toks[2].n >= 2n && toks[2].n <= 8n) {
+          const b = toks[0], n = Number(toks[2].n);
+          steps.push(step('Identify the base and the exponent', 'The base is the number being multiplied; the exponent says how many times it is used as a factor.', ['\\text{base} = ' + b.tex() + ',\\quad \\text{exponent} = ' + n]));
+          steps.push(step('Write the power as repeated multiplication', 'An exponent of ' + n + ' means ' + n + ' copies of the base multiplied together.', b.tex() + '^{' + n + '} = ' + new Array(n).fill(b.sign() < 0 ? '\\left(' + b.tex() + '\\right)' : b.tex()).join(' \\times ')));
+        }
+        phase('p', 'Powers', 'Evaluate the exponents.', onlyOps(null, true));
+        phase('md', 'Multiplication and division', 'Work from left to right.', onlyOps(['*', '/'], false));
+        phase('as', 'Addition and subtraction', 'Work from left to right.', onlyOps(['+', '-'], false));
+        if (toks.length !== 1 || !(toks[0] instanceof Q)) return null;
+        const res = toks[0];
+        steps.push(step('Final value', 'Nothing is left to simplify.', res.tex()));
+        const ans = { tex: res.tex(), text: res.str() };
+        const dec = res.isInt() ? null : { tex: res.dec(10), text: res.dec(10) };
+        /* cross-check with Nerdamer */
+        try { const chk = Q.parse(this.N(e).toString()); if (chk && !chk.eq(res)) return null; } catch (err) { /* nerdamer cannot parse: keep own result */ }
+        return { ok: true, kind: 'arithmetic', steps, answer: ans, decimal: dec };
+      } catch (err) { /* fall back below */ }
+    }
+    return this.fallback(body, 'evaluate');
+  };
+
+  /* ---------- Routines A/B: equations ---------- */
+  function quadRoots(a, b, c) {
+    const D = b.mul(b).sub(new Q(4).mul(a).mul(c));
+    const two_a = new Q(2).mul(a);
+    const out = { D, roots: [], rational: false, complex: false, repeated: false, texRoots: [], decRoots: [], u: null, v: null, m: null };
+    if (D.isZero()) { const r = b.neg().div(two_a); out.rational = true; out.repeated = true; out.roots = [r]; out.texRoots = [r.tex()]; out.decRoots = [r.dec(10)]; return out; }
+    const absD = D.abs(); const pq = absD.n * absD.d; const sp = sqrtSimp(pq); /* sqrt(|D|) = (k/q) sqrt(m) */
+    const rr = new Q(sp.k, absD.d); const m = sp.m;
+    const u = b.neg().div(two_a);
+    if (D.sign() > 0 && m === 1n) { const v = rr.div(two_a); const r1 = u.add(v), r2 = u.sub(v); out.rational = true; out.roots = [r1, r2].sort((x, y) => x.sub(y).sign()); out.texRoots = out.roots.map((r) => r.tex()); out.decRoots = out.roots.map((r) => r.dec(10)); return out; }
+    const v = rr.div(two_a).abs(); out.u = u; out.v = v; out.m = m; out.complex = D.sign() < 0;
+    const den = (u.d * v.d) / gcd(u.d, v.d); const un = u.mul(new Q(den)).n; const vn = v.mul(new Q(den)).n;
+    let g = gcd(gcd(un, vn), den); if (g === 0n) g = 1n; const un2 = un / g, vn2 = vn / g, den2 = den / g;
+    const radical = (m === 1n ? '' : '\\sqrt{' + m + '}');
+    const imag = out.complex ? 'i' : '';
+    const mid = (vn2 === 1n && (radical || imag) ? '' : vn2.toString()) + (out.complex ? 'i' + (m === 1n ? '' : radical) : radical || (D.sign() > 0 ? '' : ''));
+    const body = (sgn) => (un2 === 0n ? (sgn === '+' ? '' : '-') : un2.toString() + ' ' + sgn + ' ') + (vn2 === 1n && (radical || out.complex) ? '' : vn2.toString()) + (out.complex ? 'i' + radical : radical);
+    const top = (sgn) => body(sgn);
+    out.texRoots = ['+', '-'].map((sg) => (den2 === 1n ? top(sg) : '\\frac{' + top(sg) + '}{' + den2 + '}'));
+    const fu = u.num(), fv = v.num() * Math.sqrt(Number(m));
+    out.decRoots = out.complex ? ['+', '-'].map((sg) => trimDec(fu, 8) + (sg === '+' ? ' + ' : ' - ') + trimDec(fv, 8) + 'i') : [trimDec(fu + fv, 10), trimDec(fu - fv, 10)];
+    return out;
+  }
+  P.equation = function (body) {
+    let lhs, rhs;
+    if (body.indexOf('=') >= 0) { const parts = body.split('='); if (parts.length !== 2) return null; lhs = parts[0]; rhs = parts[1]; } else { lhs = body; rhs = '0'; }
+    if (!lhs.trim() || !rhs.trim()) return null;
+    if (/[<>]/.test(body)) return { ok: false, message: 'Inequalities are available in the FX-991CW tab (More \u203a Algebra \u203a Inequalities).' };
+    const vs = this.vars(lhs + ' ' + rhs);
+    if (vs.length === 0) { return this.evaluate(lhs + '-(' + rhs + ')') && this.truth(lhs, rhs); }
+    if (vs.length > 1) return { ok: false, message: 'Step-by-step solving here handles one unknown. Use the FX-991CW Equation mode (More \u203a Algebra) for systems.' };
+    const v = vs[0];
+    const L = this.coeffs(lhs, v), R = this.coeffs(rhs, v);
+    if (!L || !R) return this.fallback(body, 'solve');
+    const len = Math.max(L.length, R.length); const D = [];
+    for (let k = 0; k < len; k++) D.push((L[k] || new Q(0)).sub(R[k] || new Q(0)));
+    while (D.length > 1 && D[D.length - 1].isZero()) D.pop();
+    const deg = D.length - 1;
+    const eqTex = toTex(lhs) + ' = ' + toTex(rhs);
+    if (deg === 0) { return { ok: true, kind: 'linear', steps: [step('Simplify both sides', 'All the ' + v + ' terms cancel.', eqTex)], answer: { tex: D[0].isZero() ? '\\text{True for every } ' + v : '\\text{No solution}', text: D[0].isZero() ? 'Every value of ' + v + ' works' : 'No solution' }, decimal: null }; }
+    if (deg === 1) return this.linear(v, L, R, D, eqTex);
+    if (deg === 2) return this.quadratic(v, D, L, R, eqTex);
+    if (deg <= 6) return this.polyRoots(v, D, eqTex);
+    return this.fallback(body, 'solve');
+  };
+  P.truth = function (l, r) { const a = this.evalDec(l), b = this.evalDec(r); const ok = a !== null && a === b; return { ok: true, kind: 'check', steps: [step('Compare both sides', 'Evaluate each side and compare.', [toTex(l) + ' = ' + a, toTex(r) + ' = ' + b])], answer: { tex: ok ? '\\text{True}' : '\\text{False}', text: ok ? 'True' : 'False' }, decimal: null }; };
+  P.linear = function (v, L, R, D, eqTex) {
+    const a1 = L[1] || new Q(0), b1 = L[0] || new Q(0), a2 = R[1] || new Q(0), b2 = R[0] || new Q(0);
+    const A = a1.sub(a2), B = b2.sub(b1);
+    const steps = [];
+    steps.push(step('Start with the equation', 'This is a linear equation: the unknown ' + v + ' appears only to the first power.', eqTex));
+    if (!a2.isZero() || !b1.isZero()) steps.push(step('Group the ' + v + ' terms on the left and the constants on the right', 'Add or subtract the same quantity on both sides so each side keeps its balance.', '(' + a1.tex() + (a2.isZero() ? '' : ' - ' + (a2.sign() < 0 ? '\\left(' + a2.tex() + '\\right)' : a2.tex())) + ')' + v + ' = ' + b2.tex() + (b1.isZero() ? '' : ' - ' + (b1.sign() < 0 ? '\\left(' + b1.tex() + '\\right)' : b1.tex()))));
+    steps.push(step('Simplify both sides', 'Combine like terms.', A.tex() + v + ' = ' + B.tex()));
+    const x = B.div(A);
+    steps.push(step('Divide by the coefficient of ' + v, 'Dividing both sides by ' + A.tex() + ' isolates ' + v + '.', v + ' = \\frac{' + B.tex() + '}{' + A.tex() + '} = ' + x.tex()));
+    steps.push(step('Check the answer', 'Substitute back into the original equation.', toTex(this.sub(L, x)) + ' \\;=\\; ' + toTex(this.sub(R, x))));
+    return { ok: true, kind: 'linear', steps, answer: { tex: v + ' = ' + x.tex(), text: v + ' = ' + x.str() }, decimal: x.isInt() ? null : { tex: v + ' = ' + x.dec(10), text: v + ' = ' + x.dec(10) } };
+  };
+  P.sub = function (cs, x) { let s = new Q(0); for (let k = cs.length - 1; k >= 0; k--) s = s.mul(x).add(cs[k]); return s.str().indexOf('/') >= 0 ? s.str() : s.str(); };
+  P.quadratic = function (v, D, L, R, eqTex) {
+    const a = D[2], b = D[1], c = D[0];
+    const q = quadRoots(a, b, c);
+    const steps = []; const std = polyTex(D, v) + ' = 0';
+    steps.push(step('Write it in standard form', 'Move every term to one side so the equation looks like ax\u00b2 + bx + c = 0, then read off a, b and c.', [eqTex.replace(/\s/g, '') !== std.replace(/\s/g, '') ? eqTex + '\\;\\Longrightarrow\\;' + std : std, 'a = ' + a.tex() + ',\\quad b = ' + b.tex() + ',\\quad c = ' + c.tex()]));
+    const dTex = (x) => (x.sign() < 0 ? '\\left(' + x.tex() + '\\right)' : x.tex());
+    const meaning = q.D.sign() > 0 ? (q.rational ? 'The discriminant is positive and a perfect square, so there are two distinct rational roots.' : 'The discriminant is positive but not a perfect square, so there are two distinct irrational real roots.') : q.D.isZero() ? 'The discriminant is zero, so there is one repeated real root.' : 'The discriminant is negative, so there are two complex (non-real) roots.';
+    steps.push(step('Calculate the discriminant', 'The discriminant \u0394 = b\u00b2 \u2212 4ac decides what kind of roots to expect. ' + meaning, '\\Delta = b^2 - 4ac = ' + dTex(b) + '^2 - 4\\cdot' + dTex(a) + '\\cdot' + dTex(c) + ' = ' + q.D.tex()));
+    steps.push(step('Substitute into the quadratic formula', 'The roots are given by x = (\u2212b \u00b1 \u221a\u0394) / 2a.', v + ' = \\frac{-b \\pm \\sqrt{\\Delta}}{2a} = \\frac{' + b.neg().tex() + ' \\pm \\sqrt{' + q.D.tex() + '}}{' + new Q(2).mul(a).tex() + '}'));
+    let ans, dec = null, text, dtext = null;
+    if (q.repeated) {
+      steps.push(step('Simplify', 'With \u0394 = 0 the \u00b1 part vanishes, leaving a single repeated root.', v + ' = ' + q.texRoots[0]));
+      ans = v + ' = ' + q.texRoots[0]; text = v + ' = ' + q.roots[0].str();
+    } else if (q.rational) {
+      steps.push(step('Simplify to get the roots', 'The square root is exact, so both roots are rational.', [v + '_1 = ' + q.texRoots[0] + ',\\quad ' + v + '_2 = ' + q.texRoots[1]]));
+      const r1 = q.roots[0], r2 = q.roots[1];
+      const fact = (r) => (r.isZero() ? v : '\\left(' + v + (r.sign() > 0 ? ' - ' : ' + ') + r.abs().tex() + '\\right)');
+      steps.push(step('Check by factoring', 'Because the roots are rational, the quadratic factors as a(x \u2212 x\u2081)(x \u2212 x\u2082).', (a.eq(new Q(1)) ? '' : a.tex()) + fact(r1) + fact(r2) + ' = 0'));
+      ans = v + ' = ' + q.texRoots[0] + ',\\; ' + v + ' = ' + q.texRoots[1]; text = v + ' = ' + r1.str() + ' or ' + v + ' = ' + r2.str();
+      if (!(r1.isInt() && r2.isInt())) { dec = { tex: v + ' \\approx ' + q.decRoots.join(',\\; ' + v + ' \\approx '), text: v + ' = ' + q.decRoots.join(' or ' + v + ' = ') }; }
+    } else {
+      steps.push(step('Simplify the square root and the fraction', q.complex ? 'The square root of a negative number introduces i (i\u00b2 = \u22121). Simplify the radical and cancel common factors.' : 'Pull perfect squares out of the radical and cancel common factors.', [v + '_1 = ' + q.texRoots[0] + ',\\quad ' + v + '_2 = ' + q.texRoots[1]]));
+      ans = v + ' = ' + q.texRoots[0] + ',\\; ' + v + ' = ' + q.texRoots[1];
+      const plain = (t) => t.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/$2').replace(/\\sqrt\{(\d+)\}/g, '\u221a$1').replace(/\\pm/g, '\u00b1');
+      text = v + ' = ' + plain(q.texRoots[0]) + ' or ' + v + ' = ' + plain(q.texRoots[1]);
+      dec = { tex: v + ' \\approx ' + q.decRoots.join(',\\; ' + v + ' \\approx '), text: v + ' = ' + q.decRoots.join(' or ' + v + ' = ') };
+    }
+    return { ok: true, kind: 'quadratic', steps, answer: { tex: ans, text }, decimal: dec };
+  };
+  /* higher degree: rational root theorem, deflate to a quadratic */
+  P.polyRoots = function (v, D, eqTex) {
+    let cs = D.slice();
+    const lcmD = cs.reduce((acc, q) => (acc * q.d) / gcd(acc, q.d), 1n);
+    let ic = cs.map((q) => q.mul(new Q(lcmD)).n);
+    const g = ic.reduce((acc, x) => gcd(acc, x), 0n) || 1n; ic = ic.map((x) => x / g);
+    const steps = [step('Write it as a polynomial equal to zero', 'Move everything to one side and clear fractions.', polyTex(ic.map((x) => new Q(x)), v) + ' = 0')];
+    const roots = []; let cur = ic.slice();
+    const divisors = (n) => { n = n < 0n ? -n : n; const out = []; if (n === 0n) return out; for (let d = 1n; d * d <= n && d < 100000n; d++) if (n % d === 0n) { out.push(d); if (d !== n / d) out.push(n / d); } return out; };
+    while (cur.length > 3) {
+      if (cur[0] === 0n) { roots.push(new Q(0)); cur = cur.slice(1); continue; }
+      let found = null;
+      const ps = divisors(cur[0]), qs = divisors(cur[cur.length - 1]);
+      outer: for (const p of ps) for (const q of qs) for (const sg of [1n, -1n]) {
+        const r = new Q(sg * p, q); let s = new Q(0); for (let k = cur.length - 1; k >= 0; k--) s = s.mul(r).add(new Q(cur[k]));
+        if (s.isZero()) { found = r; break outer; }
+      }
+      if (!found) return this.fallback(eqTex.replace(/\s/g, ''), 'solve');
+      /* synthetic division */
+      const nc = []; let carry = new Q(0); const hi = cur.slice().reverse().map((x) => new Q(x));
+      for (let k = 0; k < hi.length; k++) { carry = k === 0 ? hi[0] : carry.mul(found).add(hi[k]); nc.push(carry); }
+      nc.pop(); const lcm2 = nc.reduce((acc, q) => (acc * q.d) / gcd(acc, q.d), 1n);
+      cur = nc.reverse().map((q) => q.mul(new Q(lcm2)).n);
+      roots.push(found);
+      steps.push(step('Find a rational root', 'The Rational Root Theorem says any rational root p/q has p dividing the constant term and q dividing the leading coefficient. Testing candidates gives ' + v + ' = ' + found.str() + ', so (' + v + (found.sign() > 0 ? ' - ' : ' + ') + found.abs().str() + ') is a factor. Divide it out.', polyTex(cur.map((x) => new Q(x)), v) + ' = 0'));
+    }
+    let extra = []; let decs = [];
+    if (cur.length === 3) {
+      const q = quadRoots(new Q(cur[2]), new Q(cur[1]), new Q(cur[0]));
+      steps.push(step('Solve the remaining quadratic', 'Apply the quadratic formula to ' + polyTex(cur.map((x) => new Q(x)), v) + ' = 0. The discriminant is ' + q.D.str() + '.', q.texRoots.map((t, k) => v + '_{' + (k + 1) + '} = ' + t)));
+      if (q.repeated) extra = [q.texRoots[0]]; else extra = q.texRoots.slice();
+      decs = q.decRoots.slice();
+      if (q.rational) q.roots.forEach((r) => roots.push(r)); else { extra = q.texRoots.slice(); }
+      if (q.rational) extra = [];
+    } else if (cur.length === 2) { roots.push(new Q(-cur[0], cur[1])); }
+    const all = roots.sort((x, y) => x.sub(y).sign()).map((r) => r.tex()).concat(extra);
+    const ans = all.map((t) => v + ' = ' + t).join(',\\; ');
+    const rationalOnly = extra.length === 0;
+    const text = roots.sort((x, y) => x.sub(y).sign()).map((r) => v + ' = ' + r.str()).join(', ') + (extra.length ? ', ' + extra.map((t) => v + ' = ' + t).join(', ') : '');
+    const dec = rationalOnly && roots.every((r) => r.isInt()) ? null : { tex: roots.map((r) => v + ' = ' + r.dec(10)).concat(decs.map((d) => v + ' \\approx ' + d)).join(',\\; '), text: roots.map((r) => v + ' = ' + r.dec(10)).concat(decs.map((d) => v + ' = ' + d)).join(', ') };
+    return { ok: true, kind: 'polynomial', steps, answer: { tex: ans, text }, decimal: dec };
+  };
+
+  /* ---------- Routine D: right triangle ---------- */
+  P.geometry = function (s) {
+    const num = '(\\d+(?:\\.\\d+)?)';
+    let m = new RegExp('legs?\\s*(?:of|are|is|=)?\\s*' + num + '\\s*(?:and|&|,)\\s*' + num, 'i').exec(s);
+    if (m) {
+      const a = Q.parse(m[1]), b = Q.parse(m[2]); const sum = a.mul(a).add(b.mul(b));
+      const steps = [step('Identify the given sides', 'In a right triangle the two shorter sides are the legs; the longest side, opposite the right angle, is the hypotenuse c.', 'a = ' + a.tex() + ',\\quad b = ' + b.tex()),
+        step('State the Pythagorean theorem and substitute', 'For a right triangle, a\u00b2 + b\u00b2 = c\u00b2.', 'c^2 = ' + a.tex() + '^2 + ' + b.tex() + '^2'),
+        step('Square both legs and add', 'Squaring and summing gives c\u00b2.', 'c^2 = ' + a.mul(a).tex() + ' + ' + b.mul(b).tex() + ' = ' + sum.tex())];
+      const r = this.sqrtQ(sum);
+      steps.push(step('Take the principal square root', 'The hypotenuse is positive, so take the positive root.', 'c = \\sqrt{' + sum.tex() + '} = ' + r.tex));
+      return { ok: true, kind: 'pythagoras', steps, answer: { tex: 'c = ' + r.tex, text: 'c = ' + r.text }, decimal: r.exact && r.int ? null : { tex: 'c \\approx ' + trimDec(Math.sqrt(sum.num()), 10), text: 'c = ' + trimDec(Math.sqrt(sum.num()), 10) } };
+    }
+    m = new RegExp('hypotenuse\\s*(?:of|is|=)?\\s*' + num + '[^\\d]+(?:leg|side)\\s*(?:of|is|=)?\\s*' + num, 'i').exec(s) || new RegExp('(?:leg|side)\\s*(?:of|is|=)?\\s*' + num + '[^\\d]+hypotenuse\\s*(?:of|is|=)?\\s*' + num, 'i').exec(s);
+    if (m) {
+      let c = Q.parse(m[1]), a = Q.parse(m[2]);
+      if (/^(leg|side)/i.test(m[0])) { const t = c; c = a; a = t; }
+      if (c.sub(a).sign() <= 0) return { ok: false, message: 'The hypotenuse must be longer than the leg.' };
+      const diff = c.mul(c).sub(a.mul(a)); const r = this.sqrtQ(diff);
+      const steps = [step('Identify the given sides', 'The hypotenuse c and one leg a are known; find the other leg b.', 'c = ' + c.tex() + ',\\quad a = ' + a.tex()),
+        step('Rearrange the Pythagorean theorem', 'From a\u00b2 + b\u00b2 = c\u00b2, b\u00b2 = c\u00b2 \u2212 a\u00b2.', 'b^2 = ' + c.tex() + '^2 - ' + a.tex() + '^2 = ' + c.mul(c).tex() + ' - ' + a.mul(a).tex() + ' = ' + diff.tex()),
+        step('Take the principal square root', 'The side length is positive.', 'b = \\sqrt{' + diff.tex() + '} = ' + r.tex)];
+      return { ok: true, kind: 'pythagoras', steps, answer: { tex: 'b = ' + r.tex, text: 'b = ' + r.text }, decimal: r.exact && r.int ? null : { tex: 'b \\approx ' + trimDec(Math.sqrt(diff.num()), 10), text: 'b = ' + trimDec(Math.sqrt(diff.num()), 10) } };
+    }
+    return null;
+  };
+  P.sqrtQ = function (q) { /* exact sqrt of a positive rational as TeX/text */
+    const pq = q.n * q.d; const sp = sqrtSimp(pq); const den = q.d;
+    if (sp.m === 1n) { const r = new Q(sp.k, den); return { tex: r.tex(), text: r.str(), exact: true, int: r.isInt() }; }
+    const k = new Q(sp.k, den);
+    const tex = (k.eq(new Q(1)) ? '' : (k.isInt() ? k.tex() : '\\frac{' + k.n + '}{' + k.d + '}')) + '\\sqrt{' + sp.m + '}';
+    return { tex, text: (k.eq(new Q(1)) ? '' : k.str()) + '\u221a' + sp.m, exact: true, int: false };
+  };
+
+  /* ---------- Routine E: calculus ---------- */
+  P.calculus = function (body, kind) {
+    let expr = body.trim(); let a = null, b = null;
+    let m = /^(.*?)\s+from\s+(-?[\d./a-z()*^+-]+)\s+to\s+(-?[\d./a-z()*^+-]+)\s*$/i.exec(expr);
+    if (m && kind === 'int') { expr = m[1]; a = m[2]; b = m[3]; }
+    expr = expr.replace(/\s*d[xyt]\s*$/i, '').replace(/^\s*(?:of\s+)?/, '');
+    const vs = this.vars(expr); const v = vs.length ? (vs.indexOf('x') >= 0 ? 'x' : vs[0]) : 'x';
+    const cs = this.coeffs(expr, v);
+    const dtex = kind === 'diff' ? '\\frac{d}{d' + v + '}\\left[' + toTex(expr) + '\\right]' : '\\int ' + toTex(expr) + '\\, d' + v;
+    if (cs && vs.length <= 1) {
+      const terms = []; cs.forEach((c, p) => { if (!c.isZero()) terms.push({ c, p }); }); terms.sort((x, y) => y.p - x.p);
+      const termTex = (c, p) => polyTex(Array.from({ length: p + 1 }, (_, k) => (k === p ? c : new Q(0))), v);
+      const steps = [];
+      if (kind === 'diff') {
+        steps.push(step('Split into terms (Sum/Difference Rule)', 'The derivative of a sum is the sum of the derivatives, so differentiate each term separately.', [dtex, terms.map((t) => '\\frac{d}{d' + v + '}\\left[' + termTex(t.c, t.p) + '\\right]').join(' + ').replace(/\+ \\frac\{d\}\{d.\}\\left\[-/g, '+ \\frac{d}{d' + v + '}\\left[-')]));
+        const out = []; const res = [];
+        terms.forEach((t) => { if (t.p === 0) { out.push('\\frac{d}{d' + v + '}\\left[' + t.c.tex() + '\\right] = 0'); } else { const nc = t.c.mul(new Q(t.p)); out.push('\\frac{d}{d' + v + '}\\left[' + termTex(t.c, t.p) + '\\right] = ' + t.c.tex() + '\\cdot' + t.p + v + '^{' + (t.p - 1) + '} = ' + termTex(nc, t.p - 1)); const arr = new Array(t.p).fill(new Q(0)); arr[t.p - 1] = nc; res.push(arr); } });
+        steps.push(step('Apply the Power Rule term by term', 'The Power Rule says d/d' + v + ' [' + v + '\u207f] = n\u00b7' + v + '\u207f\u207b\u00b9, and the derivative of a constant is 0.', out));
+        const total = []; res.forEach((arr) => arr.forEach((q, k) => { total[k] = (total[k] || new Q(0)).add(q); }));
+        for (let k = 0; k < Math.max(0, ...terms.map((t) => t.p)); k++) if (!total[k]) total[k] = new Q(0);
+        const final = polyTex(total.length ? total : [new Q(0)], v);
+        steps.push(step('Combine the results', 'Add the term derivatives together.', final));
+        /* cross-check */
+        try { const chk = this.N('diff(' + expr + ',' + v + ')'); const dif = this.N('expand((' + chk.toString() + ')-(' + polyTex2(total, v) + '))').toString(); if (dif !== '0') throw new Error('mismatch'); } catch (err) { return this.fallbackCalc(expr, v, 'diff'); }
+        return { ok: true, kind: 'derivative', steps, answer: { tex: "\\frac{d}{d" + v + "}\\left[" + toTex(expr) + "\\right] = " + final, text: "d/d" + v + " = " + final.replace(/\\frac\{(\d+)\}\{(\d+)\}/g, '$1/$2').replace(/[{}]/g, '').replace(/\\/g, '') }, decimal: null, plain: final };
+      }
+      /* integral */
+      const anti = []; const lines = []; const parts = [];
+      terms.forEach((t) => { const nc = t.c.div(new Q(t.p + 1)); const p1 = t.p + 1; lines.push('\\int ' + termTex(t.c, t.p) + '\\,d' + v + ' = \\frac{' + t.c.tex() + '}{' + p1 + '}' + v + '^{' + p1 + '} = ' + termTex(nc, p1)); parts.push(nc); anti[p1] = nc; });
+      for (let k = 0; k < anti.length; k++) if (!anti[k]) anti[k] = new Q(0);
+      steps.push(step('Split into terms (Sum/Difference Rule)', 'The integral of a sum is the sum of the integrals.', [dtex, terms.map((t) => '\\int ' + termTex(t.c, t.p) + '\\,d' + v).join(' + ')]));
+      steps.push(step('Apply the Power Rule for integrals', 'The rule is \u222b ' + v + '\u207f d' + v + ' = ' + v + '\u207f\u207a\u00b9/(n+1) (n \u2260 \u22121). A constant c integrates to c\u00b7' + v + '.', lines));
+      const F = polyTex(anti.length ? anti : [new Q(0)], v);
+      if (a === null) {
+        steps.push(step('Combine and add the constant of integration', 'An indefinite integral is only defined up to a constant, written + C.', F + ' + C'));
+        try { const chk = this.N('integrate(' + expr + ',' + v + ')').toString(); const dif = this.N('expand((' + chk + ')-(' + polyTex2(anti, v) + '))').toString(); if (dif !== '0') throw new Error('mismatch'); } catch (err) { return this.fallbackCalc(expr, v, 'int'); }
+        return { ok: true, kind: 'integral', steps, answer: { tex: dtex + ' = ' + F + ' + C', text: F.replace(/\\frac\{(\d+)\}\{(\d+)\}/g, '$1/$2').replace(/[{}]/g, '').replace(/\\/g, '') + ' + C' }, decimal: null };
+      }
+      const qa = Q.parse(a), qb = Q.parse(b);
+      if (qa && qb) {
+        const ev = (x) => { let s = new Q(0); for (let k = anti.length - 1; k >= 0; k--) s = s.mul(x).add(anti[k]); return s; };
+        const Fb = ev(qb), Fa = ev(qa); const val = Fb.sub(Fa);
+        steps.push(step('Evaluate the antiderivative at the limits', 'By the Fundamental Theorem of Calculus, \u222b from a to b f = F(b) \u2212 F(a).', ['F(' + v + ') = ' + F, 'F(' + qb.str() + ') - F(' + qa.str() + ') = ' + Fb.tex() + ' - ' + (Fa.sign() < 0 ? '\\left(' + Fa.tex() + '\\right)' : Fa.tex()) + ' = ' + val.tex()]));
+        return { ok: true, kind: 'definite', steps, answer: { tex: '\\int_{' + qa.str() + '}^{' + qb.str() + '} ' + toTex(expr) + '\\,d' + v + ' = ' + val.tex(), text: val.str() }, decimal: val.isInt() ? null : { tex: val.dec(10), text: val.dec(10) } };
+      }
+    }
+    return this.fallbackCalc(expr, v, kind, a, b);
+  };
+  function polyTex2(total, v) { /* nerdamer-readable polynomial string */
+    let out = ''; for (let p = total.length - 1; p >= 0; p--) { const c = total[p]; if (!c || c.isZero()) continue; out += (out ? '+' : '') + '(' + c.str() + ')' + (p === 0 ? '' : '*' + v + '^' + p); } return out || '0';
+  }
+  P.fallbackCalc = function (expr, v, kind, a, b) {
+    const N = this.N; let res;
+    try {
+      if (kind === 'diff') res = N('diff(' + expr + ',' + v + ')');
+      else if (a !== null && a !== undefined) res = N('defint(' + expr + ',' + a + ',' + b + ',' + v + ')');
+      else res = N('integrate(' + expr + ',' + v + ')');
+    } catch (err) { return { ok: false, message: 'That expression could not be ' + (kind === 'diff' ? 'differentiated' : 'integrated') + ' symbolically.' }; }
+    const text = res.toString();
+    if (/integrate\(|defint\(|diff\(/.test(text)) return { ok: false, message: 'No closed-form ' + (kind === 'diff' ? 'derivative' : 'integral') + ' was found for that expression.' };
+    const dtex = kind === 'diff' ? '\\frac{d}{d' + v + '}\\left[' + toTex(expr) + '\\right]' : '\\int ' + toTex(expr) + '\\, d' + v;
+    const steps = [step('Write the problem', kind === 'diff' ? 'Differentiate with respect to ' + v + '.' : 'Integrate with respect to ' + v + '.', dtex),
+      step('Apply the standard rules', 'Chain, product, quotient and the standard derivative/integral table are applied symbolically.', this.nTex(text))];
+    const fin = this.nTex(text);
+    return { ok: true, kind: kind === 'diff' ? 'derivative' : 'integral', steps, answer: { tex: dtex + ' = ' + fin + (kind === 'int' && (a === null || a === undefined) ? ' + C' : ''), text: text + (kind === 'int' && (a === null || a === undefined) ? ' + C' : '') }, decimal: (a !== null && a !== undefined) ? { tex: this.evalDec(text), text: this.evalDec(text) } : null };
+  };
+
+  /* ---------- factoring ---------- */
+  P.prettyFactors = function (str, v) {
+    const parts = []; let depth = 0, cur = '';
+    for (const ch of str) { if (ch === '(') depth++; if (ch === ')') depth--; if (ch === '*' && depth === 0) { parts.push(cur); cur = ''; } else cur += ch; }
+    parts.push(cur);
+    const out = [];
+    for (let f of parts) {
+      f = f.trim(); let ex = ''; const m = /^\((.*)\)\^(\d+)$/.exec(f); let inner = f;
+      if (m) { inner = m[1]; ex = '^{' + m[2] + '}'; } else if (/^\(.*\)$/.test(f)) inner = f.slice(1, -1);
+      const q = Q.parse(inner);
+      if (q) { if (!q.eq(new Q(1))) out.push(q.tex()); continue; }
+      if (/^[A-Za-z]$/.test(inner)) { out.push(inner + ex); continue; }
+      const cs = this.coeffs(inner, v);
+      if (!cs) return null;
+      out.push('\\left(' + polyTex(cs, v) + '\\right)' + ex);
+    }
+    return out.join('');
+  };
+  P.factorTex = function (str, v) { return this.prettyFactors(str, v) || this.nTex(str); };
+  P.factor = function (body) {
+    const vs = this.vars(body); if (vs.length !== 1) return this.fallback(body, 'factor');
+    const v = vs[0]; const cs = this.coeffs(body, v);
+    if (!cs) return this.fallback(body, 'factor');
+    const orig = polyTex(cs, v);
+    const steps = [step('Write the expression in standard form', 'Arrange the terms from the highest power down.', orig)];
+    let fac; try { fac = this.N('factor(' + this.expandStr(body) + ')'); } catch (err) { return null; }
+    const check = () => { try { return this.N('expand(' + fac.toString() + ')-(' + this.expandStr(body) + ')').toString() === '0'; } catch (e) { return false; } };
+    if (!check()) return null;
+    if (cs.length === 3 && cs.every((q) => q.isInt())) {
+      let a = cs[2].n, b = cs[1].n, c = cs[0].n; const g = [a, b, c].reduce((x, y) => gcd(x, y), 0n);
+      if (g > 1n) { steps.push(step('Take out the greatest common factor', 'All coefficients share the factor ' + g + '.', g + '\\left(' + polyTex([new Q(c / g), new Q(b / g), new Q(a / g)], v) + '\\right)')); a /= g; b /= g; c /= g; }
+      const ac = a * c; let pair = null;
+      const lim = ac < 0n ? -ac : ac;
+      for (let p = -lim; p <= lim && !pair; p++) { if (p === 0n) continue; if (ac % p === 0n) { const q = ac / p; if (p + q === b) pair = [p, q]; } if (lim > 20000n) break; }
+      if (pair && a !== 1n) {
+        steps.push(step('Find two numbers that multiply to ac and add to b', 'Here ac = ' + ac + ' and b = ' + b + '. The numbers are ' + pair[0] + ' and ' + pair[1] + '.', 'a c = ' + a + '\\cdot' + (c < 0n ? '\\left(' + c + '\\right)' : c) + ' = ' + ac + ',\\quad ' + pair[0] + ' + ' + (pair[1] < 0n ? '\\left(' + pair[1] + '\\right)' : pair[1]) + ' = ' + b));
+        steps.push(step('Split the middle term', 'Rewrite bx as the two terms found above.', polyTex([new Q(c)], v).replace(/^0$/, '') && (a === 1n ? '' : a.toString()) + v + '^2' + (pair[0] < 0n ? ' - ' + (-pair[0]) : ' + ' + pair[0]) + v + (pair[1] < 0n ? ' - ' + (-pair[1]) : ' + ' + pair[1]) + v + (c < 0n ? ' - ' + (-c) : ' + ' + c)));
+        steps.push(step('Group and factor each pair', 'Factor a common factor from each pair; the same bracket appears in both.', '\\Rightarrow ' + this.factorTex(fac.toString(), v)));
+      } else if (pair) {
+        steps.push(step('Find two numbers that multiply to c and add to b', 'The numbers are ' + pair[0] + ' and ' + pair[1] + '.', pair[0] + '\\cdot' + (pair[1] < 0n ? '\\left(' + pair[1] + '\\right)' : pair[1]) + ' = ' + c + ',\\quad ' + pair[0] + ' + ' + (pair[1] < 0n ? '\\left(' + pair[1] + '\\right)' : pair[1]) + ' = ' + b));
+      } else { steps.push(step('Look for integer factor pairs', 'No pair of integers multiplies to ac and adds to b, so this quadratic does not factor over the rationals.', '')); }
+    } else {
+      steps.push(step('Factor using algebraic identities', 'Look for a common factor, a difference of squares, or a sum/difference of cubes; the factorisation below was found and verified by expanding.', ''));
+    }
+    const out = this.factorTex(fac.toString(), v);
+    steps.push(step('Write the factored form', 'Expanding the factors reproduces the original expression, which confirms the result.', out + ' = ' + orig));
+    return { ok: true, kind: 'factor', steps, answer: { tex: out, text: fac.toString().replace(/\*/g, '') }, decimal: null };
+  };
+
+  /* ---------- Routine F: fallback ---------- */
+  P.fallback = function (body, mode) {
+    const N = this.N; const steps = [];
+    if (/^[\s\d.+\-*/^()]*$/.test(body) === false && !body.trim()) return null;
+    steps.push(step('Write the expression', 'This is the expression as entered.', toTex(body)));
+    let simp, expd = null, fac = null;
+    try { simp = N(body.indexOf('=') >= 0 ? body.replace('=', '-(') + ')' : body); } catch (err) { return { ok: false, message: 'That expression could not be parsed.' }; }
+    try { expd = N('expand(' + body + ')').toString(); } catch (e) { expd = null; }
+    try { fac = N('factor(' + body + ')').toString(); } catch (e) { fac = null; }
+    const resText = simp.toString();
+    if (mode === 'expand') {
+      if (!expd) return null; steps.push(step('Expand', 'Multiply out brackets and combine like terms.', this.nTex(expd)));
+      return { ok: true, kind: 'expand', steps, answer: { tex: this.nTex(expd), text: expd }, decimal: null };
+    }
+    if (expd && expd !== resText) steps.push(step('Expanded form', 'Multiply out brackets and combine like terms.', this.nTex(expd)));
+    if (fac && fac !== resText && fac !== expd) steps.push(step('Factored form', 'Factor out common factors where possible.', this.nTex(fac)));
+    const vsl = this.vars(body);
+    let dec = null; if (!vsl.length) { const d = this.evalDec(body); if (d !== null && d !== resText) dec = { tex: d, text: d }; }
+    steps.push(step(vsl.length ? 'Simplified result' : 'Exact value', vsl.length ? 'Combine and simplify.' : 'The exact value is shown first; the decimal approximation is available with the toggle.', this.nTex(resText)));
+    if (mode === 'solve') return { ok: false, message: 'I could not solve that equation step by step. Try a polynomial with one unknown, e.g. "Solve x^2 - 5x + 6 = 0".' };
+    return { ok: true, kind: 'symbolic', steps, answer: { tex: this.nTex(resText), text: resText }, decimal: dec };
+  };
+
+  MathStepEngine.Q = Q; MathStepEngine.toTex = toTex;
+  if (typeof module !== 'undefined' && module.exports) module.exports = MathStepEngine; else root.MathStepEngine = MathStepEngine;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* TOOLS SHEET: Scratchpad (canvas) + step-by-step Solver. No backend, no AI service. KaTeX and Nerdamer load lazily from a CDN only when the Solver is first used. */
+(function () {
+  'use strict';
+  var root = document.getElementById('blogger-calc-widget');
+  if (!root || window.BQTools) { return; }
+  var VERSIONS = { katex: '0.16.9', nerdamer: '1.1.12' };
+  var SRC = {
+    css: ['https://cdn.jsdelivr.net/npm/katex@' + VERSIONS.katex + '/dist/katex.min.css', 'https://unpkg.com/katex@' + VERSIONS.katex + '/dist/katex.min.css'],
+    katex: ['https://cdn.jsdelivr.net/npm/katex@' + VERSIONS.katex + '/dist/katex.min.js', 'https://unpkg.com/katex@' + VERSIONS.katex + '/dist/katex.min.js'],
+    nerd: ['nerdamer.core.js', 'Algebra.js', 'Calculus.js', 'Solve.js'].map(function (f) { return ['https://cdn.jsdelivr.net/npm/nerdamer@' + VERSIONS.nerdamer + '/' + f, 'https://unpkg.com/nerdamer@' + VERSIONS.nerdamer + '/' + f]; })
+  };
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) { e.className = cls; } if (text !== undefined) { e.textContent = text; } return e; }
+  function btn(cls, text, label, fn) { var b = el('button', cls, text); b.type = 'button'; if (label) { b.setAttribute('aria-label', label); b.title = label; } if (fn) { b.addEventListener('click', fn); } return b; }
+  function loadScript(urls) {
+    return new Promise(function (resolve, reject) {
+      var i = 0;
+      (function next() {
+        if (i >= urls.length) { reject(new Error('load failed')); return; }
+        var s = document.createElement('script'); s.src = urls[i++]; s.async = false; s.crossOrigin = 'anonymous';
+        s.onload = function () { resolve(); }; s.onerror = function () { s.remove(); next(); };
+        document.head.appendChild(s);
+      })();
+    });
+  }
+  function loadCss(urls) {
+    return new Promise(function (resolve) {
+      var i = 0;
+      (function next() {
+        if (i >= urls.length) { resolve(); return; }
+        var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = urls[i++]; l.crossOrigin = 'anonymous';
+        l.onload = function () { resolve(); }; l.onerror = function () { l.remove(); next(); };
+        document.head.appendChild(l);
+      })();
+    });
+  }
+  var libs = null;
+  function loadLibs() {
+    if (libs) { return libs; }
+    libs = (window.nerdamer && window.nerdamer.solve ? Promise.resolve() : SRC.nerd.reduce(function (p, u) { return p.then(function () { return loadScript(u); }); }, Promise.resolve()))
+      .then(function () { return window.katex ? null : Promise.all([loadCss(SRC.css), loadScript(SRC.katex).catch(function () { return null; })]); })
+      .catch(function (e) { libs = null; throw e; });
+    return libs;
+  }
+
+  /* ---------------- sheet shell ---------------- */
+  var sheet = el('div', 'bq-sheet'); sheet.id = 'bc-sheet'; sheet.hidden = true; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', 'Calculator tools');
+  var head = el('div', 'bq-sh-head');
+  var seg = el('div', 'bq-seg'); seg.setAttribute('role', 'tablist');
+  var tabDraw = btn('bq-segb', '✏️ Scratchpad', null, function () { show('draw'); });
+  var tabSolve = btn('bq-segb', '⌨️ Solver', null, function () { show('solve'); });
+  [tabDraw, tabSolve].forEach(function (b) { b.setAttribute('role', 'tab'); seg.appendChild(b); });
+  var closeB = btn('bq-sh-x', '✕', 'Close tools', function () { close(); });
+  head.appendChild(seg); head.appendChild(closeB);
+  var body = el('div', 'bq-sh-body');
+  var drawPane = el('div', 'bq-pane'); var solvePane = el('div', 'bq-pane');
+  body.appendChild(drawPane); body.appendChild(solvePane); sheet.appendChild(head); sheet.appendChild(body); root.appendChild(sheet);
+  var opener = null, current = 'draw', built = { draw: false, solve: false };
+
+  function show(which) {
+    current = which;
+    tabDraw.setAttribute('aria-selected', String(which === 'draw')); tabSolve.setAttribute('aria-selected', String(which === 'solve'));
+    tabDraw.classList.toggle('on', which === 'draw'); tabSolve.classList.toggle('on', which === 'solve');
+    drawPane.hidden = which !== 'draw'; solvePane.hidden = which !== 'solve';
+    if (which === 'draw') { if (!built.draw) { buildDraw(); built.draw = true; } pad.resize(); }
+    else { if (!built.solve) { buildSolve(); built.solve = true; } }
+  }
+  function open(which) {
+    opener = document.activeElement; sheet.hidden = false; sheet.style.height = Math.max(root.clientHeight, 440) + 'px';
+    show(which); closeB.focus();
+  }
+  function close() { sheet.hidden = true; if (opener && opener.focus) { try { opener.focus(); } catch (e) { /* ignore */ } } }
+  document.addEventListener('keydown', function (e) { if (!sheet.hidden && e.key === 'Escape') { e.preventDefault(); close(); } });
+
+  /* ---------------- Scratchpad ---------------- */
+  var pad = { resize: function () {} };
+  function buildDraw() {
+    var wrap = el('div', 'bq-padwrap');
+    var cv = el('canvas', 'bq-canvas'); cv.setAttribute('aria-label', 'Scratchpad drawing area'); cv.setAttribute('role', 'img');
+    var ctx = cv.getContext('2d');
+    var tools = el('div', 'bq-ptools'); tools.setAttribute('role', 'toolbar'); tools.setAttribute('aria-label', 'Drawing tools');
+    var strokes = [], undo = [], redo = [], tool = 'pen', cur = null, view = { x: 0, y: 0, k: 1 }, pointers = {}, pinch = null, panFrom = null, erased = null;
+    var tb = {};
+    function mk(id, text, label) { tb[id] = btn('bq-pt', text, label); tools.appendChild(tb[id]); return tb[id]; }
+    mk('pen', '✎', 'Pen'); mk('eraser', '⌦', 'Eraser'); mk('undo', '↶', 'Undo'); mk('redo', '↷', 'Redo'); mk('pan', '✋', 'Pan (move the canvas)'); mk('save', '⬇', 'Save as image'); mk('clear', '🗑', 'Clear all');
+    var zoomB = btn('bq-zoom', '100%', 'Reset zoom and position'); var hint = el('div', 'bq-hint', 'Scratchpad • Draw & scribble rough work manually');
+    wrap.appendChild(cv); wrap.appendChild(tools); wrap.appendChild(zoomB); drawPane.appendChild(wrap); drawPane.appendChild(hint);
+    var note = el('div', 'bq-hint bq-hint2', 'Pinch or use the mouse wheel to zoom. Drawings stay on this device and are not scanned or recognised.'); drawPane.appendChild(note);
+    var dpr = 1, W = 300, H = 300;
+    function toWorld(x, y) { return { x: (x - view.x) / view.k, y: (y - view.y) / view.k }; }
+    function render() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#fbfcfe'; ctx.fillRect(0, 0, W, H);
+      var g = 28 * view.k; if (g < 8) { g *= Math.ceil(8 / g); }
+      ctx.strokeStyle = '#e6eaf2'; ctx.lineWidth = 1; ctx.beginPath();
+      var ox = ((view.x % g) + g) % g, oy = ((view.y % g) + g) % g;
+      for (var x = ox; x < W; x += g) { ctx.moveTo(Math.round(x) + .5, 0); ctx.lineTo(Math.round(x) + .5, H); }
+      for (var y = oy; y < H; y += g) { ctx.moveTo(0, Math.round(y) + .5); ctx.lineTo(W, Math.round(y) + .5); }
+      ctx.stroke();
+      ctx.save(); ctx.translate(view.x, view.y); ctx.scale(view.k, view.k); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#1d1d1f';
+      var all = cur ? strokes.concat([cur]) : strokes;
+      all.forEach(function (s) {
+        ctx.lineWidth = 2.6; ctx.beginPath(); var p = s.pts;
+        if (p.length === 1) { ctx.arc(p[0].x, p[0].y, 1.3, 0, 7); ctx.fillStyle = '#1d1d1f'; ctx.fill(); return; }
+        ctx.moveTo(p[0].x, p[0].y);
+        for (var i = 1; i < p.length - 1; i++) { var mx = (p[i].x + p[i + 1].x) / 2, my = (p[i].y + p[i + 1].y) / 2; ctx.quadraticCurveTo(p[i].x, p[i].y, mx, my); }
+        ctx.lineTo(p[p.length - 1].x, p[p.length - 1].y); ctx.stroke();
+      });
+      ctx.restore(); zoomB.textContent = Math.round(view.k * 100) + '%';
+      tb.undo.disabled = !undo.length; tb.redo.disabled = !redo.length; tb.clear.disabled = !strokes.length;
+    }
+    function resize() {
+      var r = wrap.getBoundingClientRect(); if (!r.width) { return; }
+      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(240, Math.min(420, Math.round((sheet.clientHeight || 520) - 150)));
+      wrap.style.height = H + 'px'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px'; render();
+    }
+    pad.resize = resize; window.addEventListener('resize', function () { if (!sheet.hidden && current === 'draw') { resize(); } });
+    function setTool(t) { tool = t; ['pen', 'eraser', 'pan'].forEach(function (k) { tb[k].classList.toggle('on', k === t); tb[k].setAttribute('aria-pressed', String(k === t)); }); cv.style.cursor = t === 'pan' ? 'grab' : t === 'eraser' ? 'cell' : 'crosshair'; }
+    function pos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    function eraseAt(w) {
+      var r = 10 / view.k, hit = false;
+      for (var i = strokes.length - 1; i >= 0; i--) {
+        var pts = strokes[i].pts, touch = false;
+        for (var j = 0; j < pts.length && !touch; j++) { var dx = pts[j].x - w.x, dy = pts[j].y - w.y; if (dx * dx + dy * dy <= r * r) { touch = true; } }
+        if (touch) { erased.push({ s: strokes[i], i: i }); strokes.splice(i, 1); hit = true; }
+      }
+      if (hit) { render(); }
+    }
+    cv.addEventListener('pointerdown', function (e) {
+      e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
+      var p = pos(e); pointers[e.pointerId] = p; var ids = Object.keys(pointers);
+      if (ids.length === 2) { cur = null; var a = pointers[ids[0]], b = pointers[ids[1]]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), k: view.k, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2, vx: view.x, vy: view.y }; render(); return; }
+      if (ids.length > 2) { return; }
+      if (tool === 'pan') { panFrom = { x: p.x, y: p.y, vx: view.x, vy: view.y }; cv.style.cursor = 'grabbing'; }
+      else if (tool === 'eraser') { erased = []; eraseAt(toWorld(p.x, p.y)); }
+      else { cur = { pts: [toWorld(p.x, p.y)] }; render(); }
+    });
+    cv.addEventListener('pointermove', function (e) {
+      if (!pointers[e.pointerId]) { return; } e.preventDefault();
+      var p = pos(e); pointers[e.pointerId] = p;
+      if (pinch) { var ids = Object.keys(pointers); if (ids.length >= 2) { var a = pointers[ids[0]], b = pointers[ids[1]]; var d = Math.hypot(a.x - b.x, a.y - b.y) || 1; var k = Math.min(4, Math.max(.4, pinch.k * d / pinch.d)); var cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2; var wx = (pinch.cx - pinch.vx) / pinch.k, wy = (pinch.cy - pinch.vy) / pinch.k; view.k = k; view.x = cx - wx * k; view.y = cy - wy * k; render(); } return; }
+      if (tool === 'pan' && panFrom) { view.x = panFrom.vx + (p.x - panFrom.x); view.y = panFrom.vy + (p.y - panFrom.y); render(); }
+      else if (tool === 'eraser' && erased) { eraseAt(toWorld(p.x, p.y)); }
+      else if (cur) {
+        var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e]; (evs.length ? evs : [e]).forEach(function (ce) { var q = pos(ce); var w = toWorld(q.x, q.y); var last = cur.pts[cur.pts.length - 1]; if (Math.abs(w.x - last.x) + Math.abs(w.y - last.y) > .4) { cur.pts.push(w); } });
+        render();
+      }
+    });
+    function up(e) {
+      if (!pointers[e.pointerId]) { return; } delete pointers[e.pointerId];
+      if (pinch) { if (Object.keys(pointers).length < 2) { pinch = null; } return; }
+      if (cur) { strokes.push(cur); undo.push({ t: 'add', s: cur }); redo = []; cur = null; }
+      if (erased) { if (erased.length) { undo.push({ t: 'erase', list: erased }); redo = []; } erased = null; }
+      panFrom = null; if (tool === 'pan') { cv.style.cursor = 'grab'; } render();
+    }
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('wheel', function (e) { e.preventDefault(); var p = pos(e); var k = Math.min(4, Math.max(.4, view.k * (e.deltaY < 0 ? 1.1 : 1 / 1.1))); var w = toWorld(p.x, p.y); view.k = k; view.x = p.x - w.x * k; view.y = p.y - w.y * k; render(); }, { passive: false });
+    cv.style.touchAction = 'none';
+    tb.pen.addEventListener('click', function () { setTool('pen'); }); tb.eraser.addEventListener('click', function () { setTool('eraser'); }); tb.pan.addEventListener('click', function () { setTool('pan'); });
+    tb.undo.addEventListener('click', function () {
+      var a = undo.pop(); if (!a) { return; }
+      if (a.t === 'add') { var i = strokes.indexOf(a.s); if (i >= 0) { strokes.splice(i, 1); } }
+      else if (a.t === 'erase') { a.list.slice().sort(function (x, y) { return x.i - y.i; }).forEach(function (it) { strokes.splice(Math.min(it.i, strokes.length), 0, it.s); }); }
+      else if (a.t === 'clear') { strokes = a.all.slice(); }
+      redo.push(a); render();
+    });
+    tb.redo.addEventListener('click', function () {
+      var a = redo.pop(); if (!a) { return; }
+      if (a.t === 'add') { strokes.push(a.s); }
+      else if (a.t === 'erase') { a.list.forEach(function (it) { var i = strokes.indexOf(it.s); if (i >= 0) { strokes.splice(i, 1); } }); }
+      else if (a.t === 'clear') { strokes = []; }
+      undo.push(a); render();
+    });
+    tb.clear.addEventListener('click', function () { if (!strokes.length) { return; } undo.push({ t: 'clear', all: strokes.slice() }); redo = []; strokes = []; render(); });
+    zoomB.addEventListener('click', function () { view = { x: 0, y: 0, k: 1 }; render(); });
+    tb.save.addEventListener('click', function () { try { cv.toBlob(function (b) { if (!b) { return; } var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'scratchpad.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500); }); } catch (e) { /* ignore */ } });
+    setTool('pen'); setTimeout(resize, 0);
+    pad.state = function () { return { strokes: strokes.length, view: view, tool: tool }; };
+  }
+
+  /* ---------------- Solver ---------------- */
+  var SAMPLES = [
+    ['basic', 'Evaluate 2^5', 'Evaluate 2⁵'], ['basic', 'Evaluate (3+4)*5-6/2', 'Evaluate (3 + 4) × 5 − 6 ÷ 2'], ['basic', 'Evaluate 1/2+1/3', 'Evaluate 1/2 + 1/3'],
+    ['algebra', 'Solve x^2 - 5x + 6 = 0', 'Solve x² − 5x + 6 = 0'], ['algebra', 'Solve 2x + 5 = 15', 'Solve 2x + 5 = 15'], ['algebra', 'Factor 2x^2 + 7x + 3', 'Factor 2x² + 7x + 3'], ['algebra', 'Solve x^3 - 6x^2 + 11x - 6 = 0', 'Solve x³ − 6x² + 11x − 6 = 0'],
+    ['geometry', 'A right triangle has legs 3 and 4. Find the hypotenuse.', 'A right triangle has legs 3 and 4. Find the hypotenuse.'], ['geometry', 'A right triangle has legs 5 and 12. Find the hypotenuse.', 'A right triangle has legs 5 and 12. Find the hypotenuse.'],
+    ['calculus', 'Differentiate x^3 - 4x^2 + 7x - 2', 'Differentiate x³ − 4x² + 7x − 2'], ['calculus', 'Integrate 3x^2 + 2x', 'Integrate 3x² + 2x'], ['calculus', 'Integrate x^2 from 0 to 3', 'Integrate x² from 0 to 3']
+  ];
+  var GRADES = [['all', 'All grades'], ['basic', 'Basic Math & Exponents'], ['algebra', 'Algebra & Quadratics'], ['geometry', 'Geometry Word Problems'], ['calculus', 'Calculus (Derivatives & Integrals)']];
+  var KEYS = {
+    'Basic & Algebra': [['x²', '^2'], ['xⁿ', '^'], ['√( )', 'sqrt()', -1], ['ᵃ/ᵇ', '()/()', -4], ['π', 'pi'], ['=', ' = '], ['x', 'x'], ['y', 'y'], ['(', '('], [')', ')'], ['+', ' + '], ['−', ' - '], ['×', '*'], ['÷', '/']],
+    'Calculus & Trig': [['d/dx', 'Differentiate ', 0], ['∫', 'Integrate ', 0], ['∫ a→b', ' from 0 to 1', 0], ['sin', 'sin()', -1], ['cos', 'cos()', -1], ['tan', 'tan()', -1], ['ln', 'ln()', -1], ['log₁₀', 'log()', -1], ['e', 'e']],
+    'Templates': [['Quadratic equation', 'Solve ax^2 + bx + c = 0'.replace('ax^2 + bx + c', 'x^2 - 5x + 6'), 0, 1], ['Derivative', 'Differentiate x^3 - 4x^2 + 7x - 2', 0, 1], ['Definite integral', 'Integrate x^2 from 0 to 3', 0, 1], ['Factor', 'Factor 2x^2 + 7x + 3', 0, 1], ['Right triangle', 'A right triangle has legs 3 and 4. Find the hypotenuse.', 0, 1]]
+  };
+  var engine = null;
+  function buildSolve() {
+    var hdr = el('div', 'bq-sv-title'); var badge = el('span', 'bq-badge-ic', '∑'); hdr.appendChild(badge); hdr.appendChild(el('b', null, 'Solver')); hdr.appendChild(el('span', 'bq-beta', 'BETA'));
+    var h1 = el('h2', 'bq-h1', 'Get the answer and understand exactly how to solve it.');
+    var sub = el('p', 'bq-sub', 'Type a problem below and I’ll work through it step by step, explaining the reasoning behind each one.');
+    var card = el('div', 'bq-inputcard');
+    var ta = el('textarea', 'bq-ta'); ta.rows = 2; ta.setAttribute('aria-label', 'Math problem'); ta.placeholder = 'Type a math problem — e.g. Solve x² − 5x + 6 = 0. Use “fx Math” for anything tricky.'; ta.spellcheck = false; ta.autocapitalize = 'off';
+    var bar = el('div', 'bq-ibar');
+    var fxB = btn('bq-fxb', 'fx Math', 'Show or hide the math keypad'); fxB.setAttribute('aria-expanded', 'false');
+    var solveB = btn('bq-solveb', '', 'Solve'); var sTxt = el('span', null, 'Solve →'); var spin = el('span', 'bq-spin'); spin.hidden = true; solveB.appendChild(spin); solveB.appendChild(sTxt);
+    bar.appendChild(fxB); bar.appendChild(solveB); card.appendChild(ta); card.appendChild(bar);
+    var drawer = el('div', 'bq-drawer'); drawer.hidden = true;
+    var ktabs = el('div', 'bq-ktabs'); var kgrid = el('div', 'bq-kgrid'); drawer.appendChild(ktabs); drawer.appendChild(kgrid);
+    function ins(text, back) { var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value; ta.value = v.slice(0, s) + text + v.slice(e); var c = s + text.length + (back || 0); ta.focus(); ta.setSelectionRange(c, c); grow(); }
+    function fillKeys(name) {
+      kgrid.innerHTML = ''; Array.prototype.forEach.call(ktabs.children, function (b) { b.classList.toggle('on', b.textContent === name); b.setAttribute('aria-selected', String(b.textContent === name)); });
+      KEYS[name].forEach(function (k) { var b = btn('bq-key' + (k[3] ? ' wide' : ''), k[0], null, function () { if (k[3]) { ta.value = k[1]; ta.focus(); grow(); solveNow(); } else { ins(k[1], k[2]); } }); b.setAttribute('aria-label', k[0]); kgrid.appendChild(b); });
+    }
+    Object.keys(KEYS).forEach(function (n) { var b = btn('bq-ktab', n, null, function () { fillKeys(n); }); b.setAttribute('role', 'tab'); ktabs.appendChild(b); });
+    fillKeys('Basic & Algebra');
+    function grow() { ta.style.height = 'auto'; ta.style.height = Math.min(160, Math.max(56, ta.scrollHeight)) + 'px'; }
+    ta.addEventListener('input', grow);
+    fxB.addEventListener('click', function () { drawer.hidden = !drawer.hidden; fxB.setAttribute('aria-expanded', String(!drawer.hidden)); fxB.classList.toggle('on', !drawer.hidden); });
+    ta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); solveNow(); } });
+
+    var samplesHead = el('h3', 'bq-h3', 'Try a sample problem.');
+    var ctl = el('div', 'bq-sctl'); var shuf = btn('bq-shuf', '⇄', 'Shuffle sample problems'); var sel = el('select', 'bq-sel'); sel.setAttribute('aria-label', 'Sample category');
+    GRADES.forEach(function (g) { var o = el('option', null, g[1]); o.value = g[0]; sel.appendChild(o); }); ctl.appendChild(shuf); ctl.appendChild(sel);
+    var list = el('div', 'bq-samples');
+    function pickSamples(shuffle) {
+      var pool = SAMPLES.filter(function (s) { return sel.value === 'all' || s[0] === sel.value; });
+      if (shuffle) { pool = pool.slice().sort(function () { return Math.random() - .5; }); }
+      list.innerHTML = ''; pool.slice(0, 5).forEach(function (s) { var b = btn('bq-sample', s[2], null, function () { ta.value = s[1]; grow(); solveNow(); }); list.appendChild(b); });
+    }
+    shuf.addEventListener('click', function () { pickSamples(true); }); sel.addEventListener('change', function () { pickSamples(false); }); pickSamples(false);
+
+    var out = el('div', 'bq-out'); out.hidden = true; out.setAttribute('aria-live', 'polite');
+    solvePane.appendChild(hdr); solvePane.appendChild(h1); solvePane.appendChild(sub); solvePane.appendChild(card); solvePane.appendChild(drawer); solvePane.appendChild(out); solvePane.appendChild(samplesHead); solvePane.appendChild(ctl); solvePane.appendChild(list);
+    solvePane.appendChild(el('div', 'bq-hint', 'Client-Side Solver • Powered by pure JavaScript • log means base 10, ln is natural'));
+
+    function tex(target, t, display) {
+      if (window.katex) { try { window.katex.render(t, target, { displayMode: display !== false, throwOnError: false, strict: 'ignore', trust: false, output: 'html' }); return; } catch (e) { /* fall through */ } }
+      target.textContent = t.replace(/\\left|\\right|\\quad|\;|\\,/g, ' ').replace(/\\([a-z]+)/g, '$1 ');
+    }
+    var busy = false;
+    function solveNow() {
+      if (busy) { return; } var text = ta.value.trim();
+      if (!text) { showMsg('Type a problem first.'); return; }
+      busy = true; solveB.disabled = true; spin.hidden = false; sTxt.textContent = 'Working…';
+      var done = function () { busy = false; solveB.disabled = false; spin.hidden = true; sTxt.textContent = 'Solve →'; };
+      loadLibs().then(function () {
+        if (!engine) { engine = new window.MathStepEngine(window.nerdamer); }
+        var r = engine.solve(text); done(); if (r.ok) { render(r); } else { showMsg(r.message); }
+      }).catch(function () { done(); showMsg('The solver modules could not load. Check your internet connection, then tap Solve again.'); });
+    }
+    solveB.addEventListener('click', solveNow);
+    function showMsg(m) { out.hidden = false; out.innerHTML = ''; var d = el('div', 'bq-err', m); d.setAttribute('role', 'alert'); out.appendChild(d); }
+    function render(r) {
+      out.hidden = false; out.innerHTML = '';
+      var ans = el('div', 'bq-ans'); var top = el('div', 'bq-anstop'); top.appendChild(el('span', 'bq-anslabel', 'Final answer'));
+      var tg = el('div', 'bq-tg'); var bEx = btn('bq-tgb on', 'Exact', 'Show exact answer'); var bDe = btn('bq-tgb', 'Decimal', 'Show decimal approximation'); tg.appendChild(bEx); tg.appendChild(bDe);
+      var cp = btn('bq-cp', 'Copy', 'Copy answer');
+      top.appendChild(tg); top.appendChild(cp); var big = el('div', 'bq-bigans'); ans.appendChild(top); ans.appendChild(big); out.appendChild(ans);
+      var mode = 'exact';
+      function paint() { var cur = mode === 'exact' ? r.answer : r.decimal; tex(big, cur.tex, true); bEx.classList.toggle('on', mode === 'exact'); bDe.classList.toggle('on', mode === 'decimal'); }
+      if (!r.decimal) { bDe.disabled = true; bDe.title = 'This answer is already exact and has no separate decimal form'; }
+      bEx.addEventListener('click', function () { mode = 'exact'; paint(); }); bDe.addEventListener('click', function () { if (r.decimal) { mode = 'decimal'; paint(); } });
+      cp.addEventListener('click', function () {
+        var t = (mode === 'exact' ? r.answer : r.decimal).text;
+        var ok = function () { cp.textContent = 'Copied'; setTimeout(function () { cp.textContent = 'Copy'; }, 1400); };
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(ok, function () { fallbackCopy(t); ok(); }); } else { fallbackCopy(t); ok(); }
+      });
+      paint();
+      var ol = el('ol', 'bq-steps');
+      r.steps.forEach(function (s, i) {
+        var li = el('li', 'bq-step'); li.appendChild(el('span', 'bq-n', 'Step ' + (i + 1)));
+        var bd = el('div', 'bq-sbody'); bd.appendChild(el('div', 'bq-stitle', s.title)); bd.appendChild(el('div', 'bq-stext', s.text));
+        s.tex.forEach(function (t) { if (t) { var m = el('div', 'bq-smath'); tex(m, t, true); bd.appendChild(m); } });
+        li.appendChild(bd); ol.appendChild(li);
+      });
+      out.appendChild(ol); out.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+    function fallbackCopy(t) { var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) { /* ignore */ } a.remove(); }
+    grow(); setTimeout(function () { loadLibs().catch(function () { /* shown when Solve is pressed */ }); }, 400);
+    BQTools._solveText = function (t) { ta.value = t; grow(); solveNow(); };
+  }
+
+  var BQTools = window.BQTools = { open: open, close: close, sheet: sheet, pad: pad };
+})();
+
+</script>
 </div>
 
 </body>
