@@ -1509,6 +1509,8 @@
         .bq-scanbtn { flex: 1 1 auto; min-height: 40px; border: 1px solid #cfd6e4; background: #ffffff; color: #1f2937; border-radius: 10px; font-weight: 700; font-size: 13.5px; padding: 0 12px; }
         .bq-scanbtn.pri { background: #2563eb; border-color: #2563eb; color: #ffffff; }
         .bq-full #bc-sheet { min-height: 0 !important; }
+        #bc-sheet button { touch-action: manipulation; -webkit-tap-highlight-color: rgba(37, 99, 235, .18); }
+        .bq-scanbtn:active, .bq-chip2:active { transform: scale(.96); filter: brightness(.95); }
 
         /* ===== v22: More tab inside the scrolling row; HISTORY stays pinned at the end ===== */
         #btn-bc-history-tab { right: 0; }
@@ -7606,7 +7608,8 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       var strokes = pad.strokes();
       if (!strokes.length || !S.meaningful(strokes)) { show('warn', 'Nothing to scan', 'Please draw a mathematical expression first.'); return; }
       busy = true; go.disabled = true; sp.hidden = false; ic.hidden = true; gt.textContent = 'Scanning';
-      S.scan(strokes, status).then(function (cands) {
+      /* let the screen repaint (spinner, hidden old result) before the heavy work starts, so taps feel instant */
+      new Promise(function (ok) { requestAnimationFrame(function () { setTimeout(ok, 40); }); }).then(function () { return S.scan(strokes, status); }).then(function (cands) {
         busy = false; go.disabled = false; sp.hidden = true; ic.hidden = false; gt.textContent = 'Scan Drawing';
         if (!cands || !cands.length) { show('warn', 'Scanned Expression', el('div', 'bq-scanp', 'Unable to recognise this expression. Please redraw it or enter the expression manually.')); return; }
         var best = cands[0]; pad.editor.set(best.expr);
@@ -7622,7 +7625,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
         body.appendChild(actions([
           ['Edit Expression', function () { pad.editor.input.focus(); }],
           ['Solve', function () { pad.editor.solve(); }, 1],
-          ['Scan Again', function () { run(); }],
+          ['Scan Again', function () { res.hidden = true; run(); }],
           ['Close', function () { res.hidden = true; }]
         ]));
         show('ok', 'Scanned Expression', body);
