@@ -7366,8 +7366,14 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     if (which === 'draw') { if (!built.draw) { buildDraw(); built.draw = true; } pad.resize(); }
     else { if (!built.solve) { buildSolve(); built.solve = true; } }
   }
+  /* Sheet height: as tall as the calculator, never taller than the visible frame, so nothing is clipped and the body scrolls inside it. */
+  function fitSheet() {
+    var h = Math.max(root.clientHeight, 360), vh = window.innerHeight || 0;
+    if (vh >= 320 && vh < h) { h = vh; }
+    sheet.style.height = Math.round(h) + 'px'; sheet.style.minHeight = '';
+  }
   function open(which) {
-    opener = document.activeElement; sheet.hidden = false; sheet.style.height = 'auto'; sheet.style.minHeight = Math.max(root.clientHeight, 440) + 'px';
+    opener = document.activeElement; sheet.hidden = false; fitSheet();
     show(which); closeB.focus();
   }
   function close() { sheet.hidden = true; if (opener && opener.focus) { try { opener.focus(); } catch (e) { /* ignore */ } } }
@@ -7413,10 +7419,10 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     }
     function resize() {
       var r = wrap.getBoundingClientRect(); if (!r.width) { return; }
-      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(240, Math.min(380, Math.round((sheet.clientHeight || 520) - 150 - 96)));
+      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(170, Math.min(340, Math.round((sheet.clientHeight || 520) * 0.44)));
       wrap.style.height = H + 'px'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px'; render();
     }
-    pad.resize = resize; window.addEventListener('resize', function () { if (!sheet.hidden && current === 'draw') { resize(); } });
+    pad.resize = resize; window.addEventListener('resize', function () { if (!sheet.hidden && !root.classList.contains('bq-full')) { fitSheet(); } if (!sheet.hidden && current === 'draw') { resize(); } });
     function setTool(t) { tool = t; ['pen', 'eraser', 'pan'].forEach(function (k) { tb[k].classList.toggle('on', k === t); tb[k].setAttribute('aria-pressed', String(k === t)); }); cv.style.cursor = t === 'pan' ? 'grab' : t === 'eraser' ? 'cell' : 'crosshair'; }
     function pos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
     function eraseAt(w) {
