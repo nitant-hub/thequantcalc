@@ -1508,6 +1508,7 @@
         .bq-scanact { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
         .bq-scanbtn { flex: 1 1 auto; min-height: 40px; border: 1px solid #cfd6e4; background: #ffffff; color: #1f2937; border-radius: 10px; font-weight: 700; font-size: 13.5px; padding: 0 12px; }
         .bq-scanbtn.pri { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+        .bq-full #bc-sheet { min-height: 0 !important; }
 
         /* ===== v22: More tab inside the scrolling row; HISTORY stays pinned at the end ===== */
         #btn-bc-history-tab { right: 0; }
@@ -7366,7 +7367,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     else { if (!built.solve) { buildSolve(); built.solve = true; } }
   }
   function open(which) {
-    opener = document.activeElement; sheet.hidden = false; sheet.style.height = Math.max(root.clientHeight, 440) + 'px';
+    opener = document.activeElement; sheet.hidden = false; sheet.style.height = 'auto'; sheet.style.minHeight = Math.max(root.clientHeight, 440) + 'px';
     show(which); closeB.focus();
   }
   function close() { sheet.hidden = true; if (opener && opener.focus) { try { opener.focus(); } catch (e) { /* ignore */ } } }
