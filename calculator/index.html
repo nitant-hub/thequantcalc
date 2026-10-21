@@ -7386,7 +7386,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     var zoomB = btn('bq-zoom', '100%', 'Reset zoom and position'); var hint = el('div', 'bq-hint', 'Scratchpad • Draw & scribble rough work manually');
     wrap.appendChild(cv); wrap.appendChild(tools); wrap.appendChild(zoomB); drawPane.appendChild(wrap); drawPane.appendChild(hint);
     var pills = el('div', 'bq-pills'); var fitB = btn('bq-pill', 'Fit', 'Fit the whole drawing in view'); var penB = btn('bq-pill', 'Pen: Medium', 'Change pen thickness'); pills.appendChild(fitB); pills.appendChild(penB); wrap.appendChild(pills);
-    var note = el('div', 'bq-hint bq-hint2', 'Pinch or use the mouse wheel to zoom. Drawings stay on this device. Handwriting is not recognised — type or tap the expression below to calculate it.'); drawPane.appendChild(note);
+    var note = el('div', 'bq-hint bq-hint2', 'Pinch or use the mouse wheel to zoom. Drawings stay on this device. Tap Scan Drawing to read your handwriting, or type / tap the expression below.'); drawPane.appendChild(note);
     var dpr = 1, W = 300, H = 300;
     function toWorld(x, y) { return { x: (x - view.x) / view.k, y: (y - view.y) / view.k }; }
     function render() {
@@ -7731,6 +7731,23 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     BQTools._solveText = function (t) { ta.value = t; grow(); solveNow(); };
   }
 
+  /* Phone keyboard: keep the field being typed in visible above the on-screen keyboard. */
+  (function () {
+    function adj() {
+      var vv = window.visualViewport;
+      var b = sheet.querySelector('.bq-sh-body'); if (!b) { return; }
+      var a = document.activeElement, typing = !!(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && b.contains(a));
+      var kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
+      if (typing && kb > 80) {
+        b.style.paddingBottom = (kb + 28) + 'px';
+        try { a.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { /* ignore */ }
+      } else { b.style.paddingBottom = ''; }
+    }
+    sheet.addEventListener('focusin', function () { setTimeout(adj, 120); setTimeout(adj, 450); });
+    sheet.addEventListener('focusout', function () { setTimeout(adj, 150); });
+    if (window.visualViewport) { window.visualViewport.addEventListener('resize', adj); }
+  })();
+
   var BQTools = window.BQTools = { open: open, close: close, sheet: sheet, pad: pad };
 })();
 
@@ -7739,4 +7756,3 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
 
 </body>
 </html>
-
