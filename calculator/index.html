@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator Widget</title>
     <style>
         html, body {
@@ -1412,7 +1412,7 @@
         .bq-sv-title { display: flex; align-items: center; gap: 8px; font-size: 18px; margin-bottom: 8px; }
         .bq-badge-ic { width: 32px; height: 32px; border-radius: 9px; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .2); }
         .bq-beta { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: 999px; background: #e7edfb; color: #1d4ed8; border: 1px solid #c9d7f5; }
-        .bq-h1 { font-size: 22px; line-height: 1.2; margin: 6px 0 4px; letter-spacing: -.02em; }
+        .bq-h1 { font-size: 20px; line-height: 1.2; margin: 6px 0 10px; letter-spacing: -.02em; }
         .bq-sub { margin: 0 0 12px; color: #5b6070; font-size: 14.5px; line-height: 1.4; }
         .bq-inputcard { background: #ffffff; border: 1px solid #d9deea; border-radius: 16px; padding: 10px; box-shadow: 0 2px 8px rgba(15, 23, 42, .06); }
         .bq-inputcard:focus-within { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, .18); }
@@ -1487,15 +1487,33 @@
         .bq-edk.fn { background: #eef2ff; color: #3730a3; } .bq-edk.op { background: #fff7ed; color: #b45309; } .bq-edk.ctl { background: #fee2e2; color: #b91c1c; } .bq-edk.eq { background: #2563eb; color: #ffffff; border-color: #2563eb; }
         .bq-edk.on { background: #f59e0b; color: #ffffff; border-color: #d97706; } .bq-edk.sh { color: #b45309; }
 
+        .bq-tawrap { position: relative; }
+        .bq-tawrap .bq-ta { padding: 4px 4px 4px 16px; min-height: 104px; }
+        .bq-blink { position: absolute; left: 5px; top: 8px; width: 2px; height: 22px; border-radius: 2px; background: #2563eb; animation: bq-bl 1.05s steps(1) infinite; pointer-events: none; }
+        .bq-blink[hidden] { display: none; }
+        @keyframes bq-bl { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .bq-blink { animation: none; } }
+        .bq-scan { margin-top: 10px; }
+        .bq-scanb { width: 100%; min-height: 48px; border: 0; border-radius: 14px; background: linear-gradient(180deg, #3b6cf0, #2349d4); color: #ffffff; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 10px rgba(37, 73, 212, .35); }
+        .bq-scanb:disabled { opacity: .85; cursor: progress; }
+        .bq-scanb .bq-spin { border-color: rgba(255, 255, 255, .5); border-top-color: #ffffff; }
+        .bq-scanic { font-size: 18px; line-height: 1; }
+        .bq-scanres { margin-top: 10px; border: 1px solid #d9deea; border-radius: 14px; background: #ffffff; padding: 12px; }
+        .bq-scanres.ok { border-color: #b7d9c6; background: #f4fbf7; } .bq-scanres.bad { border-color: #f1b8b4; background: #fff6f5; } .bq-scanres.warn { border-color: #f1d9a6; background: #fffaf0; }
+        .bq-scanh { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+        .bq-scanp { font-size: 13.5px; color: #4b5160; line-height: 1.4; } .bq-scanp.warn { color: #9a5b00; margin-top: 6px; }
+        .bq-scanex { font: 700 20px/1.3 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: #1e3a8a; word-break: break-word; margin-bottom: 4px; }
+        .bq-scanalt { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 12.5px; color: #5b6070; }
+        .bq-chip2 { border: 1px solid #cfd6e4; background: #f1f4fa; color: #1f2937; border-radius: 999px; padding: 4px 10px; font: 700 12.5px ui-monospace, Menlo, Consolas, monospace; min-height: 30px; }
+        .bq-scanact { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .bq-scanbtn { flex: 1 1 auto; min-height: 40px; border: 1px solid #cfd6e4; background: #ffffff; color: #1f2937; border-radius: 10px; font-weight: 700; font-size: 13.5px; padding: 0 12px; }
+        .bq-scanbtn.pri { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+
         /* ===== v22: More tab inside the scrolling row; HISTORY stays pinned at the end ===== */
         #btn-bc-history-tab { right: 0; }
         #btn-bc-more[aria-expanded="true"] { color: #2563eb !important; }
 
         /* ===== v22: compact log (hidden until asked for) ===== */
-        .bq-paper.bq-collapsed { display: none !important; }
-        .bq-grip { align-self: center; min-height: 24px; padding: 2px 12px; border: 0; border-radius: 999px; background: transparent; color: inherit; opacity: .8; font: 700 11.5px/1 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; cursor: pointer; }
-        .bq-grip[hidden] { display: none; }
-        .bq-grip:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
         .bq-ic { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; }
         .bq-fullexit { display: none; }
 
@@ -1530,7 +1548,86 @@
         .blogger-calc-classic:not([class*="calc-theme-"]) .bq-chip { background: rgba(255, 255, 255, .6); color: #3f5147; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bq-chead, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-pempty { color: #5d6f64; }
         .blogger-calc-classic:not([class*="calc-theme-"]) .bq-card { border-bottom-color: rgba(86, 128, 104, .22); }
-        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-grip { color: #4a5a6a; background: rgba(255, 255, 255, .6); border: 1px solid #d3dae6; }
+
+        /* ===== v23: display = one scrolling LCD; memory read-out removed ===== */
+        #bc-memory-indicator { display: none !important; }
+        .bq-scroll { display: flex; flex-direction: column; gap: 6px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; -webkit-overflow-scrolling: touch; scrollbar-width: thin; position: relative; min-height: 0; }
+        .bq-scroll .bq-paper { max-height: none !important; overflow: visible !important; flex: 0 0 auto; touch-action: pan-y; }
+        .bq-scroll .bq-paper:not(:has(.bq-card)) { display: none; }
+        .bq-scroll .bq-pempty { display: none; }
+        .bq-scroll > #bc-display, .bq-scroll > .bc-output-box { flex: 0 0 auto; }
+        .bq-xhold { position: sticky; top: 0; height: 0; z-index: 4; flex: 0 0 0; overflow: visible; }
+        .bq-xbtn { position: absolute; right: 6px; top: 6px; width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(60, 70, 60, .25); background: rgba(255, 255, 255, .78); color: #334155; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; box-shadow: 0 1px 3px rgba(30, 41, 59, .18); }
+        .bq-xbtn:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
+        .bq-tools { flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .bq-tools::-webkit-scrollbar { display: none; }
+        .bq-tools > .bq-tb { flex: 0 0 auto; }
+        .bq-tools > .bq-tsp { flex: 1 0 6px; }
+        #bc-paper-btn { padding-left: 10px; padding-right: 10px; }
+
+        /* ===== v23: Default display colour = real Casio / MathDA LCD (pale green-grey) ===== */
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll { background: linear-gradient(180deg, #edf1e5 0%, #e6ecdc 100%); border: 1px solid #cdd6c1; border-radius: 14px; padding: 2px 4px; box-shadow: inset 0 1px 2px rgba(255, 255, 255, .9), inset 0 -6px 16px rgba(110, 130, 95, .08), 0 2px 6px rgba(40, 62, 52, .10); }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll .bc-input-box, .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll .bc-output-box:not(.bq-plot), .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll .bq-paper { background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll .bc-output-box:not(.bq-plot) { border-top: 1px solid rgba(86, 110, 80, .22) !important; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll .bq-card { border-bottom-color: rgba(86, 110, 80, .2); }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-xbtn { background: rgba(255, 255, 255, .7); color: #3b4a3a; }
+
+        /* ===== v23: Log pill sits in the first toolbar slot ===== */
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-paper-btn { background: linear-gradient(180deg, #f2f8ff, #dcecff); border-color: #b9d6fb; color: #0a62d6; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-paper-btn.on { background: linear-gradient(180deg, #3b9bff, #0a7aff); border-color: #0a6ae0; color: #ffffff; }
+
+        /* ===== v23: full-screen display pop-up ===== */
+        #bc-dpop { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 96; display: flex; flex-direction: column; background: #f3f5f9; color: #1d1d1f; border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif; overflow: hidden; }
+        #bc-dpop[hidden] { display: none; }
+        #bc-dpop * { box-sizing: border-box; }
+        #bc-dpop button { font-family: inherit; cursor: pointer; }
+        .bq-dp-head { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #ffffff; border-bottom: 1px solid #e3e6ee; font-size: 16px; }
+        .bq-dp-sp { flex: 1 1 auto; }
+        .bq-dp-clear { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid #f5bcb8; background: linear-gradient(180deg, #fff3f2, #ffdcda); color: #c4271f; font-weight: 800; font-size: 13px; }
+        .bq-dp-clear[data-arm="1"] { background: #c4271f; color: #ffffff; border-color: #c4271f; }
+        .bq-dp-x { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #dfe3ec; background: #ffffff; color: #3a3a3c; font-size: 15px; }
+        .bq-dp-filters { flex: 0 0 auto; display: flex; gap: 6px; overflow-x: auto; padding: 8px 12px; scrollbar-width: none; background: #f8f9fc; border-bottom: 1px solid #e3e6ee; }
+        .bq-dp-filters::-webkit-scrollbar { display: none; }
+        .bq-dp-chip { flex: 0 0 auto; min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid #d5dbe7; background: #ffffff; color: #334155; font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .bq-dp-chip.on { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+        .bq-dp-date input { border: 0; background: transparent; color: inherit; font: inherit; font-size: 12.5px; width: 118px; padding: 0; }
+        .bq-dp-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; -webkit-overflow-scrolling: touch; }
+        .bq-dp-card { background: #ffffff; border: 1px solid #e3e6ee; border-radius: 14px; padding: 8px 12px 10px; box-shadow: 0 1px 3px rgba(30, 41, 59, .06); font-family: "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; font-size: 22px; }
+        .bq-dp-ch { display: flex; align-items: center; font: 600 12px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin-bottom: 4px; }
+        .bq-dp-ch .bq-pdel { margin-left: auto; background: none; border: 0; color: #6e6e73; font-size: 14px; padding: 6px 8px; min-height: 32px; }
+        .bq-dp-card .bq-chip { padding: 3px 8px; border-radius: 6px; background: #eef0f6; color: #3a3a3c; }
+        .bq-dp-card .bq-pexpr { color: #3b4f8f; background: none; border: 0; font: inherit; padding: 0; display: block; width: 100%; text-align: left; overflow-x: auto; white-space: nowrap; cursor: pointer; }
+        .bq-dp-card .bq-pres { color: #0b7a4b; background: none; border: 0; font: inherit; padding: 0; display: flex; flex-direction: column; align-items: flex-end; width: 100%; margin-top: 4px; cursor: pointer; font-weight: 600; }
+        .bq-dp-card .bq-frac { display: inline-flex; flex-direction: column; text-align: center; line-height: 1.1; }
+        .bq-dp-card .bq-n { border-bottom: 1.5px solid currentColor; padding: 0 .25em .04em; } .bq-dp-card .bq-d { padding: .04em .25em 0; }
+        .bq-dp-card .bq-dec { font-size: .8em; font-weight: 500; color: #4d8a72; margin-top: .15em; }
+        .bq-dp-card .bq-fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.05; margin: 0 .2em; font-size: .85em; }
+        .bq-dp-card .bq-fb { display: block; font-size: 0; height: 0; border-top: 1.5px solid currentColor; }
+        .bq-dp-card .bq-sup { font-size: .68em; vertical-align: .6em; line-height: 0; }
+        .bq-dp-card .bq-h, .bq-dp-card .bq-rw, .bq-dp-card .bq-hat, .bq-dp-card .fx-caret { display: none; }
+        .bq-dp-empty { text-align: center; color: #6e6e73; font-size: 14px; padding: 28px 8px; }
+        .bq-dp-live { flex: 0 0 auto; background: linear-gradient(180deg, #edf1e5, #e3e9d8); border-top: 1px solid #cdd6c1; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); }
+        .bq-dp-in { font: 500 24px/1.4 "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; color: #1e3a8a; min-height: 34px; overflow-x: auto; white-space: nowrap; }
+        .bq-dp-out { font: 600 28px/1.2 "STIX Two Text", "Cambria Math", "Times New Roman", Georgia, serif; color: #0b7a4b; text-align: right; min-height: 34px; overflow-x: auto; }
+        .bq-dp-out.bad { color: #d70015; }
+        .bq-dp-out .bq-dec { font-size: .75em; font-weight: 500; opacity: .85; }
+        .bq-full #bc-dpop, .bq-full #bc-sheet { position: fixed; left: 0; right: 0; bottom: 0; top: calc(env(safe-area-inset-top, 0px) + 56px); height: auto !important; border-radius: 0; z-index: 2147483050; }
+
+        /* ===== v23: "More" pop-up = Apple-style semi-3D bento tiles ===== */
+        .bq-more { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: min(360px, calc(100% - 12px)); padding: 10px; background: rgba(247, 248, 252, .96); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border: 1px solid #dfe3ee; border-radius: 22px; box-shadow: 0 18px 40px rgba(15, 23, 42, .24), 0 2px 8px rgba(15, 23, 42, .10), inset 0 1px 0 #ffffff; }
+        .bq-more[hidden] { display: none; }
+        .bq-mrow { --c: #8e8e93; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; padding: 9px 10px; border: 1px solid rgba(255, 255, 255, .9); border-radius: 18px; background: #ffffff; background: linear-gradient(150deg, color-mix(in srgb, var(--c) 16%, #ffffff) 0%, #ffffff 78%); box-shadow: 0 1px 0 #ffffff inset, 0 6px 14px color-mix(in srgb, var(--c) 18%, transparent), 0 1px 3px rgba(15, 23, 42, .10); }
+        .bq-mrow + .bq-mrow { border-top: 1px solid rgba(255, 255, 255, .9); }
+        .bq-mrow:last-child { grid-column: 1 / -1; flex-direction: row; align-items: center; }
+        .bq-mic { width: 30px; height: 30px; border-radius: 10px; font-size: 14px; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 78%, #ffffff), var(--c)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), inset 0 -2px 0 rgba(0, 0, 0, .16), 0 3px 6px color-mix(in srgb, var(--c) 40%, transparent); }
+        .bq-mname { font-size: 14.5px; font-weight: 800; letter-spacing: -.01em; color: #111827; }
+        .bq-mchips { gap: 5px; margin-top: 6px; }
+        .bq-mchip { min-height: 28px; padding: 5px 10px; font-size: 12px; font-weight: 700; border-radius: 999px; border: 1px solid rgba(15, 23, 42, .08); background: rgba(255, 255, 255, .85); color: #1e293b; box-shadow: 0 1px 2px rgba(15, 23, 42, .08); }
+        .bq-mchip:hover, .bq-mchip:focus-visible { background: #ffffff; color: var(--c); border-color: var(--c); outline: none; }
+        .bq-mchip:active { transform: translateY(1px); }
+        @media (max-width: 330px) { .bq-more { grid-template-columns: 1fr; } }
+
+        .blogger-calc-classic button, .blogger-calc-classic .bc-btn { touch-action: manipulation; }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -1550,11 +1647,12 @@
     </div>
 
     <button type="button" class="bq-fullexit" id="bc-full-exit" onclick="BloggerCalc.toggleFull()" aria-label="Back to normal screen">&#10005; Normal screen</button>
+    <div id="bc-dpop" role="dialog" aria-modal="true" aria-label="Calculator display" hidden></div>
     <div class="bq-more" id="bc-more-pop" role="menu" aria-label="More calculators" hidden></div>
 
     <div class="bc-screen-container">
         <div class="bq-tools" id="bc-tools" role="toolbar" aria-label="Display controls">
-            <button type="button" class="bq-tb" id="bc-paper-btn" aria-expanded="false" aria-controls="bc-paper" title="Show or hide previous calculations" onclick="BloggerCalc.togglePaper()">Log</button>
+            <button type="button" class="bq-tb" id="bc-paper-btn" aria-controls="bc-scroll" title="Show earlier calculations" onclick="BloggerCalc.togglePaper()">Log</button>
             <button type="button" class="bq-tb" id="bc-sd-btn" aria-pressed="false" title="Switch the result between fraction and decimal" onclick="BloggerCalc.toggleSD()">S⇔D</button>
             <button type="button" class="bq-tb" id="bc-draw-btn" title="Open the scratchpad" onclick="BloggerCalc.openDraw()">Draw</button>
             <button type="button" class="bq-tb" id="bc-solve-btn" title="Open the step-by-step solver" onclick="BloggerCalc.openSolve()">Solve</button>
@@ -1563,10 +1661,8 @@
             <button type="button" class="bq-tb" id="bc-zoom-out" aria-label="Zoom out display" title="Zoom out display" onclick="BloggerCalc.zoomDisp(-1)">A−</button>
             <button type="button" class="bq-tb" id="bc-zoom-pct" aria-label="Reset display zoom" title="Reset display zoom" onclick="BloggerCalc.zoomDisp(0)">100%</button>
             <button type="button" class="bq-tb" id="bc-zoom-in" aria-label="Zoom in display" title="Zoom in display" onclick="BloggerCalc.zoomDisp(1)">A+</button>
-            <button type="button" class="bq-tb" id="bc-log-clear" aria-label="Clear all calculation history" title="Clear all calculation history" onclick="BloggerCalc.clearHistory()">Clear</button>
         </div>
-        <button type="button" class="bq-grip" id="bc-paper-grip" aria-controls="bc-paper" aria-expanded="false" hidden onclick="BloggerCalc.togglePaper()"></button>
-        <div class="bq-paper bq-collapsed" id="bc-paper" aria-label="Calculation log"></div>
+        <div class="bq-paper" id="bc-paper" aria-label="Calculation log"></div>
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
             <div class="bc-out-meta">
@@ -3633,23 +3729,30 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 let txt = document.createElement("textarea"); txt.innerHTML = str; return txt.value;
             }
 
+            const BQ_ALLOWED_IDS = new Set(['Math.E', 'Math.PI', 'Math.SQRT2', 'Math.abs', 'Math.acosh', 'Math.asinh', 'Math.atanh', 'Math.cbrt', 'Math.cosh', 'Math.exp', 'Math.log', 'Math.log10', 'Math.log2', 'Math.random', 'Math.sinh', 'Math.sqrt', 'Math.tanh', 'Math.pow', 'Math.floor', 'Math.ceil', 'Math.round', 'Math.sign', 'Math.trunc', 'Math.min', 'Math.max', 'Math.hypot', 'bcFact', 'bcLogY', 'bcNthRoot', 'bcTrig.acos', 'bcTrig.asin', 'bcTrig.atan', 'bcTrig.cos', 'bcTrig.sin', 'bcTrig.tan']);
+            const BQ_TOKEN = /\s+|(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?|\*\*|[+\-*/%(),]|Math\.[A-Za-z0-9]+|bcTrig\.[A-Za-z]+|bc[A-Za-z]+/y;
             function secureEvaluate(expr) {
-                const testStr = expr
-                    .replace(/(Math\.[a-zA-Z0-9]+|bcTrig\.[a-zA-Z]+|bc[A-zA-Z]+)/g, '')
-                    .replace(/[0-9+\-*/().,% eE]/g, '');
-                if (testStr.length > 0) {
-                    throw new Error("Invalid Input");
+                const s = String(expr);
+                if (s.length > 5000) { throw new Error("Invalid Input"); }
+                let pos = 0;
+                while (pos < s.length) {
+                    BQ_TOKEN.lastIndex = pos;
+                    const m = BQ_TOKEN.exec(s);
+                    if (!m) { throw new Error("Invalid Input"); }
+                    const t = m[0];
+                    if (/^(Math\.|bcTrig\.|bc)/.test(t) && !BQ_ALLOWED_IDS.has(t)) { throw new Error("Invalid Input"); }
+                    pos = BQ_TOKEN.lastIndex;
                 }
-                return new Function('return ' + expr)();
+                return new Function('return ' + s)();
             }
 
             window.bcTrig = {
                 sin: (x) => isDegree ? Math.sin(x * Math.PI / 180) : Math.sin(x),
                 cos: (x) => isDegree ? Math.cos(x * Math.PI / 180) : Math.cos(x),
                 tan: (x) => isDegree ? Math.tan(x * Math.PI / 180) : Math.tan(x),
-                asin: (x) => isDegree ? Math.asin(x * 180 / Math.PI) : Math.asin(x),
-                acos: (x) => isDegree ? Math.acos(x * 180 / Math.PI) : Math.acos(x),
-                atan: (x) => isDegree ? Math.atan(x * 180 / Math.PI) : Math.atan(x)
+                asin: (x) => isDegree ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
+                acos: (x) => isDegree ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
+                atan: (x) => isDegree ? Math.atan(x) * 180 / Math.PI : Math.atan(x)
             };
             window.bcFact = function(n) {
                 if(n < 0 || !Number.isInteger(n)) return NaN;
@@ -4020,11 +4123,6 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 bqSDRender();
             }
             const BQ_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            function bqStamp() {
-                const rows = bcHistList.querySelectorAll('.hist-entry:not([data-ts])');
-                const now = Date.now();
-                for (let i = rows.length - 1; i >= 0; i--) { rows[i].setAttribute('data-ts', String(now)); }
-            }
             function bqTime(ms) {
                 const d = new Date(Number(ms)); if (!isFinite(d.getTime())) { return ''; }
                 const z = function(n) { return (n < 10 ? '0' : '') + n; };
@@ -4050,9 +4148,10 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 if (!box) { return; }
                 bqStamp();
                 const btn = document.getElementById('bc-paper-btn');
-                const open = btn.classList.contains('on');
-                box.classList.toggle('bq-collapsed', !open); box.hidden = false;
+                const open = true;
+                box.hidden = !open;
                 bqSyncInk();
+                if (!open) { return; }
                 const wasBottom = !bqPaperBuilt || (box.scrollHeight - box.scrollTop - box.clientHeight < 12);
                 const oldTop = box.scrollTop;
                 box.innerHTML = '';
@@ -4090,8 +4189,6 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     box.appendChild(card);
                 }
                 bqPaperBuilt = true;
-                if (bqPrevN !== null && all.length > bqPrevN && open) { bqPaperSet(false); }
-                bqPrevN = all.length; bqGripSync();
                 box.scrollTop = wasBottom ? box.scrollHeight : oldTop;
                 if (!shown) { const em = document.createElement('div'); em.className = 'bq-pempty'; em.textContent = 'No previous calculations yet'; box.appendChild(em); }
             }
@@ -4115,7 +4212,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 const pop = document.getElementById('bc-more-pop');
                 if (pop.firstChild) { return; }
                 BQ_MORE.forEach(function(it) {
-                    const row = document.createElement('div'); row.className = 'bq-mrow';
+                    const row = document.createElement('div'); row.className = 'bq-mrow'; row.style.setProperty('--c', it.c);
                     const ic = document.createElement('span'); ic.className = 'bq-mic'; ic.textContent = it.g; ic.style.background = it.c; ic.setAttribute('aria-hidden', 'true');
                     const body = document.createElement('div'); body.className = 'bq-mbody';
                     const nm = document.createElement('div'); nm.className = 'bq-mname'; nm.textContent = it.n;
@@ -4176,37 +4273,6 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             }
             window.addEventListener('resize', bqMoreSizes);
             setTimeout(bqMoreSizes, 0); setTimeout(bqMoreSizes, 600);
-            /* ---------- DISPLAY: the log stays closed (display = input + output only) and opens only when the user asks for it ---------- */
-            let bqPrevN = null, bqIdleT = 0;
-            function bqEntries() { return bcHistList.querySelectorAll('.hist-entry').length; }
-            function bqGripSync() {
-                const g = document.getElementById('bc-paper-grip'), btn = document.getElementById('bc-paper-btn');
-                if (!g) { return; }
-                const n = bqEntries(), on = btn.classList.contains('on');
-                g.hidden = n === 0 && !on;
-                g.setAttribute('aria-expanded', String(on));
-                g.textContent = on ? '\u25be Hide earlier' : '\u25b4 ' + n + ' earlier';
-            }
-            function bqPaperSet(on) {
-                const btn = document.getElementById('bc-paper-btn'), box = document.getElementById('bc-paper');
-                btn.classList.toggle('on', on); btn.setAttribute('aria-expanded', String(on));
-                box.classList.toggle('bq-collapsed', !on);
-                if (on) { box.scrollTop = box.scrollHeight; bqIdleArm(); } else { clearTimeout(bqIdleT); }
-                bqGripSync(); bqSyncInk();
-            }
-            function bqIdleArm() { clearTimeout(bqIdleT); bqIdleT = setTimeout(function() { if (document.getElementById('bc-paper-btn').classList.contains('on')) { bqPaperSet(false); } }, 15000); }
-            (function() {
-                const sc = document.querySelector('.bc-screen-container'); let y0 = null, x0 = 0;
-                const closed = function() { return document.getElementById('bc-paper').classList.contains('bq-collapsed'); };
-                sc.addEventListener('wheel', function(e) { if (closed() && e.deltaY < 0 && bqEntries()) { bqPaperSet(true); } else if (!closed()) { bqIdleArm(); } }, { passive: true });
-                sc.addEventListener('touchstart', function(e) { const t = e.touches[0]; y0 = t.clientY; x0 = t.clientX; if (!closed()) { bqIdleArm(); } }, { passive: true });
-                sc.addEventListener('touchmove', function(e) {
-                    if (y0 === null) { return; } const t = e.touches[0], dy = t.clientY - y0, dx = t.clientX - x0;
-                    if (closed() && dy > 22 && dy > Math.abs(dx) * 1.5 && bqEntries()) { y0 = null; bqPaperSet(true); } else if (!closed()) { bqIdleArm(); }
-                }, { passive: true });
-                sc.addEventListener('touchend', function() { y0 = null; }, { passive: true });
-                document.getElementById('bc-paper').addEventListener('scroll', function() { if (!closed()) { bqIdleArm(); } }, { passive: true });
-            })();
             /* ---------- FULL SCREEN: CSS expansion (never rotates or locks orientation) + the browser Fullscreen API when it is allowed ---------- */
             let bqFull = false, bqFullY = 0, bqFullNative = false;
             function bqFullSet(on) {
@@ -4235,7 +4301,162 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 if ((sh && !sh.hidden) || (pop && !pop.hidden)) { return; }
                 bqFullSet(false);
             });
-            setTimeout(bqGripSync, 0);
+            /* ---------- v23 DISPLAY: one scrolling LCD (earlier calculations above, input + output at the bottom) + full-screen display pop-up with date filters ---------- */
+            const bqScroll = document.createElement('div');
+            const bqPaperEl = document.getElementById('bc-paper'), bqOutBox = document.getElementById('bc-output-box');
+            let bqStick = true;
+            (function() {
+                const sc = document.querySelector('.bc-screen-container');
+                bqScroll.id = 'bc-scroll'; bqScroll.className = 'bq-scroll'; bqScroll.setAttribute('aria-label', 'Calculator display. Scroll up to see earlier calculations.');
+                const hold = document.createElement('div'); hold.className = 'bq-xhold';
+                hold.innerHTML = '<button type="button" class="bq-xbtn" id="bc-dexp" aria-label="Open the display full screen" title="Open the display full screen"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12.6 12.6L17 17M6.2 8.5h4.6M8.5 6.2v4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>';
+                sc.insertBefore(bqScroll, bqPaperEl);
+                bqScroll.appendChild(hold); bqScroll.appendChild(bqPaperEl); bqScroll.appendChild(bcDisp); bqScroll.appendChild(bqOutBox);
+                document.getElementById('bc-dexp').addEventListener('click', function() { bqDispOpen(); });
+            })();
+            function bqAtBottom() { return bqScroll.scrollHeight - bqScroll.scrollTop - bqScroll.clientHeight < 10; }
+            function bqEntryCount() { return bcHistList.querySelectorAll('.hist-entry').length; }
+            function bqLogLabel() {
+                const b = document.getElementById('bc-paper-btn'); if (!b) { return; }
+                const n = bqEntryCount(), bottom = bqAtBottom() || bqScroll.scrollHeight - bqScroll.clientHeight < 10;
+                b.classList.toggle('on', !bottom && n > 0);
+                b.textContent = n === 0 ? 'Log' : (bottom ? '▴ ' + n + ' earlier' : '▾ Latest');
+                b.setAttribute('aria-label', n === 0 ? 'No earlier calculations yet' : (bottom ? 'Show earlier calculations' : 'Back to the latest calculation'));
+                b.title = b.getAttribute('aria-label');
+            }
+            function bqFitScroll() {
+                const cs = getComputedStyle(bqScroll);
+                const extra = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+                const gap = parseFloat(cs.rowGap) || 0;
+                const h = bcDisp.offsetHeight + bqOutBox.offsetHeight + gap + extra;
+                if (h > 0) { bqScroll.style.height = Math.ceil(h) + 'px'; }
+                if (bqStick) { bqScroll.scrollTop = bqScroll.scrollHeight; }
+                bqLogLabel();
+            }
+            function bqToBottom() { bqStick = true; bqScroll.scrollTop = bqScroll.scrollHeight; bqLogLabel(); }
+            function bqLogToggle() {
+                if (bqEntryCount() === 0) { return; }
+                if (bqAtBottom()) { bqStick = false; bqScroll.scrollBy({ top: -Math.max(40, bqScroll.clientHeight * 0.85), behavior: 'smooth' }); }
+                else { bqStick = true; bqScroll.scrollTo({ top: bqScroll.scrollHeight, behavior: 'smooth' }); }
+                setTimeout(bqLogLabel, 350);
+            }
+            bqScroll.addEventListener('scroll', function() { bqStick = bqAtBottom(); bqLogLabel(); }, { passive: true });
+            try { const ro = new ResizeObserver(function() { bqFitScroll(); }); ro.observe(bcDisp); ro.observe(bqOutBox); } catch (e) { window.addEventListener('resize', bqFitScroll); }
+            try { new MutationObserver(function() { bqToBottom(); bqFitScroll(); }).observe(bqPaperEl, { childList: true }); } catch (e) {}
+            setTimeout(bqFitScroll, 0); setTimeout(bqFitScroll, 400);
+
+            /* dates for the history filters are remembered next to the history (local only) */
+            const BQ_TS_KEY = 'bc_hist_ts';
+            function bqTsKey(r) { return (r.getAttribute('data-expr') || '') + '|' + (r.getAttribute('data-res') || '') + '|' + (r.getAttribute('data-tab') || ''); }
+            function bqStamp() {
+                const rows = Array.prototype.slice.call(bcHistList.querySelectorAll('.hist-entry'));
+                if (!rows.length) { try { localStorage.removeItem(BQ_TS_KEY); } catch (e) {} return; }
+                const fresh = rows.filter(function(r) { return !r.hasAttribute('data-ts'); });
+                if (fresh.length) {
+                    let saved = []; try { saved = JSON.parse(localStorage.getItem(BQ_TS_KEY) || '[]'); if (!Array.isArray(saved)) { saved = []; } } catch (e) { saved = []; }
+                    const now = Date.now();
+                    for (let i = rows.length - 1; i >= 0; i--) {
+                        const r = rows[i]; if (r.hasAttribute('data-ts')) { continue; }
+                        const k = bqTsKey(r); let hit = -1;
+                        for (let j = 0; j < saved.length; j++) { if (saved[j] && saved[j].k === k) { hit = j; break; } }
+                        if (hit >= 0) { r.setAttribute('data-ts', String(saved[hit].t)); saved.splice(hit, 1); } else { r.setAttribute('data-ts', String(now)); }
+                    }
+                    try { localStorage.setItem(BQ_TS_KEY, JSON.stringify(rows.slice(0, 400).reverse().map(function(r) { return { k: bqTsKey(r), t: Number(r.getAttribute('data-ts')) }; }))); } catch (e) {}
+                }
+            }
+
+            /* ---- full-screen display pop-up ---- */
+            const bqDF = { k: 'all', date: '' };
+            const BQ_FILTERS = [['all', 'All'], ['today', 'Today'], ['week', 'This week'], ['month', 'This month'], ['old', 'Older than 1 month']];
+            function bqInRange(ts) {
+                if (bqDF.k === 'all') { return true; }
+                if (!ts) { return bqDF.k === 'old'; }
+                const d = new Date(ts), n = new Date(), day0 = new Date(n.getFullYear(), n.getMonth(), n.getDate()).getTime();
+                if (bqDF.k === 'today') { return ts >= day0; }
+                if (bqDF.k === 'week') { const dow = (n.getDay() + 6) % 7; return ts >= day0 - dow * 86400000; }
+                if (bqDF.k === 'month') { return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth(); }
+                if (bqDF.k === 'old') { return ts < n.getTime() - 30 * 86400000; }
+                if (bqDF.k === 'date' && bqDF.date) { const p = bqDF.date.split('-'); const a = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])).getTime(); return ts >= a && ts < a + 86400000; }
+                return true;
+            }
+            let bqDpBuilt = false, bqDpObs = null, bqDpClearT = 0;
+            function bqDpBuild() {
+                if (bqDpBuilt) { return; }
+                bqDpBuilt = true;
+                const pop = document.getElementById('bc-dpop');
+                pop.innerHTML = '<div class="bq-dp-head"><b>Display</b><span class="bq-dp-sp"></span><button type="button" class="bq-dp-clear" id="bc-dp-clear">Clear all</button><button type="button" class="bq-dp-x" id="bc-dp-x" aria-label="Close display">&#10005;</button></div>'
+                    + '<div class="bq-dp-filters" id="bc-dp-filters" role="group" aria-label="Filter history by date"></div>'
+                    + '<div class="bq-dp-list" id="bc-dp-list" tabindex="0"></div>'
+                    + '<div class="bq-dp-live" aria-live="polite"><div class="bq-dp-in" id="bc-dp-in"></div><div class="bq-dp-out" id="bc-dp-out"></div></div>';
+                const fl = document.getElementById('bc-dp-filters');
+                BQ_FILTERS.forEach(function(f) {
+                    const b = document.createElement('button'); b.type = 'button'; b.className = 'bq-dp-chip'; b.dataset.k = f[0]; b.textContent = f[1];
+                    b.onclick = function() { bqDF.k = f[0]; bqDF.date = ''; bqDpRender(); }; fl.appendChild(b);
+                });
+                const lab = document.createElement('label'); lab.className = 'bq-dp-chip bq-dp-date'; lab.dataset.k = 'date';
+                lab.innerHTML = '<span>Choose date</span><input type="date" id="bc-dp-date" aria-label="Choose a date">';
+                fl.appendChild(lab);
+                document.getElementById('bc-dp-date').addEventListener('change', function(e) { bqDF.k = e.target.value ? 'date' : 'all'; bqDF.date = e.target.value; bqDpRender(); });
+                document.getElementById('bc-dp-x').onclick = function() { bqDispClose(); };
+                const cl = document.getElementById('bc-dp-clear');
+                cl.onclick = function() {
+                    if (cl.dataset.arm === '1') { clearTimeout(bqDpClearT); cl.dataset.arm = ''; cl.textContent = 'Clear all'; api.clearHistory(); bqDpRender(); return; }
+                    cl.dataset.arm = '1'; cl.textContent = 'Tap again to clear'; bqDpClearT = setTimeout(function() { cl.dataset.arm = ''; cl.textContent = 'Clear all'; }, 3500);
+                };
+            }
+            function bqDpMirror() {
+                const i = document.getElementById('bc-dp-in'), o = document.getElementById('bc-dp-out'); if (!i || !o) { return; }
+                i.innerHTML = bcDisp.innerHTML; o.innerHTML = bcLiveOut.innerHTML;
+                o.classList.toggle('bad', bqOutBox.classList.contains('bq-error'));
+            }
+            function bqDpRender() {
+                const list = document.getElementById('bc-dp-list'); if (!list) { return; }
+                Array.prototype.forEach.call(document.querySelectorAll('#bc-dp-filters [data-k]'), function(c) { const on = c.dataset.k === bqDF.k; c.classList.toggle('on', on); if (c.tagName === 'BUTTON') { c.setAttribute('aria-pressed', String(on)); } });
+                list.innerHTML = '';
+                const rows = Array.prototype.slice.call(bcHistList.querySelectorAll('.hist-entry')).reverse();
+                let shown = 0;
+                rows.forEach(function(r) {
+                    let expr, res; try { expr = decodeURIComponent(r.getAttribute('data-expr') || ''); res = decodeURIComponent(r.getAttribute('data-res') || ''); } catch (e) { return; }
+                    if (!expr || !bqInRange(Number(r.getAttribute('data-ts')))) { return; }
+                    shown++;
+                    const tabId = r.getAttribute('data-tab') || '';
+                    const card = document.createElement('div'); card.className = 'bq-dp-card';
+                    const head = document.createElement('div'); head.className = 'bq-dp-ch';
+                    const chip = document.createElement('span'); chip.className = 'bq-chip'; chip.textContent = (typeof TAB_NAMES !== 'undefined' && TAB_NAMES[tabId]) || '=';
+                    const del = document.createElement('button'); del.type = 'button'; del.className = 'bq-pdel'; del.setAttribute('aria-label', 'Delete this entry'); del.title = 'Delete this entry'; del.textContent = '✕';
+                    del.onclick = function() { const b = r.querySelector('.hist-del-btn'); if (b) { b.click(); } bqDpRender(); };
+                    head.appendChild(chip); head.appendChild(del); card.appendChild(head);
+                    const e = document.createElement('button'); e.type = 'button'; e.className = 'bq-pexpr'; e.title = 'Tap to reuse this calculation'; e.innerHTML = bqMath(expr, tabId === 'bc-adv');
+                    e.onclick = function() { const c = r.querySelector('.hist-content'); if (c) { c.click(); } bqDispClose(); };
+                    card.appendChild(e);
+                    if (res) {
+                        const v = document.createElement('button'); v.type = 'button'; v.className = 'bq-pres'; v.title = 'Tap to use this result';
+                        const f = bqFracHtml(res.replace(/^[=≈]\s*/, '').replace(/−/g, '-'));
+                        if (f) { v.innerHTML = f.html + (f.dec ? '<span class="bq-dec">= ' + f.dec + '</span>' : ''); } else { v.textContent = '= ' + res; }
+                        v.onclick = function() { const st = r.querySelector('strong'); if (st) { st.click(); } bqDispClose(); };
+                        card.appendChild(v);
+                    }
+                    list.appendChild(card);
+                });
+                if (!shown) { const em = document.createElement('div'); em.className = 'bq-dp-empty'; em.textContent = rows.length ? 'No calculations match this filter.' : 'No calculations yet.'; list.appendChild(em); }
+                list.scrollTop = list.scrollHeight;
+                bqDpMirror();
+            }
+            function bqDispOpen() {
+                bqDpBuild(); const pop = document.getElementById('bc-dpop');
+                bqMoreClose(false); bqStamp(); pop.hidden = false; bqDpRender();
+                try { bqDpObs = new MutationObserver(bqDpMirror); bqDpObs.observe(bcDisp, { childList: true, subtree: true, characterData: true }); bqDpObs.observe(bcLiveOut, { childList: true, subtree: true, characterData: true }); } catch (e) {}
+                const x = document.getElementById('bc-dp-x'); if (x) { x.focus(); }
+            }
+            function bqDispClose() {
+                const pop = document.getElementById('bc-dpop'); if (!pop || pop.hidden) { return; }
+                pop.hidden = true; if (bqDpObs) { bqDpObs.disconnect(); bqDpObs = null; }
+                const b = document.getElementById('bc-dexp'); if (b) { b.focus(); }
+            }
+            document.addEventListener('keydown', function(e) {
+                const pop = document.getElementById('bc-dpop');
+                if (e.key === 'Escape' && pop && !pop.hidden) { e.preventDefault(); e.stopPropagation(); bqDispClose(); }
+            }, true);
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
@@ -5958,8 +6179,9 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 openSolve: function() { if (window.BQTools) { window.BQTools.open('solve'); } },
                 zoomDisp: function(d) { bqZoom(d); },
                 toggleSD: function() { bqToggleSD(); },
-                togglePaper: function() { bqPaperSet(!document.getElementById('bc-paper-btn').classList.contains('on')); },
                 toggleFull: function() { bqFullSet(!bqFull); },
+                togglePaper: function() { bqLogToggle(); },
+                openDisplay: function() { bqDispOpen(); },
                 insertExpr: function(t) { api.switchTab('bc-adv', document.getElementById('btn-bc-adv')); if (fx) { try { fx.loadText(String(t)); } catch (e) {} } },
                 calc: function() {
                     if (fxActive()) { fx.key('exe'); return; }
@@ -6824,6 +7046,259 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
   if (typeof module !== 'undefined' && module.exports) module.exports = MathStepEngine; else root.MathStepEngine = MathStepEngine;
 })(typeof window !== 'undefined' ? window : globalThis);
 
+/* SCAN DRAWING: free handwriting reader that runs inside the browser (no server, no API key, no paid service).
+   Model: CoMER (handwritten maths -> LaTeX), INT8 ONNX files from the open-source "ink-on" project (Apache-2.0),
+   run with ONNX Runtime Web (MIT), which is loaded from a CDN only when the user first taps Scan Drawing.
+   The model files must be uploaded next to this page:  calculator/models/comer/{encoder_int8.onnx, decoder_int8.onnx, vocab.json}  */
+(function () {
+  'use strict';
+  var ORT_VER = '1.20.1';
+  var ORT_BASES = ['https://cdn.jsdelivr.net/npm/onnxruntime-web@' + ORT_VER + '/dist/', 'https://unpkg.com/onnxruntime-web@' + ORT_VER + '/dist/'];
+  var ORT_FILE = 'ort.wasm.min.js';
+  var MODEL_H = 256, MAX_W = 1024, MIN_W = 128, W_ALIGN = 64, TARGET_H = 128, PAD = 16;
+  var MAX_STEPS = 60, BEAM = 3, REPEAT_LIMIT = 3;
+
+  /* ---------------- LaTeX tokens -> calculator expression (pure functions; no eval) ---------------- */
+  function latexToExpr(tokens) {
+    var t = tokens.filter(function (x) { return x !== ''; }), i = 0, warn = [];
+    function simple(s) { return /^[A-Za-z0-9.π]+$/.test(s); }
+    function single(s) { var m = /^(\u221a|sin|cos|tan|log)?\(/.exec(s); if (!m) { return false; } var d = 0; for (var k = m[0].length - 1; k < s.length; k++) { if (s[k] === '(') { d++; } else if (s[k] === ')') { d--; if (d === 0) { return k === s.length - 1; } } } return false; }
+    function wrap(s) { return simple(s) || single(s) ? s : '(' + s + ')'; }
+    function balanced(s) { var d = 0; for (var k = 0; k < s.length; k++) { if (s[k] === '(') { d++; } else if (s[k] === ')') { d--; if (d < 0) { return false; } } } return d === 0; }
+    function atom() {
+      var x = t[i];
+      if (x === undefined) { return ''; }
+      if (x === '{') { i++; var g = seq(true); return g; }
+      if (/^[0-9]$/.test(x)) { var n = ''; while (i < t.length && /^[0-9.]$/.test(t[i])) { n += t[i++]; } return n; }
+      i++; return mapTok(x);
+    }
+    function arg() { if (t[i] === '{') { i++; return seq(true); } return atom(); }
+    function mapTok(x) {
+      var M = { '\\times': '×', '\\cdot': '×', '\\div': '÷', '\\pi': 'π', '\\infty': '∞', '\\leq': '≤', '\\geq': '≥', '\\neq': '≠', '\\pm': '±', '\\{': '(', '\\}': ')', '\\prime': "'", '\\ldots': '...', '\\cdots': '...' };
+      if (M[x] !== undefined) { return M[x]; }
+      if (x.charAt(0) === '\\') { warn.push(x); return x.slice(1); }
+      return x;
+    }
+    function seq(inGroup) {
+      var out = '';
+      while (i < t.length) {
+        var x = t[i];
+        if (x === '}') { if (inGroup) { i++; return out; } i++; continue; }
+        if (x === '{') { i++; out += wrapIfNeeded(seq(true)); continue; }
+        if (x === '\\frac') { i++; var n = arg(), d = arg(); out += wrap(n) + '/' + wrap(d); continue; }
+        if (x === '\\sqrt') {
+          i++; var idx = null;
+          if (t[i] === '[') { i++; idx = ''; while (i < t.length && t[i] !== ']') { idx += mapTok(t[i++]); } i++; }
+          var r = arg(); out += idx ? wrap(r) + '^(1/' + wrap(idx) + ')' : '√(' + r + ')'; continue;
+        }
+        if (x === '^') { i++; var e = arg(); out += '^' + (simple(e) ? e : '(' + e + ')'); continue; }
+        if (x === '_') { i++; arg(); warn.push('subscript ignored'); continue; }
+        if (x === '\\sin' || x === '\\cos' || x === '\\tan' || x === '\\log' || x === '\\lim') {
+          i++; var nm = x.slice(1);
+          if (t[i] === '_') { i++; arg(); warn.push('subscript ignored'); }
+          if (t[i] === '(') { out += nm; } else { var a = atom(); out += nm + '(' + a + ')'; }
+          continue;
+        }
+        if (x === '\\limits') { i++; continue; }
+        if (x === '-') { out += '-'; i++; continue; }
+        if (/^[0-9]$/.test(x)) { var num = ''; while (i < t.length && /^[0-9.]$/.test(t[i])) { num += t[i++]; } out += num; continue; }
+        i++; out += mapTok(x);
+      }
+      return out;
+    }
+    function wrapIfNeeded(s) { return simple(s) || s === '' ? s : '(' + s + ')'; }
+    var expr = seq(false).replace(/\s+/g, '');
+    return { expr: expr, warnings: warn.filter(function (w, k, a) { return a.indexOf(w) === k; }) };
+  }
+  function parenBalance(s) { var d = 0; for (var k = 0; k < s.length; k++) { if (s[k] === '(') { d++; } else if (s[k] === ')') { d--; } if (d < 0) { return false; } } return d === 0; }
+
+  /* ---------------- pre-processing (same convention as the model's training data: white strokes on black, top-left aligned) ---------------- */
+  function resample(points, interval) {
+    interval = interval || 3; if (points.length < 2) { return points; }
+    var out = [points[0]], remaining = interval;
+    for (var i = 1; i < points.length; i++) {
+      var p = points[i - 1], c = points[i], dx = c.x - p.x, dy = c.y - p.y, dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist <= remaining) { remaining -= dist; continue; }
+      var covered = remaining;
+      while (covered <= dist) { var k = covered / dist; out.push({ x: p.x + dx * k, y: p.y + dy * k }); covered += interval; }
+      remaining = covered - dist;
+    }
+    out.push(points[points.length - 1]); return out;
+  }
+  function bbox(strokes) {
+    var a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
+    strokes.forEach(function (s) { s.points.forEach(function (p) { if (p.x < a) { a = p.x; } if (p.y < b) { b = p.y; } if (p.x > c) { c = p.x; } if (p.y > d) { d = p.y; } }); });
+    return { minX: a, minY: b, maxX: c, maxY: d };
+  }
+  function meaningful(strokes) {
+    if (!strokes.length) { return false; }
+    var bb = bbox(strokes), w = bb.maxX - bb.minX, h = bb.maxY - bb.minY;
+    if (w < 8 && h < 8) { return false; }
+    var pts = 0, len = 0;
+    strokes.forEach(function (s) { pts += s.points.length; for (var i = 1; i < s.points.length; i++) { len += Math.hypot(s.points[i].x - s.points[i - 1].x, s.points[i].y - s.points[i - 1].y); } });
+    return pts >= 6 && len >= 15;
+  }
+  function preprocess(strokes) {
+    var bb = bbox(strokes);
+    var rw = Math.max(1, Math.ceil(bb.maxX - bb.minX)), rh = Math.max(1, Math.ceil(bb.maxY - bb.minY));
+    var raw = document.createElement('canvas'); raw.width = rw + PAD * 2; raw.height = rh + PAD * 2;
+    var rc = raw.getContext('2d'); rc.fillStyle = '#000'; rc.fillRect(0, 0, raw.width, raw.height);
+    rc.strokeStyle = '#fff'; rc.lineCap = 'round'; rc.lineJoin = 'round';
+    strokes.forEach(function (s) {
+      if (!s.points.length) { return; }
+      var pts = resample(s.points); rc.beginPath(); rc.lineWidth = Math.max(2, s.lineWidth || 3);
+      var ox = PAD - bb.minX, oy = PAD - bb.minY;
+      rc.moveTo(pts[0].x + ox, pts[0].y + oy);
+      if (pts.length === 1) { rc.lineTo(pts[0].x + ox + .01, pts[0].y + oy); }
+      else if (pts.length === 2) { rc.lineTo(pts[1].x + ox, pts[1].y + oy); }
+      else {
+        for (var i = 1; i < pts.length - 1; i++) { rc.quadraticCurveTo(pts[i].x + ox, pts[i].y + oy, (pts[i].x + pts[i + 1].x) / 2 + ox, (pts[i].y + pts[i + 1].y) / 2 + oy); }
+        var l = pts[pts.length - 1]; rc.lineTo(l.x + ox, l.y + oy);
+      }
+      rc.stroke();
+    });
+    var scale = Math.min(TARGET_H / raw.height, MAX_W / raw.width);
+    var dw = Math.max(1, Math.round(raw.width * scale)), dh = Math.max(1, Math.round(raw.height * scale));
+    var cw = Math.min(MAX_W, Math.max(MIN_W, Math.ceil((dw + PAD) / W_ALIGN) * W_ALIGN));
+    var tg = document.createElement('canvas'); tg.width = cw; tg.height = MODEL_H;
+    var tc = tg.getContext('2d'); tc.fillStyle = '#000'; tc.fillRect(0, 0, cw, MODEL_H); tc.drawImage(raw, 0, 0, dw, dh);
+    var data = tc.getImageData(0, 0, cw, MODEL_H).data, tensor = new Float32Array(cw * MODEL_H), mask = new Uint8Array(cw * MODEL_H);
+    for (var k = 0; k < tensor.length; k++) { tensor[k] = (data[k * 4] * .299 + data[k * 4 + 1] * .587 + data[k * 4 + 2] * .114) / 255; }
+    for (var y = 0; y < MODEL_H; y++) { for (var x = 0; x < cw; x++) { mask[y * cw + x] = y < dh && x < dw ? 0 : 1; } }
+    return { tensor: tensor, mask: mask, height: MODEL_H, width: cw };
+  }
+
+  /* ---------------- model + runtime loading (lazy, cached) ---------------- */
+  var engine = null, loading = null, ortBase = '';
+  function loadScript(urls) {
+    return new Promise(function (resolve, reject) {
+      var n = 0;
+      (function next() {
+        if (n >= urls.length) { reject(new Error('ORT_LOAD')); return; }
+        var s = document.createElement('script'); s.src = urls[n]; s.async = true; ortBase = ORT_BASES[n++];
+        s.onload = function () { resolve(); }; s.onerror = function () { s.remove(); next(); };
+        document.head.appendChild(s);
+      })();
+    });
+  }
+  function idb(url, buf) {
+    return new Promise(function (resolve) {
+      try {
+        var rq = indexedDB.open('bq-handwriting-models', 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore('m'); };
+        rq.onerror = function () { resolve(null); };
+        rq.onsuccess = function () {
+          try {
+            var tx = rq.result.transaction('m', buf ? 'readwrite' : 'readonly'), st = tx.objectStore('m');
+            var r = buf ? st.put(buf, url) : st.get(url);
+            r.onsuccess = function () { resolve(buf ? true : (r.result || null)); }; r.onerror = function () { resolve(null); };
+          } catch (e) { resolve(null); }
+        };
+      } catch (e) { resolve(null); }
+    });
+  }
+  function fetchModel(url) {
+    return idb(url).then(function (hit) {
+      if (hit && hit.byteLength > 1e6) { return hit; }
+      return fetch(url).then(function (r) {
+        if (!r.ok) { throw new Error('MODEL_MISSING'); }
+        return r.arrayBuffer();
+      }).then(function (buf) {
+        var head = new Uint8Array(buf.slice(0, 1));
+        if (buf.byteLength < 1e6 || head[0] === 60) { throw new Error('MODEL_MISSING'); }
+        idb(url, buf); return buf;
+      });
+    });
+  }
+  function init(onStatus) {
+    if (engine) { return Promise.resolve(engine); }
+    if (loading) { return loading; }
+    var base = new URL('models/comer/', document.baseURI).href;
+    loading = (window.ort ? Promise.resolve() : (onStatus && onStatus('runtime'), loadScript(ORT_BASES.map(function (b) { return b + ORT_FILE; }))))
+      .then(function () {
+        if (!window.ort) { throw new Error('ORT_LOAD'); }
+        if (ortBase) { window.ort.env.wasm.wasmPaths = ortBase; }
+        window.ort.env.wasm.numThreads = 1; window.ort.env.wasm.simd = true;
+        onStatus && onStatus('models');
+        return Promise.all([fetchModel(base + 'encoder_int8.onnx'), fetchModel(base + 'decoder_int8.onnx'), fetch(base + 'vocab.json').then(function (r) { if (!r.ok) { throw new Error('MODEL_MISSING'); } return r.json(); })]);
+      })
+      .then(function (r) {
+        onStatus && onStatus('start');
+        var o = { executionProviders: ['wasm'] };
+        return Promise.all([window.ort.InferenceSession.create(r[0], o), window.ort.InferenceSession.create(r[1], o)]).then(function (s) { engine = { enc: s[0], dec: s[1], vocab: r[2] }; return engine; });
+      });
+    loading.catch(function () { loading = null; });
+    return loading;
+  }
+
+  /* ---------------- decoding (greedy-free beam search, as in the model's reference implementation) ---------------- */
+  function logSoftmax(l, off, n) {
+    var out = new Float64Array(n), m = -Infinity, i;
+    for (i = 0; i < n; i++) { if (l[off + i] > m) { m = l[off + i]; } }
+    var sum = 0; for (i = 0; i < n; i++) { sum += Math.exp(l[off + i] - m); }
+    var ls = Math.log(sum); for (i = 0; i < n; i++) { out[i] = l[off + i] - m - ls; }
+    return out;
+  }
+  function topK(a, k) { var ix = []; for (var i = 0; i < a.length; i++) { ix.push(i); } ix.sort(function (x, y) { return a[y] - a[x]; }); return ix.slice(0, k); }
+  function runDec(E, ids, f, m) {
+    var ort = window.ort, inp = new ort.Tensor('int64', BigInt64Array.from(ids.map(function (v) { return BigInt(v); })), [1, ids.length]);
+    return E.dec.run({ encoder_features: f, encoder_mask: m, input_ids: inp }).then(function (r) { return r.logits.data; });
+  }
+  function recognize(strokes) {
+    var E = engine, ort = window.ort, pre = preprocess(strokes), sp = E.vocab.special_tokens, V = E.vocab.vocab_size;
+    var pv = new ort.Tensor('float32', pre.tensor, [1, 1, pre.height, pre.width]), pm = new ort.Tensor('bool', pre.mask, [1, pre.height, pre.width]);
+    return E.enc.run({ pixel_values: pv, pixel_mask: pm }).then(function (res) {
+      var f = res.encoder_features, m = res.encoder_mask, beams = [{ lp: 0, ids: [sp.sos], done: false }], step = 0;
+      function loop() {
+        if (step >= MAX_STEPS || beams.every(function (b) { return b.done; })) { return Promise.resolve(); }
+        step++;
+        var all = [];
+        return beams.reduce(function (p, b) {
+          return p.then(function () {
+            if (b.done) { all.push(b); return null; }
+            return runDec(E, b.ids, f, m).then(function (lg) {
+              var lp = logSoftmax(lg, (b.ids.length - 1) * V, V), top = topK(lp, BEAM * 2);
+              top.forEach(function (ix) {
+                var nl = b.lp + lp[ix];
+                if (ix === sp.eos) { all.push({ lp: nl, ids: b.ids, done: true }); return; }
+                var r = 0; for (var j = b.ids.length - 1; j >= 1 && b.ids[j] === ix; j--) { r++; }
+                all.push(r >= REPEAT_LIMIT ? { lp: nl, ids: b.ids, done: true } : { lp: nl, ids: b.ids.concat([ix]), done: false });
+              });
+            });
+          });
+        }, Promise.resolve()).then(function () {
+          all.sort(function (a, b) { return b.lp / Math.max(b.ids.length, 1) - a.lp / Math.max(a.ids.length, 1); });
+          beams = all.slice(0, BEAM); return loop();
+        });
+      }
+      return loop().then(function () {
+        try { f.dispose(); m.dispose(); pv.dispose(); pm.dispose(); } catch (e) { /* ignore */ }
+        var done = beams.filter(function (b) { return b.done; }), pick = (done.length ? done : beams).slice().sort(function (a, b) { return b.lp / Math.max(b.ids.length, 1) - a.lp / Math.max(a.ids.length, 1); });
+        var skip = {}; skip[sp.sos] = skip[sp.eos] = skip[sp.pad] = 1;
+        return pick.map(function (b) {
+          var toks = b.ids.slice(1).filter(function (id) { return !skip[id]; }).map(function (id) { return E.vocab.idx2word[String(id)]; }).filter(function (w) { return w !== undefined; });
+          var c = latexToExpr(toks); return { latex: toks.join(' '), expr: c.expr, warnings: c.warnings, score: b.lp };
+        }).filter(function (c) { return c.expr; });
+      });
+    });
+  }
+
+  /* run: strokes in, { candidates } out; errors carry .code */
+  function scan(strokes, onStatus) {
+    return init(onStatus).then(function () { onStatus && onStatus('read'); return recognize(strokes); });
+  }
+  function friendly(err) {
+    var m = String(err && err.message || err);
+    if (/ORT_LOAD/.test(m)) { return 'The handwriting reader could not load. Check your internet connection and tap Scan Drawing again, or type the expression below.'; }
+    if (/MODEL_MISSING/.test(m)) { return 'The handwriting model files were not found on this site (calculator/models/comer/). You can still type the expression below.'; }
+    if (/memory|alloc/i.test(m)) { return 'This device ran out of memory while reading the drawing. Try a smaller drawing or type the expression below.'; }
+    return 'Could not read the drawing. Please redraw it or type the expression below.';
+  }
+  var api = { latexToExpr: latexToExpr, preprocess: preprocess, meaningful: meaningful, scan: scan, friendly: friendly, parenBalance: parenBalance, _state: function () { return { ready: !!engine }; } };
+  if (typeof window !== 'undefined') { window.BQScan = api; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
+})();
+
 /* TOOLS SHEET: Scratchpad (canvas) + step-by-step Solver. No backend, no AI service. KaTeX and Nerdamer load lazily from a CDN only when the Solver is first used. */
 (function () {
   'use strict';
@@ -6937,7 +7412,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     }
     function resize() {
       var r = wrap.getBoundingClientRect(); if (!r.width) { return; }
-      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(200, Math.min(360, Math.round((sheet.clientHeight || 520) - 150 - 96)));
+      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(240, Math.min(380, Math.round((sheet.clientHeight || 520) - 150 - 96)));
       wrap.style.height = H + 'px'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px'; render();
     }
     pad.resize = resize; window.addEventListener('resize', function () { if (!sheet.hidden && current === 'draw') { resize(); } });
@@ -7008,9 +7483,10 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       var k = Math.min(4, Math.max(.4, Math.min((W - m) / bw, (H - m - 50) / bh)));
       view.k = k; view.x = (W - bw * k) / 2 - x0 * k; view.y = (H - bh * k) / 2 - y0 * k + 20; render();
     });
-    buildEditor();
+    buildEditor(); buildScan(note);
     tb.save.addEventListener('click', function () { try { cv.toBlob(function (b) { if (!b) { return; } var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'scratchpad.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500); }); } catch (e) { /* ignore */ } });
     setTool('pen'); setTimeout(resize, 0);
+    pad.strokes = function () { return strokes.map(function (s) { return { points: s.pts, lineWidth: s.w || 2.6 }; }); };
     pad.state = function () { return { strokes: strokes.length, view: view, tool: tool }; };
   }
 
@@ -7088,7 +7564,68 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       var c = conv(t); show('solve'); setTimeout(function () { if (BQTools._solveText) { BQTools._solveText((/=/.test(c) ? 'Solve ' : 'Evaluate ') + c); } }, 0);
     });
     syncKeys(); preview();
-    pad.editor = { set: function (v) { inp.value = v; preview(); }, press: press, input: inp, eval: evalText };
+    function solveNow() {
+      var t = inp.value.trim(); if (!t) { out.className = 'bq-edout bad'; out.textContent = 'Type or tap an expression first.'; return; }
+      if (/[=<>\u2264\u2265]/.test(t)) { solB.click(); } else { commit(); }
+    }
+    pad.editor = { set: function (v) { inp.value = v; preview(); }, press: press, input: inp, eval: evalText, solve: solveNow };
+  }
+
+
+  /* ---------------- Scan Drawing (free local handwriting reader; see scan.js) ---------------- */
+  function buildScan(afterEl) {
+    var S = window.BQScan; if (!S) { return; }
+    var wrapR = el('div', 'bq-scan');
+    var go = btn('bq-scanb', '', 'Scan the drawing and read it as a maths expression'); var ic = el('span', 'bq-scanic', '⧉'); ic.setAttribute('aria-hidden', 'true'); var gt = el('span', null, 'Scan Drawing'); var sp = el('span', 'bq-spin'); sp.hidden = true;
+    go.appendChild(sp); go.appendChild(ic); go.appendChild(gt);
+    var res = el('div', 'bq-scanres'); res.hidden = true; res.setAttribute('aria-live', 'polite');
+    wrapR.appendChild(go); wrapR.appendChild(res); afterEl.parentNode.insertBefore(wrapR, afterEl.nextSibling);
+    var busy = false;
+    function show(kind, title, body) {
+      res.hidden = false; res.className = 'bq-scanres ' + (kind || ''); res.innerHTML = '';
+      res.appendChild(el('div', 'bq-scanh', title)); if (body) { res.appendChild(typeof body === 'string' ? el('div', 'bq-scanp', body) : body); }
+      try { res.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { /* ignore */ }
+    }
+    function status(code) {
+      var m = { runtime: 'Loading the handwriting reader…', models: 'Downloading the reader (about 7 MB, first time only)…', start: 'Starting the reader…', read: 'Reading your handwriting…' };
+      gt.textContent = 'Scanning'; show('busy', 'Scanning', m[code] || 'Scanning\u2026');
+    }
+    function actions(list) {
+      var row = el('div', 'bq-scanact');
+      list.forEach(function (a) { row.appendChild(btn('bq-scanbtn' + (a[2] ? ' pri' : ''), a[0], a[0], a[1])); }); return row;
+    }
+    function run() {
+      if (busy) { return; }
+      var strokes = pad.strokes();
+      if (!strokes.length || !S.meaningful(strokes)) { show('warn', 'Nothing to scan', 'Please draw a mathematical expression first.'); return; }
+      busy = true; go.disabled = true; sp.hidden = false; ic.hidden = true; gt.textContent = 'Scanning';
+      S.scan(strokes, status).then(function (cands) {
+        busy = false; go.disabled = false; sp.hidden = true; ic.hidden = false; gt.textContent = 'Scan Drawing';
+        if (!cands || !cands.length) { show('warn', 'Scanned Expression', el('div', 'bq-scanp', 'Unable to recognise this expression. Please redraw it or enter the expression manually.')); return; }
+        var best = cands[0]; pad.editor.set(best.expr);
+        var body = el('div', 'bq-scanbody');
+        body.appendChild(el('div', 'bq-scanex', best.expr));
+        if (best.warnings && best.warnings.length) { body.appendChild(el('div', 'bq-scanp warn', 'Some symbols may not be supported by the calculator (' + best.warnings.join(', ') + '). Check and edit the expression below.')); }
+        else { body.appendChild(el('div', 'bq-scanp', 'Check the expression, correct anything that was misread, then solve it.')); }
+        if (cands.length > 1) {
+          var alt = el('div', 'bq-scanalt'); alt.appendChild(el('span', null, 'Other readings:'));
+          cands.slice(1).forEach(function (c) { alt.appendChild(btn('bq-chip2', c.expr, 'Use this reading: ' + c.expr, function () { pad.editor.set(c.expr); })); });
+          body.appendChild(alt);
+        }
+        body.appendChild(actions([
+          ['Edit Expression', function () { pad.editor.input.focus(); }],
+          ['Solve', function () { pad.editor.solve(); }, 1],
+          ['Scan Again', function () { run(); }],
+          ['Close', function () { res.hidden = true; }]
+        ]));
+        show('ok', 'Scanned Expression', body);
+      }, function (err) {
+        busy = false; go.disabled = false; sp.hidden = true; ic.hidden = false; gt.textContent = 'Scan Drawing';
+        show('bad', 'Could not scan', S.friendly(err));
+        try { if (window.console) { console.warn('Scan Drawing:', err); } } catch (e) { /* ignore */ }
+      });
+    }
+    go.addEventListener('click', run);
   }
 
   /* ---------------- Solver ---------------- */
@@ -7107,14 +7644,17 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
   var engine = null;
   function buildSolve() {
     var hdr = el('div', 'bq-sv-title'); var badge = el('span', 'bq-badge-ic', '∑'); hdr.appendChild(badge); hdr.appendChild(el('b', null, 'Solver')); hdr.appendChild(el('span', 'bq-beta', 'BETA'));
-    var h1 = el('h2', 'bq-h1', 'Get the answer and understand exactly how to solve it.');
-    var sub = el('p', 'bq-sub', 'Type a problem below and I’ll work through it step by step, explaining the reasoning behind each one.');
+    var h1 = el('h2', 'bq-h1', 'Get the answer step by step');
     var card = el('div', 'bq-inputcard');
-    var ta = el('textarea', 'bq-ta'); ta.rows = 2; ta.setAttribute('aria-label', 'Math problem'); ta.placeholder = 'Type a math problem — e.g. Solve x² − 5x + 6 = 0. Use “fx Math” for anything tricky.'; ta.spellcheck = false; ta.autocapitalize = 'off';
+    var ta = el('textarea', 'bq-ta'); ta.rows = 4; ta.setAttribute('aria-label', 'Math problem'); ta.placeholder = 'Type a math problem'; ta.spellcheck = false; ta.autocapitalize = 'off';
     var bar = el('div', 'bq-ibar');
     var fxB = btn('bq-fxb', 'fx Math', 'Show or hide the math keypad'); fxB.setAttribute('aria-expanded', 'false');
     var solveB = btn('bq-solveb', '', 'Solve'); var sTxt = el('span', null, 'Solve →'); var spin = el('span', 'bq-spin'); spin.hidden = true; solveB.appendChild(spin); solveB.appendChild(sTxt);
-    bar.appendChild(fxB); bar.appendChild(solveB); card.appendChild(ta); card.appendChild(bar);
+    bar.appendChild(fxB); bar.appendChild(solveB);
+    var taWrap = el('div', 'bq-tawrap'); var blink = el('span', 'bq-blink'); blink.setAttribute('aria-hidden', 'true'); taWrap.appendChild(blink); taWrap.appendChild(ta);
+    function syncBlink() { blink.hidden = ta.value !== '' || document.activeElement === ta; }
+    ta.addEventListener('focus', syncBlink); ta.addEventListener('blur', syncBlink); ta.addEventListener('input', syncBlink); setTimeout(syncBlink, 0);
+    card.appendChild(taWrap); card.appendChild(bar);
     var drawer = el('div', 'bq-drawer'); drawer.hidden = true;
     var ktabs = el('div', 'bq-ktabs'); var kgrid = el('div', 'bq-kgrid'); drawer.appendChild(ktabs); drawer.appendChild(kgrid);
     function ins(text, back) { var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value; ta.value = v.slice(0, s) + text + v.slice(e); var c = s + text.length + (back || 0); ta.focus(); ta.setSelectionRange(c, c); grow(); }
@@ -7124,7 +7664,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     }
     Object.keys(KEYS).forEach(function (n) { var b = btn('bq-ktab', n, null, function () { fillKeys(n); }); b.setAttribute('role', 'tab'); ktabs.appendChild(b); });
     fillKeys('Basic & Algebra');
-    function grow() { ta.style.height = 'auto'; ta.style.height = Math.min(160, Math.max(56, ta.scrollHeight)) + 'px'; }
+    function grow() { ta.style.height = 'auto'; ta.style.height = Math.min(200, Math.max(104, ta.scrollHeight)) + 'px'; syncBlink(); }
     ta.addEventListener('input', grow);
     fxB.addEventListener('click', function () { drawer.hidden = !drawer.hidden; fxB.setAttribute('aria-expanded', String(!drawer.hidden)); fxB.classList.toggle('on', !drawer.hidden); });
     ta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); solveNow(); } });
@@ -7141,7 +7681,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     shuf.addEventListener('click', function () { pickSamples(true); }); sel.addEventListener('change', function () { pickSamples(false); }); pickSamples(false);
 
     var out = el('div', 'bq-out'); out.hidden = true; out.setAttribute('aria-live', 'polite');
-    solvePane.appendChild(hdr); solvePane.appendChild(h1); solvePane.appendChild(sub); solvePane.appendChild(card); solvePane.appendChild(drawer); solvePane.appendChild(out); solvePane.appendChild(samplesHead); solvePane.appendChild(ctl); solvePane.appendChild(list);
+    solvePane.appendChild(hdr); solvePane.appendChild(h1); solvePane.appendChild(card); solvePane.appendChild(drawer); solvePane.appendChild(out); solvePane.appendChild(samplesHead); solvePane.appendChild(ctl); solvePane.appendChild(list);
     solvePane.appendChild(el('div', 'bq-hint', 'Client-Side Solver • Powered by pure JavaScript • log means base 10, ln is natural'));
 
     function tex(target, t, display) {
