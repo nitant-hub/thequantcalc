@@ -1393,16 +1393,16 @@
         #bc-sheet * { box-sizing: border-box; }
         #bc-sheet button { font-family: inherit; cursor: pointer; }
         #bc-sheet button:focus-visible, #bc-sheet select:focus-visible, #bc-sheet textarea:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
-        .bq-sh-head { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #ffffff; border-bottom: 1px solid #e2e6ee; flex: 0 0 auto; }
+        .bq-sh-head { display: flex; align-items: center; gap: 6px; padding: 3px 8px; background: #ffffff; border-bottom: 1px solid #e2e6ee; flex: 0 0 auto; }
         .bq-seg { display: flex; gap: 4px; flex: 1 1 auto; background: #eceff5; padding: 3px; border-radius: 12px; }
-        .bq-segb { flex: 1 1 0; border: 0; background: transparent; color: #3a3a3c; font-weight: 700; font-size: 13.5px; padding: 8px 6px; border-radius: 9px; min-height: 38px; }
+        .bq-segb { flex: 1 1 0; border: 0; background: transparent; color: #3a3a3c; font-weight: 700; font-size: 13.5px; padding: 4px 6px; border-radius: 9px; min-height: 30px; }
         .bq-segb.on { background: #ffffff; color: #0b57d0; box-shadow: 0 1px 3px rgba(15, 23, 42, .18); }
-        .bq-sh-x { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid #dfe3ec; background: #ffffff; color: #3a3a3c; font-size: 16px; }
+        .bq-sh-x { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; border: 1px solid #dfe3ec; background: #ffffff; color: #3a3a3c; font-size: 16px; }
         .bq-sh-body { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 12px 12px 18px; }
         .bq-pane[hidden] { display: none; }
-        .bq-padwrap { position: relative; border: 1px solid #d9deea; border-radius: 12px; overflow: hidden; background: #fbfcfe; box-shadow: 0 1px 3px rgba(15, 23, 42, .08); }
+        .bq-padwrap { position: relative; display: flex; flex-direction: column; border: 1px solid #d9deea; border-radius: 12px; overflow: hidden; background: #fbfcfe; box-shadow: 0 1px 3px rgba(15, 23, 42, .08); }
         .bq-canvas { display: block; width: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
-        .bq-ptools { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; padding: 4px; max-width: calc(100% - 12px); background: rgba(255, 255, 255, .96); border: 1px solid #e0e4ee; border-radius: 14px; box-shadow: 0 6px 18px rgba(15, 23, 42, .16); }
+        .bq-ptools { position: relative; order: -1; display: flex; justify-content: center; gap: 3px; padding: 3px 4px; width: 100%; background: #ffffff; border: 0; border-bottom: 1px solid #e0e4ee; border-radius: 0; box-shadow: none; }
         .bq-pt { width: 36px; height: 36px; border: 0; border-radius: 10px; background: transparent; font-size: 17px; color: #3a3a3c; line-height: 1; }
         .bq-pt.on { background: #2563eb; color: #ffffff; }
         .bq-pt:disabled { opacity: .35; cursor: default; }
@@ -1511,6 +1511,8 @@
         .bq-full #bc-sheet { min-height: 0 !important; }
         #bc-sheet button { touch-action: manipulation; -webkit-tap-highlight-color: rgba(37, 99, 235, .18); }
         .bq-scanbtn:active, .bq-chip2:active { transform: scale(.96); filter: brightness(.95); }
+        .bq-sheetfull #bc-full-exit { display: none !important; }
+        .bq-full.bq-sheetfull #bc-sheet { top: env(safe-area-inset-top, 0px) !important; }
 
         /* ===== v22: More tab inside the scrolling row; HISTORY stays pinned at the end ===== */
         #btn-bc-history-tab { right: 0; }
@@ -7374,11 +7376,25 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     if (vh >= 320 && vh < h) { h = vh; }
     sheet.style.height = Math.round(h) + 'px'; sheet.style.minHeight = '';
   }
+  var enteredFull = false;
   function open(which) {
-    opener = document.activeElement; sheet.hidden = false; fitSheet();
+    var first = sheet.hidden;
+    opener = document.activeElement;
+    /* Scratchpad and Solver open on the whole available screen; closing them goes back to how it was. */
+    if (first && !root.classList.contains('bq-full')) {
+      try { BloggerCalc.toggleFull(); enteredFull = true; root.classList.add('bq-sheetfull'); } catch (e) { enteredFull = false; }
+    }
+    sheet.hidden = false; fitSheet();
     show(which); closeB.focus();
   }
-  function close() { sheet.hidden = true; if (opener && opener.focus) { try { opener.focus(); } catch (e) { /* ignore */ } } }
+  function close() {
+    sheet.hidden = true;
+    if (enteredFull) {
+      enteredFull = false; root.classList.remove('bq-sheetfull');
+      try { if (root.classList.contains('bq-full')) { BloggerCalc.toggleFull(); } } catch (e) { /* ignore */ }
+    }
+    if (opener && opener.focus) { try { opener.focus(); } catch (e) { /* ignore */ } }
+  }
   document.addEventListener('keydown', function (e) { if (!sheet.hidden && e.key === 'Escape') { e.preventDefault(); close(); } });
 
   /* ---------------- Scratchpad ---------------- */
@@ -7421,8 +7437,8 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     }
     function resize() {
       var r = wrap.getBoundingClientRect(); if (!r.width) { return; }
-      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(170, Math.min(340, Math.round((sheet.clientHeight || 520) * 0.44)));
-      wrap.style.height = H + 'px'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px'; render();
+      dpr = window.devicePixelRatio || 1; W = Math.round(r.width); H = Math.max(170, Math.min(560, Math.round((sheet.clientHeight || 520) * 0.5)));
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px'; render();
     }
     pad.resize = resize; window.addEventListener('resize', function () { if (!sheet.hidden && !root.classList.contains('bq-full')) { fitSheet(); } if (!sheet.hidden && current === 'draw') { resize(); } });
     function setTool(t) { tool = t; ['pen', 'eraser', 'pan'].forEach(function (k) { tb[k].classList.toggle('on', k === t); tb[k].setAttribute('aria-pressed', String(k === t)); }); cv.style.cursor = t === 'pan' ? 'grab' : t === 'eraser' ? 'cell' : 'crosshair'; }
