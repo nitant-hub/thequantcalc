@@ -75,13 +75,12 @@
         color: var(--muted, #94a3b8) !important;
       }
       #dynGlobalFooter p {
-        margin: 0 !important;
+        margin: 0 0 1.2rem 0 !important;
       }
       #dynGlobalFooter nav {
         display: flex !important;
         justify-content: center !important;
         gap: 1.5rem !important;
-        margin-top: 1.2rem !important;
         flex-wrap: wrap !important;
       }
       #dynGlobalFooter a {
@@ -1245,6 +1244,7 @@
     const footerContainer = document.createElement("footer");
     footerContainer.id = "dynGlobalFooter";
     footerContainer.innerHTML = `
+      <p>&copy; 2026 thequantcals. All rights reserved.</p>
       <nav>
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="terms-of-service.html">Terms of Service</a>
