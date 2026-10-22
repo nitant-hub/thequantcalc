@@ -7082,6 +7082,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       var M = { '\\times': '×', '\\cdot': '×', '\\div': '÷', '\\pi': 'π', '\\infty': '∞', '\\leq': '≤', '\\geq': '≥', '\\neq': '≠', '\\pm': '±', '\\{': '(', '\\}': ')', '\\prime': "'", '\\ldots': '...', '\\cdots': '...' };
       if (M[x] !== undefined) { return M[x]; }
       if (x.charAt(0) === '\\') { warn.push(x); return x.slice(1); }
+      if (x === 'X' || x === 'Y') { return x.toLowerCase(); }
       return x;
     }
     function seq(inGroup) {
@@ -7143,6 +7144,36 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     strokes.forEach(function (s) { pts += s.points.length; for (var i = 1; i < s.points.length; i++) { len += Math.hypot(s.points[i].x - s.points[i - 1].x, s.points[i].y - s.points[i - 1].y); } });
     return pts >= 6 && len >= 15;
   }
+  /* Tilted baseline: people often write uphill or downhill. The slope is the median of the slopes between stroke centres (Theil-Sen),
+     so one raised exponent cannot tilt the whole line. Only a clear tilt (8-50 degrees) of a left-to-right line of 3+ strokes counts. */
+  function baselineSlope(strokes) {
+    var c = [];
+    strokes.forEach(function (s) {
+      if (!s.points || !s.points.length) { return; }
+      var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      s.points.forEach(function (p) { if (p.x < x0) { x0 = p.x; } if (p.x > x1) { x1 = p.x; } if (p.y < y0) { y0 = p.y; } if (p.y > y1) { y1 = p.y; } });
+      c.push({ x: (x0 + x1) / 2, y: (y0 + y1) / 2, w: x1 - x0, h: y1 - y0 });
+    });
+    if (c.length < 3) { return null; }
+    var size = c.reduce(function (a, k) { return a + Math.max(k.w, k.h); }, 0) / c.length, sl = [], i, j;
+    for (i = 0; i < c.length; i++) { for (j = i + 1; j < c.length; j++) { var dx = c[j].x - c[i].x; if (Math.abs(dx) > size * 0.6) { sl.push((c[j].y - c[i].y) / dx); } } }
+    if (sl.length < 2) { return null; }
+    sl.sort(function (a, b) { return a - b; });
+    var m = sl.length % 2 ? sl[(sl.length - 1) / 2] : (sl[sl.length / 2 - 1] + sl[sl.length / 2]) / 2, ang = Math.abs(Math.atan(m) * 180 / Math.PI);
+    if (ang < 8 || ang > 50) { return null; }
+    var cx = 0, cy = 0; c.forEach(function (k) { cx += k.x; cy += k.y; });
+    return { m: m, cx: cx / c.length, cy: cy / c.length, ang: ang };
+  }
+  function mapPts(strokes, f) {
+    return strokes.map(function (s) {
+      var o = {}; for (var k in s) { if (Object.prototype.hasOwnProperty.call(s, k)) { o[k] = s[k]; } }
+      o.points = (s.points || []).map(function (p) { var q = f(p); if (p.t !== undefined) { q.t = p.t; } return q; });
+      return o;
+    });
+  }
+  function rotateFlat(strokes, b) { var a = -Math.atan(b.m), cs = Math.cos(a), sn = Math.sin(a); return mapPts(strokes, function (p) { var dx = p.x - b.cx, dy = p.y - b.cy; return { x: b.cx + dx * cs - dy * sn, y: b.cy + dx * sn + dy * cs }; }); }
+  function shearFlat(strokes, b) { return mapPts(strokes, function (p) { return { x: p.x, y: p.y - b.m * (p.x - b.cx) }; }); }
+  function deskew(strokes) { var b = baselineSlope(strokes); return b ? rotateFlat(strokes, b) : strokes; }
   function preprocess(strokes) {
     var bb = bbox(strokes);
     var rw = Math.max(1, Math.ceil(bb.maxX - bb.minX)), rh = Math.max(1, Math.ceil(bb.maxY - bb.minY));
@@ -7249,7 +7280,47 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     var ort = window.ort, inp = new ort.Tensor('int64', BigInt64Array.from(ids.map(function (v) { return BigInt(v); })), [1, ids.length]);
     return E.dec.run({ encoder_features: f, encoder_mask: m, input_ids: inp }).then(function (r) { return r.logits.data; });
   }
+  /* Upright the letters of slanted handwriting (italic lean) so tall strokes such as 1, 7, | stand vertical. */
+  function unslant(strokes) {
+    var sl = [], size = 0, n = 0;
+    strokes.forEach(function (s) { if (!s.points || s.points.length < 3) { return; } var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity; s.points.forEach(function (p) { if (p.x < x0) { x0 = p.x; } if (p.x > x1) { x1 = p.x; } if (p.y < y0) { y0 = p.y; } if (p.y > y1) { y1 = p.y; } }); size += Math.max(x1 - x0, y1 - y0); n++; s._b = { w: x1 - x0, h: y1 - y0 }; });
+    if (!n) { return strokes; } size /= n;
+    strokes.forEach(function (s) {
+      var b = s._b; delete s._b; if (!b || b.h < size * 0.9 || b.h < b.w * 1.3) { return; }
+      var my = 0, mx = 0, k = s.points.length, num = 0, den = 0; s.points.forEach(function (p) { my += p.y; mx += p.x; }); my /= k; mx /= k;
+      s.points.forEach(function (p) { num += (p.x - mx) * (p.y - my); den += (p.y - my) * (p.y - my); });
+      if (den > 0) { sl.push(num / den); }
+    });
+    if (!sl.length) { return strokes; }
+    sl.sort(function (a, b) { return a - b; });
+    var m = sl.length % 2 ? sl[(sl.length - 1) / 2] : (sl[sl.length / 2 - 1] + sl[sl.length / 2]) / 2;
+    if (Math.abs(m) < 0.15 || Math.abs(m) > 0.7) { return strokes; }
+    var cy = 0, cnt = 0; strokes.forEach(function (s) { (s.points || []).forEach(function (p) { cy += p.y; cnt++; }); }); cy /= Math.max(cnt, 1);
+    return strokes.map(function (s) { var o = {}; for (var q in s) { if (Object.prototype.hasOwnProperty.call(s, q)) { o[q] = s[q]; } } o.points = (s.points || []).map(function (p) { var r = { x: p.x - m * (p.y - cy), y: p.y }; if (p.t !== undefined) { r.t = p.t; } return r; }); return o; });
+  }
+  /* A tidy drawing is read once. A tilted or leaning one is also read straightened, and the most likely reading of all wins. */
+  function variants(strokes) {
+    var b = baselineSlope(strokes), v;
+    if (!b) { v = [strokes]; }
+    else if (b.ang < 15) { v = [strokes, rotateFlat(strokes, b)]; }
+    else { v = [rotateFlat(strokes, b), shearFlat(strokes, b)]; }
+    var u = unslant(v[v.length - 1]); if (u !== v[v.length - 1]) { v.push(u); }
+    return v;
+  }
   function recognize(strokes) {
+    var vs = variants(strokes), merged = {}, i = 0;
+    function next() {
+      if (i >= vs.length) {
+        return Object.keys(merged).map(function (k) { return merged[k]; }).sort(function (a, b) { return (b.norm - (b.warnings && b.warnings.length ? 0.4 : 0)) - (a.norm - (a.warnings && a.warnings.length ? 0.4 : 0)); }).slice(0, 3);
+      }
+      return recognizeOne(vs[i++]).then(function (cands) {
+        cands.forEach(function (c) { var k = c.expr; if (!merged[k] || c.norm > merged[k].norm) { merged[k] = c; } });
+        return next();
+      });
+    }
+    return Promise.resolve().then(next);
+  }
+  function recognizeOne(strokes) {
     var E = engine, ort = window.ort, pre = preprocess(strokes), sp = E.vocab.special_tokens, V = E.vocab.vocab_size;
     var pv = new ort.Tensor('float32', pre.tensor, [1, 1, pre.height, pre.width]), pm = new ort.Tensor('bool', pre.mask, [1, pre.height, pre.width]);
     return E.enc.run({ pixel_values: pv, pixel_mask: pm }).then(function (res) {
@@ -7282,7 +7353,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
         var skip = {}; skip[sp.sos] = skip[sp.eos] = skip[sp.pad] = 1;
         return pick.map(function (b) {
           var toks = b.ids.slice(1).filter(function (id) { return !skip[id]; }).map(function (id) { return E.vocab.idx2word[String(id)]; }).filter(function (w) { return w !== undefined; });
-          var c = latexToExpr(toks); return { latex: toks.join(' '), expr: c.expr, warnings: c.warnings, score: b.lp };
+          var c = latexToExpr(toks); return { latex: toks.join(' '), expr: c.expr, warnings: c.warnings, score: b.lp, norm: b.lp / Math.max(b.ids.length - 1, 1) };
         }).filter(function (c) { return c.expr; });
       });
     });
@@ -7299,7 +7370,14 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     if (/memory|alloc/i.test(m)) { return 'This device ran out of memory while reading the drawing. Try a smaller drawing or type the expression below.'; }
     return 'Could not read the drawing. Please redraw it or type the expression below.';
   }
-  var api = { latexToExpr: latexToExpr, preprocess: preprocess, meaningful: meaningful, scan: scan, friendly: friendly, parenBalance: parenBalance, _state: function () { return { ready: !!engine }; } };
+  var warmed = false;
+  /* After the first stroke the person is likely to scan: fetch the reader and model quietly so the first Scan feels instant (skipped on Data Saver). */
+  function warm() {
+    if (warmed || engine || loading) { return; }
+    try { var c = navigator.connection; if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''))) { return; } } catch (e) { /* ignore */ }
+    warmed = true; setTimeout(function () { init().catch(function () { /* a failed quiet fetch is not retried until the person taps Scan */ }); }, 300);
+  }
+  var api = { warm: warm, latexToExpr: latexToExpr, preprocess: preprocess, meaningful: meaningful, scan: scan, friendly: friendly, parenBalance: parenBalance, _state: function () { return { ready: !!engine }; } };
   if (typeof window !== 'undefined') { window.BQScan = api; }
   if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
 })();
@@ -7461,6 +7539,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       else if (tool === 'eraser') { erased = []; eraseAt(toWorld(p.x, p.y)); }
       else { cur = { pts: [toWorld(p.x, p.y)], w: PEN_W[penI] }; render(); }
     });
+    var rq = 0; function renderSoon() { if (rq) { return; } rq = requestAnimationFrame(function () { rq = 0; render(); }); }
     cv.addEventListener('pointermove', function (e) {
       if (!pointers[e.pointerId]) { return; } e.preventDefault();
       var p = pos(e); pointers[e.pointerId] = p;
@@ -7469,13 +7548,13 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
       else if (tool === 'eraser' && erased) { eraseAt(toWorld(p.x, p.y)); }
       else if (cur) {
         var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e]; (evs.length ? evs : [e]).forEach(function (ce) { var q = pos(ce); var w = toWorld(q.x, q.y); var last = cur.pts[cur.pts.length - 1]; if (Math.abs(w.x - last.x) + Math.abs(w.y - last.y) > .4) { cur.pts.push(w); } });
-        render();
+        renderSoon();
       }
     });
     function up(e) {
       if (!pointers[e.pointerId]) { return; } delete pointers[e.pointerId];
       if (pinch) { if (Object.keys(pointers).length < 2) { pinch = null; } return; }
-      if (cur) { strokes.push(cur); undo.push({ t: 'add', s: cur }); redo = []; cur = null; }
+      if (cur) { strokes.push(cur); undo.push({ t: 'add', s: cur }); redo = []; cur = null; if (window.BQScan && BQScan.warm) { BQScan.warm(); } }
       if (erased) { if (erased.length) { undo.push({ t: 'erase', list: erased }); redo = []; } erased = null; }
       panFrom = null; if (tool === 'pan') { cv.style.cursor = 'grab'; } render();
     }
