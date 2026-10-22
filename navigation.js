@@ -392,7 +392,7 @@
         max-width: 100% !important;
         display: block !important;
         clear: both !important;
-        margin: 0 !important;
+        margin: 0 0 12px 0 !important;
         background: var(--bg-surface, #ffffff) !important;
         border: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 0px !important;
@@ -1876,12 +1876,12 @@
         const toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
-        if (sidebarAside.firstElementChild !== globalSearchNode) {
-          sidebarAside.insertBefore(globalSearchNode, sidebarAside.firstChild);
+        if (toolsCard && globalAdsenseNode.parentElement !== sidebarAside) {
+          sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
         }
 
-        if (toolsCard && globalAdsenseNode.previousElementSibling !== globalSearchNode) {
-          sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
+        if (toolsCard && globalSearchNode.parentElement !== sidebarAside) {
+          sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
       }
     }
