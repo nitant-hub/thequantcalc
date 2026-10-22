@@ -322,20 +322,21 @@
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
         padding: 7px 6px !important;
-        min-height: 48px !important;
+        min-height: 34px !important;
         border-radius: 7px !important;
         width: 100% !important;
         max-width: 100% !important;
+        justify-content: center !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
-        font-size: 14.5px !important;
-        font-weight: 800 !important;
-        line-height: 1.3 !important;
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
       }
+      /* Erase/eliminate description text in red square portion */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
-        font-size: 12.2px !important;
-        font-weight: 500 !important;
-        line-height: 1.3 !important;
+        display: none !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
         padding-left: 12px !important;
@@ -1005,7 +1006,7 @@
         background: rgba(255, 255, 255, 0.75) !important; 
         border: 1px solid var(--border) !important; 
         border-radius: 8px !important;
-        min-height: 44px !important;
+        min-height: 38px !important;
         justify-content: center !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -1027,7 +1028,7 @@
       
       .related-section .tool-title {
         position: relative !important; 
-        margin: 0 0 1px 0 !important; 
+        margin: 0 !important; 
         padding: 0 !important;
         border: none !important;
         font-size: 13px !important; 
@@ -1041,17 +1042,9 @@
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
 
+      /* Erase/eliminate description text in red square portion */
       .related-section .tool-description {
-        position: relative !important; 
-        margin: 0 !important; 
-        padding: 0 !important;
-        color: var(--muted) !important; 
-        font-size: 11.5px !important; 
-        line-height: 1.25 !important;
-        font-weight: 400 !important; 
-        white-space: nowrap !important; 
-        overflow: hidden !important; 
-        text-overflow: ellipsis !important;
+        display: none !important;
       }
 
       .related-section .carousel-footer {
@@ -1815,7 +1808,7 @@
           const drawerSlot = document.getElementById("dynDrawerSearchSlot");
           globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
           if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
-            drawerSlot.appendChild(globalSearchNode);
+            drawerSlot.appendChild(drawerSlot);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
         }
