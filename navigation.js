@@ -1037,9 +1037,9 @@
         position: relative !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        padding: 4px 10px !important;
-        min-height: 26px !important;
-        height: 30px !important;
+        padding: 5px 10px !important;
+        min-height: 28px !important;
+        height: 32px !important;
         overflow: hidden !important; 
         color: inherit !important; 
         text-decoration: none !important;
