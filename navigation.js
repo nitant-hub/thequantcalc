@@ -302,45 +302,77 @@
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 0 8px 0 !important;
-        padding: 8px 2px !important;
+        padding: 10px 8px !important;
         border: none !important;
         border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 14px 14px 0 0 !important;
         box-shadow: none !important;
+        box-sizing: border-box !important;
       }
       [data-theme="dark"] body.dyn-is-tool-page .dyn-tools-card > .related-section {
         border-bottom-color: var(--border-color, #334155) !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .section-header,
       body.dyn-is-tool-page .dyn-tools-card > .related-section .carousel-footer {
-        padding-left: 6px !important;
-        padding-right: 6px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
         padding: 0 2px !important;
         gap: 6px !important;
+        box-sizing: border-box !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
-        padding: 7px 6px !important;
-        min-height: 34px !important;
-        border-radius: 7px !important;
+        padding: 8px 10px !important;
+        min-height: 42px !important;
+        border-radius: 8px !important;
         width: 100% !important;
         max-width: 100% !important;
         justify-content: center !important;
+        box-sizing: border-box !important;
       }
-      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
-        font-size: 13.5px !important;
-        font-weight: 700 !important;
-        line-height: 1.2 !important;
+      
+      /* Updated Heading Size: 18px */
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .section-title {
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        line-height: 1.25 !important;
         margin: 0 !important;
       }
+
+      /* Updated Tool Titles Size: 16.5px */
+      body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
+        font-size: 16.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+
       /* Erase/eliminate description text in red square portion */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
         display: none !important;
       }
+
+      /* Professional System Status Text styling with attractive color */
+      body.dyn-is-tool-page .dyn-tools-card > *:last-child,
+      aside.sidebar > .box:last-child div {
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #0284c7 !important;
+        line-height: 1.5 !important;
+      }
+      [data-theme="dark"] body.dyn-is-tool-page .dyn-tools-card > *:last-child,
+      [data-theme="dark"] aside.sidebar > .box:last-child div {
+        color: #38bdf8 !important;
+      }
+
       body.dyn-is-tool-page .dyn-tools-card > *:not(.related-section) {
         padding-left: 12px !important;
         padding-right: 12px !important;
+        box-sizing: border-box !important;
       }
       body.dyn-is-tool-page .dyn-tools-card > *:last-child:not(.related-section) {
         padding-bottom: 12px !important;
@@ -879,11 +911,13 @@
         width: 100% !important;
         display: block !important;
       }
+      
+      /* Updated Heading Size: 18px */
       .related-section .section-title {
         margin: 0 !important; 
         padding: 0 !important;
         border: none !important;
-        font-size: 14.5px !important; 
+        font-size: 18px !important; 
         font-weight: 800 !important; 
         letter-spacing: -0.3px !important; 
         color: var(--text) !important;
@@ -999,7 +1033,7 @@
         position: relative !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        padding: 6px 10px !important;
+        padding: 7px 10px !important;
         overflow: hidden !important; 
         color: inherit !important; 
         text-decoration: none !important;
@@ -1026,12 +1060,13 @@
         display: none !important; 
       }
       
+      /* Updated Tool Titles Size: 16.5px */
       .related-section .tool-title {
         position: relative !important; 
         margin: 0 !important; 
         padding: 0 !important;
         border: none !important;
-        font-size: 13px !important; 
+        font-size: 16.5px !important; 
         font-weight: 700 !important;
         color: #2563eb !important; 
         line-height: 1.25 !important; 
