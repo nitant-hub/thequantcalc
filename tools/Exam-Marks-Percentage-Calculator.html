@@ -124,15 +124,16 @@
             border-color: var(--border, #334155);
         }
 
-        /* CALCULATOR BOX: Perfectly centered with symmetrical left and right margins */
+        /* CALCULATOR BOX: Fixed with align-self: center to ensure equal margins on BOTH sides */
         .tool-suite {
             background-color: var(--calc-bg);
             border: 1px solid var(--calc-border);
             border-radius: 12px;
             padding: 1.5rem;
             color: var(--calc-text);
-            margin: 0.5rem auto 1.5rem auto; /* 'auto' centers it, creating equal vacant space on both sides */
-            width: 85%; /* Adjust this percentage if you want it slightly wider or narrower */
+            margin: 0.5rem 0 1.5rem 0;
+            align-self: center; /* Forces the flexbox container to center this box horizontally */
+            width: 85%; /* Leaves identical vacant space on left and right */
             max-width: 100%;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
@@ -342,7 +343,7 @@
         @media (max-width: 767px) {
             .wrapper { margin: 0.15rem auto 1.5rem auto; padding: 0 0.4rem; }
             .main-body { padding: 1.25rem 0.85rem; } 
-            .tool-suite { width: 92%; margin: 0.5rem auto 1.25rem auto; padding: 1.1rem; }
+            .tool-suite { width: 94%; margin: 0.5rem auto 1.25rem auto; padding: 1.1rem; }
         }
     </style>
     
@@ -676,3 +677,4 @@
     <script src="/navigation.js"></script>
 </body>
 </html>
+
