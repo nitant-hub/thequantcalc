@@ -886,22 +886,6 @@ aside .box:empty,
   min-height: 0 !important;
 }
 
-footer {
-  background: var(--surface); border-top: 1px solid var(--border);
-  padding: 2.5rem 1.5rem; text-align: center; font-size: .9rem; color: var(--muted); margin-top: 3.5rem;
-}
-footer nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
-footer a { color: var(--muted); text-decoration: none; font-weight: 500; }
-footer a:hover { color: var(--link); }
-
-.top {
-  position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px;
-  background: var(--grad); color: #fff; border: none; border-radius: 50%; cursor: pointer;
-  opacity: 0; visibility: hidden; transition: .3s; z-index: 999; font-size: 1.2rem;
-  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.4);
-}
-.top.show { opacity: 1; visibility: visible; }
-
 @media(max-width:480px){ .wrap { padding: 0 .6rem; } }
 @media(min-width:768px){
   .card { padding: 1.75rem; }
@@ -996,17 +980,6 @@ footer a:hover { color: var(--link); }
   </div>
 </aside>
 </div></div>
-
-<footer>
-  <p>&copy; 2026 thequantcals. All rights reserved.</p>
-  <nav>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="terms-of-service.html">Terms of Service</a>
-    <a href="disclaimer.html">Disclaimer</a>
-    <a href="contact.html">Contact Us</a>
-  </nav>
-</footer>
-<button class="top" id="top" aria-label="Back to top">&#8963;</button>
 
 <script>
 (function(){
@@ -1268,13 +1241,6 @@ footer a:hover { color: var(--link); }
   window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
   render();
   load(render);
-
-  var top_=document.getElementById('top');
-  window.addEventListener('scroll',function(){
-    var y=window.scrollY;
-    top_.classList.toggle('show',y>300);
-  });
-  top_.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 })();
 </script>
 
