@@ -41,15 +41,15 @@
               "name": "What is the difference between percentage and CGPA?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "A percentage is an exact score calculated out of 100 representing total marks. A CGPA (Cumulative Grade Point Average) is an average grading scale (usually 1 to 10) evaluating qualitative grade points."
+                "text": "A percentage is a score out of 100 that shows your exact academic performance. A CGPA is a grading system that averages your performance on a scale of 1 to 10."
               }
             },
             {
               "@type": "Question",
-              "name": "How do I calculate my percentage from total marks?",
+              "name": "How do I calculate my percentage from marks?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Divide the total marks obtained by the maximum possible aggregate marks, then multiply the quotient by 100: Percentage = (Marks Obtained / Total Marks) * 100."
+                "text": "Divide the total marks you earned by the maximum possible marks, and then multiply that number by 100."
               }
             }
           ]
@@ -65,9 +65,22 @@
             --calc-border: #334155;
             --calc-text: #f8fafc;
             --calc-accent: #38bdf8;
+            --bg-primary: #f4f6f9;
+            --bg-surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
         }
 
-        html { visibility: visible; opacity: 1; background-color: var(--bg-primary, #f4f6f9); }
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-surface: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        html { visibility: visible; opacity: 1; background-color: var(--bg-primary); }
 
         .wrapper { 
             max-width: 1200px; 
@@ -81,12 +94,12 @@
             font-size: 0.85rem; 
             margin-bottom: 0.4rem; 
             margin-top: 0;
-            color: var(--muted, #64748b); 
+            color: var(--text-muted); 
             font-weight: 500; 
         }
         
         .breadcrumb a { 
-            color: var(--link, #2563eb); 
+            color: #2563eb; 
             text-decoration: none; 
         }
         
@@ -112,19 +125,15 @@
             flex-direction: column; 
             width: 100%; 
             max-width: 100%;
-            background: var(--surface, #ffffff); 
+            background: var(--bg-surface); 
             padding: 1.5rem 2rem 2rem 2rem; 
             border-radius: 16px; 
-            border: 1px solid var(--border, #e2e8f0); 
+            border: 1px solid var(--border-color); 
             box-sizing: border-box;
             overflow: hidden;
         }
-        [data-theme="dark"] .main-body {
-            background: var(--surface, #1e293b);
-            border-color: var(--border, #334155);
-        }
 
-        /* CALCULATOR BOX: Fixed with align-self: center to ensure equal margins on BOTH sides */
+        /* CALCULATOR BOX: Centered with equal left and right margins */
         .tool-suite {
             background-color: var(--calc-bg);
             border: 1px solid var(--calc-border);
@@ -132,14 +141,13 @@
             padding: 1.5rem;
             color: var(--calc-text);
             margin: 0.5rem 0 1.5rem 0;
-            align-self: center; /* Forces the flexbox container to center this box horizontally */
-            width: 85%; /* Leaves identical vacant space on left and right */
+            align-self: center;
+            width: 85%;
             max-width: 100%;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
         }
 
-        /* Responsive tab handling with horizontal scroll if area is tight */
         .tool-tabs {
             display: flex;
             gap: 0.5rem;
@@ -239,7 +247,6 @@
             color: var(--calc-accent);
         }
 
-        /* Results & SVG Gauge Dashboard */
         .results-dashboard {
             background-color: var(--calc-surface);
             border: 1px solid var(--calc-border);
@@ -294,51 +301,47 @@
             font-weight: 800;
             margin-top: 0;
             margin-bottom: 1rem;
-            color: var(--text, #1e293b);
+            color: var(--text-main);
             line-height: 1.2;
         }
-        [data-theme="dark"] h1.primary-title { color: #f8fafc; }
 
         h2.section-heading {
             font-size: 1.25rem;
             font-weight: 700;
             margin: 1.75rem 0 0.5rem 0;
-            color: var(--text, #1e293b);
-            border-bottom: 1px solid var(--border, #e2e8f0);
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.35rem;
         }
-        [data-theme="dark"] h2.section-heading { color: #f8fafc; border-bottom-color: #334155; }
 
         h3.sub-heading {
             font-size: 1rem;
             font-weight: 600;
             margin: 1rem 0 0.35rem 0;
-            color: var(--text, #1e293b);
+            color: var(--text-main);
         }
-        [data-theme="dark"] h3.sub-heading { color: #f8fafc; }
 
         p, ul, ol {
-            color: var(--muted, #64748b);
+            color: var(--text-muted);
             font-size: 0.92rem;
             margin-bottom: 0.8rem;
+            line-height: 1.7;
         }
-        [data-theme="dark"] p, [data-theme="dark"] ul, [data-theme="dark"] ol { color: #94a3b8; }
 
         ul, ol { padding-left: 1.3rem; }
         li { margin-bottom: 0.35rem; }
 
         .formula-callout {
-            background: var(--bg-primary, #f4f6f9);
+            background: var(--bg-primary);
             border-left: 4px solid var(--calc-accent);
             border-radius: 4px;
             padding: 0.75rem 1rem;
             margin: 0.85rem 0;
             font-family: monospace;
             font-weight: 600;
-            color: var(--text, #1e293b);
+            color: var(--text-main);
             font-size: 0.9rem;
         }
-        [data-theme="dark"] .formula-callout { background: #0f172a; color: #f8fafc; }
 
         @media (max-width: 767px) {
             .wrapper { margin: 0.15rem auto 1.5rem auto; padding: 0 0.4rem; }
@@ -454,6 +457,16 @@
                         <li><strong>Result: 58.33% (2nd Division)</strong></li>
                     </ul>
 
+                    <h3 class="sub-heading">How to Calculate Percentage of 5 Subjects</h3>
+                    <p>If you just got your mark sheet and want to find your total percentage across 5 subjects, follow these steps:</p>
+                    <ol>
+                        <li>Check the maximum marks for each subject (usually 100).</li>
+                        <li>Add the maximum marks together (100 + 100 + 100 + 100 + 100 = 500 total).</li>
+                        <li>Add up the marks you actually scored in all 5 subjects (e.g., 75 + 82 + 68 + 90 + 71 = 386).</li>
+                        <li>Divide your score by the total marks (386 &divide; 500 = 0.772).</li>
+                        <li>Multiply by 100 to get your final percentage (77.2%).</li>
+                    </ol>
+
                     <h2 class="section-heading">State and Central Board Calculations</h2>
                     <h3 class="sub-heading">How to Calculate Percentage in CBSE</h3>
                     <p>The Central Board of Secondary Education (CBSE) often issues a CGPA (Cumulative Grade Point Average) instead of a straight percentage. If an admission form asks for a percentage, you have to convert it.</p>
@@ -462,6 +475,19 @@
                     <h3 class="sub-heading">How to Calculate Percentage in Bihar Board (BSEB)</h3>
                     <p>The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
                     <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB places you in the "1st Division" category.</p>
+
+                    <!-- Visualizing Your Score Section from Old Code -->
+                    <h3 class="sub-heading">Visualizing Your Score</h3>
+                    <p>The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
+                    <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 20px 0; padding: 20px; text-align: center;">
+                        <svg height="100%" style="max-width: 220px;" viewBox="0 0 400 400" width="100%">
+                            <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
+                            <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#38bdf8"></path>
+                            <circle cx="200" cy="200" fill="var(--bg-surface)" r="100"></circle>
+                            <text fill="var(--text-main)" font-family="sans-serif" font-size="36" font-weight="bold" text-anchor="middle" x="200" y="210">84%</text>
+                        </svg>
+                        <p style="font-size: 0.85rem; margin-top: 10px; font-style: italic;">A visual representation of an 84% score.</p>
+                    </div>
 
                     <h2 class="section-heading">Frequently Asked Questions (FAQ)</h2>
                     <div itemscope itemtype="https://schema.org/FAQPage">
@@ -534,18 +560,18 @@
 
         function updateGauge(percentage) {
             const clamped = Math.max(0, Math.min(100, percentage));
-            svgGaugePath.setAttribute('stroke-dasharray', `${clamped}, 100`);
+            if (svgGaugePath) svgGaugePath.setAttribute('stroke-dasharray', `${clamped}, 100`);
         }
 
         function renderResults(percent, subtext) {
             if (isNaN(percent) || percent === null) {
                 percentResult.textContent = '0.00%';
-                resDivision.textContent = subtext || 'Enter marks to see result & division status';
+                if (resDivision) resDivision.textContent = subtext || 'Enter marks to see result & division status';
                 updateGauge(0);
                 return;
             }
             percentResult.textContent = `${percent.toFixed(2)}%`;
-            resDivision.textContent = subtext || getDivisionText(percent);
+            if (resDivision) resDivision.textContent = subtext || getDivisionText(percent);
             updateGauge(percent);
         }
 
@@ -677,4 +703,3 @@
     <script src="/navigation.js"></script>
 </body>
 </html>
-
