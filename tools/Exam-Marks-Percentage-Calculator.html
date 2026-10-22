@@ -51,22 +51,6 @@
                 "@type": "Answer",
                 "text": "Divide the total marks obtained by the maximum possible aggregate marks, then multiply the quotient by 100: Percentage = (Marks Obtained / Total Marks) * 100."
               }
-            },
-            {
-              "@type": "Question",
-              "name": "What is the official CBSE formula to convert CGPA to percentage?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The Central Board of Secondary Education (CBSE) standard formula requires multiplying your cumulative CGPA by 9.5 to determine aggregate percentage (e.g., 8.4 * 9.5 = 79.80%)."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How does the 'Best of 5' rule calculate aggregate marks?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Under the Best of 5 rule, only your five highest subject marks are added together out of 500 total marks, discarding the lowest scoring optional subject."
-              }
             }
           ]
         }
@@ -76,67 +60,30 @@
 
     <style>
         :root {
-            --bg-primary: #f4f6f9;
-            --bg-surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --accent-primary: #2563eb;
             --calc-bg: #0f172a;
             --calc-surface: #1e293b;
             --calc-border: #334155;
             --calc-text: #f8fafc;
             --calc-accent: #38bdf8;
-            --header-height: 55px; 
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-surface: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --calc-bg: #111827;
-            --calc-surface: #1f2937;
-            --calc-border: #374151;
-            --calc-text: #f9fafb;
-            --calc-accent: #38bdf8;
-        }
-
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            transition: background-color 0.2s ease, border-color 0.2s ease; 
-        }
-        
-        body { 
-            background-color: var(--bg-primary); 
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            line-height: 1.6;
-        }
-
+        /* Calculator Specific Styles */
         .wrapper { 
             max-width: 1200px; 
             width: 100%; 
             margin: 1rem auto 2rem auto; 
             padding: 0 1rem; 
-            flex: 1; 
         }
-        
+
         .breadcrumb { 
             font-size: 0.9rem; 
             margin-bottom: 0.75rem; 
-            color: var(--text-muted); 
+            color: var(--muted, #64748b); 
             font-weight: 500; 
         }
         
         .breadcrumb a { 
-            color: var(--accent-primary); 
+            color: var(--link, #2563eb); 
             text-decoration: none; 
         }
         
@@ -144,7 +91,6 @@
             text-decoration: underline; 
         }
 
-        /* Responsive Layout Engine */
         .layout-grid { 
             display: grid; 
             grid-template-columns: 1fr; 
@@ -152,24 +98,18 @@
             align-items: start;
         }
 
-        @media (min-width: 900px) { 
-            .layout-grid { 
-                grid-template-columns: 2.3fr 1fr; 
-            } 
-            .sidebar { 
-                position: sticky; 
-                top: calc(var(--header-height) + 1.5rem); 
-            }
-        }
-
         .main-body { 
             display: flex; 
             flex-direction: column; 
             width: 100%; 
-            background: var(--bg-surface); 
+            background: var(--surface, #ffffff); 
             padding: 2rem; 
             border-radius: 16px; 
-            border: 1px solid var(--border-color); 
+            border: 1px solid var(--border, #e2e8f0); 
+        }
+        [data-theme="dark"] .main-body {
+            background: var(--surface, #1e293b);
+            border-color: var(--border, #334155);
         }
 
         /* Calculator Card & Tabs */
@@ -329,60 +269,54 @@
             font-size: 1.65rem;
             font-weight: 800;
             margin-bottom: 1.25rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
+            color: var(--text, #1e293b);
         }
+        [data-theme="dark"] h1.primary-title { color: #f8fafc; }
 
         h2.section-heading {
             font-size: 1.35rem;
             font-weight: 700;
             margin: 2rem 0 0.6rem 0;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--border-color);
+            color: var(--text, #1e293b);
+            border-bottom: 1px solid var(--border, #e2e8f0);
             padding-bottom: 0.4rem;
         }
+        [data-theme="dark"] h2.section-heading { color: #f8fafc; border-bottom-color: #334155; }
 
         h3.sub-heading {
             font-size: 1.05rem;
             font-weight: 600;
             margin: 1.25rem 0 0.4rem 0;
-            color: var(--text-main);
+            color: var(--text, #1e293b);
         }
+        [data-theme="dark"] h3.sub-heading { color: #f8fafc; }
 
         p, ul, ol {
-            color: var(--text-muted);
+            color: var(--muted, #64748b);
             font-size: 0.95rem;
             margin-bottom: 0.9rem;
         }
+        [data-theme="dark"] p, [data-theme="dark"] ul, [data-theme="dark"] ol { color: #94a3b8; }
 
-        ul, ol {
-            padding-left: 1.4rem;
-        }
-
-        li {
-            margin-bottom: 0.4rem;
-        }
+        ul, ol { padding-left: 1.4rem; }
+        li { margin-bottom: 0.4rem; }
 
         .formula-callout {
-            background: var(--bg-primary);
+            background: var(--bg-primary, #f4f6f9);
             border-left: 4px solid var(--calc-accent);
             border-radius: 4px;
             padding: 0.85rem 1.1rem;
             margin: 1rem 0;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-family: monospace;
             font-weight: 600;
-            color: var(--text-main);
+            color: var(--text, #1e293b);
             font-size: 0.95rem;
         }
+        [data-theme="dark"] .formula-callout { background: #0f172a; color: #f8fafc; }
 
-        /* Sidebar Empty Skeleton Structure */
-        .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
-
-        /* Mobile Adjustments */
         @media (max-width: 767px) {
             .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 0.9rem; } 
-            .breadcrumb { margin-bottom: 0.35rem; font-size: 0.82rem; }
             .tool-suite { padding: 1rem; }
             .subject-grid { grid-template-columns: 1.5fr 1fr 1fr; gap: 0.35rem; }
             .form-control { padding: 0.55rem 0.7rem; font-size: 0.88rem; }
@@ -427,9 +361,7 @@
 
                     <!-- TAB 2: Subject Marksheet -->
                     <div id="tab-subjects" class="tab-pane" role="tabpanel">
-                        <div id="subjectRowsContainer">
-                            <!-- Injected via JavaScript -->
-                        </div>
+                        <div id="subjectRowsContainer"></div>
                         <div class="btn-action-group">
                             <button id="addSubjectBtn" class="btn-ui" type="button">+ Add Subject</button>
                             <button id="resetSubjectsBtn" class="btn-ui" type="button">Reset</button>
@@ -482,7 +414,7 @@
                         Percentage = (Marks Obtained &divide; Total Marks) &times; 100
                     </div>
 
-                    <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem; color: var(--text-main);">Example 1: Percentage of 420 out of 500</h4>
+                    <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem;">Example 1: Percentage of 420 out of 500</h4>
                     <p>If your exams consisted of 5 subjects worth 100 marks each, your total maximum marks would be 500. Let's say you scored exactly 420 marks. To find the percentage:</p>
                     <ul>
                         <li>Step 1: Divide 420 by 500 (420 &divide; 500 = 0.84)</li>
@@ -490,7 +422,7 @@
                         <li><strong>Result: 84% (1st Division with Distinction)</strong></li>
                     </ul>
 
-                    <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem; color: var(--text-main);">Example 2: Percentage of 350 out of 600</h4>
+                    <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem;">Example 2: Percentage of 350 out of 600</h4>
                     <p>If your board requires you to take 6 subjects worth 100 marks each, your total possible score is 600. If you obtained 350 marks in total, the math looks like this:</p>
                     <ul>
                         <li>Step 1: Divide 350 by 600 (350 &divide; 600 = 0.5833)</li>
@@ -526,12 +458,12 @@
                 </article>
             </main>
 
-            <!-- EMPTY SIDEBAR: Your navigation.js will inject the search, adsense, and carousel here -->
+            <!-- EMPTY SIDEBAR: This tells navigation.js where to automatically inject the AdSense box, Search bar, and Carousel -->
             <aside class="sidebar"></aside>
         </div>
     </div>
 
-    <!-- Multi-Tool Engine Script -->
+    <!-- Calculator Engine Script -->
     <script>
     (() => {
         'use strict';
@@ -717,7 +649,7 @@
     })();
     </script>
 
-    <!-- Global Navigation & Carousel Injection Script -->
+    <!-- This script automatically fetches and builds the Header, Search, AdSense, and Carousel into the empty aside.sidebar -->
     <script src="/js/navigation.js"></script>
 </body>
 </html>
