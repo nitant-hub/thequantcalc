@@ -6,7 +6,8 @@
       vMeta.name = "viewport";
       document.head.appendChild(vMeta);
     }
-    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
+    // FIXED: Removed "maximum-scale=1.0, user-scalable=no" for better SEO and accessibility
+    vMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
 
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynAllToolsModal", "dynBackToTop", "dynGlobalFooter"].forEach((id) => {
       const el = document.getElementById(id);
@@ -1847,8 +1848,9 @@
         } else {
           const drawerSlot = document.getElementById("dynDrawerSearchSlot");
           globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
+          // FIXED: Bug that attempted to append drawerSlot to itself
           if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
-            drawerSlot.appendChild(drawerSlot);
+            drawerSlot.appendChild(globalSearchNode);
           }
           if (globalAdsenseNode.parentElement) globalAdsenseNode.remove();
         }
@@ -1928,10 +1930,15 @@
       relocateSearch();
     }
 
+    // FIXED: Added Debounce timer to MutationObserver to stop battery drain and lagging
+    let debounceTimer;
     const observer = new MutationObserver(() => {
-      observer.disconnect();
-      relocateSearch();
-      observer.observe(document.body, { childList: true, subtree: true });
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        observer.disconnect();
+        relocateSearch();
+        observer.observe(document.body, { childList: true, subtree: true });
+      }, 150);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
