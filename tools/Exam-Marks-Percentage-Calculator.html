@@ -67,7 +67,6 @@
             --calc-accent: #38bdf8;
         }
 
-        /* Calculator Specific Styles */
         .wrapper { 
             max-width: 1200px; 
             width: 100%; 
@@ -458,7 +457,7 @@
                 </article>
             </main>
 
-            <!-- EMPTY SIDEBAR: This tells navigation.js where to automatically inject the AdSense box, Search bar, and Carousel -->
+            <!-- EMPTY SIDEBAR: Navigation.js dynamically injects AdSense, Search, and Carousel here -->
             <aside class="sidebar"></aside>
         </div>
     </div>
@@ -649,7 +648,7 @@
     })();
     </script>
 
-    <!-- This script automatically fetches and builds the Header, Search, AdSense, and Carousel into the empty aside.sidebar -->
-    <script src="/js/navigation.js"></script>
+    <!-- Global Navigation & Carousel Dynamic Injection Script -->
+    <script src="/navigation.js"></script>
 </body>
 </html>
