@@ -45,7 +45,7 @@
         display: none !important;
       }
 
-      /* Hide old basic back-to-top buttons or legacy footers to prevent duplicates */
+      /* Hide old basic back-to-top buttons to prevent duplicates */
       button.top, #top {
         display: none !important;
         opacity: 0 !important;
@@ -1245,7 +1245,6 @@
     const footerContainer = document.createElement("footer");
     footerContainer.id = "dynGlobalFooter";
     footerContainer.innerHTML = `
-      <p>&copy; 2026 thequantcals. All rights reserved.</p>
       <nav>
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="terms-of-service.html">Terms of Service</a>
