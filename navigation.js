@@ -45,8 +45,8 @@
         display: none !important;
       }
 
-      /* Hide old basic back-to-top buttons or footers to prevent duplicates */
-      button.top, #top, footer {
+      /* Hide old basic back-to-top buttons or legacy footers to prevent duplicates */
+      button.top, #top {
         display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
