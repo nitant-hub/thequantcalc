@@ -51,22 +51,6 @@
                 "@type": "Answer",
                 "text": "Divide the total marks obtained by the maximum possible aggregate marks, then multiply the quotient by 100: Percentage = (Marks Obtained / Total Marks) * 100."
               }
-            },
-            {
-              "@type": "Question",
-              "name": "What is the official CBSE formula to convert CGPA to percentage?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The Central Board of Secondary Education (CBSE) standard formula requires multiplying your cumulative CGPA by 9.5 to determine aggregate percentage (e.g., 8.4 * 9.5 = 79.80%)."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How does the 'Best of 5' rule calculate aggregate marks?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Under the Best of 5 rule, only your five highest subject marks are added together out of 500 total marks, discarding the lowest scoring optional subject."
-              }
             }
           ]
         }
@@ -88,6 +72,7 @@
             --calc-border: #334155;
             --calc-text: #f8fafc;
             --calc-accent: #38bdf8;
+            --sidebar-input-bg: #ffffff;
             --header-height: 55px; 
         }
 
@@ -102,6 +87,7 @@
             --calc-border: #374151;
             --calc-text: #f9fafb;
             --calc-accent: #38bdf8;
+            --sidebar-input-bg: #0f172a;
         }
 
         * { 
@@ -140,10 +126,6 @@
             color: var(--accent-primary); 
             text-decoration: none; 
         }
-        
-        .breadcrumb a:hover { 
-            text-decoration: underline; 
-        }
 
         /* Responsive Layout Engine */
         .layout-grid { 
@@ -173,7 +155,7 @@
             border: 1px solid var(--border-color); 
         }
 
-        /* Calculator Card & Tabs */
+        /* Calculator UI */
         .tool-suite {
             background-color: var(--calc-bg);
             border: 1px solid var(--calc-border);
@@ -183,237 +165,77 @@
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
+        .tool-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--calc-border); padding-bottom: 0.75rem; overflow-x: auto; }
+        .tab-btn { background: transparent; border: 1px solid transparent; color: #94a3b8; padding: 0.5rem 0.9rem; border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { background: var(--calc-surface); color: var(--calc-accent); border-color: var(--calc-border); }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .input-row { margin-bottom: 1.1rem; }
+        .input-row label { display: block; font-size: 0.88rem; font-weight: 500; margin-bottom: 0.35rem; color: #cbd5e1; }
+        .form-control { width: 100%; background-color: var(--calc-surface); border: 1px solid var(--calc-border); border-radius: 6px; color: #ffffff; font-size: 0.95rem; padding: 0.65rem 0.85rem; outline: none; }
+        .form-control:focus { border-color: var(--calc-accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        
+        .results-dashboard { background-color: var(--calc-surface); border: 1px solid var(--calc-border); border-radius: 8px; padding: 1.2rem; margin-top: 1.2rem; display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: center; text-align: center; }
+        @media (min-width: 600px) { .results-dashboard { grid-template-columns: 1fr 90px; text-align: left; } }
+        .res-label { font-size: 0.82rem; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.2rem; }
+        .res-value { font-size: 2rem; font-weight: 800; color: var(--calc-accent); line-height: 1.1; }
+        .res-subtext { font-size: 0.85rem; color: #cbd5e1; margin-top: 0.25rem; }
+        .chart-gauge { width: 80px; height: 80px; margin: 0 auto; }
 
-        .tool-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
-            border-bottom: 1px solid var(--calc-border);
-            padding-bottom: 0.75rem;
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: 1px solid transparent;
-            color: #94a3b8;
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .tab-btn.active {
-            background: var(--calc-surface);
-            color: var(--calc-accent);
-            border-color: var(--calc-border);
-        }
-
-        .tab-pane {
-            display: none;
-        }
-
-        .tab-pane.active {
-            display: block;
-        }
-
-        .input-row {
-            margin-bottom: 1.1rem;
-        }
-
-        .input-row label {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 500;
-            margin-bottom: 0.35rem;
-            color: #cbd5e1;
-        }
-
-        .form-control {
-            width: 100%;
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            padding: 0.65rem 0.85rem;
-            outline: none;
-        }
-
-        .form-control:focus {
-            border-color: var(--calc-accent);
-            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-        }
-
-        .subject-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 0.6rem;
-            align-items: center;
-            margin-bottom: 0.6rem;
-        }
-
-        .btn-action-group {
-            display: flex;
-            gap: 0.6rem;
-            margin: 1rem 0;
-        }
-
-        .btn-ui {
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
-            color: #ffffff;
-            padding: 0.45rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-ui:hover {
-            border-color: var(--calc-accent);
-            color: var(--calc-accent);
-        }
-
-        /* Results & SVG Gauge */
-        .results-dashboard {
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-top: 1.2rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            align-items: center;
-            text-align: center;
-        }
-
-        @media (min-width: 600px) {
-            .results-dashboard {
-                grid-template-columns: 1fr 90px;
-                text-align: left;
-            }
-        }
-
-        .res-label {
-            font-size: 0.82rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #94a3b8;
-            margin-bottom: 0.2rem;
-        }
-
-        .res-value {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--calc-accent);
-            line-height: 1.1;
-        }
-
-        .res-subtext {
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            margin-top: 0.25rem;
-        }
-
-        .chart-gauge {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-        }
-
-        /* Typography & Editorial Content */
-        h1.primary-title {
-            font-size: 1.65rem;
-            font-weight: 800;
-            margin-bottom: 1.25rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
-        }
-
-        h2.section-heading {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin: 2rem 0 0.6rem 0;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.4rem;
-        }
-
-        h3.sub-heading {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin: 1.25rem 0 0.4rem 0;
-            color: var(--text-main);
-        }
-
-        p, ul, ol {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 0.9rem;
-        }
-
-        ul, ol {
-            padding-left: 1.4rem;
-        }
-
-        li {
-            margin-bottom: 0.4rem;
-        }
-
-        .formula-callout {
-            background: var(--bg-primary);
-            border-left: 4px solid var(--calc-accent);
-            border-radius: 4px;
-            padding: 0.85rem 1.1rem;
-            margin: 1rem 0;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
+        /* Typography */
+        h1.primary-title { font-size: 1.65rem; font-weight: 800; margin-bottom: 1.25rem; color: var(--text-main); }
+        h2.section-heading { font-size: 1.35rem; font-weight: 700; margin: 2rem 0 0.6rem 0; color: var(--text-main); border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; }
+        h3.sub-heading { font-size: 1.05rem; font-weight: 600; margin: 1.25rem 0 0.4rem 0; color: var(--text-main); }
+        p, ul { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.9rem; }
+        ul { padding-left: 1.4rem; }
+        .formula-callout { background: var(--bg-primary); border-left: 4px solid var(--calc-accent); border-radius: 4px; padding: 0.85rem 1.1rem; margin: 1rem 0; font-family: monospace; font-weight: 600; font-size: 0.95rem; }
 
         /* Sidebar Structure */
-        .sidebar { 
+        .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+        
+        .ad-placeholder {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: 250px;
             display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
 
-        .sidebar-card {
-            background: var(--bg-surface); 
-            padding: 1.5rem; 
-            border-radius: 16px; 
-            border: 1px solid var(--border-color); 
+        .search-box input {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--sidebar-input-bg);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
         }
+        .search-box input:focus { border-color: var(--accent-primary); }
 
-        .sidebar-card h3 { 
-            font-size: 1.1rem; 
-            margin-bottom: 1rem; 
-            border-bottom: 2px solid var(--border-color); 
-            padding-bottom: 0.4rem; 
-            font-weight: 700; 
-        }
+        .sidebar-card { background: var(--bg-surface); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--border-color); }
+        .sidebar-card h3 { font-size: 1rem; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; color: var(--text-main); }
+        
+        .related-tools-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+        .related-tools-list li { border-bottom: 1px solid var(--border-color); padding-bottom: 0.8rem; }
+        .related-tools-list li:last-child { border-bottom: none; padding-bottom: 0; }
+        .related-tools-list a { text-decoration: none; color: var(--accent-primary); font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 0.2rem; }
+        .related-tools-list span { font-size: 0.75rem; color: var(--text-muted); }
 
         /* Mobile Adjustments */
         @media (max-width: 767px) {
             .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 0.9rem; } 
-            .breadcrumb { margin-bottom: 0.35rem; font-size: 0.82rem; }
             .tool-suite { padding: 1rem; }
-            .subject-grid { grid-template-columns: 1.5fr 1fr 1fr; gap: 0.35rem; }
-            .form-control { padding: 0.55rem 0.7rem; font-size: 0.88rem; }
-            .sidebar-card { padding: 1.1rem; }
         }
     </style>
     
     <script>
-        if (localStorage.getItem('theme') === 'dark') { 
-            document.documentElement.setAttribute('data-theme', 'dark'); 
-        }
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
     </script>
 </head>
 <body>
@@ -427,15 +249,14 @@
             <main class="main-body">
                 <h1 class="primary-title">Exam Marks &amp; Percentage Calculator</h1>
 
-                <section class="tool-suite" aria-label="Interactive Calculator">
+                <section class="tool-suite">
                     <div class="tool-tabs" role="tablist">
-                        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-quick">Quick Total %</button>
-                        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-subjects">Subject Marksheet</button>
-                        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-cgpa">CBSE CGPA to %</button>
+                        <button class="tab-btn active" role="tab" data-tab="tab-quick">Quick Total %</button>
+                        <button class="tab-btn" role="tab" data-tab="tab-cgpa">CBSE CGPA to %</button>
                     </div>
 
                     <!-- TAB 1: Quick Total -->
-                    <div id="tab-quick" class="tab-pane active" role="tabpanel">
+                    <div id="tab-quick" class="tab-pane active">
                         <div class="input-row">
                             <label for="marksObtained">Marks Obtained:</label>
                             <input id="marksObtained" class="form-control" type="number" min="0" step="any" placeholder="e.g. 420" />
@@ -446,22 +267,8 @@
                         </div>
                     </div>
 
-                    <!-- TAB 2: Subject Marksheet -->
-                    <div id="tab-subjects" class="tab-pane" role="tabpanel">
-                        <div id="subjectRowsContainer">
-                            <!-- Injected via JavaScript -->
-                        </div>
-                        <div class="btn-action-group">
-                            <button id="addSubjectBtn" class="btn-ui" type="button">+ Add Subject</button>
-                            <button id="resetSubjectsBtn" class="btn-ui" type="button">Reset</button>
-                        </div>
-                        <label style="font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="checkbox" id="bestOfFiveToggle" /> Apply "Best of 5" highest scores rule
-                        </label>
-                    </div>
-
-                    <!-- TAB 3: CGPA Converter -->
-                    <div id="tab-cgpa" class="tab-pane" role="tabpanel">
+                    <!-- TAB 2: CGPA Converter -->
+                    <div id="tab-cgpa" class="tab-pane">
                         <div class="input-row">
                             <label for="cgpaInput">Cumulative Grade Point Average (CGPA):</label>
                             <input id="cgpaInput" class="form-control" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.4" />
@@ -475,7 +282,7 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Output Dashboard -->
+                    <!-- Dynamic Output -->
                     <div class="results-dashboard" aria-live="polite">
                         <div>
                             <div class="res-label">Your Percentage:</div>
@@ -493,76 +300,82 @@
 
                 <article>
                     <h2 class="section-heading">How to Calculate Your Exam Percentage</h2>
-                    <p>Most students need to calculate their percentage at some point, whether it's for exam results, college admissions, or scholarship applications. Many admission forms and job applications ask applicants to provide their percentage score.</p>
-                    <p>The <strong>marks percentage calculator</strong> above does the math for you instantly. If you're curious about how the calculation works, here is the simple formula behind it, along with a few practical examples.</p>
-
-                    <h3 class="sub-heading">Percentage Formula with Examples</h3>
-                    <p>You can calculate your percentage yourself using a simple math formula. You only need two numbers: the marks you earned, and the total marks possible. Here is the standard <strong>marks to percentage formula</strong>:</p>
-
-                    <div class="formula-callout">
-                        Percentage = (Marks Obtained &divide; Total Marks) &times; 100
-                    </div>
+                    <p>The <strong>marks percentage calculator</strong> above does the math for you instantly. Here is the standard formula:</p>
+                    <div class="formula-callout">Percentage = (Marks Obtained &divide; Total Marks) &times; 100</div>
 
                     <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem; color: var(--text-main);">Example 1: Percentage of 420 out of 500</h4>
-                    <p>If your exams consisted of 5 subjects worth 100 marks each, your total maximum marks would be 500. Let's say you scored exactly 420 marks. To find the percentage:</p>
                     <ul>
                         <li>Step 1: Divide 420 by 500 (420 &divide; 500 = 0.84)</li>
                         <li>Step 2: Multiply 0.84 by 100</li>
-                        <li><strong>Result: 84% (1st Division with Distinction)</strong></li>
-                    </ul>
-
-                    <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 1rem; color: var(--text-main);">Example 2: Percentage of 350 out of 600</h4>
-                    <p>If your board requires you to take 6 subjects worth 100 marks each, your total possible score is 600. If you obtained 350 marks in total, the math looks like this:</p>
-                    <ul>
-                        <li>Step 1: Divide 350 by 600 (350 &divide; 600 = 0.5833)</li>
-                        <li>Step 2: Multiply 0.5833 by 100</li>
-                        <li><strong>Result: 58.33% (2nd Division)</strong></li>
+                        <li><strong>Result: 84%</strong></li>
                     </ul>
 
                     <h2 class="section-heading">State and Central Board Calculations</h2>
                     <h3 class="sub-heading">How to Calculate Percentage in CBSE</h3>
-                    <p>The Central Board of Secondary Education (CBSE) often issues a CGPA (Cumulative Grade Point Average) instead of a straight percentage. If an admission form asks for a percentage, you have to convert it.</p>
                     <p>The official CBSE standard rule is to multiply your CGPA by <strong>9.5</strong>. For example, if your report card shows a CGPA of 8.4, you multiply 8.4 by 9.5 to get 79.80%.</p>
-
-                    <h3 class="sub-heading">How to Calculate Percentage in Bihar Board (BSEB)</h3>
-                    <p>The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
-                    <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB places you in the "1st Division" category.</p>
-
-                    <h2 class="section-heading">Frequently Asked Questions (FAQ)</h2>
-                    <div itemscope itemtype="https://schema.org/FAQPage">
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1rem;">
-                            <h3 itemprop="name" class="sub-heading">1. What is the difference between percentage and CGPA?</h3>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">A percentage is a score out of 100 that shows your exact academic performance. A CGPA is a grading system that averages your performance on a scale of 1 to 10.</p>
-                            </div>
-                        </div>
-
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1rem;">
-                            <h3 itemprop="name" class="sub-heading">2. Can I round up my percentage for a job application?</h3>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">No, it is highly recommended not to do this. For example, if a government job requires a minimum of 60%, and you score 59.9%, you do not meet the criteria. Always enter the exact decimal you earned.</p>
-                            </div>
-                        </div>
-                    </div>
                 </article>
             </main>
 
+            <!-- Sidebar perfectly matching Photo 3 -->
             <aside class="sidebar">
+                
+                <div class="ad-placeholder">
+                    Advertisement
+                </div>
+
+                <div class="search-box">
+                    <input type="text" placeholder="Search..." />
+                </div>
+
                 <div class="sidebar-card">
-                    <h3>System Status</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0;">
-                        All calculations run client-side in your browser for instant privacy and zero data transfer.
+                    <h3>🔥 Related Tools / Calculators</h3>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+                        <span style="background: var(--accent-primary); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">≡ List view</span>
+                        <div style="display: flex; gap: 0.3rem;">
+                            <button style="border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); border-radius: 4px; padding: 0.1rem 0.4rem; cursor: pointer;">&lt;</button>
+                            <button style="border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); border-radius: 4px; padding: 0.1rem 0.4rem; cursor: pointer;">&gt;</button>
+                        </div>
+                    </div>
+                    
+                    <ul class="related-tools-list">
+                        <li>
+                            <a href="/tools/Compound-Interest-Calculator.html">Compound Interest Calculator</a>
+                            <span>Estimate investment growth over time.</span>
+                        </li>
+                        <li>
+                            <a href="/tools/Exam-Marks-Percentage-Calculator.html">Exam Marks Percentage Calculator</a>
+                            <span>Calculate exam scores and percentages.</span>
+                        </li>
+                        <li>
+                            <a href="/tools/accurate-age-calculator.html">Accurate Age Calculator</a>
+                            <span>Calculate your exact age.</span>
+                        </li>
+                    </ul>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">
+                        <span>1 of 2</span>
+                        <div style="display: flex; gap: 4px;">
+                            <div style="width: 15px; height: 4px; background: var(--accent-primary); border-radius: 2px;"></div>
+                            <div style="width: 5px; height: 4px; background: var(--border-color); border-radius: 2px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 style="border-bottom: none; margin-bottom: 0.5rem;">System Status</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0;">
+                        All tools process locally in your browser.
                     </p>
                 </div>
             </aside>
         </div>
     </div>
 
-    <!-- Multi-Tool Engine Script -->
+    <!-- Script for calculations -->
     <script>
     (() => {
         'use strict';
-
         const marksObtained = document.getElementById('marksObtained');
         const maxMarks = document.getElementById('maxMarks');
         const percentResult = document.getElementById('percentResult');
@@ -572,23 +385,13 @@
         const cgpaScale = document.getElementById('cgpaScale');
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabPanes = document.querySelectorAll('.tab-pane');
-        const subjectRowsContainer = document.getElementById('subjectRowsContainer');
-        const addSubjectBtn = document.getElementById('addSubjectBtn');
-        const resetSubjectsBtn = document.getElementById('resetSubjectsBtn');
-        const bestOfFiveToggle = document.getElementById('bestOfFiveToggle');
-
         let activeTabId = 'tab-quick';
 
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                tabBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
+                tabBtns.forEach(b => b.classList.remove('active'));
                 tabPanes.forEach(p => p.classList.remove('active'));
-
                 btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
                 activeTabId = btn.getAttribute('data-tab');
                 document.getElementById(activeTabId).classList.add('active');
                 calculateActive();
@@ -611,7 +414,7 @@
         function renderResults(percent, subtext) {
             if (isNaN(percent) || percent === null) {
                 percentResult.textContent = '0.00%';
-                resDivision.textContent = subtext || 'Enter marks to see result & division status';
+                resDivision.textContent = subtext || 'Enter marks to see result';
                 updateGauge(0);
                 return;
             }
@@ -623,128 +426,34 @@
         function calcQuick() {
             const obtained = parseFloat(marksObtained.value);
             const max = parseFloat(maxMarks.value);
-
-            if (isNaN(obtained) || isNaN(max)) {
-                renderResults(null, 'Enter marks to see result & division status');
-                return;
-            }
-            if (max <= 0) {
-                renderResults(null, 'Maximum marks must be greater than zero');
-                return;
-            }
-            if (obtained < 0) {
-                renderResults(null, 'Score cannot be negative');
-                return;
-            }
-            if (obtained > max) {
-                renderResults(null, 'Obtained score cannot exceed maximum marks');
-                return;
-            }
-
+            if (isNaN(obtained) || isNaN(max)) return renderResults(null, 'Enter marks to see result');
+            if (max <= 0) return renderResults(null, 'Max marks must be > 0');
+            if (obtained < 0) return renderResults(null, 'Score cannot be negative');
+            if (obtained > max) return renderResults(null, 'Obtained cannot exceed maximum');
             renderResults((obtained / max) * 100);
-        }
-
-        function calcSubjects() {
-            const rowElements = subjectRowsContainer.querySelectorAll('.subject-grid');
-            const scores = [];
-            let totalMax = 0;
-            let totalObt = 0;
-
-            for (const row of rowElements) {
-                const obt = parseFloat(row.querySelector('.sub-obt').value) || 0;
-                const max = parseFloat(row.querySelector('.sub-max').value) || 100;
-                scores.push({ obt, max, pct: max > 0 ? (obt / max) : 0 });
-            }
-
-            if (scores.length === 0) {
-                renderResults(null);
-                return;
-            }
-
-            if (bestOfFiveToggle.checked && scores.length > 5) {
-                scores.sort((a, b) => b.pct - a.pct);
-                const bestFive = scores.slice(0, 5);
-                totalObt = bestFive.reduce((acc, curr) => acc + curr.obt, 0);
-                totalMax = bestFive.reduce((acc, curr) => acc + curr.max, 0);
-            } else {
-                totalObt = scores.reduce((acc, curr) => acc + curr.obt, 0);
-                totalMax = scores.reduce((acc, curr) => acc + curr.max, 0);
-            }
-
-            if (totalMax <= 0) {
-                renderResults(null, 'Total max marks must be > 0');
-                return;
-            }
-            const pct = (totalObt / totalMax) * 100;
-            const contextText = bestOfFiveToggle.checked && scores.length > 5 
-                ? `${getDivisionText(pct)} (Best 5 subjects: ${totalObt}/${totalMax})`
-                : `${getDivisionText(pct)} (Total: ${totalObt}/${totalMax})`;
-            renderResults(pct, contextText);
         }
 
         function calcCGPA() {
             const cgpa = parseFloat(cgpaInput.value);
             const scale = parseFloat(cgpaScale.value);
-
-            if (isNaN(cgpa)) {
-                renderResults(null, 'Enter a valid CGPA (e.g. 8.4)');
-                return;
-            }
-            if (cgpa < 0 || cgpa > 10) {
-                renderResults(null, 'CGPA must be between 0.0 and 10.0');
-                return;
-            }
-
-            const pct = cgpa * scale;
-            renderResults(pct, `Converted using ${scale}x scale multiplier`);
+            if (isNaN(cgpa)) return renderResults(null, 'Enter a valid CGPA');
+            if (cgpa < 0 || cgpa > 10) return renderResults(null, 'CGPA must be between 0 and 10');
+            renderResults(cgpa * scale, `Converted using ${scale}x scale`);
         }
 
         function calculateActive() {
             if (activeTabId === 'tab-quick') calcQuick();
-            else if (activeTabId === 'tab-subjects') calcSubjects();
             else if (activeTabId === 'tab-cgpa') calcCGPA();
-        }
-
-        function initDefaultSubjects() {
-            subjectRowsContainer.innerHTML = '';
-            for (let i = 1; i <= 5; i++) {
-                addSubjectRow(`Subject ${i}`, 100);
-            }
-        }
-
-        function addSubjectRow(name = '', max = 100) {
-            const row = document.createElement('div');
-            row.className = 'subject-grid';
-            row.innerHTML = `
-                <input class="form-control sub-name" type="text" placeholder="Subject Name" value="${name}" />
-                <input class="form-control sub-obt" type="number" min="0" placeholder="Marks" />
-                <input class="form-control sub-max" type="number" min="1" value="${max}" />
-            `;
-            row.querySelectorAll('input').forEach(input => {
-                input.addEventListener('input', calcSubjects);
-            });
-            subjectRowsContainer.appendChild(row);
         }
 
         marksObtained.addEventListener('input', calcQuick);
         maxMarks.addEventListener('input', calcQuick);
         cgpaInput.addEventListener('input', calcCGPA);
         cgpaScale.addEventListener('change', calcCGPA);
-        addSubjectBtn.addEventListener('click', () => { 
-            addSubjectRow(`Subject ${subjectRowsContainer.children.length + 1}`); 
-            calcSubjects(); 
-        });
-        resetSubjectsBtn.addEventListener('click', () => { 
-            initDefaultSubjects(); 
-            calcSubjects(); 
-        });
-        bestOfFiveToggle.addEventListener('change', calcSubjects);
-
-        initDefaultSubjects();
     })();
     </script>
 
-    <!-- Global Navigation & Theme Engine -->
+    <!-- Global Navigation Script -->
     <script src="/js/navigation.js"></script>
 </body>
 </html>
