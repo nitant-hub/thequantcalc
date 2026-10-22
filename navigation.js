@@ -8,7 +8,7 @@
     }
     vMeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
 
-    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynAllToolsModal"].forEach((id) => {
+    ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynAllToolsModal", "dynBackToTop", "dynGlobalFooter"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     });
@@ -43,6 +43,119 @@
 
       .sr input#q {
         display: none !important;
+      }
+
+      /* Hide old basic back-to-top buttons or footers to prevent duplicates */
+      button.top, #top, footer {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+
+      /* =====================================================================
+         GLOBAL PREMIUM FOOTER (ALL PAGES)
+      ===================================================================== */
+      #dynGlobalFooter {
+        background: var(--surface, #ffffff) !important;
+        border-top: 1px solid var(--border, #e2e8f0) !important;
+        padding: 2.5rem 1.5rem !important;
+        text-align: center !important;
+        font-size: .9rem !important;
+        color: var(--muted, #64748b) !important;
+        margin-top: 3.5rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 10 !important;
+      }
+      [data-theme="dark"] #dynGlobalFooter {
+        background: var(--surface, #151c2e) !important;
+        border-top-color: var(--border, #232d42) !important;
+        color: var(--muted, #94a3b8) !important;
+      }
+      #dynGlobalFooter p {
+        margin: 0 !important;
+      }
+      #dynGlobalFooter nav {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 1.5rem !important;
+        margin-top: 1.2rem !important;
+        flex-wrap: wrap !important;
+      }
+      #dynGlobalFooter a {
+        color: var(--muted, #64748b) !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: color 0.15s ease !important;
+      }
+      [data-theme="dark"] #dynGlobalFooter a {
+        color: var(--muted, #94a3b8) !important;
+      }
+      #dynGlobalFooter a:hover {
+        color: var(--link, #0066cc) !important;
+      }
+
+      /* =====================================================================
+         PREMIUM SEMI-3D GLASSY BENTO "BACK TO TOP" BUTTON (ALL PAGES)
+      ===================================================================== */
+      #dynBackToTop {
+        position: fixed !important;
+        bottom: 1.35rem !important;
+        right: 1.35rem !important;
+        width: 46px !important;
+        height: 46px !important;
+        border-radius: 14px !important;
+        background: linear-gradient(145deg, #164e63 0%, #1e3a8a 50%, #0f172a 100%) !important;
+        backdrop-filter: blur(16px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+        border: 1.5px solid rgba(56, 189, 248, 0.55) !important;
+        box-shadow: 0 10px 24px -4px rgba(2, 6, 23, 0.55), 0 0 14px rgba(56, 189, 248, 0.25), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -2px 4px rgba(0, 0, 0, 0.4) !important;
+        color: #ffffff !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 999995 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(14px) scale(0.9) !important;
+        transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s, box-shadow 0.2s ease, border-color 0.2s ease !important;
+        padding: 0 !important;
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+
+      #dynBackToTop.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) scale(1) !important;
+      }
+
+      #dynBackToTop:hover {
+        transform: translateY(-3px) scale(1.04) !important;
+        border-color: rgba(52, 211, 153, 0.8) !important;
+        box-shadow: 0 14px 28px -4px rgba(2, 6, 23, 0.65), 0 0 18px rgba(52, 211, 153, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.5) !important;
+      }
+
+      #dynBackToTop:active {
+        transform: translateY(0) scale(0.96) !important;
+      }
+
+      #dynBackToTop svg {
+        width: 22px !important;
+        height: 22px !important;
+        stroke: #38bdf8 !important;
+        stroke-width: 2.6 !important;
+        fill: none !important;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)) !important;
+        transition: transform 0.2s ease, stroke 0.2s ease !important;
+      }
+
+      #dynBackToTop:hover svg {
+        stroke: #34d399 !important;
+        transform: translateY(-1.5px) !important;
       }
 
       #catView {
@@ -1120,8 +1233,40 @@
           </div>
         </div>
       </div>
+      <button id="dynBackToTop" aria-label="Back to top" title="Back to top">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 15l-6-6-6 6"/>
+          <path d="M18 9l-6-6-6 6" opacity="0.45"/>
+        </svg>
+      </button>
     `;
     document.body.insertAdjacentElement("afterbegin", navContainer);
+
+    const footerContainer = document.createElement("footer");
+    footerContainer.id = "dynGlobalFooter";
+    footerContainer.innerHTML = `
+      <p>&copy; 2026 thequantcals. All rights reserved.</p>
+      <nav>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+    `;
+    document.body.appendChild(footerContainer);
+
+    const dynBackToTopBtn = document.getElementById("dynBackToTop");
+    if (dynBackToTopBtn) {
+      const toggleBackToTop = () => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        dynBackToTopBtn.classList.toggle("show", y > 260);
+      };
+      window.addEventListener("scroll", toggleBackToTop, { passive: true });
+      toggleBackToTop();
+      dynBackToTopBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    }
 
     function syncActiveTab() {
       const hash = (window.location.hash || "").toLowerCase();
