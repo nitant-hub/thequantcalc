@@ -383,9 +383,10 @@ p.intro, #cintro, #cintro:empty {
   white-space: nowrap;
 }
 
+/* Category Card Tool Title Sized to 16.5px */
 .cat-card-tools-y li a {
   color: #3b6fb6;
-  font-size: 0.9rem;
+  font-size: 16.5px !important;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -512,9 +513,10 @@ p.intro, #cintro, #cintro:empty {
   min-width: 0;
 }
 
+/* Category View Tool Title Sized to 16.5px */
 .cat-pure-text-list li a {
   color: #3b6fb6;
-  font-size: 1.05rem;
+  font-size: 16.5px !important;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -681,7 +683,7 @@ input, select, textarea {
   }
 
   .cat-card-tools-y li a {
-    font-size: 0.92rem !important;
+    font-size: 16.5px !important;
     line-height: 1.28 !important;
   }
 
@@ -745,7 +747,7 @@ input, select, textarea {
   }
 
   .cat-pure-text-list li a {
-    font-size: 0.96rem !important;
+    font-size: 16.5px !important;
     line-height: 1.35 !important;
     white-space: nowrap !important;
   }
@@ -955,9 +957,9 @@ aside .box:empty,
         <h3>Prime Calculators/Tools</h3>
       </div>
       <ul class="cat-pure-text-list" style="flex-direction: column; gap: 0.65rem;">
-        <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest Calculator</a></li>
-        <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Percentage Calculator</a></li>
-        <li><a href="/tools/accurate-age-calculator.html">⭐ Accurate Age Calculator</a></li>
+        <li><a href="/tools/Compound-Interest-Calculator.html" style="font-size: 16.5px !important;">⭐ Compound Interest Calculator</a></li>
+        <li><a href="/tools/Exam-Marks-Percentage-Calculator.html" style="font-size: 16.5px !important;">⭐ Exam Marks Percentage Calculator</a></li>
+        <li><a href="/tools/accurate-age-calculator.html" style="font-size: 16.5px !important;">⭐ Accurate Age Calculator</a></li>
       </ul>
     </div>
 
@@ -967,9 +969,9 @@ aside .box:empty,
         <h3>Editor's Picks</h3>
       </div>
       <ul class="cat-pure-text-list" style="flex-direction: column; gap: 0.65rem;">
-        <li><a href="/tools/cosmic-weight.html">🪐 Cosmic Weight Calculator</a></li>
-        <li><a href="/tools/Compound-Interest-Calculator.html">📈 Compound Interest Calculator</a></li>
-        <li><a href="/tools/accurate-age-calculator.html">📅 Accurate Age Calculator</a></li>
+        <li><a href="/tools/cosmic-weight.html" style="font-size: 16.5px !important;">🪐 Cosmic Weight Calculator</a></li>
+        <li><a href="/tools/Compound-Interest-Calculator.html" style="font-size: 16.5px !important;">📈 Compound Interest Calculator</a></li>
+        <li><a href="/tools/accurate-age-calculator.html" style="font-size: 16.5px !important;">📅 Accurate Age Calculator</a></li>
       </ul>
     </div>
   </div>
@@ -1147,7 +1149,7 @@ aside .box:empty,
     card += '  </a>';
     if (fullList.length > 0) {
       card += '  <ul class="cat-card-tools-y">';
-      fullList.forEach(function(t){ card += '    <li><a href="' + esc(t.url) + '">' + esc(t.name) + '</a></li>'; });
+      fullList.forEach(function(t){ card += '    <li><a href="' + esc(t.url) + '" style="font-size: 16.5px !important;">' + esc(t.name) + '</a></li>'; });
       card += '  </ul>';
     }
     card += '</div>';
@@ -1217,7 +1219,7 @@ aside .box:empty,
         var list=toolsOf(c); if(!list.length)return;
         var meta = autoSketchCategory(c);
         o+='<div class="cat-group-block"><a class="cat-bento-header-card ' + meta.theme + '" href="#/'+c+'"><div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div><span class="cat-bento-title">'+esc(label(c))+'</span></a><ul class="cat-pure-text-list">';
-        list.forEach(function(t){ o+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'; });
+        list.forEach(function(t){ o+='<li><a href="'+esc(t.url)+'" style="font-size: 16.5px !important;">'+esc(t.name)+'</a></li>'; });
         o+='</ul></div>';
       });
       document.getElementById('cols').innerHTML=o;
@@ -1231,7 +1233,7 @@ aside .box:empty,
       var meta = autoSketchCategory(cur);
       var list = toolsOf(cur);
       var o2='<div class="cat-group-block"><div class="cat-bento-header-card ' + meta.theme + '"><div class="cat-3d-icon ' + meta.iconClass + '">' + meta.icon + '</div><span class="cat-bento-title">'+esc(label(cur))+'</span></div><ul class="cat-pure-text-list">';
-      list.forEach(function(t){ o2+='<li><a href="'+esc(t.url)+'">'+esc(t.name)+'</a></li>'; });
+      list.forEach(function(t){ o2+='<li><a href="'+esc(t.url)+'" style="font-size: 16.5px !important;">'+esc(t.name)+'</a></li>'; });
       o2+='</ul></div>';
       document.getElementById('cols').innerHTML=o2;
       document.getElementById('none').style.display='none';
