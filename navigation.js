@@ -302,7 +302,7 @@
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 0 8px 0 !important;
-        padding: 10px 8px !important;
+        padding: 8px 8px !important;
         border: none !important;
         border-bottom: 1px solid var(--border-color, #e2e8f0) !important;
         border-radius: 14px 14px 0 0 !important;
@@ -319,13 +319,16 @@
       }
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-group {
         padding: 0 2px !important;
-        gap: 6px !important;
+        gap: 4px !important;
         box-sizing: border-box !important;
       }
+
+      /* Compact Y-direction box sizing */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
-        padding: 8px 10px !important;
-        min-height: 42px !important;
-        border-radius: 8px !important;
+        padding: 5px 10px !important;
+        min-height: 28px !important;
+        height: 32px !important;
+        border-radius: 6px !important;
         width: 100% !important;
         max-width: 100% !important;
         justify-content: center !important;
@@ -344,7 +347,7 @@
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
         font-size: 16.5px !important;
         font-weight: 700 !important;
-        line-height: 1.3 !important;
+        line-height: 1.1 !important;
         margin: 0 !important;
         white-space: nowrap !important;
         overflow: hidden !important;
@@ -1024,23 +1027,25 @@
         min-width: 100% !important; 
         max-width: 100% !important;
         flex-direction: column !important; 
-        gap: 5px !important; 
+        gap: 4px !important; 
         padding: 0 !important;
         box-sizing: border-box !important;
       }
 
+      /* Compact Y-direction box sizing */
       .related-section .tool-card {
         position: relative !important; 
         display: flex !important; 
         flex-direction: column !important; 
-        padding: 7px 10px !important;
+        padding: 4px 10px !important;
+        min-height: 26px !important;
+        height: 30px !important;
         overflow: hidden !important; 
         color: inherit !important; 
         text-decoration: none !important;
         background: rgba(255, 255, 255, 0.75) !important; 
         border: 1px solid var(--border) !important; 
-        border-radius: 8px !important;
-        min-height: 38px !important;
+        border-radius: 6px !important;
         justify-content: center !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -1069,7 +1074,7 @@
         font-size: 16.5px !important; 
         font-weight: 700 !important;
         color: #2563eb !important; 
-        line-height: 1.25 !important; 
+        line-height: 1.1 !important; 
         text-decoration: underline !important;
         white-space: nowrap !important;
         overflow: hidden !important;
