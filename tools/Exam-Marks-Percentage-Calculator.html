@@ -60,11 +60,6 @@
 
     <style>
         :root {
-            --calc-bg: #0f172a;
-            --calc-surface: #1e293b;
-            --calc-border: #334155;
-            --calc-text: #f8fafc;
-            --calc-accent: #38bdf8;
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
             --text-main: #1e293b;
@@ -133,26 +128,42 @@
             overflow: hidden;
         }
 
-        /* CALCULATOR BOX */
+        /* --- AD TARGET HOOK --- */
         .tool-suite {
-            background-color: var(--calc-bg);
-            border: 1px solid var(--calc-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            color: var(--calc-text);
-            margin: 0.5rem 0 1.5rem 0;
-            align-self: center;
-            width: 85%;
-            max-width: 100%;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: block;
+            margin-bottom: 2rem;
+        }
+
+        /* --- PREMIUM DARK GLASS CALCULATOR CARD --- */
+        .calculator-ui-box {
+            background-color: #071426; 
+            background-image: 
+                radial-gradient(circle at top left, rgba(22, 200, 244, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at top right, rgba(0, 214, 160, 0.08) 0%, transparent 40%),
+                linear-gradient(135deg, rgba(7, 20, 38, 0.8) 0%, rgba(4, 10, 20, 0.9) 100%);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 420px; /* SLIM IN X-DIRECTION */
+            margin: 0 auto;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid #1e293b;
+            color: #f8fafc;
             box-sizing: border-box;
+        }
+        
+        [data-theme="dark"] .calculator-ui-box {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.08);
         }
 
         .tool-tabs {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1.25rem;
-            border-bottom: 1px solid var(--calc-border);
+            border-bottom: 1px solid #1e293b;
             padding-bottom: 0.75rem;
             overflow-x: auto;
             white-space: nowrap;
@@ -169,12 +180,13 @@
             font-weight: 600;
             cursor: pointer;
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
 
         .tab-btn.active {
-            background: var(--calc-surface);
-            color: var(--calc-accent);
-            border-color: var(--calc-border);
+            background: #101E35;
+            color: #00D6A0;
+            border-color: #334155;
         }
 
         .tab-pane {
@@ -194,26 +206,29 @@
             display: block;
             font-size: 0.85rem;
             font-weight: 500;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
             color: #cbd5e1;
         }
 
+        /* Premium Dark Slate Inputs */
         .form-control {
             width: 100%;
             max-width: 100%;
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
-            border-radius: 6px;
-            color: #ffffff;
+            background-color: #101E35;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.02);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f8fafc;
             font-size: 0.95rem;
             padding: 0.6rem 0.8rem;
             outline: none;
+            transition: all 0.2s ease;
             box-sizing: border-box;
         }
 
         .form-control:focus {
-            border-color: var(--calc-accent);
-            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+            border-color: #00D6A0;
+            box-shadow: 0 0 0 2px rgba(0, 214, 160, 0.2);
         }
 
         .subject-grid {
@@ -232,34 +247,39 @@
         }
 
         .btn-ui {
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
+            background-color: #101E35;
+            border: 1px solid #334155;
             color: #ffffff;
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
             font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .btn-ui:hover {
-            border-color: var(--calc-accent);
-            color: var(--calc-accent);
+            border-color: #00D6A0;
+            color: #00D6A0;
         }
 
-        /* SLIMMED DASHBOARD */
+        /* Deep Teal Result Dashboard */
         .results-dashboard {
-            background-color: var(--calc-surface);
-            border: 1px solid var(--calc-border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            margin-top: 1rem;
+            background-color: #103B42;
+            background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
+            box-shadow: inset 0 0 25px rgba(0, 214, 160, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid #184c55;
+            padding: 1rem;
+            margin-top: 1.5rem;
             display: grid;
             grid-template-columns: 1fr;
             gap: 0.5rem;
             align-items: center;
             text-align: center;
             box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
         }
 
         @media (min-width: 600px) {
@@ -274,20 +294,22 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: #94a3b8;
-            margin-bottom: 0.1rem;
+            margin-bottom: 0.2rem;
         }
 
+        /* Bright Mint-Teal Result Amount */
         .res-value {
+            color: #00D6A0;
             font-size: 1.7rem;
             font-weight: 800;
-            color: var(--calc-accent);
             line-height: 1;
+            text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3);
         }
 
         .res-subtext {
             font-size: 0.8rem;
             color: #cbd5e1;
-            margin-top: 0.1rem;
+            margin-top: 0.3rem;
         }
 
         .chart-gauge {
@@ -303,7 +325,7 @@
             margin-top: 0;
             margin-bottom: 1rem;
             color: var(--text-main);
-            line-height: 1.2;
+            line-height: 1.38;
         }
 
         h2.section-heading {
@@ -313,6 +335,7 @@
             color: var(--text-main);
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.35rem;
+            line-height: 1.38;
         }
 
         h3.sub-heading {
@@ -320,6 +343,7 @@
             font-weight: 600;
             margin: 1rem 0 0.35rem 0;
             color: var(--text-main);
+            line-height: 1.38;
         }
 
         p, ul, ol {
@@ -334,7 +358,7 @@
 
         .formula-callout {
             background: var(--bg-primary);
-            border-left: 4px solid var(--calc-accent);
+            border-left: 4px solid #00D6A0;
             border-radius: 4px;
             padding: 0.75rem 1rem;
             margin: 0.85rem 0;
@@ -343,11 +367,26 @@
             color: var(--text-main);
             font-size: 0.9rem;
         }
+        
+        .data-table-wrapper { 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            width: 100%; 
+            max-width: 100%; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+        }
 
+        /* --- MOBILE TWEAKS --- */
         @media (max-width: 767px) {
             .wrapper { margin: 0.15rem auto 1.5rem auto; padding: 0 0.4rem; }
-            .main-body { padding: 1.25rem 0.85rem; } 
-            .tool-suite { width: 94%; margin: 0.5rem auto 1.25rem auto; padding: 1.1rem; }
+            .main-body { padding: 1.25rem 0.85rem; overflow: hidden; } 
+            
+            /* No max-width: 100% applied here. Keeps it slim on tablets! */
+            .calculator-ui-box { padding: 20px 15px; } 
+            
+            h1.primary-title { font-size: 1.3rem; }
+            .res-value { font-size: 1.5rem; }
         }
     </style>
     
@@ -366,64 +405,70 @@
             <main class="main-body dyn-left-split">
                 <h1 class="primary-title">Exam Marks &amp; Percentage Calculator</h1>
 
+                <!-- .tool-suite is kept 100% wide for AdSense injection -->
                 <section class="tool-suite" aria-label="Interactive Calculator">
-                    <div class="tool-tabs" role="tablist">
-                        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-quick">Quick Total %</button>
-                        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-subjects">Subject Marksheet</button>
-                        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-cgpa">CBSE CGPA to %</button>
-                    </div>
+                    
+                    <!-- Premium Dark Glass Calculator Box -->
+                    <div class="calculator-ui-box">
+                        <div class="tool-tabs" role="tablist">
+                            <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-quick">Quick Total %</button>
+                            <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-subjects">Subject Marksheet</button>
+                            <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-cgpa">CBSE CGPA to %</button>
+                        </div>
 
-                    <!-- TAB 1: Quick Total -->
-                    <div id="tab-quick" class="tab-pane active" role="tabpanel">
-                        <div class="input-row">
-                            <label for="marksObtained">Marks Obtained:</label>
-                            <input id="marksObtained" class="form-control" type="number" min="0" step="any" placeholder="e.g. 420" />
+                        <!-- TAB 1: Quick Total -->
+                        <div id="tab-quick" class="tab-pane active" role="tabpanel">
+                            <div class="input-row">
+                                <label for="marksObtained">Marks Obtained:</label>
+                                <input id="marksObtained" class="form-control" type="number" min="0" step="any" placeholder="e.g. 420" />
+                            </div>
+                            <div class="input-row">
+                                <label for="maxMarks">Maximum/Total Marks:</label>
+                                <input id="maxMarks" class="form-control" type="number" min="1" step="any" placeholder="e.g. 500" />
+                            </div>
                         </div>
-                        <div class="input-row">
-                            <label for="maxMarks">Maximum/Total Marks:</label>
-                            <input id="maxMarks" class="form-control" type="number" min="1" step="any" placeholder="e.g. 500" />
-                        </div>
-                    </div>
 
-                    <!-- TAB 2: Subject Marksheet -->
-                    <div id="tab-subjects" class="tab-pane" role="tabpanel">
-                        <div id="subjectRowsContainer"></div>
-                        <div class="btn-action-group">
-                            <button id="addSubjectBtn" class="btn-ui" type="button">+ Add Subject</button>
-                            <button id="resetSubjectsBtn" class="btn-ui" type="button">Reset</button>
+                        <!-- TAB 2: Subject Marksheet -->
+                        <div id="tab-subjects" class="tab-pane" role="tabpanel">
+                            <div id="subjectRowsContainer"></div>
+                            <div class="btn-action-group">
+                                <button id="addSubjectBtn" class="btn-ui" type="button">+ Add Subject</button>
+                                <button id="resetSubjectsBtn" class="btn-ui" type="button">Reset</button>
+                            </div>
+                            <label style="font-size: 0.82rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; margin-top: 10px;">
+                                <input type="checkbox" id="bestOfFiveToggle" /> Apply "Best of 5" highest scores rule
+                            </label>
                         </div>
-                        <label style="font-size: 0.82rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
-                            <input type="checkbox" id="bestOfFiveToggle" /> Apply "Best of 5" highest scores rule
-                        </label>
-                    </div>
 
-                    <!-- TAB 3: CGPA Converter -->
-                    <div id="tab-cgpa" class="tab-pane" role="tabpanel">
-                        <div class="input-row">
-                            <label for="cgpaInput">Cumulative Grade Point Average (CGPA):</label>
-                            <input id="cgpaInput" class="form-control" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.4" />
+                        <!-- TAB 3: CGPA Converter -->
+                        <div id="tab-cgpa" class="tab-pane" role="tabpanel">
+                            <div class="input-row">
+                                <label for="cgpaInput">Cumulative Grade Point Average (CGPA):</label>
+                                <input id="cgpaInput" class="form-control" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.4" />
+                            </div>
+                            <div class="input-row">
+                                <label for="cgpaScale">Scale / Multiplier:</label>
+                                <select id="cgpaScale" class="form-control">
+                                    <option value="9.5">CBSE Standard Multiplier (9.5)</option>
+                                    <option value="10">Direct 10-Point Multiplier (10.0)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="input-row">
-                            <label for="cgpaScale">Scale / Multiplier:</label>
-                            <select id="cgpaScale" class="form-control">
-                                <option value="9.5">CBSE Standard Multiplier (9.5)</option>
-                                <option value="10">Direct 10-Point Multiplier (10.0)</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <!-- Dynamic Output Dashboard -->
-                    <div class="results-dashboard" aria-live="polite">
-                        <div>
-                            <div class="res-label">Your Percentage:</div>
-                            <output id="percentResult" class="res-value">0.00%</output>
-                            <div id="resDivision" class="res-subtext">Enter marks to see result &amp; division status</div>
-                        </div>
-                        <div class="chart-gauge">
-                            <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
-                                <path stroke="#334155" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path id="svgGaugePath" stroke="#38bdf8" stroke-dasharray="0, 100" stroke-width="3.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            </svg>
+                        <!-- Dynamic Output Dashboard -->
+                        <div class="results-dashboard" aria-live="polite">
+                            <div>
+                                <div class="res-label">Your Percentage:</div>
+                                <output id="percentResult" class="res-value">0.00%</output>
+                                <div id="resDivision" class="res-subtext">Enter marks to see result</div>
+                            </div>
+                            <div class="chart-gauge">
+                                <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                                    <path stroke="#1e293b" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <!-- Mint Teal Stroke for Gauge -->
+                                    <path id="svgGaugePath" stroke="#00D6A0" stroke-dasharray="0, 100" stroke-width="3.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -478,10 +523,10 @@
                     <!-- Visualizing Your Score Section -->
                     <h3 class="sub-heading">Visualizing Your Score</h3>
                     <p>The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
-                    <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 20px 0; padding: 20px; text-align: center;">
+                    <div class="data-table-wrapper" style="margin: 20px 0; padding: 20px; text-align: center; background: var(--bg-surface);">
                         <svg height="100%" style="max-width: 220px;" viewBox="0 0 400 400" width="100%">
                             <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
-                            <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#38bdf8"></path>
+                            <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#00D6A0"></path>
                             <circle cx="200" cy="200" fill="var(--bg-surface)" r="100"></circle>
                             <text fill="var(--text-main)" font-family="sans-serif" font-size="64" font-weight="bold" text-anchor="middle" x="200" y="222">84%</text>
                         </svg>
@@ -565,7 +610,7 @@
         function renderResults(percent, subtext) {
             if (isNaN(percent) || percent === null) {
                 percentResult.textContent = '0.00%';
-                if (resDivision) resDivision.textContent = subtext || 'Enter marks to see result & division status';
+                if (resDivision) resDivision.textContent = subtext || 'Enter marks to see result';
                 updateGauge(0);
                 return;
             }
@@ -579,7 +624,7 @@
             const max = parseFloat(maxMarks.value);
 
             if (isNaN(obtained) || isNaN(max)) {
-                renderResults(null, 'Enter marks to see result & division status');
+                renderResults(null, 'Enter marks to see result');
                 return;
             }
             if (max <= 0) {
