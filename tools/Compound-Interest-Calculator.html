@@ -89,7 +89,7 @@
             padding: 24px;
             width: 100%;
             max-width: 420px; /* SLIM IN X-DIRECTION */
-            margin: 0.5rem auto 1rem auto; /* Centered */
+            margin: 0.5rem auto 1rem auto; /* Centered perfectly */
             align-self: center;
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             border: 1px solid #1e293b;
@@ -142,15 +142,16 @@
             word-break: break-all;
         }
 
-        /* --- AD INSERTION CONTAINER (MATCHES CALCULATOR WIDTH) --- */
+        /* --- AD INSERTION CONTAINER --- */
+        /* CRITICAL FIX: Must remain 100% width so AdSense has space to load large desktop banners! */
         .adsense-in-content-wrapper, #dynInContentAd, #inContentAdContainer { 
-            margin: 0 auto 25px auto; 
+            margin: 20px auto 30px auto; 
             width: 100%; 
-            max-width: 420px; /* Forces Ad box to match the slim calculator exactly */
             display: flex; 
-            justify-content: center; /* Centers the actual AdSense iframe inside */
+            justify-content: center; 
             align-items: center;
-            overflow: hidden;
+            min-height: 90px;
+            clear: both;
         }
 
         /* --- EDITORIAL CONTENT --- */
@@ -191,11 +192,8 @@
             .wrapper { padding: 0 0.5rem; margin-top: 0.5rem; }
             .main-body { padding: 1.25rem 1rem; width: 100%; overflow: hidden; } 
             
-            /* Both Calculator and Ad Box expand gracefully on mobile */
-            .tool-suite, .adsense-in-content-wrapper, #dynInContentAd, #inContentAdContainer { 
-                width: 100%; max-width: 100%; margin: 0 auto 1.5rem auto; 
-            }
-            .tool-suite { padding: 20px 15px; }
+            /* Calculator scales down to fit screen if smaller than 420px */
+            .tool-suite { width: 100%; max-width: 100%; padding: 20px 15px; margin: 0 auto 1.5rem auto; }
             
             h1.page-title { font-size: 21px; }
             .result-value { font-size: 28px; }
@@ -256,8 +254,8 @@
                   
                 </div>
 
-                <!-- AD INJECTION HOOKS TARGETED BY NAVIGATION.JS -->
-                <!-- Now restricted to 420px wide and perfectly centered to match the calculator -->
+                <!-- AD INJECTION HOOKS -->
+                <!-- These are fully 100% wide again so AdSense can successfully render desktop banners -->
                 <div id="inContentAdContainer" class="adsense-in-content-wrapper"></div>
                 <div id="dynInContentAd" class="adsense-in-content-wrapper"></div>
 
