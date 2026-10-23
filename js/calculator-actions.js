@@ -49,26 +49,28 @@
     }
     .${MENU_CLASS} { 
       position: absolute; 
-      top: calc(100% + 7px); 
+      top: calc(100% + 5px); 
       right: 0; 
-      width: min(250px, calc(100vw - 32px)); 
+      width: min(240px, calc(100vw - 32px)); 
+      max-height: 320px;
+      overflow-y: auto;
       padding: 8px; 
       border: 1px solid rgba(90,160,235,.7); 
       border-radius: 14px; 
       background: linear-gradient(150deg, rgba(24,57,94,.99), rgba(5,20,41,.99)); 
       color: #f1f7ff; 
-      box-shadow: 0 15px 38px rgba(0,0,0,.35); 
+      box-shadow: 0 15px 38px rgba(0,0,0,.45); 
       backdrop-filter: blur(18px); 
       font: 14px/1.4 system-ui, sans-serif; 
       z-index: 99999; 
     }
     .${MENU_CLASS}[hidden] { display: none !important; }
-    .${MENU_CLASS} button { width: 100%; display: flex; align-items: center; gap: 11px; padding: 10px 8px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+    .${MENU_CLASS} button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
     .${MENU_CLASS} button:hover { background: rgba(120,180,245,.15); }
-    .${MENU_CLASS} .tqc-divider { height: 1px; margin: 5px 3px; background: rgba(160,195,235,.23); }
-    .${MENU_CLASS} .tqc-label { padding: 6px 8px 3px; color: #abc5e5; font-size: 12px; }
-    .${MENU_CLASS} .tqc-feedback { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-    .${MENU_CLASS} .tqc-feedback button { justify-content: center; }
+    .${MENU_CLASS} .tqc-divider { height: 1px; margin: 4px 2px; background: rgba(160,195,235,.23); }
+    .${MENU_CLASS} .tqc-label { padding: 4px 8px 2px; color: #abc5e5; font-size: 11px; }
+    .${MENU_CLASS} .tqc-feedback { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .${MENU_CLASS} .tqc-feedback button { justify-content: center; padding: 6px; }
     .${MENU_CLASS} .tqc-feedback button[aria-pressed="true"] { color: #70e3ff; background: rgba(35,190,255,.17); }
     .tqc-actions-toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); padding: 11px 16px; border-radius: 12px; background: #102b4c; color: white; box-shadow: 0 8px 28px #0004; font: 14px system-ui, sans-serif; z-index: 100000; }
   `;
@@ -125,9 +127,10 @@
     else { await copyText(data.text + " " + data.url); notify("Link copied."); }
   }
 
-  function createMenu(card, btn) {
+  function createMenu(card, btn, anchor) {
     const menu = document.createElement("div");
-    menu.className = MENU_CLASS; menu.hidden = true;
+    menu.className = MENU_CLASS; 
+    menu.hidden = true;
     menu.innerHTML = `
       <button data-act="download">Download result</button>
       <button data-act="print">Print result</button>
@@ -165,8 +168,21 @@
 
     btn.addEventListener("click", e => { 
       e.stopPropagation(); 
-      menu.hidden = !menu.hidden; 
-      btn.setAttribute("aria-expanded", !menu.hidden); 
+      const willOpen = menu.hidden;
+      menu.hidden = !willOpen; 
+      btn.setAttribute("aria-expanded", willOpen); 
+
+      // Smart positioning: if the menu goes past the bottom of the screen, open it UPWARDS instead!
+      if (willOpen) {
+        const rect = menu.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight - 10) {
+          menu.style.top = "auto";
+          menu.style.bottom = "calc(100% + 5px)";
+        } else {
+          menu.style.top = "calc(100% + 5px)";
+          menu.style.bottom = "auto";
+        }
+      }
     });
     
     return menu;
@@ -185,8 +201,8 @@
     btn.setAttribute("aria-label", "Calculator actions");
     btn.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>';
     
-    anchor.append(btn, createMenu(card, btn));
-    card.appendChild(anchor); // Appended as last child so it stays inside the top-right corner of the card
+    anchor.append(btn, createMenu(card, btn, anchor));
+    card.appendChild(anchor);
   }
 
   const scan = () => document.querySelectorAll(RESULT_SELECTOR).forEach(addMenu);
