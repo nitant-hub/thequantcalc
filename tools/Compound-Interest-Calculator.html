@@ -89,28 +89,35 @@
             margin-bottom: 2rem;
         }
 
-        /* --- THE SLIM & DARK CALCULATOR CARD --- */
+        /* --- PREMIUM DARK GLASS CALCULATOR CARD --- */
         .calculator-ui-box {
-            background-color: #020617; /* Deep pitch-dark blue/black */
+            background-color: #071426; 
+            background-image: 
+                radial-gradient(circle at top left, rgba(22, 200, 244, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at top right, rgba(0, 214, 160, 0.08) 0%, transparent 40%),
+                linear-gradient(135deg, rgba(7, 20, 38, 0.8) 0%, rgba(4, 10, 20, 0.9) 100%);
             border-radius: 16px;
             padding: 24px;
             width: 100%;
             max-width: 420px; /* SLIM IN X-DIRECTION */
-            margin: 0 auto; /* Centers the calculator box */
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            margin: 0 auto;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border: 1px solid #1e293b;
         }
         
         [data-theme="dark"] .calculator-ui-box {
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.08);
         }
 
         .calc-input-group { margin-bottom: 16px; width: 100%; }
         .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #94a3b8; }
         
-        /* Dark styled inputs to match the deep background */
+        /* Premium Dark Slate Inputs */
         .calc-input {
-            background-color: #0f172a;
+            background-color: #101E35;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.02);
             color: #f8fafc;
             border: 1px solid #334155;
             border-radius: 8px;
@@ -123,10 +130,13 @@
         
         .calc-input:focus { border-color: #38bdf8; box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
 
+        /* Deep Teal Result Panel */
         .result-box {
-            background-color: #0f172a;
+            background-color: #103B42;
+            background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
+            box-shadow: inset 0 0 25px rgba(0, 214, 160, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            border: 1px solid #334155;
+            border: 1px solid #184c55;
             padding: 20px;
             text-align: center;
             margin-top: 24px;
@@ -139,13 +149,15 @@
             background: linear-gradient(90deg, #3b82f6, #8b5cf6);
         }
 
+        /* Bright Mint-Teal Result Amount */
         .result-value {
-            color: #38bdf8;
+            color: #00D6A0;
             font-size: 32px;
             font-weight: 800;
             display: block;
             margin-top: 5px;
             word-break: break-all;
+            text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3);
         }
 
         /* --- EDITORIAL CONTENT --- */
@@ -214,7 +226,7 @@
                 <!-- .tool-suite is kept 100% wide so navigation.js has room to inject AdSense below the calculator box! -->
                 <div class="tool-suite">
                   
-                  <!-- The visual calculator box is kept slim and centered -->
+                  <!-- Premium Dark Glass Calculator Box -->
                   <div class="calculator-ui-box">
                       <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Fixed Deposit Calculator</h2>
                       
