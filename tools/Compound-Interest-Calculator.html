@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fixed Deposit & Compound Interest Calculator | thequantcals</title>
     
+    <script>
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "thequantcals",
-      "url": "https://thequantcals.com",
-      "description": "Calculate your Compound Interest and Fixed Deposit maturity value for free."
+      "@type": "WebApplication",
+      "name": "Fixed Deposit & Compound Interest Calculator",
+      "url": "https://thequantcals.com/tools/fixed-deposit-calculator.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "description": "Calculate your Fixed Deposit maturity value and compound interest growth instantly for free."
     }
     </script>
 
@@ -24,7 +30,6 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            --header-height: 55px; 
         }
 
         [data-theme="dark"] {
@@ -36,39 +41,14 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
+        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
         /* Typography - Strict Line Heights Enforced */
         h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
         p, li, label, span, td, th, option, select, input { line-height: 1.33 !important; }
 
-        /* Header - GUARANTEED FIXED POSITION */
-        header#siteHeader {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
-            background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
-            border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol { background: var(--accent-gradient); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
-        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
-        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1001; }
-        .menu-btn span { width: 24px; height: 3px; background-color: #ffffff; border-radius: 2px; }
-        
-        /* Mobile Menu */
-        .nav-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border-color); padding: 5rem 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: right 0.3s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 10001; }
-        .nav-menu.active { right: 0; }
-        .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
-        .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
-
-        /* --- THE GRID & TABLET FIX (768px Breakpoint) --- */
-        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
+        /* --- THE GRID & LAYOUT --- */
+        .wrapper { max-width: 1200px; width: 100%; margin: 0.5rem auto 2rem auto; padding: 0 1rem; flex: 1; }
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         
         .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
@@ -78,17 +58,16 @@
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        /* --- PREMIUM MODERN SAAS CALCULATOR UI --- */
+        /* --- PREMIUM CALCULATOR CARD (Symmetrical Margins) --- */
         .calculator-card {
-            /* Professional Non-White SaaS Gradient */
             background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 100%);
             border-radius: 16px;
             border: 1px solid #cbd5e1;
-            /* Semi-3D pop with inset white highlight and soft shadow */
             box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
             padding: 25px;
-            margin: 0 auto 25px auto;
-            max-width: 100%;
+            width: 85%;
+            margin: 0.5rem auto 25px auto;
+            align-self: center;
         }
         
         [data-theme="dark"] .calculator-card {
@@ -101,7 +80,7 @@
         .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: var(--text-main); }
         
         .calc-input {
-            background-color: #ffffff; /* Crisp white inputs pop perfectly off the slate background */
+            background-color: #ffffff;
             color: var(--text-main);
             border: 1px solid #cbd5e1;
             border-radius: 8px;
@@ -127,7 +106,7 @@
 
         .input-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 18px;
         }
 
@@ -154,28 +133,21 @@
             background: var(--accent-gradient);
         }
 
-        /* ULTRA-SLIM MOBILE SPACING ADJUSTMENTS */
+        /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 767px) {
-            .sidebar { display: none; }
-            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
+            .calculator-card { width: 100%; padding: 20px 15px; }
+            .wrapper { margin: 0.25rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 1rem; } 
             .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
-            .calculator-card { padding: 20px 15px; }
             .input-grid { grid-template-columns: 1fr; gap: 15px; }
         }
 
         @media (min-width: 768px) { 
             .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } 
-            .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); }
         }
 
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
-        .sidebar-list a:hover { color: #7c3aed; }
-        
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 4rem; }
+        /* Empty Sidebar container - dynamically populated by navigation.js */
+        .sidebar { background: transparent; padding: 0; border: none; height: fit-content; }
 
         /* Data Table Responsive Design */
         .data-table-wrapper { overflow-x: auto; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
@@ -184,29 +156,8 @@
         .data-table td { padding: 12px; border: 1px solid var(--border-color); }
         .data-table tr:nth-child(even) { background-color: var(--bg-primary); }
     </style>
-    
-    <script>
-        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
-    </script>
 </head>
 <body>
-
-    <header id="siteHeader">
-        <a href="/" class="brand">
-            <div class="logo-symbol">&sum;</div>
-            <div class="brand-title">thequantcals</div>
-        </a>
-        <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle">🌙</button>
-            <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
-        </div>
-        <nav class="nav-menu" id="navMenu">
-            <button id="closeMenuBtn" class="close-menu-btn">×</button>
-            <a href="/">🏠 Home Base</a>
-            <a href="/#finance">📈 Finance Tools</a>
-            <a href="/#math">📐 Mathematics</a>
-        </nav>
-    </header>
 
     <div class="wrapper">
         
@@ -223,24 +174,24 @@
                   
                   <div class="calc-input-group">
                     <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
-                    <input id="principal" class="calc-input" oninput="calculateFinance()" type="number" value="10000" />
+                    <input id="principal" class="calc-input" type="number" value="10000" />
                   </div>
 
                   <div class="input-grid">
                       <div class="calc-input-group">
                         <label class="calc-label" for="interestRate">Annual Interest Rate (%):</label>
-                        <input id="interestRate" class="calc-input" oninput="calculateFinance()" type="number" value="7.1" />
+                        <input id="interestRate" class="calc-input" type="number" value="7.1" />
                       </div>
 
                       <div class="calc-input-group">
                         <label class="calc-label" for="years">Time Period (Years):</label>
-                        <input id="years" class="calc-input" oninput="calculateFinance()" type="number" value="5" />
+                        <input id="years" class="calc-input" type="number" value="5" />
                       </div>
                   </div>
 
                   <div class="calc-input-group" style="margin-bottom: 25px;">
                     <label class="calc-label" for="compounding">Compounding Frequency:</label>
-                    <select id="compounding" class="calc-input" onchange="calculateFinance()">
+                    <select id="compounding" class="calc-input">
                         <option value="1">Yearly (12 Months)</option>
                         <option value="2">Half-Yearly (6 Months)</option>
                         <option value="4" selected>Quarterly (3 Months)</option>
@@ -250,33 +201,11 @@
                   <div class="result-box">
                     <div class="result-accent-line"></div>
                     <span style="color: var(--text-muted); display: block; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Estimated Maturity Value</span>
-                    <span id="financeResult" style="color: #2563eb; font-size: 36px; font-weight: 800;">14,213.63</span>
+                    <span id="financeResult" aria-live="polite" style="color: #2563eb; font-size: 36px; font-weight: 800;">14,213.63</span>
                   </div>
                   
                   <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 20px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
                 </div>
-
-                <script>
-                function calculateFinance() {
-                  var p = parseFloat(document.getElementById('principal').value);
-                  var r = parseFloat(document.getElementById('interestRate').value);
-                  var t = parseFloat(document.getElementById('years').value);
-                  var n = parseFloat(document.getElementById('compounding').value);
-                  
-                  if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r <= 0 || t <= 0) {
-                    document.getElementById('financeResult').innerText = "0.00";
-                    return;
-                  }
-                  
-                  // Dynamic Compound Formula A = P (1 + r/n)^(nt)
-                  var amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
-                  
-                  document.getElementById('financeResult').innerText = amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                }
-                
-                // Initialize default value on load
-                window.addEventListener('DOMContentLoaded', calculateFinance);
-                </script>
 
                 <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 20px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
 
@@ -440,52 +369,61 @@
 
             </main>
 
-            <aside class="sidebar">
-                <h3>🔥 Popular Tools</h3>
-                <ul class="sidebar-list">
-                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
-                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
-                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
-                </ul>
-                <h3 style="margin-top: 2rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5 !important;">All tools process locally in your browser.</p>
-            </aside>
+            <!-- EMPTY SIDEBAR: Populated dynamically by navigation.js -->
+            <aside class="sidebar"></aside>
 
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 thequantcals. All rights reserved.</p>
-    </footer>
-
+    <!-- Vanilla JS Calculation Script wrapped in IIFE -->
     <script>
-        // Core Theme & Layout Logic
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlEl = document.documentElement;
-        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
-        themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') { 
-                htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); 
-            } else { 
-                htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); 
-            }
-        });
+    (function () {
+      'use strict';
 
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        menuBtn.addEventListener('click', () => navMenu.classList.add('active'));
-        closeMenuBtn.addEventListener('click', () => navMenu.classList.remove('active'));
+      function calculateFinance() {
+        const pInput = document.getElementById('principal');
+        const rInput = document.getElementById('interestRate');
+        const tInput = document.getElementById('years');
+        const nInput = document.getElementById('compounding');
+        const resultEl = document.getElementById('financeResult');
 
-        const mainHeader = document.getElementById('siteHeader');
-        let lastScrollY = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY <= 0) { mainHeader.style.transform = 'translateY(0)'; return; }
-            if (currentScrollY > lastScrollY && currentScrollY > 55) { mainHeader.style.transform = 'translateY(-100%)'; } 
-            else { mainHeader.style.transform = 'translateY(0)'; }
-            lastScrollY = currentScrollY;
-        });
+        if (!pInput || !rInput || !tInput || !nInput || !resultEl) return;
+
+        const p = parseFloat(pInput.value);
+        const r = parseFloat(rInput.value);
+        const t = parseFloat(tInput.value);
+        const n = parseFloat(nInput.value);
+        
+        if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r <= 0 || t <= 0) {
+          resultEl.innerText = "0.00";
+          return;
+        }
+        
+        // Compound Formula: A = P (1 + r/n)^(nt)
+        const amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
+        
+        resultEl.innerText = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      // Attach event listeners for real-time calculation
+      ['principal', 'interestRate', 'years', 'compounding'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', calculateFinance);
+          el.addEventListener('change', calculateFinance);
+        }
+      });
+
+      // Run on initial load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', calculateFinance);
+      } else {
+        calculateFinance();
+      }
+    })();
     </script>
+
+    <!-- Global Navigation & Dynamic Sidebar Engine -->
+    <script src="/navigation.js"></script>
 </body>
 </html>
