@@ -7,19 +7,61 @@
   if (window.__TQC_ACTIONS_LOADED__) return;
   window.__TQC_ACTIONS_LOADED__ = true;
 
-  // Updated to include .results-dashboard for the Exam Marks Calculator
   const RESULT_SELECTOR = "[data-calculator-result], .calculator-result, .result-card, .result-box, .result-container, .calculation-result, #result, #results, .result, .results-dashboard";
   const VALUE_SELECTOR = "[data-result-value], .result-value, .result-number, .percentage-value, .final-result, output";
   const MENU_CLASS = "tqc-actions-menu";
 
   const style = document.createElement("style");
   style.textContent = `
-    .tqc-actions-host { position: relative !important; overflow: visible !important; }
-    .tqc-actions-anchor { position: relative; display: flex; justify-content: flex-end; margin-bottom: 5px; z-index: 100; }
-    .tqc-actions-trigger { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(130,190,255,.3); background: rgba(100,150,210,.22); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
-    .tqc-actions-trigger:hover, .tqc-actions-trigger[aria-expanded="true"] { background: rgba(35,190,255,.23); border-color: #32baff; }
-    .tqc-actions-trigger svg { width: 23px; height: 23px; fill: currentColor; }
-    .${MENU_CLASS} { position: absolute; top: calc(100% + 7px); right: 0; width: min(250px, calc(100vw - 32px)); padding: 8px; border: 1px solid rgba(90,160,235,.7); border-radius: 14px; background: linear-gradient(150deg, rgba(24,57,94,.99), rgba(5,20,41,.99)); color: #f1f7ff; box-shadow: 0 15px 38px rgba(0,0,0,.35); backdrop-filter: blur(18px); font: 14px/1.4 system-ui, sans-serif; z-index: 99999; }
+    .tqc-actions-host { 
+      position: relative !important; 
+      overflow: visible !important; 
+    }
+    .tqc-actions-anchor { 
+      position: absolute !important; 
+      top: 10px; 
+      right: 10px; 
+      display: flex; 
+      justify-content: flex-end; 
+      z-index: 100; 
+    }
+    .tqc-actions-trigger { 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      border: 1px solid rgba(130,190,255,.3); 
+      background: rgba(100,150,210,.22); 
+      color: #fff; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      transition: background .2s; 
+    }
+    .tqc-actions-trigger:hover, .tqc-actions-trigger[aria-expanded="true"] { 
+      background: rgba(35,190,255,.23); 
+      border-color: #32baff; 
+    }
+    .tqc-actions-trigger svg { 
+      width: 21px; 
+      height: 21px; 
+      fill: currentColor; 
+    }
+    .${MENU_CLASS} { 
+      position: absolute; 
+      top: calc(100% + 7px); 
+      right: 0; 
+      width: min(250px, calc(100vw - 32px)); 
+      padding: 8px; 
+      border: 1px solid rgba(90,160,235,.7); 
+      border-radius: 14px; 
+      background: linear-gradient(150deg, rgba(24,57,94,.99), rgba(5,20,41,.99)); 
+      color: #f1f7ff; 
+      box-shadow: 0 15px 38px rgba(0,0,0,.35); 
+      backdrop-filter: blur(18px); 
+      font: 14px/1.4 system-ui, sans-serif; 
+      z-index: 99999; 
+    }
     .${MENU_CLASS}[hidden] { display: none !important; }
     .${MENU_CLASS} button { width: 100%; display: flex; align-items: center; gap: 11px; padding: 10px 8px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
     .${MENU_CLASS} button:hover { background: rgba(120,180,245,.15); }
@@ -114,7 +156,6 @@
       if (act === "yes" || act === "no") notify("Thanks for your feedback.");
     });
 
-    // Close menu when clicking outside
     document.addEventListener("click", (evt) => {
       if (!menu.hidden && !btn.contains(evt.target) && !menu.contains(evt.target)) {
         menu.hidden = true;
@@ -145,7 +186,7 @@
     btn.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>';
     
     anchor.append(btn, createMenu(card, btn));
-    card.insertBefore(anchor, card.firstChild);
+    card.appendChild(anchor); // Appended as last child so it stays inside the top-right corner of the card
   }
 
   const scan = () => document.querySelectorAll(RESULT_SELECTOR).forEach(addMenu);
@@ -156,7 +197,6 @@
     scan();
   }
 
-  // Support calculators that update their HTML dynamically
   const observer = new MutationObserver(scan);
   observer.observe(document.body, { childList: true, subtree: true });
 })();
