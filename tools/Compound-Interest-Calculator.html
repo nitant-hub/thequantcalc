@@ -76,7 +76,7 @@
         .wrapper { max-width: 1200px; width: 100%; margin: 0.5rem auto 2rem auto; padding: 0 1rem; flex: 1; box-sizing: border-box; }
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; width: 100%; }
         
-        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); box-sizing: border-box; overflow: hidden; }
+        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); box-sizing: border-box; }
         
         /* BREADCRUMB SLIM SPACING */
         .breadcrumb { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted); font-weight: 500; }
@@ -90,7 +90,7 @@
             border: 1px solid var(--border-color);
             padding: 20px;
             width: 100%;
-            margin: 0 0 15px 0;
+            margin: 0 0 20px 0;
             box-sizing: border-box;
         }
         
@@ -157,7 +157,7 @@
         /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 767px) {
             .wrapper { padding: 0 0.5rem; margin: 0.25rem auto 1.5rem auto; }
-            .main-body { padding: 1.25rem 0.75rem; border-radius: 12px; } 
+            .main-body { padding: 1.25rem 0.85rem; border-radius: 12px; } 
             .calculator-card { padding: 15px 12px; }
             .breadcrumb { font-size: 0.85rem; padding-left: 0.15rem; }
             .input-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -228,8 +228,8 @@
                   <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
                 </div>
 
-                <!-- TARGET CONTAINER FOR NAVIGATION.JS IN-CONTENT HORIZONTAL AD -->
-                <div id="dynInContentAd" style="margin: 0 0 25px 0; width: 100%;"></div>
+                <!-- DUAL AD-INJECTION TARGETS FOR NAVIGATION.JS -->
+                <div id="inContentAdContainer" class="adsense-in-content-wrapper" style="margin: 0 0 25px 0; width: 100%;"></div>
 
                 <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 22px; margin-top: 10px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
 
@@ -451,4 +451,3 @@
     <script src="/navigation.js"></script>
 </body>
 </html>
-
