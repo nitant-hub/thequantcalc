@@ -1961,3 +1961,14 @@
     initNavigation();
   }
 })();
+/* TheQuantCal — Load shared calculator actions */
+(function () {
+  if (document.querySelector('script[data-tqc-actions-loader="true"]')) return;
+  const script = document.createElement("script");
+  script.src = "/js/calculator-actions.js";
+  script.defer = true;
+  script.dataset.tqcActionsLoader = "true";
+  document.head.appendChild(script);
+})();
+ 
+
