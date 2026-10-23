@@ -156,7 +156,7 @@
         width: min(258px, calc(100vw - 24px));
         max-height: min(420px, calc(100vh - 24px));
         max-height: min(420px, calc(100dvh - 24px));
-        padding: 5px;
+        padding: 3px;
         overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -174,7 +174,7 @@
         opacity: 0;
         transform: translateY(5px) scale(.985);
         transition: opacity .15s ease, transform .15s ease;
-        font: 13.5px/1.3 system-ui,-apple-system,BlinkMacSystemFont,
+        font: 13px/1.2 system-ui,-apple-system,BlinkMacSystemFont,
               "Segoe UI",sans-serif;
       }
       .${MENU_CLASS}::-webkit-scrollbar { width: 6px; }
@@ -190,9 +190,9 @@
       .${MENU_CLASS}.tqc-opening-down { transform-origin: top left; }
 
       .tqc-actions-heading {
-        padding: 5px 8px 4px;
+        padding: 3px 8px 2px;
         color: #94a3b8;
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 750;
         letter-spacing: .12em;
         text-transform: uppercase;
@@ -201,14 +201,14 @@
       .${MENU_CLASS} button {
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 8px;
         box-sizing: border-box;
         width: 100%;
-        min-height: 36px;
+        min-height: 29px;
         margin: 0;
-        padding: 5px 8px;
+        padding: 2px 8px;
         border: 0;
-        border-radius: 9px;
+        border-radius: 8px;
         background: transparent;
         color: #e2e8f0;
         text-align: left;
@@ -224,40 +224,41 @@
 
       .tqc-actions-icon {
         display: inline-flex;
-        flex: 0 0 22px;
+        flex: 0 0 19px;
         align-items: center;
         justify-content: center;
-        width: 22px;
-        height: 22px;
-        border-radius: 7px;
+        width: 19px;
+        height: 19px;
+        border-radius: 6px;
         background: rgba(59,130,246,.14);
         color: #7dd3fc;
-        font-size: 15px;
+        font-size: 13px;
       }
 
       .tqc-actions-divider {
         height: 1px;
-        margin: 3px 4px;
+        margin: 2px 4px;
         background: rgba(148,163,184,.15);
       }
 
       .tqc-actions-feedback-label {
         display: flex;
         align-items: center;
-        gap: 9px;
-        min-height: 30px;
-        padding: 3px 8px 0;
+        gap: 8px;
+        min-height: 25px;
+        padding: 1px 8px 0;
         color: #e2e8f0;
       }
 
       .tqc-actions-feedback {
         display: flex;
         gap: 6px;
-        padding: 2px 4px 5px;
+        padding: 1px 4px 3px;
       }
       .${MENU_CLASS} .tqc-feedback-choice {
         justify-content: center;
-        min-height: 34px;
+        min-height: 27px;
+        padding: 1px 8px;
         border: 1px solid rgba(148,163,184,.22);
         background: rgba(255,255,255,.035);
       }
@@ -293,8 +294,8 @@
       }
 
       @media (pointer: coarse) {
-        .${MENU_CLASS} button { min-height: 38px; }
-        .${MENU_CLASS} .tqc-feedback-choice { min-height: 36px; }
+        .${MENU_CLASS} button { min-height: 32px; }
+        .${MENU_CLASS} .tqc-feedback-choice { min-height: 30px; }
       }
 
       @media (prefers-reduced-motion: reduce) {
