@@ -724,6 +724,7 @@
    * ------------------------------------------------------------------ */
   function positionMenu(menu, trigger) {
     var GAP = 8;
+    var AD_GAP = 16; // Minimum clearance kept between the menu and any ad.
     var MARGIN = 12;
     var MIN_USABLE = 88;
     var CAP = 420;
@@ -770,7 +771,7 @@
     ];
 
     ads.forEach(function (ad) {
-      leftOptions.push(ad.right + GAP, ad.left - GAP - width);
+      leftOptions.push(ad.right + AD_GAP, ad.left - AD_GAP - width);
     });
 
     var seen = {};
@@ -807,20 +808,20 @@
 
         ads.forEach(function (ad) {
           var overlapsColumn =
-            ad.left < colR + GAP && ad.right > colL - GAP;
+            ad.left < colR + AD_GAP && ad.right > colL - AD_GAP;
           if (!overlapsColumn) return;
 
           if (dir === "down") {
-            if (ad.top - GAP < anchor && ad.bottom + GAP > anchor) {
+            if (ad.top - AD_GAP < anchor && ad.bottom + AD_GAP > anchor) {
               blocked = true; // Menu would start inside an ad zone.
-            } else if (ad.top - GAP >= anchor) {
-              height = Math.min(height, ad.top - GAP - anchor);
+            } else if (ad.top - AD_GAP >= anchor) {
+              height = Math.min(height, ad.top - AD_GAP - anchor);
             }
           } else {
-            if (ad.top - GAP < anchor && ad.bottom + GAP > anchor) {
+            if (ad.top - AD_GAP < anchor && ad.bottom + AD_GAP > anchor) {
               blocked = true;
-            } else if (ad.bottom + GAP <= anchor) {
-              height = Math.min(height, anchor - (ad.bottom + GAP));
+            } else if (ad.bottom + AD_GAP <= anchor) {
+              height = Math.min(height, anchor - (ad.bottom + AD_GAP));
             }
           }
         });
