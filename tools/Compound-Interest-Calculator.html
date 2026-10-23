@@ -83,8 +83,8 @@
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        /* --- CALCULATOR CARD STYLE --- */
-        .calculator-card {
+        /* --- TOOL SUITE CALCULATOR CARD (HOOKED TO NAVIGATION.JS) --- */
+        .tool-suite {
             background: var(--bg-primary);
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -94,7 +94,7 @@
             box-sizing: border-box;
         }
         
-        [data-theme="dark"] .calculator-card {
+        [data-theme="dark"] .tool-suite {
             background: rgba(15, 23, 42, 0.4);
             border-color: var(--border-color);
         }
@@ -158,7 +158,7 @@
         @media (max-width: 767px) {
             .wrapper { padding: 0 0.5rem; margin: 0.25rem auto 1.5rem auto; }
             .main-body { padding: 1.25rem 0.85rem; border-radius: 12px; } 
-            .calculator-card { padding: 15px 12px; }
+            .tool-suite { padding: 15px 12px; }
             .breadcrumb { font-size: 0.85rem; padding-left: 0.15rem; }
             .input-grid { grid-template-columns: 1fr; gap: 12px; }
         }
@@ -190,7 +190,7 @@
             
             <main class="main-body">
 
-                <div class="calculator-card">
+                <div class="tool-suite">
                   <h2 style="border-bottom: 2px solid var(--border-color); color: #2563eb; font-size: 20px; margin-bottom: 18px; margin-top: 0px; padding-bottom: 10px; text-align: center; font-weight: 700;">Fixed Deposit & Compound Interest</h2>
                   
                   <div class="calc-input-group">
@@ -227,10 +227,6 @@
                   
                   <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
                 </div>
-
-                <!-- AD INJECTION HOOKS TARGETED BY NAVIGATION.JS -->
-                <div id="inContentAdContainer" class="adsense-in-content-wrapper" style="margin: 0 0 25px 0; width: 100%;"></div>
-                <div id="dynInContentAd" style="margin: 0 0 25px 0; width: 100%;"></div>
 
                 <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 22px; margin-top: 10px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
 
