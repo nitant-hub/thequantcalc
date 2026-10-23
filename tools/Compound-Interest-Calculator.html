@@ -82,14 +82,14 @@
             text-align: center;
         }
 
-        /* --- THE SLIM & DARK CALCULATOR CARD (Targeted by navigation.js) --- */
+        /* --- THE SLIM & DARK CALCULATOR CARD --- */
         .tool-suite {
-            background-color: #020617; /* Deep pitch-dark blue/black from photo 2 */
+            background-color: #020617; /* Deep pitch-dark blue/black */
             border-radius: 16px;
             padding: 24px;
             width: 100%;
             max-width: 420px; /* SLIM IN X-DIRECTION */
-            margin: 0.5rem auto 2.5rem auto; /* Centered */
+            margin: 0.5rem auto 1rem auto; /* Centered */
             align-self: center;
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             border: 1px solid #1e293b;
@@ -142,6 +142,17 @@
             word-break: break-all;
         }
 
+        /* --- AD INSERTION CONTAINER (MATCHES CALCULATOR WIDTH) --- */
+        .adsense-in-content-wrapper, #dynInContentAd, #inContentAdContainer { 
+            margin: 0 auto 25px auto; 
+            width: 100%; 
+            max-width: 420px; /* Forces Ad box to match the slim calculator exactly */
+            display: flex; 
+            justify-content: center; /* Centers the actual AdSense iframe inside */
+            align-items: center;
+            overflow: hidden;
+        }
+
         /* --- EDITORIAL CONTENT --- */
         .article-content { width: 100%; margin-top: 1rem; max-width: 100%; }
         .article-content h2 { font-size: 22px; color: var(--text-main); margin: 2rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
@@ -179,7 +190,13 @@
         @media (max-width: 767px) { 
             .wrapper { padding: 0 0.5rem; margin-top: 0.5rem; }
             .main-body { padding: 1.25rem 1rem; width: 100%; overflow: hidden; } 
-            .tool-suite { width: 100%; padding: 20px 15px; margin: 0 auto 1.5rem auto; }
+            
+            /* Both Calculator and Ad Box expand gracefully on mobile */
+            .tool-suite, .adsense-in-content-wrapper, #dynInContentAd, #inContentAdContainer { 
+                width: 100%; max-width: 100%; margin: 0 auto 1.5rem auto; 
+            }
+            .tool-suite { padding: 20px 15px; }
+            
             h1.page-title { font-size: 21px; }
             .result-value { font-size: 28px; }
             .breadcrumb { font-size: 0.85rem; padding-left: 0.15rem; }
@@ -187,9 +204,6 @@
 
         /* Empty Sidebar placeholder */
         .sidebar { width: 100%; }
-        
-        /* Utility for Ad Insertion */
-        .adsense-in-content-wrapper { margin: 0 auto 25px auto; width: 100%; max-width: 100%; }
     </style>
 </head>
 <body>
@@ -206,7 +220,7 @@
                 
                 <h1 class="page-title">Fixed Deposit & Compound Interest Calculator</h1>
 
-                <!-- Slim & Dark Calculator Card. navigation.js will inject the ad right below this element -->
+                <!-- Slim & Dark Calculator Card -->
                 <div class="tool-suite">
                   <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Fixed Deposit Calculator</h2>
                   
@@ -243,6 +257,7 @@
                 </div>
 
                 <!-- AD INJECTION HOOKS TARGETED BY NAVIGATION.JS -->
+                <!-- Now restricted to 420px wide and perfectly centered to match the calculator -->
                 <div id="inContentAdContainer" class="adsense-in-content-wrapper"></div>
                 <div id="dynInContentAd" class="adsense-in-content-wrapper"></div>
 
