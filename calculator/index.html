@@ -1633,6 +1633,116 @@
         @media (max-width: 330px) { .bq-more { grid-template-columns: 1fr; } }
 
         .blogger-calc-classic button, .blogger-calc-classic .bc-btn { touch-action: manipulation; }
+
+        /* ===== v24: slimmer display controls, result settings, tighter keypads ===== */
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-screen-container { padding: 4px 5px 5px; gap: 3px; }
+        .bq-tools .bq-tb { min-height: 22px; padding: 2px 9px; font-size: 11px; line-height: 1.1; }
+        .bq-tools .bq-tb.bq-ic { min-width: 26px; padding: 2px 6px; }
+        .bq-tools { gap: 4px; padding-top: 0; padding-bottom: 0; }
+        @media (max-width: 400px) { .bq-tools .bq-tb { padding: 2px 8px; font-size: 10.5px; min-width: 24px; } }
+        .bq-scroll { max-height: 340px; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bq-scroll { padding: 1px 4px; }
+        .bq-xbtn { width: 28px; height: 28px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+        .bq-xbtn:active { cursor: grabbing; }
+        .bq-scroll .bq-card { padding: 3px 4px 4px; }
+        .bq-scroll .bq-chead .bq-pdel { margin-right: 32px; }
+        .bc-out-meta { min-height: 0; }
+        #bc-set-btn { font-size: 10.5px !important; padding: 2px 8px !important; min-height: 22px; line-height: 1.2; white-space: nowrap; }
+
+        /* the display pop-up: slim header, no repeated input/result, slim cards */
+        .bq-dp-head { padding: 4px 8px; font-size: 14px; gap: 6px; }
+        .bq-dp-clear { min-height: 28px; padding: 0 12px; font-size: 12px; }
+        .bq-dp-x { width: 30px; height: 30px; font-size: 13px; }
+        .bq-dp-filters { padding: 4px 8px; gap: 5px; }
+        .bq-dp-chip { min-height: 28px; padding: 0 10px; font-size: 12px; }
+        .bq-dp-date input { font-size: 12px; width: 108px; }
+        .bq-dp-list { padding: 6px 8px; gap: 5px; }
+        .bq-dp-card { padding: 3px 10px 4px; border-radius: 11px; font-size: 20px; }
+        .bq-dp-ch { margin-bottom: 0; font-size: 11px; }
+        .bq-dp-ch .bq-pdel { min-height: 24px; padding: 2px 6px; font-size: 13px; }
+        .bq-dp-card .bq-chip { padding: 1px 6px; font-size: 11px; }
+        .bq-dp-card .bq-pexpr { line-height: 1.15; }
+        .bq-dp-card .bq-pres { margin-top: 0; line-height: 1.12; }
+        .bq-dp-card .bq-dec { margin-top: 0; }
+        #bc-dpop .bq-dp-live { display: none; }
+
+        /* result settings (decimal places) */
+        #bc-setpop { position: absolute; inset: 0; z-index: 97; display: flex; align-items: center; justify-content: center; padding: 10px; background: rgba(15, 23, 42, .38); border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #1d1d1f; }
+        #bc-setpop[hidden] { display: none; }
+        #bc-setpop * { box-sizing: border-box; }
+        #bc-setpop button { font-family: inherit; cursor: pointer; touch-action: manipulation; }
+        .bq-st-card { width: 100%; max-width: 380px; max-height: 100%; overflow-y: auto; background: linear-gradient(180deg, #ffffff, #f6f8fc); border-radius: 18px; padding: 10px 12px 10px; box-shadow: 0 18px 44px rgba(15, 23, 42, .35), 0 0 0 1px rgba(15, 23, 42, .06); }
+        .bq-st-head { display: flex; align-items: center; justify-content: space-between; font-size: 15px; margin-bottom: 4px; }
+        .bq-st-x { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #dfe3ec; background: #ffffff; color: #3a3a3c; font-size: 12px; }
+        .bq-st-sec { margin-top: 8px; }
+        .bq-st-lab { display: flex; align-items: baseline; justify-content: space-between; font-size: 11.5px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: #6b7280; margin-bottom: 4px; }
+        .bq-st-val { font-size: 17px; font-weight: 800; color: #0b57d0; text-transform: none; letter-spacing: 0; }
+        .bq-st-step { display: flex; align-items: center; gap: 8px; }
+        .bq-st-step button { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #d5dbe7; background: linear-gradient(180deg, #ffffff, #eef1f7); font-size: 18px; font-weight: 700; color: #1f2937; box-shadow: 0 1px 2px rgba(30, 41, 59, .12); line-height: 1; }
+        .bq-st-step button:active { transform: translateY(1px); }
+        #bc-st-range { flex: 1 1 auto; min-width: 0; height: 28px; margin: 0; accent-color: #2563eb; }
+        #bc-st-range.off { opacity: .45; }
+        .bq-st-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+        .bq-st-chip { min-height: 28px; min-width: 38px; padding: 0 10px; border-radius: 999px; border: 1px solid #d5dbe7; background: #ffffff; color: #334155; font-weight: 800; font-size: 12.5px; }
+        .bq-st-chip.on { background: #2563eb; border-color: #2563eb; color: #ffffff; box-shadow: 0 2px 6px rgba(37, 99, 235, .35); }
+        .bq-st-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .bq-st-seg { display: flex; background: #e9edf5; border-radius: 10px; padding: 2px; gap: 2px; }
+        .bq-st-seg button { flex: 1 1 0; min-height: 28px; border: 0; background: transparent; color: #3a3a3c; font-weight: 700; font-size: 12.5px; border-radius: 8px; }
+        .bq-st-seg button.on { background: #ffffff; color: #0b57d0; box-shadow: 0 1px 3px rgba(15, 23, 42, .2); }
+        .bq-st-seg.dis { opacity: .5; }
+        .bq-st-prev { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 10px; padding: 8px 10px; border-radius: 12px; background: #edf1e5; border: 1px solid #cdd6c1; font-family: "STIX Two Text", "Cambria Math", Georgia, serif; font-size: 15px; }
+        .bq-st-pl { font: 800 10.5px/1 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: .04em; color: #6b7a63; width: 100%; }
+        .bq-st-pa { color: #1e3a8a; opacity: .75; }
+        .bq-st-arrow { color: #6b7a63; }
+        .bq-st-pb { color: #0b7a4b; font-size: 17px; }
+        .bq-st-foot { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+        .bq-st-sp { flex: 1 1 auto; }
+        .bq-st-link { border: 0; background: none; color: #0b57d0; font-weight: 700; font-size: 12px; padding: 4px 2px; text-decoration: underline; }
+        .bq-st-reset, .bq-st-done { min-height: 32px; padding: 0 16px; border-radius: 999px; font-weight: 800; font-size: 13px; }
+        .bq-st-reset { border: 1px solid #d5dbe7; background: #ffffff; color: #334155; }
+        .bq-st-done { border: 0; background: linear-gradient(180deg, #3b6cf0, #2349d4); color: #ffffff; box-shadow: 0 2px 6px rgba(37, 99, 235, .35); }
+        .bq-st-note { margin: 8px 2px 0; font-size: 10.5px; line-height: 1.35; color: #7b8190; }
+
+        /* tighter keys on every calculator */
+        .blogger-calc-classic:not([class*="calc-theme-"]) .bc-tab-pane { gap: 2px !important; }
+        .blogger-calc-classic:not([class*="calc-theme-"]) #bc-basic.bc-tab-pane { gap: 2px !important; }
+        [class*="calc-theme-"] .bc-tab-pane { gap: 2px !important; }
+        .bq-full.blogger-calc-classic .bc-tab-pane.active { gap: 3px !important; }
+
+        /* ===== v25: premium filter picker ===== */
+        .bc-filter-panel { background: linear-gradient(180deg, #f6f8fc, #eceff6) !important; border: 1px solid #d7deea !important; border-radius: 12px !important; padding: 8px 8px 6px !important; box-shadow: 0 14px 36px rgba(15, 23, 42, .28) !important; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        #bc-filter-panel .bc-filter-head { border-bottom: 0 !important; padding: 0 2px 4px !important; margin-bottom: 2px !important; }
+        #bc-filter-panel .bc-filter-title { font-size: 15px !important; font-weight: 800 !important; text-transform: none !important; letter-spacing: 0 !important; color: #111827 !important; }
+        #bc-filter-panel .bc-filter-close { width: 30px !important; height: 30px !important; border-radius: 50% !important; border: 1px solid #d9dfeb !important; background: #ffffff !important; box-shadow: 0 1px 2px rgba(15, 23, 42, .12) !important; font-size: 0 !important; position: relative; }
+        #bc-filter-panel .bc-filter-close::before { content: "\2715"; font-size: 13px; color: #374151; line-height: 1; }
+        .bc-filter-chips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 6px; flex: 0 0 auto; scrollbar-width: none; }
+        .bc-filter-chips::-webkit-scrollbar { display: none; }
+        .bc-fchip { flex: 0 0 auto; min-height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #d5dbe7; background: #ffffff; color: #374151; font: 700 12px/1 inherit; font-family: inherit; touch-action: manipulation; cursor: pointer; }
+        .bc-fchip.on { background: #111827; border-color: #111827; color: #ffffff; box-shadow: 0 2px 6px rgba(17, 24, 39, .28); }
+        #bc-filter-panel .bc-filter-list { gap: 8px !important; padding: 2px 2px 8px !important; }
+        #bc-filter-panel .bc-filter-item.bc-fcard { position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 5px; padding: 6px 6px 7px; border-radius: 14px; border: 1.5px solid #e1e6f0; background: #ffffff; box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 10px rgba(15, 23, 42, .05); font-family: inherit; text-align: center; touch-action: manipulation; transition: transform .12s ease, box-shadow .12s ease; }
+        #bc-filter-panel .bc-filter-item.bc-fcard:active { transform: scale(.97); box-shadow: 0 1px 2px rgba(15, 23, 42, .1); }
+        #bc-filter-panel .bc-filter-item.bc-fcard.sel { border-color: #2563eb; background: #f3f7ff; box-shadow: 0 0 0 2px rgba(37, 99, 235, .22), 0 4px 12px rgba(37, 99, 235, .18); }
+        #bc-filter-panel .bc-filter-item.bc-fcard:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+        .bc-fprev { display: flex; flex-direction: column; gap: 4px; padding: 5px; border-radius: 9px; border: 1px solid rgba(15, 23, 42, .1); }
+        .bc-fscr { display: flex; flex-direction: column; justify-content: center; min-height: 28px; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(15, 23, 42, .12); font-family: "STIX Two Text", "Cambria Math", Georgia, serif; line-height: 1.1; text-align: left; }
+        .bc-fscr b { font-weight: 600; font-size: 10px; opacity: .8; }
+        .bc-fscr em { font-style: normal; font-weight: 700; font-size: 12px; text-align: right; }
+        .bc-fgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+        .bc-fk { display: block; height: 14px; border-radius: 4px; border: 1px solid transparent; font: 800 7.5px/12px -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-style: normal; text-align: center; overflow: hidden; }
+        #bc-filter-panel .bc-fname { font-size: 12px !important; font-weight: 700 !important; color: #111827 !important; padding: 0 2px; }
+        .bc-fcheck { position: absolute; top: 4px; right: 4px; width: 18px; height: 18px; border-radius: 50%; background: #2563eb; color: #ffffff; font: 800 11px/18px -apple-system, "Segoe UI", Arial, sans-serif; text-align: center; box-shadow: 0 1px 4px rgba(37, 99, 235, .5); opacity: 0; transform: scale(.6); transition: opacity .12s ease, transform .12s ease; }
+        .bc-fcard.sel .bc-fcheck { opacity: 1; transform: scale(1); }
+        @media (prefers-reduced-motion: reduce) { #bc-filter-panel .bc-filter-item.bc-fcard, .bc-fcheck { transition: none; } }
+
+        /* the display controls (Log, S⇔D, Draw, Solve, full screen, zoom 20-300%) stay in view on a 360px phone */
+        @media (max-width: 420px) {
+            .bq-tools { gap: 3px; }
+            .bq-tools .bq-tb { padding: 2px 6px; font-size: 10.5px; }
+            .bq-tools .bq-tb.bq-ic { min-width: 24px; padding: 2px 4px; }
+            #bc-zoom-pct { min-width: 36px; padding: 2px 3px !important; text-align: center; }
+            #bc-zoom-out, #bc-zoom-in { min-width: 26px; padding: 2px 4px !important; }
+        }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -1671,7 +1781,8 @@
         <div class="bc-input-box" id="bc-display" aria-label="Calculator Expression Display">0</div>
         <div class="bc-output-box" id="bc-output-box" aria-live="polite" aria-atomic="true">
             <div class="bc-out-meta">
-                <button type="button" class="bc-copy-btn" id="bc-copy-btn" aria-label="Copy Result to Clipboard" title="Copy result to clipboard (Ctrl+C)" onclick="BloggerCalc.copyResult()">📋 Copy</button>
+                <button type="button" class="bc-copy-btn" id="bc-set-btn" aria-label="Result settings: decimal places" aria-haspopup="dialog" title="Result settings (decimal places)">⚙ Settings</button>
+                <button type="button" class="bc-copy-btn" id="bc-copy-btn" hidden style="display:none !important" tabindex="-1" aria-hidden="true" onclick="BloggerCalc.copyResult()">📋 Copy</button>
                 <span class="bc-mem-indicator" id="bc-memory-indicator"></span>
             </div>
             <span id="bc-live-out"></span>
@@ -2115,9 +2226,10 @@
     <!-- FILTER POP-UP MODAL WITH DUAL-SHADOW 3D ❌ CANCEL BUTTON -->
     <div class="bc-filter-panel" id="bc-filter-panel" role="dialog" aria-label="Choose Calculator Filter">
         <div class="bc-filter-head">
-            <div class="bc-filter-title">🎨 Choose Filter</div>
+            <div class="bc-filter-title">🎨 Filters</div>
             <button type="button" class="bc-filter-close" aria-label="Cancel and Close Filters" onclick="BloggerCalc.closeFilters()">❌</button>
         </div>
+        <div class="bc-filter-chips" id="bc-filter-chips" role="group" aria-label="Filter groups"></div>
         <div class="bc-filter-list" id="bc-filter-list"></div>
     </div>
 
@@ -3617,29 +3729,63 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 bcUpdate();
             });
 
+            /* ---------- v25: premium filter picker - every card is a live miniature of the real theme (colours are read from the theme itself) ---------- */
+            const BQ_FP_SEEN = {};
+            function bqLum(c) { const m = /rgba?\(([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:[, /]+([\d.]+))?/.exec(c || ''); if (!m) { return 1; } const f = function(v) { v = v / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(+m[1]) + 0.7152 * f(+m[2]) + 0.0722 * f(+m[3]); }
+            function bqSolid(c) { const m = /rgba?\(([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:[, /]+([\d.]+))?/.exec(c || ''); return !!m && (m[4] === undefined || +m[4] > 0.35); }
             function buildFilters() {
                 if (filtersBuilt) return;
-                FILTERS.forEach(function(f) {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'bc-filter-item';
-                    btn.setAttribute('data-theme', f[0]);
-
-                    const dot = document.createElement('span');
-                    dot.className = 'bc-filter-dot';
-                    dot.style.background = f[2];
-
-                    const name = document.createElement('span');
-                    name.className = 'bc-filter-name';
-                    name.textContent = f[1];
-
-                    btn.appendChild(dot);
-                    btn.appendChild(name);
-                    btn.addEventListener('click', function() {
-                        api.pickTheme(f[0]);
-                    });
-                    filterList.appendChild(btn);
+                const box = document.createElement('div'); box.setAttribute('aria-hidden', 'true');
+                box.style.cssText = 'position:fixed;left:-9999px;top:0;width:240px;height:10px;overflow:hidden;visibility:hidden;pointer-events:none';
+                document.body.appendChild(box);
+                const infos = FILTERS.map(function(f) {
+                    const p = document.createElement('div'); p.className = 'blogger-calc-classic ' + f[0];
+                    p.innerHTML = '<div class="bc-screen-container"><div class="bc-output-box"></div></div><button class="bc-btn bc-btn-num">1</button><button class="bc-btn bc-btn-op">+</button><button class="bc-btn bc-btn-action">f</button><button class="bc-btn bc-btn-special">f</button><button class="bc-btn bc-btn-danger">AC</button><button class="bc-btn bc-btn-primary">=</button>';
+                    box.appendChild(p);
+                    const g = function(s) { return getComputedStyle(p.querySelector(s)); };
+                    const k = function(s) { const c = g(s); let bg = c.backgroundImage && c.backgroundImage !== 'none' ? c.backgroundImage : c.backgroundColor; return { bg: bg, fg: c.color, bd: c.borderTopColor }; };
+                    const root = getComputedStyle(p), scr = g('.bc-output-box'), sc = g('.bc-screen-container');
+                    let screen = bqSolid(scr.backgroundColor) ? scr.backgroundColor : (bqSolid(sc.backgroundColor) ? sc.backgroundColor : (bqSolid(root.backgroundColor) ? root.backgroundColor : '#edf1e5'));
+                    if (!f[0]) { screen = '#edf1e5'; }
+                    const frame = bqSolid(root.backgroundColor) ? root.backgroundColor : '#f5f7fb';
+                    const sfg = !f[0] ? '#1e3a8a' : (bqSolid(scr.color) ? scr.color : (bqLum(screen) > 0.5 ? '#0f172a' : '#ffffff'));
+                    return { f: f, frame: frame, screen: screen, sfg: sfg, num: k('.bc-btn-num'), op: k('.bc-btn-op'), act: k('.bc-btn-action'), spc: k('.bc-btn-special'), dan: k('.bc-btn-danger'), pri: k('.bc-btn-primary'),
+                             glass: /glass/.test(f[0]), dark: bqLum(frame) < 0.2 || bqLum(screen) < 0.12 };
                 });
+                box.remove();
+                const chipsEl = document.getElementById('bc-filter-chips');
+                let cur = 'all';
+                function paintChips() {
+                    chipsEl.innerHTML = '';
+                    [['all', 'All'], ['light', 'Light'], ['dark', 'Dark'], ['glass', 'Glass']].forEach(function(c) {
+                        const n = infos.filter(function(i) { return c[0] === 'all' || (c[0] === 'glass' ? i.glass : c[0] === 'dark' ? (i.dark && !i.glass) : (!i.dark && !i.glass)); }).length;
+                        const b = document.createElement('button'); b.type = 'button'; b.className = 'bc-fchip' + (cur === c[0] ? ' on' : ''); b.setAttribute('aria-pressed', String(cur === c[0]));
+                        b.textContent = c[1] + ' ' + n; b.addEventListener('click', function() { cur = c[0]; paintChips(); paintList(); });
+                        chipsEl.appendChild(b);
+                    });
+                }
+                function key(o, label) { const s = document.createElement('i'); s.className = 'bc-fk'; s.style.background = o.bg; s.style.borderColor = o.bd; s.style.color = o.fg; s.textContent = label || ''; return s; }
+                function paintList() {
+                    filterList.innerHTML = '';
+                    infos.forEach(function(i) {
+                        if (!(cur === 'all' || (cur === 'glass' ? i.glass : cur === 'dark' ? (i.dark && !i.glass) : (!i.dark && !i.glass)))) { return; }
+                        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'bc-filter-item bc-fcard'; btn.setAttribute('data-theme', i.f[0]);
+                        btn.setAttribute('aria-label', i.f[1] + ' filter');
+                        const prev = document.createElement('span'); prev.className = 'bc-fprev'; prev.style.background = i.frame;
+                        const scr = document.createElement('span'); scr.className = 'bc-fscr'; scr.style.background = i.screen; scr.style.color = i.sfg;
+                        scr.innerHTML = '<b>12×8</b><em>= 96</em>';
+                        const grid = document.createElement('span'); grid.className = 'bc-fgrid';
+                        [[i.num, '7'], [i.num, '8'], [i.op, '÷'], [i.dan, 'AC'], [i.num, '4'], [i.act, 'f'], [i.op, '+'], [i.pri, '=']].forEach(function(x) { grid.appendChild(key(x[0], x[1])); });
+                        prev.appendChild(scr); prev.appendChild(grid);
+                        const nm = document.createElement('span'); nm.className = 'bc-filter-name bc-fname'; nm.textContent = i.f[1];
+                        const ck = document.createElement('span'); ck.className = 'bc-fcheck'; ck.setAttribute('aria-hidden', 'true'); ck.textContent = '✓';
+                        btn.appendChild(prev); btn.appendChild(nm); btn.appendChild(ck);
+                        btn.addEventListener('click', function() { api.pickTheme(i.f[0]); });
+                        filterList.appendChild(btn);
+                    });
+                    markSelectedFilter();
+                }
+                paintChips(); paintList();
                 filtersBuilt = true;
             }
 
@@ -4079,17 +4225,23 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             })();
             /* ---------- DISPLAY: calculation log inside the screen (reads the existing history rows; nothing stored here except a time stamp attribute) ---------- */
             let bqPaperBuilt = false, bqSD = false, bqZ = 1;
-            try { bqSD = localStorage.getItem('bc_sd_mode') === '1'; const zz = parseFloat(localStorage.getItem('bc_disp_zoom')); if (zz >= 0.8 && zz <= 1.8) { bqZ = zz; } } catch (e) {}
+            try { bqSD = localStorage.getItem('bc_sd_mode') === '1'; const zz = parseFloat(localStorage.getItem('bc_disp_zoom')); if (zz >= 0.2 && zz <= 3) { bqZ = zz; } } catch (e) {}
+            const BQ_ZL = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
             function bqZoom(d) {
-                bqZ = d === 0 ? 1 : Math.min(1.8, Math.max(0.8, Math.round((bqZ + d * 0.1) * 10) / 10));
+                if (d === 0) { bqZ = 1; }
+                else {
+                    let i = 0, best = 1e9;
+                    BQ_ZL.forEach(function(v, k) { const dd = Math.abs(v - bqZ); if (dd < best) { best = dd; i = k; } });
+                    bqZ = BQ_ZL[Math.max(0, Math.min(BQ_ZL.length - 1, i + d))];
+                }
                 try { localStorage.setItem('bc_disp_zoom', String(bqZ)); } catch (e) {}
                 bqApplyZoom();
             }
             function bqApplyZoom() {
                 document.querySelector('.bc-screen-container').style.setProperty('--bq-z', String(bqZ));
                 document.getElementById('bc-zoom-pct').textContent = Math.round(bqZ * 100) + '%';
-                document.getElementById('bc-zoom-out').disabled = bqZ <= 0.8;
-                document.getElementById('bc-zoom-in').disabled = bqZ >= 1.8;
+                document.getElementById('bc-zoom-out').disabled = bqZ <= BQ_ZL[0];
+                document.getElementById('bc-zoom-in').disabled = bqZ >= BQ_ZL[BQ_ZL.length - 1];
             }
             function bqSyncInk() {
                 try { const c = getComputedStyle(bcDisp).color; document.getElementById('bc-tools').style.color = c; document.getElementById('bc-paper').style.color = c; } catch (e) {}
@@ -4187,7 +4339,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                         const v = document.createElement('button'); v.type = 'button'; v.className = 'bq-pres'; v.title = 'Tap to use this result';
                         const f = bqFracHtml(res.replace(/^[=\u2248]\s*/, '').replace(/\u2212/g, '-'));
                         if (f) { v.innerHTML = f.html + (f.dec ? '<span class="bq-dec">= ' + f.dec + '</span>' : ''); }
-                        else { v.textContent = '= ' + res; }
+                        else { v.textContent = '= ' + (typeof bqFmtNum === 'function' ? bqFmtNum(res) : res); }
                         v.onclick = (function(rr) { return function() { const st = rr.querySelector('strong'); if (st) { st.click(); } }; })(r);
                         card.appendChild(v);
                     }
@@ -4347,7 +4499,17 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             }
             bqScroll.addEventListener('scroll', function() { bqStick = bqAtBottom(); bqLogLabel(); }, { passive: true });
             try { const ro = new ResizeObserver(function() { bqFitScroll(); }); ro.observe(bcDisp); ro.observe(bqOutBox); } catch (e) { window.addEventListener('resize', bqFitScroll); }
-            try { new MutationObserver(function() { bqToBottom(); bqFitScroll(); }).observe(bqPaperEl, { childList: true }); } catch (e) {}
+            /* deleting an entry must not throw the display down to the latest result: remember where the person was */
+            let bqKeepTop = null;
+            bqScroll.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.bq-pdel')) { bqKeepTop = bqScroll.scrollTop; setTimeout(function() { bqKeepTop = null; }, 500); } }, true);
+            try {
+                new MutationObserver(function() {
+                    if (bqKeepTop !== null) {
+                        const t = bqKeepTop; bqKeepTop = null; bqStick = false; bqFitScroll();
+                        bqScroll.scrollTop = Math.max(0, Math.min(t, bqScroll.scrollHeight - bqScroll.clientHeight)); bqStick = bqAtBottom(); bqLogLabel();
+                    } else { bqToBottom(); bqFitScroll(); }
+                }).observe(bqPaperEl, { childList: true });
+            } catch (e) {}
             setTimeout(bqFitScroll, 0); setTimeout(bqFitScroll, 400);
 
             /* dates for the history filters are remembered next to the history (local only) */
@@ -4391,8 +4553,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 const pop = document.getElementById('bc-dpop');
                 pop.innerHTML = '<div class="bq-dp-head"><b>Display</b><span class="bq-dp-sp"></span><button type="button" class="bq-dp-clear" id="bc-dp-clear">Clear all</button><button type="button" class="bq-dp-x" id="bc-dp-x" aria-label="Close display">&#10005;</button></div>'
                     + '<div class="bq-dp-filters" id="bc-dp-filters" role="group" aria-label="Filter history by date"></div>'
-                    + '<div class="bq-dp-list" id="bc-dp-list" tabindex="0"></div>'
-                    + '<div class="bq-dp-live" aria-live="polite"><div class="bq-dp-in" id="bc-dp-in"></div><div class="bq-dp-out" id="bc-dp-out"></div></div>';
+                    + '<div class="bq-dp-list" id="bc-dp-list" tabindex="0"></div>';
                 const fl = document.getElementById('bc-dp-filters');
                 BQ_FILTERS.forEach(function(f) {
                     const b = document.createElement('button'); b.type = 'button'; b.className = 'bq-dp-chip'; b.dataset.k = f[0]; b.textContent = f[1];
@@ -4409,13 +4570,10 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     cl.dataset.arm = '1'; cl.textContent = 'Tap again to clear'; bqDpClearT = setTimeout(function() { cl.dataset.arm = ''; cl.textContent = 'Clear all'; }, 3500);
                 };
             }
-            function bqDpMirror() {
-                const i = document.getElementById('bc-dp-in'), o = document.getElementById('bc-dp-out'); if (!i || !o) { return; }
-                i.innerHTML = bcDisp.innerHTML; o.innerHTML = bcLiveOut.innerHTML;
-                o.classList.toggle('bad', bqOutBox.classList.contains('bq-error'));
-            }
-            function bqDpRender() {
+            function bqDpMirror() { /* the live input/result are already on the calculator screen, so the pop-up no longer repeats them */ }
+            function bqDpRender(keep) {
                 const list = document.getElementById('bc-dp-list'); if (!list) { return; }
+                const keepTop = list.scrollTop;
                 Array.prototype.forEach.call(document.querySelectorAll('#bc-dp-filters [data-k]'), function(c) { const on = c.dataset.k === bqDF.k; c.classList.toggle('on', on); if (c.tagName === 'BUTTON') { c.setAttribute('aria-pressed', String(on)); } });
                 list.innerHTML = '';
                 const rows = Array.prototype.slice.call(bcHistList.querySelectorAll('.hist-entry')).reverse();
@@ -4429,7 +4587,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     const head = document.createElement('div'); head.className = 'bq-dp-ch';
                     const chip = document.createElement('span'); chip.className = 'bq-chip'; chip.textContent = (typeof TAB_NAMES !== 'undefined' && TAB_NAMES[tabId]) || '=';
                     const del = document.createElement('button'); del.type = 'button'; del.className = 'bq-pdel'; del.setAttribute('aria-label', 'Delete this entry'); del.title = 'Delete this entry'; del.textContent = '✕';
-                    del.onclick = function() { const b = r.querySelector('.hist-del-btn'); if (b) { b.click(); } bqDpRender(); };
+                    del.onclick = function() { const b = r.querySelector('.hist-del-btn'); if (b) { b.click(); } bqDpRender(true); };
                     head.appendChild(chip); head.appendChild(del); card.appendChild(head);
                     const e = document.createElement('button'); e.type = 'button'; e.className = 'bq-pexpr'; e.title = 'Tap to reuse this calculation'; e.innerHTML = bqMath(expr, tabId === 'bc-adv');
                     e.onclick = function() { const c = r.querySelector('.hist-content'); if (c) { c.click(); } bqDispClose(); };
@@ -4437,20 +4595,18 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     if (res) {
                         const v = document.createElement('button'); v.type = 'button'; v.className = 'bq-pres'; v.title = 'Tap to use this result';
                         const f = bqFracHtml(res.replace(/^[=≈]\s*/, '').replace(/−/g, '-'));
-                        if (f) { v.innerHTML = f.html + (f.dec ? '<span class="bq-dec">= ' + f.dec + '</span>' : ''); } else { v.textContent = '= ' + res; }
+                        if (f) { v.innerHTML = f.html + (f.dec ? '<span class="bq-dec">= ' + f.dec + '</span>' : ''); } else { v.textContent = '= ' + bqFmtNum(res); }
                         v.onclick = function() { const st = r.querySelector('strong'); if (st) { st.click(); } bqDispClose(); };
                         card.appendChild(v);
                     }
                     list.appendChild(card);
                 });
                 if (!shown) { const em = document.createElement('div'); em.className = 'bq-dp-empty'; em.textContent = rows.length ? 'No calculations match this filter.' : 'No calculations yet.'; list.appendChild(em); }
-                list.scrollTop = list.scrollHeight;
-                bqDpMirror();
+                list.scrollTop = keep ? keepTop : list.scrollHeight;
             }
             function bqDispOpen() {
                 bqDpBuild(); const pop = document.getElementById('bc-dpop');
                 bqMoreClose(false); bqStamp(); pop.hidden = false; bqDpRender();
-                try { bqDpObs = new MutationObserver(bqDpMirror); bqDpObs.observe(bcDisp, { childList: true, subtree: true, characterData: true }); bqDpObs.observe(bcLiveOut, { childList: true, subtree: true, characterData: true }); } catch (e) {}
                 const x = document.getElementById('bc-dp-x'); if (x) { x.focus(); }
             }
             function bqDispClose() {
@@ -4462,6 +4618,166 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 const pop = document.getElementById('bc-dpop');
                 if (e.key === 'Escape' && pop && !pop.hidden) { e.preventDefault(); e.stopPropagation(); bqDispClose(); }
             }, true);
+            /* ---------- v24: result settings (decimal places) + a magnifier button the person can drag ---------- */
+            var bqFmt = { d: null, mode: 'round', trim: false };
+            try {
+                const sv = JSON.parse(localStorage.getItem('bc_fmt') || 'null');
+                if (sv && (sv.d === null || (Number.isInteger(sv.d) && sv.d >= 0 && sv.d <= 13))) { bqFmt = { d: sv.d, mode: sv.mode === 'cut' ? 'cut' : 'round', trim: !!sv.trim }; }
+            } catch (e) {}
+            /* rounds a plain decimal such as 70.122407738686 on the digits themselves, so there is no floating-point surprise */
+            function bqFmtNum(str) {
+                const f = bqFmt;
+                if (!f || f.d === null || typeof str !== 'string') { return str; }
+                const m = /^([-+−]?)(\d+)\.(\d+)$/.exec(str.trim());
+                if (!m) { return str; }
+                let sign = m[1], ip = m[2], fp = m[3];
+                const n = f.d;
+                if (fp.length <= n) { fp = fp + '0'.repeat(n - fp.length); }
+                else {
+                    let digits = ip + fp.slice(0, n);
+                    if (f.mode === 'round' && fp.charCodeAt(n) - 48 >= 5) {
+                        const a = digits.split(''); let i = a.length - 1;
+                        while (i >= 0) { if (a[i] === '9') { a[i] = '0'; i--; } else { a[i] = String(Number(a[i]) + 1); break; } }
+                        if (i < 0) { a.unshift('1'); }
+                        digits = a.join('');
+                    }
+                    ip = digits.slice(0, digits.length - n); fp = digits.slice(digits.length - n);
+                }
+                if (f.trim) { fp = fp.replace(/0+$/, ''); }
+                const out = ip + (fp ? '.' + fp : '');
+                if (/^0*(\.0*)?$/.test(out)) { sign = ''; }
+                return sign + out;
+            }
+            function bqFmtLive() {
+                const cur = bcLiveOut.textContent || '';
+                const had = bcLiveOut.dataset.fmtFor !== undefined && bcLiveOut.dataset.fmtFor === cur;
+                const base = had ? '= ' + bcLiveOut.dataset.fmtFull : cur;
+                const on = !!(bqFmt && bqFmt.d !== null) && !bqSD && !fxActive() && !bcLiveOut.children.length && /^= /.test(base);
+                const out = on ? '= ' + bqFmtNum(base.slice(2)) : base;
+                if (out === cur) { return; }
+                if (on && out !== base) { bcLiveOut.dataset.fmtFull = base.slice(2); bcLiveOut.dataset.fmtFor = out; }
+                else { delete bcLiveOut.dataset.fmtFull; delete bcLiveOut.dataset.fmtFor; }
+                bcLiveOut.innerText = out;
+            }
+            try { new MutationObserver(bqFmtLive).observe(bcLiveOut, { childList: true, characterData: true, subtree: true }); } catch (e) {}
+            function bqFmtSave() { try { localStorage.setItem('bc_fmt', JSON.stringify(bqFmt)); } catch (e) {} }
+            function bqFmtApply() {
+                bqFmtSave(); bqFmtLive();
+                bqKeepTop = bqScroll.scrollTop; setTimeout(function() { bqKeepTop = null; }, 500);
+                try { bqPaperRefresh(); } catch (e) {}
+                if (!document.getElementById('bc-dpop').hidden) { bqDpRender(true); }
+                bqSetPaint();
+            }
+
+            /* ---- settings panel (replaces the old Copy button; long-press on the result still copies) ---- */
+            const BQ_SAMPLE = '70.122407738686';
+            function bqSample() {
+                const t = (bcLiveOut.dataset.fmtFull !== undefined ? '= ' + bcLiveOut.dataset.fmtFull : bcLiveOut.textContent || '');
+                const m = /^= ([-+−]?\d+\.\d{4,})$/.exec(t.trim());
+                return m ? m[1] : BQ_SAMPLE;
+            }
+            function bqSetBuild() {
+                if (document.getElementById('bc-setpop')) { return; }
+                const root = document.getElementById('blogger-calc-widget');
+                const pop = document.createElement('div');
+                pop.id = 'bc-setpop'; pop.hidden = true; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-modal', 'true'); pop.setAttribute('aria-label', 'Result settings');
+                pop.innerHTML = '<div class="bq-st-card" id="bc-st-card">'
+                    + '<div class="bq-st-head"><b>Result settings</b><button type="button" class="bq-st-x" id="bc-st-x" aria-label="Close settings">✕</button></div>'
+                    + '<div class="bq-st-sec"><div class="bq-st-lab"><span>Decimal places</span><span class="bq-st-val" id="bc-st-val">Auto</span></div>'
+                    + '<div class="bq-st-step"><button type="button" id="bc-st-minus" aria-label="Fewer decimal places">−</button>'
+                    + '<input type="range" id="bc-st-range" min="0" max="13" step="1" value="6" aria-label="Decimal places">'
+                    + '<button type="button" id="bc-st-plus" aria-label="More decimal places">+</button></div>'
+                    + '<div class="bq-st-chips" id="bc-st-chips" role="group" aria-label="Quick choices"></div></div>'
+                    + '<div class="bq-st-two"><div class="bq-st-sec"><div class="bq-st-lab"><span>Rounding</span></div><div class="bq-st-seg" id="bc-st-mode" role="group" aria-label="Rounding"><button type="button" data-m="round">Round</button><button type="button" data-m="cut">Cut off</button></div></div>'
+                    + '<div class="bq-st-sec"><div class="bq-st-lab"><span>Trailing zeros</span></div><div class="bq-st-seg" id="bc-st-trim" role="group" aria-label="Trailing zeros"><button type="button" data-t="0">Keep</button><button type="button" data-t="1">Remove</button></div></div></div>'
+                    + '<div class="bq-st-prev" aria-live="polite"><span class="bq-st-pl">Preview</span><span class="bq-st-pa" id="bc-st-pa"></span><span class="bq-st-arrow" aria-hidden="true">→</span><b class="bq-st-pb" id="bc-st-pb"></b></div>'
+                    + '<div class="bq-st-foot"><button type="button" class="bq-st-link" id="bc-st-pos">Reset magnifier position</button><span class="bq-st-sp"></span><button type="button" class="bq-st-reset" id="bc-st-reset">Auto</button><button type="button" class="bq-st-done" id="bc-st-done">Done</button></div>'
+                    + '<p class="bq-st-note">Only changes how results are shown. Calculations keep full precision. The FX-991CW tab keeps its own settings.</p></div>';
+                root.appendChild(pop);
+                const chips = pop.querySelector('#bc-st-chips');
+                [['Auto', null], ['0', 0], ['2', 2], ['4', 4], ['6', 6], ['8', 8], ['10', 10], ['12', 12]].forEach(function(c) {
+                    const b = document.createElement('button'); b.type = 'button'; b.className = 'bq-st-chip'; b.textContent = c[0]; b.dataset.d = c[1] === null ? 'auto' : String(c[1]);
+                    b.onclick = function() { bqFmt.d = c[1]; bqFmtApply(); }; chips.appendChild(b);
+                });
+                const rg = pop.querySelector('#bc-st-range');
+                rg.addEventListener('input', function() { bqFmt.d = Number(rg.value); bqFmtApply(); });
+                pop.querySelector('#bc-st-minus').onclick = function() { bqFmt.d = bqFmt.d === null ? 6 : Math.max(0, bqFmt.d - 1); bqFmtApply(); };
+                pop.querySelector('#bc-st-plus').onclick = function() { bqFmt.d = bqFmt.d === null ? 6 : Math.min(13, bqFmt.d + 1); bqFmtApply(); };
+                Array.prototype.forEach.call(pop.querySelectorAll('#bc-st-mode button'), function(b) { b.onclick = function() { bqFmt.mode = b.dataset.m; bqFmtApply(); }; });
+                Array.prototype.forEach.call(pop.querySelectorAll('#bc-st-trim button'), function(b) { b.onclick = function() { bqFmt.trim = b.dataset.t === '1'; bqFmtApply(); }; });
+                pop.querySelector('#bc-st-reset').onclick = function() { bqFmt = { d: null, mode: 'round', trim: false }; bqFmtApply(); };
+                pop.querySelector('#bc-st-pos').onclick = function() { bqXReset(); };
+                pop.querySelector('#bc-st-done').onclick = bqSetClose;
+                pop.querySelector('#bc-st-x').onclick = bqSetClose;
+                pop.addEventListener('click', function(e) { if (e.target === pop) { bqSetClose(); } });
+            }
+            function bqSetPaint() {
+                const pop = document.getElementById('bc-setpop'); if (!pop) { return; }
+                const auto = bqFmt.d === null;
+                pop.querySelector('#bc-st-val').textContent = auto ? 'Auto' : String(bqFmt.d);
+                const rg = pop.querySelector('#bc-st-range'); if (!auto) { rg.value = String(bqFmt.d); } rg.classList.toggle('off', auto);
+                Array.prototype.forEach.call(pop.querySelectorAll('.bq-st-chip'), function(b) { const on = b.dataset.d === (auto ? 'auto' : String(bqFmt.d)); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+                Array.prototype.forEach.call(pop.querySelectorAll('#bc-st-mode button'), function(b) { const on = b.dataset.m === bqFmt.mode; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+                Array.prototype.forEach.call(pop.querySelectorAll('#bc-st-trim button'), function(b) { const on = (b.dataset.t === '1') === bqFmt.trim; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+                pop.querySelector('#bc-st-mode').classList.toggle('dis', auto); pop.querySelector('#bc-st-trim').classList.toggle('dis', auto);
+                const s = bqSample(); pop.querySelector('#bc-st-pa').textContent = s; pop.querySelector('#bc-st-pb').textContent = auto ? s : bqFmtNum(s);
+            }
+            function bqSetOpen() {
+                bqSetBuild(); bqMoreClose(false);
+                const pop = document.getElementById('bc-setpop'); pop.hidden = false; bqSetPaint();
+                const d = pop.querySelector('#bc-st-done'); if (d) { d.focus({ preventScroll: true }); }
+            }
+            function bqSetClose() {
+                const pop = document.getElementById('bc-setpop'); if (!pop || pop.hidden) { return; }
+                pop.hidden = true; const b = document.getElementById('bc-set-btn'); if (b) { b.focus({ preventScroll: true }); }
+            }
+            document.getElementById('bc-set-btn').addEventListener('click', bqSetOpen);
+            document.addEventListener('keydown', function(e) {
+                const pop = document.getElementById('bc-setpop');
+                if (e.key === 'Escape' && pop && !pop.hidden) { e.preventDefault(); e.stopPropagation(); bqSetClose(); }
+            }, true);
+
+            /* ---- magnifier button: drag it anywhere inside the display; a plain tap still opens the full-screen display ---- */
+            const bqXBtn = document.getElementById('bc-dexp'), BQ_X_KEY = 'bc_xpos';
+            let bqXPos = null, bqXDrag = null, bqXMoved = false;
+            try { const sp = JSON.parse(localStorage.getItem(BQ_X_KEY) || 'null'); if (sp && sp.fx >= 0 && sp.fx <= 1 && sp.fy >= 0 && sp.fy <= 1) { bqXPos = sp; } } catch (e) {}
+            function bqXArea() { return { w: bqScroll.clientWidth, h: bqScroll.clientHeight, s: bqXBtn.offsetWidth || 30 }; }
+            function bqXApply() {
+                if (!bqXPos) { bqXBtn.style.left = ''; bqXBtn.style.top = ''; bqXBtn.style.right = ''; return; }
+                const a = bqXArea();
+                bqXBtn.style.right = 'auto';
+                bqXBtn.style.left = Math.round(bqXPos.fx * Math.max(0, a.w - a.s)) + 'px';
+                bqXBtn.style.top = Math.round(bqXPos.fy * Math.max(0, a.h - a.s)) + 'px';
+            }
+            function bqXReset() { bqXPos = null; try { localStorage.removeItem(BQ_X_KEY); } catch (e) {} bqXApply(); }
+            bqXBtn.addEventListener('pointerdown', function(e) {
+                if (e.button !== undefined && e.button > 0) { return; }
+                const r = bqXBtn.getBoundingClientRect();
+                bqXDrag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: e.clientX - r.left, oy: e.clientY - r.top }; bqXMoved = false;
+                try { bqXBtn.setPointerCapture(e.pointerId); } catch (err) {}
+            });
+            bqXBtn.addEventListener('pointermove', function(e) {
+                if (!bqXDrag || e.pointerId !== bqXDrag.id) { return; }
+                if (!bqXMoved && Math.hypot(e.clientX - bqXDrag.sx, e.clientY - bqXDrag.sy) < 7) { return; }
+                bqXMoved = true; e.preventDefault();
+                const a = bqXArea(), sr = bqScroll.getBoundingClientRect();
+                const x = Math.min(Math.max(0, e.clientX - sr.left - bqXDrag.ox), Math.max(0, a.w - a.s));
+                const y = Math.min(Math.max(0, e.clientY - sr.top - bqXDrag.oy), Math.max(0, a.h - a.s));
+                bqXPos = { fx: a.w - a.s > 0 ? x / (a.w - a.s) : 1, fy: a.h - a.s > 0 ? y / (a.h - a.s) : 0 };
+                bqXApply();
+            });
+            function bqXEnd(e) {
+                if (!bqXDrag || e.pointerId !== bqXDrag.id) { return; }
+                try { bqXBtn.releasePointerCapture(e.pointerId); } catch (err) {}
+                bqXDrag = null;
+                if (bqXMoved) { try { localStorage.setItem(BQ_X_KEY, JSON.stringify(bqXPos)); } catch (err) {} setTimeout(function() { bqXMoved = false; }, 80); }
+            }
+            bqXBtn.addEventListener('pointerup', bqXEnd); bqXBtn.addEventListener('pointercancel', bqXEnd);
+            bqXBtn.addEventListener('click', function(e) { if (bqXMoved) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+            bqXBtn.title = 'Open the display full screen (drag to move this button)';
+            window.addEventListener('resize', bqXApply);
+            try { new ResizeObserver(bqXApply).observe(bqScroll); } catch (e) {}
+            setTimeout(bqXApply, 0); setTimeout(bqXApply, 500);
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
@@ -6180,6 +6496,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     try { localStorage.removeItem(HISTORY_STORAGE_KEY); } catch (e) {}
                 },
                 toggleMore: function(ev) { bqMoreToggle(ev); },
+                openSettings: function() { bqSetOpen(); },
                 openDraw: function() { if (window.BQTools) { window.BQTools.open('draw'); } },
                 openSolve: function() { if (window.BQTools) { window.BQTools.open('solve'); } },
                 zoomDisp: function(d) { bqZoom(d); },
@@ -7385,6 +7702,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
 /* TOOLS SHEET: Scratchpad (canvas) + step-by-step Solver. No backend, no AI service. KaTeX and Nerdamer load lazily from a CDN only when the Solver is first used. */
 (function () {
   'use strict';
+  var BQTools_kbLater = function () {};
   var root = document.getElementById('blogger-calc-widget');
   if (!root || window.BQTools) { return; }
   var VERSIONS = { katex: '0.16.9', nerdamer: '1.1.12' };
@@ -7718,7 +8036,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
           body.appendChild(alt);
         }
         body.appendChild(actions([
-          ['Edit Expression', function () { pad.editor.input.focus(); }],
+          ['Edit Expression', function () { pad.editor.input.focus(); BQTools_kbLater(); }],
           ['Solve', function () { pad.editor.solve(); }, 1],
           ['Scan Again', function () { res.hidden = true; run(); }],
           ['Close', function () { res.hidden = true; }]
@@ -7836,21 +8154,24 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
     BQTools._solveText = function (t) { ta.value = t; grow(); solveNow(); };
   }
 
-  /* Phone keyboard: keep the field being typed in visible above the on-screen keyboard. */
+  /* Phone keyboard: keep the field being typed in visible above the on-screen keyboard. Some phones shrink the page when the keyboard opens,
+     others only cover it, so the field is scrolled into view in both cases (and again while the keyboard slides up). */
   (function () {
+    function typingEl() { var b = sheet.querySelector('.bq-sh-body'), a = document.activeElement; return b && a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && b.contains(a) ? { b: b, a: a } : null; }
     function adj() {
-      var vv = window.visualViewport;
-      var b = sheet.querySelector('.bq-sh-body'); if (!b) { return; }
-      var a = document.activeElement, typing = !!(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && b.contains(a));
-      var kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
-      if (typing && kb > 80) {
-        b.style.paddingBottom = (kb + 28) + 'px';
-        try { a.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { /* ignore */ }
-      } else { b.style.paddingBottom = ''; }
+      var t = typingEl(), b = sheet.querySelector('.bq-sh-body'); if (!b) { return; }
+      var vv = window.visualViewport, kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
+      if (!t) { b.style.paddingBottom = ''; return; }
+      b.style.paddingBottom = (kb > 80 ? kb + 28 : 140) + 'px';
+      try { t.a.scrollIntoView({ block: 'center', behavior: 'auto' }); } catch (e) { /* ignore */ }
     }
-    sheet.addEventListener('focusin', function () { setTimeout(adj, 120); setTimeout(adj, 450); });
+    var tm = [];
+    function later() { tm.forEach(clearTimeout); tm = [60, 220, 450, 800].map(function (ms) { return setTimeout(adj, ms); }); }
+    sheet.addEventListener('focusin', later);
     sheet.addEventListener('focusout', function () { setTimeout(adj, 150); });
-    if (window.visualViewport) { window.visualViewport.addEventListener('resize', adj); }
+    window.addEventListener('resize', function () { if (typingEl()) { later(); } });
+    if (window.visualViewport) { window.visualViewport.addEventListener('resize', function () { if (typingEl()) { later(); } }); }
+    BQTools_kbLater = later;
   })();
 
   var BQTools = window.BQTools = { open: open, close: close, sheet: sheet, pad: pad };
