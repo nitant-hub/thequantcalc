@@ -6,7 +6,6 @@
       vMeta.name = "viewport";
       document.head.appendChild(vMeta);
     }
-    // FIXED: Removed "maximum-scale=1.0, user-scalable=no" for better SEO and accessibility
     vMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
 
     ["siteDynamicHeader", "dynDrawer", "dynOverlay", "dynAllToolsModal", "dynBackToTop", "dynGlobalFooter"].forEach((id) => {
@@ -46,7 +45,6 @@
         display: none !important;
       }
 
-      /* Hide old basic back-to-top buttons to prevent duplicates */
       button.top, #top {
         display: none !important;
         opacity: 0 !important;
@@ -54,9 +52,6 @@
         pointer-events: none !important;
       }
 
-      /* =====================================================================
-         GLOBAL PREMIUM FOOTER (ALL PAGES)
-      ===================================================================== */
       #dynGlobalFooter {
         background: var(--surface, #ffffff) !important;
         border-top: 1px solid var(--border, #e2e8f0) !important;
@@ -97,9 +92,6 @@
         color: var(--link, #0066cc) !important;
       }
 
-      /* =====================================================================
-         PREMIUM SEMI-3D GLASSY BENTO "BACK TO TOP" BUTTON (ALL PAGES)
-      ===================================================================== */
       #dynBackToTop {
         position: fixed !important;
         bottom: 1.35rem !important;
@@ -281,8 +273,6 @@
 
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
-          position: sticky !important;
-          top: 12px !important;
           align-self: start !important;
           width: 100% !important;
           max-width: 100% !important;
@@ -324,7 +314,6 @@
         box-sizing: border-box !important;
       }
 
-      /* Compact Y-direction box sizing */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-card {
         padding: 5px 10px !important;
         min-height: 28px !important;
@@ -336,7 +325,6 @@
         box-sizing: border-box !important;
       }
       
-      /* Updated Heading Size: 18px */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .section-title {
         font-size: 18px !important;
         font-weight: 800 !important;
@@ -344,7 +332,6 @@
         margin: 0 !important;
       }
 
-      /* Updated Tool Titles Size: 16.5px */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-title {
         font-size: 16.5px !important;
         font-weight: 700 !important;
@@ -355,12 +342,10 @@
         text-overflow: ellipsis !important;
       }
 
-      /* Erase/eliminate description text in red square portion */
       body.dyn-is-tool-page .dyn-tools-card > .related-section .tool-description {
         display: none !important;
       }
 
-      /* Professional System Status Text styling with attractive color */
       body.dyn-is-tool-page .dyn-tools-card > *:last-child,
       aside.sidebar > .box:last-child div {
         font-size: 13.5px !important;
@@ -392,7 +377,6 @@
         z-index: 20 !important;
       }
 
-      /* Home Page Specific Professional Rectangular Search Box */
       .dyn-search-wrapper.in-home-bottom {
         max-width: 100% !important;
         width: 100% !important;
@@ -497,6 +481,7 @@
       [data-theme="dark"] .dyn-modern-input { color: #f8fafc !important; }
       .dyn-modern-input::placeholder { color: var(--text-muted, #64748b) !important; font-size: 14px !important; font-weight: 400 !important; }
 
+      /* Default Top Sidebar Ad */
       .dyn-adsense-slot {
         width: 300px !important;
         max-width: 100% !important;
@@ -514,11 +499,41 @@
         flex-shrink: 0 !important;
         margin: 0 auto;
       }
-
       [data-theme="dark"] .dyn-adsense-slot {
         background: #1e293b !important;
         border-color: #334155 !important;
         color: #94a3b8 !important;
+      }
+
+      /* New Sticky 300x600 Vertical Ad for Desktop */
+      .dyn-adsense-tall {
+        width: 300px !important;
+        max-width: 100% !important;
+        height: 600px !important;
+        background: #f1f5f9 !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 4px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #64748b !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        box-sizing: border-box !important;
+        flex-shrink: 0 !important;
+        margin: 1rem auto 0 auto !important;
+        position: sticky !important;
+        top: 15px !important;
+      }
+      [data-theme="dark"] .dyn-adsense-tall {
+        background: #1e293b !important;
+        border-color: #334155 !important;
+        color: #94a3b8 !important;
+      }
+      @media (max-width: 767px) {
+        .dyn-adsense-tall {
+          display: none !important; /* Hides sticky tall ad on mobile to prevent stacking */
+        }
       }
 
       #homeSideWrapper .dyn-adsense-slot {
@@ -591,9 +606,6 @@
         border-color: var(--border-color, #334155) !important;
       }
 
-      /* =====================================================================
-         HEADER: Apple Glassy Semi-3D + Dark Bento Card Gradient Background
-      ===================================================================== */
       header#siteDynamicHeader {
         position: relative !important; 
         top: 0 !important; 
@@ -643,20 +655,9 @@
         }
       }
 
-      .dyn-brand-text .b-the {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-      }
-
-      .dyn-brand-text .b-quant {
-        color: #38bdf8 !important;
-        -webkit-text-fill-color: #38bdf8 !important;
-      }
-
-      .dyn-brand-text .b-cals {
-        color: #34d399 !important;
-        -webkit-text-fill-color: #34d399 !important;
-      }
+      .dyn-brand-text .b-the { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+      .dyn-brand-text .b-quant { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
+      .dyn-brand-text .b-cals { color: #34d399 !important; -webkit-text-fill-color: #34d399 !important; }
 
       .dyn-brand-text::after {
         content: "" !important;
@@ -672,10 +673,7 @@
         pointer-events: none !important;
       }
       @media (min-width: 768px) {
-        .dyn-brand-text::after {
-          height: 3.5px !important;
-          bottom: -1px !important;
-        }
+        .dyn-brand-text::after { height: 3.5px !important; bottom: -1px !important; }
       }
 
       .dyn-desktop-nav { 
@@ -911,12 +909,8 @@
         width: 100% !important;
       }
 
-      .related-section .title-row {
-        width: 100% !important;
-        display: block !important;
-      }
+      .related-section .title-row { width: 100% !important; display: block !important; }
       
-      /* Updated Heading Size: 18px */
       .related-section .section-title {
         margin: 0 !important; 
         padding: 0 !important;
@@ -962,11 +956,7 @@
         flex-shrink: 0 !important;
       }
 
-      .related-section .carousel-controls { 
-        display: flex !important; 
-        gap: 5px !important; 
-        flex-shrink: 0 !important; 
-      }
+      .related-section .carousel-controls { display: flex !important; gap: 5px !important; flex-shrink: 0 !important; }
       .related-section .carousel-btn {
         display: grid !important; 
         place-items: center !important; 
@@ -1033,7 +1023,6 @@
         box-sizing: border-box !important;
       }
 
-      /* Compact Y-direction box sizing */
       .related-section .tool-card {
         position: relative !important; 
         display: flex !important; 
@@ -1052,21 +1041,10 @@
         max-width: 100% !important;
         box-sizing: border-box !important;
       }
-      [data-theme="dark"] .related-section .tool-card {
-        background: rgba(30, 41, 59, 0.75) !important;
-      }
-      .related-section .tool-card.is-empty {
-        visibility: hidden !important;
-        pointer-events: none !important;
-      }
-      .related-section .tool-card::before,
-      .related-section .tool-icon,
-      .related-section .tool-category,
-      .related-section .tool-open { 
-        display: none !important; 
-      }
+      [data-theme="dark"] .related-section .tool-card { background: rgba(30, 41, 59, 0.75) !important; }
+      .related-section .tool-card.is-empty { visibility: hidden !important; pointer-events: none !important; }
+      .related-section .tool-card::before, .related-section .tool-icon, .related-section .tool-category, .related-section .tool-open { display: none !important; }
       
-      /* Updated Tool Titles Size: 16.5px */
       .related-section .tool-title {
         position: relative !important; 
         margin: 0 !important; 
@@ -1082,11 +1060,7 @@
         text-overflow: ellipsis !important;
       }
       [data-theme="dark"] .related-section .tool-title { color: #38bdf8 !important; }
-
-      /* Erase/eliminate description text in red square portion */
-      .related-section .tool-description {
-        display: none !important;
-      }
+      .related-section .tool-description { display: none !important; }
 
       .related-section .carousel-footer {
         display: flex !important; 
@@ -1099,17 +1073,8 @@
         width: 100% !important;
       }
 
-      .related-section .carousel-status { 
-        color: var(--muted) !important; 
-        font-size: 11px !important; 
-        font-weight: 600 !important; 
-      }
-      .related-section .carousel-dots { 
-        display: flex !important; 
-        justify-content: center !important; 
-        align-items: center !important; 
-        gap: 4px !important; 
-      }
+      .related-section .carousel-status { color: var(--muted) !important; font-size: 11px !important; font-weight: 600 !important; }
+      .related-section .carousel-dots { display: flex !important; justify-content: center !important; align-items: center !important; gap: 4px !important; }
       .related-section .carousel-dot {
         width: 5px !important; 
         height: 5px !important; 
@@ -1120,10 +1085,7 @@
         cursor: pointer !important; 
         transition: width .25s ease, background .25s ease !important;
       }
-      .related-section .carousel-dot[aria-current="true"] { 
-        width: 14px !important; 
-        background: #2563eb !important; 
-      }
+      .related-section .carousel-dot[aria-current="true"] { width: 14px !important; background: #2563eb !important; }
 
       #dynAllToolsModal {
         position: fixed !important;
@@ -1136,9 +1098,7 @@
         padding: 1rem !important;
         backdrop-filter: blur(4px);
       }
-      #dynAllToolsModal.open {
-        display: flex !important;
-      }
+      #dynAllToolsModal.open { display: flex !important; }
       .dyn-modal-content {
         background: var(--bg-surface, #ffffff) !important;
         width: 100% !important;
@@ -1151,10 +1111,7 @@
         flex-direction: column !important;
         overflow: hidden !important;
       }
-      [data-theme="dark"] .dyn-modal-content {
-        background: #1e293b !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-      }
+      [data-theme="dark"] .dyn-modal-content { background: #1e293b !important; border-color: rgba(255, 255, 255, 0.1) !important; }
       .dyn-modal-header {
         display: flex !important;
         align-items: center !important;
@@ -1202,22 +1159,10 @@
         border-radius: 10px !important;
         text-decoration: none !important;
       }
-      [data-theme="dark"] .dyn-modal-item {
-        background: #0f172a !important;
-        border-color: #334155 !important;
-      }
-      .dyn-modal-item-title {
-        font-size: 0.92rem !important;
-        font-weight: 700 !important;
-        color: #2563eb !important;
-      }
+      [data-theme="dark"] .dyn-modal-item { background: #0f172a !important; border-color: #334155 !important; }
+      .dyn-modal-item-title { font-size: 0.92rem !important; font-weight: 700 !important; color: #2563eb !important; }
       [data-theme="dark"] .dyn-modal-item-title { color: #38bdf8 !important; }
-      .dyn-modal-item-desc {
-        font-size: 0.8rem !important;
-        color: var(--text-muted, #64748b) !important;
-        line-height: 1.35 !important;
-        margin: 0 !important;
-      }
+      .dyn-modal-item-desc { font-size: 0.8rem !important; color: var(--text-muted, #64748b) !important; line-height: 1.35 !important; margin: 0 !important; }
       [data-theme="dark"] .dyn-modal-item-desc { color: #94a3b8 !important; }
     `;
 
@@ -1420,12 +1365,22 @@
       });
     }
 
+    // Top Sidebar Ad Unit Generation
     let globalAdsenseNode = document.getElementById("dynAdsenseSlot");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
       globalAdsenseNode.id = "dynAdsenseSlot";
       globalAdsenseNode.className = "dyn-adsense-slot";
-      globalAdsenseNode.innerHTML = `<span>Advertisement</span>`;
+      globalAdsenseNode.innerHTML = `<span style="font-size: 0.75rem; color: inherit;">Advertisement</span>`;
+    }
+
+    // Sticky Bottom 300x600 Ad Unit Generation (Desktop Only)
+    let globalAdsenseTallNode = document.getElementById("dynAdsenseTallSlot");
+    if (!globalAdsenseTallNode) {
+      globalAdsenseTallNode = document.createElement("div");
+      globalAdsenseTallNode.id = "dynAdsenseTallSlot";
+      globalAdsenseTallNode.className = "dyn-adsense-tall";
+      globalAdsenseTallNode.innerHTML = `<span style="font-size: 0.75rem; color: inherit;">Advertisement</span>`;
     }
 
     const fallbackTools = [
@@ -1719,6 +1674,11 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
+      // Safely ensure tall ad is removed if we are not on a tool page
+      if (!isTool && globalAdsenseTallNode.parentElement) {
+        globalAdsenseTallNode.remove();
+      }
+
       const catViewEl = document.getElementById("catView");
       if (catViewEl) {
         let anc = catViewEl.parentElement;
@@ -1848,7 +1808,6 @@
         } else {
           const drawerSlot = document.getElementById("dynDrawerSearchSlot");
           globalSearchNode.className = "dyn-search-wrapper in-cat-pane";
-          // FIXED: Bug that attempted to append drawerSlot to itself
           if (drawerSlot && globalSearchNode.parentElement !== drawerSlot) {
             drawerSlot.appendChild(globalSearchNode);
           }
@@ -1907,16 +1866,24 @@
         return;
       }
 
+      // SIDEBAR AD INJECTIONS FOR CALCULATOR PAGES
       if (sidebarAside) {
         const toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
+        // Top Sidebar Ad
         if (toolsCard && globalAdsenseNode.parentElement !== sidebarAside) {
           sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
         }
 
+        // Sidebar Search Bar
         if (toolsCard && globalSearchNode.parentElement !== sidebarAside) {
           sidebarAside.insertBefore(globalSearchNode, toolsCard);
+        }
+
+        // Tall Sticky Desktop Ad Appended Below the Carousel
+        if (globalAdsenseTallNode.parentElement !== sidebarAside) {
+          sidebarAside.appendChild(globalAdsenseTallNode);
         }
       }
     }
@@ -1930,7 +1897,6 @@
       relocateSearch();
     }
 
-    // FIXED: Added Debounce timer to MutationObserver to stop battery drain and lagging
     let debounceTimer;
     const observer = new MutationObserver(() => {
       clearTimeout(debounceTimer);
