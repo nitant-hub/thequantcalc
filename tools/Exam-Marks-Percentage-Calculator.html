@@ -133,7 +133,7 @@
             overflow: hidden;
         }
 
-        /* CALCULATOR BOX: Centered with equal left and right margins */
+        /* CALCULATOR BOX */
         .tool-suite {
             background-color: var(--calc-bg);
             border: 1px solid var(--calc-border);
@@ -247,15 +247,16 @@
             color: var(--calc-accent);
         }
 
+        /* SLIMMED DASHBOARD */
         .results-dashboard {
             background-color: var(--calc-surface);
             border: 1px solid var(--calc-border);
             border-radius: 8px;
-            padding: 1.1rem;
+            padding: 0.75rem 1rem;
             margin-top: 1rem;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
             text-align: center;
             box-sizing: border-box;
@@ -263,35 +264,35 @@
 
         @media (min-width: 600px) {
             .results-dashboard {
-                grid-template-columns: 1fr 85px;
+                grid-template-columns: 1fr 65px;
                 text-align: left;
             }
         }
 
         .res-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: #94a3b8;
-            margin-bottom: 0.15rem;
+            margin-bottom: 0.1rem;
         }
 
         .res-value {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
             font-weight: 800;
             color: var(--calc-accent);
-            line-height: 1.1;
+            line-height: 1;
         }
 
         .res-subtext {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: #cbd5e1;
-            margin-top: 0.2rem;
+            margin-top: 0.1rem;
         }
 
         .chart-gauge {
-            width: 75px;
-            height: 75px;
+            width: 65px;
+            height: 65px;
             margin: 0 auto;
         }
 
@@ -476,7 +477,7 @@
                     <p>The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
                     <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB places you in the "1st Division" category.</p>
 
-                    <!-- Visualizing Your Score Section from Old Code -->
+                    <!-- Visualizing Your Score Section -->
                     <h3 class="sub-heading">Visualizing Your Score</h3>
                     <p>The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
                     <div style="background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); margin: 20px 0; padding: 20px; text-align: center;">
@@ -484,7 +485,7 @@
                             <circle cx="200" cy="200" fill="#e2e8f0" r="160"></circle>
                             <path d="M 200 40 A 160 160 0 1 1 65 115 L 200 200 Z" fill="#38bdf8"></path>
                             <circle cx="200" cy="200" fill="var(--bg-surface)" r="100"></circle>
-                            <text fill="var(--text-main)" font-family="sans-serif" font-size="36" font-weight="bold" text-anchor="middle" x="200" y="210">84%</text>
+                            <text fill="var(--text-main)" font-family="sans-serif" font-size="64" font-weight="bold" text-anchor="middle" x="200" y="222">84%</text>
                         </svg>
                         <p style="font-size: 0.85rem; margin-top: 10px; font-style: italic;">A visual representation of an 84% score.</p>
                     </div>
@@ -508,7 +509,7 @@
                 </article>
             </main>
 
-            <!-- EMPTY SIDEBAR: navigation.js automatically injects AdSense, Search, and Carousel here -->
+            <!-- EMPTY SIDEBAR -->
             <aside class="sidebar"></aside>
         </div>
     </div>
@@ -699,7 +700,7 @@
     })();
     </script>
 
-    <!-- Global Navigation & Carousel Dynamic Injection Script -->
+    <!-- Global Navigation Injection Script -->
     <script src="/navigation.js"></script>
 </body>
 </html>
