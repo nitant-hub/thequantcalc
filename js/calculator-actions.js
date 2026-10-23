@@ -10,16 +10,8 @@
   if (window.__TQC_ACTIONS_LOADED__) return;
   window.__TQC_ACTIONS_LOADED__ = true;
 
-  const RESULT_SELECTOR = [
-    "[data-calculator-result]",
-    ".calculator-result",
-    ".result-card",
-    ".result-box",
-    ".result-container",
-    ".calculation-result",
-    "#result",
-    "#results",
-    ".result"
+  const RESULT_SELECTOR = "[data-calculator-result], .calculator-result, .result-card, .result-box, .result-container, .calculation-result, #result, #results, .result, .results-dashboard";
+
   ].join(",");
 
   const VALUE_SELECTOR = [
