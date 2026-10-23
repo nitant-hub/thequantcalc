@@ -273,7 +273,8 @@
 
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
-          align-self: start !important;
+          align-self: stretch !important; 
+          height: 100% !important; 
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
@@ -522,8 +523,8 @@
         box-sizing: border-box !important;
         flex-shrink: 0 !important;
         
-        /* 48px gap to prevent accidental clicks on carousel (AdSense policy compliance) */
-        margin: 48px auto 0 auto !important; 
+        /* 64px gap to prevent accidental clicks on carousel (AdSense policy compliance) */
+        margin: 64px auto 0 auto !important; 
         
         position: sticky !important;
         top: 24px !important;
