@@ -83,7 +83,7 @@
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        /* --- MATCHING EXAM MARKS CALCULATOR CARD STYLE --- */
+        /* --- EXAM MARKS MATCHING CALCULATOR CARD STYLE --- */
         .calculator-card {
             background: var(--bg-surface);
             border-radius: 16px;
@@ -156,9 +156,9 @@
 
         /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 767px) {
-            .calculator-card { padding: 20px 15px; }
+            .calculator-card { padding: 20px 12px; }
             .wrapper { margin: 0.25rem auto 1.5rem auto; padding: 0 0.5rem; }
-            .main-body { padding: 1.25rem 1rem; } 
+            .main-body { padding: 1.25rem 0.75rem; } 
             .breadcrumb { margin-bottom: 0.25rem; font-size: 0.85rem; padding-left: 0.25rem; }
             .input-grid { grid-template-columns: 1fr; gap: 15px; }
         }
@@ -191,7 +191,7 @@
             <main class="main-body">
 
                 <div class="calculator-card">
-                  <h2 style="border-bottom: 2px solid var(--border-color); color: #2563eb; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; font-weight: 700;">Fixed Deposit & Compound Interest</h2>
+                  <h2 style="border-bottom: 2px solid var(--border-color); color: #2563eb; font-size: 22px; margin-bottom: 20px; margin-top: 0px; padding-bottom: 12px; text-align: center; font-weight: 700;">Fixed Deposit & Compound Interest</h2>
                   
                   <div class="calc-input-group">
                     <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
@@ -210,7 +210,7 @@
                       </div>
                   </div>
 
-                  <div class="calc-input-group" style="margin-bottom: 25px;">
+                  <div class="calc-input-group" style="margin-bottom: 20px;">
                     <label class="calc-label" for="compounding">Compounding Frequency:</label>
                     <select id="compounding" class="calc-input">
                         <option value="1">Yearly (12 Months)</option>
@@ -221,11 +221,11 @@
 
                   <div class="result-box">
                     <div class="result-accent-line"></div>
-                    <span style="color: var(--text-muted); display: block; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Estimated Maturity Value</span>
-                    <span id="financeResult" aria-live="polite" style="color: #2563eb; font-size: 36px; font-weight: 800;">14,213.63</span>
+                    <span style="color: var(--text-muted); display: block; font-size: 13px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Estimated Maturity Value</span>
+                    <span id="financeResult" aria-live="polite" style="color: #2563eb; font-size: 32px; font-weight: 800;">14,213.63</span>
                   </div>
                   
-                  <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 20px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
+                  <p style="font-size: 12.5px; color: var(--text-muted); text-align: center; margin-top: 15px;">*Calculation updates instantly based on selected compounding periods. Actual bank payouts may vary slightly based on taxation.</p>
                 </div>
 
                 <h2 style="border-bottom: 2px solid var(--border-color); color: var(--text-main); font-size: 26px; margin-top: 20px; padding-bottom: 8px;">Understanding Compound Interest and Fixed Deposits</h2>
