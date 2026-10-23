@@ -506,7 +506,7 @@
         color: #94a3b8 !important;
       }
 
-      /* New Sticky 300x600 Vertical Ad for Desktop */
+      /* Sticky Bottom 300x600 Vertical Ad for Desktop */
       .dyn-adsense-tall {
         width: 300px !important;
         max-width: 100% !important;
@@ -522,10 +522,7 @@
         font-weight: 500 !important;
         box-sizing: border-box !important;
         flex-shrink: 0 !important;
-        
-        /* 64px gap to prevent accidental clicks on carousel (AdSense policy compliance) */
         margin: 64px auto 0 auto !important; 
-        
         position: sticky !important;
         top: 24px !important;
         overflow: hidden !important;
@@ -537,7 +534,7 @@
       }
       @media (max-width: 767px) {
         .dyn-adsense-tall {
-          display: none !important; /* Hides sticky tall ad on mobile to prevent stacking */
+          display: none !important;
         }
       }
 
@@ -1370,7 +1367,6 @@
       });
     }
 
-    // Top Sidebar Ad Unit Generation
     let globalAdsenseNode = document.getElementById("dynAdsenseSlot");
     if (!globalAdsenseNode) {
       globalAdsenseNode = document.createElement("div");
@@ -1379,7 +1375,6 @@
       globalAdsenseNode.innerHTML = `<span style="font-size: 0.75rem; color: inherit;">Advertisement</span>`;
     }
 
-    // Sticky Bottom 300x600 Ad Unit Generation (Desktop Only)
     let globalAdsenseTallNode = document.getElementById("dynAdsenseTallSlot");
     if (!globalAdsenseTallNode) {
       globalAdsenseTallNode = document.createElement("div");
@@ -1709,6 +1704,37 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
+        // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
+        const mainArticle = document.querySelector(".dyn-left-split article");
+        if (mainArticle && !document.getElementById("dynInContentAd")) {
+          const adWrapper = document.createElement("div");
+          adWrapper.id = "dynInContentAd";
+          adWrapper.style.margin = "32px 0";
+          adWrapper.style.textAlign = "center";
+          adWrapper.style.minHeight = "90px";
+          adWrapper.style.overflow = "hidden";
+          
+          const adLabel = document.createElement("span");
+          adLabel.textContent = "Advertisement";
+          adLabel.style.cssText = "font-size: 0.75rem; color: #64748b; margin-bottom: 4px; display: block;";
+          adWrapper.appendChild(adLabel);
+
+          const insTag = document.createElement("ins");
+          insTag.className = "adsbygoogle";
+          insTag.style.display = "block";
+          
+          // Replace with your AdSense details for the horizontal ad slot
+          insTag.setAttribute("data-ad-client", "ca-pub-XXXXXXXXXXXXXXXX"); 
+          insTag.setAttribute("data-ad-slot", "XXXXXXXXXX"); 
+          insTag.setAttribute("data-ad-format", "auto");
+          insTag.setAttribute("data-full-width-responsive", "true");
+          
+          adWrapper.appendChild(insTag);
+          mainArticle.parentElement.insertBefore(adWrapper, mainArticle);
+          try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+        }
+        // --- END OF AUTOMATIC AD CODE ---
+
         document.querySelectorAll(".breadcrumb, .crumb, #crumb, nav, div, p").forEach((el) => {
           if (el.children.length <= 4) {
             const txt = (el.textContent || "").trim().toLowerCase();
@@ -1865,7 +1891,7 @@
         
         globalSearchNode.className = "dyn-search-wrapper in-home-bottom";
         if (homeSearchSlot && globalSearchNode.parentElement !== homeSearchSlot) {
-          homeSearchSlot.appendChild(globalSearchNode);
+            homeSearchSlot.appendChild(globalSearchNode);
         }
         return;
       }
