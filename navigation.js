@@ -521,9 +521,13 @@
         font-weight: 500 !important;
         box-sizing: border-box !important;
         flex-shrink: 0 !important;
-        margin: 1rem auto 0 auto !important;
+        
+        /* 48px gap to prevent accidental clicks on carousel (AdSense policy compliance) */
+        margin: 48px auto 0 auto !important; 
+        
         position: sticky !important;
-        top: 15px !important;
+        top: 24px !important;
+        overflow: hidden !important;
       }
       [data-theme="dark"] .dyn-adsense-tall {
         background: #1e293b !important;
@@ -1674,7 +1678,6 @@
       const isTool = path.includes("/tools/") || path.includes("calculator.html");
       const isCategory = hash.startsWith("#/") && hash.length > 2;
 
-      // Safely ensure tall ad is removed if we are not on a tool page
       if (!isTool && globalAdsenseTallNode.parentElement) {
         globalAdsenseTallNode.remove();
       }
@@ -1866,22 +1869,18 @@
         return;
       }
 
-      // SIDEBAR AD INJECTIONS FOR CALCULATOR PAGES
       if (sidebarAside) {
         const toolsCard = sidebarAside.querySelector(".dyn-tools-card");
         globalSearchNode.className = "dyn-search-wrapper in-sidebar";
 
-        // Top Sidebar Ad
         if (toolsCard && globalAdsenseNode.parentElement !== sidebarAside) {
           sidebarAside.insertBefore(globalAdsenseNode, toolsCard);
         }
 
-        // Sidebar Search Bar
         if (toolsCard && globalSearchNode.parentElement !== sidebarAside) {
           sidebarAside.insertBefore(globalSearchNode, toolsCard);
         }
 
-        // Tall Sticky Desktop Ad Appended Below the Carousel
         if (globalAdsenseTallNode.parentElement !== sidebarAside) {
           sidebarAside.appendChild(globalAdsenseTallNode);
         }
