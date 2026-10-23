@@ -37,18 +37,26 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "How does the tool account for leap years?",
+              "name": "Why is my manual age calculation sometimes off by a day?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The tool uses JavaScript's built-in calendar logic to accurately count the specific days in historical months, factoring in 29-day Februaries during leap years automatically."
+                "text": "Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift."
               }
             },
             {
               "@type": "Question",
-              "name": "Can I calculate my total hours and seconds lived?",
+              "name": "How does the tool calculate estimated heartbeats?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. Once you input your birth date, the tool calculates the total elapsed time in days and multiplies it down to hours, minutes, and exact seconds."
+                "text": "It takes the exact number of minutes you have been alive and multiplies it by an average resting human heart rate of 80 beats per minute."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use this to check government exam eligibility?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Most official recruitment portals use this exact date-to-date calendar logic to verify cutoff dates."
               }
             }
           ]
@@ -63,7 +71,7 @@
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
             --text-main: #1e293b;
-            --text-muted: #64748b;
+            --text-muted: #475569;
             --border-color: #e2e8f0;
             --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             --header-height: 55px; 
@@ -82,7 +90,7 @@
 
         /* Typography - Strict Line Heights Enforced */
         h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
-        p, li, label, span, td, th, option, select, input, button { line-height: 1.33 !important; }
+        p, li, label, span, td, th, option, select, input, button { line-height: 1.6 !important; }
 
         /* Header - GUARANTEED FIXED POSITION */
         header#siteHeader {
@@ -195,7 +203,7 @@
         }
 
         .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10b981, #00D6A0); }
-        .result-value { color: #00D6A0; font-size: 32px; font-weight: 800; display: block; margin-top: 5px; text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3); line-height: 1.1; }
+        .result-value { color: #00D6A0; font-size: 30px; font-weight: 800; display: block; margin-top: 5px; text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3); line-height: 1.2; }
 
         /* Extended Metrics Grid inside Result Box */
         .extended-metrics {
@@ -207,10 +215,10 @@
 
         /* --- STYLED CONTENT HEADINGS --- */
         .content-section { margin-top: 20px; }
-        .content-section h2 { font-size: 24px; color: var(--text-main); margin-top: 40px; margin-bottom: 20px; padding-left: 14px; padding-bottom: 8px; border-left: 5px solid #3b82f6; border-bottom: 2px solid var(--border-color); }
-        .content-section h3 { font-size: 20px; color: var(--text-main); margin-top: 30px; margin-bottom: 15px; padding-left: 12px; padding-bottom: 6px; border-left: 5px solid #10b981; border-bottom: 2px solid var(--border-color); }
+        .content-section h2 { font-size: 24px; color: var(--text-main); margin-top: 45px; margin-bottom: 20px; padding-left: 14px; padding-bottom: 8px; border-left: 5px solid #3b82f6; border-bottom: 2px solid var(--border-color); }
+        .content-section h3 { font-size: 20px; color: var(--text-main); margin-top: 35px; margin-bottom: 15px; padding-left: 12px; padding-bottom: 6px; border-left: 5px solid #10b981; border-bottom: 2px solid var(--border-color); }
         
-        .content-section p, .content-section li { color: var(--text-muted); font-size: 15.5px; margin-bottom: 16px; line-height: 1.7 !important; }
+        .content-section p, .content-section li { color: var(--text-muted); font-size: 15.5px; margin-bottom: 16px; }
         .content-section ul, .content-section ol { margin-left: 20px; margin-bottom: 20px; }
 
         .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; display: none; }
@@ -321,16 +329,16 @@
                 </div>
 
                 <div class="content-section">
-                    <h2>How an Age Calculator Really Works</h2>
-                    <p>Most people state their age simply as the number of years they have been alive. However, in legal documentation, competitive exams, medical assessments, and academic research, guessing that you are "around 25 years old" is insufficient. Precise cutoff dates require your exact age down to the day.</p>
-                    <p>This biological and chronological calculator goes far beyond simple year subtraction. By processing your date of birth against a specific target date, it accounts for leap years, variations in month lengths, and outputs your age in exact years, months, and days. It also calculates your total elapsed time in hours, seconds, and estimated lifetime heartbeats based on a healthy average of 80 beats per minute.</p>
+                    <h2>Why "Rough Math" Isn't Good Enough Anymore</h2>
+                    <p>Most people don't think twice when someone asks their age. You quickly state you are 22, 35, or 50 and move on. But try writing "around 25" on a government job application or a legal contract. It won't work. When official cutoff dates are involved, guessing your age can literally cost you an opportunity.</p>
+                    <p>This biological and chronological calculator doesn't just do basic year subtraction. By processing your exact date of birth against a specific target date, it accounts for calendar quirks like leap years and varying month lengths. The result is an exact measurement of your age in years, months, and days. It even taps into your biological metrics to calculate total elapsed time in hours, seconds, and an estimate of how many times your heart has beaten since you were born.</p>
 
-                    <h3>A Brief History: Why the Calendar is Uneven</h3>
-                    <p>Early civilizations tracked time by observing lunar cycles. The fundamental mathematical problem with early calendars is that the Earth does not complete its orbit around the Sun in a perfectly round number of days. A true solar year takes approximately <strong>365.24219 days</strong>.</p>
-                    <p>In 45 BCE, Julius Caesar established a 365-day year and added a "leap year" every four years to absorb that extra quarter of a day. This Julian year was exactly 365.25 days long, which is 11 minutes and 14 seconds longer than the actual time it takes the Earth to orbit the Sun. By the 16th century, those extra 11 minutes per year had accumulated, shifting the calendar 10 days out of sync. In 1582, Pope Gregory XIII implemented a correction to create the <strong>Gregorian calendar</strong>, fixing the leap year rules to what we use globally today.</p>
+                    <h3>A Quick Look at Our Clunky Calendar System</h3>
+                    <p>If math was perfect, every month would have the exact same number of days. Unfortunately, early astronomers had to base time on the physical rotation of the Earth, and the Earth refuses to orbit the Sun in a perfectly round number of days. A true solar year takes approximately <strong>365.24219 days</strong> to complete.</p>
+                    <p>Back in 45 BCE, Julius Caesar tried to fix the shifting seasons by establishing a 365-day year and randomly tossing in a "leap year" every four years to absorb that extra quarter of a day. This Julian calendar was definitely an improvement, but it was still technically 11 minutes and 14 seconds longer than the actual solar year. Fast forward to the 16th century, and those extra 11 minutes per year had piled up so much that the calendar drifted a full 10 days out of sync. Pope Gregory XIII eventually had to step in and fix the leap year math in 1582, leaving us with the somewhat messy, unequal Gregorian calendar we still use globally today.</p>
 
-                    <h3>Visualizing the Solar Year (Slim View)</h3>
-                    <p>To understand why we need leap year adjustments, look at this breakdown of the actual solar year. The fractional extra time shown in red is what the calculator logic continuously adjusts for in the background.</p>
+                    <h3>Visualizing the Solar Year (The Math Behind the Leap)</h3>
+                    <p>To understand why counting your age is inherently complicated, look at this breakdown of the actual solar year. The fractional extra time shown in red is what the calculator logic continuously adjusts for behind the scenes to make sure your day count is perfect.</p>
 
                     <div style="background: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); margin: 20px 0; padding: 25px 15px; text-align: center; overflow-x: auto;">
                       <svg viewBox="0 0 450 90" style="width: 100%; max-width: 450px; height: auto;">
@@ -349,14 +357,15 @@
                       </svg>
                     </div>
 
-                    <h3>How the Algorithm Calculates Exact Age</h3>
-                    <p>When computing exact age, simple subtraction fails because months have unequal lengths (28, 29, 30, or 31 days). If a target day is smaller than your birth day, the algorithm must "borrow" days from the previous month. This means the engine must know exactly how many days were in that specific historical month.</p>
+                    <h3>How the Algorithm Calculates Your Exact Age</h3>
+                    <p>You might wonder why a program is even needed. Can't you just count it manually on a piece of paper? You can, but it gets tricky fast. When computing exact age, simple subtraction fails entirely because months bounce around between 28, 29, 30, and 31 days.</p>
+                    <p>If your target calculation day is a lower number than the day you were born, the algorithm has to "borrow" days from the previous month just to make the math work. This means the engine is programmed to know exactly how many days were in that specific historical month, checking whether a leap year occurred before returning your answer.</p>
                     
-                    <div style="background: var(--bg-primary); border-left: 4px solid #10b981; font-family: monospace; font-size: 17px; font-weight: bold; margin: 20px 0; padding: 15px; text-align: center; color: var(--text-main);">
-                      Elapsed Time = Target Date - Date of Birth (Adjusting for Leap Years)
+                    <div style="background: var(--bg-primary); border-left: 4px solid #10b981; font-family: monospace; font-size: 16px; font-weight: bold; margin: 20px 0; padding: 15px; text-align: center; color: var(--text-main);">
+                      Elapsed Time = Target Date - Date of Birth (Adjusting for Leap Rules)
                     </div>
 
-                    <p>To accurately count total seconds and hours lived, the engine converts your date of birth into Unix time (milliseconds elapsed since January 1, 1970) and measures the absolute gap against the target date. This removes timezone and month-length ambiguity, allowing precise biological tracking like estimated heartbeats.</p>
+                    <p>We didn't just stop at years and months. To accurately count your total seconds and hours lived, the script quietly converts your date of birth into Unix time—which is the number of milliseconds that have passed since January 1, 1970. By measuring the absolute gap against your target date, the tool removes timezone and month-length ambiguity entirely. This is what allows us to give you those fun biological metrics, like how many times your heart has beaten since day one.</p>
 
                     <div class="data-table-wrapper">
                       <table class="data-table">
@@ -387,24 +396,32 @@
                       </table>
                     </div>
 
+                    <h2>Practical Real-World Uses</h2>
+                    <p>Checking your exact time lived is incredibly useful depending on your current life phase or profession. Here are a few common scenarios where an exact day count is mandatory.</p>
+                    <ul>
+                        <li><strong>Government Exams & Recruitment:</strong> Organizations like the UPSC, SSC, and state commissions are notoriously strict about age limits. If a notification states you must be under 25 years of age as of August 1st, being exactly 25 years and 1 day old will get your application instantly rejected by their system.</li>
+                        <li><strong>Medical and Pediatric Tracking:</strong> Doctors do not track infant growth by years. Medical professionals record vaccine schedules and developmental milestones in precise weeks and days. Pediatric clinics rely on exact date-to-date calculations rather than estimates.</li>
+                        <li><strong>Retirement Planning:</strong> In finance, your exact age heavily dictates your pension payouts, 401(k) withdrawal penalties, and insurance premiums. Financial institutions use rigid calendar logic to lock in your rates.</li>
+                    </ul>
+
                     <h2>Frequently Asked Questions (FAQ)</h2>
                     <div itemscope itemtype="https://schema.org/FAQPage">
                       <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.25rem;">
-                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">1. How does the tool account for leap years?</h4>
+                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">1. Why is my manual age calculation sometimes off by a day?</h4>
                         <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                          <p itemprop="text">The tool uses JavaScript's built-in calendar logic to accurately count the specific days in historical months, factoring in 29-day Februaries during leap years automatically.</p>
+                          <p itemprop="text">Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift.</p>
                         </div>
                       </div>
                       <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.25rem;">
-                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">2. Can I calculate my total hours and seconds lived?</h4>
+                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">2. How does the tool calculate estimated heartbeats?</h4>
                         <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                          <p itemprop="text">Yes. Once you input your birth date, the tool calculates the total elapsed time in days and multiplies it down to hours, minutes, and exact seconds.</p>
+                          <p itemprop="text">It takes the exact number of minutes you have been alive and multiplies it by an average resting human heart rate of 80 beats per minute.</p>
                         </div>
                       </div>
                       <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">3. How is the estimated heartbeat calculated?</h4>
+                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">3. Can I use this to check government exam eligibility?</h4>
                         <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                          <p itemprop="text" style="margin-bottom: 0;">The tool calculates your total lived minutes and multiplies it by an average resting heart rate of 80 beats per minute (bpm) to provide a biological estimation of cardiac work.</p>
+                          <p itemprop="text" style="margin-bottom: 0;">Yes. Most official recruitment portals use this exact date-to-date calendar logic to verify cutoff dates.</p>
                         </div>
                       </div>
                     </div>
