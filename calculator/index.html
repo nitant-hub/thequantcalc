@@ -1743,6 +1743,80 @@
             #bc-zoom-pct { min-width: 36px; padding: 2px 3px !important; text-align: center; }
             #bc-zoom-out, #bc-zoom-in { min-width: 26px; padding: 2px 4px !important; }
         }
+/* v26 header + pills stay vivid under filters */
+.blogger-calc-classic[class*="calc-theme-"] .bc-tab-btn:not(#btn-bc-history-tab) { font-size: 13px !important }
+@media (min-width: 601px) {
+.blogger-calc-classic[class*="calc-theme-"] .bc-tab-btn:not(#btn-bc-history-tab) { font-size: 17px !important }
+}
+.blogger-calc-classic[class*="calc-theme-"] .bc-tab-btn.active { box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.85), 0 -2px 3px rgba(0, 0, 0, 0.06) !important }
+.blogger-calc-classic[class*="calc-theme-"] .bq-tools { background: transparent !important; border: 0 !important; padding: 0 0 1px !important; color: #3a3a3c !important }
+.blogger-calc-classic[class*="calc-theme-"] .bq-tb { font-weight: 700 !important; border-radius: 999px !important; border: 1px solid #dcdfe8 !important; background: linear-gradient(180deg, #ffffff, #f0f2f7) !important; color: #3a3a3c !important; opacity: 1 !important; box-shadow: 0 1px 0 #ffffff inset, 0 1px 2px rgba(30, 41, 59, .12) !important }
+.blogger-calc-classic[class*="calc-theme-"] .bq-tb:active { transform: translateY(1px) !important; box-shadow: 0 1px 1px rgba(30, 41, 59, .12) inset !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-paper-btn { background: linear-gradient(180deg, #f2f8ff, #dcecff) !important; border-color: #b9d6fb !important; color: #0a62d6 !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-paper-btn.on { background: linear-gradient(180deg, #3b9bff, #0a7aff) !important; border-color: #0a6ae0 !important; color: #ffffff !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-sd-btn { background: linear-gradient(180deg, #f5f3ff, #e4defd) !important; border-color: #cdc4f8 !important; color: #4b3fc4 !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-sd-btn[aria-pressed="true"] { background: linear-gradient(180deg, #7b6df0, #5a4bdc) !important; border-color: #4a3dc4 !important; color: #ffffff !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-draw-btn { background: linear-gradient(180deg, #f1fbf5, #d9f3e3) !important; border-color: #b6e3c8 !important; color: #17803d !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-solve-btn { background: linear-gradient(180deg, #fff7ec, #ffe8c8) !important; border-color: #f5d3a1 !important; color: #b45309 !important }
+.blogger-calc-classic[class*="calc-theme-"] .bq-tb:disabled { opacity: .45 !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-paper-btn { background: linear-gradient(180deg, #f2f8ff, #dcecff) !important; border-color: #b9d6fb !important; color: #0a62d6 !important }
+.blogger-calc-classic[class*="calc-theme-"] #bc-paper-btn.on { background: linear-gradient(180deg, #3b9bff, #0a7aff) !important; border-color: #0a6ae0 !important; color: #ffffff !important }
+/* ===== v26 ===== */
+/* toolbar steady + fits 360px */
+.bq-tools { overflow: hidden !important; overscroll-behavior: none; flex-wrap: nowrap; }
+.bq-tools .bq-tb { flex: 0 1 auto; min-width: 0; }
+#bc-paper-btn { max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 420px) { #bc-paper-btn { max-width: 66px; } .bq-tools .bq-tb { padding: 2px 5px !important; } }
+/* history: bounded pane, inner scroll, display hidden */
+.bq-hist .bc-screen-container { display: none !important; }
+.bc-keypad-container:has(#bc-history-tab.active) { overflow: hidden; }
+#bc-history-tab.active { min-height: 0; overflow: hidden; }
+#bc-history-tab .bc-history-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; zoom: var(--bq-hz, 1); }
+.bq-hctl { display: inline-flex; align-items: center; gap: 3px; flex: 0 0 auto; }
+.bq-hb { font: 800 11px/1 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; min-width: 26px; height: 24px; padding: 0 6px; border-radius: 999px; border: 1px solid #cdd6e3; background: linear-gradient(180deg, #ffffff, #eef2f8); color: #1e3a8a; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; touch-action: manipulation; }
+.bq-hb:disabled { opacity: .4; }
+.bq-hb:active { transform: translateY(1px); }
+@media (max-width: 440px) { .bq-hist .bc-history-title { display: none; } .bc-history-header { gap: 4px; } .bq-hb { min-width: 24px; padding: 0 5px; } }
+/* elite More pop-up */
+.bq-more { display: flex !important; flex-direction: column; gap: 0 !important; padding: 0 !important; width: min(340px, calc(100% - 12px)) !important; max-height: min(78vh, 470px); overflow-y: auto; border-radius: 18px !important; background: rgba(255,255,255,.97) !important; border: 1px solid #e3e7f0 !important; box-shadow: 0 22px 48px rgba(15,23,42,.28), 0 2px 8px rgba(15,23,42,.10) !important; animation: bqMoreIn .16s ease-out; overscroll-behavior: contain; }
+.bq-more[hidden] { display: none !important; }
+@keyframes bqMoreIn { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+.bq-mhead { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 11px 14px 9px; background: linear-gradient(180deg, #ffffff, #f6f8fc); border-bottom: 1px solid #e6eaf2; }
+.bq-mtitle { font: 800 13px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #334155; }
+.bq-mx { width: 26px; height: 26px; border-radius: 50%; border: 0; background: #eef1f6; color: #475569; font-size: 12px; cursor: pointer; }
+.bq-mrow { flex-direction: row !important; align-items: flex-start !important; gap: 12px !important; padding: 11px 14px !important; border: 0 !important; border-radius: 0 !important; border-bottom: 1px solid #eef1f6 !important; background: #fff !important; box-shadow: none !important; position: relative; }
+.bq-mrow:last-child { border-bottom: 0 !important; }
+.bq-mrow::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); }
+.bq-mic { flex: 0 0 auto; width: 32px !important; height: 32px !important; display: inline-flex; align-items: center; justify-content: center; color: #fff; font: 800 14px/1 -apple-system, "Segoe UI", Roboto, sans-serif; border-radius: 10px !important; }
+.bq-mbody { flex: 1 1 auto; min-width: 0; }
+.bq-mname { font: 800 14px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important; color: #0f172a; }
+.bq-mchips { display: flex; flex-wrap: wrap; gap: 6px !important; margin-top: 7px !important; }
+.bq-mchip { min-height: 28px; padding: 4px 11px !important; border-radius: 999px !important; font: 700 12px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important; color: color-mix(in srgb, var(--c) 82%, #000) !important; background: color-mix(in srgb, var(--c) 10%, #fff) !important; border: 1px solid color-mix(in srgb, var(--c) 28%, #fff) !important; box-shadow: none !important; }
+.bq-mchip:hover, .bq-mchip:focus-visible { background: var(--c) !important; color: #fff !important; }
+.bq-more * { text-shadow: none; }
+@media (orientation: landscape) and (max-height: 540px) { .bq-tools { flex-wrap: wrap !important; row-gap: 3px; } #bc-paper-btn { max-width: 120px; } }
+/* landscape: two columns so the whole calculator is visible */
+@media (orientation: landscape) and (max-height: 540px) and (min-width: 520px) {
+  .blogger-calc-classic:not(.bq-full) { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; column-gap: 6px; align-items: stretch; }
+  .blogger-calc-classic:not(.bq-full) > .bc-tabs { grid-column: 1 / -1; grid-row: 1; }
+  .blogger-calc-classic:not(.bq-full) > .bc-screen-container { grid-column: 1; grid-row: 2; margin: 0 !important; min-height: 0; height: auto !important; align-self: stretch; }
+  .blogger-calc-classic:not(.bq-full) > .bc-keypad-container { grid-column: 2; grid-row: 2; min-height: 0 !important; }
+  .blogger-calc-classic.bq-hist:not(.bq-full) > .bc-keypad-container { grid-column: 1 / -1; }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .blogger-calc-classic.bq-full { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); grid-template-rows: auto minmax(0, 1fr); column-gap: 6px; height: 100vh; height: 100dvh; box-sizing: border-box; overflow: hidden; }
+  .blogger-calc-classic.bq-full > .bc-tabs { grid-column: 1 / -1; grid-row: 1; }
+  .blogger-calc-classic.bq-full > .bc-screen-container { grid-column: 1; grid-row: 2; min-height: 0; height: auto !important; }
+  .blogger-calc-classic.bq-full > .bc-keypad-container { grid-column: 2; grid-row: 2; min-height: 0 !important; height: auto !important; }
+  .blogger-calc-classic.bq-full.bq-hist > .bc-keypad-container { grid-column: 1 / -1; }
+}
+/* header navigation never changes with a filter */
+#blogger-calc-widget[class*="calc-theme-"] .bc-tabs { border-bottom-color: #2563eb !important; }
+#blogger-calc-widget[class*="calc-theme-"] .bc-tab-btn { background: #ffffff !important; color: #000000 !important; border-color: #94a3b8 !important; }
+#blogger-calc-widget[class*="calc-theme-"] .bc-tab-btn.active { background: #2563eb !important; color: #ffffff !important; border-color: #2563eb !important; }
+#blogger-calc-widget[class*="calc-theme-"] .bc-theme-select, #blogger-calc-widget[class*="calc-theme-"] #btn-bc-history-tab { background: #0f172a !important; color: #ffffff !important; border-color: #0f172a !important; }
+#blogger-calc-widget[class*="calc-theme-"] #btn-bc-history-tab.active { background: #2563eb !important; border-color: #2563eb !important; }
+#blogger-calc-widget[class*="calc-theme-"] #btn-bc-more { background: #ffffff !important; color: #1d4ed8 !important; border-color: #94a3b8 !important; }
     </style>
 
     <div class="bc-tabs" role="tablist">
@@ -3883,8 +3957,9 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             const BQ_ALLOWED_IDS = new Set(['Math.E', 'Math.PI', 'Math.SQRT2', 'Math.abs', 'Math.acosh', 'Math.asinh', 'Math.atanh', 'Math.cbrt', 'Math.cosh', 'Math.exp', 'Math.log', 'Math.log10', 'Math.log2', 'Math.random', 'Math.sinh', 'Math.sqrt', 'Math.tanh', 'Math.pow', 'Math.floor', 'Math.ceil', 'Math.round', 'Math.sign', 'Math.trunc', 'Math.min', 'Math.max', 'Math.hypot', 'bcFact', 'bcLogY', 'bcNthRoot', 'bcTrig.acos', 'bcTrig.asin', 'bcTrig.atan', 'bcTrig.cos', 'bcTrig.sin', 'bcTrig.tan']);
             const BQ_TOKEN = /\s+|(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?|\*\*|[+\-*/%(),]|Math\.[A-Za-z0-9]+|bcTrig\.[A-Za-z]+|bc[A-Za-z]+/y;
             function secureEvaluate(expr) {
-                const s = String(expr);
+                let s = String(expr);
                 if (s.length > 5000) { throw new Error("Invalid Input"); }
+                s = s.replace(/%(?=\s*(?:[-+*\/)%^]|$))/g, '*0.01');
                 let pos = 0;
                 while (pos < s.length) {
                     BQ_TOKEN.lastIndex = pos;
@@ -4239,6 +4314,8 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             }
             function bqApplyZoom() {
                 document.querySelector('.bc-screen-container').style.setProperty('--bq-z', String(bqZ));
+                document.getElementById('blogger-calc-widget').style.setProperty('--bq-hz', String(bqZ));
+                document.querySelectorAll('.bq-hzp').forEach(function(x) { x.textContent = Math.round(bqZ * 100) + '%'; });
                 document.getElementById('bc-zoom-pct').textContent = Math.round(bqZ * 100) + '%';
                 document.getElementById('bc-zoom-out').disabled = bqZ <= BQ_ZL[0];
                 document.getElementById('bc-zoom-in').disabled = bqZ >= BQ_ZL[BQ_ZL.length - 1];
@@ -4367,7 +4444,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             ];
             function bqMoreBuild() {
                 const pop = document.getElementById('bc-more-pop');
-                if (pop.firstChild) { return; }
+                if (pop.querySelector('.bq-mrow')) { return; }
                 BQ_MORE.forEach(function(it) {
                     const row = document.createElement('div'); row.className = 'bq-mrow'; row.style.setProperty('--c', it.c);
                     const ic = document.createElement('span'); ic.className = 'bq-mic'; ic.textContent = it.g; ic.style.background = it.c; ic.setAttribute('aria-hidden', 'true');
@@ -4778,6 +4855,73 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             window.addEventListener('resize', bqXApply);
             try { new ResizeObserver(bqXApply).observe(bqScroll); } catch (e) {}
             setTimeout(bqXApply, 0); setTimeout(bqXApply, 500);
+            /* ===== v26: history toggle/bounded pane, toolbar steady, auto-scroll on keys, elite More ===== */
+            (function bq26() {
+                const root = document.getElementById('blogger-calc-widget');
+                const pane = document.getElementById('bc-history-tab');
+                const hb = document.getElementById('btn-bc-history-tab');
+                const tools = document.getElementById('bc-tools');
+                let capH = 0;
+                /* HISTORY button opens / closes alternately */
+                hb.addEventListener('click', function(e) {
+                    if (pane.classList.contains('active')) { e.stopImmediatePropagation(); e.preventDefault(); api.historyBack(); return; }
+                    capH = root.offsetHeight;
+                }, true);
+                /* extra header controls: zoom + full screen */
+                const hd = pane.querySelector('.bc-history-header');
+                if (hd && !hd.querySelector('.bq-hctl')) {
+                    const g = document.createElement('span'); g.className = 'bq-hctl';
+                    g.innerHTML = '<button type="button" class="bq-hb" id="bq-h-out" aria-label="Zoom out" title="Zoom out">A−</button>' +
+                        '<button type="button" class="bq-hb bq-hzp" id="bq-h-pct" aria-label="Reset zoom" title="Reset zoom">100%</button>' +
+                        '<button type="button" class="bq-hb" id="bq-h-in" aria-label="Zoom in" title="Zoom in">A+</button>' +
+                        '<button type="button" class="bq-hb" id="bq-h-full" aria-label="Full screen" title="Full screen"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+                    const back = hd.querySelector('.bc-history-back-btn');
+                    hd.insertBefore(g, back || null);
+                    g.querySelector('#bq-h-out').onclick = function() { api.zoomDisp(-1); };
+                    g.querySelector('#bq-h-pct').onclick = function() { api.zoomDisp(0); };
+                    g.querySelector('#bq-h-in').onclick = function() { api.zoomDisp(1); };
+                    g.querySelector('#bq-h-full').onclick = function() { api.toggleFull(); };
+                    bqApplyZoom();
+                }
+                function size() {
+                    const kp = root.querySelector('.bc-keypad-container'), tabs = root.querySelector('.bc-tabs');
+                    if (root.classList.contains('bq-full')) { ['height', 'min-height', 'max-height'].forEach(function(k) { kp.style.removeProperty(k); }); return; }
+                    const h = (capH || root.offsetHeight) - (tabs ? tabs.offsetHeight : 0);
+                    if (h > 120) {
+                        const set = function(v) { ['height', 'min-height', 'max-height'].forEach(function(k) { kp.style.setProperty(k, v + 'px', 'important'); }); };
+                        set(h); const d = root.offsetHeight - (capH || root.offsetHeight); if (d !== 0) { set(h - d); }
+                    }
+                }
+                new MutationObserver(function() {
+                    if (pane.classList.contains('active')) {
+                        if (!capH) { capH = root.offsetHeight; }
+                        root.classList.add('bq-hist'); size();
+                        const l = document.getElementById('bc-history-list'); if (l) { l.scrollTop = 0; }
+                    } else {
+                        root.classList.remove('bq-hist'); capH = 0;
+                        const kp = root.querySelector('.bc-keypad-container'); ['height', 'min-height', 'max-height'].forEach(function(k) { kp.style.removeProperty(k); });
+                    }
+                }).observe(pane, { attributes: true, attributeFilter: ['class'] });
+                /* toolbar never slides while the display scrolls */
+                if (tools) {
+                    tools.addEventListener('scroll', function() { tools.scrollLeft = 0; }, { passive: true });
+                    tools.addEventListener('touchmove', function(e) { if (e.cancelable) { e.preventDefault(); } }, { passive: false });
+                }
+                /* keep input / output in view when a key is pressed */
+                root.addEventListener('click', function(e) {
+                    const b = e.target.closest && e.target.closest('.bc-btn, .fx-key, [data-fxkey]');
+                    if (!b || !root.contains(b) || pane.classList.contains('active')) { return; }
+                    const go = function() { try { bqStick = true; bqToBottom(); } catch (er) {} };
+                    setTimeout(go, 0); setTimeout(go, 90); setTimeout(go, 260);
+                }, false);
+                /* More pop-up: header + close, Esc, outside tap */
+                const more = document.getElementById('bc-more-pop');
+                const mh = document.createElement('div'); mh.className = 'bq-mhead';
+                mh.innerHTML = '<span class="bq-mtitle">More calculators</span><button type="button" class="bq-mx" aria-label="Close">✕</button>';
+                more.insertBefore(mh, more.firstChild);
+                mh.querySelector('.bq-mx').onclick = function(ev) { ev.stopPropagation(); bqMoreClose(true); };
+                document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !more.hidden) { bqMoreClose(true); } });
+            })();
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
