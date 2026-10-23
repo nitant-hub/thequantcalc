@@ -28,7 +28,6 @@
             --text-main: #1e293b;
             --text-muted: #475569;
             --border-color: #e2e8f0;
-            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
         }
 
         [data-theme="dark"] {
@@ -82,20 +81,27 @@
             text-align: center;
         }
 
-        /* --- THE SLIM & DARK CALCULATOR CARD --- */
+        /* --- AD TARGET HOOK --- */
+        /* This is kept 100% wide so AdSense has room to load the desktop banner */
         .tool-suite {
+            width: 100%;
+            display: block;
+            margin-bottom: 2rem;
+        }
+
+        /* --- THE SLIM & DARK CALCULATOR CARD --- */
+        .calculator-ui-box {
             background-color: #020617; /* Deep pitch-dark blue/black */
             border-radius: 16px;
             padding: 24px;
             width: 100%;
             max-width: 420px; /* SLIM IN X-DIRECTION */
-            margin: 0.5rem auto 1rem auto; /* Centered perfectly */
-            align-self: center;
+            margin: 0 auto; /* Centers the calculator box */
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             border: 1px solid #1e293b;
         }
         
-        [data-theme="dark"] .tool-suite {
+        [data-theme="dark"] .calculator-ui-box {
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
@@ -142,21 +148,9 @@
             word-break: break-all;
         }
 
-        /* --- AD INSERTION CONTAINER --- */
-        /* CRITICAL FIX: Must remain 100% width so AdSense has space to load large desktop banners! */
-        .adsense-in-content-wrapper, #dynInContentAd, #inContentAdContainer { 
-            margin: 20px auto 30px auto; 
-            width: 100%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            min-height: 90px;
-            clear: both;
-        }
-
         /* --- EDITORIAL CONTENT --- */
-        .article-content { width: 100%; margin-top: 1rem; max-width: 100%; }
-        .article-content h2 { font-size: 22px; color: var(--text-main); margin: 2rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .article-content { width: 100%; max-width: 100%; }
+        .article-content h2 { font-size: 22px; color: var(--text-main); margin: 1rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
         .article-content h3 { font-size: 19px; color: var(--text-main); margin: 1.5rem 0 0.75rem 0; }
         .article-content p, .article-content li { color: var(--text-muted); margin-bottom: 1rem; font-size: 15.5px; }
         .article-content ul { margin-left: 20px; margin-bottom: 1rem; }
@@ -192,8 +186,7 @@
             .wrapper { padding: 0 0.5rem; margin-top: 0.5rem; }
             .main-body { padding: 1.25rem 1rem; width: 100%; overflow: hidden; } 
             
-            /* Calculator scales down to fit screen if smaller than 420px */
-            .tool-suite { width: 100%; max-width: 100%; padding: 20px 15px; margin: 0 auto 1.5rem auto; }
+            .calculator-ui-box { width: 100%; max-width: 100%; padding: 20px 15px; margin: 0 auto; }
             
             h1.page-title { font-size: 21px; }
             .result-value { font-size: 28px; }
@@ -218,46 +211,46 @@
                 
                 <h1 class="page-title">Fixed Deposit & Compound Interest Calculator</h1>
 
-                <!-- Slim & Dark Calculator Card -->
+                <!-- .tool-suite is kept 100% wide so navigation.js has room to inject AdSense below the calculator box! -->
                 <div class="tool-suite">
-                  <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Fixed Deposit Calculator</h2>
                   
-                  <div class="calc-input-group">
-                    <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
-                    <input id="principal" class="calc-input" type="number" value="10000" />
-                  </div>
+                  <!-- The visual calculator box is kept slim and centered -->
+                  <div class="calculator-ui-box">
+                      <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Fixed Deposit Calculator</h2>
+                      
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
+                        <input id="principal" class="calc-input" type="number" value="10000" />
+                      </div>
 
-                  <div class="calc-input-group">
-                    <label class="calc-label" for="interestRate">Annual Interest Rate (%):</label>
-                    <input id="interestRate" class="calc-input" type="number" value="7.1" />
-                  </div>
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="interestRate">Annual Interest Rate (%):</label>
+                        <input id="interestRate" class="calc-input" type="number" value="7.1" />
+                      </div>
 
-                  <div class="calc-input-group">
-                    <label class="calc-label" for="years">Time Period (Years):</label>
-                    <input id="years" class="calc-input" type="number" value="5" />
-                  </div>
+                      <div class="calc-input-group">
+                        <label class="calc-label" for="years">Time Period (Years):</label>
+                        <input id="years" class="calc-input" type="number" value="5" />
+                      </div>
 
-                  <div class="calc-input-group" style="margin-bottom: 8px;">
-                    <label class="calc-label" for="compounding">Compounding Frequency:</label>
-                    <select id="compounding" class="calc-input">
-                        <option value="1">Yearly (12 Months)</option>
-                        <option value="2">Half-Yearly (6 Months)</option>
-                        <option value="4" selected>Quarterly (3 Months)</option>
-                    </select>
-                  </div>
+                      <div class="calc-input-group" style="margin-bottom: 8px;">
+                        <label class="calc-label" for="compounding">Compounding Frequency:</label>
+                        <select id="compounding" class="calc-input">
+                            <option value="1">Yearly (12 Months)</option>
+                            <option value="2">Half-Yearly (6 Months)</option>
+                            <option value="4" selected>Quarterly (3 Months)</option>
+                        </select>
+                      </div>
 
-                  <div class="result-box">
-                    <div class="result-accent-line"></div>
-                    <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Estimated Maturity Value</span>
-                    <span id="financeResult" class="result-value" aria-live="polite">14,213.63</span>
+                      <div class="result-box">
+                        <div class="result-accent-line"></div>
+                        <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Estimated Maturity Value</span>
+                        <span id="financeResult" class="result-value" aria-live="polite">14,213.63</span>
+                      </div>
                   </div>
                   
+                  <!-- navigation.js injects the ad banner here -->
                 </div>
-
-                <!-- AD INJECTION HOOKS -->
-                <!-- These are fully 100% wide again so AdSense can successfully render desktop banners -->
-                <div id="inContentAdContainer" class="adsense-in-content-wrapper"></div>
-                <div id="dynInContentAd" class="adsense-in-content-wrapper"></div>
 
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
