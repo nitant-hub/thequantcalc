@@ -529,65 +529,149 @@
    * guarantee detection of every third-party or cross-origin layout.
    * It never modifies, hides, resizes or reads ad contents.
    * ------------------------------------------------------------------ */
-  function getVisibleAdRects() {
-    var elements = new Set();
+  var AD_TOKENS = {
+    ad: 1, ads: 1, adv: 1, advert: 1, advertisement: 1, advertisements: 1,
+    adsense: 1, adslot: 1, adunit: 1, adbox: 1, adwrap: 1, adwrapper: 1,
+    adcontainer: 1, adplaceholder: 1, sponsor: 1, sponsored: 1
+  };
+  var AD_LABEL_RE = /^(advertisement|advertisements|sponsored|ad)$/i;
+  var RESULT_JOINED = RESULT_SELECTORS.join(",");
+  var AD_CACHE_MS = 700;
+  var adCache = { time: 0, els: [] };
+
+  function hasAdToken(el) {
+    var raw = (typeof el.className === "string" ? el.className : "") +
+      " " + (el.id || "");
+    var parts = raw.toLowerCase().split(/[^a-z0-9]+/);
+    for (var i = 0; i < parts.length; i += 1) {
+      if (parts[i] && AD_TOKENS[parts[i]] === 1) return true;
+    }
+    return false;
+  }
+
+  // True when an element is a page-sized container, not an ad slot.
+  function looksLikeLayoutContainer(el) {
+    if (el === document.body || el === document.documentElement) return true;
+    try {
+      if (el.querySelector(RESULT_JOINED + ", input, select, textarea")) {
+        return true;
+      }
+    } catch (e) { /* ignore */ }
+    return false;
+  }
+
+  /*
+   * Finds ad elements. Empty or unfilled slots are included, because the
+   * slot reserves space and a filled ad can appear there later. The list is
+   * cached briefly; rectangles are always measured fresh.
+   */
+  function collectAdElements(force) {
+    var now = Date.now();
+    if (!force && now - adCache.time < AD_CACHE_MS) return adCache.els;
+
+    var found = new Set();
+
+    // 1. Known AdSense / ad-network selectors.
+    try {
+      document.querySelectorAll(AD_ANCESTOR_SELECTOR).forEach(function (el) {
+        if (el instanceof HTMLElement && !isOurNode(el)) found.add(el);
+      });
+    } catch (e) { /* ignore */ }
+
+    // 2. Wrappers whose class or id names an ad (ad-slot, ad-box, ...).
+    document.querySelectorAll("[class],[id]").forEach(function (el) {
+      if (!(el instanceof HTMLElement)) return;
+      if (isOurNode(el) || found.has(el)) return;
+      if (!hasAdToken(el)) return;
+      if (looksLikeLayoutContainer(el)) return;
+      found.add(el);
+    });
+
+    // 3. Slots identified only by a visible "Advertisement" label. Climb
+    // while the parent holds nothing but that label.
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        var v = n.nodeValue;
+        if (!v || v.length > 40 || !AD_LABEL_RE.test(v.trim())) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    var node;
+    var guard = 0;
+
+    while ((node = walker.nextNode()) && guard < 40) {
+      guard += 1;
+      var el = node.parentElement;
+      if (!el || isOurNode(el)) continue;
+
+      var best = el;
+      for (var hop = 0; hop < 3; hop += 1) {
+        var p = best.parentElement;
+        if (!p || p === document.body || looksLikeLayoutContainer(p)) break;
+        if ((p.innerText || "").trim().length > 40) break;
+        if (p.getBoundingClientRect().height > 700) break;
+        best = p;
+      }
+      found.add(best);
+    }
+
+    adCache.time = now;
+    adCache.els = Array.from(found);
+    return adCache.els;
+  }
+
+  function getVisibleAdRects(force) {
     var vw = document.documentElement.clientWidth;
     var vh = window.innerHeight;
+    var rects = [];
 
-    AD_SELECTORS.forEach(function (selector) {
-      var nodes;
-      try {
-        nodes = document.querySelectorAll(selector);
-      } catch (e) {
-        return;
+    collectAdElements(force).forEach(function (el) {
+      if (!el.isConnected) return;
+
+      var style = getComputedStyle(el);
+      var rect = el.getBoundingClientRect();
+
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        Number(style.opacity) === 0 ||
+        rect.width < 2 ||
+        rect.height < 2 ||
+        rect.bottom <= 0 ||
+        rect.top >= vh ||
+        rect.right <= 0 ||
+        rect.left >= vw
+      ) return;
+
+      rects.push(rect);
+
+      // Also include a close-fitting wrapper around the slot.
+      var parent = el.parentElement;
+      var hops = 0;
+
+      while (parent && parent !== document.body && hops < 2) {
+        if (looksLikeLayoutContainer(parent)) break;
+
+        var pr = parent.getBoundingClientRect();
+
+        var hugs =
+          pr.width >= rect.width - 1 &&
+          pr.height >= rect.height - 1 &&
+          pr.width <= Math.max(rect.width * 1.8, rect.width + 80) &&
+          pr.height <= Math.max(rect.height * 1.8, rect.height + 80);
+
+        if (!hugs) break;
+
+        rects.push(pr);
+        parent = parent.parentElement;
+        hops += 1;
       }
-
-      nodes.forEach(function (element) {
-        if (!(element instanceof HTMLElement)) return;
-
-        var style = getComputedStyle(element);
-        var rect = element.getBoundingClientRect();
-
-        if (
-          style.display === "none" ||
-          style.visibility === "hidden" ||
-          Number(style.opacity) === 0 ||
-          rect.width < 2 ||
-          rect.height < 2 ||
-          rect.bottom <= 0 ||
-          rect.top >= vh ||
-          rect.right <= 0 ||
-          rect.left >= vw
-        ) return;
-
-        elements.add(element);
-
-        // Include the nearest wrapper(s) only when they hug the ad, so the
-        // whole page layout is never treated as an ad region.
-        var parent = element.parentElement;
-        var hops = 0;
-
-        while (parent && parent !== document.body && hops < 2) {
-          var pr = parent.getBoundingClientRect();
-
-          var hugs =
-            pr.width >= rect.width - 1 &&
-            pr.height >= rect.height - 1 &&
-            pr.width <= Math.max(rect.width * 1.8, rect.width + 80) &&
-            pr.height <= Math.max(rect.height * 1.8, rect.height + 80);
-
-          if (!hugs) break;
-
-          elements.add(parent);
-          parent = parent.parentElement;
-          hops += 1;
-        }
-      });
     });
 
-    return Array.from(elements).map(function (element) {
-      return element.getBoundingClientRect();
-    });
+    return rects;
   }
 
   /* ------------------------------------------------------------------ *
@@ -674,7 +758,9 @@
       return Math.round(Math.max(MARGIN, Math.min(x, vw - width - MARGIN)));
     }
 
-    var ads = getVisibleAdRects();
+    var ads = getVisibleAdRects(!menu.classList.contains("tqc-visible") &&
+      !menu.dataset.tqcPlaced);
+    menu.dataset.tqcPlaced = "1";
 
     var leftOptions = [
       t.left,
@@ -746,7 +832,7 @@
           left: left,
           top: dir === "down" ? anchor : anchor - height,
           height: height,
-          full: height >= wanted - 0.5,
+          ok: height >= Math.min(wanted, 220) - 0.5,
           li: li
         });
       });
@@ -760,15 +846,22 @@
       return false;
     }
 
+    // Prefer a comfortable (>= 220px or full-height) spot below the
+    // trigger, then above. Within a direction prefer the taller one.
+    // If nothing is comfortable, take the tallest available space.
     candidates.sort(function (a, b) {
-      if (a.full !== b.full) return a.full ? -1 : 1;
+      if (a.ok !== b.ok) return a.ok ? -1 : 1;
 
-      if (!a.full) {
-        var diff = b.height - a.height;
-        if (Math.abs(diff) > 1) return diff;
+      if (!a.ok) {
+        var tall = b.height - a.height;
+        if (Math.abs(tall) > 1) return tall;
       }
 
       if (a.dir !== b.dir) return a.dir === "down" ? -1 : 1;
+
+      var diff = b.height - a.height;
+      if (Math.abs(diff) > 1) return diff;
+
       return a.li - b.li;
     });
 
