@@ -88,11 +88,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
         body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
 
-        /* Typography - Strict Line Heights Enforced */
+        /* Typography */
         h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
         p, li, label, span, td, th, option, select, input, button { line-height: 1.6 !important; }
 
-        /* Header - GUARANTEED FIXED POSITION */
+        /* Header */
         header#siteHeader {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
             background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
@@ -117,7 +117,7 @@
         .nav-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.05rem; }
         .close-menu-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
 
-        /* --- THE GRID --- */
+        /* The Grid */
         .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
         .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 768px) { 
@@ -131,81 +131,82 @@
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        h1.page-title {
-            font-size: 26px; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-main); text-align: center;
+        h1.page-title { font-size: 26px; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-main); text-align: center; }
+
+        /* =========================================
+           STRUCTURAL NESTING FOR ADSENSE & SLIM UI
+           ========================================= */
+
+        /* 1. Outer Hook for navigation.js to inject AdSense (100% width) */
+        .tool-suite { 
+            width: 100%; 
+            display: block; 
+            margin-bottom: 2rem; 
         }
 
-        /* --- AD TARGET HOOK --- */
-        .tool-suite { width: 100%; display: block; margin-bottom: 2rem; }
-
-        /* --- PREMIUM DARK GLASS CALCULATOR UI (.calculator-ui-box) --- */
+        /* 2. Middle Wrapper to keep the calculator slim (Max 420px) */
         .calculator-ui-box {
-            background-color: #071426; 
-            background-image: 
-                radial-gradient(circle at top left, rgba(22, 200, 244, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 45%),
-                radial-gradient(circle at top right, rgba(0, 214, 160, 0.08) 0%, transparent 40%),
-                linear-gradient(135deg, rgba(7, 20, 38, 0.8) 0%, rgba(4, 10, 20, 0.9) 100%);
-            border-radius: 16px;
-            padding: 24px;
             width: 100%;
-            max-width: 420px; 
+            max-width: 420px;
             margin: 0 auto;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid #1e293b;
-            color: #f8fafc;
-        }
-        
-        [data-theme="dark"] .calculator-ui-box {
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.08);
         }
 
+        /* 3. Inner Card containing the actual visual design */
+        .calculator-card {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 16px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            width: 100%;
+            color: #f8fafc;
+            box-sizing: border-box;
+        }
+
+        /* Input Styles */
         .calc-input-group { margin-bottom: 18px; }
-        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #94a3b8; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: #cbd5e1; }
         
         .calc-input {
-            background-color: #101E35;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.02);
+            background-color: #0b1120;
             color: #f8fafc;
             border: 1px solid #334155;
+            border-bottom: 1px solid #475569;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), inset 0 -1px 2px rgba(255,255,255,0.02);
             border-radius: 8px;
             padding: 12px 15px;
             width: 100%;
             font-size: 16px;
             outline: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s;
         }
         
         .calc-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; opacity: 0.7; }
         .calc-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
-        .calc-input:focus { border-color: #00D6A0; box-shadow: 0 0 0 2px rgba(0, 214, 160, 0.2); }
+        .calc-input:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 3px 6px rgba(0,0,0,0.6); }
 
+        /* Button */
         .calc-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white; border: none; border-radius: 8px; padding: 14px 24px;
+            background: var(--accent-gradient); color: white; border: none; border-radius: 8px; padding: 14px 24px;
             font-size: 16px; font-weight: 700; width: 100%; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3), inset 0 1px 1px rgba(255,255,255,0.2);
             transition: transform 0.2s, box-shadow 0.2s; margin-top: 5px;
         }
-        .calc-btn:hover {
-            transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
-        }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255,255,255,0.2); }
 
-        /* Deep Teal Result Dashboard */
+        /* Result Panel */
         .result-box {
-            background-color: #103B42;
-            background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
-            box-shadow: inset 0 0 25px rgba(0, 214, 160, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-radius: 10px; border: 1px solid #184c55;
-            padding: 20px; text-align: center; position: relative; overflow: hidden; margin-top: 25px; display: none;
+            background: linear-gradient(145deg, #1e293b, #111827); border-radius: 12px;
+            border: 1px solid #334155; border-top: 1px solid #475569;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.05);
+            padding: 25px; text-align: center; position: relative; overflow: hidden; margin-top: 25px; display: none;
         }
+        
+        .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-gradient); }
+        .result-value { color: #38bdf8; font-size: 32px; font-weight: 800; display: block; margin-top: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2; }
 
-        .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10b981, #00D6A0); }
-        .result-value { color: #00D6A0; font-size: 30px; font-weight: 800; display: block; margin-top: 5px; text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3); line-height: 1.2; }
-
-        /* Extended Metrics Grid inside Result Box */
+        /* Extended Metrics Grid */
         .extended-metrics {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
         }
@@ -234,13 +235,13 @@
         .data-table th { padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-primary); font-weight: 700; }
         .data-table td { padding: 12px; border: 1px solid var(--border-color); font-size: 14.5px; }
 
-        /* --- MOBILE TWEAKS --- */
+        /* --- MOBILE TWEAKS (STRICT TABLET SIZING) --- */
         @media (max-width: 767px) {
             .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 1rem; overflow: hidden; } 
             
-            /* No max-width: 100% here. Keeps the calculator slim on tablets! */
-            .calculator-ui-box { padding: 20px 15px; }
+            /* Adjust padding only. No width: 100% applied to keep tablet slim! */
+            .calculator-card { padding: 20px 15px; }
             
             h1.page-title { font-size: 22px; }
             .result-value { font-size: 26px; }
@@ -281,51 +282,57 @@
             <main class="main-body">
                 <h1 class="page-title">Accurate Age & Time Lived Calculator</h1>
 
-                <!-- .tool-suite kept 100% wide for AdSense -->
+                <!-- 1. .tool-suite kept 100% wide for AdSense injection -->
                 <div class="tool-suite">
                     
-                    <!-- Premium Dark Glass Calculator Box -->
+                    <!-- 2. .calculator-ui-box keeps the design slim at 420px max-width -->
                     <div class="calculator-ui-box">
-                      <div class="calc-input-group">
-                        <label class="calc-label" for="birthDate">Select Your Date of Birth:</label>
-                        <input id="birthDate" class="calc-input" type="date" />
-                      </div>
 
-                      <div class="calc-input-group">
-                        <label class="calc-label" for="targetDate">Calculate Age As Of (Target Date):</label>
-                        <input id="targetDate" class="calc-input" type="date" />
-                      </div>
+                        <!-- 3. .calculator-card preserves your exact deep 3D aesthetic -->
+                        <div class="calculator-card">
+                            <h2 style="border-bottom: 2px solid rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 24px; margin-bottom: 25px; margin-top: 0px; padding-bottom: 12px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Calculate Age</h2>
+                            
+                            <div class="calc-input-group">
+                                <label class="calc-label" for="birthDate">Select Your Date of Birth:</label>
+                                <input id="birthDate" class="calc-input" type="date" />
+                            </div>
 
-                      <button class="calc-btn" onclick="checkAge()">Calculate Exact Age</button>
+                            <div class="calc-input-group">
+                                <label class="calc-label" for="targetDate">Calculate Age As Of (Target Date):</label>
+                                <input id="targetDate" class="calc-input" type="date" />
+                            </div>
 
-                      <div id="ageResultBox" class="result-box" aria-live="polite">
-                        <div class="result-accent-line"></div>
-                        <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Your Exact Age</span>
-                        <span id="ageResult" class="result-value"></span>
-                        
-                        <!-- Extended Time Metrics -->
-                        <div class="extended-metrics">
-                            <div class="metric-item">
-                                <span id="resDays" class="metric-val">0</span>
-                                <span class="metric-label">Total Days Lived</span>
+                            <button class="calc-btn" onclick="checkAge()">Calculate Exact Age</button>
+
+                            <div id="ageResultBox" class="result-box" aria-live="polite">
+                                <div class="result-accent-line"></div>
+                                <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Your Exact Age</span>
+                                <span id="ageResult" class="result-value"></span>
+                                
+                                <!-- Extended Biological Time Metrics -->
+                                <div class="extended-metrics">
+                                    <div class="metric-item">
+                                        <span id="resDays" class="metric-val">0</span>
+                                        <span class="metric-label">Total Days Lived</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span id="resHours" class="metric-val">0</span>
+                                        <span class="metric-label">Total Hours Lived</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span id="resSeconds" class="metric-val">0</span>
+                                        <span class="metric-label">Total Seconds</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span id="resHeartbeats" class="metric-val">0</span>
+                                        <span class="metric-label">Est. Heartbeats (80 bpm)</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="metric-item">
-                                <span id="resHours" class="metric-val">0</span>
-                                <span class="metric-label">Total Hours Lived</span>
-                            </div>
-                            <div class="metric-item">
-                                <span id="resSeconds" class="metric-val">0</span>
-                                <span class="metric-label">Total Seconds</span>
-                            </div>
-                            <div class="metric-item">
-                                <span id="resHeartbeats" class="metric-val">0</span>
-                                <span class="metric-label">Est. Heartbeats (80 bpm)</span>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
+                        </div> <!-- End .calculator-card -->
+                    </div> <!-- End .calculator-ui-box -->
                     
-                    <!-- Navigation.js will inject AdSense here -->
+                    <!-- Navigation.js will successfully inject AdSense here, underneath the UI box! -->
                 </div>
 
                 <div class="content-section">
@@ -452,7 +459,6 @@
             'use strict';
             const today = new Date();
             const targetDateInput = document.getElementById('targetDate');
-            // Auto-fill target date with today's local date properly formatted to YYYY-MM-DD
             targetDateInput.value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
             window.checkAge = function() {
@@ -467,7 +473,6 @@
                 const dob = new Date(dobInput);
                 const target = new Date(targetInput);
                 
-                // Ensure calculations happen at midnight to avoid timezone drifts
                 dob.setHours(0, 0, 0, 0);
                 target.setHours(0, 0, 0, 0);
 
@@ -476,14 +481,12 @@
                     return;
                 }
                 
-                // 1. Calculate Exact Years, Months, Days
                 let years = target.getFullYear() - dob.getFullYear();
                 let months = target.getMonth() - dob.getMonth();
                 let days = target.getDate() - dob.getDate();
 
                 if (days < 0) {
                     months--;
-                    // Get days in the previous month
                     const prevMonthDate = new Date(target.getFullYear(), target.getMonth(), 0);
                     days += prevMonthDate.getDate();
                 }
@@ -493,15 +496,13 @@
                     months += 12;
                 }
                 
-                // 2. Calculate Total Days, Hours, Seconds, Heartbeats
                 const diffTime = target.getTime() - dob.getTime();
                 const totalDays = Math.floor(diffTime / (1000 * 3600 * 24));
                 const totalHours = totalDays * 24;
                 const totalMinutes = totalHours * 60;
                 const totalSeconds = totalMinutes * 60;
-                const estimatedHeartbeats = totalMinutes * 80; // 80 bpm average
+                const estimatedHeartbeats = totalMinutes * 80;
                 
-                // 3. Render Output
                 document.getElementById('ageResult').innerText = `${years} Yrs, ${months} Mos, ${days} Days`;
                 document.getElementById('resDays').innerText = totalDays.toLocaleString();
                 document.getElementById('resHours').innerText = totalHours.toLocaleString();
@@ -512,7 +513,6 @@
             };
         })();
 
-        // Core Theme & Layout Logic
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
