@@ -1054,28 +1054,19 @@ aside .box:empty,
   }
   BASE.forEach(function(b){add(b[0],b[1],b[2],b[3])});
 
-  function addFromTree(list){
-    list.forEach(function(p){
-      if(!/^tools\/.+\.html$/i.test(p))return;
-      var parts=p.split('/').slice(1), file=parts.pop();
-      if(file.charAt(0)==='_'||/^index\.html$/i.test(file))return;
-      var cat=parts.length?norm(parts[0]):'utility';
-      var group=parts[1]?pretty(parts[1]):(parts.length?'Calculators':'More Tools');
-      add(p,pretty(file.replace(/\.html$/i,'')),cat,group);
+  function addFromJson(list){
+    list.forEach(function(t){
+      if(!t||!t.path)return;
+      var file=t.path.split('/').pop().replace(/\.html$/i,'');
+      add(t.path.replace(/^\//,''), t.title||pretty(file), norm(t.category||'utility'), 'Calculators');
     });
   }
 
   function load(done){
-    var c=null; try{c=JSON.parse(localStorage.getItem('qc_tree'))}catch(e){}
-    if(c&&c.p){addFromTree(c.p);return;}
-    fetch('https://api.github.com/repos/'+REPO+'/git/trees/'+BRANCH+'?recursive=1')
-      .then(function(r){return r.json()})
-      .then(function(j){
-        if(!j.tree)return done();
-        var p=j.tree.filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
-        try{localStorage.setItem('qc_tree',JSON.stringify({t:Date.now(),p:p}))}catch(e){}
-        addFromTree(p); done();
-      }).catch(done);
+    fetch('/tools.json',{cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(list){ if(Array.isArray(list)&&list.length)addFromJson(list); done(); })
+      .catch(function(){ done(); });
   }
 
   function cats(){
