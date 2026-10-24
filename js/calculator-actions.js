@@ -38,7 +38,11 @@
 
   var hostByCard = new WeakMap();
 
-  var RESULT_SELECTORS = [
+    var RESULT_SELECTORS = [
+    "[data-tqc-result]",
+    ".tqc-result-box",
+    ".tqc-result-card",
+    ".js-tqc-result",
     "[data-calculator-result]",
     ".results-dashboard",
     ".calculator-result",
@@ -50,6 +54,7 @@
     "#result",
     ".result"
   ];
+
 
     var AD_SELECTORS = [
     /* 1. Core AdSense & Google Network */
