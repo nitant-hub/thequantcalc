@@ -57,35 +57,33 @@
 
 
     var AD_SELECTORS = [
-    /* 1. Core AdSense & Google Network */
-    "ins.adsbygoogle",
-    ".adsbygoogle",
-    "iframe[id^='google_ads_iframe']",
-    "iframe[id^='aswift']",
-    "iframe[src*='doubleclick.net']",
-    "iframe[src*='googlesyndication.com']",
+  // 1. Core AdSense & Google Network
+  ".adsbygoogle",
+  "iframe[id^='google_ads_iframe']",
+  "iframe[id^='aswift']",
+  "iframe[src*='doubleclick.net']",
+  "iframe[src*='googlesyndication.com']",
 
-    /* 2. AdSense Layout Attributes */
-    "[data-ad-client]",
-    "[data-ad-slot]",
-    "[data-anchor-status]",
-    "[data-ad-format]",
-    "[data-full-width-responsive]",
-    ".google-auto-placed",
+  // 2. AdSense layout attributes
+  "[data-ad-client]",
+  "[data-ad-slot]",
+  "[data-anchor-status]",
+  "[data-ad-format]",
+  "[data-full-width-responsive]",
+  ".google-auto-placed",
 
-    /* 3. TheQuantCalc Custom Ad Wrappers */
-    ".tqc-ad-slot",
-    "[data-tqc-ad]",
+  // 3. TheQuantCalc custom ad wrappers
+  ".tqc-ad-slot",
+  "[data-tqc-ad]",
 
-    /* 4. Generic Ad Wrappers */
-    ".ad-container",
-    ".ad-wrapper",
-    ".ads-container",
-    ".ad-slot",
-    ".ad-box",
-    ".advertisement"
-  ];
-
+  // 4. Generic ad wrappers
+  ".ad-container",
+  ".ad-wrapper",
+  ".ads-container",
+  ".ad-slot",
+  ".ad-box",
+  ".advertisement"
+];
 
   var AD_ANCESTOR_SELECTOR = AD_SELECTORS.join(",");
 
