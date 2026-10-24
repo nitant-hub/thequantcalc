@@ -316,11 +316,20 @@
             line-height: 1.2;
         }
 
-        .sidebar-ad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Fixed Ad Containers for perfect centering */
+        .ad-container {
+            display: block;
             width: 100%;
+            text-align: center;
+            margin: 20px auto 36px;
+            min-height: 90px;
+            overflow: hidden;
+        }
+        
+        .sidebar-ad-container {
+            display: block;
+            width: 100%;
+            text-align: center;
             margin-bottom: 30px;
             min-height: 250px;
             overflow: hidden;
@@ -494,8 +503,20 @@
                     </section>
                 </div>
 
+                <!-- AdSense 1: Directly below calculator -->
+                <div class="ad-container">
+                    <ins class="adsbygoogle"
+                         style="display:block; text-align:center;"
+                         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                         data-ad-slot="XXXXXXXXXXXXXXXX"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
                 <!-- Section 2: The Article -->
-                <!-- navigation.js will dynamically insert the AdSense block right before this article -->
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
                     <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
@@ -639,7 +660,7 @@
                 <!-- AdSense 2: Top of Sidebar -->
                 <div class="sidebar-ad-container">
                     <ins class="adsbygoogle"
-                         style="display:block"
+                         style="display:block; text-align:center;"
                          data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
                          data-ad-slot="XXXXXXXXXXXXXXXX"
                          data-ad-format="auto"
@@ -655,7 +676,7 @@
                 <!-- AdSense 3: Bottom of Sidebar -->
                 <div class="sidebar-ad-container">
                     <ins class="adsbygoogle"
-                         style="display:block"
+                         style="display:block; text-align:center;"
                          data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
                          data-ad-slot="XXXXXXXXXXXXXXXX"
                          data-ad-format="auto"
@@ -710,3 +731,4 @@
     <script src="/navigation.js"></script>
 </body>
 </html>
+
