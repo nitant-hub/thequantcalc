@@ -96,18 +96,12 @@
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 16px;
-            line-height: 1.35;
+            line-height: 1.4;
             overflow-wrap: anywhere;
         }
 
-        button, input, select {
-            font: inherit;
-        }
-
-        a {
-            color: var(--accent);
-            text-underline-offset: 3px;
-        }
+        button, input, select { font: inherit; }
+        a { color: var(--accent); text-underline-offset: 3px; }
 
         .tqc-page-grid {
             width: 100%;
@@ -116,7 +110,7 @@
             padding: 20px 16px;
         }
 
-        /* Responsive layout handling the sidebar & main content split */
+        /* Responsive Layout matching Photo 2 exactly */
         .dyn-left-split {
             display: grid;
             grid-template-columns: minmax(0, 1fr);
@@ -131,38 +125,45 @@
             }
         }
 
+        /* Main Body strictly forces vertical stacking, overriding any rogue side-by-side splits */
         .main-body {
+            display: flex;
+            flex-direction: column;
             width: 100%;
             min-width: 0;
             padding: 28px;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 8px 28px rgba(15, 23, 42, 0.045);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
         }
 
+        /* Title left-aligned to match the Exam Marks photo example */
         .primary-title {
-            margin: 0 0 30px;
-            padding: 0;
-            color: var(--text-main);
-            font-size: clamp(22px, 3vw, 26px);
-            font-weight: 750;
-            line-height: 1.39;
-            text-align: center;
-            letter-spacing: -0.4px;
-        }
-
-        .tool-suite {
             display: block;
             width: 100%;
-            min-width: 0;
+            margin: 0 0 24px;
+            padding: 0 0 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: clamp(22px, 3vw, 28px);
+            font-weight: 750;
+            line-height: 1.35;
+            text-align: left;
+        }
+
+        /* Force calculator to be centered block */
+        .tool-suite {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             margin: 0 0 30px;
         }
 
         .calculator-ui-box {
             width: 100%;
             max-width: 440px;
-            margin: 0 auto;
             padding: 28px 24px;
             border: 1px solid rgba(148, 163, 184, 0.24);
             border-radius: 20px;
@@ -173,11 +174,11 @@
                 radial-gradient(circle at 100% 0%, rgba(0, 214, 160, 0.09), transparent 38%),
                 linear-gradient(135deg, #071426, #040a14);
             color: #f8fafc;
-            box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.09);
+            box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.09);
         }
 
         .calculator-heading {
-            margin: 0 0 26px;
+            margin: 0 0 24px;
             color: #f8fafc;
             font-size: 18px;
             font-weight: 700;
@@ -193,7 +194,7 @@
             display: block;
             margin-bottom: 8px;
             color: #c2cede;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
         }
 
@@ -276,46 +277,80 @@
             line-height: 1.2;
         }
 
-        /* AdSense Container Styling */
+        /* AD CONTAINERS: ensures ads are clearly spaced and centered */
         .ad-container {
+            display: block;
             width: 100%;
             text-align: center;
-            overflow: hidden;
-            margin: 24px 0;
+            margin: 0 auto 30px;
+            clear: both;
+        }
+        
+        .sidebar-ad-container {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
+        /* Article Formatting matching the exam percentage photo */
         .article-content {
             width: 100%;
             color: var(--text-muted);
+            display: block;
         }
 
         .article-content h2 {
-            margin: 36px 0 16px;
-            padding-bottom: 12px;
+            margin: 32px 0 16px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
             font-size: 20px;
+            font-weight: 750;
+        }
+
+        .article-content h3 {
+            margin: 24px 0 12px;
+            color: var(--text-main);
+            font-size: 17px;
             font-weight: 700;
         }
 
-        .article-content h2:first-child { margin-top: 0; }
-        .article-content h3 { font-size: 17px; font-weight: 700; color: var(--text-main); }
-        .article-content p, .article-content li { font-size: 15px; line-height: 1.7; }
-        .article-content ul { padding-left: 20px; }
-        .article-content li { margin-bottom: 10px; }
+        .article-content p, .article-content li {
+            font-size: 15.5px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .article-content ul, .article-content ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
 
         .formula-box {
             padding: 16px;
             border-left: 4px solid var(--accent);
             background: var(--bg-primary);
-            font-family: monospace;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
             font-size: 14.5px;
             margin: 20px 0;
+            font-weight: 600;
+        }
+        .formula-box p { margin: 0; }
+
+        .sidebar { width: 100%; min-width: 0; }
+
+        @media (max-width: 900px) {
+            .main-body { padding: 24px; }
+            .dyn-left-split { gap: 20px; }
         }
 
-        .sidebar {
-            width: 100%;
-            min-width: 0;
+        @media (max-width: 767px) {
+            .tqc-page-grid { padding: 12px; }
+            .main-body { padding: 20px 14px; }
+            .calculator-ui-box { padding: 24px 16px; }
+            .primary-title { font-size: 22px; }
+            .article-content h2 { font-size: 19px; }
         }
     </style>
 </head>
@@ -325,10 +360,12 @@
         <div class="dyn-left-split">
 
             <main class="main-body">
+                <!-- Title left-aligned at the top, perfectly matching Exam Marks example -->
                 <h1 class="primary-title">
                     Fixed Deposit & Compound Interest Calculator
                 </h1>
 
+                <!-- Calculator strictly centered inside main body -->
                 <div class="tool-suite">
                     <section class="calculator-ui-box" aria-labelledby="calculator-heading">
                         <h2 class="calculator-heading" id="calculator-heading">
@@ -375,7 +412,7 @@
                     </section>
                 </div>
 
-                <!-- AdSense 1: Below Calculator, Above Article -->
+                <!-- AdSense 1: Directly below calculator, above article (Centered) -->
                 <div class="ad-container">
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -388,12 +425,15 @@
                     </script>
                 </div>
 
+                <!-- Article flows below the Ad -->
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
                     <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
+                    
                     <p>Compound interest is a process where the interest you earn starts earning its own interest. Unlike simple interest, which is only calculated on your original deposit, compound interest calculates returns on your starting balance plus any interest already added to the account.</p>
 
                     <h3>How the Process Works in a Bank</h3>
+                    <p>When you open a fixed deposit, the growth usually follows a set schedule:</p>
                     <ul>
                         <li><strong>The First Cycle:</strong> During the first period, the bank pays interest based only on the money you deposited.</li>
                         <li><strong>The Next Cycles:</strong> In the following period, the bank calculates interest on your original deposit plus the interest you earned in the first cycle.</li>
@@ -401,9 +441,13 @@
                     </ul>
 
                     <h2>The Math Behind the Calculator</h2>
+                    <p>The interactive tool at the top of this page uses the standard algebraic formula for compound interest. Here is what the formula looks like:</p>
+                    
                     <div class="formula-box">
                         <p>Final Amount = P × (1 + r/n)<sup>nt</sup></p>
                     </div>
+                    
+                    <p>Here is a simple breakdown of what each letter means:</p>
                     <ul>
                         <li><strong>P (Principal):</strong> Your starting investment.</li>
                         <li><strong>r (Annual Interest Rate):</strong> The yearly rate expressed as a decimal. If the bank offers 7%, you use 0.07 in the math.</li>
@@ -413,11 +457,11 @@
                 </article>
             </main>
 
-            <!-- Sidebar exactly as requested -->
+            <!-- Sidebar Container (Right side on desktop) -->
             <aside class="sidebar" aria-label="Related tools and sidebar">
                 
                 <!-- AdSense 2: Top of Sidebar -->
-                <div class="ad-container">
+                <div class="sidebar-ad-container">
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -429,11 +473,11 @@
                     </script>
                 </div>
 
-                <!-- navigation.js sidebar contents (Search Box, Related Tools) will load naturally here between the ads -->
-                <div id="navigation-sidebar-hook"></div>
+                <!-- Navigation scripts (like your search bar and related tools) will load naturally here -->
+                <div id="navigation-sidebar-content-hook"></div>
 
                 <!-- AdSense 3: Bottom of Sidebar -->
-                <div class="ad-container" style="margin-top: 32px;">
+                <div class="sidebar-ad-container">
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -450,6 +494,7 @@
         </div>
     </div>
 
+    <!-- Calculator Logic -->
     <script>
     (function () {
         'use strict';
@@ -470,9 +515,10 @@
             const t = tInput.valueAsNumber;
             const n = Number(nInput.value);
 
-            if (!Number.isFinite(p) || p <= 0) return resultAmount.textContent = '—';
-            if (!Number.isFinite(rPercent) || rPercent < 0) return resultAmount.textContent = '—';
-            if (!Number.isFinite(t) || t < 0) return resultAmount.textContent = '—';
+            if (!Number.isFinite(p) || p <= 0 || !Number.isFinite(rPercent) || rPercent < 0 || !Number.isFinite(t) || t < 0) {
+                resultAmount.textContent = '—';
+                return;
+            }
             
             const amount = (rPercent === 0 || t === 0) ? p : p * Math.pow(1 + (rPercent/100)/n, n * t);
             resultAmount.textContent = formatter.format(amount);
@@ -484,7 +530,7 @@
     })();
     </script>
 
-    <!-- Navigation JS -->
+    <!-- Essential external navigation script -->
     <script src="/navigation.js"></script>
 </body>
 </html>
