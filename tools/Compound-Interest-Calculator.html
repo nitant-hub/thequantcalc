@@ -54,6 +54,54 @@
             "@type": "Answer",
             "text": "This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "What does quarterly compounding mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quarterly compounding means interest is compounded four times per year under the selected mathematical model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will this result exactly match my bank's FD maturity amount?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, and rounding rules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I calculate an FD with a zero interest rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between cumulative and periodic-interest payout FDs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is tax included in the maturity estimate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. This calculator does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Rule of 72?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage, while remembering that actual growth depends on the rate and compounding method."
+          }
         }
       ]
     }
@@ -82,13 +130,8 @@
             --focus-ring: rgba(56, 189, 248, 0.3);
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -110,7 +153,6 @@
             padding: 20px 16px;
         }
 
-        /* Responsive Layout matching Photo 2 exactly */
         .dyn-left-split {
             display: grid;
             grid-template-columns: minmax(0, 1fr);
@@ -125,7 +167,6 @@
             }
         }
 
-        /* Main Body strictly forces vertical stacking, overriding any rogue side-by-side splits */
         .main-body {
             display: flex;
             flex-direction: column;
@@ -138,7 +179,6 @@
             box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
         }
 
-        /* Title left-aligned to match the Exam Marks photo example */
         .primary-title {
             display: block;
             width: 100%;
@@ -152,7 +192,6 @@
             text-align: left;
         }
 
-        /* Force calculator to be centered block */
         .tool-suite {
             display: flex;
             justify-content: center;
@@ -277,7 +316,6 @@
             line-height: 1.2;
         }
 
-        /* AD CONTAINERS: ensures ads are clearly spaced and centered */
         .ad-container {
             display: block;
             width: 100%;
@@ -293,7 +331,7 @@
             margin-bottom: 30px;
         }
 
-        /* Article Formatting matching the exam percentage photo */
+        /* Full Article Formatting */
         .article-content {
             width: 100%;
             color: var(--text-muted);
@@ -338,6 +376,56 @@
         }
         .formula-box p { margin: 0; }
 
+        .data-table-wrapper {
+            width: 100%;
+            max-width: 100%;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 540px;
+            border-collapse: collapse;
+            background: var(--bg-surface);
+            text-align: left;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 14px;
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        .data-table th { background: var(--bg-primary); font-weight: 750; }
+        .data-table caption { padding: 12px; color: var(--text-muted); font-size: 13px; text-align: left; }
+
+        .notice {
+            margin: 18px 0;
+            padding: 15px 16px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent);
+            border-radius: 9px;
+            background: var(--bg-primary);
+        }
+        .notice p:last-child { margin-bottom: 0; }
+
+        .faq-item {
+            margin: 0 0 14px;
+            padding: 17px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-surface);
+        }
+        .faq-item p { margin-bottom: 0; }
+        .faq-item h3 { margin-top: 0; }
+
         .sidebar { width: 100%; min-width: 0; }
 
         @media (max-width: 900px) {
@@ -360,12 +448,10 @@
         <div class="dyn-left-split">
 
             <main class="main-body">
-                <!-- Title left-aligned at the top, perfectly matching Exam Marks example -->
                 <h1 class="primary-title">
                     Fixed Deposit & Compound Interest Calculator
                 </h1>
 
-                <!-- Calculator strictly centered inside main body -->
                 <div class="tool-suite">
                     <section class="calculator-ui-box" aria-labelledby="calculator-heading">
                         <h2 class="calculator-heading" id="calculator-heading">
@@ -412,7 +498,7 @@
                     </section>
                 </div>
 
-                <!-- AdSense 1: Directly below calculator, above article (Centered) -->
+                <!-- AdSense 1: Directly below calculator, above article -->
                 <div class="ad-container">
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -425,7 +511,7 @@
                     </script>
                 </div>
 
-                <!-- Article flows below the Ad -->
+                <!-- FULL ARTICLE RESTORED -->
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
                     <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
@@ -454,10 +540,116 @@
                         <li><strong>n (Compounding Frequency):</strong> How many times a year the bank adds interest to your balance.</li>
                         <li><strong>t (Time Period):</strong> How many years the money stays in the account.</li>
                     </ul>
+
+                    <h2>Worked Example: A ₹10,000 Deposit</h2>
+                    <p>Suppose you invest ₹10,000 at a fixed annual nominal rate of 7.1% for five years, using quarterly compounding. Under the formula used by this calculator, the periodic rate is 7.1% divided by four, or 1.775%. The model uses 20 quarterly periods.</p>
+
+                    <div class="formula-box">
+                        <p>P = ₹10,000</p>
+                        <p>r = 0.071</p>
+                        <p>n = 4</p>
+                        <p>t = 5</p>
+                        <p>A = 10,000 × (1 + 0.071 / 4)<sup>20</sup></p>
+                        <p>A ≈ ₹14,217.47</p>
+                    </div>
+                    
+                    <p>The estimated final amount is the principal plus this interest. These figures demonstrate the calculator's mathematical model; they do not establish the maturity amount payable under every bank's FD product.</p>
+
+                    <h2>Simple Interest vs Compound Interest</h2>
+                    <p>Simple interest is calculated only on the original principal. Compound interest, by contrast, can accumulate on both the original principal and interest already added to the balance. To compare the two methods, consider a hypothetical principal of ₹10,000 earning 8% per year for different periods. The compound-interest column below assumes annual compounding and no additional deposits or withdrawals.</p>
+
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <caption>Illustrative amounts in Indian rupees. Figures are rounded to two decimal places.</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Period</th>
+                                    <th scope="col">Principal</th>
+                                    <th scope="col">Simple-interest balance</th>
+                                    <th scope="col">Annual compound balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>5 years</td><td>₹10,000.00</td><td>₹14,000.00</td><td>₹14,693.28</td></tr>
+                                <tr><td>10 years</td><td>₹10,000.00</td><td>₹18,000.00</td><td>₹21,589.25</td></tr>
+                                <tr><td>20 years</td><td>₹10,000.00</td><td>₹26,000.00</td><td>₹46,609.57</td></tr>
+                                <tr><td>30 years</td><td>₹10,000.00</td><td>₹34,000.00</td><td>₹100,626.57</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>How Compounding Frequency Affects Growth</h2>
+                    <p>Compounding frequency determines how often interest is added to the balance in the mathematical model. For the same positive nominal annual rate, the formula generally produces a higher final amount when compounding occurs more frequently, assuming the same principal and time period. This comparison depends on the model's assumptions and should not be used to conclude that a bank product with a particular payout schedule is automatically better.</p>
+
+                    <ul>
+                        <li><strong>Yearly:</strong> The model compounds interest once per year.</li>
+                        <li><strong>Half-yearly:</strong> The model compounds interest twice per year.</li>
+                        <li><strong>Quarterly:</strong> The model compounds interest four times per year.</li>
+                    </ul>
+
+                    <h2>Important Assumptions and FD Limitations</h2>
+                    <p>The result assumes a fixed annual nominal rate for the entire entered duration, the selected periodic compounding frequency, one initial lump-sum deposit, and no additional deposits or withdrawals. It also assumes the calculated interest remains invested according to the formula. The tool does not model changes to rates, premature closure, renewal, penalties, fees, or tax deductions.</p>
+                    <p>Actual fixed-deposit maturity can differ because financial institutions apply the terms of their specific deposit products. These terms may determine the interest calculation method, the handling of incomplete periods, the payout schedule, and the rounding of interest. A bank's actual maturity quotation may therefore differ from the result displayed here even if the starting amount and advertised rate look the same.</p>
+
+                    <h3>Cumulative and periodic-interest payout deposits</h3>
+                    <p>A cumulative deposit generally retains interest toward maturity, subject to the product's rules. A periodic-interest payout deposit instead pays interest at scheduled intervals. Because money paid out may no longer remain in the deposit to earn further interest, the cash-flow pattern differs. This calculator models growth of a single balance; it does not calculate the timing or reinvestment of periodic payouts.</p>
+
+                    <h3>Rounding, taxes, and incomplete periods</h3>
+                    <p>This calculator rounds the displayed monetary result to two decimal places. It does not reproduce a bank's internal rounding at every calculation step. It also does not estimate tax liability or deductions, and it does not model every possible day-count convention or incomplete compounding period. Check the official terms and maturity quotation for the FD you intend to open.</p>
+
+                    <div class="notice">
+                        <p><strong>Important:</strong> This tool is for educational estimates and financial planning. It is not a bank quotation, a guarantee of returns, or personalised financial advice. Confirm the applicable interest rate, deposit conditions, payout option, tax treatment, and maturity amount with the financial institution.</p>
+                    </div>
+
+                    <h2>Frequently Asked Questions</h2>
+
+                    <section class="faq-item">
+                        <h3>1. How is compound interest different from simple interest?</h3>
+                        <p>Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest. The difference can become more significant over longer periods, depending on the rate and compounding method.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>2. How do I calculate fixed deposit maturity?</h3>
+                        <p>This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods. Actual bank calculations may use additional product-specific rules.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>3. What does quarterly compounding mean?</h3>
+                        <p>Quarterly compounding means interest is compounded four times per year under the selected mathematical model. This calculator divides the nominal annual rate by four and uses four periods for each year.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>4. Will this result exactly match my bank's FD maturity amount?</h3>
+                        <p>Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, incomplete-period rules, and rounding method. Check the bank's official maturity quotation.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>5. Can I calculate an FD with a zero interest rate?</h3>
+                        <p>Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal. The calculator supports a zero interest rate.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>6. What is the difference between cumulative and periodic-interest payout FDs?</h3>
+                        <p>A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ. This calculator estimates a growing balance rather than periodic payouts.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>7. Is tax included in the maturity estimate?</h3>
+                        <p>No. The estimate does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments. Your actual after-tax return can differ from the amount shown by the calculator.</p>
+                    </section>
+
+                    <section class="faq-item">
+                        <h3>8. What is the Rule of 72?</h3>
+                        <p>The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage. For example, at 6% the estimate is about 12 years. Actual growth depends on the rate, compounding method, and applicable terms.</p>
+                    </section>
+
+                    <h2>Conclusion</h2>
+                    <p>A fixed deposit and compound-interest calculator can help you understand how a starting deposit, an assumed annual interest rate, a duration, and a compounding frequency affect a projected balance. It is useful for comparing hypothetical scenarios and seeing how accumulated interest can contribute to growth over time. Try different inputs to understand how the assumptions change the estimate.</p>
+                    <p>Remember that the mathematical result is not necessarily the amount a bank will pay at maturity. Actual FD terms, payout options, rounding, incomplete periods, and applicable taxes or deductions may affect the final amount. Before making a deposit, verify the official rate and maturity quotation for the specific product. Use this calculator as a planning aid, and rely on the institution's documented terms for the final decision.</p>
                 </article>
             </main>
 
-            <!-- Sidebar Container (Right side on desktop) -->
+            <!-- Sidebar Container -->
             <aside class="sidebar" aria-label="Related tools and sidebar">
                 
                 <!-- AdSense 2: Top of Sidebar -->
