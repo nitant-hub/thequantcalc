@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs'); 
 const path = require('path');
 
 // List of folders to scan for tools (includes standard /tools/ and any category folders)
