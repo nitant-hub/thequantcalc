@@ -197,7 +197,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            margin: 0 0 30px;
+            margin: 0 0 20px;
         }
 
         .calculator-ui-box {
@@ -316,19 +316,25 @@
             line-height: 1.2;
         }
 
+        /* Improved Ad Containers for perfect centering and spacing */
         .ad-container {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            text-align: center;
-            margin: 0 auto 30px;
-            clear: both;
+            margin: 20px auto 36px;
+            min-height: 90px; /* Prevents layout shift before ad loads */
+            overflow: hidden;
         }
         
         .sidebar-ad-container {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            text-align: center;
             margin-bottom: 30px;
+            min-height: 250px; /* Prevents layout shift in sidebar */
+            overflow: hidden;
         }
 
         /* Full Article Formatting */
@@ -498,7 +504,7 @@
                     </section>
                 </div>
 
-                <!-- AdSense 1: Directly below calculator, above article -->
+                <!-- AdSense 1: Directly below calculator, perfectly centered -->
                 <div class="ad-container">
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -511,7 +517,6 @@
                     </script>
                 </div>
 
-                <!-- FULL ARTICLE RESTORED -->
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
                     <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
