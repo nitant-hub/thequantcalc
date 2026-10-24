@@ -23,6 +23,79 @@
     }
     </script>
 
+    <script type="application/ld+json" id="faq-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is compound interest different from simple interest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate fixed deposit maturity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does quarterly compounding mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quarterly compounding means interest is compounded four times per year under the selected mathematical model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will this result exactly match my bank's FD maturity amount?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, and rounding rules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I calculate an FD with a zero interest rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between cumulative and periodic-interest payout FDs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is tax included in the maturity estimate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. This calculator does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Rule of 72?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage, while remembering that actual growth depends on the rate and compounding method."
+          }
+        }
+      ]
+    }
+    </script>
+
     <style>
         /* Modern UI Design System & Theme Colors */
         :root {
@@ -144,7 +217,7 @@
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid #1e293b;
-            text-align: left; /* Keep internal form labels aligned left */
+            text-align: left;
         }
 
         [data-theme="dark"] .calculator-ui-box {
@@ -226,7 +299,7 @@
         .article-content h2 {
             font-size: 22px;
             color: var(--text-main);
-            margin: 1rem 0 1rem 0;
+            margin: 1.5rem 0 1rem 0;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
@@ -236,6 +309,12 @@
             color: var(--text-main);
             margin: 1.5rem 0 0.75rem 0;
         }
+        
+        .article-content h4 {
+            font-size: 17px;
+            color: var(--text-main);
+            margin: 1rem 0 0.5rem 0;
+        }
 
         .article-content p, .article-content li {
             color: var(--text-muted);
@@ -243,7 +322,7 @@
             font-size: 15.5px;
         }
 
-        .article-content ul {
+        .article-content ul, .article-content ol {
             margin-left: 20px;
             margin-bottom: 1rem;
         }
@@ -289,6 +368,43 @@
         .data-table th {
             background: var(--bg-primary);
             font-weight: 700;
+        }
+        
+        .data-table caption {
+            padding: 12px;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .notice {
+            margin: 20px 0;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid #38bdf8;
+            border-radius: 8px;
+            background: var(--bg-primary);
+        }
+
+        .notice p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-item {
+            margin: 0 0 16px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+        }
+
+        .faq-item h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .faq-item p:last-child {
+            margin-bottom: 0;
         }
 
         /* --- MOBILE TWEAKS --- */
@@ -376,104 +492,186 @@
                 </div>
 
                 <article class="article-content">
-                    <h2>Understanding Compound Interest and Fixed Deposits</h2>
-                    <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
-                    <p>Compound interest is a process where the interest you earn starts earning its own interest. Unlike simple interest, which is only calculated on your original deposit, compound interest calculates returns on your starting balance plus any interest already added to the account. In this guide, we will explain how this math works, look at the historical background of the concept, and show you how to use the calculator above to plan your savings.</p>
+                    <h2>What Is a Fixed Deposit and Compound Interest?</h2>
+                    <p>A fixed deposit (FD), also called a term deposit, is a savings product in which you deposit money for an agreed period under specified terms. The bank or financial institution pays interest according to the conditions of that deposit. The interest you receive depends on factors such as the offered rate, the deposit period, the interest calculation method, and the payout option.</p>
+                    <p>Compound interest describes a mathematical process in which accumulated interest can itself earn interest in later periods. If interest is added to the balance and remains invested, subsequent interest calculations may use the increased balance rather than only the original principal. This can make compound growth different from simple interest, which is calculated on the original principal alone.</p>
+                    <p>Use this calculator to explore an estimated maturity amount by entering your starting deposit, annual nominal interest rate, investment period, and compounding frequency. The result is based on the mathematical assumptions described below. It should not be treated as a guaranteed quote from a particular bank.</p>
 
-                    <h3>How the Process Works in a Bank</h3>
-                    <p>When you open a fixed deposit, the growth usually follows a set schedule:</p>
-                    <ul>
-                        <li><strong>The First Cycle:</strong> During the first period, the bank pays interest based only on the money you deposited.</li>
-                        <li><strong>The Next Cycles:</strong> In the following period, the bank calculates interest on your original deposit plus the interest you earned in the first cycle.</li>
-                        <li><strong>The Long-Term Effect:</strong> Because your balance gets slightly bigger every cycle, the amount of interest you earn also increases. The longer you leave the money alone, the faster it grows.</li>
-                    </ul>
+                    <h2>How to Use the FD Calculator</h2>
+                    <ol>
+                        <li><strong>Enter the principal:</strong> Type the amount you plan to deposit. For example, enter 10000 for a ten-thousand deposit.</li>
+                        <li><strong>Enter the annual interest rate:</strong> If the stated rate is 7.1% per year, enter 7.1, not 0.071.</li>
+                        <li><strong>Choose the duration:</strong> Enter the investment period in years. A value of 5 means five years under the calculator's model.</li>
+                        <li><strong>Select the compounding frequency:</strong> Choose yearly, half-yearly, or quarterly to change how many compounding periods the model uses in one year.</li>
+                        <li><strong>Review the result:</strong> The estimated maturity value will update automatically when you change an input.</li>
+                    </ol>
 
                     <h2>The Math Behind the Calculator</h2>
-                    <p>The interactive tool at the top of this page uses the standard algebraic formula for compound interest. Here is what the formula looks like:</p>
+                    <p>This calculator uses the standard formula for a single lump-sum deposit earning a fixed nominal annual rate with periodic compounding:</p>
+                    
                     <div class="formula-box">
-                        Final Amount = P &times; (1 + r/n)<sup>nt</sup>
+                        A = P &times; (1 + r/n)<sup>nt</sup>
                     </div>
                     
-                    <p>Here is a simple breakdown of what each letter means:</p>
+                    <p>In this formula:</p>
                     <ul>
-                        <li><strong>P (Principal):</strong> Your starting investment.</li>
-                        <li><strong>r (Annual Interest Rate):</strong> The yearly rate expressed as a decimal. If the bank offers 7%, you use 0.07 in the math.</li>
-                        <li><strong>n (Compounding Frequency):</strong> How many times a year the bank adds interest to your balance. The calculator above lets you choose between Yearly (n=1), Half-Yearly (n=2), and Quarterly (n=4).</li>
-                        <li><strong>t (Time):</strong> The number of years you plan to leave the money in the account.</li>
+                        <li><strong>A:</strong> The estimated final amount, including the original principal and accumulated interest.</li>
+                        <li><strong>P:</strong> The initial principal deposited.</li>
+                        <li><strong>r:</strong> The annual nominal interest rate expressed as a decimal. For example, 7.1% is represented by 0.071.</li>
+                        <li><strong>n:</strong> The number of compounding periods per year. It is 1 for yearly, 2 for half-yearly, and 4 for quarterly compounding.</li>
+                        <li><strong>t:</strong> The investment period expressed in years.</li>
                     </ul>
+                    <p>The periodic rate in this model is r divided by n, while the total number of periods is n multiplied by t. The calculation uses the selected frequency and retains fractional exponents if the entered duration does not correspond to a whole number of periods. Actual financial institutions may apply different rules for incomplete periods.</p>
 
-                    <h2>Tracking the Growth Over Time</h2>
-                    <p>To really see how compound interest works, it helps to look at a long-term projection. The table below compares simple interest to compound interest on a $10,000 initial investment at an 8% annual rate.</p>
+                    <h2>Worked Example: A 10,000 Deposit</h2>
+                    <p>Suppose you invest 10,000 at a fixed annual nominal rate of 7.1% for five years, using quarterly compounding. Under the formula used by this calculator, the periodic rate is 7.1% divided by four, or 1.775%. The model uses 20 quarterly periods.</p>
+
+                    <div class="formula-box">
+                        P = 10,000<br>
+                        r = 0.071<br>
+                        n = 4<br>
+                        t = 5<br>
+                        A = 10,000 &times; (1 + 0.071 / 4)<sup>20</sup><br>
+                        A &approx; 14,213.63
+                    </div>
+                    
+                    <p>The estimated final amount is the principal plus this interest. These figures demonstrate the calculator's mathematical model; they do not establish the maturity amount payable under every bank's FD product.</p>
+
+                    <h2>Simple Interest vs Compound Interest</h2>
+                    <p>Simple interest is calculated only on the original principal. Compound interest, by contrast, can accumulate on both the original principal and interest already added to the balance. To compare the two methods, consider a hypothetical principal of 10,000 earning 8% per year for different periods. The compound-interest column below assumes annual compounding and no additional deposits or withdrawals.</p>
+
                     <div class="data-table-wrapper">
                         <table class="data-table">
+                            <caption>Illustrative amounts. Figures are rounded to two decimal places.</caption>
                             <thead>
                                 <tr>
-                                    <th>Years</th>
+                                    <th>Period</th>
                                     <th>Principal</th>
-                                    <th>Simple Interest Balance</th>
-                                    <th>Compound Interest Balance</th>
-                                    <th>Difference</th>
+                                    <th>Simple-interest balance</th>
+                                    <th>Annual compound balance</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>5 Years</td>
-                                    <td>10,000</td>
-                                    <td>14,000</td>
-                                    <td>14,693</td>
-                                    <td style="color: #2563eb; font-weight: 600;">+ 693</td>
+                                    <td>5 years</td>
+                                    <td>10,000.00</td>
+                                    <td>14,000.00</td>
+                                    <td>14,693.28</td>
                                 </tr>
                                 <tr>
-                                    <td>10 Years</td>
-                                    <td>10,000</td>
-                                    <td>18,000</td>
-                                    <td>21,589</td>
-                                    <td style="color: #2563eb; font-weight: 600;">+ 3,589</td>
+                                    <td>10 years</td>
+                                    <td>10,000.00</td>
+                                    <td>18,000.00</td>
+                                    <td>21,589.25</td>
                                 </tr>
                                 <tr>
-                                    <td>20 Years</td>
-                                    <td>10,000</td>
-                                    <td>26,000</td>
-                                    <td>46,609</td>
-                                    <td style="color: #2563eb; font-weight: 600;">+ 20,609</td>
+                                    <td>20 years</td>
+                                    <td>10,000.00</td>
+                                    <td>26,000.00</td>
+                                    <td>46,609.57</td>
                                 </tr>
                                 <tr>
-                                    <td>30 Years</td>
-                                    <td>10,000</td>
-                                    <td>34,000</td>
-                                    <td>100,626</td>
-                                    <td style="color: #2563eb; font-weight: 600;">+ 66,626</td>
+                                    <td>30 years</td>
+                                    <td>10,000.00</td>
+                                    <td>34,000.00</td>
+                                    <td>100,626.57</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-                    <div itemscope itemtype="https://schema.org/FAQPage">
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="font-size: 17px; margin-bottom: 8px;">1. How is compound interest different from simple interest?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">Simple interest is calculated only on the starting amount you deposited. Compound interest is calculated on your starting amount plus any interest that the bank has already paid into your account.</p>
-                            </div>
-                        </div>
+                    <h2>How Compounding Frequency Affects Growth</h2>
+                    <p>Compounding frequency determines how often interest is added to the balance in the mathematical model. For the same positive nominal annual rate, the formula generally produces a higher final amount when compounding occurs more frequently, assuming the same principal and time period. This comparison depends on the model's assumptions and should not be used to conclude that a bank product with a particular payout schedule is automatically better.</p>
 
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
-                            <h4 itemprop="name" style="font-size: 17px; margin-bottom: 8px;">2. How often do fixed deposits compound?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">This varies by location and bank policy. Many term deposits compound quarterly (every three months). Other high-yield accounts may compound monthly or daily.</p>
-                            </div>
-                        </div>
+                    <ul>
+                        <li><strong>Yearly:</strong> The model compounds interest once per year.</li>
+                        <li><strong>Half-yearly:</strong> The model compounds interest twice per year.</li>
+                        <li><strong>Quarterly:</strong> The model compounds interest four times per year.</li>
+                    </ul>
+                    
+                    <p>When comparing actual deposits, review the effective terms and quoted rates for each product rather than relying only on the frequency label. Banks can use product-specific calculation conventions, and the nominal rate alone may not tell the entire story.</p>
 
-                        <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                            <h4 itemprop="name" style="font-size: 17px; margin-bottom: 8px;">3. What is the Rule of 72?</h4>
-                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text" style="margin-bottom: 0;">The Rule of 72 is a mental math trick to estimate how long an investment takes to double. You divide 72 by your interest rate (e.g., 72 ÷ 6 = 12 years).</p>
-                            </div>
-                        </div>
+                    <h2>Important Assumptions and FD Limitations</h2>
+                    <p>The result assumes a fixed annual nominal rate for the entire entered duration, the selected periodic compounding frequency, one initial lump-sum deposit, and no additional deposits or withdrawals. It also assumes the calculated interest remains invested according to the formula. The tool does not model changes to rates, premature closure, renewal, penalties, fees, or tax deductions.</p>
+                    <p>Actual fixed-deposit maturity can differ because financial institutions apply the terms of their specific deposit products. These terms may determine the interest calculation method, the handling of incomplete periods, the payout schedule, and the rounding of interest. A bank's actual maturity quotation may therefore differ from the result displayed here even if the starting amount and advertised rate look the same.</p>
+
+                    <h3>Cumulative and periodic-interest payout deposits</h3>
+                    <p>A cumulative deposit generally retains interest toward maturity, subject to the product's rules. A periodic-interest payout deposit instead pays interest at scheduled intervals. Because money paid out may no longer remain in the deposit to earn further interest, the cash-flow pattern differs. This calculator models growth of a single balance; it does not calculate the timing or reinvestment of periodic payouts.</p>
+
+                    <h3>Rounding, taxes, and incomplete periods</h3>
+                    <p>This calculator rounds the displayed monetary result to two decimal places. It does not reproduce a bank's internal rounding at every calculation step. It also does not estimate tax liability or deductions, and it does not model every possible day-count convention or incomplete compounding period. Check the official terms and maturity quotation for the FD you intend to open.</p>
+
+                    <div class="notice">
+                        <p><strong>Important:</strong> This tool is for educational estimates and financial planning. It is not a bank quotation, a guarantee of returns, or personalised financial advice. Confirm the applicable interest rate, deposit conditions, payout option, tax treatment, and maturity amount with the financial institution.</p>
                     </div>
+
+                    <h2>Frequently Asked Questions</h2>
+                    <div itemscope itemtype="https://schema.org/FAQPage">
+                        
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">1. How is compound interest different from simple interest?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest. The difference can become more significant over longer periods, depending on the rate and compounding method.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">2. How do I calculate fixed deposit maturity?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods. Actual bank calculations may use additional product-specific rules.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">3. What does quarterly compounding mean?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Quarterly compounding means interest is compounded four times per year under the selected mathematical model. This calculator divides the nominal annual rate by four and uses four periods for each year.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">4. Will this result exactly match my bank's FD maturity amount?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, incomplete-period rules, and rounding method. Check the bank's official maturity quotation.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">5. Can I calculate an FD with a zero interest rate?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal. The calculator supports a zero interest rate.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">6. What is the difference between cumulative and periodic-interest payout FDs?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ. This calculator estimates a growing balance rather than periodic payouts.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">7. Is tax included in the maturity estimate?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">No. The estimate does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments. Your actual after-tax return can differ from the amount shown by the calculator.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <h4 itemprop="name">8. What is the Rule of 72?</h4>
+                            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage. For example, at 6% the estimate is about 12 years. Actual growth depends on the rate, compounding method, and applicable terms.</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <h2>Conclusion</h2>
+                    <p>A fixed deposit and compound-interest calculator can help you understand how a starting deposit, an assumed annual interest rate, a duration, and a compounding frequency affect a projected balance. It is useful for comparing hypothetical scenarios and seeing how accumulated interest can contribute to growth over time. Try different inputs to understand how the assumptions change the estimate.</p>
+                    <p>Remember that the mathematical result is not necessarily the amount a bank will pay at maturity. Actual FD terms, payout options, rounding, incomplete periods, and applicable taxes or deductions may affect the final amount. Before making a deposit, verify the official rate and maturity quotation for the specific product. Use this calculator as a planning aid, and rely on the institution's documented terms for the final decision.</p>
                 </article>
             </main>
-
+            
             <aside class="sidebar"></aside>
         </div>
     </div>
@@ -496,13 +694,19 @@
             const t = parseFloat(tInput.value);
             const n = parseFloat(nInput.value);
             
-            if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r <= 0 || t <= 0) {
+            if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r < 0 || t <= 0) {
                 resultEl.innerText = "0.00";
                 return;
             }
             
-            const amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
-            resultEl.innerText = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            let amount;
+            if (r === 0) {
+                amount = p;
+            } else {
+                amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
+            }
+            
+            resultEl.innerText = amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         
         ['principal', 'interestRate', 'years', 'compounding'].forEach(id => {
