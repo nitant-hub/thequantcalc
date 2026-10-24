@@ -388,6 +388,126 @@
             h1.primary-title { font-size: 1.3rem; }
             .res-value { font-size: 1.5rem; }
         }
+
+        /* ===== TQC RESULT CARD (all rules scoped to .tqc-result-box) ===== */
+        .tqc-result-box{
+          --tqc-accent:#00D6A0;
+          --tqc-tile:#101E35;
+          --tqc-tile2:#0b1729;
+          --tqc-line:#26364d;
+          --tqc-hero:#103B42;
+          --tqc-hero2:#092126;
+          --tqc-hero-line:#184c55;
+          --tqc-text:#f8fafc;
+          --tqc-soft:#cbd5e1;
+          --tqc-muted:#94a3b8;
+          --tqc-bad:#f87171;
+          --tqc-warn:#fbbf24;
+          margin-top:1.5rem;
+          color:var(--tqc-text);
+          line-height:1.35;
+        }
+        .tqc-result-box,.tqc-result-box *{box-sizing:border-box}
+        /* neutralise the old .results-dashboard look (class kept only so navigation.js selectors still match) */
+        .tqc-result-box.results-dashboard{display:block;background:none;box-shadow:none;border:0;border-radius:0;padding:0;overflow:visible;text-align:left}
+
+        .tqc-result-box .tqc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+        .tqc-result-box .tqc-span2{grid-column:1/-1}
+        @media (max-width:359px){.tqc-result-box .tqc-grid{grid-template-columns:minmax(0,1fr)}}
+
+        /* tiles */
+        .tqc-result-box .tqc-tile{
+          min-width:0;
+          padding:12px 14px;
+          border-radius:12px;
+          border:1px solid var(--tqc-line);
+          background:linear-gradient(160deg,var(--tqc-tile),var(--tqc-tile2));
+          box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 14px rgba(0,0,0,.25);
+        }
+        .tqc-result-box .tqc-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tqc-muted);margin-bottom:4px}
+        .tqc-result-box .tqc-tv{font-size:1.2rem;font-weight:800;line-height:1.15;color:var(--tqc-text);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+        .tqc-result-box .tqc-tv.up{color:var(--tqc-accent)}
+        .tqc-result-box .tqc-tv.bad{color:var(--tqc-bad)}
+        .tqc-result-box .tqc-sub{font-size:.75rem;color:var(--tqc-muted);margin-top:4px}
+
+        /* hero */
+        .tqc-result-box .tqc-hero{
+          display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;
+          border-color:var(--tqc-hero-line);
+          background:linear-gradient(145deg,var(--tqc-hero) 0%,var(--tqc-hero2) 100%);
+          box-shadow:inset 0 0 25px rgba(0,214,160,.08),0 8px 20px rgba(0,0,0,.3);
+        }
+        .tqc-result-box .tqc-hero.tqc-compact{padding:12px 14px}
+        .tqc-result-box .tqc-hero-main{min-width:0;flex:1}
+        .tqc-result-box .tqc-value{
+          display:block;
+          font-size:clamp(1.75rem,8.5vw,2.5rem);
+          font-weight:800;line-height:1.05;letter-spacing:-.01em;
+          color:var(--c,var(--tqc-accent));
+          text-shadow:0 2px 12px var(--g,rgba(0,214,160,.3));
+          font-variant-numeric:tabular-nums;overflow-wrap:anywhere;
+        }
+        .tqc-result-box .tqc-pill{
+          display:inline-block;margin-top:8px;padding:3px 10px;border-radius:999px;
+          font-size:.74rem;font-weight:700;line-height:1.3;
+          color:var(--c,var(--tqc-accent));
+          background:var(--s,rgba(0,214,160,.15));
+          border:1px solid var(--g,rgba(0,214,160,.4));
+        }
+        .tqc-result-box .tqc-ring{width:64px;height:64px;flex:0 0 auto}
+        .tqc-result-box .tqc-ring svg{display:block;width:100%;height:100%;transform:rotate(-90deg)}
+        .tqc-result-box .tqc-ring-fg{transition:stroke-dasharray .6s ease,opacity .3s ease}
+
+        /* benchmark bar */
+        .tqc-result-box .tqc-bar{position:relative;display:flex;gap:2px;height:10px;margin:12px 0 6px}
+        .tqc-result-box .tqc-seg{display:block;height:100%;min-width:0;background:var(--c);opacity:.32;border-radius:3px}
+        .tqc-result-box .tqc-seg:first-child{border-radius:999px 3px 3px 999px}
+        .tqc-result-box .tqc-seg:nth-last-child(2){border-radius:3px 999px 999px 3px}
+        .tqc-result-box .tqc-seg.on{opacity:1;box-shadow:0 0 8px var(--g)}
+        .tqc-result-box .tqc-marker{
+          position:absolute;top:-4px;width:4px;height:18px;border-radius:2px;background:#fff;
+          box-shadow:0 0 0 2px #071426,0 0 8px rgba(255,255,255,.55);transform:translateX(-50%);
+        }
+        .tqc-result-box .tqc-bar-labels{display:flex;gap:2px}
+        .tqc-result-box .tqc-bar-labels span{min-width:0;overflow:hidden;white-space:nowrap;font-size:.62rem;color:var(--tqc-muted)}
+        .tqc-result-box .tqc-note{margin-top:8px;font-size:.7rem;line-height:1.4;color:var(--tqc-muted)}
+
+        /* subject table (scrolls inside the card only) */
+        .tqc-result-box .tqc-table-wrap{max-height:190px;overflow:auto;margin-top:6px;border-radius:8px;-webkit-overflow-scrolling:touch}
+        .tqc-result-box .tqc-table{width:100%;border-collapse:collapse;font-size:.78rem}
+        .tqc-result-box .tqc-table th{
+          position:sticky;top:0;padding:6px;text-align:left;background:var(--tqc-tile2);
+          color:var(--tqc-accent);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;
+        }
+        .tqc-result-box .tqc-table td{padding:6px;border-top:1px solid rgba(148,163,184,.14);color:var(--tqc-soft)}
+        .tqc-result-box .tqc-table th:nth-child(n+2),
+        .tqc-result-box .tqc-table td:nth-child(n+2){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+        .tqc-result-box .tqc-nm{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .tqc-result-box .tqc-skip td{opacity:.45}
+        .tqc-result-box .tqc-tag{font-size:.62rem;color:var(--tqc-muted);border:1px solid var(--tqc-line);border-radius:999px;padding:0 6px}
+        .tqc-result-box .tqc-hi{color:var(--tqc-accent);font-weight:700}
+        .tqc-result-box .tqc-lo{color:var(--tqc-warn);font-weight:700}
+
+        /* description */
+        .tqc-result-box .tqc-desc{border-color:rgba(0,214,160,.25);background:linear-gradient(160deg,rgba(0,214,160,.09),rgba(0,214,160,.02))}
+        .tqc-result-box .tqc-desc-text{font-size:.86rem;line-height:1.55;color:var(--tqc-soft)}
+
+        /* motion (only when the state changes, never on every keystroke) */
+        @keyframes tqc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+        .tqc-result-box .tqc-enter>*{animation:tqc-in .3s ease both;animation-delay:calc(var(--i,0)*50ms)}
+        @media (prefers-reduced-motion:reduce){
+          .tqc-result-box *{animation:none!important;transition:none!important}
+        }
+
+        /* visually hidden live region (screen readers announce the result without re-reading the whole card) */
+        .tqc-result-box .tqc-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+        .tqc-result-box .tqc-tv small{font-size:.75rem;font-weight:600;color:var(--tqc-muted)}
+        /* stagger */
+        .tqc-result-box .tqc-enter>*:nth-child(2){animation-delay:50ms}
+        .tqc-result-box .tqc-enter>*:nth-child(3){animation-delay:100ms}
+        .tqc-result-box .tqc-enter>*:nth-child(4){animation-delay:150ms}
+        .tqc-result-box .tqc-enter>*:nth-child(5){animation-delay:200ms}
+        .tqc-result-box .tqc-enter>*:nth-child(n+6){animation-delay:250ms}
     </style>
     
     <script>
@@ -455,21 +575,8 @@
                             </div>
                         </div>
 
-                        <!-- Dynamic Output Dashboard -->
-                        <div class="results-dashboard" aria-live="polite">
-                            <div>
-                                <div class="res-label">Your Percentage:</div>
-                                <output id="percentResult" class="res-value">0.00%</output>
-                                <div id="resDivision" class="res-subtext">Enter marks to see result</div>
-                            </div>
-                            <div class="chart-gauge">
-                                <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
-                                    <path stroke="#1e293b" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <!-- Mint Teal Stroke for Gauge -->
-                                    <path id="svgGaugePath" stroke="#00D6A0" stroke-dasharray="0, 100" stroke-width="3.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                </svg>
-                            </div>
-                        </div>
+                        <!-- Result card (rendered by the engine script below) -->
+                        <div id="tqcResult" class="tqc-result-box results-dashboard"></div>
                     </div>
                 </section>
 
@@ -559,188 +666,341 @@
 
     <!-- Calculator Engine Script -->
     <script>
-    (() => {
-        'use strict';
+(() => {
+    'use strict';
 
-        const marksObtained = document.getElementById('marksObtained');
-        const maxMarks = document.getElementById('maxMarks');
-        const percentResult = document.getElementById('percentResult');
-        const resDivision = document.getElementById('resDivision');
-        const svgGaugePath = document.getElementById('svgGaugePath');
-        const cgpaInput = document.getElementById('cgpaInput');
-        const cgpaScale = document.getElementById('cgpaScale');
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabPanes = document.querySelectorAll('.tab-pane');
-        const subjectRowsContainer = document.getElementById('subjectRowsContainer');
-        const addSubjectBtn = document.getElementById('addSubjectBtn');
-        const resetSubjectsBtn = document.getElementById('resetSubjectsBtn');
-        const bestOfFiveToggle = document.getElementById('bestOfFiveToggle');
+    /* ================= CONFIG: edit standards here =================
+       Division bands and pass mark follow common Indian school-board convention
+       (CBSE / BSEB style). Change them here if your board differs.            */
+    const CONFIG = {
+        passMark: 33,              // minimum % to pass (must equal the min of the "3rd Division" band)
+        cbseMultiplier: 9.5,       // CBSE official CGPA -> percentage multiplier
+        bands: [                   // highest first
+            { min: 75, label: '1st Division (Distinction)', color: '#00D6A0' },
+            { min: 60, label: '1st Division',               color: '#38bdf8' },
+            { min: 45, label: '2nd Division',               color: '#fbbf24' },
+            { min: 33, label: '3rd Division (Pass)',        color: '#fb923c' },
+            { min: 0,  label: 'Below Passing Grade',        color: '#f87171' }
+        ]
+    };
 
-        let activeTabId = 'tab-quick';
+    /* ---------------- element references (IDs unchanged) ---------------- */
+    const marksObtained = document.getElementById('marksObtained');
+    const maxMarks = document.getElementById('maxMarks');
+    const cgpaInput = document.getElementById('cgpaInput');
+    const cgpaScale = document.getElementById('cgpaScale');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    const subjectRowsContainer = document.getElementById('subjectRowsContainer');
+    const addSubjectBtn = document.getElementById('addSubjectBtn');
+    const resetSubjectsBtn = document.getElementById('resetSubjectsBtn');
+    const bestOfFiveToggle = document.getElementById('bestOfFiveToggle');
+    const root = document.getElementById('tqcResult');
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                tabPanes.forEach(p => p.classList.remove('active'));
+    root.innerHTML = '<div class="tqc-sr" role="status" aria-live="polite"></div><div class="tqc-card"></div>';
+    const sr = root.firstChild;
+    const card = root.lastChild;
 
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-                activeTabId = btn.getAttribute('data-tab');
-                document.getElementById(activeTabId).classList.add('active');
-                calculateActive();
+    let activeTabId = 'tab-quick';
+    let lastSig = '';
+
+    /* ---------------- helpers ---------------- */
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const nf = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 });
+    const num = v => nf.format(Math.round(v * 100) / 100);
+    const round2 = v => Math.round(v * 100) / 100;
+    const bandOf = p => CONFIG.bands.find(b => p + 1e-9 >= b.min) || CONFIG.bands[CONFIG.bands.length - 1];
+
+    function rgba(hex, a) {
+        const n = parseInt(hex.slice(1), 16);
+        return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+    }
+    const colorVars = c => `--c:${c};--g:${rgba(c, 0.4)};--s:${rgba(c, 0.15)}`;
+
+    // Percent display: normal 2-dp rounding, but never let rounding push a score
+    // over a band boundary it has not actually reached (e.g. 59.996 must not show 60.00).
+    function fmtPct(p) {
+        let r = Math.round(p * 100) / 100;
+        if (bandOf(r) !== bandOf(p)) r = Math.floor(p * 100 + 1e-6) / 100;
+        return r.toFixed(2);
+    }
+
+    /* ---------------- card building blocks ---------------- */
+    function ringHTML(pct, color, prev) {
+        const v = Math.max(0, Math.min(100, pct));
+        const d = 'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831';
+        return `<div class="tqc-ring" role="img" aria-label="${esc(fmtPct(v))} percent">
+            <svg viewBox="0 0 36 36" aria-hidden="true">
+                <path stroke="#1e293b" stroke-width="3.8" fill="none" d="${d}"/>
+                <path id="svgGaugePath" class="tqc-ring-fg" data-target="${v}" stroke="${color}" stroke-width="3.8" stroke-linecap="round" fill="none"
+                      style="stroke-dasharray:${prev} 100;opacity:${v > 0 ? 1 : 0}" d="${d}"/>
+            </svg></div>`;
+    }
+
+    function heroHTML(o) {
+        const color = o.color || '#00D6A0';
+        return `<div class="tqc-tile tqc-hero tqc-span2${o.compact ? ' tqc-compact' : ''}" style="${colorVars(color)}">
+            <div class="tqc-hero-main">
+                <div class="tqc-label">Your Percentage:</div>
+                <output id="percentResult" class="tqc-value">${esc(o.value)}</output>
+                ${o.sub ? `<div class="tqc-sub">${esc(o.sub)}</div>` : ''}
+                <div id="resDivision" class="tqc-pill">${esc(o.pill)}</div>
+            </div>
+            ${o.ring ? ringHTML(o.ring.pct, color, o.ring.prev) : ''}
+        </div>`;
+    }
+
+    function tile(label, valueHTML, sub, cls) {
+        return `<div class="tqc-tile${cls ? ' ' + cls : ''}">
+            <div class="tqc-label">${esc(label)}</div>
+            <div class="tqc-tv">${valueHTML}</div>
+            ${sub ? `<div class="tqc-sub">${esc(sub)}</div>` : ''}
+        </div>`;
+    }
+
+    function barTile(pct, band) {
+        const asc = [...CONFIG.bands].reverse();
+        const segs = asc.map((b, i) => ({ b, w: (asc[i + 1] ? asc[i + 1].min : 100) - b.min }));
+        const segHTML = segs.map(s => `<i class="tqc-seg${s.b === band ? ' on' : ''}" style="flex:${s.w} 1 0;--c:${s.b.color};--g:${rgba(s.b.color, 0.6)}"></i>`).join('');
+        const lblHTML = segs.map(s => `<span style="flex:${s.w} 1 0">${s.b.min}</span>`).join('');
+        const left = Math.max(0, Math.min(100, pct));
+        return `<div class="tqc-tile tqc-span2">
+            <div class="tqc-label">Where you stand</div>
+            <div class="tqc-bar" role="img" aria-label="${esc(fmtPct(pct))} percent, ${esc(band.label)}">${segHTML}<span class="tqc-marker" style="left:${left}%"></span></div>
+            <div class="tqc-bar-labels" aria-hidden="true">${lblHTML}</div>
+            <div class="tqc-note">Bands follow common Indian board norms (pass mark ${CONFIG.passMark}%).</div>
+        </div>`;
+    }
+
+    function descTile(text) {
+        return `<div class="tqc-tile tqc-desc tqc-span2">
+            <div class="tqc-label">Understanding your result</div>
+            <div class="tqc-desc-text">${esc(text)}</div>
+        </div>`;
+    }
+
+    function tableTile(r) {
+        const rows = r.entered.map(s => {
+            const counted = r.counted.has(s);
+            const cls = counted ? '' : ' class="tqc-skip"';
+            let pc = '';
+            if (counted && r.best !== r.worst) pc = s === r.best ? ' class="tqc-hi"' : (s === r.worst ? ' class="tqc-lo"' : '');
+            return `<tr${cls}><td class="tqc-nm">${esc(s.name)}${counted ? '' : ' <span class="tqc-tag">skipped</span>'}</td>
+                <td>${num(s.obt)} / ${num(s.max)}</td><td${pc}>${num(s.pct)}%</td></tr>`;
+        }).join('');
+        const note = r.blank > 0 ? `<div class="tqc-note">${r.blank} subject${r.blank > 1 ? 's' : ''} left blank ${r.blank > 1 ? 'are' : 'is'} not counted.</div>` : '';
+        return `<div class="tqc-tile tqc-span2">
+            <div class="tqc-label">Subject breakdown</div>
+            <div class="tqc-table-wrap"><table class="tqc-table">
+                <thead><tr><th scope="col">Subject</th><th scope="col">Marks</th><th scope="col">%</th></tr></thead>
+                <tbody>${rows}</tbody></table></div>${note}
+        </div>`;
+    }
+
+    /* ---------------- paint (rebuild card, keep ring animation smooth) ---------------- */
+    function paint(sig, html, announce) {
+        const old = document.getElementById('svgGaugePath');
+        const prev = old ? (parseFloat(old.style.strokeDasharray) || 0) : 0;
+        const enter = sig !== lastSig;
+        lastSig = sig;
+        card.innerHTML = `<div class="tqc-grid${enter ? ' tqc-enter' : ''}">${html.replace('{{PREV}}', prev)}</div>`;
+        sr.textContent = announce;
+        const el = document.getElementById('svgGaugePath');
+        if (el) {
+            const target = el.getAttribute('data-target');
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                const live = document.getElementById('svgGaugePath');
+                if (live === el) el.style.strokeDasharray = `${target} 100`;
+            }));
+        }
+    }
+
+    /* ---------------- descriptions ---------------- */
+    function gapSentence(pct, band) {
+        if (pct + 1e-9 < CONFIG.passMark) return `That is ${num(CONFIG.passMark - pct)} percentage points below the ${CONFIG.passMark}% pass mark.`;
+        const up = CONFIG.bands[CONFIG.bands.indexOf(band) - 1];
+        return up ? `A further ${num(up.min - pct)} percentage points would reach ${up.label}.` : 'That is the top band.';
+    }
+
+    /* ---------------- calculation (pure) ---------------- */
+    const err = msg => ({ kind: 'error', msg });
+    const empty = hint => ({ kind: 'empty', hint });
+
+    function calcQuick() {
+        const obt = parseFloat(marksObtained.value);
+        const max = parseFloat(maxMarks.value);
+        if (isNaN(obt) || isNaN(max)) return empty('Enter marks to see result');
+        if (!isFinite(obt) || !isFinite(max)) return err('Enter valid numbers');
+        if (max <= 0) return err('Maximum marks must be greater than zero');
+        if (obt < 0) return err('Score cannot be negative');
+        if (obt > max) return err('Obtained score cannot exceed maximum marks');
+        // Percentage = (Marks Obtained x 100) / Total Marks  (multiply first to limit float error)
+        return { kind: 'ok', mode: 'quick', pct: (obt * 100) / max, obt, max };
+    }
+
+    function calcSubjects() {
+        const entered = [];
+        let blank = 0;
+        subjectRowsContainer.querySelectorAll('.subject-grid').forEach((row, idx) => {
+            const obtRaw = row.querySelector('.sub-obt').value.trim();
+            if (obtRaw === '') { blank++; return; }
+            const maxRaw = row.querySelector('.sub-max').value.trim();
+            entered.push({
+                name: row.querySelector('.sub-name').value.trim() || `Subject ${idx + 1}`,
+                obt: parseFloat(obtRaw),
+                max: maxRaw === '' ? 100 : parseFloat(maxRaw)
             });
         });
-
-        function getDivisionText(percentage) {
-            if (percentage >= 75) return '1st Division (Distinction)';
-            if (percentage >= 60) return '1st Division';
-            if (percentage >= 45) return '2nd Division';
-            if (percentage >= 33) return '3rd Division (Pass)';
-            return 'Below Passing Grade';
+        if (!entered.length) return empty('Enter marks for your subjects');
+        for (const s of entered) {
+            if (!isFinite(s.obt) || !isFinite(s.max)) return err(`${s.name}: enter valid numbers`);
+            if (s.max <= 0) return err(`${s.name}: maximum marks must be above zero`);
+            if (s.obt < 0) return err(`${s.name}: marks cannot be negative`);
+            if (s.obt > s.max) return err(`${s.name}: marks cannot exceed ${num(s.max)}`);
+            s.pct = (s.obt * 100) / s.max;
         }
+        // "Best of 5": keep the five highest subject percentages, only when more than five are entered
+        const useBest = bestOfFiveToggle.checked && entered.length > 5;
+        const list = useBest ? [...entered].sort((a, b) => b.pct - a.pct).slice(0, 5) : entered;
+        const totalObt = list.reduce((a, s) => a + s.obt, 0);
+        const totalMax = list.reduce((a, s) => a + s.max, 0);
+        const best = list.reduce((a, s) => (s.pct > a.pct ? s : a), list[0]);
+        const worst = list.reduce((a, s) => (s.pct < a.pct ? s : a), list[0]);
+        return { kind: 'ok', mode: 'subjects', pct: (totalObt * 100) / totalMax, totalObt, totalMax, entered, counted: new Set(list), n: list.length, useBest, blank, best, worst };
+    }
 
-        function updateGauge(percentage) {
-            const clamped = Math.max(0, Math.min(100, percentage));
-            if (svgGaugePath) svgGaugePath.setAttribute('stroke-dasharray', `${clamped}, 100`);
-        }
+    function calcCGPA() {
+        const cgpa = parseFloat(cgpaInput.value);
+        const scale = parseFloat(cgpaScale.value);
+        if (isNaN(cgpa)) return empty('Enter a valid CGPA (e.g. 8.4)');
+        if (!isFinite(cgpa) || cgpa < 0 || cgpa > 10) return err('CGPA must be between 0.0 and 10.0');
+        // CBSE rule: Percentage = CGPA x 9.5
+        return { kind: 'ok', mode: 'cgpa', pct: cgpa * scale, cgpa, scale };
+    }
 
-        function renderResults(percent, subtext) {
-            if (isNaN(percent) || percent === null) {
-                percentResult.textContent = '0.00%';
-                if (resDivision) resDivision.textContent = subtext || 'Enter marks to see result';
-                updateGauge(0);
-                return;
-            }
-            percentResult.textContent = `${percent.toFixed(2)}%`;
-            if (resDivision) resDivision.textContent = subtext || getDivisionText(percent);
-            updateGauge(percent);
-        }
+    /* ---------------- render (layout depends on mode and on the result) ---------------- */
+    function render(r) {
+        const tab = activeTabId;
 
-        function calcQuick() {
-            const obtained = parseFloat(marksObtained.value);
-            const max = parseFloat(maxMarks.value);
-
-            if (isNaN(obtained) || isNaN(max)) {
-                renderResults(null, 'Enter marks to see result');
-                return;
-            }
-            if (max <= 0) {
-                renderResults(null, 'Maximum marks must be greater than zero');
-                return;
-            }
-            if (obtained < 0) {
-                renderResults(null, 'Score cannot be negative');
-                return;
-            }
-            if (obtained > max) {
-                renderResults(null, 'Obtained score cannot exceed maximum marks');
-                return;
-            }
-
-            renderResults((obtained / max) * 100);
-        }
-
-        function calcSubjects() {
-            const rowElements = subjectRowsContainer.querySelectorAll('.subject-grid');
-            const scores = [];
-            let totalMax = 0;
-            let totalObt = 0;
-
-            for (const row of rowElements) {
-                const obt = parseFloat(row.querySelector('.sub-obt').value) || 0;
-                const max = parseFloat(row.querySelector('.sub-max').value) || 100;
-                scores.push({ obt, max, pct: max > 0 ? (obt / max) : 0 });
-            }
-
-            if (scores.length === 0) {
-                renderResults(null);
-                return;
-            }
-
-            if (bestOfFiveToggle.checked && scores.length > 5) {
-                scores.sort((a, b) => b.pct - a.pct);
-                const bestFive = scores.slice(0, 5);
-                totalObt = bestFive.reduce((acc, curr) => acc + curr.obt, 0);
-                totalMax = bestFive.reduce((acc, curr) => acc + curr.max, 0);
-            } else {
-                totalObt = scores.reduce((acc, curr) => acc + curr.obt, 0);
-                totalMax = scores.reduce((acc, curr) => acc + curr.max, 0);
-            }
-
-            if (totalMax <= 0) {
-                renderResults(null, 'Total max marks must be > 0');
-                return;
-            }
-            const pct = (totalObt / totalMax) * 100;
-            const contextText = bestOfFiveToggle.checked && scores.length > 5 
-                ? `${getDivisionText(pct)} (Best 5 subjects: ${totalObt}/${totalMax})`
-                : `${getDivisionText(pct)} (Total: ${totalObt}/${totalMax})`;
-            renderResults(pct, contextText);
-        }
-
-        function calcCGPA() {
-            const cgpa = parseFloat(cgpaInput.value);
-            const scale = parseFloat(cgpaScale.value);
-
-            if (isNaN(cgpa)) {
-                renderResults(null, 'Enter a valid CGPA (e.g. 8.4)');
-                return;
-            }
-            if (cgpa < 0 || cgpa > 10) {
-                renderResults(null, 'CGPA must be between 0.0 and 10.0');
-                return;
-            }
-
-            const pct = cgpa * scale;
-            renderResults(pct, `Converted using ${scale}x scale multiplier`);
-        }
-
-        function calculateActive() {
-            if (activeTabId === 'tab-quick') calcQuick();
-            else if (activeTabId === 'tab-subjects') calcSubjects();
-            else if (activeTabId === 'tab-cgpa') calcCGPA();
-        }
-
-        function initDefaultSubjects() {
-            subjectRowsContainer.innerHTML = '';
-            for (let i = 1; i <= 5; i++) {
-                addSubjectRow(`Subject ${i}`, 100);
-            }
-        }
-
-        function addSubjectRow(name = '', max = 100) {
-            const row = document.createElement('div');
-            row.className = 'subject-grid';
-            row.innerHTML = `
-                <input class="form-control sub-name" type="text" placeholder="Subject Name" value="${name}" />
-                <input class="form-control sub-obt" type="number" min="0" placeholder="Marks" />
-                <input class="form-control sub-max" type="number" min="1" value="${max}" />
-            `;
-            row.querySelectorAll('input').forEach(input => {
-                input.addEventListener('input', calcSubjects);
+        if (r.kind !== 'ok') {
+            const isErr = r.kind === 'error';
+            const html = heroHTML({
+                compact: true,
+                value: isErr ? '—' : '0.00%',
+                pill: isErr ? r.msg : r.hint,
+                color: isErr ? '#f87171' : '#94a3b8',
+                ring: isErr ? null : { pct: 0, prev: '{{PREV}}' }
             });
-            subjectRowsContainer.appendChild(row);
+            paint(`${tab}|${r.kind}`, html, isErr ? r.msg : r.hint);
+            return;
         }
 
-        marksObtained.addEventListener('input', calcQuick);
-        maxMarks.addEventListener('input', calcQuick);
-        cgpaInput.addEventListener('input', calcCGPA);
-        cgpaScale.addEventListener('change', calcCGPA);
-        addSubjectBtn.addEventListener('click', () => { 
-            addSubjectRow(`Subject ${subjectRowsContainer.children.length + 1}`); 
-            calcSubjects(); 
-        });
-        resetSubjectsBtn.addEventListener('click', () => { 
-            initDefaultSubjects(); 
-            calcSubjects(); 
-        });
-        bestOfFiveToggle.addEventListener('change', calcSubjects);
+        const pct = r.pct;
+        const band = bandOf(pct);
+        const p = fmtPct(pct);
+        const parts = [];
+        let desc = '';
+        let sub = '';
 
+        if (r.mode === 'quick') {
+            const fail = pct + 1e-9 < CONFIG.passMark;
+            const required = round2((r.max * CONFIG.passMark) / 100);
+            const short = round2(required - r.obt);
+            const missed = round2(r.max - r.obt);
+            const perfect = missed <= 0;
+            parts.push(tile('Marks scored', `${num(r.obt)} <small>/ ${num(r.max)}</small>`));
+            parts.push(fail
+                ? tile('Needed to pass', `${num(short)} <small>more</small>`, `Pass mark: ${num(required)}`, 'tqc-need')
+                : tile('Marks missed', num(missed), perfect ? 'Perfect score' : ''));
+            if (perfect) desc = `${num(r.obt)} out of ${num(r.max)} is full marks, a perfect 100% with nothing lost.`;
+            else if (fail) desc = `${num(r.obt)} out of ${num(r.max)} works out to ${p}%, which falls in the ${band.label} range. That is ${num(short)} marks short of the ${CONFIG.passMark}% pass mark (${num(required)} of ${num(r.max)}).`;
+            else desc = `${num(r.obt)} out of ${num(r.max)} works out to ${p}%, which falls in the ${band.label} range, with ${num(missed)} marks lost. ${gapSentence(pct, band)}`;
+        } else if (r.mode === 'subjects') {
+            sub = `${num(r.totalObt)} / ${num(r.totalMax)} marks · ${r.useBest ? `best 5 of ${r.entered.length}` : `${r.n} subject${r.n > 1 ? 's' : ''}`}`;
+            const spread = r.n > 1 && r.best !== r.worst;
+            if (spread) {
+                parts.push(tile('Strongest', `${num(r.best.pct)}<small>%</small>`, r.best.name));
+                parts.push(tile('Weakest', `${num(r.worst.pct)}<small>%</small>`, r.worst.name, r.worst.pct + 1e-9 < CONFIG.passMark ? 'tqc-need' : ''));
+            }
+            if (r.entered.length >= 2) parts.push(tableTile(r));
+            const scope = r.useBest ? `your best 5 of ${r.entered.length} subjects` : `${r.n} subject${r.n > 1 ? 's' : ''}`;
+            desc = `Across ${scope} you scored ${num(r.totalObt)} out of ${num(r.totalMax)}, which is ${p}%, in the ${band.label} range. `
+                + (spread ? `${r.best.name} is your strongest at ${num(r.best.pct)}% and ${r.worst.name} your weakest at ${num(r.worst.pct)}%.` : gapSentence(pct, band));
+        } else {
+            sub = `${num(r.cgpa)} × ${num(r.scale)}`;
+            const official = r.scale === CONFIG.cbseMultiplier;
+            parts.push(tile('CGPA', `${num(r.cgpa)} <small>/ 10</small>`));
+            parts.push(tile('Multiplier', `×${num(r.scale)}`, official ? 'CBSE official' : 'Direct 10-point'));
+            desc = `A CGPA of ${num(r.cgpa)} converts to ${p}% using the ${num(r.scale)} multiplier, which falls in the ${band.label} range. `
+                + (official ? 'This is the official CBSE method.' : 'This is not the official CBSE method, so use it only if your institution asks for it.');
+        }
+
+        parts.push(barTile(pct, band));
+        parts.push(descTile(desc));
+
+        const html = heroHTML({
+            value: `${p}%`, sub, pill: band.label, color: band.color,
+            ring: { pct, prev: '{{PREV}}' }
+        }) + parts.join('');
+
+        paint(`${tab}|ok|${band.label}`, html, `${p} percent, ${band.label}`);
+    }
+
+    function calculateActive() {
+        if (activeTabId === 'tab-quick') render(calcQuick());
+        else if (activeTabId === 'tab-subjects') render(calcSubjects());
+        else if (activeTabId === 'tab-cgpa') render(calcCGPA());
+    }
+
+    /* ---------------- tabs ---------------- */
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+            tabPanes.forEach(pn => pn.classList.remove('active'));
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            activeTabId = btn.getAttribute('data-tab');
+            document.getElementById(activeTabId).classList.add('active');
+            calculateActive();
+        });
+    });
+
+    /* ---------------- subject rows ---------------- */
+    function addSubjectRow(name = '', max = 100) {
+        const row = document.createElement('div');
+        row.className = 'subject-grid';
+        row.innerHTML = `
+            <input class="form-control sub-name" type="text" placeholder="Subject Name" value="${esc(name)}" />
+            <input class="form-control sub-obt" type="number" min="0" placeholder="Marks" />
+            <input class="form-control sub-max" type="number" min="1" value="${esc(max)}" />
+        `;
+        row.querySelectorAll('input').forEach(input => input.addEventListener('input', calculateActive));
+        subjectRowsContainer.appendChild(row);
+    }
+
+    function initDefaultSubjects() {
+        subjectRowsContainer.innerHTML = '';
+        for (let i = 1; i <= 5; i++) addSubjectRow(`Subject ${i}`, 100);
+    }
+
+    /* ---------------- listeners (each bound once) ---------------- */
+    marksObtained.addEventListener('input', calculateActive);
+    maxMarks.addEventListener('input', calculateActive);
+    cgpaInput.addEventListener('input', calculateActive);
+    cgpaScale.addEventListener('change', calculateActive);
+    addSubjectBtn.addEventListener('click', () => {
+        addSubjectRow(`Subject ${subjectRowsContainer.children.length + 1}`);
+        calculateActive();
+    });
+    resetSubjectsBtn.addEventListener('click', () => {
         initDefaultSubjects();
-    })();
+        calculateActive();
+    });
+    bestOfFiveToggle.addEventListener('change', calculateActive);
+
+    initDefaultSubjects();
+    calculateActive();
+})();
     </script>
 
     <!-- Global Navigation Injection Script -->
