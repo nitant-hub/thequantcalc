@@ -132,18 +132,10 @@
 
         h1.page-title { font-size: 26px; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-main); text-align: center; }
 
-        /* =========================================
-           STRUCTURAL NESTING FOR ADSENSE & SLIM UI
-           ========================================= */
+        /* Outer Hook for navigation.js to inject AdSense (100% width) */
+        .tool-suite { width: 100%; display: block; margin-bottom: 2rem; }
 
-        /* 1. Outer Hook for navigation.js to inject AdSense (100% width) */
-        .tool-suite { 
-            width: 100%; 
-            display: block; 
-            margin-bottom: 2rem; 
-        }
-
-        /* 2. Slim Premium Dark Glass UI Box (max 420px) */
+        /* Slim Premium Dark Glass UI Box (max 420px) */
         .calculator-ui-box {
             background-color: #071426; 
             background-image: 
@@ -199,27 +191,120 @@
         }
         .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.2); }
 
-        /* Deep Teal Result Dashboard */
-        .result-box {
-            background-color: #103B42;
-            background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
+        /* --- NEW UPGRADED RESULT BOX SCOPED CSS --- */
+        #ageResultBox { margin-top: 25px; } /* Just for spacing when empty */
+        .tqc-result-box {
+            --bg-grad: linear-gradient(145deg, #103B42 0%, #092126 100%);
+            --accent: #00D6A0;
+            --border: #184c55;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --tile-bg: rgba(0, 0, 0, 0.25);
+            
+            background-image: var(--bg-grad);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             box-shadow: inset 0 0 25px rgba(0, 214, 160, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-radius: 10px; border: 1px solid #184c55;
-            padding: 20px; text-align: center; position: relative; overflow: hidden; margin-top: 25px; display: none;
+            color: var(--text-main);
+            padding: 24px;
+            font-family: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: tqc-fade 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .result-accent-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10b981, #00D6A0); }
-        .result-value { color: #00D6A0; font-size: 30px; font-weight: 800; display: block; margin-top: 5px; text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3); line-height: 1.2; }
 
-        /* Extended Metrics Grid */
-        .extended-metrics {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
+        @media (prefers-reduced-motion: reduce) {
+            .tqc-result-box { animation: none; }
         }
-        .metric-item { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; }
-        .metric-val { color: #f8fafc; font-weight: 700; font-size: 15px; display: block; }
-        .metric-label { color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* --- EDITORIAL CONTENT (Replaced .content-section with <article>) --- */
+        @keyframes tqc-fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tqc-top-accent {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, #10b981, var(--accent));
+        }
+
+        .tqc-hero {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .tqc-hero-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .tqc-hero-value {
+            color: var(--accent);
+            font-size: clamp(1.5rem, 6vw, 2.125rem);
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 214, 160, 0.25);
+        }
+
+        .tqc-bento {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .tqc-tile {
+            background: var(--tile-bg);
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center;
+        }
+
+        .tqc-tile-val {
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tqc-tile-label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tqc-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            text-align: center;
+            background: rgba(0, 214, 160, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px dashed rgba(0, 214, 160, 0.2);
+        }
+
+        .tqc-error {
+            text-align: center;
+            color: #ef4444;
+            font-weight: 600;
+            padding: 20px;
+        }
+
+        /* Editorial Content */
         .article-content { width: 100%; max-width: 100%; margin-top: 20px; }
         .article-content h2 { font-size: 22px; color: var(--text-main); margin: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
         .article-content h3 { font-size: 19px; color: var(--text-main); margin: 1.5rem 0 0.75rem 0; }
@@ -239,17 +324,12 @@
         .data-table th { padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-primary); font-weight: 700; }
         .data-table td { padding: 12px; border: 1px solid var(--border-color); font-size: 14.5px; }
 
-        /* --- MOBILE TWEAKS (STRICT TABLET SIZING) --- */
+        /* Mobile Tweaks */
         @media (max-width: 767px) {
             .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
             .main-body { padding: 1.25rem 1rem; overflow: hidden; } 
-            
-            /* Adjust padding only. No width: 100% applied to keep tablet slim! */
             .calculator-ui-box { padding: 20px 15px; }
-            
             h1.page-title { font-size: 22px; }
-            .result-value { font-size: 26px; }
-            .extended-metrics { grid-template-columns: 1fr; }
         }
     </style>
     
@@ -285,10 +365,8 @@
             <main class="main-body">
                 <h1 class="page-title">Accurate Age & Time Lived Calculator</h1>
 
-                <!-- 1. .tool-suite kept 100% wide for AdSense injection -->
                 <div class="tool-suite">
                     
-                    <!-- 2. .calculator-ui-box keeps the design slim at 420px max-width -->
                     <div class="calculator-ui-box">
                         <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Calculate Exact Age</h2>
                         
@@ -304,36 +382,11 @@
 
                         <button class="calc-btn" onclick="checkAge()">Calculate Exact Age</button>
 
-                        <div id="ageResultBox" class="result-box" aria-live="polite">
-                            <div class="result-accent-line"></div>
-                            <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Your Exact Age</span>
-                            <span id="ageResult" class="result-value"></span>
-                            
-                            <!-- Extended Biological Time Metrics -->
-                            <div class="extended-metrics">
-                                <div class="metric-item">
-                                    <span id="resDays" class="metric-val">0</span>
-                                    <span class="metric-label">Total Days Lived</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span id="resHours" class="metric-val">0</span>
-                                    <span class="metric-label">Total Hours Lived</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span id="resSeconds" class="metric-val">0</span>
-                                    <span class="metric-label">Total Seconds</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span id="resHeartbeats" class="metric-val">0</span>
-                                    <span class="metric-label">Est. Heartbeats (80 bpm)</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- JS WILL INJECT THE UPGRADED RESULT BOX HERE -->
+                        <div id="ageResultBox"></div>
                     </div>
-                    <!-- Navigation.js will successfully inject AdSense here, underneath the UI box! -->
                 </div>
 
-                <!-- 3. Wrapped in standard <article class="article-content"> to match Fixed Deposit page -->
                 <article class="article-content">
                     <h2>Why "Rough Math" Isn't Good Enough Anymore</h2>
                     <p>Most people don't think twice when someone asks their age. You quickly state you are 22, 35, or 50 and move on. But try writing "around 25" on a government job application or a legal contract. It won't work. When official cutoff dates are involved, guessing your age can literally cost you an opportunity.</p>
@@ -452,36 +505,28 @@
         <p>&copy; 2026 thequantcals. All rights reserved.</p>
     </footer>
 
-    <!-- Age & Time Calculation Engine Script -->
+    <!-- Age & Time Calculation Engine Script (UPGRADED) -->
     <script>
         (function() {
             'use strict';
+            
+            const CONFIG = {
+                avgBpm: 80 // Source: Standard average resting adult heart rate
+            };
+
+            // Auto-fill target date on load
             const today = new Date();
             const targetDateInput = document.getElementById('targetDate');
-            if(targetDateInput) {
-                targetDateInput.value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+            if (targetDateInput && !targetDateInput.value) {
+                // Ensure correct local formatting YYYY-MM-DD
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                targetDateInput.value = `${year}-${month}-${day}`;
             }
 
-            window.checkAge = function() {
-                const dobInput = document.getElementById('birthDate').value;
-                const targetInput = document.getElementById('targetDate').value;
-                
-                if (!dobInput || !targetInput) {
-                    alert("Please select both dates.");
-                    return;
-                }
-                
-                const dob = new Date(dobInput);
-                const target = new Date(targetInput);
-                
-                dob.setHours(0, 0, 0, 0);
-                target.setHours(0, 0, 0, 0);
-
-                if (dob > target) {
-                    alert("Date of birth cannot be later than the target date.");
-                    return;
-                }
-                
+            // Pure function to calculate exact calendar difference
+            function calculateExactAge(dob, target) {
                 let years = target.getFullYear() - dob.getFullYear();
                 let months = target.getMonth() - dob.getMonth();
                 let days = target.getDate() - dob.getDate();
@@ -496,24 +541,90 @@
                     years--;
                     months += 12;
                 }
+
+                return { years, months, days };
+            }
+
+            // Main controller triggered by UI
+            window.checkAge = function() {
+                const container = document.getElementById('ageResultBox');
+                const dobVal = document.getElementById('birthDate').value;
+                const targetVal = document.getElementById('targetDate').value;
                 
-                const diffTime = target.getTime() - dob.getTime();
-                const totalDays = Math.floor(diffTime / (1000 * 3600 * 24));
+                if (!dobVal || !targetVal) {
+                    container.innerHTML = `<div class="tqc-result-box" style="margin-top:0;"><div class="tqc-error">⚠️ Please select both dates to calculate.</div></div>`;
+                    return;
+                }
+                
+                const dob = new Date(dobVal);
+                const target = new Date(targetVal);
+                
+                dob.setHours(0, 0, 0, 0);
+                target.setHours(0, 0, 0, 0);
+
+                if (dob > target) {
+                    container.innerHTML = `<div class="tqc-result-box" style="margin-top:0;"><div class="tqc-error">⚠️ Date of birth cannot be later than the target date.</div></div>`;
+                    return;
+                }
+
+                const { years, months, days } = calculateExactAge(dob, target);
+                
+                // Formulas for biological metrics
+                const diffMs = target.getTime() - dob.getTime();
+                const totalDays = Math.floor(diffMs / (1000 * 3600 * 24));
                 const totalHours = totalDays * 24;
                 const totalMinutes = totalHours * 60;
                 const totalSeconds = totalMinutes * 60;
-                const estimatedHeartbeats = totalMinutes * 80;
-                
-                document.getElementById('ageResult').innerText = `${years} Yrs, ${months} Mos, ${days} Days`;
-                document.getElementById('resDays').innerText = totalDays.toLocaleString();
-                document.getElementById('resHours').innerText = totalHours.toLocaleString();
-                document.getElementById('resSeconds').innerText = totalSeconds.toLocaleString();
-                document.getElementById('resHeartbeats').innerText = estimatedHeartbeats.toLocaleString();
-                
-                document.getElementById('ageResultBox').style.display = "block";
+                const estHeartbeats = totalMinutes * CONFIG.avgBpm;
+
+                const fmt = new Intl.NumberFormat('en-US');
+
+                // Dynamic Description
+                let descStr = '';
+                if (totalDays === 0) {
+                    descStr = `Welcome to the world! You were born on the exact target date.`;
+                } else if (years === 0) {
+                    descStr = `At just ${months} months and ${days} days old, you've experienced ${fmt.format(totalDays)} total days of life.`;
+                } else {
+                    descStr = `You have been alive for an exact total of ${fmt.format(totalDays)} days. In that time, your heart has beaten an estimated ${fmt.format(estHeartbeats)} times.`;
+                }
+
+                // Render Card
+                container.innerHTML = `
+                    <div class="tqc-result-box" aria-live="polite" style="margin-top:0;">
+                        <div class="tqc-top-accent"></div>
+                        
+                        <div class="tqc-hero">
+                            <span class="tqc-hero-label">Your Exact Age</span>
+                            <span class="tqc-hero-value">${years} Yrs, ${months} Mos, ${days} Days</span>
+                        </div>
+
+                        <div class="tqc-bento">
+                            <div class="tqc-tile">
+                                <span class="tqc-tile-val">${fmt.format(totalDays)}</span>
+                                <span class="tqc-tile-label">Total Days Lived</span>
+                            </div>
+                            <div class="tqc-tile">
+                                <span class="tqc-tile-val">${fmt.format(totalHours)}</span>
+                                <span class="tqc-tile-label">Total Hours Lived</span>
+                            </div>
+                            <div class="tqc-tile">
+                                <span class="tqc-tile-val">${fmt.format(totalSeconds)}</span>
+                                <span class="tqc-tile-label">Total Seconds</span>
+                            </div>
+                            <div class="tqc-tile">
+                                <span class="tqc-tile-val">${fmt.format(estHeartbeats)}</span>
+                                <span class="tqc-tile-label">Est. Heartbeats</span>
+                            </div>
+                        </div>
+
+                        <div class="tqc-desc">${descStr}</div>
+                    </div>
+                `;
             };
         })();
 
+        // Header and Theme Toggle logic preserved exactly as it was
         const themeToggle = document.getElementById('themeToggle');
         const htmlEl = document.documentElement;
         if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
