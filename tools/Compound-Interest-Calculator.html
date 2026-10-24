@@ -197,7 +197,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            margin: 0 0 20px;
+            margin: 0 0 30px;
         }
 
         .calculator-ui-box {
@@ -316,24 +316,13 @@
             line-height: 1.2;
         }
 
-        /* Improved Ad Containers for perfect centering and spacing */
-        .ad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin: 20px auto 36px;
-            min-height: 90px; /* Prevents layout shift before ad loads */
-            overflow: hidden;
-        }
-        
         .sidebar-ad-container {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
             margin-bottom: 30px;
-            min-height: 250px; /* Prevents layout shift in sidebar */
+            min-height: 250px;
             overflow: hidden;
         }
 
@@ -458,6 +447,7 @@
                     Fixed Deposit & Compound Interest Calculator
                 </h1>
 
+                <!-- Section 1: The Calculator -->
                 <div class="tool-suite">
                     <section class="calculator-ui-box" aria-labelledby="calculator-heading">
                         <h2 class="calculator-heading" id="calculator-heading">
@@ -504,19 +494,8 @@
                     </section>
                 </div>
 
-                <!-- AdSense 1: Directly below calculator, perfectly centered -->
-                <div class="ad-container">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                         data-ad-slot="XXXXXXXXXXXXXXXX"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
-
+                <!-- Section 2: The Article -->
+                <!-- navigation.js will dynamically insert the AdSense block right before this article -->
                 <article class="article-content">
                     <h2>Understanding Compound Interest and Fixed Deposits</h2>
                     <p>When you put money into a savings account or a fixed deposit (also known as a term deposit), the bank pays you for keeping your money with them. The reason your savings grow over time is mostly due to compound interest.</p>
