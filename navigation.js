@@ -1704,26 +1704,37 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
-        // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
+                // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
         const mainArticle = document.querySelector(".dyn-left-split article");
         if (mainArticle && !document.getElementById("dynInContentAd")) {
           const adWrapper = document.createElement("div");
           adWrapper.id = "dynInContentAd";
-          adWrapper.style.margin = "32px 0";
-          adWrapper.style.textAlign = "center";
-          adWrapper.style.minHeight = "90px";
-          adWrapper.style.overflow = "hidden";
+          
+          adWrapper.style.cssText = `
+              margin: 2rem auto;
+              width: 100%;
+              text-align: center;
+              max-width: 728px;
+              min-height: 100px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              overflow: hidden;
+              position: relative;
+              background-color: rgba(148, 163, 184, 0.05);
+              border: 1px dashed var(--border-color, #e2e8f0);
+              border-radius: 8px;
+          `;
           
           const adLabel = document.createElement("span");
-          adLabel.textContent = "Advertisement";
-          adLabel.style.cssText = "font-size: 0.75rem; color: #64748b; margin-bottom: 4px; display: block;";
+          adLabel.textContent = "- Advertisement -";
+          adLabel.style.cssText = "font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; position: absolute; z-index: 0;";
           adWrapper.appendChild(adLabel);
 
           const insTag = document.createElement("ins");
           insTag.className = "adsbygoogle";
-          insTag.style.display = "block";
+          insTag.style.cssText = "display: block; position: relative; z-index: 1; width: 100%;";
           
-          // Replace with your AdSense details for the horizontal ad slot
           insTag.setAttribute("data-ad-client", "ca-pub-XXXXXXXXXXXXXXXX"); 
           insTag.setAttribute("data-ad-slot", "XXXXXXXXXX"); 
           insTag.setAttribute("data-ad-format", "auto");
@@ -1734,6 +1745,7 @@
           try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
         }
         // --- END OF AUTOMATIC AD CODE ---
+
 
         document.querySelectorAll(".breadcrumb, .crumb, #crumb, nav, div, p").forEach((el) => {
           if (el.children.length <= 4) {
