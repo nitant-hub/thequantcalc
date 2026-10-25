@@ -59,6 +59,18 @@
     </script>
 
     <style>
+        /* Global Resets */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            background-color: var(--bg-primary);
+        }
+
         :root {
             --bg-primary: #f4f6f9;
             --bg-surface: #ffffff;
@@ -75,14 +87,13 @@
             --border-color: #334155;
         }
 
-        html { visibility: visible; opacity: 1; background-color: var(--bg-primary); }
+        html { visibility: visible; opacity: 1; }
 
-        .wrapper { 
+        .tqc-page-grid { 
             max-width: 1200px; 
             width: 100%; 
             margin: 0.25rem auto 2rem auto; 
             padding: 0 1rem; 
-            box-sizing: border-box;
         }
 
         .breadcrumb { 
@@ -104,14 +115,14 @@
 
         .layout-grid { 
             display: grid; 
-            grid-template-columns: 1fr; 
+            grid-template-columns: minmax(0, 1fr); 
             gap: 1.5rem; 
             align-items: start;
         }
 
         @media (min-width: 900px) {
             .layout-grid {
-                grid-template-columns: 2.3fr 1fr;
+                grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
             }
         }
 
@@ -124,7 +135,6 @@
             padding: 1.5rem 2rem 2rem 2rem; 
             border-radius: 16px; 
             border: 1px solid var(--border-color); 
-            box-sizing: border-box;
             overflow: hidden;
         }
 
@@ -146,13 +156,12 @@
             border-radius: 16px;
             padding: 24px;
             width: 100%;
-            max-width: 420px; /* SLIM IN X-DIRECTION */
+            max-width: 420px;
             margin: 0 auto;
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid #1e293b;
             color: #f8fafc;
-            box-sizing: border-box;
         }
         
         [data-theme="dark"] .calculator-ui-box {
@@ -210,7 +219,6 @@
             color: #cbd5e1;
         }
 
-        /* Premium Dark Slate Inputs */
         .form-control {
             width: 100%;
             max-width: 100%;
@@ -223,7 +231,6 @@
             padding: 0.6rem 0.8rem;
             outline: none;
             transition: all 0.2s ease;
-            box-sizing: border-box;
         }
 
         .form-control:focus {
@@ -263,7 +270,6 @@
             color: #00D6A0;
         }
 
-        /* Deep Teal Result Dashboard */
         .results-dashboard {
             background-color: #103B42;
             background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
@@ -277,7 +283,6 @@
             gap: 0.5rem;
             align-items: center;
             text-align: center;
-            box-sizing: border-box;
             position: relative;
             overflow: hidden;
         }
@@ -297,7 +302,6 @@
             margin-bottom: 0.2rem;
         }
 
-        /* Bright Mint-Teal Result Amount */
         .res-value {
             color: #00D6A0;
             font-size: 1.7rem;
@@ -318,7 +322,6 @@
             margin: 0 auto;
         }
 
-        /* Typography & Editorial Content */
         h1.primary-title {
             font-size: 1.55rem;
             font-weight: 800;
@@ -379,17 +382,14 @@
 
         /* --- MOBILE TWEAKS --- */
         @media (max-width: 767px) {
-            .wrapper { margin: 0.15rem auto 1.5rem auto; padding: 0 0.4rem; }
+            .tqc-page-grid { margin: 0.15rem auto 1.5rem auto; padding: 0 0.4rem; }
             .main-body { padding: 1.25rem 0.85rem; overflow: hidden; } 
-            
-            /* No max-width: 100% applied here. Keeps it slim on tablets! */
             .calculator-ui-box { padding: 20px 15px; } 
-            
             h1.primary-title { font-size: 1.3rem; }
             .res-value { font-size: 1.5rem; }
         }
 
-        /* ===== TQC RESULT CARD (all rules scoped to .tqc-result-box) ===== */
+        /* ===== TQC RESULT CARD ===== */
         .tqc-result-box{
           --tqc-accent:#00D6A0;
           --tqc-tile:#101E35;
@@ -407,8 +407,6 @@
           color:var(--tqc-text);
           line-height:1.35;
         }
-        .tqc-result-box,.tqc-result-box *{box-sizing:border-box}
-        /* neutralise the old .results-dashboard look (class kept only so navigation.js selectors still match) */
         .tqc-result-box.results-dashboard{display:block;background:none;box-shadow:none;border:0;border-radius:0;padding:0;overflow:visible;text-align:left}
 
         .tqc-result-box .tqc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -472,7 +470,7 @@
         .tqc-result-box .tqc-bar-labels span{min-width:0;overflow:hidden;white-space:nowrap;font-size:.62rem;color:var(--tqc-muted)}
         .tqc-result-box .tqc-note{margin-top:8px;font-size:.7rem;line-height:1.4;color:var(--tqc-muted)}
 
-        /* subject table (scrolls inside the card only) */
+        /* subject table */
         .tqc-result-box .tqc-table-wrap{max-height:190px;overflow:auto;margin-top:6px;border-radius:8px;-webkit-overflow-scrolling:touch}
         .tqc-result-box .tqc-table{width:100%;border-collapse:collapse;font-size:.78rem}
         .tqc-result-box .tqc-table th{
@@ -492,17 +490,15 @@
         .tqc-result-box .tqc-desc{border-color:rgba(0,214,160,.25);background:linear-gradient(160deg,rgba(0,214,160,.09),rgba(0,214,160,.02))}
         .tqc-result-box .tqc-desc-text{font-size:.86rem;line-height:1.55;color:var(--tqc-soft)}
 
-        /* motion (only when the state changes, never on every keystroke) */
+        /* motion */
         @keyframes tqc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
         .tqc-result-box .tqc-enter>*{animation:tqc-in .3s ease both;animation-delay:calc(var(--i,0)*50ms)}
         @media (prefers-reduced-motion:reduce){
           .tqc-result-box *{animation:none!important;transition:none!important}
         }
 
-        /* visually hidden live region (screen readers announce the result without re-reading the whole card) */
         .tqc-result-box .tqc-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
         .tqc-result-box .tqc-tv small{font-size:.75rem;font-weight:600;color:var(--tqc-muted)}
-        /* stagger */
         .tqc-result-box .tqc-enter>*:nth-child(2){animation-delay:50ms}
         .tqc-result-box .tqc-enter>*:nth-child(3){animation-delay:100ms}
         .tqc-result-box .tqc-enter>*:nth-child(4){animation-delay:150ms}
@@ -517,7 +513,7 @@
     </script>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="tqc-page-grid">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">home</a> / <a href="/#math">math</a> / exam marks percentage calculator
         </nav>
@@ -525,10 +521,7 @@
             <main class="main-body dyn-left-split">
                 <h1 class="primary-title">Exam Marks &amp; Percentage Calculator</h1>
 
-                <!-- .tool-suite is kept 100% wide for AdSense injection -->
                 <section class="tool-suite" aria-label="Interactive Calculator">
-                    
-                    <!-- Premium Dark Glass Calculator Box -->
                     <div class="calculator-ui-box">
                         <div class="tool-tabs" role="tablist">
                             <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-quick">Quick Total %</button>
@@ -575,7 +568,6 @@
                             </div>
                         </div>
 
-                        <!-- Result card (rendered by the engine script below) -->
                         <div id="tqcResult" class="tqc-result-box results-dashboard"></div>
                     </div>
                 </section>
@@ -627,7 +619,6 @@
                     <p>The Bihar School Examination Board (BSEB) typically calculates class 10th (Matric) and 12th (Inter) results out of 500 total marks. They use a straightforward division method rather than a grading system.</p>
                     <p>If you score 300 out of 500 on your Bihar Board exams, your calculation is (300 &divide; 500) &times; 100, giving you exactly 60%. Scoring 60% or above in BSEB places you in the "1st Division" category.</p>
 
-                    <!-- Visualizing Your Score Section -->
                     <h3 class="sub-heading">Visualizing Your Score</h3>
                     <p>The chart below shows what an 84% score looks like. This helps you quickly see how much of the test you got right versus the marks you missed.</p>
                     <div class="data-table-wrapper" style="margin: 20px 0; padding: 20px; text-align: center; background: var(--bg-surface);">
@@ -659,23 +650,18 @@
                 </article>
             </main>
 
-            <!-- EMPTY SIDEBAR -->
             <aside class="sidebar"></aside>
         </div>
     </div>
 
-    <!-- Calculator Engine Script -->
     <script>
 (() => {
     'use strict';
 
-    /* ================= CONFIG: edit standards here =================
-       Division bands and pass mark follow common Indian school-board convention
-       (CBSE / BSEB style). Change them here if your board differs.            */
     const CONFIG = {
-        passMark: 33,              // minimum % to pass (must equal the min of the "3rd Division" band)
-        cbseMultiplier: 9.5,       // CBSE official CGPA -> percentage multiplier
-        bands: [                   // highest first
+        passMark: 33,
+        cbseMultiplier: 9.5,
+        bands: [
             { min: 75, label: '1st Division (Distinction)', color: '#00D6A0' },
             { min: 60, label: '1st Division',               color: '#38bdf8' },
             { min: 45, label: '2nd Division',               color: '#fbbf24' },
@@ -684,7 +670,6 @@
         ]
     };
 
-    /* ---------------- element references (IDs unchanged) ---------------- */
     const marksObtained = document.getElementById('marksObtained');
     const maxMarks = document.getElementById('maxMarks');
     const cgpaInput = document.getElementById('cgpaInput');
@@ -704,7 +689,6 @@
     let activeTabId = 'tab-quick';
     let lastSig = '';
 
-    /* ---------------- helpers ---------------- */
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const nf = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 });
     const num = v => nf.format(Math.round(v * 100) / 100);
@@ -717,15 +701,12 @@
     }
     const colorVars = c => `--c:${c};--g:${rgba(c, 0.4)};--s:${rgba(c, 0.15)}`;
 
-    // Percent display: normal 2-dp rounding, but never let rounding push a score
-    // over a band boundary it has not actually reached (e.g. 59.996 must not show 60.00).
     function fmtPct(p) {
         let r = Math.round(p * 100) / 100;
         if (bandOf(r) !== bandOf(p)) r = Math.floor(p * 100 + 1e-6) / 100;
         return r.toFixed(2);
     }
 
-    /* ---------------- card building blocks ---------------- */
     function ringHTML(pct, color, prev) {
         const v = Math.max(0, Math.min(100, pct));
         const d = 'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831';
@@ -797,7 +778,6 @@
         </div>`;
     }
 
-    /* ---------------- paint (rebuild card, keep ring animation smooth) ---------------- */
     function paint(sig, html, announce) {
         const old = document.getElementById('svgGaugePath');
         const prev = old ? (parseFloat(old.style.strokeDasharray) || 0) : 0;
@@ -815,14 +795,12 @@
         }
     }
 
-    /* ---------------- descriptions ---------------- */
     function gapSentence(pct, band) {
         if (pct + 1e-9 < CONFIG.passMark) return `That is ${num(CONFIG.passMark - pct)} percentage points below the ${CONFIG.passMark}% pass mark.`;
         const up = CONFIG.bands[CONFIG.bands.indexOf(band) - 1];
         return up ? `A further ${num(up.min - pct)} percentage points would reach ${up.label}.` : 'That is the top band.';
     }
 
-    /* ---------------- calculation (pure) ---------------- */
     const err = msg => ({ kind: 'error', msg });
     const empty = hint => ({ kind: 'empty', hint });
 
@@ -834,7 +812,6 @@
         if (max <= 0) return err('Maximum marks must be greater than zero');
         if (obt < 0) return err('Score cannot be negative');
         if (obt > max) return err('Obtained score cannot exceed maximum marks');
-        // Percentage = (Marks Obtained x 100) / Total Marks  (multiply first to limit float error)
         return { kind: 'ok', mode: 'quick', pct: (obt * 100) / max, obt, max };
     }
 
@@ -859,7 +836,6 @@
             if (s.obt > s.max) return err(`${s.name}: marks cannot exceed ${num(s.max)}`);
             s.pct = (s.obt * 100) / s.max;
         }
-        // "Best of 5": keep the five highest subject percentages, only when more than five are entered
         const useBest = bestOfFiveToggle.checked && entered.length > 5;
         const list = useBest ? [...entered].sort((a, b) => b.pct - a.pct).slice(0, 5) : entered;
         const totalObt = list.reduce((a, s) => a + s.obt, 0);
@@ -874,11 +850,9 @@
         const scale = parseFloat(cgpaScale.value);
         if (isNaN(cgpa)) return empty('Enter a valid CGPA (e.g. 8.4)');
         if (!isFinite(cgpa) || cgpa < 0 || cgpa > 10) return err('CGPA must be between 0.0 and 10.0');
-        // CBSE rule: Percentage = CGPA x 9.5
         return { kind: 'ok', mode: 'cgpa', pct: cgpa * scale, cgpa, scale };
     }
 
-    /* ---------------- render (layout depends on mode and on the result) ---------------- */
     function render(r) {
         const tab = activeTabId;
 
@@ -952,7 +926,6 @@
         else if (activeTabId === 'tab-cgpa') render(calcCGPA());
     }
 
-    /* ---------------- tabs ---------------- */
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
@@ -965,7 +938,6 @@
         });
     });
 
-    /* ---------------- subject rows ---------------- */
     function addSubjectRow(name = '', max = 100) {
         const row = document.createElement('div');
         row.className = 'subject-grid';
@@ -983,7 +955,6 @@
         for (let i = 1; i <= 5; i++) addSubjectRow(`Subject ${i}`, 100);
     }
 
-    /* ---------------- listeners (each bound once) ---------------- */
     marksObtained.addEventListener('input', calculateActive);
     maxMarks.addEventListener('input', calculateActive);
     cgpaInput.addEventListener('input', calculateActive);
@@ -1003,7 +974,6 @@
 })();
     </script>
 
-    <!-- Global Navigation Injection Script -->
     <script src="/navigation.js"></script>
 </body>
 </html>
