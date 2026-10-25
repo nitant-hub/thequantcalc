@@ -29,6 +29,9 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 @media (max-width:900px){.tqc-page-grid{grid-template-columns:minmax(0,1fr)}}
 .main-body{padding-top:0}
 .tool-suite{padding:12px 0}
+.breadcrumb{padding:10px 0 16px;font-size:14px;color:var(--muted)}
+.breadcrumb a{color:var(--link);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
 
 /* Calculator card (always dark, low-glare) */
 .calculator-ui-box{width:100%;max-width:420px;margin:0 auto;background:#020617;box-sizing:border-box;
@@ -117,6 +120,9 @@ article a{color:var(--link);font-weight:600}
 <body>
 <div class="tqc-page-grid">
   <main class="main-body">
+    <div class="breadcrumb">
+      <a href="/">home</a> / <a href="/#finance">finance</a> / emi calculator
+    </div>
     <section class="tool-suite" aria-label="Interactive Calculator">
       <div class="calculator-ui-box">
         <h1 class="primary-title">EMI Calculator</h1>
@@ -358,8 +364,8 @@ article a{color:var(--link);font-weight:600}
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Tools",
-          "item": "https://thequantcal.pages.dev/tools"
+          "name": "Finance",
+          "item": "https://thequantcal.pages.dev/#finance"
         },
         {
           "@type": "ListItem",
