@@ -282,20 +282,91 @@ article a{color:var(--link);font-weight:600}
       "@type": "WebApplication",
       "name": "EMI Calculator",
       "url": "https://thequantcal.pages.dev/tools/EMI-Calculator",
+      "description": "Calculate your equated monthly installment (EMI), total interest and total repayment for a fixed-rate reducing-balance loan. Works with any currency; includes formula, worked example and FAQs.",
       "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Any",
-      "description": "Calculates the equated monthly installment, total interest and total repayment for a fixed-rate reducing-balance loan.",
-      "isAccessibleForFree": true
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev"
+      }
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": "How is EMI calculated?", "acceptedAnswer": {"@type": "Answer", "text": "EMI = P × r × (1 + r)^n ÷ [(1 + r)^n − 1], where P is the loan amount, r is the annual rate divided by 12 and by 100, and n is the number of monthly payments."}},
-        {"@type": "Question", "name": "Does a longer tenure save money?", "acceptedAnswer": {"@type": "Answer", "text": "It lowers the monthly EMI but increases the total interest, because the balance stays outstanding for more months. Choose the shortest tenure whose installment you can comfortably afford."}},
-        {"@type": "Question", "name": "Can I enter a 0% interest rate?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. At 0% the EMI is simply the loan amount divided by the number of months, and the total interest is zero."}},
-        {"@type": "Question", "name": "Why is most of my early EMI interest?", "acceptedAnswer": {"@type": "Answer", "text": "Interest is charged on the outstanding balance, which is largest at the start. As each payment reduces the principal, the interest portion falls and the principal portion grows."}},
-        {"@type": "Question", "name": "What is the difference between a flat rate and a reducing-balance rate?", "acceptedAnswer": {"@type": "Answer", "text": "A flat rate charges interest on the original loan amount for the whole term, while a reducing-balance rate charges it only on the unpaid balance. This calculator uses the reducing-balance method, so do not enter a flat rate directly; it would understate the true cost."}},
-        {"@type": "Question", "name": "Will my lender's EMI match this result exactly?", "acceptedAnswer": {"@type": "Answer", "text": "It should be close for a standard fixed-rate loan, but lenders may round each installment, add fees or use different day-count rules, so small differences are normal. Use this as an estimate and confirm with your loan agreement."}}
+        {
+          "@type": "Question",
+          "name": "How is EMI calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "EMI = P × r × (1 + r)^n ÷ [(1 + r)^n − 1], where P is the loan amount, r is the annual rate divided by 12 and by 100, and n is the number of monthly payments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a longer tenure save money?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It lowers the monthly EMI but increases the total interest, because the balance stays outstanding for more months. Choose the shortest tenure whose installment you can comfortably afford."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I enter a 0% interest rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. At 0% the EMI is simply the loan amount divided by the number of months, and the total interest is zero."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is most of my early EMI interest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Interest is charged on the outstanding balance, which is largest at the start. As each payment reduces the principal, the interest portion falls and the principal portion grows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a flat rate and a reducing-balance rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A flat rate charges interest on the original loan amount for the whole term, while a reducing-balance rate charges it only on the unpaid balance. This calculator uses the reducing-balance method, so do not enter a flat rate directly; it would understate the true cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my lender's EMI match this result exactly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It should be close for a standard fixed-rate loan, but lenders may round each installment, add fees or use different day-count rules, so small differences are normal. Use this as an estimate and confirm with your loan agreement."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thequantcal.pages.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://thequantcal.pages.dev/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "EMI Calculator",
+          "item": "https://thequantcal.pages.dev/tools/EMI-Calculator"
+        }
       ]
     }
   ]
