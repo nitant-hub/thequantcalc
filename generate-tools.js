@@ -1,72 +1,108 @@
-const fs = require('fs'); 
-const path = require('path');
+/*
+  generate-tools.js - runs on every Cloudflare deploy.
+  Scans tools/, finance/, math/, utility/, scientific/, everyday/ (and subfolders).
+  Category order: schema applicationCategory -> meta category -> folder name -> utility.
+  Writes tools.json, sitemap-pages.xml and the search list inside navigation.js.
+*/
+const fs = require("fs");
+const path = require("path");
 
-// List of folders to scan for tools (includes standard /tools/ and any category folders)
-const scanFolders = ['tools', 'finance', 'math', 'utility', 'scientific', 'everyday'];
+const SITE = process.env.SITE_URL || "https://thequantcal.pages.dev";
+const ROOT = __dirname;
+const SCAN_FOLDERS = ["tools", "finance", "math", "utility", "scientific", "everyday"];
 
-function generateToolsJson() {
-    let tools = [];
+const CATEGORY_MAP = {
+  finance: "financial", financial: "financial", financeapplication: "financial",
+  education: "math", educational: "math", math: "math", mathematics: "math",
+  health: "health", healthandfitness: "health", fitness: "health",
+  utility: "utility", utilities: "utility", generaltools: "utility"
+};
+const ACRONYMS = ["Sip", "Emi", "Fd", "Rd", "Ppf", "Gst", "Ipo", "Bmi", "Cagr", "Hra", "Epf", "Nps", "Roi"];
 
-    scanFolders.forEach(folder => {
-        if (fs.existsSync(folder)) {
-            walkDirectory(folder, tools);
-        }
-    });
-
-    // Write the output to tools.json in the root directory
-    fs.writeFileSync('tools.json', JSON.stringify(tools, null, 2));
-    console.log(`Success! Generated tools.json with ${tools.length} tools.`);
+function pretty(s) {
+  let t = s.replace(/[-_]+/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+  ACRONYMS.forEach(a => { t = t.replace(new RegExp("\\b" + a + "\\b", "g"), a.toUpperCase()); });
+  return t.trim();
+}
+function cleanKey(v) {
+  return String(v).toLowerCase().replace(/application/g, "").replace(/[^a-z0-9]/g, "");
+}
+function mapCat(v) {
+  const k = cleanKey(v);
+  if (!k) return "";
+  return CATEGORY_MAP[k] || k;
+}
+function readSchemas(html) {
+  const out = [];
+  const re = /<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi;
+  let m;
+  while ((m = re.exec(html))) { try { out.push(JSON.parse(m[1])); } catch (e) {} }
+  return out;
+}
+function findApp(node) {
+  if (!node || typeof node !== "object") return null;
+  if (Array.isArray(node)) { for (const n of node) { const r = findApp(n); if (r) return r; } return null; }
+  const t = node["@type"];
+  if (t === "WebApplication" || (Array.isArray(t) && t.includes("WebApplication"))) return node;
+  return findApp(node["@graph"]);
+}
+function metaContent(html, name) {
+  const m = html.match(new RegExp("<meta[^>]+name=[\"']" + name + "[\"'][^>]+content=[\"']([^\"']*)[\"']", "i"));
+  return m ? m[1].trim() : "";
+}
+function walk(dir) {
+  let files = [];
+  fs.readdirSync(dir, { withFileTypes: true }).forEach(e => {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) files = files.concat(walk(full));
+    else files.push(full);
+  });
+  return files;
 }
 
-function walkDirectory(currentDir, toolsList) {
-    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+const tools = [];
+const seen = {};
+SCAN_FOLDERS.forEach(folder => {
+  const base = path.join(ROOT, folder);
+  if (!fs.existsSync(base)) return;
+  walk(base).forEach(full => {
+    const rel = path.relative(ROOT, full).split(path.sep).join("/");
+    const file = rel.split("/").pop();
+    if (!/\.html$/i.test(file) || file.charAt(0) === "_" || /^index\.html$/i.test(file)) return;
+    const html = fs.readFileSync(full, "utf8");
 
-    entries.forEach(entry => {
-        const fullPath = path.join(currentDir, entry.name);
+    let schemaCat = "", schemaName = "";
+    for (const s of readSchemas(html)) {
+      const app = findApp(s);
+      if (app) {
+        if (typeof app.applicationCategory === "string") schemaCat = mapCat(app.applicationCategory);
+        if (typeof app.name === "string") schemaName = app.name.trim();
+        break;
+      }
+    }
+    const folderCat = folder !== "tools" ? mapCat(folder) : "";
+    const category = schemaCat || mapCat(metaContent(html, "category")) || folderCat || "utility";
+    const title = schemaName || pretty(file.replace(/\.html$/i, ""));
+    const text = metaContent(html, "description") || "Open this free tool to calculate instantly.";
+    const p = "/" + rel;
+    if (seen[p.toLowerCase()]) return;
+    seen[p.toLowerCase()] = 1;
+    tools.push({ path: p, url: p, title, text, description: text, category });
+  });
+});
+tools.sort((a, b) => a.title.localeCompare(b.title));
 
-        if (entry.isDirectory()) {
-            // Recursively scan subfolders
-            walkDirectory(fullPath, toolsList);
-        } else if (entry.isFile() && entry.name.endsWith('.html')) {
-            const htmlContent = fs.readFileSync(fullPath, 'utf8');
+fs.writeFileSync(path.join(ROOT, "tools.json"), JSON.stringify(tools, null, 2));
 
-            // 1. Extract Title
-            const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
-            const title = titleMatch ? titleMatch[1].trim() : entry.name.replace('.html', '');
+const urls = ["/", ...tools.map(t => t.path)].map(p => "  <url><loc>" + SITE + p + "</loc></url>").join("\n");
+fs.writeFileSync(path.join(ROOT, "sitemap-pages.xml"),
+  '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "\n</urlset>\n");
 
-            // 2. Extract Description
-            const descMatch = htmlContent.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']/i);
-            const description = descMatch ? descMatch[1] : '';
-
-            // 3. Determine Category
-            // First, check if a meta category tag exists in the file
-            const catMatch = htmlContent.match(/<meta\s+name=["']category["']\s+content=["'](.*?)["']/i);
-            let category = catMatch ? catMatch[1] : '';
-
-            // Fallback: If no meta tag, derive category from the parent folder name (e.g. /finance/ -> Finance)
-            if (!category) {
-                const relativePath = path.relative('.', fullPath);
-                const pathParts = relativePath.split(path.sep);
-                
-                if (pathParts.length > 1 && pathParts[0] !== 'tools') {
-                    // Capitalize folder name (e.g., finance -> Finance)
-                    category = pathParts[0].charAt(0).toUpperCase() + pathParts[0].slice(1);
-                } else {
-                    category = 'General Tools';
-                }
-            }
-
-            // Generate correct web URL path
-            const webUrl = '/' + fullPath.replace(/\\/g, '/');
-
-            toolsList.push({
-                title,
-                description,
-                category,
-                url: webUrl
-            });
-        }
-    });
+const navPath = path.join(ROOT, "navigation.js");
+if (fs.existsSync(navPath)) {
+  const nav = fs.readFileSync(navPath, "utf8");
+  const arr = JSON.stringify(tools.map(t => ({ name: t.title, url: t.path })), null, 2);
+  fs.writeFileSync(navPath, nav.replace(/const allTools = \[[\s\S]*?\];/, () => "const allTools = " + arr + ";"));
 }
-
-generateToolsJson();
+console.log("Generated " + tools.length + " tools");
+tools.forEach(t => console.log(" - " + t.category + " : " + t.title + " (" + t.path + ")"));
