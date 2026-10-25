@@ -29,17 +29,17 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 @media (max-width:900px){.tqc-page-grid{grid-template-columns:minmax(0,1fr)}}
 .main-body{padding-top:0}
 .tool-suite{padding:12px 0}
-.breadcrumb{padding:10px 0 16px;font-size:14px;color:var(--muted)}
+.breadcrumb{padding:10px 0 12px;font-size:14px;color:var(--muted)}
 .breadcrumb a{color:var(--link);text-decoration:none}
 .breadcrumb a:hover{text-decoration:underline}
+.outside-title{margin:0 0 16px;font-size:clamp(22px,4.5vw,28px);font-weight:800;color:var(--head);text-align:left}
 
 /* Calculator card (always dark, low-glare) */
 .calculator-ui-box{width:100%;max-width:420px;margin:0 auto;background:#020617;box-sizing:border-box;
   color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:20px;
   box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.35)}
 @media (max-width:767px){.calculator-ui-box{padding:14px}}
-.primary-title{margin:0 0 4px;padding:2px 0 8px;font-size:clamp(20px,5vw,26px);line-height:1.39;font-weight:700;color:#f8fafc;text-align:left;border-bottom:2px solid #334155}
-.tool-sub{margin:6px 0 14px;font-size:14px;color:#94a3b8;line-height:1.35}
+.tool-sub{margin:0 0 14px;font-size:14px;color:#94a3b8;line-height:1.35}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
 .input-wrap{position:relative;display:flex;align-items:center}
@@ -123,9 +123,11 @@ article a{color:var(--link);font-weight:600}
     <div class="breadcrumb">
       <a href="/">home</a> / <a href="/#finance">finance</a> / emi calculator
     </div>
+
+    <h1 class="outside-title">EMI Calculator</h1>
+
     <section class="tool-suite" aria-label="Interactive Calculator">
       <div class="calculator-ui-box">
-        <h1 class="primary-title">EMI Calculator</h1>
         <p class="tool-sub">Fixed-rate, reducing-balance loan. Monthly installment, total interest and total repayment.</p>
 
         <form id="emiForm" novalidate autocomplete="off">
