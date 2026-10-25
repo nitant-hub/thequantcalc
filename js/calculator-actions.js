@@ -1148,13 +1148,16 @@
     printWindow.document.close();
   }
 
-  function getEmbedCode() {
+    function getEmbedCode() {
     var url = new URL(location.href);
     url.hash = "";
+    var home = location.origin + "/";
 
     return '<iframe src="' + url.href +
       '" title="TheQuantCal calculator" width="100%" height="600" ' +
-      'loading="lazy" style="border:0;border-radius:16px;"></iframe>';
+      'loading="lazy" style="border:0;border-radius:16px;"></iframe>\n' +
+      '<p style="font-size:13px;text-align:center;">Free calculator by ' +
+      '<a href="' + home + '" target="_blank" rel="noopener">TheQuantCalc</a></p>';
   }
 
   /* ------------------------------------------------------------------ *
