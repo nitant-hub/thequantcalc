@@ -274,7 +274,7 @@
         body.dyn-is-tool-page .dyn-split-container > aside.sidebar {
           grid-column: 2 / 3 !important;
           align-self: stretch !important; 
-          height: 100% !important; 
+          height: auto !important; 
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
@@ -1330,7 +1330,7 @@
 
       const allTools = [
         { name: "Compound Interest Calculator", url: "/tools/fixed-compound-Interest-Calculator.html" },
-{ name: "Exam Marks Percentage Calculator", url: "/tools/Exam-marks-Percentage-Calculator.html" },
+        { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-marks-Percentage-Calculator.html" },
         { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
         { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" }
       ];
@@ -1385,7 +1385,7 @@
 
     const fallbackTools = [
       { path: "/tools/fixed-compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
-{ path: "/tools/Exam-marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+      { path: "/tools/Exam-marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
       { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
     ];
@@ -1704,7 +1704,7 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
-                // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
+        // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
         const mainArticle = document.querySelector(".dyn-left-split article");
         if (mainArticle && !document.getElementById("dynInContentAd")) {
           const adWrapper = document.createElement("div");
@@ -1778,6 +1778,20 @@
               child.classList.add("dyn-left-split");
             }
           });
+        }
+
+        // --- ALIGN SIDEBAR TOP WITH MAIN CONTENT (title / main card) ---
+        sidebarAside.style.marginTop = "0px";
+        if (window.innerWidth >= 768) {
+          const h1El = document.querySelector("h1");
+          if (h1El) {
+            let blk = h1El;
+            while (blk.parentElement && blk.parentElement !== sidebarAside.parentElement) blk = blk.parentElement;
+            const crumbEl = document.querySelector(".dyn-breadcrumb-el");
+            const refEl = (crumbEl && blk.contains(crumbEl)) ? h1El : blk;
+            const gap = refEl.getBoundingClientRect().top - sidebarAside.getBoundingClientRect().top;
+            if (gap > 0 && gap < 200) sidebarAside.style.marginTop = gap + "px";
+          }
         }
 
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1982,5 +1996,3 @@
   script.dataset.tqcActionsLoader = "true";
   document.head.appendChild(script);
 })();
- 
-
