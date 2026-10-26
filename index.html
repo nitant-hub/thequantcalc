@@ -1230,9 +1230,10 @@ aside .box:empty,
     }
   }
 
-  window.addEventListener('hashchange',function(){render();window.scrollTo(0,0)});
-  render();
-  load(render);
+  function renderAll(){ render(); if(window.tqcMarquee) setTimeout(window.tqcMarquee,80); }
+  window.addEventListener('hashchange',function(){renderAll();window.scrollTo(0,0)});
+  renderAll();
+  load(renderAll);
 })();
 </script>
 
