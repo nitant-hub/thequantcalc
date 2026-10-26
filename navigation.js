@@ -1327,12 +1327,13 @@
           }
         });
       }
-
-      const allTools = [
-        { name: "Compound Interest Calculator", url: "/tools/fixed-compound-Interest-Calculator.html" },
-        { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-marks-Percentage-Calculator.html" },
+            const allTools = [
+        { name: "Compound Interest Calculator", url: "/tools/fixed-compound-interest-calculator.html" },
+        { name: "Exam Marks Percentage Calculator", url: "/tools/exam-marks-percentage-calculator.html" },
         { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
-        { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" }
+        { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" },
+        { name: "EMI Calculator", url: "/tools/emi-calculator.html" },
+        { name: "SIP Calculator", url: "/tools/sip-calculator.html" }
       ];
 
       function renderList(q) {
@@ -1383,12 +1384,15 @@
       globalAdsenseTallNode.innerHTML = `<span style="font-size: 0.75rem; color: inherit;">Advertisement</span>`;
     }
 
-    const fallbackTools = [
-      { path: "/tools/fixed-compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
-      { path: "/tools/Exam-marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+        const fallbackTools = [
+      { path: "/tools/fixed-compound-interest-calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
+      { path: "/tools/exam-marks-percentage-calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
-      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
+      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." },
+      { path: "/tools/emi-calculator.html", title: "EMI Calculator", text: "Calculate your monthly EMI instantly." },
+      { path: "/tools/sip-calculator.html", title: "SIP Calculator", text: "Calculate your mutual fund returns." }
     ];
+
 
     async function fetchRelatedTools() {
       try {
