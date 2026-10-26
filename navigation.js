@@ -1329,8 +1329,8 @@
       }
 
       const allTools = [
-        { name: "Compound Interest Calculator", url: "/tools/Compound-Interest-Calculator.html" },
-        { name: "Exam Marks Percentage Calculator", url: "/tools/Exam-Marks-Percentage-Calculator.html" },
+        { name: "Compound Interest Calculator", url: "/tools/fixed-compound-Interest-Calculator.html" },
+{ name: "Exam Marks Percentage Calculator", url: "/tools/Exam-marks-Percentage-Calculator.html" },
         { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
         { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" }
       ];
@@ -1384,8 +1384,8 @@
     }
 
     const fallbackTools = [
-      { path: "/tools/Compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
-      { path: "/tools/Exam-Marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+      { path: "/tools/fixed-compound-Interest-Calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
+{ path: "/tools/Exam-marks-Percentage-Calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
       { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." }
     ];
