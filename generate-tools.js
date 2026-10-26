@@ -88,10 +88,18 @@ SCAN_FOLDERS.forEach(folder => {
     const category = schemaCat || mapCat(metaContent(html, "category")) || folderCat || "utility";
     const title = schemaName || pretty(file.replace(/\.html$/i, ""));
     const text = metaContent(html, "description") || "Open this free tool to calculate instantly.";
-    const p = "/" + rel;
+        const p = "/" + rel;
     if (seen[p.toLowerCase()]) return;
     seen[p.toLowerCase()] = 1;
-    tools.push({ path: p, url: p, title, text, description: text, category });
+    
+    const pathParts = rel.split("/");
+    let subcategory = "";
+    if (pathParts.length >= 3) {
+      subcategory = pathParts[pathParts.length - 2];
+    }
+    
+    tools.push({ path: p, url: p, title, text, description: text, category, subcategory });
+
   });
 });
 tools.sort((a, b) => a.title.localeCompare(b.title));
