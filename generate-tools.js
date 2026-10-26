@@ -9,7 +9,7 @@ const path = require("path");
 
 const SITE = process.env.SITE_URL || "https://thequantcal.pages.dev";
 const ROOT = __dirname;
-const IGNORE_FOLDERS = [".git", ".github", "node_modules", "css", "js", "assets", "images","Includes", "Layouts"];
+const IGNORE_FOLDERS = [".git", ".github", "node_modules", "css", "js", "assets", "images","_includes", "_layouts"];
 const SCAN_FOLDERS = fs.readdirSync(ROOT, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory() && !IGNORE_FOLDERS.includes(dirent.name) && !dirent.name.startsWith("."))
   .map(dirent => dirent.name);
