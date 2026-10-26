@@ -1794,16 +1794,16 @@
 .bq-mchip { min-height: 28px; padding: 4px 11px !important; border-radius: 999px !important; font: 700 12px/1.2 -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important; color: color-mix(in srgb, var(--c) 82%, #000) !important; background: color-mix(in srgb, var(--c) 10%, #fff) !important; border: 1px solid color-mix(in srgb, var(--c) 28%, #fff) !important; box-shadow: none !important; }
 .bq-mchip:hover, .bq-mchip:focus-visible { background: var(--c) !important; color: #fff !important; }
 .bq-more * { text-shadow: none; }
-@media (orientation: landscape) and (max-height: 540px) { .bq-tools { flex-wrap: wrap !important; row-gap: 3px; } #bc-paper-btn { max-width: 120px; } }
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 1024px) and (pointer: coarse) { .bq-tools { flex-wrap: wrap !important; row-gap: 3px; } #bc-paper-btn { max-width: 120px; } }
 /* landscape: two columns so the whole calculator is visible */
-@media (orientation: landscape) and (max-height: 540px) and (min-width: 520px) {
+@media (orientation: landscape) and (max-height: 540px) and (min-width: 520px) and (max-width: 1024px) and (pointer: coarse) {
   .blogger-calc-classic:not(.bq-full) { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; column-gap: 6px; align-items: stretch; }
   .blogger-calc-classic:not(.bq-full) > .bc-tabs { grid-column: 1 / -1; grid-row: 1; }
   .blogger-calc-classic:not(.bq-full) > .bc-screen-container { grid-column: 1; grid-row: 2; margin: 0 !important; min-height: 0; height: auto !important; align-self: stretch; }
   .blogger-calc-classic:not(.bq-full) > .bc-keypad-container { grid-column: 2; grid-row: 2; min-height: 0 !important; }
   .blogger-calc-classic.bq-hist:not(.bq-full) > .bc-keypad-container { grid-column: 1 / -1; }
 }
-@media (orientation: landscape) and (max-height: 540px) {
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 1024px) and (pointer: coarse) {
   .blogger-calc-classic.bq-full { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); grid-template-rows: auto minmax(0, 1fr); column-gap: 6px; height: 100vh; height: 100dvh; box-sizing: border-box; overflow: hidden; }
   .blogger-calc-classic.bq-full > .bc-tabs { grid-column: 1 / -1; grid-row: 1; }
   .blogger-calc-classic.bq-full > .bc-screen-container { grid-column: 1; grid-row: 2; min-height: 0; height: auto !important; }
