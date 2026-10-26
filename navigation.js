@@ -1,4 +1,14 @@
 (function () {
+  // ===== SINGLE SOURCE OF TRUTH FOR TOOL NAMES (must match real file names, all lowercase) =====
+  const SITE_TOOLS = [
+    { name: "Fixed Deposit & Compound Interest Calculator", url: "/tools/fixed-deposite-calculator.html", text: "Calculate fixed deposit and compound interest growth." },
+    { name: "Exam Marks Percentage Calculator", url: "/tools/exam-marks-percentage-calculator.html", text: "Find your exam percentage instantly." },
+    { name: "EMI Calculator", url: "/tools/emi-calculator.html", text: "Calculate your monthly EMI instantly." },
+    { name: "SIP Calculator", url: "/tools/sip-calculator.html", text: "Calculate your mutual fund returns." },
+    { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html", text: "Calculate your exact age." },
+    { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html", text: "Find your weight on other planets." }
+  ];
+
   function initNavigation() {
     let vMeta = document.querySelector('meta[name="viewport"]');
     if (!vMeta) {
@@ -1227,10 +1237,10 @@
     footerContainer.innerHTML = `
       <p>&copy; 2026 thequantcals. All rights reserved.</p>
       <nav>
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms-of-service.html">Terms of Service</a>
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="contact.html">Contact Us</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+        <a href="/contact.html">Contact Us</a>
       </nav>
     `;
     document.body.appendChild(footerContainer);
@@ -1289,6 +1299,44 @@
     overlay.onclick = closeDrawer;
     drawer.querySelectorAll(".dyn-drawer-link").forEach((link) => link.addEventListener("click", closeDrawer));
 
+    // ===== TOOL LIST (shared by search + related tools) =====
+    // Starts with SITE_TOOLS, then upgrades to /tools.json if it exists.
+    let toolsCache = SITE_TOOLS.slice();
+    let toolsPromise = null;
+
+    function prettyName(s) {
+      return s.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    function loadToolsList() {
+      if (toolsPromise) return toolsPromise;
+      toolsPromise = fetch("/tools.json", { cache: "no-store" })
+        .then((r) => { if (!r.ok) throw new Error("no tools.json"); return r.json(); })
+        .then((list) => {
+          if (!Array.isArray(list) || !list.length) return toolsCache;
+          const merged = SITE_TOOLS.slice();
+          const seen = {};
+          merged.forEach((t) => { seen[t.url.toLowerCase()] = 1; });
+          list.forEach((t) => {
+            if (!t || !t.path) return;
+            const url = "/" + String(t.path).replace(/^\//, "");
+            if (seen[url.toLowerCase()]) return;
+            seen[url.toLowerCase()] = 1;
+            const file = url.split("/").pop().replace(/\.html?$/i, "");
+            merged.push({
+              name: t.title || prettyName(file),
+              url: url,
+              text: "Open this free tool to calculate instantly."
+            });
+          });
+          toolsCache = merged;
+          return merged;
+        })
+        .catch(() => toolsCache);
+      return toolsPromise;
+    }
+    loadToolsList();
+
     let globalSearchNode = document.getElementById("dynGlobalSearchNode");
     if (!globalSearchNode) {
       globalSearchNode = document.createElement("div");
@@ -1327,12 +1375,6 @@
           }
         });
       }
-            const allTools = [
-        { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
-        { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" },
-        { name: "EMI Calculator", url: "/tools/emi-calculator.html" },
-        { name: "SIP Calculator", url: "/tools/sip-calculator.html" }
-      ];
 
       function renderList(q) {
         const nativeInput = document.getElementById("q");
@@ -1346,7 +1388,7 @@
           dropdown.innerHTML = "";
           return;
         }
-        const matches = allTools.filter((t) => t.name.toLowerCase().includes(q));
+        const matches = toolsCache.filter((t) => t.name.toLowerCase().includes(q));
         if (!matches.length) {
           dropdown.innerHTML = `<div style="padding:0.75rem 0.9rem;font-size:0.85rem;color:var(--text-muted,#94a3b8);">No matching calculators found</div>`;
         } else {
@@ -1382,49 +1424,13 @@
       globalAdsenseTallNode.innerHTML = `<span style="font-size: 0.75rem; color: inherit;">Advertisement</span>`;
     }
 
-        const fallbackTools = [
-      
-      { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
-      { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." },
-      { path: "/tools/emi-calculator.html", title: "EMI Calculator", text: "Calculate your monthly EMI instantly." },
-      { path: "/tools/sip-calculator.html", title: "SIP Calculator", text: "Calculate your mutual fund returns." }
-    ];
-
-
+    // Related tools = shared list minus the page you are on
     async function fetchRelatedTools() {
-      try {
-        let xmlText = null;
-        try { xmlText = sessionStorage.getItem("cachedSitemap"); } catch (e) {}
-        if (!xmlText) {
-          const response = await fetch("/sitemap-pages.xml");
-          if (response.ok) {
-            xmlText = await response.text();
-            try { sessionStorage.setItem("cachedSitemap", xmlText); } catch (e) {}
-          }
-        }
-
-        if (xmlText) {
-          const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
-          const locs = xmlDoc.getElementsByTagName("loc");
-          const currentUrl = window.location.pathname;
-          const found = [];
-
-          for (let i = 0; i < locs.length; i++) {
-            const path = new URL(locs[i].textContent).pathname;
-            if (path === currentUrl) continue;
-            if (/calculator|converter|tools/i.test(path)) {
-              const slug = path.split("/").filter(Boolean).pop() || "";
-              const clean = slug.replace(/\.html?$/i, "").replace(/-/g, " ");
-              const title = clean.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-              found.push({ path: path, title: title, text: "Open this free tool to calculate instantly." });
-            }
-          }
-          if (found.length > 0) return found;
-        }
-        return fallbackTools;
-      } catch (e) {
-        return fallbackTools;
-      }
+      const list = await loadToolsList();
+      const cur = decodeURIComponent(window.location.pathname).toLowerCase().replace(/\.html?$/, "");
+      return list
+        .filter((t) => t.url.toLowerCase().replace(/\.html?$/, "") !== cur)
+        .map((t) => ({ path: t.url, title: t.name, text: t.text }));
     }
 
     let carouselInitialized = false;
@@ -1559,7 +1565,8 @@
           next.disabled = i === maxIndex();
           prev.style.opacity = prev.disabled ? ".4" : "1";
           next.style.opacity = next.disabled ? ".4" : "1";
-          status.textContent = (i + 1) + " of " + cardGroups.length;
+          const label = (i + 1) + " of " + cardGroups.length;
+          if (status.textContent !== label) status.textContent = label;
         }
 
         function tick(t) {
@@ -1654,7 +1661,10 @@
         }, true);
         track.addEventListener("dragstart", e => e.preventDefault());
 
+        let carouselW = window.innerWidth;
         window.addEventListener("resize", () => {
+          if (window.innerWidth === carouselW) return;
+          carouselW = window.innerWidth;
           target = null;
           vel = 0;
           offset = clamp(activeIdx * step(), 0, maxOffset());
@@ -1705,7 +1715,7 @@
       if (sidebarAside) {
         document.body.classList.add("dyn-is-tool-page");
 
-        // --- AUTOMATIC RESPONSIVE HORIZONTAL AD BELOW CALCULATOR ---
+        // --- IN-CONTENT AD PLACEHOLDER (no ad script push until real IDs are set) ---
         const mainArticle = document.querySelector(".dyn-left-split article");
         if (mainArticle && !document.getElementById("dynInContentAd")) {
           const adWrapper = document.createElement("div");
@@ -1732,23 +1742,14 @@
           adLabel.style.cssText = "font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; position: absolute; z-index: 0;";
           adWrapper.appendChild(adLabel);
 
-          const insTag = document.createElement("ins");
-          insTag.className = "adsbygoogle";
-          insTag.style.cssText = "display: block; position: relative; z-index: 1; width: 100%;";
-          
-          insTag.setAttribute("data-ad-client", "ca-pub-XXXXXXXXXXXXXXXX"); 
-          insTag.setAttribute("data-ad-slot", "XXXXXXXXXX"); 
-          insTag.setAttribute("data-ad-format", "auto");
-          insTag.setAttribute("data-full-width-responsive", "true");
-          
-          adWrapper.appendChild(insTag);
-          mainArticle.parentElement.insertBefore(adWrapper, mainArticle);
-          try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-        }
-        // --- END OF AUTOMATIC AD CODE ---
+          // When you have real AdSense IDs, add the <ins class="adsbygoogle"> tag here
+          // and call (adsbygoogle = window.adsbygoogle || []).push({}) ONCE.
 
+          mainArticle.parentElement.insertBefore(adWrapper, mainArticle);
+        }
 
         document.querySelectorAll(".breadcrumb, .crumb, #crumb, nav, div, p").forEach((el) => {
+          if (el.classList.contains("dyn-breadcrumb-el")) return;
           if (el.children.length <= 4) {
             const txt = (el.textContent || "").trim().toLowerCase();
             if (txt.startsWith("home") && txt.includes("/") && el.offsetHeight > 0 && el.offsetHeight < 50) {
@@ -1773,6 +1774,7 @@
           splitContainer.classList.add("dyn-split-container");
           Array.from(splitContainer.children).forEach((child) => {
             if (child === sidebarAside) return;
+            if (child.classList.contains("dyn-full-row") || child.classList.contains("dyn-left-split")) return;
             if (child.tagName === "NAV" || child.classList.contains("breadcrumb") || (child.offsetHeight > 0 && child.offsetHeight < 45)) {
               child.classList.add("dyn-full-row");
             } else {
@@ -1781,18 +1783,21 @@
           });
         }
 
-        // --- ALIGN SIDEBAR TOP WITH MAIN CONTENT (title / main card) ---
-        sidebarAside.style.marginTop = "0px";
-        if (window.innerWidth >= 768) {
-          const h1El = document.querySelector("h1");
-          if (h1El) {
-            let blk = h1El;
-            while (blk.parentElement && blk.parentElement !== sidebarAside.parentElement) blk = blk.parentElement;
-            const crumbEl = document.querySelector(".dyn-breadcrumb-el");
-            const refEl = (crumbEl && blk.contains(crumbEl)) ? h1El : blk;
-            const gap = refEl.getBoundingClientRect().top - sidebarAside.getBoundingClientRect().top;
-            if (gap > 0 && gap < 200) sidebarAside.style.marginTop = gap + "px";
+        // --- ALIGN SIDEBAR TOP WITH MAIN CONTENT (computed once, no repeated resets) ---
+        if (!sidebarAside.dataset.aligned) {
+          sidebarAside.style.marginTop = "0px";
+          if (window.innerWidth >= 768) {
+            const h1El = document.querySelector("h1");
+            if (h1El) {
+              let blk = h1El;
+              while (blk.parentElement && blk.parentElement !== sidebarAside.parentElement) blk = blk.parentElement;
+              const crumbEl = document.querySelector(".dyn-breadcrumb-el");
+              const refEl = (crumbEl && blk.contains(crumbEl)) ? h1El : blk;
+              const gap = refEl.getBoundingClientRect().top - sidebarAside.getBoundingClientRect().top;
+              if (gap > 0 && gap < 200) sidebarAside.style.marginTop = gap + "px";
+            }
           }
+          sidebarAside.dataset.aligned = "1";
         }
 
         let toolsCard = sidebarAside.querySelector(".dyn-tools-card");
@@ -1944,28 +1949,26 @@
     syncActiveTab();
     relocateSearch();
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', relocateSearch);
-    } else {
-      relocateSearch();
+    // Re-run a few times after load (no MutationObserver = no flicker loop)
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", relocateSearch);
     }
-
-    let debounceTimer;
-    const observer = new MutationObserver(() => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        observer.disconnect();
-        relocateSearch();
-        observer.observe(document.body, { childList: true, subtree: true });
-      }, 150);
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("load", relocateSearch);
+    setTimeout(relocateSearch, 400);
+    setTimeout(relocateSearch, 1500);
 
     window.addEventListener("hashchange", () => {
       syncActiveTab();
       relocateSearch();
     });
-    window.addEventListener("resize", relocateSearch);
+
+    // Only re-layout when the WIDTH changes (mobile URL bar resize is ignored)
+    let lastW = window.innerWidth;
+    window.addEventListener("resize", () => {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      relocateSearch();
+    });
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
     const rootEl = document.documentElement;
