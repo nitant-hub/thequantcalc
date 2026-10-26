@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Add and subtract hours, minutes, and seconds online. Calculate total time durations instantly with clear results and explanations.">
+  <meta name="description" content="Add or subtract multiple hours, minutes, and seconds online. Add as many time durations as you need and calculate the total instantly.">
   <title>Hours, Minutes &amp; Seconds Calculator | TheQuantCalc</title>
   <link rel="canonical" href="https://thequantcal.pages.dev/tools/minute-hour-second-calculator">
 
@@ -19,242 +19,290 @@
   <style>
     :root {
       color-scheme: light;
-      --page-bg: #f5f8ff;
-      --surface: #ffffff;
-      --surface-soft: #f0f5ff;
-      --text: #17233d;
-      --muted: #5e6d86;
-      --border: #dce5f4;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --accent-soft: #e8f0ff;
-      --result-bg: #edf5ff;
-      --result-border: #b9d2ff;
-      --shadow: 0 16px 42px rgba(36,75,135,.10);
-      --radius: 20px;
+      --bg: #eef2f7;
+      --article-bg: #ffffff;
+      --article-soft: #f5f7fb;
+      --text: #172033;
+      --muted: #5f6b7c;
+      --border: #dce3ed;
+      --link: #2563eb;
     }
 
     html[data-theme="dark"] {
       color-scheme: dark;
-      --page-bg: #0b1220;
-      --surface: #111c2e;
-      --surface-soft: #17253b;
+      --bg: #0b1220;
+      --article-bg: #111c2e;
+      --article-soft: #17253b;
       --text: #edf4ff;
       --muted: #a8b6cc;
       --border: #2a3a53;
-      --accent: #76a7ff;
-      --accent-hover: #9abaff;
-      --accent-soft: #1b3154;
-      --result-bg: #172b48;
-      --result-border: #365b91;
-      --shadow: 0 16px 42px rgba(0,0,0,.25);
+      --link: #8bb5ff;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: var(--page-bg);
+      background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Arial, sans-serif;
       line-height: 1.5;
     }
 
-    a { color: var(--accent); }
+    a { color: var(--link); }
 
     .tqc-page-grid {
       width: min(1180px, calc(100% - 32px));
-      margin: 24px auto 60px;
+      margin: 22px auto 55px;
     }
 
-    .main-body, .tool-suite { min-width: 0; }
+    .main-body, .dyn-left-split, .tool-suite { min-width: 0; }
 
     .primary-title {
-      margin: 0 0 8px;
-      font-size: clamp(1.8rem, 4vw, 2.45rem);
+      margin: 0 0 9px;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1.25;
       letter-spacing: -.035em;
-      line-height: 1.2;
     }
 
     .page-intro {
-      margin: 0 0 22px;
+      max-width: 780px;
+      margin: 0 0 20px;
       color: var(--muted);
-      max-width: 760px;
     }
 
+    /* Always-dark calculator interface */
     .calculator-ui-box {
-      width: min(100%, 520px);
+      width: min(100%, 460px);
       margin: 0 auto 26px;
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      padding: 19px;
+      color: #e5edf9;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      box-shadow: 0 14px 34px rgba(2, 6, 23, .20);
     }
 
     .calc-heading {
-      margin: 0 0 6px;
-      font-size: 1.35rem;
+      margin: 0 0 5px;
+      color: #f8fafc;
+      font-size: 1.28rem;
       line-height: 1.35;
     }
 
     .calc-subtitle {
-      margin: 0 0 20px;
-      color: var(--muted);
-      font-size: .95rem;
+      margin: 0 0 14px;
+      color: #94a3b8;
+      font-size: .9rem;
     }
 
     .operation-switch {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 5px;
-      margin-bottom: 20px;
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      gap: 7px;
+      margin-bottom: 13px;
+      padding: 4px;
+      border: 1px solid #263449;
+      border-radius: 11px;
+      background: #0b1326;
     }
 
     .operation-switch button {
-      min-height: 44px;
+      min-height: 38px;
+      padding: 8px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 8px;
+      color: #aab8cb;
       background: transparent;
-      color: var(--muted);
       font: inherit;
+      font-size: .9rem;
       font-weight: 700;
       cursor: pointer;
     }
 
     .operation-switch button[aria-pressed="true"] {
-      color: #fff;
-      background: var(--accent);
-      box-shadow: 0 4px 12px rgba(37,99,235,.2);
+      color: #020617;
+      background: #2dd4bf;
+    }
+
+    .duration-list {
+      display: grid;
+      gap: 9px;
     }
 
     .duration-block {
-      margin: 0 0 16px;
-      padding: 16px;
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: 15px;
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid #263449;
+      border-radius: 11px;
+      background: #0b1326;
     }
 
-    .duration-block h3 {
-      margin: 0 0 12px;
-      font-size: 1rem;
+    .duration-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+
+    .duration-heading h3 {
+      margin: 0;
+      color: #e5edf9;
+      font-size: .91rem;
+      font-weight: 700;
+    }
+
+    .remove-duration {
+      flex: 0 0 auto;
+      min-width: 29px;
+      min-height: 29px;
+      padding: 3px 8px;
+      border: 1px solid #3b2635;
+      border-radius: 8px;
+      color: #fda4af;
+      background: #21101c;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .time-inputs {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
     }
+
+    .field { min-width: 0; }
 
     .field label {
       display: block;
-      margin-bottom: 6px;
-      color: var(--muted);
-      font-size: .82rem;
+      margin-bottom: 5px;
+      color: #9aabc1;
+      font-size: .76rem;
       font-weight: 650;
     }
 
     .field input {
       width: 100%;
       min-width: 0;
-      min-height: 46px;
-      padding: 10px 11px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--surface);
-      color: var(--text);
-      font: inherit;
+      min-height: 40px;
+      padding: 8px;
+      border: 1px solid #263449;
+      border-radius: 8px;
       outline: none;
+      color: #f8fafc;
+      background: #0b1326;
+      font: inherit;
+      font-size: .94rem;
     }
 
+    .field input::placeholder { color: #64748b; }
+
     .field input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+      border-color: #2dd4bf;
+      box-shadow: 0 0 0 2px rgba(45, 212, 191, .16);
     }
 
     .form-note {
       margin: 10px 0 0;
-      color: var(--muted);
-      font-size: .82rem;
+      color: #94a3b8;
+      font-size: .79rem;
+      line-height: 1.5;
     }
 
     .calc-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 13px;
     }
 
     .calc-actions button {
-      min-height: 47px;
-      padding: 11px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      color: var(--text);
+      min-height: 41px;
+      padding: 9px 12px;
+      border: 1px solid #334155;
+      border-radius: 9px;
       font: inherit;
+      font-size: .9rem;
       font-weight: 750;
       cursor: pointer;
     }
 
-    .calc-actions .primary-button {
-      flex: 1 1 170px;
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #fff;
+    .btn-calc {
+      border-color: #2dd4bf !important;
+      color: #022c2a;
+      background: #2dd4bf;
     }
 
-    .calc-actions .primary-button:hover {
-      background: var(--accent-hover);
+    .btn-calc:hover { background: #5eead4; }
+
+    .btn-reset {
+      color: #e2e8f0;
+      background: #0f172a;
     }
 
-    .calc-actions button:focus-visible,
-    .operation-switch button:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 3px;
+    .btn-reset:hover { background: #1e293b; }
+
+    .btn-add-duration {
+      width: 100%;
+      min-height: 39px;
+      margin-top: 9px;
+      padding: 8px 12px;
+      border: 1px dashed #2dd4bf;
+      border-radius: 9px;
+      color: #5eead4;
+      background: #0f2a2e;
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .btn-add-duration:hover { background: #153b3e; }
+
+    .cur-btn {
+      color: #99f6e4;
+      background: #0f2a2e;
     }
 
     .tqc-result-box {
-      margin-top: 18px;
-      padding: 18px;
-      border: 1px solid var(--result-border);
-      border-radius: 15px;
-      background: var(--result-bg);
+      margin-top: 13px;
+      padding: 14px;
+      border: 1px solid #263449;
+      border-radius: 11px;
+      background: #0b1326;
       overflow-wrap: anywhere;
     }
 
     .tqc-result-label {
       margin: 0 0 5px;
-      color: var(--muted);
-      font-size: .88rem;
+      color: #94a3b8;
+      font-size: .81rem;
       font-weight: 700;
     }
 
     .tqc-result-value {
       margin: 0;
-      color: var(--accent);
-      font-size: clamp(1.65rem, 5vw, 2.2rem);
+      color: #2dd4bf;
+      font-size: clamp(1.6rem, 5vw, 2rem);
       font-weight: 800;
       letter-spacing: -.025em;
       line-height: 1.25;
     }
 
     .tqc-result-detail {
-      margin: 8px 0 0;
-      color: var(--text);
-      font-size: .94rem;
+      margin: 7px 0 0;
+      color: #cbd5e1;
+      font-size: .86rem;
+      line-height: 1.55;
     }
 
     .error-message {
-      margin: 12px 0 0;
-      color: #dc2626;
-      font-size: .9rem;
+      margin: 10px 0 0;
+      color: #fda4af;
+      font-size: .87rem;
       font-weight: 650;
     }
 
@@ -266,94 +314,98 @@
     }
 
     .article-content h2 {
-      margin: 32px 0 12px;
+      margin: 30px 0 11px;
       font-size: clamp(1.35rem, 3vw, 1.75rem);
-      line-height: 1.3;
+      line-height: 1.35;
       letter-spacing: -.02em;
     }
 
     .article-content h3 {
-      margin: 22px 0 8px;
-      font-size: 1.1rem;
-      line-height: 1.35;
+      margin: 20px 0 8px;
+      font-size: 1.08rem;
     }
 
-    .article-content p, .article-content li {
+    .article-content p,
+    .article-content li {
       line-height: 1.7;
     }
 
     .article-content p { margin: 0 0 14px; }
 
-    .article-content ul, .article-content ol {
-      padding-left: 24px;
+    .article-content ul,
+    .article-content ol {
+      padding-left: 23px;
     }
 
     .table-scroll {
       width: 100%;
-      margin: 16px 0 22px;
+      margin: 15px 0 21px;
       overflow-x: auto;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--surface);
+      border-radius: 12px;
+      background: var(--article-bg);
     }
 
     .article-table {
       width: 100%;
-      min-width: 540px;
+      min-width: 520px;
       border-collapse: collapse;
     }
 
-    .article-table th, .article-table td {
-      padding: 12px 14px;
+    .article-table th,
+    .article-table td {
+      padding: 11px 13px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       vertical-align: top;
     }
 
     .article-table th {
-      background: var(--surface-soft);
-      font-size: .92rem;
+      background: var(--article-soft);
+      font-size: .91rem;
     }
 
     .article-table tr:last-child td { border-bottom: 0; }
 
     .formula-card {
-      margin: 16px 0;
-      padding: 16px 18px;
-      background: var(--surface-soft);
+      margin: 14px 0;
+      padding: 14px 16px;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 12px;
+      background: var(--article-soft);
     }
 
+    .formula-card p { margin-bottom: 5px; }
+
     .formula-card code {
-      color: var(--accent);
-      font-size: .98rem;
+      color: var(--link);
       white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .steps-flow {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-      margin: 16px 0 22px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+      margin: 15px 0 21px;
     }
 
     .step-card {
-      padding: 15px;
-      background: var(--surface);
+      padding: 14px;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 12px;
+      background: var(--article-bg);
     }
 
     .step-number {
       display: inline-grid;
       place-items: center;
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       margin-bottom: 8px;
-      border-radius: 10px;
-      background: var(--accent-soft);
-      color: var(--accent);
+      border-radius: 9px;
+      color: var(--link);
+      background: var(--article-soft);
       font-weight: 800;
     }
 
@@ -364,43 +416,46 @@
 
     .step-card p {
       margin: 0;
-      font-size: .92rem;
+      font-size: .91rem;
     }
 
     .faq-list {
       display: grid;
-      gap: 10px;
-      margin: 16px 0 22px;
+      gap: 9px;
+      margin: 15px 0 22px;
     }
 
     .faq-list details {
-      padding: 15px 17px;
+      padding: 14px 16px;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--surface);
+      border-radius: 12px;
+      background: var(--article-bg);
     }
 
     .faq-list summary {
       cursor: pointer;
       font-weight: 750;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .faq-list details p {
-      margin: 11px 0 0;
+      margin: 10px 0 0;
       color: var(--muted);
     }
 
+    .source-list li { margin-bottom: 9px; }
+
     .conclusion {
-      margin-top: 28px;
-      padding: 19px;
-      border: 1px solid var(--result-border);
-      border-radius: 15px;
-      background: var(--result-bg);
+      margin-top: 25px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--article-soft);
     }
 
     .conclusion h2 { margin-top: 0; }
     .conclusion p:last-child { margin-bottom: 0; }
+
     .sidebar { min-width: 0; }
 
     @media (min-width: 900px) {
@@ -412,28 +467,29 @@
     @media (max-width: 767px) {
       .tqc-page-grid {
         width: calc(100% - 24px);
-        margin-top: 18px;
+        margin-top: 16px;
       }
 
       .calculator-ui-box {
-        padding: 18px;
-        border-radius: 17px;
+        width: min(100%, 460px);
+        padding: 15px;
+        border-radius: 16px;
       }
 
-      .duration-block { padding: 13px; }
       .steps-flow { grid-template-columns: 1fr; }
-      .article-content h2 { margin-top: 28px; }
+      .article-content h2 { margin-top: 26px; }
     }
 
     @media (max-width: 360px) {
-      .time-inputs { gap: 7px; }
+      .time-inputs { gap: 6px; }
 
       .field input {
-        padding: 9px 7px;
-        font-size: .94rem;
+        padding: 7px 5px;
+        font-size: .9rem;
       }
 
-      .calculator-ui-box { padding: 14px; }
+      .duration-block { padding: 9px; }
+      .calculator-ui-box { padding: 12px; }
     }
   </style>
 
@@ -447,7 +503,7 @@
         "url": "https://thequantcal.pages.dev/tools/minute-hour-second-calculator",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
-        "description": "A free browser-based calculator for adding and subtracting time durations in hours, minutes, and seconds.",
+        "description": "Add and subtract multiple time durations online using hours, minutes, and seconds.",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -459,26 +515,26 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How do I add hours, minutes, and seconds?",
+            "name": "How do I add multiple time durations?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Choose Add, enter both time durations in hours, minutes, and seconds, then select Calculate. The calculator converts the inputs to seconds, adds them, and displays the normalized total."
+              "text": "Choose Add, enter the first duration, and use Add duration to create more rows. Enter the time values and select Calculate time to add every duration together."
             }
           },
           {
             "@type": "Question",
-            "name": "Can this calculator subtract one time duration from another?",
+            "name": "How do I subtract multiple durations?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Select Subtract, enter the first and second durations, and calculate. The result can be negative when the second duration is greater than the first."
+              "text": "Choose Subtract. The calculator subtracts every duration after the first from the first duration, in the order shown."
             }
           },
           {
             "@type": "Question",
-            "name": "Do I have to enter values in every field?",
+            "name": "Can I add more than two durations?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Leave a field blank to treat it as zero. Enter non-negative whole numbers for hours, minutes, and seconds."
+              "text": "Yes. Select Add duration to add as many time rows as you need. You can remove extra rows with the minus button beside a duration."
             }
           },
           {
@@ -486,15 +542,15 @@
             "name": "Can minutes or seconds be greater than 59?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. The calculator accepts non-negative whole numbers and normalizes the total, so 90 seconds becomes 1 minute and 30 seconds, for example."
+              "text": "Yes. Enter non-negative whole numbers. The calculator converts all values into seconds and normalizes the result automatically."
             }
           },
           {
             "@type": "Question",
-            "name": "How does the calculator convert time into seconds?",
+            "name": "How are time durations converted into seconds?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It multiplies hours by 3,600 and minutes by 60, then adds seconds. This creates one total in seconds that can be added or subtracted accurately."
+              "text": "Hours are multiplied by 3,600, minutes by 60, and seconds are added directly. The resulting total seconds are used for the calculation."
             }
           },
           {
@@ -502,23 +558,23 @@
             "name": "What does a negative result mean?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A negative result means the second duration is longer than the first in subtraction mode. The displayed minus sign indicates the difference in duration."
+              "text": "In subtraction mode, a negative result means the total of the later durations is greater than the first duration."
             }
           },
           {
             "@type": "Question",
-            "name": "Is my entered time uploaded to a server?",
+            "name": "Do I need to fill in every input field?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The calculation runs in your browser with client-side JavaScript. The calculator itself does not need to send your entered durations to a server to calculate the result."
+              "text": "No. Blank fields are treated as zero. Use non-negative whole numbers for hours, minutes, and seconds."
             }
           },
           {
             "@type": "Question",
-            "name": "Can I use this calculator on a phone?",
+            "name": "Does the calculator work on mobile devices?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. The interface is responsive and can be used on modern mobile phones, tablets, laptops, and desktop computers."
+              "text": "Yes. The calculator has a responsive layout and works in modern mobile and desktop browsers."
             }
           }
         ]
@@ -558,66 +614,77 @@
         <div class="tool-suite">
           <h1 class="primary-title">Hours, Minutes &amp; Seconds Calculator</h1>
           <p class="page-intro">
-            Add or subtract two time durations in seconds. Get a normalized
-            result in hours, minutes, and seconds in a few clicks.
+            Add or subtract multiple time durations with this free online
+            calculator. Add more rows whenever you need them.
           </p>
 
           <section class="calculator-ui-box" aria-labelledby="calc-title">
             <h2 class="calc-heading" id="calc-title">Time Duration Calculator</h2>
             <p class="calc-subtitle">
-              Enter a duration in each row. Blank fields are treated as zero.
+              Enter durations below. Blank fields are treated as zero.
             </p>
 
-            <div class="operation-switch" role="group" aria-label="Choose calculation operation">
+            <div class="operation-switch" role="group" aria-label="Choose operation">
               <button type="button" id="add-mode" aria-pressed="true">Add (+)</button>
               <button type="button" id="subtract-mode" aria-pressed="false">Subtract (−)</button>
             </div>
 
             <form id="time-form" novalidate>
-              <div class="duration-block">
-                <h3>First duration</h3>
-                <div class="time-inputs">
-                  <div class="field">
-                    <label for="hours1">Hours</label>
-                    <input id="hours1" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+              <div class="duration-list" id="duration-list">
+                <div class="duration-block" data-duration-row>
+                  <div class="duration-heading">
+                    <h3>Duration 1</h3>
                   </div>
-                  <div class="field">
-                    <label for="minutes1">Minutes</label>
-                    <input id="minutes1" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                  <div class="time-inputs">
+                    <div class="field">
+                      <label for="hours-1">Hours</label>
+                      <input id="hours-1" data-unit="hours" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
+                    <div class="field">
+                      <label for="minutes-1">Minutes</label>
+                      <input id="minutes-1" data-unit="minutes" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
+                    <div class="field">
+                      <label for="seconds-1">Seconds</label>
+                      <input id="seconds-1" data-unit="seconds" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
                   </div>
-                  <div class="field">
-                    <label for="seconds1">Seconds</label>
-                    <input id="seconds1" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                </div>
+
+                <div class="duration-block" data-duration-row>
+                  <div class="duration-heading">
+                    <h3>Duration 2</h3>
+                    <button type="button" class="remove-duration" aria-label="Remove duration 2" title="Remove this duration">−</button>
+                  </div>
+                  <div class="time-inputs">
+                    <div class="field">
+                      <label for="hours-2">Hours</label>
+                      <input id="hours-2" data-unit="hours" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
+                    <div class="field">
+                      <label for="minutes-2">Minutes</label>
+                      <input id="minutes-2" data-unit="minutes" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
+                    <div class="field">
+                      <label for="seconds-2">Seconds</label>
+                      <input id="seconds-2" data-unit="seconds" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="duration-block">
-                <h3>Second duration</h3>
-                <div class="time-inputs">
-                  <div class="field">
-                    <label for="hours2">Hours</label>
-                    <input id="hours2" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
-                  </div>
-                  <div class="field">
-                    <label for="minutes2">Minutes</label>
-                    <input id="minutes2" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
-                  </div>
-                  <div class="field">
-                    <label for="seconds2">Seconds</label>
-                    <input id="seconds2" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
-                  </div>
-                </div>
-              </div>
+              <button type="button" class="btn-add-duration" id="add-duration">
+                + Add duration
+              </button>
 
               <p class="form-note">
-                Use whole numbers. Minutes and seconds above 59 are allowed
-                and automatically normalized.
+                Use whole numbers. Values above 59 for minutes or seconds
+                are allowed and automatically normalized.
               </p>
 
               <div class="calc-actions">
-                <button class="primary-button" type="submit">Calculate time</button>
-                <button type="button" id="reset-button">Reset</button>
+                <button class="btn-calc" type="submit">Calculate time</button>
+                <button class="btn-reset" type="button" id="reset-button">Reset</button>
               </div>
             </form>
 
@@ -626,7 +693,7 @@
                 <p class="tqc-result-label">Your result</p>
                 <p class="tqc-result-value" id="result-value">00:00:00</p>
                 <p class="tqc-result-detail" id="result-detail">
-                  Enter your durations and select Calculate time.
+                  Enter durations and select Calculate time.
                 </p>
               </div>
             </div>
@@ -638,80 +705,82 @@
         <article class="article-content">
           <h2>What Is an Hours, Minutes &amp; Seconds Calculator?</h2>
           <p>
-            An hours, minutes, and seconds calculator helps you combine or
-            compare time durations without doing repeated conversions by hand.
-            Enter two durations, choose addition or subtraction, and the tool
-            returns the total or difference in a familiar format. It is useful
-            for schedules, study sessions, workout intervals, video editing,
-            travel planning, work logs, and timing tasks.
+            An hours, minutes, and seconds calculator lets you combine or
+            compare time durations without repeatedly converting units by
+            hand. Enter your durations, select addition or subtraction, and
+            get a result in hours, minutes, and seconds. This tool can help
+            with study schedules, workout intervals, video editing, travel
+            planning, task tracking, and other everyday calculations.
           </p>
           <p>
-            Time is not written in the same base-10 format as ordinary decimal
-            numbers. One hour contains 60 minutes, and one minute contains 60
-            seconds. Adding 1 hour 45 minutes to 2 hours 30 minutes requires
-            carrying 60 minutes into an additional hour. This calculator handles
-            that conversion automatically.
+            Time units do not follow the base-10 system used by ordinary
+            decimal numbers. One hour contains 60 minutes, and one minute
+            contains 60 seconds. When adding durations, the calculator
+            automatically carries extra seconds into minutes and extra
+            minutes into hours.
           </p>
 
-          <h2>How to Use the Calculator</h2>
+          <h2>How to Use This Calculator</h2>
           <div class="steps-flow">
             <div class="step-card">
               <span class="step-number">1</span>
               <strong>Choose an operation</strong>
-              <p>Select Add to combine durations or Subtract to find the difference.</p>
+              <p>Select Add to total durations or Subtract to find their difference.</p>
             </div>
             <div class="step-card">
               <span class="step-number">2</span>
-              <strong>Enter both durations</strong>
-              <p>Fill in hours, minutes, and seconds for both durations.</p>
+              <strong>Add duration rows</strong>
+              <p>Enter the values and use + Add duration to create additional rows.</p>
             </div>
             <div class="step-card">
               <span class="step-number">3</span>
-              <strong>Calculate the result</strong>
-              <p>Press Calculate time to see the normalized answer and total seconds.</p>
+              <strong>Calculate</strong>
+              <p>Press Calculate time to display the normalized result.</p>
             </div>
           </div>
+
           <p>
-            Fields can be left blank when a component is zero. For example,
-            for 12 minutes and 8 seconds, leave the hours field blank, enter
-            12 for minutes, and 8 for seconds. The calculator accepts whole
-            numbers in all fields. It also normalizes values such as 75 seconds
-            into 1 minute and 15 seconds.
+            Each row contains hours, minutes, and seconds. You can leave a
+            field blank if its value is zero. To remove an extra row, use
+            the minus button next to its heading. The first duration cannot
+            be removed because it is the starting value for the calculation.
           </p>
 
-          <h2>How the Time Calculation Works</h2>
+          <h2>How Addition and Subtraction Work</h2>
           <p>
-            The calculator first converts each duration into seconds. Since an
-            hour equals 3,600 seconds and a minute equals 60 seconds, each
-            duration can be represented as one whole number. The selected
-            operation is then performed on those totals. Finally, the answer
-            is converted back into hours, minutes, and seconds.
+            The calculator converts each duration into seconds before doing
+            arithmetic. This avoids errors caused by treating minutes and
+            seconds as if they were decimal digits.
           </p>
 
           <div class="formula-card">
-            <p><strong>Convert a duration to seconds</strong></p>
+            <p><strong>Convert one duration to seconds</strong></p>
             <code>Total seconds = (hours × 3,600) + (minutes × 60) + seconds</code>
           </div>
+
           <div class="formula-card">
             <p><strong>Addition</strong></p>
-            <code>Result seconds = First duration seconds + Second duration seconds</code>
+            <code>Result = Duration 1 + Duration 2 + Duration 3 + ...</code>
           </div>
+
           <div class="formula-card">
             <p><strong>Subtraction</strong></p>
-            <code>Result seconds = First duration seconds − Second duration seconds</code>
+            <code>Result = Duration 1 − Duration 2 − Duration 3 − ...</code>
           </div>
 
           <p>
-            To display the answer, the calculator determines complete hours,
-            then complete minutes, then leftover seconds. If subtraction
-            produces a negative total, the minus sign is kept in the result.
-            This is a duration difference, not a clock time or a date calculation.
+            In addition mode, all entered durations are added together.
+            In subtraction mode, each duration after the first is subtracted
+            from the running result in the order shown. The final total is
+            converted back to hours, minutes, and seconds. A negative result
+            is allowed and indicates that the subtracted durations exceed
+            the first duration.
           </p>
 
-          <h2>Examples of Time Addition and Subtraction</h2>
+          <h2>Time Calculation Examples</h2>
           <p>
-            These examples show how time conversion works in common situations.
-            The calculator performs carrying and borrowing automatically.
+            The following examples illustrate common addition and subtraction
+            calculations.
           </p>
 
           <div class="table-scroll" role="region" aria-label="Time calculation examples" tabindex="0">
@@ -720,7 +789,7 @@
                 <tr>
                   <th>Operation</th>
                   <th>First duration</th>
-                  <th>Second duration</th>
+                  <th>Other duration</th>
                   <th>Result</th>
                 </tr>
               </thead>
@@ -734,18 +803,11 @@
             </table>
           </div>
 
-          <p>
-            In the third example, the seconds total is 75 seconds. That is
-            equivalent to 1 minute and 15 seconds, so the final answer carries
-            one minute into the minutes column. In subtraction, a negative
-            result means the second duration is longer than the first.
-          </p>
-
           <h2>Time Unit Conversion Reference</h2>
-          <div class="table-scroll" role="region" aria-label="Time unit conversion table" tabindex="0">
+          <div class="table-scroll" role="region" aria-label="Time conversion reference" tabindex="0">
             <table class="article-table">
               <thead>
-                <tr><th>Unit</th><th>Equivalent</th><th>Seconds</th></tr>
+                <tr><th>Time unit</th><th>Equivalent</th><th>Total seconds</th></tr>
               </thead>
               <tbody>
                 <tr><td>1 minute</td><td>60 seconds</td><td>60</td></tr>
@@ -758,69 +820,94 @@
           </div>
 
           <p>
-            This reference covers common fixed time units. A calendar month
-            or year is different because its duration can vary, so calendar
-            arithmetic should be handled with a date calculator rather than
-            treated as a fixed number of seconds in every situation.
+            These conversions use fixed time units. Calendar months and years
+            can have different lengths, so calendar calculations should use
+            a suitable date calculator instead of assuming every month or year
+            contains the same number of seconds.
           </p>
 
-          <h2>Where Can This Calculator Help?</h2>
+          <h2>Practical Uses</h2>
           <ul>
-            <li><strong>Study and exam practice:</strong> add revision blocks, mock-test sections, or time spent on subjects.</li>
-            <li><strong>Fitness and sports:</strong> total running intervals, workout rounds, lap durations, or recovery periods.</li>
-            <li><strong>Video and audio editing:</strong> combine clip lengths, compare durations, or estimate total runtime.</li>
-            <li><strong>Work and projects:</strong> add task durations and compare time blocks for planning or timesheet estimates.</li>
-            <li><strong>Travel and daily routines:</strong> estimate combined activity lengths or calculate the difference between tasks.</li>
+            <li><strong>Study:</strong> combine revision sessions, study blocks, or practice-test durations.</li>
+            <li><strong>Fitness:</strong> total running intervals, laps, exercise rounds, and rest periods.</li>
+            <li><strong>Media editing:</strong> add clip lengths and calculate total video or audio duration.</li>
+            <li><strong>Work planning:</strong> total task durations or compare time spent on different activities.</li>
+            <li><strong>Daily planning:</strong> estimate how much time a group of activities will take.</li>
           </ul>
+
           <p>
-            For payroll, billing, or official time records, check the rules
-            used by your organization. Some systems round time entries or
-            calculate breaks and overtime separately; this tool performs
-            straightforward arithmetic on the durations you enter.
+            For payroll, billing, or official time records, follow the
+            applicable workplace or organization rules. Some systems use
+            separate rounding, break, or overtime policies that simple
+            duration arithmetic does not account for.
           </p>
 
           <h2>Tips for Accurate Results</h2>
           <ul>
-            <li>Enter durations, not clock readings. For example, 1 hour 30 minutes is a duration; 1:30 PM is a time of day.</li>
-            <li>Use whole numbers in the fields. Decimal hours such as 1.5 hours should first be converted to 1 hour 30 minutes.</li>
-            <li>Check that you selected the intended operation before calculating.</li>
-            <li>Remember that blank fields are treated as zero.</li>
-            <li>For a subtraction that should never be negative, enter the longer duration first.</li>
+            <li>Enter elapsed durations rather than clock readings such as 1:30 PM.</li>
+            <li>Use whole numbers in all fields.</li>
+            <li>Remember that blank input fields count as zero.</li>
+            <li>In subtraction mode, the first row is the starting duration.</li>
+            <li>Use + Add duration whenever you need more input rows.</li>
+          </ul>
+
+          <h2>Sources and Further Reading</h2>
+          <p>
+            These references explain standard measurement units and the
+            international system used for time measurements. The calculator
+            applies the standard relationships of 60 seconds per minute
+            and 60 minutes per hour.
+          </p>
+          <ul class="source-list">
+            <li>
+              <a href="https://www.bipm.org/en/publications/si-brochure"
+                 target="_blank" rel="noopener noreferrer">
+                International Bureau of Weights and Measures (BIPM) — The SI Brochure
+              </a>
+              <span> — official reference for the International System of Units.</span>
+            </li>
+            <li>
+              <a href="https://www.nist.gov/pml/time-and-frequency-division"
+                 target="_blank" rel="noopener noreferrer">
+                National Institute of Standards and Technology (NIST) — Time and Frequency Division
+              </a>
+              <span> — technical information and resources about time and frequency measurement.</span>
+            </li>
           </ul>
 
           <h2>Frequently Asked Questions</h2>
           <div class="faq-list">
             <details>
-              <summary>1. How do I add hours, minutes, and seconds?</summary>
-              <p>Choose Add, enter both time durations in hours, minutes, and seconds, then select Calculate. The calculator converts the inputs to seconds, adds them, and displays the normalized total.</p>
+              <summary>1. How do I add multiple time durations?</summary>
+              <p>Choose Add, enter the first duration, and use Add duration to create more rows. Enter the time values and select Calculate time to add every duration together.</p>
             </details>
             <details>
-              <summary>2. Can this calculator subtract one time duration from another?</summary>
-              <p>Yes. Select Subtract, enter the first and second durations, and calculate. The result can be negative when the second duration is greater than the first.</p>
+              <summary>2. How do I subtract multiple durations?</summary>
+              <p>Choose Subtract. The calculator subtracts every duration after the first from the first duration, in the order shown.</p>
             </details>
             <details>
-              <summary>3. Do I have to enter values in every field?</summary>
-              <p>No. Leave a field blank to treat it as zero. Enter non-negative whole numbers for hours, minutes, and seconds.</p>
+              <summary>3. Can I add more than two durations?</summary>
+              <p>Yes. Select Add duration to add as many time rows as you need. You can remove extra rows with the minus button beside a duration.</p>
             </details>
             <details>
               <summary>4. Can minutes or seconds be greater than 59?</summary>
-              <p>Yes. The calculator accepts non-negative whole numbers and normalizes the total, so 90 seconds becomes 1 minute and 30 seconds, for example.</p>
+              <p>Yes. Enter non-negative whole numbers. The calculator converts all values into seconds and normalizes the result automatically.</p>
             </details>
             <details>
-              <summary>5. How does the calculator convert time into seconds?</summary>
-              <p>It multiplies hours by 3,600 and minutes by 60, then adds seconds. This creates one total in seconds that can be added or subtracted accurately.</p>
+              <summary>5. How are time durations converted into seconds?</summary>
+              <p>Hours are multiplied by 3,600, minutes by 60, and seconds are added directly. The resulting total seconds are used for the calculation.</p>
             </details>
             <details>
               <summary>6. What does a negative result mean?</summary>
-              <p>A negative result means the second duration is longer than the first in subtraction mode. The displayed minus sign indicates the difference in duration.</p>
+              <p>In subtraction mode, a negative result means the total of the later durations is greater than the first duration.</p>
             </details>
             <details>
-              <summary>7. Is my entered time uploaded to a server?</summary>
-              <p>The calculation runs in your browser with client-side JavaScript. The calculator itself does not need to send your entered durations to a server to calculate the result.</p>
+              <summary>7. Do I need to fill in every input field?</summary>
+              <p>No. Blank fields are treated as zero. Use non-negative whole numbers for hours, minutes, and seconds.</p>
             </details>
             <details>
-              <summary>8. Can I use this calculator on a phone?</summary>
-              <p>Yes. The interface is responsive and can be used on modern mobile phones, tablets, laptops, and desktop computers.</p>
+              <summary>8. Does the calculator work on mobile devices?</summary>
+              <p>Yes. The calculator has a responsive layout and works in modern mobile and desktop browsers.</p>
             </details>
           </div>
 
@@ -828,12 +915,12 @@
             <h2>Conclusion</h2>
             <p>
               This Hours, Minutes &amp; Seconds Calculator makes time arithmetic
-              easier by handling addition, subtraction, unit conversion, and
-              normalization in one place. Enter the durations, choose the
-              operation, and use the result to support planning, study, fitness,
-              editing, or everyday calculations. For official timesheets or
-              billing, apply any additional rounding and workplace rules
-              required for your situation.
+              easier by supporting addition and subtraction across multiple
+              durations. Add as many rows as your calculation requires, choose
+              an operation, and view the normalized answer instantly. It is
+              useful for study, exercise, media editing, planning, and everyday
+              time calculations. For official records, apply any additional
+              rounding or reporting rules required for your situation.
             </p>
           </section>
         </article>
@@ -848,64 +935,154 @@
       "use strict";
 
       const form = document.getElementById("time-form");
-      const addButton = document.getElementById("add-mode");
-      const subtractButton = document.getElementById("subtract-mode");
+      const durationList = document.getElementById("duration-list");
+      const addDurationButton = document.getElementById("add-duration");
+      const addModeButton = document.getElementById("add-mode");
+      const subtractModeButton = document.getElementById("subtract-mode");
       const resetButton = document.getElementById("reset-button");
       const resultValue = document.getElementById("result-value");
       const resultDetail = document.getElementById("result-detail");
       const errorMessage = document.getElementById("error-message");
+
       let operation = "add";
+      let nextId = 3;
 
       function clearError() {
         errorMessage.hidden = true;
         errorMessage.textContent = "";
       }
 
-      function setOperation(nextOperation) {
+      function updateOperation(nextOperation) {
         operation = nextOperation;
 
-        addButton.setAttribute("aria-pressed", String(operation === "add"));
-        subtractButton.setAttribute("aria-pressed", String(operation === "subtract"));
+        addModeButton.setAttribute(
+          "aria-pressed",
+          String(operation === "add")
+        );
+
+        subtractModeButton.setAttribute(
+          "aria-pressed",
+          String(operation === "subtract")
+        );
 
         document.getElementById("calc-title").textContent =
-          operation === "add" ? "Add Time Durations" : "Subtract Time Durations";
+          operation === "add"
+            ? "Add Time Durations"
+            : "Subtract Time Durations";
 
         resultDetail.textContent = operation === "add"
-          ? "The two durations will be added together."
-          : "The second duration will be subtracted from the first.";
+          ? "All durations will be added together."
+          : "Every later duration will be subtracted from the first.";
 
         clearError();
       }
 
-      function readDuration(suffix) {
-        const names = ["hours", "minutes", "seconds"];
-        const multipliers = [3600, 60, 1];
+      function renumberRows() {
+        const rows = Array.from(
+          durationList.querySelectorAll("[data-duration-row]")
+        );
+
+        rows.forEach(function (row, index) {
+          const number = index + 1;
+          const heading = row.querySelector("h3");
+          const removeButton = row.querySelector(".remove-duration");
+
+          heading.textContent = "Duration " + number;
+
+          if (removeButton) {
+            removeButton.setAttribute(
+              "aria-label",
+              "Remove duration " + number
+            );
+            removeButton.title = "Remove this duration";
+          }
+
+          ["hours", "minutes", "seconds"].forEach(function (unit) {
+            const input = row.querySelector('[data-unit="' + unit + '"]');
+            const label = row.querySelector('label[for="' + input.id + '"]');
+            input.id = unit + "-" + number;
+            if (label) label.htmlFor = input.id;
+          });
+        });
+      }
+
+      function createDurationRow() {
+        const row = document.createElement("div");
+        row.className = "duration-block";
+        row.setAttribute("data-duration-row", "");
+
+        row.innerHTML = `
+          <div class="duration-heading">
+            <h3>Duration</h3>
+            <button type="button" class="remove-duration"
+              aria-label="Remove duration" title="Remove this duration">−</button>
+          </div>
+          <div class="time-inputs">
+            <div class="field">
+              <label>Hours</label>
+              <input data-unit="hours" type="number" min="0" step="1"
+                inputmode="numeric" placeholder="0">
+            </div>
+            <div class="field">
+              <label>Minutes</label>
+              <input data-unit="minutes" type="number" min="0" step="1"
+                inputmode="numeric" placeholder="0">
+            </div>
+            <div class="field">
+              <label>Seconds</label>
+              <input data-unit="seconds" type="number" min="0" step="1"
+                inputmode="numeric" placeholder="0">
+            </div>
+          </div>
+        `;
+
+        durationList.appendChild(row);
+        renumberRows();
+
+        const firstInput = row.querySelector("input");
+        if (firstInput) firstInput.focus();
+
+        clearError();
+      }
+
+      function readDuration(row) {
+        const multipliers = {
+          hours: 3600,
+          minutes: 60,
+          seconds: 1
+        };
+
         let total = 0;
 
-        names.forEach(function (name, index) {
-          const input = document.getElementById(name + suffix);
+        Object.keys(multipliers).forEach(function (unit) {
+          const input = row.querySelector('[data-unit="' + unit + '"]');
           const raw = input.value.trim();
 
           if (raw === "") return;
 
           const value = Number(raw);
+          const multiplier = multipliers[unit];
 
-          if (!Number.isFinite(value) || !Number.isInteger(value) || value < 0) {
+          if (
+            !Number.isFinite(value) ||
+            !Number.isInteger(value) ||
+            value < 0
+          ) {
             throw new Error(
-              "Enter non-negative whole numbers only. Correct the " +
-              name + " field for duration " +
-              (suffix === "1" ? "one" : "two") + "."
+              "Enter non-negative whole numbers only. Check the " +
+              unit + " field in " +
+              row.querySelector("h3").textContent + "."
             );
           }
 
-          if (value > Number.MAX_SAFE_INTEGER / multipliers[index]) {
-            throw new Error("One of the entered values is too large to calculate safely.");
+          if (value > Number.MAX_SAFE_INTEGER / multiplier) {
+            throw new Error("An entered value is too large to calculate safely.");
           }
 
-          total += value * multipliers[index];
+          total += value * multiplier;
 
           if (!Number.isSafeInteger(total)) {
-            throw new Error("The entered duration is too large to calculate safely.");
+            throw new Error("A duration is too large to calculate safely.");
           }
         });
 
@@ -930,7 +1107,7 @@
           pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
       }
 
-      function plural(value, unit) {
+      function unitText(value, unit) {
         return value + " " + unit + (value === 1 ? "" : "s");
       }
 
@@ -945,26 +1122,72 @@
         const seconds = remaining % 60;
         const parts = [];
 
-        if (hours) parts.push(plural(hours, "hour"));
-        if (minutes) parts.push(plural(minutes, "minute"));
-        if (seconds || parts.length === 0) parts.push(plural(seconds, "second"));
+        if (hours) parts.push(unitText(hours, "hour"));
+        if (minutes) parts.push(unitText(minutes, "minute"));
+
+        if (seconds || parts.length === 0) {
+          parts.push(unitText(seconds, "second"));
+        }
+
+        const secondsLabel = Math.abs(totalSeconds).toLocaleString();
 
         return (negative ? "Negative duration: " : "") +
-          parts.join(", ") +
-          " (" + Math.abs(totalSeconds).toLocaleString() + " total seconds).";
+          parts.join(", ") + " (" + secondsLabel + " total seconds).";
       }
+
+      addDurationButton.addEventListener("click", createDurationRow);
+
+      durationList.addEventListener("click", function (event) {
+        const removeButton = event.target.closest(".remove-duration");
+        if (!removeButton) return;
+
+        const rows = durationList.querySelectorAll("[data-duration-row]");
+        if (rows.length <= 2) {
+          errorMessage.textContent =
+            "Keep at least two duration rows in the calculator.";
+          errorMessage.hidden = false;
+          return;
+        }
+
+        removeButton.closest("[data-duration-row]").remove();
+        renumberRows();
+        clearError();
+      });
+
+      addModeButton.addEventListener("click", function () {
+        updateOperation("add");
+      });
+
+      subtractModeButton.addEventListener("click", function () {
+        updateOperation("subtract");
+      });
 
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         clearError();
 
         try {
-          const first = readDuration("1");
-          const second = readDuration("2");
-          const answer = operation === "add" ? first + second : first - second;
+          const rows = Array.from(
+            durationList.querySelectorAll("[data-duration-row]")
+          );
+
+          const durations = rows.map(readDuration);
+          let answer = durations[0];
+
+          if (operation === "add") {
+            answer = durations.reduce(function (sum, duration) {
+              return sum + duration;
+            }, 0);
+          } else {
+            for (let index = 1; index < durations.length; index++) {
+              answer -= durations[index];
+            }
+          }
 
           if (!Number.isSafeInteger(answer)) {
-            throw new Error("The result is too large to calculate safely. Use smaller values.");
+            throw new Error(
+              "The result is too large to calculate safely. Use smaller values."
+            );
           }
 
           resultValue.textContent = formatDuration(answer);
@@ -976,20 +1199,29 @@
         }
       });
 
-      addButton.addEventListener("click", function () {
-        setOperation("add");
-      });
-
-      subtractButton.addEventListener("click", function () {
-        setOperation("subtract");
-      });
-
       resetButton.addEventListener("click", function () {
         form.reset();
-        setOperation("add");
+
+        const rows = Array.from(
+          durationList.querySelectorAll("[data-duration-row]")
+        );
+
+        rows.slice(2).forEach(function (row) {
+          row.remove();
+        });
+
+        durationList.querySelectorAll("input").forEach(function (input) {
+          input.value = "";
+        });
+
+        nextId = 3;
+        updateOperation("add");
+        renumberRows();
+
         resultValue.textContent = "00:00:00";
         resultDetail.textContent =
-          "Enter your durations and select Calculate time.";
+          "Enter durations and select Calculate time.";
+
         clearError();
       });
     })();
