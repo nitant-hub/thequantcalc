@@ -1,426 +1,324 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accurate Age & Time Lived Calculator | thequantcals</title>
-    <meta name="description" content="Calculate your exact age in years, months, and days. Discover your total days, hours, seconds lived, and estimated heartbeats with our free multi-disciplinary tool.">
-    <link rel="canonical" href="https://thequantcals.com/tools/accurate-age-calculator.html">
+<meta charset="utf-8">
+<link rel="canonical" href="https://thequantcal.pages.dev/tools/accurate-age-calculator">
+<meta property="og:url" content="https://thequantcal.pages.dev/tools/accurate-age-calculator">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accurate Age &amp; Time Lived Calculator | TheQuantCalc</title>
+<meta name="description" content="Calculate your exact age in years, months, and days. Discover your total days, hours, seconds lived, and estimated heartbeats with our free multi-disciplinary tool.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Accurate Age &amp; Time Lived Calculator">
+<meta property="og:description" content="Calculate your exact age, total seconds lived, and biological metrics instantly.">
+<meta property="og:site_name" content="TheQuantCalc">
+<meta name="theme-color" content="#071426">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#eef2f7;--text:#1e293b;--muted:#475569;--head:#0f172a;--line:#d5deea;--card:#ffffff;--soft:#f4f7fb;
+  --accent:#0f766e;--accent2:#4f46e5;--link:#1d4ed8;
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220;--text:#d3dbe8;--muted:#a3b0c4;--head:#f1f5f9;--line:#25324a;--card:#111a2e;--soft:#0f1829;
+  --accent:#5eead4;--accent2:#a5b4fc;--link:#93c5fd;
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.35}
+.tqc-page-grid,.main-body,.tool-suite,.calculator-ui-box,article,.sidebar{min-width:0}
+.tqc-page-grid{display:grid;grid-template-columns:minmax(0,71fr) minmax(0,29fr);gap:20px;width:100%;max-width:1280px;margin:0 auto;padding:0 12px 24px}
+@media (max-width:900px){.tqc-page-grid{grid-template-columns:minmax(0,1fr)}}
+.main-body{padding-top:0}
+.tool-suite{padding:4px 0}
+.breadcrumb{padding:10px 0 10px;font-size:14px;color:var(--muted)}
+.breadcrumb a{color:var(--link);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.outside-title{margin:0 0 8px;font-size:clamp(22px,4.5vw,28px);font-weight:800;color:var(--head);text-align:left}
 
-    <!-- Open Graph Metadata -->
-    <meta property="og:title" content="Accurate Age & Time Lived Calculator | thequantcals">
-    <meta property="og:description" content="Calculate your exact age, total seconds lived, and biological metrics instantly.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://thequantcals.com/tools/accurate-age-calculator.html">
-    
-    <script type="application/ld+json">
+/* Calculator card (500px, always dark, slim y-direction) */
+.calculator-ui-box{width:100%;max-width:500px;margin:0 auto;background:#020617;box-sizing:border-box;
+  color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:20px 24px;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.35)}
+@media (max-width:767px){.calculator-ui-box{padding:16px}}
+.tool-sub{margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.35}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
+.calculator-ui-box input[type="number"], .calculator-ui-box input[type="date"], .calculator-ui-box select{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
+.calculator-ui-box input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; opacity: 0.7; }
+.calculator-ui-box select { cursor: pointer; }
+.calculator-ui-box :focus-visible{outline:3px solid #5eead4;outline-offset:2px}
+.btn-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+.btn{min-height:46px;padding:10px 14px;font-size:16px;font-weight:700;font-family:inherit;border-radius:12px;cursor:pointer;border:1px solid transparent}
+.btn-calc{color:#042f2e;background:#2dd4bf;border-color:#14b8a6;box-shadow:0 4px 0 #0f766e,0 8px 14px rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s}
+.btn-calc:active{transform:translateY(3px);box-shadow:0 1px 0 #0f766e,0 3px 6px rgba(0,0,0,.35)}
+
+/* Result Area */
+.tqc-result-box{margin-top:16px;padding:20px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word; animation: tqc-fade 0.3s ease-out;}
+@keyframes tqc-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.res-label{margin:0 0 4px;font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px}
+.res-main{margin:0;font-size:clamp(24px,6vw,30px);font-weight:800;line-height:1.2;color:#5eead4;padding-bottom:16px;border-bottom:1px solid #1e293b}
+.tqc-bento{display:grid;grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));gap:10px;margin-top:16px;}
+.tqc-tile{background:#0f1a30;padding:14px 10px;border-radius:10px;border:1px solid #1e293b;text-align:center;}
+.tqc-tile-val{display:block;font-size:18px;font-weight:700;color:#f8fafc;margin-bottom:4px;}
+.tqc-tile-label{display:block;color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+.tqc-desc{font-size:13px;color:#94a3b8;line-height:1.5;text-align:left;background:#0f1a30;padding:14px;border-radius:10px;border:1px solid #1e293b;margin-top:12px;}
+.tqc-desc-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:6px;}
+.tqc-error{color:#fca5a5;font-size:14px;font-weight:600;}
+
+/* Article */
+article{margin-top:18px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--text);font-size:16px;line-height:1.35;overflow-wrap:break-word}
+article h2,article h3{line-height:1.39;color:var(--head);text-align:left}
+article h2{margin:30px 0 12px;padding:2px 0 8px 12px;font-size:clamp(21px,4.5vw,26px);border-bottom:2px solid var(--line);border-left:4px solid var(--accent2)}
+article h2:first-child{margin-top:0}
+article h3{margin:20px 0 6px;font-size:18px}
+article p,article li{line-height:1.35}
+article p{margin:0 0 12px}
+article ul,article ol{margin:0 0 14px;padding-left:22px}
+article li{margin-bottom:6px}
+article a{color:var(--link);font-weight:600}
+.svg-container{background:var(--bg);border-radius:12px;border:1px solid var(--line);margin:20px 0;padding:25px 15px;text-align:center;overflow-x:auto;}
+.data-table-wrapper{margin:14px 0;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.data-table-wrapper table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card)}
+.data-table-wrapper th,.data-table-wrapper td{padding:10px 12px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);color:var(--text)}
+.data-table-wrapper th{background:var(--soft);color:var(--head);font-weight:700}
+.sidebar{display:block}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="tqc-page-grid">
+  <main class="main-body">
+    <div class="breadcrumb">
+      <a href="/">home</a> / <a href="/#math">math</a> / accurate age calculator
+    </div>
+
+    <h1 class="outside-title">Accurate Age &amp; Time Lived Calculator</h1>
+
+    <section class="tool-suite" aria-label="Interactive Calculator">
+      <div class="calculator-ui-box">
+        <p class="tool-sub">Calculate your exact age, total seconds lived, and biological metrics instantly.</p>
+        
+        <form id="ageForm" novalidate autocomplete="off">
+          <div class="field">
+            <label for="birthDate">Select Your Date of Birth</label>
+            <input id="birthDate" type="date">
+          </div>
+
+          <div class="field">
+            <label for="targetDate">Calculate Age As Of (Target Date)</label>
+            <input id="targetDate" type="date">
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn btn-calc" onclick="checkAge()">Calculate Exact Age</button>
+          </div>
+
+          <div id="ageResultContainer"></div>
+        </form>
+      </div>
+    </section>
+
+    <article>
+      <h2>Why "Rough Math" Isn't Good Enough Anymore</h2>
+      <p>Most people don't think twice when someone asks their age. You quickly state you are 22, 35, or 50 and move on. But try writing "around 25" on a government job application or a legal contract. It won't work. When official cutoff dates are involved, guessing your age can literally cost you an opportunity.</p>
+      <p>This biological and chronological calculator doesn't just do basic year subtraction. By processing your exact date of birth against a specific target date, it accounts for calendar quirks like leap years and varying month lengths. The result is an exact measurement of your age in years, months, and days. It even taps into your biological metrics to calculate total elapsed time in hours, seconds, and an estimate of how many times your heart has beaten since you were born.</p>
+
+      <h3>A Quick Look at Our Clunky Calendar System</h3>
+      <p>If math was perfect, every month would have the exact same number of days. Unfortunately, early astronomers had to base time on the physical rotation of the Earth, and the Earth refuses to orbit the Sun in a perfectly round number of days. A true solar year takes approximately <strong>365.24219 days</strong> to complete.</p>
+
+      <div class="svg-container">
+        <svg viewBox="0 0 450 90" style="width: 100%; max-width: 450px; height: auto;">
+          <rect x="10" y="25" width="360" height="26" rx="4" fill="#e2e8f0"></rect>
+          <rect x="10" y="25" width="360" height="26" rx="4" fill="#3b82f6"></rect>
+          <text x="190" y="43" fill="#ffffff" font-weight="bold" font-size="13" text-anchor="middle">365 Calendar Days</text>
+          <rect x="375" y="25" width="25" height="26" rx="4" fill="#ef4444"></rect>
+          <text x="387.5" y="43" fill="#ffffff" font-weight="bold" font-size="11" text-anchor="middle">.24</text>
+          <path d="M 387.5 55 L 387.5 65" stroke="#ef4444" stroke-width="2"></path>
+          <text x="387.5" y="80" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">Fractional Remainder</text>
+        </svg>
+      </div>
+
+      <h3>How the Algorithm Calculates Your Exact Age</h3>
+      <p>You might wonder why a program is even needed. Can't you just count it manually on a piece of paper? You can, but it gets tricky fast. When computing exact age, simple subtraction fails entirely because months bounce around between 28, 29, 30, and 31 days.</p>
+      
+      <div class="data-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Month Name</th>
+              <th>Days (Standard Year)</th>
+              <th>Days (Leap Year)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>January, March, May, July, August, October, December</td>
+              <td>31</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td>April, June, September, November</td>
+              <td>30</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td style="color: #ef4444; font-weight: bold;">28</td>
+              <td style="color: #10b981; font-weight: bold;">29</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Frequently Asked Questions</h2>
+      <div id="faq">
+        <h3>Why is my manual age calculation sometimes off by a day?</h3>
+        <p>Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift.</p>
+      </div>
+    </article>
+  </main>
+  
+  <aside class="sidebar"></aside>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "WebApplication",
+      "name": "Accurate Age & Time Lived Calculator",
+      "url": "https://thequantcal.pages.dev/tools/accurate-age-calculator",
+      "description": "Calculate your exact age in years, months, and days. Discover your total days, hours, seconds lived, and estimated heartbeats.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
         {
-          "@type": "WebApplication",
-          "@id": "https://thequantcals.com/tools/accurate-age-calculator.html#app",
-          "name": "Accurate Age & Time Lived Calculator",
-          "url": "https://thequantcals.com/tools/accurate-age-calculator.html",
-          "applicationCategory": "UtilityApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires JavaScript"
+          "@type": "Question",
+          "name": "Why is my manual age calculation sometimes off by a day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thequantcal.pages.dev/"
         },
         {
-          "@type": "FAQPage",
-          "@id": "https://thequantcals.com/tools/accurate-age-calculator.html#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Why is my manual age calculation sometimes off by a day?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift."
-              }
-            }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Math",
+          "item": "https://thequantcal.pages.dev/#math"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Accurate Age Calculator",
+          "item": "https://thequantcal.pages.dev/tools/accurate-age-calculator"
         }
       ]
     }
-    </script>
+  ]
+}
+</script>
 
-    <style>
-        :root {
-            --bg-primary: #f4f6f9;
-            --bg-surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #475569;
-            --border-color: #e2e8f0;
-            --header-height: 55px; 
+<script>
+(function() {
+    'use strict';
+    
+    const CONFIG = { avgBpm: 80 };
+    const targetDateInput = document.getElementById('targetDate');
+    
+    // Set default target date to today
+    if (targetDateInput && !targetDateInput.value) {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        targetDateInput.value = `${year}-${month}-${day}`;
+    }
+
+    function calculateExactAge(dob, target) {
+        let years = target.getFullYear() - dob.getFullYear();
+        let months = target.getMonth() - dob.getMonth();
+        let days = target.getDate() - dob.getDate();
+
+        if (days < 0) {
+            months--;
+            const prevMonthDate = new Date(target.getFullYear(), target.getMonth(), 0);
+            days += prevMonthDate.getDate();
         }
+        if (months < 0) { years--; months += 12; }
+        return { years, months, days };
+    }
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-surface: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.25s, color 0.25s, border-color 0.2s, box-shadow 0.2s; }
-        body { background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-height); }
-
-        h1, h2, h3, h4, h5, h6 { line-height: 1.38 !important; }
-        p, li, label, span, td, th, option, select, input, button { line-height: 1.6 !important; }
-
-        header#siteHeader {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 10000;
-            background: linear-gradient(135deg, #020818 0%, #0d1f5c 40%, #1a3a8f 75%, #0e2d6b 100%);
-            border-bottom: 1px solid rgba(99, 179, 255, 0.25);
-            box-shadow: 0 4px 30px rgba(10, 20, 80, 0.6); padding: 0 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-        .logo-symbol { background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
-        .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 60%, #c7d2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
-        .theme-toggle { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ffffff; padding: 4px; }
+    window.checkAge = function() {
+        const container = document.getElementById('ageResultContainer');
+        const dobVal = document.getElementById('birthDate').value;
+        const targetVal = document.getElementById('targetDate').value;
         
-        .wrapper { max-width: 1200px; width: 100%; margin: 1rem auto 2rem auto; padding: 0 1rem; flex: 1; }
-        .layout-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 768px) { .layout-grid { grid-template-columns: 2.5fr 1fr; align-items: start; } .sidebar { display: block; position: sticky; top: calc(var(--header-height) + 2rem); } }
-        
-        .main-body { display: flex; flex-direction: column; width: 100%; background: var(--bg-surface); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); box-sizing: border-box; }
-        h1.page-title { font-size: 26px; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-main); text-align: center; }
-
-        .tool-suite { width: 100%; display: block; margin-bottom: 2rem; }
-
-        .calculator-ui-box {
-            background-color: #071426; 
-            background-image: radial-gradient(circle at top left, rgba(22, 200, 244, 0.12) 0%, transparent 45%), linear-gradient(135deg, rgba(7, 20, 38, 0.8) 0%, rgba(4, 10, 20, 0.9) 100%);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 420px; 
-            margin: 0 auto;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid #1e293b;
-            color: #f8fafc;
-            box-sizing: border-box;
-            position: relative; /* REQUIRED FOR DOTS */
+        if (!dobVal || !targetVal) {
+            container.innerHTML = `<div class="tqc-result-box"><p class="tqc-error">⚠️ Please select both dates.</p></div>`;
+            return;
         }
         
-        [data-theme="dark"] .calculator-ui-box { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.08); }
+        const dob = new Date(dobVal);
+        const target = new Date(targetVal);
+        dob.setHours(0, 0, 0, 0); target.setHours(0, 0, 0, 0);
 
-        .calc-input-group { margin-bottom: 18px; }
-        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #94a3b8; }
-        
-        .calc-input {
-            background-color: #101E35;
-            color: #f8fafc;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 12px 15px;
-            width: 100%;
-            font-size: 16px;
-            outline: none;
-            cursor: pointer;
-        }
-        .calc-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; opacity: 0.7; }
-        .calc-input:focus { border-color: #00D6A0; }
-
-        .calc-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white; border: none; border-radius: 8px; padding: 14px 24px;
-            font-size: 16px; font-weight: 700; width: 100%; cursor: pointer;
-            margin-top: 5px;
+        if (dob > target) {
+            container.innerHTML = `<div class="tqc-result-box"><p class="tqc-error">⚠️ Date of birth cannot be later than target date.</p></div>`;
+            return;
         }
 
-        /* RESTORED "result-box" CLASS FOR YOUR ACTION SCRIPT */
-        .result-box {
-            --bg-grad: linear-gradient(145deg, #0b172a 0%, #071120 100%);
-            --accent: #00D6A0;
-            --border: rgba(255, 255, 255, 0.05);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --tile-bg: rgba(255, 255, 255, 0.03);
-            
-            background: var(--bg-grad);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            color: var(--text-main);
-            padding: 24px;
-            font-family: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 25px;
-            animation: tqc-fade 0.3s ease-out;
-            position: relative; /* REQUIRED FOR DOTS */
-        }
+        const { years, months, days } = calculateExactAge(dob, target);
+        const diffMs = target.getTime() - dob.getTime();
+        const totalDays = Math.floor(diffMs / (1000 * 3600 * 24));
+        const totalHours = totalDays * 24;
+        const totalMinutes = totalHours * 60;
+        const totalSeconds = totalMinutes * 60;
+        const estHeartbeats = totalMinutes * CONFIG.avgBpm;
+        const fmt = new Intl.NumberFormat('en-US');
 
-        @keyframes tqc-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .tqc-hero { text-align: center; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-        .tqc-hero-label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: block; }
-        .tqc-hero-value { color: var(--accent); font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 800; line-height: 1.2; }
-
-        .tqc-bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
-        .tqc-tile { background: var(--tile-bg); padding: 16px 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-        .tqc-tile-val { display: block; font-size: 1.125rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
-        .tqc-tile-label { display: block; color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .tqc-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            text-align: left;
-            background: var(--tile-bg);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            position: relative; 
-        }
-        .tqc-desc-label { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 6px; }
-        .tqc-error { text-align: center; color: #ef4444; font-weight: 600; padding: 20px; }
-
-        /* Article & Layout styling */
-        .article-content { width: 100%; max-width: 100%; margin-top: 20px; }
-        .article-content h2 { font-size: 22px; color: var(--text-main); margin: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
-        .article-content h3 { font-size: 19px; color: var(--text-main); margin: 1.5rem 0 0.75rem 0; }
-        .article-content p, .article-content li { color: var(--text-muted); font-size: 15.5px; margin-bottom: 16px; }
-        .article-content ul, .article-content ol { margin-left: 20px; margin-bottom: 20px; }
-        .sidebar { background: var(--bg-surface); padding: 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); height: fit-content; display: none; }
-        .sidebar h3 { font-size: 1.15rem; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; font-weight: 700; }
-        .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-        .sidebar-list a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: auto; }
-        .data-table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 8px; border: 1px solid var(--border-color); }
-        .data-table { border-collapse: collapse; width: 100%; min-width: 600px; text-align: left; background-color: var(--bg-surface); color: var(--text-main); }
-        .data-table th { padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-primary); font-weight: 700; }
-        .data-table td { padding: 12px; border: 1px solid var(--border-color); font-size: 14.5px; }
-
-        @media (max-width: 767px) {
-            .wrapper { margin: 0.5rem auto 1.5rem auto; padding: 0 0.5rem; }
-            .main-body { padding: 1.25rem 1rem; overflow: hidden; } 
-            .calculator-ui-box { padding: 20px 15px; }
-            h1.page-title { font-size: 22px; }
-        }
-    </style>
-</head>
-<body>
-
-    <header id="siteHeader">
-        <a href="/" class="brand">
-            <div class="logo-symbol">&sum;</div>
-            <div class="brand-title">thequantcals</div>
-        </a>
-        <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle">🌙</button>
-        </div>
-    </header>
-
-    <div class="wrapper">
-        <div class="breadcrumb">
-            <a href="/">home</a> / <a href="/#math">math</a> / accurate age calculator
-        </div>
-
-        <div class="layout-grid">
-            <main class="main-body">
-                <h1 class="page-title">Accurate Age & Time Lived Calculator</h1>
-
-                <div class="tool-suite">
-                    
-                    <div class="calculator-ui-box">
-                        <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Calculate Exact Age</h2>
-                        
-                        <div class="calc-input-group">
-                            <label class="calc-label" for="birthDate">Select Your Date of Birth:</label>
-                            <input id="birthDate" class="calc-input" type="date" />
-                        </div>
-
-                        <div class="calc-input-group">
-                            <label class="calc-label" for="targetDate">Calculate Age As Of (Target Date):</label>
-                            <input id="targetDate" class="calc-input" type="date" />
-                        </div>
-
-                        <button class="calc-btn" onclick="checkAge()">Calculate Exact Age</button>
-
-                        <div id="ageResultContainer"></div>
-                    </div>
+        container.innerHTML = `
+            <div class="tqc-result-box" aria-live="polite">
+                <span class="res-label">Your Exact Age</span>
+                <p class="res-main">${years} Yrs, ${months} Mos, ${days} Days</p>
+                
+                <div class="tqc-bento">
+                    <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalDays)}</span><span class="tqc-tile-label">Total Days</span></div>
+                    <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalHours)}</span><span class="tqc-tile-label">Total Hours</span></div>
+                    <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalSeconds)}</span><span class="tqc-tile-label">Total Seconds</span></div>
+                    <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(estHeartbeats)}</span><span class="tqc-tile-label">Est. Heartbeats</span></div>
                 </div>
-
-                <article class="article-content">
-                    <h2>Why "Rough Math" Isn't Good Enough Anymore</h2>
-                    <p>Most people don't think twice when someone asks their age. You quickly state you are 22, 35, or 50 and move on. But try writing "around 25" on a government job application or a legal contract. It won't work. When official cutoff dates are involved, guessing your age can literally cost you an opportunity.</p>
-                    <p>This biological and chronological calculator doesn't just do basic year subtraction. By processing your exact date of birth against a specific target date, it accounts for calendar quirks like leap years and varying month lengths. The result is an exact measurement of your age in years, months, and days. It even taps into your biological metrics to calculate total elapsed time in hours, seconds, and an estimate of how many times your heart has beaten since you were born.</p>
-
-                    <h3>A Quick Look at Our Clunky Calendar System</h3>
-                    <p>If math was perfect, every month would have the exact same number of days. Unfortunately, early astronomers had to base time on the physical rotation of the Earth, and the Earth refuses to orbit the Sun in a perfectly round number of days. A true solar year takes approximately <strong>365.24219 days</strong> to complete.</p>
-
-                    <div style="background: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); margin: 20px 0; padding: 25px 15px; text-align: center; overflow-x: auto;">
-                      <svg viewBox="0 0 450 90" style="width: 100%; max-width: 450px; height: auto;">
-                        <rect x="10" y="25" width="360" height="26" rx="4" fill="#e2e8f0"></rect>
-                        <rect x="10" y="25" width="360" height="26" rx="4" fill="#3b82f6"></rect>
-                        <text x="190" y="43" fill="#ffffff" font-weight="bold" font-size="13" text-anchor="middle">365 Calendar Days</text>
-                        <rect x="375" y="25" width="25" height="26" rx="4" fill="#ef4444"></rect>
-                        <text x="387.5" y="43" fill="#ffffff" font-weight="bold" font-size="11" text-anchor="middle">.24</text>
-                        <path d="M 387.5 55 L 387.5 65" stroke="#ef4444" stroke-width="2"></path>
-                        <text x="387.5" y="80" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">Fractional Remainder</text>
-                      </svg>
-                    </div>
-
-                    <h3>How the Algorithm Calculates Your Exact Age</h3>
-                    <p>You might wonder why a program is even needed. Can't you just count it manually on a piece of paper? You can, but it gets tricky fast. When computing exact age, simple subtraction fails entirely because months bounce around between 28, 29, 30, and 31 days.</p>
-                    
-                    <div class="data-table-wrapper">
-                      <table class="data-table">
-                        <thead>
-                          <tr>
-                            <th>Month Name</th>
-                            <th>Days (Standard Year)</th>
-                            <th>Days (Leap Year)</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>January, March, May, July, August, October, December</td>
-                            <td>31</td>
-                            <td>31</td>
-                          </tr>
-                          <tr>
-                            <td>April, June, September, November</td>
-                            <td>30</td>
-                            <td>30</td>
-                          </tr>
-                          <tr>
-                            <td>February</td>
-                            <td style="color: #ef4444; font-weight: bold;">28</td>
-                            <td style="color: #10b981; font-weight: bold;">29</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-                    <div itemscope itemtype="https://schema.org/FAQPage">
-                      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" style="margin-bottom: 1.25rem;">
-                        <h4 itemprop="name" style="font-size: 16px; margin-bottom: 5px; color: var(--text-main);">1. Why is my manual age calculation sometimes off by a day?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                          <p itemprop="text">Manual math often ignores the specific historical length of a month. If you are borrowing days to calculate an exact gap across a 31-day month versus a 30-day month, your manual count will drift.</p>
-                        </div>
-                      </div>
-                    </div>
-                </article>
-            </main>
-
-            <aside class="sidebar">
-                <h3>🔥 Popular Tools</h3>
-                <ul class="sidebar-list">
-                    <li><a href="/tools/Compound-Interest-Calculator.html">⭐ Compound Interest</a></li>
-                    <li><a href="/tools/accurate-age-calculator.html">⭐ Age Calculator</a></li>
-                    <li><a href="/tools/Exam-Marks-Percentage-Calculator.html">⭐ Exam Marks Calculator</a></li>
-                </ul>
-                <h3 style="margin-top: 2rem;">System Status</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted);">Calculations run locally via secure client-side scripting.</p>
-            </aside>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 thequantcals. All rights reserved.</p>
-    </footer>
-
-    <script>
-        (function() {
-            'use strict';
-            
-            const CONFIG = { avgBpm: 80 };
-
-            const today = new Date();
-            const targetDateInput = document.getElementById('targetDate');
-            if (targetDateInput && !targetDateInput.value) {
-                const year = today.getFullYear();
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const day = String(today.getDate()).padStart(2, '0');
-                targetDateInput.value = `${year}-${month}-${day}`;
-            }
-
-            function calculateExactAge(dob, target) {
-                let years = target.getFullYear() - dob.getFullYear();
-                let months = target.getMonth() - dob.getMonth();
-                let days = target.getDate() - dob.getDate();
-
-                if (days < 0) {
-                    months--;
-                    const prevMonthDate = new Date(target.getFullYear(), target.getMonth(), 0);
-                    days += prevMonthDate.getDate();
-                }
-                if (months < 0) { years--; months += 12; }
-                return { years, months, days };
-            }
-
-            window.checkAge = function() {
-                const container = document.getElementById('ageResultContainer');
-                const dobVal = document.getElementById('birthDate').value;
-                const targetVal = document.getElementById('targetDate').value;
                 
-                if (!dobVal || !targetVal) {
-                    container.innerHTML = `<div class="result-box"><div class="tqc-error">⚠️ Please select both dates.</div></div>`;
-                    return;
-                }
-                
-                const dob = new Date(dobVal);
-                const target = new Date(targetVal);
-                dob.setHours(0, 0, 0, 0); target.setHours(0, 0, 0, 0);
+                <div class="tqc-desc">
+                    <span class="tqc-desc-label">Understanding Your Result</span>
+                    You have been alive for an exact total of <strong>${fmt.format(totalDays)} days</strong>. In that time, your heart has beaten an estimated ${fmt.format(estHeartbeats)} times.
+                </div>
+            </div>
+        `;
+    };
+})();
+</script>
 
-                if (dob > target) {
-                    container.innerHTML = `<div class="result-box"><div class="tqc-error">⚠️ Date of birth cannot be later than target date.</div></div>`;
-                    return;
-                }
-
-                const { years, months, days } = calculateExactAge(dob, target);
-                const diffMs = target.getTime() - dob.getTime();
-                const totalDays = Math.floor(diffMs / (1000 * 3600 * 24));
-                const totalHours = totalDays * 24;
-                const totalMinutes = totalHours * 60;
-                const totalSeconds = totalMinutes * 60;
-                const estHeartbeats = totalMinutes * CONFIG.avgBpm;
-                const fmt = new Intl.NumberFormat('en-US');
-
-                let descStr = `You have been alive for an exact total of <strong>${fmt.format(totalDays)} days</strong>. In that time, your heart has beaten an estimated ${fmt.format(estHeartbeats)} times.`;
-
-                // Uses the exact "result-box" class your action script looks for
-                container.innerHTML = `
-                    <div class="result-box" id="ageResultBox" aria-live="polite">
-                        <div class="tqc-hero">
-                            <span class="tqc-hero-label">Your Exact Age</span>
-                            <span class="tqc-hero-value">${years} Yrs, ${months} Mos, ${days} Days</span>
-                        </div>
-                        <div class="tqc-bento">
-                            <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalDays)}</span><span class="tqc-tile-label">Total Days Lived</span></div>
-                            <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalHours)}</span><span class="tqc-tile-label">Total Hours Lived</span></div>
-                            <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(totalSeconds)}</span><span class="tqc-tile-label">Total Seconds</span></div>
-                            <div class="tqc-tile"><span class="tqc-tile-val">${fmt.format(estHeartbeats)}</span><span class="tqc-tile-label">Est. Heartbeats</span></div>
-                        </div>
-                        <div class="tqc-desc">
-                            <span class="tqc-desc-label">Understanding Your Result</span>
-                            ${descStr}
-                        </div>
-                    </div>
-                `;
-
-                // Fire custom event for your action script in case it needs to re-initialize after render
-                document.dispatchEvent(new Event('change'));
-            };
-        })();
-
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlEl = document.documentElement;
-        if (localStorage.getItem('theme') === 'dark') { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
-        themeToggle.addEventListener('click', () => {
-            if (htmlEl.getAttribute('data-theme') === 'dark') { htmlEl.setAttribute('data-theme', 'light'); themeToggle.textContent = '🌙'; localStorage.setItem('theme', 'light'); } 
-            else { htmlEl.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; localStorage.setItem('theme', 'dark'); }
-        });
-    </script>
-    <script src="/navigation.js"></script>
+<script src="/navigation.js"></script>
 </body>
 </html>
