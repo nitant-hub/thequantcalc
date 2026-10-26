@@ -1,725 +1,439 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Estimate fixed deposit maturity and compound interest using your principal, annual interest rate, investment period, and compounding frequency.">
-    <title>Fixed Deposit & Compound Interest Calculator | TheQuantCalc</title>
+<meta charset="utf-8">
+<link rel="canonical" href="https://thequantcal.pages.dev/tools/fixed-deposit-calculator">
+<meta property="og:url" content="https://thequantcal.pages.dev/tools/fixed-deposit-calculator">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fixed Deposit &amp; Compound Interest Calculator | TheQuantCalc</title>
+<meta name="description" content="Estimate fixed deposit maturity and compound interest from your principal, annual interest rate, period and compounding frequency. Includes formula, worked example and FAQs.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fixed Deposit &amp; Compound Interest Calculator">
+<meta property="og:description" content="Estimate FD maturity value, interest earned and effective yield for yearly, half-yearly or quarterly compounding.">
+<meta property="og:site_name" content="TheQuantCalc">
+<meta name="theme-color" content="#071426">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#eef2f7;--text:#1e293b;--muted:#475569;--head:#0f172a;--line:#d5deea;--card:#ffffff;--soft:#f4f7fb;
+  --accent:#0f766e;--accent2:#4f46e5;--link:#1d4ed8;
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220;--text:#d3dbe8;--muted:#a3b0c4;--head:#f1f5f9;--line:#25324a;--card:#111a2e;--soft:#0f1829;
+  --accent:#5eead4;--accent2:#a5b4fc;--link:#93c5fd;
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.35}
+.tqc-page-grid,.main-body,.tool-suite,.calculator-ui-box,article,.sidebar{min-width:0}
+.tqc-page-grid{display:grid;grid-template-columns:minmax(0,71fr) minmax(0,29fr);gap:20px;width:100%;max-width:1280px;margin:0 auto;padding:0 12px 24px}
+@media (max-width:900px){.tqc-page-grid{grid-template-columns:minmax(0,1fr)}}
+.main-body{padding-top:0}
+.tool-suite{padding:4px 0}
+.breadcrumb{padding:10px 0 10px;font-size:14px;color:var(--muted)}
+.breadcrumb a{color:var(--link);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.outside-title{margin:0 0 8px;font-size:clamp(22px,4.5vw,28px);font-weight:800;color:var(--head);text-align:left}
 
-    <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    </script>
+/* Calculator card (500px, always dark, slim y-direction) */
+.calculator-ui-box{width:100%;max-width:500px;margin:0 auto;background:#020617;box-sizing:border-box;
+  color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:20px 24px;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.35)}
+@media (max-width:767px){.calculator-ui-box{padding:16px}}
+.tool-sub{margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.35}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
+.calculator-ui-box input[type="number"],.calculator-ui-box select{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
+.calculator-ui-box select{cursor:pointer}
+.calculator-ui-box input[aria-invalid="true"]{border-color:#f87171}
+.calculator-ui-box :focus-visible{outline:3px solid #5eead4;outline-offset:2px}
+.field-error{margin:5px 0 0;font-size:13px;color:#fca5a5;min-height:0}
+.field-error:empty{display:none}
 
-    <script type="application/ld+json">
+/* Result */
+.tqc-result-box{margin-top:14px;padding:14px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word}
+.res-hint{margin:0;font-size:14px;color:#94a3b8}
+.res-label{margin:0 0 2px;font-size:14px;font-weight:600;color:#99f6e4}
+.res-main{margin:0;font-size:clamp(24px,7vw,32px);font-weight:800;line-height:1.2;color:#f8fafc}
+.res-note{margin:8px 0 0;font-size:13px;color:#94a3b8}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;text-align:left}
+.tile{padding:10px;background:#0f1a30;border:1px solid #1e293b;border-radius:10px}
+.tile.wide{grid-column:1/-1}
+.tile .k{display:block;font-size:12px;color:#94a3b8}
+.tile .v{display:block;font-size:15px;font-weight:700;color:#f1f5f9;margin-top:2px}
+.tile .v.int{color:#5eead4}
+.donut{width:112px;height:112px;margin:14px auto 6px;border-radius:50%;position:relative}
+.donut::after{content:"";position:absolute;inset:26px;background:#0b1326;border-radius:50%}
+.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:12px;color:#94a3b8}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.res-error{margin:0;font-size:14px;color:#fecaca;text-align:left}
+.res-error strong{color:#fca5a5}
+.res-error ul{margin:6px 0 0;padding-left:20px}
+
+/* Article */
+article{margin-top:18px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--text);font-size:16px;line-height:1.35;overflow-wrap:break-word}
+article h2,article h3{line-height:1.39;color:var(--head);text-align:left}
+article h2{margin:30px 0 12px;padding:2px 0 8px 12px;font-size:clamp(21px,4.5vw,26px);border-bottom:2px solid var(--line);border-left:4px solid var(--accent2)}
+article h2:first-child{margin-top:0}
+article h3{margin:20px 0 6px;font-size:18px}
+article p,article li{line-height:1.35}
+article p{margin:0 0 12px}
+article ul,article ol{margin:0 0 14px;padding-left:22px}
+article li{margin-bottom:6px}
+article a{color:var(--link);font-weight:600}
+.formula{margin:14px 0;padding:14px;background:var(--soft);border:1px solid var(--line);border-radius:10px;text-align:center;font-family:"Courier New",Courier,monospace;font-size:clamp(15px,3.6vw,20px);overflow-x:auto}
+.data-table-wrapper{margin:14px 0;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.data-table-wrapper table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card)}
+.data-table-wrapper th,.data-table-wrapper td{padding:10px 12px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);color:var(--text)}
+.data-table-wrapper th{background:var(--soft);color:var(--head);font-weight:700}
+.data-table-wrapper caption{padding:8px 12px;text-align:left;font-size:13px;color:var(--muted)}
+.notice{margin:14px 0;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:10px;background:var(--soft)}
+.notice p:last-child{margin-bottom:0}
+.sidebar{display:block}
+</style>
+</head>
+<body>
+<div class="tqc-page-grid">
+  <main class="main-body">
+    <div class="breadcrumb">
+      <a href="/">home</a> / <a href="/#finance">finance</a> / fixed deposit calculator
+    </div>
+
+    <h1 class="outside-title">Fixed Deposit &amp; Compound Interest Calculator</h1>
+
+    <section class="tool-suite" aria-label="Interactive Calculator">
+      <div class="calculator-ui-box">
+        <p class="tool-sub">Lump-sum deposit at a fixed nominal rate. Maturity value, interest earned and effective yield.</p>
+
+        <form id="fdForm" novalidate autocomplete="off">
+          <div class="field">
+            <label for="principal">Principal amount (initial deposit)</label>
+            <input id="principal" type="number" inputmode="decimal" min="1" step="any" value="10000" aria-describedby="err-principal">
+            <p class="field-error" id="err-principal"></p>
+          </div>
+
+          <div class="field">
+            <label for="interestRate">Annual interest rate (%)</label>
+            <input id="interestRate" type="number" inputmode="decimal" min="0" max="100" step="any" value="7.1" aria-describedby="err-rate">
+            <p class="field-error" id="err-rate"></p>
+          </div>
+
+          <div class="field">
+            <label for="years">Time period (years)</label>
+            <input id="years" type="number" inputmode="decimal" min="0.1" max="100" step="any" value="5" aria-describedby="err-years">
+            <p class="field-error" id="err-years"></p>
+          </div>
+
+          <div class="field">
+            <label for="compounding">Compounding frequency</label>
+            <select id="compounding">
+              <option value="1">Yearly (12 months)</option>
+              <option value="2">Half-yearly (6 months)</option>
+              <option value="4" selected>Quarterly (3 months)</option>
+            </select>
+          </div>
+        </form>
+
+        <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
+          <div class="tqc-result-content"></div>
+        </div>
+      </div>
+    </section>
+
+    <article>
+      <h2>What Is a Fixed Deposit and Compound Interest?</h2>
+      <p>A fixed deposit (FD), also called a term deposit, is a savings product in which you deposit money for an agreed period under specified terms. The bank or financial institution pays interest according to the conditions of that deposit. The interest you receive depends on the offered rate, the deposit period, the interest calculation method and the payout option.</p>
+      <p>Compound interest is a process in which accumulated interest itself earns interest in later periods. If interest is added to the balance and stays invested, later interest calculations use the larger balance rather than only the original principal. Simple interest, by contrast, is calculated on the original principal alone.</p>
+      <p>Use this calculator to explore an estimated maturity amount from your starting deposit, annual nominal interest rate, period and compounding frequency. The result rests on the assumptions below and is not a guaranteed quote from any particular bank.</p>
+
+      <h2>How to Use the FD Calculator</h2>
+      <ol>
+        <li><strong>Enter the principal:</strong> the amount you plan to deposit, for example 10000.</li>
+        <li><strong>Enter the annual interest rate:</strong> if the stated rate is 7.1% a year, enter 7.1, not 0.071. A rate of 0 is allowed.</li>
+        <li><strong>Enter the period in years:</strong> 5 means five years. Decimals such as 2.5 are accepted.</li>
+        <li><strong>Select the compounding frequency:</strong> yearly, half-yearly or quarterly.</li>
+        <li><strong>Review the result:</strong> it updates automatically whenever you change an input.</li>
+      </ol>
+      <p>If a value is missing or outside its allowed range, the result area names the field to fix. Allowed ranges: principal greater than 0 up to 10,000,000,000; rate from 0% to 100%; period from 0.1 to 100 years. The tool is currency-neutral, so enter amounts in whatever currency your deposit is in.</p>
+
+      <h2>The Math Behind the Calculator</h2>
+      <p>This calculator uses the standard formula for a single lump-sum deposit earning a fixed nominal annual rate with periodic compounding:</p>
+      <div class="formula">A = P × (1 + r/n)<sup>nt</sup></div>
+      <ul>
+        <li><strong>A:</strong> the estimated final amount, including principal and accumulated interest.</li>
+        <li><strong>P:</strong> the initial principal deposited.</li>
+        <li><strong>r:</strong> the annual nominal rate as a decimal. For example, 7.1% is 0.071.</li>
+        <li><strong>n:</strong> compounding periods per year: 1 for yearly, 2 for half-yearly, 4 for quarterly.</li>
+        <li><strong>t:</strong> the period in years.</li>
+      </ul>
+      <p>The periodic rate is r ÷ n and the number of periods is n × t. If the period is not a whole number of compounding periods, the calculator keeps the fractional exponent, whereas a bank may apply its own rule for the incomplete period. Interest earned is A − P. The effective annual yield is (1 + r/n)<sup>n</sup> − 1, which shows what the nominal rate is worth after compounding for one year.</p>
+
+      <h2>Worked Example: A 10,000 Deposit</h2>
+      <p>Suppose you deposit 10,000 at a fixed nominal rate of 7.1% for five years with quarterly compounding. The periodic rate is 7.1% ÷ 4 = 1.775% and there are 20 quarterly periods.</p>
+      <div class="formula">A = 10,000 × (1 + 0.071 ÷ 4)<sup>20</sup> ≈ 14,217.47</div>
+      <p>The interest earned is 14,217.47 − 10,000 = 4,217.47. The effective annual yield is (1.01775)<sup>4</sup> − 1 ≈ 7.29%, slightly above the 7.1% nominal rate because interest is added four times a year. These figures demonstrate the calculator's model; they do not establish the maturity amount payable under any bank's FD product.</p>
+
+      <h2>Simple Interest vs Compound Interest</h2>
+      <p>To compare the two methods, take a principal of 10,000 earning 8% a year. The compound column assumes annual compounding and no additional deposits or withdrawals.</p>
+      <div class="data-table-wrapper">
+        <table>
+          <caption>Illustrative amounts, rounded to two decimal places</caption>
+          <thead><tr><th>Period</th><th>Principal</th><th>Simple-interest balance</th><th>Annual compound balance</th></tr></thead>
+          <tbody>
+            <tr><td>5 years</td><td>10,000.00</td><td>14,000.00</td><td>14,693.28</td></tr>
+            <tr><td>10 years</td><td>10,000.00</td><td>18,000.00</td><td>21,589.25</td></tr>
+            <tr><td>20 years</td><td>10,000.00</td><td>26,000.00</td><td>46,609.57</td></tr>
+            <tr><td>30 years</td><td>10,000.00</td><td>34,000.00</td><td>1,00,626.57</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>How Compounding Frequency Affects Growth</h2>
+      <p>Compounding frequency sets how often interest is added to the balance in the model. For the same positive nominal rate, principal and period, more frequent compounding gives a higher final amount. The table below holds 10,000 at 7.1% for five years and changes only the frequency.</p>
+      <div class="data-table-wrapper">
+        <table>
+          <caption>10,000 at 7.1% a year for 5 years</caption>
+          <thead><tr><th>Compounding</th><th>Periods</th><th>Maturity value</th><th>Interest earned</th><th>Effective annual yield</th></tr></thead>
+          <tbody>
+            <tr><td>Yearly</td><td>5</td><td>14,091.18</td><td>4,091.18</td><td>7.100%</td></tr>
+            <tr><td>Half-yearly</td><td>10</td><td>14,174.28</td><td>4,174.28</td><td>7.226%</td></tr>
+            <tr><td>Quarterly</td><td>20</td><td>14,217.47</td><td>4,217.47</td><td>7.291%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The gain from compounding more often is real but small compared with the effect of the rate and the period. When comparing actual deposits, compare the effective terms and the bank's stated maturity figure rather than the frequency label alone.</p>
+
+      <h2>Important Assumptions and FD Limitations</h2>
+      <ul>
+        <li>The rate is fixed and nominal for the entire period. Rate changes, premature closure, renewal, penalties and fees are not modeled.</li>
+        <li>There is one initial lump-sum deposit and no additional deposits or withdrawals, and interest stays invested.</li>
+        <li>Banks may use different rules for incomplete periods, day counts and rounding, so their maturity quotation can differ slightly from this result.</li>
+        <li>Tax, tax deducted at source and inflation are not deducted. Inflation lowers the purchasing power of the maturity value.</li>
+        <li>The calculation runs entirely in your browser; the values you enter are not sent anywhere.</li>
+      </ul>
+
+      <h3>Cumulative and periodic-interest payout deposits</h3>
+      <p>A cumulative deposit generally retains interest toward maturity, subject to the product's rules. A periodic-interest payout deposit pays interest at scheduled intervals, so that money no longer stays in the deposit to earn further interest. This calculator models the growth of a single balance; it does not model the timing or reinvestment of periodic payouts.</p>
+
+      <div class="notice">
+        <p><strong>Important:</strong> This tool is for educational estimates and planning. It is not a bank quotation, a guarantee of returns or personalised financial advice. Confirm the applicable rate, deposit conditions, payout option, tax treatment and maturity amount with the financial institution.</p>
+      </div>
+
+      <h2>Frequently Asked Questions</h2>
+      <div id="faq">
+        <h3>How is compound interest different from simple interest?</h3>
+        <p>Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest. The difference grows over longer periods, depending on the rate and compounding method.</p>
+        <h3>How do I calculate fixed deposit maturity?</h3>
+        <p>This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods. Actual bank calculations may use additional product-specific rules.</p>
+        <h3>What does quarterly compounding mean?</h3>
+        <p>Quarterly compounding means interest is compounded four times per year under the selected mathematical model. This calculator divides the nominal annual rate by four and uses four periods for each year.</p>
+        <h3>Will this result exactly match my bank's FD maturity amount?</h3>
+        <p>Not necessarily. Actual maturity can depend on the bank's interest calculation method, deposit terms, payout option, incomplete-period rules and rounding method. Check the bank's official maturity quotation.</p>
+        <h3>Can I calculate an FD with a zero interest rate?</h3>
+        <p>Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal.</p>
+        <h3>What is the difference between cumulative and periodic-interest payout FDs?</h3>
+        <p>A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ. This calculator estimates a growing balance rather than periodic payouts.</p>
+        <h3>Is tax included in the maturity estimate?</h3>
+        <p>No. The estimate does not deduct tax, withholding, penalties, fees or other bank-specific adjustments. Your actual after-tax return can differ from the amount shown.</p>
+        <h3>What is the Rule of 72?</h3>
+        <p>The Rule of 72 is a rough mental estimate of doubling time: divide 72 by the annual interest rate as a percentage. At 6% the estimate is about 12 years. Actual growth depends on the rate, compounding method and applicable terms.</p>
+      </div>
+
+      <h2>Source</h2>
+      <p>Background on compound interest and the compounding formula: <a href="https://www.investopedia.com/terms/c/compoundinterest.asp" target="_blank" rel="noopener noreferrer">Investopedia – Compound Interest</a>. The formula above is the standard periodic-compounding formula; the worked figures were computed independently for this page.</p>
+
+      <h2>Conclusion</h2>
+      <p>A fixed deposit calculator shows how a starting deposit, an assumed rate, a period and a compounding frequency combine into a projected balance. Of these, the rate and the period move the result most; the compounding frequency adds a smaller but real boost. Test several scenarios, compare them with the quotations you receive and remember that this result is a mathematical estimate, not necessarily what a bank will pay. Before depositing, verify the official rate, payout option, tax treatment and maturity amount for the specific product.</p>
+    </article>
+  </main>
+  <aside class="sidebar"></aside>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Fixed Deposit & Compound Interest Calculator",
-      "url": "https://thequantcal.pages.dev/tools/fixed-deposit-calculator.html",
+      "url": "https://thequantcal.pages.dev/tools/fixed-deposit-calculator",
+      "description": "Estimate fixed deposit maturity and compound interest from your principal, annual interest rate, period and compounding frequency.",
       "applicationCategory": "FinanceApplication",
-      "operatingSystem": "All"
-    }
-    </script>
-
-    <script type="application/ld+json" id="faq-schema">
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev"
+      }
+    },
     {
-      "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
         {
           "@type": "Question",
           "name": "How is compound interest different from simple interest?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest. The difference grows over longer periods, depending on the rate and compounding method." }
         },
         {
           "@type": "Question",
           "name": "How do I calculate fixed deposit maturity?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods. Actual bank calculations may use additional product-specific rules." }
         },
         {
           "@type": "Question",
           "name": "What does quarterly compounding mean?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Quarterly compounding means interest is compounded four times per year under the selected mathematical model."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Quarterly compounding means interest is compounded four times per year under the selected mathematical model. This calculator divides the nominal annual rate by four and uses four periods for each year." }
         },
         {
           "@type": "Question",
           "name": "Will this result exactly match my bank's FD maturity amount?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, and rounding rules."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Not necessarily. Actual maturity can depend on the bank's interest calculation method, deposit terms, payout option, incomplete-period rules and rounding method. Check the bank's official maturity quotation." }
         },
         {
           "@type": "Question",
           "name": "Can I calculate an FD with a zero interest rate?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal." }
         },
         {
           "@type": "Question",
           "name": "What is the difference between cumulative and periodic-interest payout FDs?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ. This calculator estimates a growing balance rather than periodic payouts." }
         },
         {
           "@type": "Question",
           "name": "Is tax included in the maturity estimate?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. This calculator does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "No. The estimate does not deduct tax, withholding, penalties, fees or other bank-specific adjustments. Your actual after-tax return can differ from the amount shown." }
         },
         {
           "@type": "Question",
           "name": "What is the Rule of 72?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage, while remembering that actual growth depends on the rate and compounding method."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "The Rule of 72 is a rough mental estimate of doubling time: divide 72 by the annual interest rate as a percentage. At 6% the estimate is about 12 years. Actual growth depends on the rate, compounding method and applicable terms." }
         }
       ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thequantcal.pages.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Finance", "item": "https://thequantcal.pages.dev/#finance" },
+        { "@type": "ListItem", "position": 3, "name": "Fixed Deposit Calculator", "item": "https://thequantcal.pages.dev/tools/fixed-deposit-calculator" }
+      ]
     }
-    </script>
+  ]
+}
+</script>
 
-    <style>
-        /* Modern UI Design System & Theme Colors */
-        :root {
-            --bg-primary: #f4f6f9;
-            --bg-surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #475569;
-            --border-color: #e2e8f0;
-        }
+<script>
+(function () {
+  'use strict';
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-surface: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-        }
+  var LIMITS = {
+    principal: { min: 0, max: 10000000000, label: 'Principal' },
+    rate: { min: 0, max: 100, label: 'Interest rate' },
+    years: { min: 0.1, max: 100, label: 'Time period' }
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var els = { principal: $('principal'), rate: $('interestRate'), years: $('years'), comp: $('compounding'),
+    result: $('result').querySelector('.tqc-result-content') };
+  var errEls = { principal: $('err-principal'), rate: $('err-rate'), years: $('err-years') };
+  var KEYS = ['principal', 'rate', 'years'];
+  var nf = new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function readField(key) {
+    var input = els[key], raw = input.value.trim(), lim = LIMITS[key];
+    if (input.validity && input.validity.badInput) return { err: lim.label + ' is not a valid number.' };
+    if (raw === '') return { err: lim.label + ' is required.' };
+    var v = Number(raw);
+    if (!isFinite(v)) return { err: lim.label + ' is not a valid number.' };
+    if (key === 'principal') {
+      if (v <= 0 || v > lim.max) return { err: 'Principal must be greater than 0 and at most ' + lim.max.toLocaleString('en-US') + '.' };
+    } else if (v < lim.min || v > lim.max) {
+      return { err: lim.label + ' must be between ' + lim.min + ' and ' + lim.max + '.' };
+    }
+    return { value: v };
+  }
+  function validate() {
+    var out = { values: {}, errors: {} };
+    KEYS.forEach(function (k) {
+      var r = readField(k);
+      if (r.err) out.errors[k] = r.err; else out.values[k] = r.value;
+    });
+    out.ok = Object.keys(out.errors).length === 0;
+    return out;
+  }
+  function clearFieldErrors() {
+    KEYS.forEach(function (k) { errEls[k].textContent = ''; els[k].removeAttribute('aria-invalid'); });
+  }
+  function showFieldErrors(errors) {
+    clearFieldErrors();
+    Object.keys(errors).forEach(function (k) { errEls[k].textContent = errors[k]; els[k].setAttribute('aria-invalid', 'true'); });
+  }
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            line-height: 1.5;
-            word-wrap: break-word;
-            overflow-x: hidden;
-        }
+  // A = P(1 + r/n)^(nt); r = 0 -> A = P. Effective annual yield = (1 + r/n)^n - 1.
+  function calculate(p, ratePct, t, n) {
+    var r = ratePct / 100, a = r === 0 ? p : p * Math.pow(1 + r / n, n * t);
+    return { amount: a, interest: a - p, principal: p, eay: Math.pow(1 + r / n, n) - 1 };
+  }
 
-        /* --- NEW UNIFIED GRID LAYOUT --- */
-        .tqc-page-grid {
-            max-width: 1200px;
-            width: 100%;
-            margin: 1rem auto;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
+  function clearResult() { while (els.result.firstChild) els.result.removeChild(els.result.firstChild); }
+  function renderErrors(errors) {
+    clearResult();
+    var box = el('div', 'res-error');
+    box.appendChild(el('strong', '', 'Please check your input:'));
+    var ul = el('ul');
+    Object.keys(errors).forEach(function (k) { ul.appendChild(el('li', '', errors[k])); });
+    box.appendChild(ul);
+    els.result.appendChild(box);
+  }
+  function tile(k, v, cls, wide) {
+    var t = el('div', 'tile' + (wide ? ' wide' : ''));
+    t.appendChild(el('span', 'k', k));
+    t.appendChild(el('span', 'v' + (cls ? ' ' + cls : ''), v));
+    return t;
+  }
+  function render(res) {
+    if (![res.amount, res.interest].every(isFinite)) { renderErrors({ x: 'The inputs produce a value that cannot be displayed. Try smaller numbers.' }); return; }
+    clearResult();
+    els.result.appendChild(el('p', 'res-label', 'Estimated maturity value'));
+    els.result.appendChild(el('p', 'res-main', nf.format(res.amount)));
+    var tiles = el('div', 'tiles');
+    tiles.appendChild(tile('Principal', nf.format(res.principal)));
+    tiles.appendChild(tile('Interest earned', nf.format(res.interest), 'int'));
+    tiles.appendChild(tile('Effective annual yield', (res.eay * 100).toFixed(3) + '%', '', true));
+    els.result.appendChild(tiles);
+    var pct = Math.max(0, Math.min(100, (res.principal / res.amount) * 100));
+    var donut = el('div', 'donut');
+    donut.setAttribute('aria-hidden', 'true');
+    donut.style.background = 'conic-gradient(#3b82f6 0% ' + pct.toFixed(2) + '%, #2dd4bf ' + pct.toFixed(2) + '% 100%)';
+    els.result.appendChild(donut);
+    var lg = el('div', 'legend');
+    var a = el('span'); var ai = el('i'); ai.style.background = '#3b82f6'; a.appendChild(ai); a.appendChild(document.createTextNode('Principal ' + pct.toFixed(1) + '%')); lg.appendChild(a);
+    var b = el('span'); var bi = el('i'); bi.style.background = '#2dd4bf'; b.appendChild(bi); b.appendChild(document.createTextNode('Interest ' + (100 - pct).toFixed(1) + '%')); lg.appendChild(b);
+    els.result.appendChild(lg);
+    els.result.appendChild(el('p', 'res-note', 'Estimate for a single lump-sum deposit at a fixed nominal rate. Tax, fees and bank rounding are not included.'));
+  }
 
-        @media (min-width: 768px) {
-            .tqc-page-grid {
-                grid-template-columns: 2.5fr 1fr;
-                align-items: start;
-            }
-        }
+  function run() {
+    var v = validate();
+    if (!v.ok) { showFieldErrors(v.errors); renderErrors(v.errors); return; }
+    clearFieldErrors();
+    render(calculate(v.values.principal, v.values.rate, v.values.years, Number(els.comp.value)));
+  }
 
-        /* Breadcrumb */
-        .breadcrumb {
-            font-size: 0.9rem;
-            margin-bottom: 0px;
-            color: var(--text-muted);
-            font-weight: 500;
-            padding-bottom: 0.75rem;
-        }
+  KEYS.forEach(function (k) { els[k].addEventListener('input', run); });
+  els.comp.addEventListener('change', run);
+  $('fdForm').addEventListener('submit', function (e) { e.preventDefault(); run(); });
+  run();
+})();
+</script>
 
-        .breadcrumb a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .main-body {
-            background: var(--bg-surface);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        h1.page-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-            text-align: center;
-        }
-
-        /* --- AD TARGET HOOK --- */
-        /* Flexbox guarantees anything navigation.js injects perfectly centers itself */
-        .tool-suite {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        /* Target dynamically injected AdSense wrappers to add margin */
-        .tool-suite > *:not(.calculator-ui-box) {
-            margin-top: 1.5rem;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* --- PREMIUM DARK GLASS CALCULATOR CARD --- */
-        .calculator-ui-box {
-            background-color: #071426;
-            background-image: 
-                radial-gradient(circle at top left, rgba(22, 200, 244, 0.12) 0%, transparent 45%), 
-                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 45%), 
-                radial-gradient(circle at top right, rgba(0, 214, 160, 0.08) 0%, transparent 40%), 
-                linear-gradient(135deg, rgba(7, 20, 38, 0.8) 0%, rgba(4, 10, 20, 0.9) 100%);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid #1e293b;
-            text-align: left;
-        }
-
-        [data-theme="dark"] .calculator-ui-box {
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.08);
-        }
-
-        .calc-input-group {
-            margin-bottom: 16px;
-            width: 100%;
-        }
-
-        .calc-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #94a3b8;
-        }
-
-        /* Premium Dark Slate Inputs */
-        .calc-input {
-            background-color: #101E35;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.02);
-            color: #f8fafc;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 12px 15px;
-            width: 100%;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .calc-input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-        }
-
-        /* Deep Teal Result Panel */
-        .result-box {
-            background-color: #103B42;
-            background-image: linear-gradient(145deg, #103B42 0%, #092126 100%);
-            box-shadow: inset 0 0 25px rgba(0, 214, 160, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid #184c55;
-            padding: 20px;
-            text-align: center;
-            margin-top: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-accent-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        }
-
-        /* Bright Mint-Teal Result Amount */
-        .result-value {
-            color: #00D6A0;
-            font-size: 32px;
-            font-weight: 800;
-            display: block;
-            margin-top: 5px;
-            word-break: break-all;
-            text-shadow: 0 2px 10px rgba(0, 214, 160, 0.3);
-        }
-
-        /* --- EDITORIAL CONTENT --- */
-        .article-content {
-            width: 100%;
-            max-width: 100%;
-        }
-
-        .article-content h2 {
-            font-size: 22px;
-            color: var(--text-main);
-            margin: 1.5rem 0 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
-
-        .article-content h3 {
-            font-size: 19px;
-            color: var(--text-main);
-            margin: 1.5rem 0 0.75rem 0;
-        }
-        
-        .article-content h4 {
-            font-size: 17px;
-            color: var(--text-main);
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .article-content p, .article-content li {
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-size: 15.5px;
-        }
-
-        .article-content ul, .article-content ol {
-            margin-left: 20px;
-            margin-bottom: 1rem;
-        }
-
-        .formula-box {
-            background: var(--bg-primary);
-            border-left: 4px solid #38bdf8;
-            padding: 15px;
-            overflow-x: auto;
-            font-family: monospace;
-            font-size: 16px;
-            font-weight: bold;
-            margin: 15px 0;
-            color: var(--text-main);
-            white-space: nowrap;
-            max-width: 100%;
-        }
-
-        .data-table-wrapper {
-            overflow-x: auto;
-            margin: 20px 0;
-            width: 100%;
-            max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .data-table {
-            border-collapse: collapse;
-            width: 100%;
-            min-width: 500px;
-            text-align: left;
-            background: var(--bg-surface);
-        }
-
-        .data-table th, .data-table td {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            font-size: 14.5px;
-            color: var(--text-main);
-        }
-
-        .data-table th {
-            background: var(--bg-primary);
-            font-weight: 700;
-        }
-        
-        .data-table caption {
-            padding: 12px;
-            color: var(--text-muted);
-            font-size: 13px;
-            text-align: left;
-        }
-
-        .notice {
-            margin: 20px 0;
-            padding: 16px;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid #38bdf8;
-            border-radius: 8px;
-            background: var(--bg-primary);
-        }
-
-        .notice p:last-child {
-            margin-bottom: 0;
-        }
-
-        .faq-item {
-            margin: 0 0 16px;
-            padding: 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            background: var(--bg-primary);
-        }
-
-        .faq-item h4 {
-            margin-top: 0;
-            margin-bottom: 8px;
-        }
-
-        .faq-item p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* --- MOBILE TWEAKS --- */
-        @media (max-width: 767px) {
-            .tqc-page-grid {
-                padding: 0 0.5rem;
-                margin-top: 0.5rem;
-            }
-            .main-body {
-                padding: 1.25rem 1rem;
-                width: 100%;
-                overflow: hidden;
-            }
-            .calculator-ui-box {
-                padding: 20px 15px;
-            }
-            h1.page-title {
-                font-size: 21px;
-            }
-            .result-value {
-                font-size: 28px;
-            }
-            .breadcrumb {
-                font-size: 0.85rem;
-                padding-left: 0.15rem;
-            }
-        }
-
-        /* Empty Sidebar placeholder */
-        .sidebar {
-            width: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="tqc-page-grid">
-        <div class="breadcrumb">
-            <a href="/">home</a> / <a href="/#finance">finance</a> / fixed deposit calculator
-        </div>
-
-        <main class="main-body">
-            <h1 class="page-title">Fixed Deposit & Compound Interest Calculator</h1>
-            
-            <!-- .tool-suite uses flexbox to force dynamically injected AdSense to absolute center -->
-            <div class="tool-suite">
-                
-                <!-- Premium Dark Glass Calculator Box -->
-                <div class="calculator-ui-box">
-                    <h2 style="color: #f8fafc; font-size: 18px; margin-bottom: 20px; margin-top: 0px; text-align: center; font-weight: 700; letter-spacing: 0.5px;">Fixed Deposit Calculator</h2>
-                    
-                    <div class="calc-input-group">
-                        <label class="calc-label" for="principal">Principal Amount (Initial Investment):</label>
-                        <input id="principal" class="calc-input" type="number" value="10000" />
-                    </div>
-                    
-                    <div class="calc-input-group">
-                        <label class="calc-label" for="interestRate">Annual Interest Rate (%):</label>
-                        <input id="interestRate" class="calc-input" type="number" value="7.1" />
-                    </div>
-                    
-                    <div class="calc-input-group">
-                        <label class="calc-label" for="years">Time Period (Years):</label>
-                        <input id="years" class="calc-input" type="number" value="5" />
-                    </div>
-                    
-                    <div class="calc-input-group" style="margin-bottom: 8px;">
-                        <label class="calc-label" for="compounding">Compounding Frequency:</label>
-                        <select id="compounding" class="calc-input">
-                            <option value="1">Yearly (12 Months)</option>
-                            <option value="2">Half-Yearly (6 Months)</option>
-                            <option value="4" selected>Quarterly (3 Months)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="result-box">
-                        <div class="result-accent-line"></div>
-                        <span style="color: #94a3b8; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Estimated Maturity Value</span>
-                        <span id="financeResult" class="result-value" aria-live="polite">14,213.63</span>
-                    </div>
-                </div>
-                
-                <!-- navigation.js injects the ad banner here -->
-            </div>
-
-            <article class="article-content">
-                <h2>What Is a Fixed Deposit and Compound Interest?</h2>
-                <p>A fixed deposit (FD), also called a term deposit, is a savings product in which you deposit money for an agreed period under specified terms. The bank or financial institution pays interest according to the conditions of that deposit. The interest you receive depends on factors such as the offered rate, the deposit period, the interest calculation method, and the payout option.</p>
-                <p>Compound interest describes a mathematical process in which accumulated interest can itself earn interest in later periods. If interest is added to the balance and remains invested, subsequent interest calculations may use the increased balance rather than only the original principal. This can make compound growth different from simple interest, which is calculated on the original principal alone.</p>
-                <p>Use this calculator to explore an estimated maturity amount by entering your starting deposit, annual nominal interest rate, investment period, and compounding frequency. The result is based on the mathematical assumptions described below. It should not be treated as a guaranteed quote from a particular bank.</p>
-
-                <h2>How to Use the FD Calculator</h2>
-                <ol>
-                    <li><strong>Enter the principal:</strong> Type the amount you plan to deposit. For example, enter 10000 for a ten-thousand deposit.</li>
-                    <li><strong>Enter the annual interest rate:</strong> If the stated rate is 7.1% per year, enter 7.1, not 0.071.</li>
-                    <li><strong>Choose the duration:</strong> Enter the investment period in years. A value of 5 means five years under the calculator's model.</li>
-                    <li><strong>Select the compounding frequency:</strong> Choose yearly, half-yearly, or quarterly to change how many compounding periods the model uses in one year.</li>
-                    <li><strong>Review the result:</strong> The estimated maturity value will update automatically when you change an input.</li>
-                </ol>
-
-                <h2>The Math Behind the Calculator</h2>
-                <p>This calculator uses the standard formula for a single lump-sum deposit earning a fixed nominal annual rate with periodic compounding:</p>
-                
-                <div class="formula-box">
-                    A = P &times; (1 + r/n)<sup>nt</sup>
-                </div>
-                
-                <p>In this formula:</p>
-                <ul>
-                    <li><strong>A:</strong> The estimated final amount, including the original principal and accumulated interest.</li>
-                    <li><strong>P:</strong> The initial principal deposited.</li>
-                    <li><strong>r:</strong> The annual nominal interest rate expressed as a decimal. For example, 7.1% is represented by 0.071.</li>
-                    <li><strong>n:</strong> The number of compounding periods per year. It is 1 for yearly, 2 for half-yearly, and 4 for quarterly compounding.</li>
-                    <li><strong>t:</strong> The investment period expressed in years.</li>
-                </ul>
-                <p>The periodic rate in this model is r divided by n, while the total number of periods is n multiplied by t. The calculation uses the selected frequency and retains fractional exponents if the entered duration does not correspond to a whole number of periods. Actual financial institutions may apply different rules for incomplete periods.</p>
-
-                <h2>Worked Example: A 10,000 Deposit</h2>
-                <p>Suppose you invest 10,000 at a fixed annual nominal rate of 7.1% for five years, using quarterly compounding. Under the formula used by this calculator, the periodic rate is 7.1% divided by four, or 1.775%. The model uses 20 quarterly periods.</p>
-
-                <div class="formula-box">
-                    P = 10,000<br>
-                    r = 0.071<br>
-                    n = 4<br>
-                    t = 5<br>
-                    A = 10,000 &times; (1 + 0.071 / 4)<sup>20</sup><br>
-                    A &approx; 14,213.63
-                </div>
-                
-                <p>The estimated final amount is the principal plus this interest. These figures demonstrate the calculator's mathematical model; they do not establish the maturity amount payable under every bank's FD product.</p>
-
-                <h2>Simple Interest vs Compound Interest</h2>
-                <p>Simple interest is calculated only on the original principal. Compound interest, by contrast, can accumulate on both the original principal and interest already added to the balance. To compare the two methods, consider a hypothetical principal of 10,000 earning 8% per year for different periods. The compound-interest column below assumes annual compounding and no additional deposits or withdrawals.</p>
-
-                <div class="data-table-wrapper">
-                    <table class="data-table">
-                        <caption>Illustrative amounts. Figures are rounded to two decimal places.</caption>
-                        <thead>
-                            <tr>
-                                <th>Period</th>
-                                <th>Principal</th>
-                                <th>Simple-interest balance</th>
-                                <th>Annual compound balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>5 years</td>
-                                <td>10,000.00</td>
-                                <td>14,000.00</td>
-                                <td>14,693.28</td>
-                            </tr>
-                            <tr>
-                                <td>10 years</td>
-                                <td>10,000.00</td>
-                                <td>18,000.00</td>
-                                <td>21,589.25</td>
-                            </tr>
-                            <tr>
-                                <td>20 years</td>
-                                <td>10,000.00</td>
-                                <td>26,000.00</td>
-                                <td>46,609.57</td>
-                            </tr>
-                            <tr>
-                                <td>30 years</td>
-                                <td>10,000.00</td>
-                                <td>34,000.00</td>
-                                <td>100,626.57</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h2>How Compounding Frequency Affects Growth</h2>
-                <p>Compounding frequency determines how often interest is added to the balance in the mathematical model. For the same positive nominal annual rate, the formula generally produces a higher final amount when compounding occurs more frequently, assuming the same principal and time period. This comparison depends on the model's assumptions and should not be used to conclude that a bank product with a particular payout schedule is automatically better.</p>
-
-                <ul>
-                    <li><strong>Yearly:</strong> The model compounds interest once per year.</li>
-                    <li><strong>Half-yearly:</strong> The model compounds interest twice per year.</li>
-                    <li><strong>Quarterly:</strong> The model compounds interest four times per year.</li>
-                </ul>
-                
-                <p>When comparing actual deposits, review the effective terms and quoted rates for each product rather than relying only on the frequency label. Banks can use product-specific calculation conventions, and the nominal rate alone may not tell the entire story.</p>
-
-                <h2>Important Assumptions and FD Limitations</h2>
-                <p>The result assumes a fixed annual nominal rate for the entire entered duration, the selected periodic compounding frequency, one initial lump-sum deposit, and no additional deposits or withdrawals. It also assumes the calculated interest remains invested according to the formula. The tool does not model changes to rates, premature closure, renewal, penalties, fees, or tax deductions.</p>
-                <p>Actual fixed-deposit maturity can differ because financial institutions apply the terms of their specific deposit products. These terms may determine the interest calculation method, the handling of incomplete periods, the payout schedule, and the rounding of interest. A bank's actual maturity quotation may therefore differ from the result displayed here even if the starting amount and advertised rate look the same.</p>
-
-                <h3>Cumulative and periodic-interest payout deposits</h3>
-                <p>A cumulative deposit generally retains interest toward maturity, subject to the product's rules. A periodic-interest payout deposit instead pays interest at scheduled intervals. Because money paid out may no longer remain in the deposit to earn further interest, the cash-flow pattern differs. This calculator models growth of a single balance; it does not calculate the timing or reinvestment of periodic payouts.</p>
-
-                <h3>Rounding, taxes, and incomplete periods</h3>
-                <p>This calculator rounds the displayed monetary result to two decimal places. It does not reproduce a bank's internal rounding at every calculation step. It also does not estimate tax liability or deductions, and it does not model every possible day-count convention or incomplete compounding period. Check the official terms and maturity quotation for the FD you intend to open.</p>
-
-                <div class="notice">
-                    <p><strong>Important:</strong> This tool is for educational estimates and financial planning. It is not a bank quotation, a guarantee of returns, or personalised financial advice. Confirm the applicable interest rate, deposit conditions, payout option, tax treatment, and maturity amount with the financial institution.</p>
-                </div>
-
-                <h2>Frequently Asked Questions</h2>
-                <div itemscope itemtype="https://schema.org/FAQPage">
-                    
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">1. How is compound interest different from simple interest?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">Simple interest is calculated on the original principal, while compound interest is calculated on the principal and previously accumulated interest. The difference can become more significant over longer periods, depending on the rate and compounding method.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">2. How do I calculate fixed deposit maturity?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">This calculator estimates maturity by multiplying the principal by one plus the periodic interest rate, raised to the total number of compounding periods. Actual bank calculations may use additional product-specific rules.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">3. What does quarterly compounding mean?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">Quarterly compounding means interest is compounded four times per year under the selected mathematical model. This calculator divides the nominal annual rate by four and uses four periods for each year.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">4. Will this result exactly match my bank's FD maturity amount?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">Not necessarily. Actual maturity can depend on the bank's applicable interest calculation method, deposit terms, payout option, duration, incomplete-period rules, and rounding method. Check the bank's official maturity quotation.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">5. Can I calculate an FD with a zero interest rate?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">Yes. With a zero interest rate and no additional deposits or withdrawals, the estimated maturity amount equals the original principal. The calculator supports a zero interest rate.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">6. What is the difference between cumulative and periodic-interest payout FDs?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">A cumulative FD generally accumulates interest toward maturity, while a periodic-interest payout FD pays interest at scheduled intervals. Their cash flows and maturity proceeds differ. This calculator estimates a growing balance rather than periodic payouts.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">7. Is tax included in the maturity estimate?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">No. The estimate does not deduct tax, withholding, penalties, fees, or other bank-specific adjustments. Your actual after-tax return can differ from the amount shown by the calculator.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                        <h4 itemprop="name">8. What is the Rule of 72?</h4>
-                        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                            <p itemprop="text">The Rule of 72 is a rough mental estimate of doubling time. Divide 72 by an annual interest rate expressed as a percentage. For example, at 6% the estimate is about 12 years. Actual growth depends on the rate, compounding method, and applicable terms.</p>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <h2>Conclusion</h2>
-                <p>A fixed deposit and compound-interest calculator can help you understand how a starting deposit, an assumed annual interest rate, a duration, and a compounding frequency affect a projected balance. It is useful for comparing hypothetical scenarios and seeing how accumulated interest can contribute to growth over time. Try different inputs to understand how the assumptions change the estimate.</p>
-                <p>Remember that the mathematical result is not necessarily the amount a bank will pay at maturity. Actual FD terms, payout options, rounding, incomplete periods, and applicable taxes or deductions may affect the final amount. Before making a deposit, verify the official rate and maturity quotation for the specific product. Use this calculator as a planning aid, and rely on the institution's documented terms for the final decision.</p>
-            </article>
-        </main>
-        
-        <aside class="sidebar"></aside>
-    </div>
-
-    <!-- Vanilla JS Calculation Script wrapped in IIFE -->
-    <script>
-    (function () {
-        'use strict';
-        function calculateFinance() {
-            const pInput = document.getElementById('principal');
-            const rInput = document.getElementById('interestRate');
-            const tInput = document.getElementById('years');
-            const nInput = document.getElementById('compounding');
-            const resultEl = document.getElementById('financeResult');
-            
-            if (!pInput || !rInput || !tInput || !nInput || !resultEl) return;
-            
-            const p = parseFloat(pInput.value);
-            const r = parseFloat(rInput.value);
-            const t = parseFloat(tInput.value);
-            const n = parseFloat(nInput.value);
-            
-            if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r < 0 || t <= 0) {
-                resultEl.innerText = "0.00";
-                return;
-            }
-            
-            let amount;
-            if (r === 0) {
-                amount = p;
-            } else {
-                amount = p * Math.pow((1 + (r / (100 * n))), (n * t));
-            }
-            
-            resultEl.innerText = amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        
-        ['principal', 'interestRate', 'years', 'compounding'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('input', calculateFinance);
-                el.addEventListener('change', calculateFinance);
-            }
-        });
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', calculateFinance);
-        } else {
-            calculateFinance();
-        }
-    })();
-    </script>
-    
-    <script src="/navigation.js"></script>
+<script src="/navigation.js"></script>
 </body>
 </html>
