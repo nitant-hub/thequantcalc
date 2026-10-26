@@ -1328,8 +1328,6 @@
         });
       }
             const allTools = [
-        { name: "Compound Interest Calculator", url: "/tools/fixed-compound-interest-calculator.html" },
-        { name: "Exam Marks Percentage Calculator", url: "/tools/exam-marks-percentage-calculator.html" },
         { name: "Accurate Age Calculator", url: "/tools/accurate-age-calculator.html" },
         { name: "Cosmic Weight Calculator", url: "/tools/cosmic-weight.html" },
         { name: "EMI Calculator", url: "/tools/emi-calculator.html" },
@@ -1385,8 +1383,7 @@
     }
 
         const fallbackTools = [
-      { path: "/tools/fixed-compound-interest-calculator.html", title: "Compound Interest Calculator", text: "Estimate investment growth over time." },
-      { path: "/tools/exam-marks-percentage-calculator.html", title: "Exam Marks Percentage Calculator", text: "Calculate exam scores and percentages." },
+      
       { path: "/tools/accurate-age-calculator.html", title: "Accurate Age Calculator", text: "Calculate your exact age." },
       { path: "/tools/cosmic-weight.html", title: "Cosmic Weight Calculator", text: "Find your weight on other planets." },
       { path: "/tools/emi-calculator.html", title: "EMI Calculator", text: "Calculate your monthly EMI instantly." },
