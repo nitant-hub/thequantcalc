@@ -6,7 +6,7 @@
 <meta property="og:url" content="https://thequantcal.pages.dev/tools/Cosmos-Weight-Calculator">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cosmos Weight Calculator | TheQuantCalc</title>
-<meta name="description" content="Calculate your cosmic weight on different planets like Mars, Jupiter, and the Moon. Free space weight calculator with gravity comparisons.">
+<meta name="description" content="Calculate your cosmic weight on the Moon, Mars, Venus, Jupiter, Saturn and a neutron star. Free space weight calculator with surface gravity data, formula and FAQs.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cosmos Weight Calculator">
 <meta property="og:description" content="Calculate your cosmic weight on different planets like Mars, Jupiter, and the Moon.">
@@ -42,9 +42,8 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .tool-sub{margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.35}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
-.input-wrap{position:relative;display:flex;align-items:center}
-.calculator-ui-box input[type="number"], .calculator-ui-box select{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
-.calculator-ui-box select { cursor: pointer; }
+.calculator-ui-box input[type="number"],.calculator-ui-box select{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
+.calculator-ui-box select{cursor:pointer}
 .calculator-ui-box input[aria-invalid="true"]{border-color:#f87171}
 .calculator-ui-box :focus-visible{outline:3px solid #5eead4;outline-offset:2px}
 .field-error{margin:5px 0 0;font-size:13px;color:#fca5a5;min-height:0}
@@ -54,6 +53,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .tqc-result-box{margin-top:14px;padding:20px 14px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word}
 .res-label{margin:0 0 4px;font-size:14px;font-weight:600;color:#99f6e4;text-transform:uppercase;letter-spacing:0.5px}
 .res-main{margin:0;font-size:clamp(28px,7vw,36px);font-weight:800;line-height:1.2;color:#4ade80}
+.res-note{margin:8px 0 0;font-size:13px;color:#94a3b8}
 
 /* Article */
 article{margin-top:18px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--text);font-size:16px;line-height:1.35;overflow-wrap:break-word}
@@ -68,11 +68,11 @@ article li{margin-bottom:6px}
 article a{color:var(--link);font-weight:600}
 .formula{margin:14px 0;padding:14px;background:var(--soft);border:1px solid var(--line);border-radius:10px;text-align:center;font-family:"Courier New",Courier,monospace;font-size:clamp(15px,3.6vw,20px);overflow-x:auto;color:var(--text);font-weight:bold}
 .data-table-wrapper{margin:14px 0;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
-.data-table-wrapper table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card)}
+.data-table-wrapper table{width:100%;min-width:640px;border-collapse:collapse;background:var(--card)}
 .data-table-wrapper th,.data-table-wrapper td{padding:10px 12px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);color:var(--text)}
 .data-table-wrapper th{background:var(--soft);color:var(--head);font-weight:700}
-.svg-container{background:var(--bg);border-radius:12px;border:1px solid var(--line);margin:30px 0px;padding:20px;text-align:center;}
-
+.data-table-wrapper caption{padding:8px 12px;text-align:left;font-size:13px;color:var(--muted)}
+.svg-container{background:var(--bg);border-radius:12px;border:1px solid var(--line);margin:30px 0;padding:20px;text-align:center}
 .sidebar{display:block}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
@@ -93,172 +93,169 @@ article a{color:var(--link);font-weight:600}
         <form id="cosmosForm" novalidate autocomplete="off">
           <div class="field">
             <label for="earthWeight">Your weight on Earth (kg)</label>
-            <div class="input-wrap">
-              <input id="earthWeight" name="weight" type="number" inputmode="decimal" min="1" step="any" value="60">
-            </div>
+            <input id="earthWeight" name="weight" type="number" inputmode="decimal" min="0" step="any" value="60" aria-describedby="err-weight">
+            <p class="field-error" id="err-weight"></p>
           </div>
 
           <div class="field">
-            <label for="celestialBody">Select a Celestial Body</label>
+            <label for="celestialBody">Select a celestial body</label>
             <select id="celestialBody" name="planet">
-              <option value="0.166">The Moon (Low Gravity)</option>
-              <option value="0.38">Mars (The Red Planet)</option>
-              <option value="0.91">Venus (Earth's Twin)</option>
-              <option value="2.34">Jupiter (Gas Giant)</option>
-              <option value="1.06">Saturn (Ringed Planet)</option>
-              <option value="140000000000">A Neutron Star (Extreme Gravity!)</option>
+              <option value="0.165" data-name="the Moon">The Moon (Low Gravity)</option>
+              <option value="0.38" data-name="Mars">Mars (The Red Planet)</option>
+              <option value="0.90" data-name="Venus">Venus (Earth's Twin)</option>
+              <option value="2.53" data-name="Jupiter">Jupiter (Gas Giant)</option>
+              <option value="1.06" data-name="Saturn">Saturn (Ringed Planet)</option>
+              <option value="140000000000" data-name="a neutron star">A Neutron Star (Extreme Gravity!)</option>
             </select>
           </div>
-
-          <div id="result" class="tqc-result-box" aria-live="polite">
-            <p class="res-label">Your Cosmic Weight</p>
-            <p class="res-main" id="cosmicResult">9.96 kg</p>
-          </div>
         </form>
+
+        <div id="result" class="tqc-result-box" aria-live="polite">
+          <p class="res-label">Your cosmic weight</p>
+          <p class="res-main" id="cosmicResult">9.90 kg</p>
+          <p class="res-note" id="cosmicNote">That is 0.165 times your Earth weight.</p>
+        </div>
       </div>
     </section>
 
     <article>
       <h2>The Mechanics of Gravity: Why Your Weight Changes in Space</h2>
-      <p>Have you ever stepped on a scale and thought about how gravity affects the number you see? Of course, changing planets isn't possible, but it shows how much gravity affects weight.</p>
-      <p>If you use the calculator above, you'll notice a significant difference. A person who weighs 70 kg on Earth drops to 26 kg just by measuring their weight on the surface of Mars. But here is the interesting part: your physical body hasn't changed at all. You didn't lose any muscle, bone, or water. So, what exactly is happening here?</p>
-      <p>To understand this, we need to take a look at how the universe actually works. Whether you're a student trying to understand physics, a data enthusiast looking for patterns, or just someone curious about the stars, let's understand how gravity works across the solar system.</p>
+      <p>Have you ever stepped on a scale and thought about how gravity affects the number you see? Changing planets isn't possible for most of us, but it shows how much gravity affects weight.</p>
+      <p>If you use the calculator above, you'll notice a significant difference. A person who weighs 70 kg on Earth would read about 27 kg on the surface of Mars. But here is the interesting part: your physical body hasn't changed at all. You didn't lose any muscle, bone, or water. So, what exactly is happening here?</p>
+      <p>To understand this, we need to look at how gravity works. Whether you're a student trying to understand physics or just someone curious about the stars, let's see how gravity changes across the solar system.</p>
+
+      <h2>How to Use the Calculator</h2>
+      <ol>
+        <li>Enter your weight on Earth in kilograms, as a bathroom scale reads it.</li>
+        <li>Choose a celestial body from the list.</li>
+        <li>Read your cosmic weight in the result box. It updates instantly when you change either value.</li>
+      </ol>
+      <p>The calculator multiplies your Earth weight by the body's surface-gravity multiplier from the table below. It reports the number a scale calibrated on Earth would show if you stood on that surface.</p>
 
       <h2>The Distinction: Mass vs. Weight</h2>
-      <p>Most of us use the words "mass" and "weight" as if they mean the exact same thing. In our daily lives, that’s perfectly fine. But out in space? Understanding the difference is important in physics. Let's look at the distinction:</p>
+      <p>Most of us use the words "mass" and "weight" as if they mean the exact same thing. In daily life that's fine. In physics the difference is important:</p>
       <ul>
-        <li><strong>What is Mass?</strong> Mass refers to the physical material that makes up an object. It represents all the matter inside you—every single atom and molecule. No matter where you are in the universe (Earth, the Moon, or deep space), that amount of physical matter remains exactly the same. Your mass never changes.</li>
-        <li><strong>What is Weight?</strong> Weight is not about the physical matter. Weight is the measure of how strongly gravity pulls on that matter. If a planet's gravity is weak, the gravitational pull is low (low weight). If the gravity is strong, the pull is much higher (high weight).</li>
+        <li><strong>What is Mass?</strong> Mass is the amount of matter in an object, every atom and molecule in you. No matter where you are in the universe, your mass stays the same.</li>
+        <li><strong>What is Weight?</strong> Weight is the force with which gravity pulls on that mass. If a planet's gravity is weak, the pull is low (low weight). If the gravity is strong, the pull is higher (high weight).</li>
       </ul>
+      <p>Strictly, weight is a force measured in newtons, while kilograms measure mass. This page follows the everyday convention of quoting weight in kilograms: it gives the mass a scale on Earth would need to read to feel the same pull.</p>
 
       <h2>The Mathematics of Gravity</h2>
-      <p>When scientists and data analysts look at the universe, they use math to predict how things will behave. For example, if a data researcher wants to predict how much rocket fuel is needed based on the weight of a spacecraft, they might use a common statistical tool called a linear regression model:</p>
-
+      <p>The weight of an object on any body is its mass multiplied by the local surface gravity:</p>
       <div class="formula">
-        y = &beta;<sub>0</sub> + &beta;<sub>1</sub>x + &epsilon;
+        W = m &times; g
       </div>
+      <p>Because your mass m does not change, the ratio of your weight on two bodies equals the ratio of their surface gravities. That gives the multiplier used by the calculator:</p>
+      <div class="formula">
+        Multiplier = g<sub>body</sub> &divide; g<sub>Earth</sub>
+      </div>
+      <p>For Mars, g is about 3.71 m/s&sup2; against Earth's 9.81 m/s&sup2;, so the multiplier is 3.71 &divide; 9.81 &asymp; 0.38. A 60 kg person reads 60 &times; 0.38 &asymp; 22.8 kg.</p>
 
-      <p><strong>Plain English Translation:</strong> The symbols may look unfamiliar, but the idea is straightforward. This formula simply says: <em>"My Prediction (y) = A starting baseline (&beta;<sub>0</sub>) + (The rate of change (&beta;<sub>1</sub>) multiplied by my input (x)) + A margin for error (&epsilon;)."</em> It is a standard way to map data points.</p>
-
-      <p>But when it comes to gravity itself, we use Sir Isaac Newton's Universal Law of Gravitation. Over 300 years ago, Newton established that every object in the universe pulls on every other object. Here is the equation:</p>
-
+      <p>Where does g come from? Sir Isaac Newton's Universal Law of Gravitation, published over 300 years ago, says every object pulls on every other object:</p>
       <div class="formula">
         F = G &times; (m<sub>1</sub>m<sub>2</sub> / r<sup>2</sup>)
       </div>
-
-      <p>Let's simplify the equation and see what these variables mean:</p>
       <ul>
-        <li><strong>F (Force):</strong> This is your actual weight—the force pulling you down to the ground.</li>
-        <li><strong>G (Gravity Constant):</strong> A universal baseline number that dictates gravitational strength.</li>
-        <li><strong>m<sub>1</sub> (Mass 1):</strong> This is your body mass.</li>
-        <li><strong>m<sub>2</sub> (Mass 2):</strong> This is the mass of the planet (like Earth, Mars, or Jupiter).</li>
-        <li><strong>r<sup>2</sup> (Distance):</strong> This is the distance from the center of the planet's core to the surface.</li>
+        <li><strong>F (Force):</strong> your actual weight, the force pulling you toward the body.</li>
+        <li><strong>G (Gravitational constant):</strong> a universal constant, about 6.674 &times; 10<sup>&minus;11</sup> N&middot;m&sup2;/kg&sup2;.</li>
+        <li><strong>m<sub>1</sub> (Mass 1):</strong> your body mass.</li>
+        <li><strong>m<sub>2</sub> (Mass 2):</strong> the mass of the planet or moon.</li>
+        <li><strong>r (Distance):</strong> the distance from the body's center to your position, which on the surface equals the body's radius.</li>
       </ul>
-      <p>When looking at the equation, the relationship becomes easier to understand. If you stand on a giant planet like Jupiter (m<sub>2</sub> is very large), the planet pulls on you with more force, increasing your weight. If you stand on a smaller body like the Moon (m<sub>2</sub> is small), the pull is weak, and you feel much lighter.</p>
+      <p>Dividing out your own mass leaves the surface gravity g = G &times; m<sub>2</sub> / r<sup>2</sup>. A more massive body pulls harder, but a larger radius pulls less because you are farther from the center. That is why Saturn, with about 95 times Earth's mass, has surface gravity close to Earth's: its large radius cancels most of the extra mass.</p>
 
       <h2>Planetary Data: A Side-by-Side Comparison</h2>
-      <p>The table below shows the data that aerospace engineers use to calculate rocket launches. Notice how a planet's total mass directly correlates to its surface gravity.</p>
+      <p>The table below shows the data that engineers use for landing and launch calculations, plus what a 60 kg person would read on each surface.</p>
 
       <div class="data-table-wrapper">
         <table>
+          <caption>Mass, radius and surface gravity (rounded). The last column uses the multiplier in the calculator.</caption>
           <thead>
             <tr>
               <th>Planet / Moon</th>
-              <th>Planet's Total Mass (kg)</th>
-              <th>Distance to Core (km)</th>
-              <th>Gravity (m/s²)</th>
-              <th>Weight Multiplier</th>
+              <th>Total mass (kg)</th>
+              <th>Radius (km)</th>
+              <th>Gravity (m/s&sup2;)</th>
+              <th>Weight multiplier</th>
+              <th>A 60 kg person reads</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Earth</strong></td>
-              <td>5.97 &times; 10<sup>24</sup></td>
-              <td>6,371</td>
-              <td>9.81</td>
-              <td>1.00x</td>
-            </tr>
-            <tr>
-              <td><strong>The Moon</strong></td>
-              <td>0.073 &times; 10<sup>24</sup></td>
-              <td>1,737</td>
-              <td>1.62</td>
-              <td>0.16x</td>
-            </tr>
-            <tr>
-              <td><strong>Mars</strong></td>
-              <td>0.642 &times; 10<sup>24</sup></td>
-              <td>3,389</td>
-              <td>3.71</td>
-              <td>0.38x</td>
-            </tr>
-            <tr>
-              <td><strong>Jupiter</strong></td>
-              <td>1898 &times; 10<sup>24</sup></td>
-              <td>69,911</td>
-              <td>24.79</td>
-              <td>2.53x</td>
-            </tr>
-            <tr>
-              <td><strong>Saturn</strong></td>
-              <td>568 &times; 10<sup>24</sup></td>
-              <td>58,232</td>
-              <td>10.44</td>
-              <td>1.06x</td>
-            </tr>
+            <tr><td><strong>Earth</strong></td><td>5.97 &times; 10<sup>24</sup></td><td>6,371</td><td>9.81</td><td>1.00x</td><td>60.0 kg</td></tr>
+            <tr><td><strong>The Moon</strong></td><td>0.073 &times; 10<sup>24</sup></td><td>1,737</td><td>1.62</td><td>0.165x</td><td>9.9 kg</td></tr>
+            <tr><td><strong>Mars</strong></td><td>0.642 &times; 10<sup>24</sup></td><td>3,389</td><td>3.71</td><td>0.38x</td><td>22.8 kg</td></tr>
+            <tr><td><strong>Venus</strong></td><td>4.87 &times; 10<sup>24</sup></td><td>6,052</td><td>8.87</td><td>0.90x</td><td>54.0 kg</td></tr>
+            <tr><td><strong>Jupiter</strong></td><td>1898 &times; 10<sup>24</sup></td><td>69,911</td><td>24.79</td><td>2.53x</td><td>151.8 kg</td></tr>
+            <tr><td><strong>Saturn</strong></td><td>568 &times; 10<sup>24</sup></td><td>58,232</td><td>10.44</td><td>1.06x</td><td>63.6 kg</td></tr>
           </tbody>
         </table>
       </div>
+      <p>For Jupiter and Saturn, which have no solid surface, the radius and gravity refer to the level where the atmospheric pressure is about one bar, the usual reference. The neutron star option uses an illustrative multiplier of about 1.4 &times; 10<sup>11</sup>, since real neutron stars vary widely in mass and radius.</p>
 
       <h2>A Visual Guide to Your Cosmic Weight</h2>
-      <p>If a person steps on a scale on Earth and it reads exactly 100 kg, the circles below represent what that exact same scale would read if they stood on Mars or Jupiter.</p>
+      <p>If a person steps on a scale on Earth and it reads exactly 100 kg, the circles below show what the same scale would read on Mars or Jupiter. The area of each circle is proportional to the reading.</p>
 
       <div class="svg-container">
-        <svg height="100%" style="max-width: 300px;" viewBox="0 0 400 400" width="100%">
-          <circle cx="200" cy="200" fill="#fca5a5" r="180"></circle>
+        <svg height="100%" style="max-width: 300px;" viewBox="0 0 400 400" width="100%" role="img" aria-label="Concentric circles: Jupiter 253 kg, Earth 100 kg, Mars 38 kg">
+          <circle cx="200" cy="200" fill="#fca5a5" r="159"></circle>
           <circle cx="200" cy="200" fill="#38bdf8" r="100"></circle>
-          <circle cx="200" cy="200" fill="#fb923c" r="38"></circle>
-          <circle cx="200" cy="200" fill="#cbd5e1" r="16"></circle>
-          
-          <text fill="#7f1d1d" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="45">Jupiter: Scale reads 253 kg</text>
-          <text fill="#0c4a6e" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="130">Earth: Scale reads 100 kg</text>
-          <text fill="#7c2d12" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="200" y="195">Mars: Scale reads 38 kg</text>
+          <circle cx="200" cy="200" fill="#fb923c" r="62"></circle>
+
+          <text fill="#7f1d1d" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="76">Jupiter: 253 kg</text>
+          <text fill="#0c4a6e" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="127">Earth: 100 kg</text>
+          <text fill="#7c2d12" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" x="200" y="205">Mars: 38 kg</text>
         </svg>
-        <p style="font-size: 13px; margin-top: 15px;"><em>Visualizing the shift in a 100kg Earth weight across our solar system.</em></p>
+        <p style="font-size: 13px; margin-top: 15px;"><em>A 100 kg Earth reading shown on Mars, Earth and Jupiter.</em></p>
       </div>
 
       <h2>Real-World Applications in Space Engineering</h2>
-      <p>These calculations are a core part of space engineering. When space agencies like NASA or ISRO launch rovers to Mars, engineers must write computer code that tells the spacecraft exactly how hard to fire its landing rockets. If the system assumes Earth's gravity (9.81 m/s²) instead of Martian gravity (3.71 m/s²), the rockets will overcompensate, preventing the rover from landing safely.</p>
-      <p>Understanding gravity is also vital for human health. Astronauts on the International Space Station (ISS) live in a state of continuous free-fall, meaning they don't use their muscles to fight gravity. Over time, their bones weaken and their muscles atrophy. Developing solutions for low-gravity environments is essential for future planetary exploration.</p>
+      <p>These calculations are a core part of space engineering. When space agencies like NASA or ISRO send landers to the Moon or Mars, engineers must tell the spacecraft exactly how hard to fire its landing engines. If the guidance system assumed Earth's gravity (9.81 m/s&sup2;) instead of Martian gravity (3.71 m/s&sup2;), the engine thrust would be badly wrong and the landing would fail.</p>
+      <p>Understanding gravity is also vital for human health. Astronauts on the International Space Station (ISS) live in continuous free-fall, so their muscles and bones do not have to work against gravity. Over time, bones lose density and muscles weaken. Developing countermeasures is essential for future long missions and for living on bodies with low gravity.</p>
+
+      <h2>Assumptions and Limitations</h2>
+      <ul>
+        <li>The result is your Earth reading multiplied by a surface-gravity ratio. It is an estimate of what an Earth-calibrated scale would show, not a measurement.</li>
+        <li>Gravity varies slightly with location on every body (for example with latitude and altitude on Earth), so the multipliers are rounded averages.</li>
+        <li>Jupiter and Saturn have no solid surface to stand on; their values refer to the one-bar level of the atmosphere.</li>
+        <li>The neutron star value is illustrative, and a human could not survive anywhere near one.</li>
+        <li>The calculation runs entirely in your browser; the values you enter are not sent anywhere.</li>
+      </ul>
 
       <h2>Frequently Asked Questions</h2>
       <div id="faq">
-        <h3>1. Why is Jupiter's gravity so strong?</h3>
-        <p>Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity correlates with mass, Jupiter's gravitational pull is about 2.5 times stronger than Earth's. Movement would be much more difficult due to the stronger gravity.</p>
-        
-        <h3>2. Would I weigh less if I stood on top of Mount Everest?</h3>
-        <p>Technically, yes. Gravity gets weaker the further away you get from the center of the Earth. At the peak of Mount Everest, you are physically further from the Earth's core. You would weigh slightly less up there, though the difference is so small you would need a scientific scale to measure it.</p>
-        
-        <h3>3. Why do astronauts float if gravity still exists in space?</h3>
-        <p>Gravity still has a strong presence where the International Space Station orbits. The reason astronauts float is because the station is moving horizontally at 17,500 mph. They are constantly falling toward Earth, but moving forward so fast that they keep missing the ground. This continuous free-fall creates the effect of weightlessness.</p>
-        
-        <h3>4. What is a Neutron Star?</h3>
-        <p>A neutron star is the collapsed core of a massive star. Imagine taking the entire mass of our Sun and compressing it into a sphere the size of a small city. Because it is incredibly dense, its surface gravity is billions of times stronger than Earth's. The gravitational forces would be far beyond human survival limits.</p>
-        
-        <h3>5. Does my weight change if I go to Venus?</h3>
-        <p>Yes, slightly. Venus is often called Earth's twin sister because it is similar in size. Since its mass is slightly less than Earth's, its gravity is about 91% of ours. So, if you weigh 100 kg on Earth, you would weigh about 91 kg on Venus. However, your mass would remain unchanged.</p>
+        <h3>Why is Jupiter's gravity so strong?</h3>
+        <p>Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity depends on mass, Jupiter's gravitational pull at the cloud tops is about 2.5 times stronger than Earth's. Movement would be much more difficult under that gravity.</p>
+
+        <h3>Would I weigh less if I stood on top of Mount Everest?</h3>
+        <p>Technically, yes. Gravity gets weaker the farther you are from the center of the Earth. At the peak of Mount Everest you are farther from the Earth's core, so you would weigh slightly less, though the difference is so small you would need a scientific instrument to measure it.</p>
+
+        <h3>Why do astronauts float if gravity still exists in space?</h3>
+        <p>Gravity is still strong where the International Space Station orbits, roughly 90% of its strength at the surface. Astronauts float because the station and everyone in it are in continuous free-fall: they move sideways at about 17,500 mph, so they keep falling toward Earth but keep missing it. This free-fall creates the effect of weightlessness.</p>
+
+        <h3>What is a neutron star?</h3>
+        <p>A neutron star is the collapsed core of a massive star. Imagine compressing more than the mass of our Sun into a sphere only about the size of a small city. Because it is incredibly dense, its surface gravity is about a hundred billion times stronger than Earth's. The gravitational forces would be far beyond human survival limits.</p>
+
+        <h3>Does my weight change if I go to Venus?</h3>
+        <p>Yes, slightly. Venus is often called Earth's twin because it is similar in size. Its mass is a little less than Earth's, so its surface gravity is about 90% of ours. If you weigh 100 kg on Earth, you would weigh about 90 kg on Venus. Your mass would remain unchanged.</p>
+
+        <h3>Why is Saturn's gravity about the same as Earth's if it is so big?</h3>
+        <p>Saturn is about 95 times as massive as Earth, but it is also far less dense and about 9 times wider. Surface gravity depends on mass divided by the square of the radius, so the large radius cancels most of the extra mass, leaving a pull only about 6% stronger than Earth's.</p>
       </div>
 
-      <h2>External Resources for Planetary Science</h2>
-      <p>To read more about planetary data and orbital mechanics, refer to these scientific resources:</p>
+      <h2>Source</h2>
+      <p>Planetary mass, radius and gravity values come from NASA and ESA reference material. To read more about planetary data and orbital mechanics, see these resources:</p>
       <ul>
-        <li><a href="https://solarsystem.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA's Solar System Exploration</a>: Data on orbital paths, planetary models, and current space missions.</li>
-        <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noopener noreferrer">The NASA Planetary Fact Sheet</a>: A primary dataset for the mass, radius, and gravity metrics of bodies in our solar system.</li>
-        <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Relativity_and_gravity" target="_blank" rel="noopener noreferrer">ESA: Relativity and Gravity</a>: Literature from the European Space Agency explaining the broader mechanics of gravity and physics.</li>
+        <li><a href="https://solarsystem.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA's Solar System Exploration</a>: data on orbital paths, planetary models, and current space missions.</li>
+        <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noopener noreferrer">The NASA Planetary Fact Sheet</a>: a primary dataset for the mass, radius, and gravity of bodies in our solar system.</li>
+        <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Relativity_and_gravity" target="_blank" rel="noopener noreferrer">ESA: Relativity and Gravity</a>: background from the European Space Agency on the mechanics of gravity.</li>
       </ul>
+      <p>The multipliers are ratios of the surface gravities in the table above, computed independently for this page.</p>
+
+      <h2>Conclusion</h2>
+      <p>Your weight is not a fixed property of your body. It is the result of your mass meeting a particular world's gravity, so the same person would read about 10 kg on the Moon, 23 kg on Mars and more than 150 kg on Jupiter. Use the calculator to compare worlds, and keep in mind the difference between mass, which stays constant, and weight, which depends on where you stand. The same ratio of surface gravities is what engineers use to plan landings, from the Moon to Mars.</p>
     </article>
   </main>
-  
+
   <aside class="sidebar"></aside>
 </div>
 
@@ -287,66 +284,41 @@ article a{color:var(--link);font-weight:600}
         {
           "@type": "Question",
           "name": "Why is Jupiter's gravity so strong?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity correlates with mass, Jupiter's gravitational pull is about 2.5 times stronger than Earth's."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Jupiter is the largest planet in our solar system. You could fit over 1,300 Earths inside of it. Because gravity depends on mass, Jupiter's gravitational pull at the cloud tops is about 2.5 times stronger than Earth's." }
         },
         {
           "@type": "Question",
           "name": "Would I weigh less if I stood on top of Mount Everest?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Technically, yes. Gravity gets weaker the further away you get from the center of the Earth. At the peak of Mount Everest, you are physically further from the Earth's core, meaning you would weigh slightly less."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Technically, yes. Gravity gets weaker the farther you are from the center of the Earth. At the peak of Mount Everest you are farther from the Earth's core, so you would weigh slightly less." }
         },
         {
           "@type": "Question",
           "name": "Why do astronauts float if gravity still exists in space?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The reason astronauts float is because the station is moving horizontally at 17,500 mph. They are constantly falling toward Earth, but moving forward so fast that they keep missing the ground. This creates the effect of weightlessness."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Astronauts float because the station and everyone in it are in continuous free-fall: they move sideways at about 17,500 mph, so they keep falling toward Earth but keep missing it. This creates the effect of weightlessness." }
         },
         {
           "@type": "Question",
-          "name": "What is a Neutron Star?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "A neutron star is the collapsed core of a massive star. Because it is incredibly dense, its surface gravity is billions of times stronger than Earth's."
-          }
+          "name": "What is a neutron star?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A neutron star is the collapsed core of a massive star. Because it is incredibly dense, its surface gravity is about a hundred billion times stronger than Earth's." }
         },
         {
           "@type": "Question",
           "name": "Does my weight change if I go to Venus?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, slightly. Since its mass is slightly less than Earth's, its gravity is about 91% of ours. So, if you weigh 100 kg on Earth, you would weigh about 91 kg on Venus. However, your mass would remain unchanged."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, slightly. Its surface gravity is about 90% of Earth's, so if you weigh 100 kg on Earth you would weigh about 90 kg on Venus. Your mass would remain unchanged." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Saturn's gravity about the same as Earth's if it is so big?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Saturn is about 95 times as massive as Earth, but it is far less dense and about 9 times wider. Surface gravity depends on mass divided by the square of the radius, so the large radius cancels most of the extra mass, leaving a pull only about 6% stronger than Earth's." }
         }
       ]
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://thequantcal.pages.dev/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Physics",
-          "item": "https://thequantcal.pages.dev/#physics"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Cosmos Weight Calculator",
-          "item": "https://thequantcal.pages.dev/tools/Cosmos-Weight-Calculator"
-        }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thequantcal.pages.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Physics", "item": "https://thequantcal.pages.dev/#physics" },
+        { "@type": "ListItem", "position": 3, "name": "Cosmos Weight Calculator", "item": "https://thequantcal.pages.dev/tools/Cosmos-Weight-Calculator" }
       ]
     }
   ]
@@ -359,30 +331,35 @@ article a{color:var(--link);font-weight:600}
   var earthInput = document.getElementById('earthWeight');
   var bodySelect = document.getElementById('celestialBody');
   var resultBox = document.getElementById('cosmicResult');
+  var noteBox = document.getElementById('cosmicNote');
+  var errBox = document.getElementById('err-weight');
 
   function calculate() {
-    var earthW = parseFloat(earthInput.value);
-    var gravityMultiplier = parseFloat(bodySelect.value);
-    
-    if (isNaN(earthW) || earthW <= 0) {
-      resultBox.innerText = "0 kg";
+    var raw = earthInput.value.trim();
+    var earthW = Number(raw);
+    var mult = parseFloat(bodySelect.value);
+    var opt = bodySelect.options[bodySelect.selectedIndex];
+    var name = opt.getAttribute('data-name');
+
+    errBox.textContent = '';
+    earthInput.removeAttribute('aria-invalid');
+
+    if (raw === '' || !isFinite(earthW) || earthW < 0) {
+      errBox.textContent = raw === '' ? 'Enter your weight on Earth.' : 'Weight must be a number of 0 or more.';
+      earthInput.setAttribute('aria-invalid', 'true');
+      resultBox.textContent = '— kg';
+      noteBox.textContent = '';
       return;
     }
-    
-    var finalWeight = earthW * gravityMultiplier;
-    
-    if (finalWeight >= 1000000) {
-      resultBox.innerText = finalWeight.toExponential(2) + " kg";
-    } else {
-      resultBox.innerText = finalWeight.toFixed(2) + " kg";
-    }
+
+    var finalWeight = earthW * mult;
+    resultBox.textContent = (finalWeight >= 1000000 ? finalWeight.toExponential(2) : finalWeight.toFixed(2)) + ' kg';
+    noteBox.textContent = 'On ' + name + ' that is ' + (mult >= 1000 ? mult.toExponential(1) : mult) + ' times your Earth weight.';
   }
 
-  // Event Listeners
   earthInput.addEventListener('input', calculate);
   bodySelect.addEventListener('change', calculate);
-  
-  // Initial Calculation
+  document.getElementById('cosmosForm').addEventListener('submit', function (e) { e.preventDefault(); });
   calculate();
 })();
 </script>
