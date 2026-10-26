@@ -34,14 +34,13 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .breadcrumb a:hover{text-decoration:underline}
 .outside-title{margin:0 0 8px;font-size:clamp(22px,4.5vw,28px);font-weight:800;color:var(--head);text-align:left}
 
-/* Calculator card (always dark, low-glare) */
+/* Calculator card (always dark, low-glare, slim y-direction) */
 .calculator-ui-box{width:100%;max-width:500px;margin:0 auto;background:#020617;box-sizing:border-box;
-  color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:24px;
+  color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:20px 24px;
   box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.35)}
 @media (max-width:767px){.calculator-ui-box{padding:16px}}
-.primary-title{margin:0 0 4px;padding:2px 0 8px;font-size:clamp(20px,5vw,26px);line-height:1.39;font-weight:700;color:#f8fafc;text-align:left;border-bottom:2px solid #334155}
-.tool-sub{margin:6px 0 14px;font-size:14px;color:#94a3b8;line-height:1.35}
-.field{margin-bottom:14px}
+.tool-sub{margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.35}
+.field{margin-bottom:12px}
 .field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
 .input-wrap{position:relative;display:flex;align-items:center}
 .calculator-ui-box input[type="number"]{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
@@ -50,10 +49,10 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .calculator-ui-box :focus-visible{outline:3px solid #5eead4;outline-offset:2px}
 .cur-btn{position:absolute;right:4px;top:4px;bottom:4px;min-width:44px;padding:0 10px;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#99f6e4;background:#0f2a2e;border:1px solid #14504f;border-radius:7px;cursor:pointer;white-space:nowrap;font-family:inherit}
 .cur-btn:hover{background:#13393d}
-input[type="range"]{width:100%;margin:10px 0 0;height:24px;accent-color:#2dd4bf;background:transparent}
+input[type="range"]{width:100%;margin:8px 0 0;height:24px;accent-color:#2dd4bf;background:transparent}
 .field-error{margin:5px 0 0;font-size:13px;color:#fca5a5;min-height:0}
 .field-error:empty{display:none}
-.btn-row{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:6px}
+.btn-row{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:4px}
 .btn{min-height:46px;padding:10px 14px;font-size:16px;font-weight:700;font-family:inherit;border-radius:12px;cursor:pointer;border:1px solid transparent}
 .btn-calc{color:#042f2e;background:#2dd4bf;border-color:#14b8a6;box-shadow:0 4px 0 #0f766e,0 8px 14px rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s}
 .btn-calc:active{transform:translateY(3px);box-shadow:0 1px 0 #0f766e,0 3px 6px rgba(0,0,0,.35)}
@@ -63,7 +62,7 @@ input[type="range"]{width:100%;margin:10px 0 0;height:24px;accent-color:#2dd4bf;
 .btn-undo:hover{background:#0f172a}
 
 /* Result */
-.tqc-result-box{margin-top:16px;padding:16px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word}
+.tqc-result-box{margin-top:14px;padding:14px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word}
 .res-hint{margin:0;font-size:14px;color:#94a3b8}
 .res-label{margin:0 0 2px;font-size:14px;font-weight:600;color:#99f6e4}
 .res-main{margin:0;font-size:clamp(24px,7vw,32px);font-weight:800;line-height:1.2;color:#f8fafc}
@@ -129,7 +128,6 @@ article a{color:var(--link);font-weight:600}
 
     <section class="tool-suite" aria-label="Interactive Calculator">
       <div class="calculator-ui-box">
-        <h2 class="primary-title" style="font-size:clamp(20px,5vw,26px); margin:0 0 4px; padding:2px 0 8px; font-weight:700; color:#f8fafc; border-bottom:2px solid #334155;">EMI Calculator</h2>
         <p class="tool-sub">Fixed-rate, reducing-balance loan. Monthly installment, total interest and total repayment.</p>
 
         <form id="emiForm" novalidate autocomplete="off">
