@@ -1176,6 +1176,34 @@
       [data-theme="dark"] .dyn-modal-item-title { color: #38bdf8 !important; }
       .dyn-modal-item-desc { font-size: 0.8rem !important; color: var(--text-muted, #64748b) !important; line-height: 1.35 !important; margin: 0 !important; }
       [data-theme="dark"] .dyn-modal-item-desc { color: #94a3b8 !important; }
+
+      /* ===== LONG TITLES: stay inside the box, scroll by swipe + auto-slide ===== */
+      .cat-pure-text-list li a,
+      .cat-card-tools-y li a {
+        display: block !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        flex-shrink: 1 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        text-overflow: clip !important;
+        white-space: nowrap !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      .cat-pure-text-list li a::-webkit-scrollbar,
+      .cat-card-tools-y li a::-webkit-scrollbar { display: none !important; }
+      .related-section .tool-title { text-overflow: clip !important; }
+      .dyn-modal-item-title {
+        display: block !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        scrollbar-width: none !important;
+      }
+      .dyn-modal-item-title::-webkit-scrollbar { display: none !important; }
     `;
 
     const categories = [
@@ -1946,6 +1974,51 @@
       }
     }
 
+    // ===== AUTO + MANUAL SLIDING FOR LONG TITLES =====
+    const MARQ_SEL = ".cat-pure-text-list li a, .cat-card-tools-y li a, .related-section .tool-title, .dyn-modal-item-title";
+    const marqEls = new Set();
+    let marqRaf = null;
+
+    function marqTick(t) {
+      marqEls.forEach((el) => {
+        if (!el.isConnected) { marqEls.delete(el); return; }
+        const st = el._mq;
+        const max = el.scrollWidth - el.clientWidth;
+        if (max <= 2) { el.scrollLeft = 0; return; }
+        // if the person scrolled by hand, follow them and wait before sliding again
+        if (Math.abs(el.scrollLeft - st.x) > 2) {
+          st.x = el.scrollLeft;
+          st.hold = t + 3500;
+        }
+        if (t < st.hold) { st.last = t; return; }
+        const dt = Math.min(50, t - (st.last || t));
+        st.last = t;
+        st.x += st.dir * dt * 0.03; // about 30px per second
+        if (st.x >= max) { st.x = max; st.dir = -1; st.hold = t + 1200; }
+        else if (st.x <= 0) { st.x = 0; st.dir = 1; st.hold = t + 1200; }
+        el.scrollLeft = st.x;
+      });
+      marqRaf = (marqEls.size && !document.hidden) ? requestAnimationFrame(marqTick) : null;
+    }
+
+    window.tqcMarquee = function () {
+      document.querySelectorAll(MARQ_SEL).forEach((el) => {
+        if (!el._mq) {
+          el._mq = { dir: 1, hold: performance.now() + 1500, last: 0, x: 0 };
+          const bump = () => { el._mq.hold = performance.now() + 4000; };
+          ["touchstart", "pointerdown", "wheel", "mouseenter"].forEach((ev) =>
+            el.addEventListener(ev, bump, { passive: true })
+          );
+        }
+        if (el.scrollWidth - el.clientWidth > 2) marqEls.add(el);
+        else { marqEls.delete(el); el.scrollLeft = 0; }
+      });
+      if (marqEls.size && !marqRaf) marqRaf = requestAnimationFrame(marqTick);
+    };
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) window.tqcMarquee();
+    });
+
     syncActiveTab();
     relocateSearch();
 
@@ -1956,10 +2029,13 @@
     window.addEventListener("load", relocateSearch);
     setTimeout(relocateSearch, 400);
     setTimeout(relocateSearch, 1500);
+    [300, 900, 2000, 4000].forEach((ms) => setTimeout(window.tqcMarquee, ms));
+    window.addEventListener("load", () => window.tqcMarquee());
 
     window.addEventListener("hashchange", () => {
       syncActiveTab();
       relocateSearch();
+      setTimeout(window.tqcMarquee, 150);
     });
 
     // Only re-layout when the WIDTH changes (mobile URL bar resize is ignored)
@@ -1968,6 +2044,7 @@
       if (window.innerWidth === lastW) return;
       lastW = window.innerWidth;
       relocateSearch();
+      setTimeout(window.tqcMarquee, 150);
     });
 
     const themeBtn = document.getElementById("dynThemeToggleBtn");
