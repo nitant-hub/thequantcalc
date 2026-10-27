@@ -12,93 +12,651 @@
 <meta property="og:description" content="Estimate the future value of your monthly SIP: invested amount, estimated returns and total maturity value.">
 <meta property="og:site_name" content="TheQuantCalc">
 <meta name="theme-color" content="#071426">
+
 <style>
 *,*::before,*::after{box-sizing:border-box}
+
 :root{
-  --bg:#eef2f7;--text:#1e293b;--muted:#475569;--head:#0f172a;--line:#d5deea;--card:#ffffff;--soft:#f4f7fb;
-  --accent:#0f766e;--accent2:#4f46e5;--link:#1d4ed8;
+  --bg:#eef2f7;
+  --text:#1e293b;
+  --muted:#475569;
+  --head:#0f172a;
+  --line:#d5deea;
+  --card:#ffffff;
+  --soft:#f4f7fb;
+  --accent:#0f766e;
+  --accent2:#4f46e5;
+  --link:#1d4ed8;
 }
+
 :root[data-theme="dark"]{
-  --bg:#0b1220;--text:#d3dbe8;--muted:#a3b0c4;--head:#f1f5f9;--line:#25324a;--card:#111a2e;--soft:#0f1829;
-  --accent:#5eead4;--accent2:#a5b4fc;--link:#93c5fd;
+  --bg:#0b1220;
+  --text:#d3dbe8;
+  --muted:#a3b0c4;
+  --head:#f1f5f9;
+  --line:#25324a;
+  --card:#111a2e;
+  --soft:#0f1829;
+  --accent:#5eead4;
+  --accent2:#a5b4fc;
+  --link:#93c5fd;
 }
+
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.35}
-.tqc-page-grid,.main-body,.tool-suite,.calculator-ui-box,article,.sidebar{min-width:0}
-.tqc-page-grid{display:grid;grid-template-columns:minmax(0,71fr) minmax(0,29fr);gap:20px;width:100%;max-width:1280px;margin:0 auto;padding:0 12px 24px}
-@media (max-width:900px){.tqc-page-grid{grid-template-columns:minmax(0,1fr)}}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.35
+}
+
+.tqc-page-grid,.main-body,.tool-suite,.calculator-ui-box,article,.sidebar{
+  min-width:0
+}
+
+.tqc-page-grid{
+  display:grid;
+  grid-template-columns:minmax(0,71fr) minmax(0,29fr);
+  gap:20px;
+  width:100%;
+  max-width:1280px;
+  margin:0 auto;
+  padding:0 12px 24px
+}
+
+@media (max-width:900px){
+  .tqc-page-grid{
+    grid-template-columns:minmax(0,1fr)
+  }
+}
+
 .main-body{padding-top:0}
 .tool-suite{padding:4px 0}
-.breadcrumb{padding:10px 0 10px;font-size:14px;color:var(--muted)}
-.breadcrumb a{color:var(--link);text-decoration:none}
+
+.breadcrumb{
+  padding:10px 0 10px;
+  font-size:14px;
+  color:var(--muted)
+}
+
+.breadcrumb a{
+  color:var(--link);
+  text-decoration:none
+}
+
 .breadcrumb a:hover{text-decoration:underline}
-.outside-title{margin:0 0 8px;font-size:clamp(22px,4.5vw,28px);font-weight:800;color:var(--head);text-align:left}
 
-/* Calculator card (500px, always dark, slim y-direction) */
-.calculator-ui-box{width:100%;max-width:500px;margin:0 auto;background:#020617;box-sizing:border-box;
-  color:#e2e8f0;border:1px solid #1e293b;border-radius:16px;padding:20px 24px;
-  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.35)}
-@media (max-width:767px){.calculator-ui-box{padding:16px}}
-.tool-sub{margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.35}
-.field{margin-bottom:12px}
-.field label{display:block;font-size:14px;font-weight:600;color:#cbd5e1;margin-bottom:5px}
-.calculator-ui-box input[type="number"]{width:100%;min-height:44px;padding:9px 12px;font-size:16px;color:#f8fafc;background:#0b1326;border:1px solid #334155;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.35) inset;font-family:inherit}
-.calculator-ui-box input[aria-invalid="true"]{border-color:#f87171}
-.calculator-ui-box :focus-visible{outline:3px solid #5eead4;outline-offset:2px}
-input[type="range"]{width:100%;margin:8px 0 0;height:24px;accent-color:#2dd4bf;background:transparent}
-.field-error{margin:5px 0 0;font-size:13px;color:#fca5a5;min-height:0}
+.outside-title{
+  margin:0 0 8px;
+  font-size:clamp(22px,4.5vw,28px);
+  font-weight:800;
+  color:var(--head);
+  text-align:left
+}
+
+/* Premium obsidian glass calculator with metallic gold and emerald depth */
+
+.calculator-ui-box{
+  position:relative;
+  isolation:isolate;
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
+  box-sizing:border-box;
+  color:#f8fafc;
+  border:1px solid rgba(245,158,11,.75);
+  border-radius:20px;
+  padding:22px 24px;
+  background:
+    radial-gradient(ellipse at 10% 0%,rgba(245,158,11,.10),transparent 38%),
+    radial-gradient(ellipse at 100% 100%,rgba(16,185,129,.13),transparent 42%),
+    linear-gradient(145deg,#0f172a 0%,#07070b 48%,#0b1718 100%);
+  box-shadow:
+    0 0 0 1px rgba(16,185,129,.45),
+    0 0 0 3px rgba(245,158,11,.12),
+    0 0 26px rgba(16,185,129,.12),
+    0 0 35px rgba(245,158,11,.07),
+    0 18px 35px rgba(0,0,0,.48),
+    0 28px 0 -10px #050609,
+    0 35px 28px -12px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(16,185,129,.20);
+}
+
+/* Restrained metallic reflections on the glass surface */
+
+.calculator-ui-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:inherit;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.045),transparent 25%,transparent 72%,rgba(16,185,129,.045)),
+    linear-gradient(180deg,rgba(255,255,255,.025),transparent 35%);
+}
+
+@media (max-width:767px){
+  .calculator-ui-box{
+    padding:17px;
+    border-radius:18px;
+    box-shadow:
+      0 0 0 1px rgba(16,185,129,.40),
+      0 0 0 3px rgba(245,158,11,.10),
+      0 0 20px rgba(16,185,129,.10),
+      0 14px 26px rgba(0,0,0,.42),
+      0 23px 0 -9px #050609,
+      0 29px 24px -12px rgba(0,0,0,.52),
+      inset 0 1px 0 rgba(255,255,255,.09)
+  }
+}
+
+.tool-sub{
+  margin:0 0 19px;
+  font-size:14px;
+  color:#aab7c8;
+  line-height:1.55
+}
+
+.field{
+  margin-bottom:15px
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:650;
+  color:#f1f5f9;
+  margin-bottom:7px;
+  letter-spacing:.01em
+}
+
+/* Deeply inset numeric fields */
+
+.calculator-ui-box input[type="number"]{
+  display:block;
+  width:100%;
+  min-height:46px;
+  padding:10px 13px;
+  font-size:16px;
+  color:#f8fafc;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.025),transparent 45%),
+    #111827;
+  border:1px solid rgba(245,158,11,.35);
+  border-radius:11px;
+  box-shadow:
+    inset 0 3px 7px rgba(0,0,0,.48),
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 1px 0 rgba(255,255,255,.025);
+  font-family:inherit;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease
+}
+
+.calculator-ui-box input[type="number"]:hover{
+  border-color:rgba(16,185,129,.65)
+}
+
+.calculator-ui-box input[type="number"]:focus{
+  border-color:#10b981;
+  background:#101d22;
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.42),
+    0 0 0 2px rgba(16,185,129,.15),
+    0 0 16px rgba(16,185,129,.10)
+}
+
+.calculator-ui-box input[aria-invalid="true"]{
+  border-color:#f87171;
+  box-shadow:0 0 0 2px rgba(248,113,113,.12)
+}
+
+/* Gold-to-emerald slider accents */
+
+.calculator-ui-box input[type="range"]{
+  display:block;
+  width:100%;
+  margin:9px 0 0;
+  height:24px;
+  accent-color:#10b981;
+  background:transparent;
+  cursor:pointer;
+  touch-action:pan-y
+}
+
+.calculator-ui-box input[type="range"]:focus-visible{
+  outline:2px solid rgba(245,158,11,.85);
+  outline-offset:3px;
+  border-radius:8px
+}
+
+.calculator-ui-box input[type="range"]::-webkit-slider-runnable-track{
+  height:6px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#b7791f 0%,#f59e0b 36%,#10b981 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,.55),
+    0 0 8px rgba(16,185,129,.12)
+}
+
+.calculator-ui-box input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:18px;
+  height:18px;
+  margin-top:-6px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff4cf 0%,#f59e0b 48%,#10b981 100%);
+  border:2px solid #f8fafc;
+  box-shadow:
+    0 0 0 3px rgba(16,185,129,.15),
+    0 2px 6px rgba(0,0,0,.5),
+    0 0 10px rgba(245,158,11,.22);
+  cursor:grab
+}
+
+.calculator-ui-box input[type="range"]::-moz-range-track{
+  height:6px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#b7791f 0%,#f59e0b 36%,#10b981 100%);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.55)
+}
+
+.calculator-ui-box input[type="range"]::-moz-range-thumb{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff4cf 0%,#f59e0b 48%,#10b981 100%);
+  border:2px solid #f8fafc;
+  box-shadow:
+    0 0 0 3px rgba(16,185,129,.15),
+    0 2px 6px rgba(0,0,0,.5);
+  cursor:grab
+}
+
+.field-error{
+  margin:5px 0 0;
+  font-size:13px;
+  color:#fca5a5;
+  min-height:0
+}
+
 .field-error:empty{display:none}
-.btn-row{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:4px}
-.btn{min-height:46px;padding:10px 14px;font-size:16px;font-weight:700;font-family:inherit;border-radius:12px;cursor:pointer;border:1px solid transparent}
-.btn-calc{color:#042f2e;background:#2dd4bf;border-color:#14b8a6;box-shadow:0 4px 0 #0f766e,0 8px 14px rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s}
-.btn-calc:active{transform:translateY(3px);box-shadow:0 1px 0 #0f766e,0 3px 6px rgba(0,0,0,.35)}
-.btn-reset{color:#e2e8f0;background:#0f172a;border-color:#334155}
-.btn-reset:hover{background:#16213a}
 
-/* Result */
-.tqc-result-box{margin-top:14px;padding:14px;background:#0b1326;border:1px solid #1e3a4a;border-radius:14px;box-shadow:0 6px 0 rgba(15,118,110,.18),0 10px 20px rgba(0,0,0,.3);text-align:center;overflow-wrap:anywhere;word-break:break-word}
-.res-hint{margin:0;font-size:14px;color:#94a3b8}
-.res-label{margin:0 0 2px;font-size:14px;font-weight:600;color:#99f6e4}
-.res-main{margin:0;font-size:clamp(24px,7vw,32px);font-weight:800;line-height:1.2;color:#f8fafc}
-.res-note{margin:8px 0 0;font-size:13px;color:#94a3b8}
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;text-align:left}
-.tile{padding:10px;background:#0f1a30;border:1px solid #1e293b;border-radius:10px}
+/* Raised, rounded action controls */
+
+.btn-row{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:11px;
+  margin-top:7px
+}
+
+.btn{
+  min-height:47px;
+  padding:11px 15px;
+  font-size:15px;
+  font-weight:750;
+  font-family:inherit;
+  border-radius:999px;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .18s ease,
+    border-color .18s ease
+}
+
+.btn:focus-visible{
+  outline:2px solid #f59e0b;
+  outline-offset:4px
+}
+
+.btn-calc{
+  color:#022c22;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.18),transparent 48%),
+    linear-gradient(135deg,#34d399 0%,#10b981 48%,#059669 100%);
+  border-color:#6ee7b7;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.38),
+    inset 0 -2px 0 rgba(0,0,0,.13),
+    0 4px 0 #047857,
+    0 7px 13px rgba(0,0,0,.32),
+    0 0 18px rgba(16,185,129,.17);
+  transition:transform .08s,box-shadow .08s
+}
+
+.btn-calc:hover{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.22),transparent 48%),
+    linear-gradient(135deg,#6ee7b7 0%,#10b981 52%,#059669 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.42),
+    0 4px 0 #047857,
+    0 9px 17px rgba(0,0,0,.34),
+    0 0 23px rgba(16,185,129,.25)
+}
+
+.btn-calc:active{
+  transform:translateY(3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    0 1px 0 #047857,
+    0 3px 6px rgba(0,0,0,.35)
+}
+
+.btn-reset{
+  color:#e5e7eb;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.045),transparent 60%),
+    #111827;
+  border-color:rgba(245,158,11,.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    inset 0 -1px 0 rgba(0,0,0,.4),
+    0 3px 0 #050609,
+    0 6px 12px rgba(0,0,0,.24)
+}
+
+.btn-reset:hover{
+  color:#fff4cf;
+  background:
+    linear-gradient(145deg,rgba(245,158,11,.09),transparent 65%),
+    #17202c;
+  border-color:rgba(245,158,11,.75)
+}
+
+.btn-reset:active{
+  transform:translateY(2px);
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.35),
+    0 1px 0 #050609
+}
+
+/* Embossed result panel with emerald and gold illumination */
+
+.tqc-result-box{
+  position:relative;
+  margin-top:18px;
+  padding:17px 14px;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(16,185,129,.17),transparent 60%),
+    radial-gradient(ellipse at 100% 100%,rgba(245,158,11,.09),transparent 48%),
+    linear-gradient(145deg,#0c1b1a 0%,#09120f 52%,#10151c 100%);
+  border:1px solid rgba(16,185,129,.50);
+  border-radius:16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.075),
+    inset 0 -1px 0 rgba(245,158,11,.13),
+    0 0 0 1px rgba(245,158,11,.12),
+    0 5px 0 #050a09,
+    0 9px 0 -3px rgba(16,185,129,.25),
+    0 13px 23px rgba(0,0,0,.34),
+    0 0 22px rgba(16,185,129,.08);
+  text-align:center;
+  overflow-wrap:anywhere;
+  word-break:break-word
+}
+
+.res-hint{
+  margin:0;
+  font-size:14px;
+  color:#a8b7b5;
+  line-height:1.55
+}
+
+.res-label{
+  margin:0 0 5px;
+  font-size:14px;
+  font-weight:700;
+  color:#fbbf24;
+  letter-spacing:.015em
+}
+
+.res-main{
+  margin:0;
+  font-size:clamp(24px,7vw,32px);
+  font-weight:850;
+  line-height:1.2;
+  color:#6ee7b7;
+  text-shadow:
+    0 0 10px rgba(16,185,129,.24),
+    0 0 20px rgba(16,185,129,.10);
+  overflow-wrap:anywhere
+}
+
+.res-note{
+  margin:8px 0 0;
+  font-size:13px;
+  color:#a6b4b0;
+  line-height:1.5
+}
+
+.tiles{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:15px;
+  text-align:left
+}
+
+.tile{
+  padding:11px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),transparent 58%),
+    #111827;
+  border:1px solid rgba(245,158,11,.22);
+  border-radius:12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 3px 7px rgba(0,0,0,.17)
+}
+
 .tile.wide{grid-column:1/-1}
-.tile .k{display:block;font-size:12px;color:#94a3b8}
-.tile .v{display:block;font-size:15px;font-weight:700;color:#f1f5f9;margin-top:2px}
-.tile .v.int{color:#5eead4}
-.donut{width:112px;height:112px;margin:14px auto 6px;border-radius:50%;position:relative}
-.donut::after{content:"";position:absolute;inset:26px;background:#0b1326;border-radius:50%}
-.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:12px;color:#94a3b8}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.res-error{margin:0;font-size:14px;color:#fecaca;text-align:left}
-.res-error strong{color:#fca5a5}
-.res-error ul{margin:6px 0 0;padding-left:20px}
 
-/* Article */
-article{margin-top:18px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--text);font-size:16px;line-height:1.35;overflow-wrap:break-word}
-article h2,article h3{line-height:1.39;color:var(--head);text-align:left}
-article h2{margin:30px 0 12px;padding:2px 0 8px 12px;font-size:clamp(21px,4.5vw,26px);border-bottom:2px solid var(--line);border-left:4px solid var(--accent2)}
+.tile .k{
+  display:block;
+  font-size:12px;
+  color:#a8b7c8;
+  line-height:1.4
+}
+
+.tile .v{
+  display:block;
+  font-size:15px;
+  font-weight:750;
+  color:#f8fafc;
+  margin-top:4px;
+  overflow-wrap:anywhere
+}
+
+.tile .v.int{
+  color:#6ee7b7;
+  text-shadow:0 0 10px rgba(16,185,129,.15)
+}
+
+.donut{
+  width:112px;
+  height:112px;
+  margin:16px auto 7px;
+  border-radius:50%;
+  position:relative;
+  box-shadow:
+    0 0 0 1px rgba(245,158,11,.35),
+    0 0 16px rgba(16,185,129,.12),
+    0 5px 12px rgba(0,0,0,.28)
+}
+
+.donut::after{
+  content:"";
+  position:absolute;
+  inset:26px;
+  background:#0a1512;
+  border:1px solid rgba(245,158,11,.20);
+  border-radius:50%;
+  box-shadow:
+    inset 0 2px 7px rgba(0,0,0,.48),
+    0 1px 0 rgba(255,255,255,.035)
+}
+
+.legend{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  font-size:12px;
+  color:#a8b7c8
+}
+
+.legend i{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:3px;
+  margin-right:5px;
+  vertical-align:-1px;
+  box-shadow:0 0 6px rgba(255,255,255,.08)
+}
+
+.res-error{
+  margin:0;
+  font-size:14px;
+  color:#fecaca;
+  text-align:left
+}
+
+.res-error strong{color:#fca5a5}
+
+.res-error ul{
+  margin:6px 0 0;
+  padding-left:20px
+}
+
+/* Article styles preserved */
+
+article{
+  margin-top:18px;
+  padding:22px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  color:var(--text);
+  font-size:16px;
+  line-height:1.35;
+  overflow-wrap:break-word
+}
+
+article h2,article h3{
+  line-height:1.39;
+  color:var(--head);
+  text-align:left
+}
+
+article h2{
+  margin:30px 0 12px;
+  padding:2px 0 8px 12px;
+  font-size:clamp(21px,4.5vw,26px);
+  border-bottom:2px solid var(--line);
+  border-left:4px solid var(--accent2)
+}
+
 article h2:first-child{margin-top:0}
-article h3{margin:20px 0 6px;font-size:18px}
+
+article h3{
+  margin:20px 0 6px;
+  font-size:18px
+}
+
 article p,article li{line-height:1.35}
 article p{margin:0 0 12px}
 article ul,article ol{margin:0 0 14px;padding-left:22px}
 article li{margin-bottom:6px}
 article a{color:var(--link);font-weight:600}
-.formula{margin:14px 0;padding:14px;background:var(--soft);border:1px solid var(--line);border-radius:10px;text-align:center;font-family:"Courier New",Courier,monospace;font-size:clamp(15px,3.6vw,20px);overflow-x:auto}
-.data-table-wrapper{margin:14px 0;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
-.data-table-wrapper table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card)}
-.data-table-wrapper th,.data-table-wrapper td{padding:10px 12px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);color:var(--text)}
-.data-table-wrapper th{background:var(--soft);color:var(--head);font-weight:700}
-.data-table-wrapper caption{padding:8px 12px;text-align:left;font-size:13px;color:var(--muted)}
-.svg-container{background:var(--bg);border-radius:12px;border:1px solid var(--line);margin:14px 0;padding:18px 12px;text-align:center;overflow-x:auto}
-.svg-container svg{width:100%;max-width:520px;height:auto}
-.svg-container p{margin:10px 0 0;font-size:13px;color:var(--muted)}
+
+.formula{
+  margin:14px 0;
+  padding:14px;
+  background:var(--soft);
+  border:1px solid var(--line);
+  border-radius:10px;
+  text-align:center;
+  font-family:"Courier New",Courier,monospace;
+  font-size:clamp(15px,3.6vw,20px);
+  overflow-x:auto
+}
+
+.data-table-wrapper{
+  margin:14px 0;
+  overflow-x:auto;
+  border:1px solid var(--line);
+  border-radius:10px
+}
+
+.data-table-wrapper table{
+  width:100%;
+  min-width:560px;
+  border-collapse:collapse;
+  background:var(--card)
+}
+
+.data-table-wrapper th,.data-table-wrapper td{
+  padding:10px 12px;
+  text-align:left;
+  font-size:14px;
+  border-bottom:1px solid var(--line);
+  color:var(--text)
+}
+
+.data-table-wrapper th{
+  background:var(--soft);
+  color:var(--head);
+  font-weight:700
+}
+
+.data-table-wrapper caption{
+  padding:8px 12px;
+  text-align:left;
+  font-size:13px;
+  color:var(--muted)
+}
+
+.svg-container{
+  background:var(--bg);
+  border-radius:12px;
+  border:1px solid var(--line);
+  margin:14px 0;
+  padding:18px 12px;
+  text-align:center;
+  overflow-x:auto
+}
+
+.svg-container svg{
+  width:100%;
+  max-width:520px;
+  height:auto
+}
+
+.svg-container p{
+  margin:10px 0 0;
+  font-size:13px;
+  color:var(--muted)
+}
+
 .sidebar{display:block}
-@media (prefers-reduced-motion:reduce){.btn-calc{transition:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .btn-calc,.btn,.calculator-ui-box input[type="number"]{
+    transition:none
+  }
+}
 </style>
 </head>
+
 <body>
 <div class="tqc-page-grid">
   <main class="main-body">
@@ -285,6 +843,7 @@ article a{color:var(--link);font-weight:600}
       <p>A SIP is built from three things you control: how much you invest each month, how long you stay invested and the return you earn. Of these, time is usually the strongest lever, because the later instalments compound for only a short while while the earliest ones do most of the work. Use the calculator to test a few scenarios, keep your assumed return conservative, and remember that it assumes a constant rate and ignores fees, taxes and inflation. Check the fund's scheme documents before investing, because actual returns will vary with the market.</p>
     </article>
   </main>
+
   <aside class="sidebar"></aside>
 </div>
 
@@ -420,21 +979,31 @@ article a{color:var(--link);font-weight:600}
     }
     return { value: v };
   }
+
   function validate() {
     var out = { values: {}, errors: {} };
     KEYS.forEach(function (k) {
       var r = readField(k);
-      if (r.err) out.errors[k] = r.err; else out.values[k] = r.value;
+      if (r.err) out.errors[k] = r.err;
+      else out.values[k] = r.value;
     });
     out.ok = Object.keys(out.errors).length === 0;
     return out;
   }
+
   function clearFieldErrors() {
-    KEYS.forEach(function (k) { errEls[k].textContent = ''; els[k].removeAttribute('aria-invalid'); });
+    KEYS.forEach(function (k) {
+      errEls[k].textContent = '';
+      els[k].removeAttribute('aria-invalid');
+    });
   }
+
   function showFieldErrors(errors) {
     clearFieldErrors();
-    Object.keys(errors).forEach(function (k) { errEls[k].textContent = errors[k]; els[k].setAttribute('aria-invalid', 'true'); });
+    Object.keys(errors).forEach(function (k) {
+      errEls[k].textContent = errors[k];
+      els[k].setAttribute('aria-invalid', 'true');
+    });
   }
 
   // Future value of an annuity due: FV = P·((1+i)^n − 1)/i·(1+i); i = 0 → P·n.
@@ -446,84 +1015,147 @@ article a{color:var(--link);font-weight:600}
     return { fv: fv, invested: invested, returns: fv - invested, months: n };
   }
 
-  function clearResult() { while (els.result.firstChild) els.result.removeChild(els.result.firstChild); }
+  function clearResult() {
+    while (els.result.firstChild) els.result.removeChild(els.result.firstChild);
+  }
+
   function renderInitial() {
     clearResult();
     els.result.appendChild(el('p', 'res-hint', 'Enter your monthly investment, expected return and period, then press Calculate. Results update as you type once you have calculated.'));
   }
+
   function renderErrors(errors) {
     clearResult();
     var box = el('div', 'res-error');
     box.appendChild(el('strong', '', 'Please check your input:'));
     var ul = el('ul');
-    Object.keys(errors).forEach(function (k) { ul.appendChild(el('li', '', errors[k])); });
+    Object.keys(errors).forEach(function (k) {
+      ul.appendChild(el('li', '', errors[k]));
+    });
     box.appendChild(ul);
     els.result.appendChild(box);
   }
+
   function tile(k, v, cls, wide) {
     var t = el('div', 'tile' + (wide ? ' wide' : ''));
     t.appendChild(el('span', 'k', k));
     t.appendChild(el('span', 'v' + (cls ? ' ' + cls : ''), v));
     return t;
   }
+
   function render(res) {
-    if (![res.fv, res.invested, res.returns].every(isFinite)) { renderErrors({ x: 'The inputs produce a value that cannot be displayed. Try smaller numbers.' }); return; }
+    if (![res.fv, res.invested, res.returns].every(isFinite)) {
+      renderErrors({ x: 'The inputs produce a value that cannot be displayed. Try smaller numbers.' });
+      return;
+    }
+
     clearResult();
     els.result.appendChild(el('p', 'res-label', 'Estimated maturity value'));
     els.result.appendChild(el('p', 'res-main', rupee(res.fv)));
     els.result.appendChild(el('p', 'res-note', '≈ ' + compact(res.fv)));
+
     var tiles = el('div', 'tiles');
     tiles.appendChild(tile('Total invested', rupee(res.invested)));
     tiles.appendChild(tile('Estimated returns', rupee(res.returns), 'int'));
     tiles.appendChild(tile('Wealth multiple', (res.fv / res.invested).toFixed(2) + '×', '', true));
     els.result.appendChild(tiles);
+
     var pct = Math.max(0, Math.min(100, (res.invested / res.fv) * 100));
     var donut = el('div', 'donut');
     donut.setAttribute('aria-hidden', 'true');
     donut.style.background = 'conic-gradient(#3b82f6 0% ' + pct.toFixed(2) + '%, #2dd4bf ' + pct.toFixed(2) + '% 100%)';
     els.result.appendChild(donut);
+
     var lg = el('div', 'legend');
-    var a = el('span'); var ai = el('i'); ai.style.background = '#3b82f6'; a.appendChild(ai); a.appendChild(document.createTextNode('Invested ' + pct.toFixed(1) + '%')); lg.appendChild(a);
-    var b = el('span'); var bi = el('i'); bi.style.background = '#2dd4bf'; b.appendChild(bi); b.appendChild(document.createTextNode('Returns ' + (100 - pct).toFixed(1) + '%')); lg.appendChild(b);
+    var a = el('span');
+    var ai = el('i');
+    ai.style.background = '#3b82f6';
+    a.appendChild(ai);
+    a.appendChild(document.createTextNode('Invested ' + pct.toFixed(1) + '%'));
+    lg.appendChild(a);
+
+    var b = el('span');
+    var bi = el('i');
+    bi.style.background = '#2dd4bf';
+    b.appendChild(bi);
+    b.appendChild(document.createTextNode('Returns ' + (100 - pct).toFixed(1) + '%'));
+    lg.appendChild(b);
+
     els.result.appendChild(lg);
     els.result.appendChild(el('p', 'res-note', 'Estimate at a constant return, month-start investing. Fees, taxes and market variation are not included.'));
   }
 
   function run() {
     var v = validate();
-    if (!v.ok) { showFieldErrors(v.errors); renderErrors(v.errors); return; }
+    if (!v.ok) {
+      showFieldErrors(v.errors);
+      renderErrors(v.errors);
+      return;
+    }
     clearFieldErrors();
     render(calculate(v.values.amount, v.values.rate, v.values.years));
   }
 
-  function clampForSlider(slider, v) { return Math.min(Number(slider.max), Math.max(Number(slider.min), v)); }
+  function clampForSlider(slider, v) {
+    return Math.min(Number(slider.max), Math.max(Number(slider.min), v));
+  }
+
   function syncSliderFromInput(key) {
     var v = Number(els[key].value);
-    if (els[key].value !== '' && isFinite(v)) els[key + 'Slider'].value = clampForSlider(els[key + 'Slider'], v);
+    if (els[key].value !== '' && isFinite(v)) {
+      els[key + 'Slider'].value = clampForSlider(els[key + 'Slider'], v);
+    }
   }
+
   function scheduleRun() {
     if (!state.active) return;
     clearTimeout(state.timer);
     state.timer = setTimeout(run, 150);
   }
+
   function resetCalculator() {
     clearTimeout(state.timer);
     $('sipForm').reset();
-    KEYS.forEach(function (k) { els[k].value = DEFAULTS[k]; els[k + 'Slider'].value = DEFAULTS[k]; });
+    KEYS.forEach(function (k) {
+      els[k].value = DEFAULTS[k];
+      els[k + 'Slider'].value = DEFAULTS[k];
+    });
     state.active = false;
     clearFieldErrors();
     renderInitial();
   }
 
   KEYS.forEach(function (k) {
-    els[k].addEventListener('input', function () { syncSliderFromInput(k); scheduleRun(); });
-    els[k + 'Slider'].addEventListener('input', function () { els[k].value = els[k + 'Slider'].value; scheduleRun(); });
+    els[k].addEventListener('input', function () {
+      syncSliderFromInput(k);
+      scheduleRun();
+    });
+
+    els[k + 'Slider'].addEventListener('input', function () {
+      els[k].value = els[k + 'Slider'].value;
+      scheduleRun();
+    });
   });
-  els.calc.addEventListener('click', function () { state.active = true; run(); });
+
+  els.calc.addEventListener('click', function () {
+    state.active = true;
+    run();
+  });
+
   els.reset.addEventListener('click', resetCalculator);
-  $('sipForm').addEventListener('submit', function (e) { e.preventDefault(); state.active = true; run(); });
+
+  $('sipForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    state.active = true;
+    run();
+  });
+
   $('sipForm').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); state.active = true; run(); }
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+      e.preventDefault();
+      state.active = true;
+      run();
+    }
   });
 
   renderInitial();
