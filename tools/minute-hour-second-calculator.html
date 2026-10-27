@@ -66,9 +66,24 @@
       flex-direction: column;
     }
 
+    .breadcrumb-trail {
+      margin: 0 0 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .breadcrumb-trail a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-trail a:hover {
+      text-decoration: underline;
+    }
+
     .primary-title {
       margin: 0 0 9px;
-      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-size: clamp(1.5rem, 3.2vw, 2rem);
       line-height: 1.25;
       letter-spacing: -.035em;
     }
@@ -518,13 +533,7 @@
       {
         "@type": "WebApplication",
         "name": "Hours, Minutes & Seconds Calculator",
-        {
-  "@type": "ListItem",
-  "position": 3,
-  "name": "Hours, Minutes & Seconds Calculator",
-  "item": "https://thequantcal.pages.dev/tools/minute-hour-second-calculator"
-}
-
+        "url": "https://thequantcal.pages.dev/tools/minute-hour-second-calculator",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
         "description": "Add and subtract multiple time durations online using hours, minutes, and seconds.",
@@ -636,6 +645,12 @@
     <main class="main-body">
       <div class="dyn-left-split">
         <div class="tool-suite">
+          <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+            <a href="https://thequantcal.pages.dev/">Home</a> / 
+            <span>Math Calculators</span> / 
+            <span style="color: var(--text);">Hours, Minutes &amp; Seconds Calculator</span>
+          </nav>
+
           <h1 class="primary-title">Hours, Minutes &amp; Seconds Calculator</h1>
           <p class="page-intro">
             Add or subtract multiple time durations with this free online
