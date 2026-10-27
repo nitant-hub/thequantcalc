@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timesheet Calculator – Weekly Hours &amp; Pay | TheQuantCalc</title>
-<meta name="description" content="Free timesheet calculator: enter daily start, end and break times to get weekly hours, decimal hours, overtime and a gross pay estimate.">
+<title>Timesheet Calculator – Daily, Weekly &amp; Monthly Hours | TheQuantCalc</title>
+<meta name="description" content="Free timesheet calculator for daily, weekly, biweekly or monthly periods. Add shifts and breaks to get total hours, overtime and a gross pay estimate.">
 <link rel="canonical" href="https://thequantcal.pages.dev/tools/timesheet-calculator">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Timesheet Calculator – Weekly Hours &amp; Pay | TheQuantCalc">
-<meta property="og:description" content="Free timesheet calculator: enter daily start, end and break times to get weekly hours, decimal hours, overtime and a gross pay estimate.">
+<meta property="og:title" content="Timesheet Calculator – Daily, Weekly &amp; Monthly Hours | TheQuantCalc">
+<meta property="og:description" content="Free timesheet calculator for daily, weekly, biweekly or monthly periods. Add shifts and breaks to get total hours, overtime and a gross pay estimate.">
 <meta property="og:url" content="https://thequantcal.pages.dev/tools/timesheet-calculator">
 <script type="application/ld+json">
 {
@@ -18,7 +18,7 @@
       "@type": "WebApplication",
       "name": "Timesheet Calculator",
       "url": "https://thequantcal.pages.dev/tools/timesheet-calculator",
-      "description": "Free online timesheet calculator that totals daily start, end and break times into weekly hours and minutes, decimal hours, overtime and an optional gross pay estimate.",
+      "description": "Free online timesheet calculator with daily, weekly, biweekly and monthly periods. Add dated shifts and unpaid breaks to get total hours, decimal hours, overtime and an optional gross pay estimate.",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript",
@@ -33,10 +33,18 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does the timesheet calculator work out daily hours?",
+          "name": "How does the timesheet calculator work out hours?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For each day it subtracts the start time from the end time, then subtracts the unpaid break. All arithmetic is done in whole minutes, so each daily result is exact, and the weekly total is the sum of the daily results."
+            "text": "For each entry it subtracts the start time from the end time, then subtracts the unpaid break. All arithmetic uses whole minutes, so every entry is exact, and the period total is the sum of the entries. Leave the break empty if your breaks are paid."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the Daily, Weekly, Biweekly and Monthly periods do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The period sets the date range the entries must fall in. Daily covers one date, Weekly covers 7 days from the start date you choose, Biweekly covers 14 days from the start date, and Monthly covers the whole calendar month that contains the date you choose."
           }
         },
         {
@@ -44,7 +52,15 @@
           "name": "How do I enter a shift that finishes after midnight?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Enter the real start and end clock times, for example 22:00 and 06:00. When the end time is earlier than the start time, the calculator treats the shift as ending the next day and adds 24 hours to the difference. If the start and end times are identical, that day counts as zero hours."
+            "text": "Enter the real start and end clock times, for example 22:00 and 06:00, on the date the shift began. When the end time is earlier than the start time, the calculator adds 24 hours to the difference. If the two times are identical, the entry counts as zero hours and a warning asks you to check them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I enter more than one shift on the same day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Choose Daily and press Add for each extra shift, or add more entries with the same date in any other period. Shifts that overlap are flagged as errors so the same minutes are never counted twice."
           }
         },
         {
@@ -52,15 +68,7 @@
           "name": "What is the difference between 7:30 and 7.5 hours?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "They are the same amount of time written in two ways. 7:30 means 7 hours and 30 minutes, while 7.5 is decimal hours, where 30 minutes is half of an hour. Payroll systems usually multiply decimal hours by an hourly rate, so the calculator shows both formats."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Are breaks subtracted from my total?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Whatever you enter in the break field is treated as unpaid and is subtracted from that day. Leave the field blank or at zero if your breaks are paid."
+            "text": "They are the same amount of time written two ways. 7:30 means 7 hours and 30 minutes, while 7.5 is decimal hours, where 30 minutes is half an hour. Payroll systems usually multiply decimal hours by an hourly rate, so the calculator shows both formats."
           }
         },
         {
@@ -68,23 +76,15 @@
           "name": "How is overtime calculated?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Overtime is optional. If you enter a weekly threshold in hours, every minute above it is paid at your hourly rate multiplied by the overtime multiplier, and the minutes up to the threshold are paid at the normal rate. Leave the threshold blank to ignore overtime."
+            "text": "Overtime is optional. Enter the number of hours after which overtime starts and choose whether that limit applies per day, per week (each 7-day block from the start date) or per whole period. Minutes above the limit are paid at your hourly rate times the overtime multiplier."
           }
         },
         {
           "@type": "Question",
-          "name": "Does it follow my country's payroll or labour rules?",
+          "name": "Does it follow my country's payroll rules, and is gross pay my take-home pay?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The calculator is global and applies plain arithmetic only. Overtime thresholds, daily limits, rounding policies, paid breaks and premium rates differ between countries, industries and contracts, so check your own rules before relying on the figures."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is the gross pay estimate the same as take-home pay?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Gross pay is the amount earned before tax, social contributions and other deductions. The calculator does not estimate deductions, benefits, bonuses or allowances."
+            "text": "No to both. The calculator is global and uses plain arithmetic only, so check your own contract and local rules for thresholds, premiums, rounding and paid breaks. Gross pay is the amount before tax and other deductions, so it is higher than take-home pay."
           }
         },
         {
@@ -168,48 +168,76 @@ a{color:var(--link)}
 .tool-lead{margin:0 auto 12px;max-width:460px;text-align:center;font-size:14px;line-height:1.5;color:var(--text-muted)}
 
 /* Calculator card: always dark (P3) */
-.calculator-ui-box{--c-bg:#020617;--c-panel:#0f172a;--c-line:#1e293b;--c-line2:#334155;--c-text:#e2e8f0;--c-muted:#94a3b8;--c-accent:#2dd4bf;--c-accent-ink:#042f2e;--c-err:#fca5a5;
-  width:min(100%,460px);align-self:center !important;margin:0 auto 26px auto !important;
+.calculator-ui-box{--c-bg:#020617;--c-panel:#0f172a;--c-line:#1e293b;--c-line2:#334155;--c-text:#e2e8f0;--c-muted:#94a3b8;--c-accent:#2dd4bf;--c-accent-ink:#042f2e;--c-err:#fca5a5;--c-warn:#fcd34d;
+  width:min(100%,460px);min-width:0;align-self:center !important;margin:0 auto 26px auto !important;
   background:var(--c-bg);border:1px solid var(--c-line);border-radius:18px;padding:16px;color:var(--c-text);
   color-scheme:dark;box-shadow:0 8px 28px rgba(2,6,23,.22);overflow:visible;font-size:14px;line-height:1.45}
 .calculator-ui-box fieldset{border:0;margin:0;padding:0;min-width:0}
 .calculator-ui-box legend{padding:0;font-size:14px;font-weight:600;color:var(--c-text)}
-.calc-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 4px}
+
+/* Period selector: scrolls horizontally inside the card only */
+.period-scroll{position:relative;display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;margin:0 -2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#334155 transparent}
+.period-btn{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:0 16px;font:inherit;font-size:14px;font-weight:500;color:var(--c-text);background:transparent;border:1px solid var(--c-line2);border-radius:999px;cursor:pointer}
+.period-btn:hover{background:var(--c-panel)}
+.period-btn[aria-pressed="true"]{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-accent-ink);font-weight:700}
+.period-note{display:none;margin:0 0 8px;font-size:13px;color:var(--c-muted)}
+@media (max-width:520px){.period-note{display:block}}
+
+.date-block{margin:4px 0 8px}
+.date-block label{display:block;font-size:13px;font-weight:500;color:var(--c-muted);margin:0 0 3px}
+.range-label{margin:4px 0 0;font-size:13px;color:var(--c-accent);font-variant-numeric:tabular-nums}
+
+.calc-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.toolbar-title{font-size:14px;font-weight:600}
+.entry-count{font-size:13px;font-weight:400;color:var(--c-muted)}
+.toolbar-btns{display:flex;gap:8px}
+.mini-btn{min-height:40px;padding:0 14px;font:inherit;font-size:14px;font-weight:600;color:var(--c-text);background:transparent;border:1px solid var(--c-line2);border-radius:10px;cursor:pointer;white-space:nowrap}
+.mini-btn:hover:not(:disabled){background:var(--c-panel)}
+.mini-btn.add{color:var(--c-accent);border-color:#115e59}
+.mini-btn:disabled{opacity:.45;cursor:not-allowed}
 .link-btn{font:inherit;font-size:13px;font-weight:500;color:var(--c-accent);background:none;border:0;padding:8px 0;cursor:pointer;min-height:36px}
 .link-btn:hover{text-decoration:underline}
-.day-row{border-top:1px solid var(--c-line);padding:8px 0 10px}
-.day-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
-.day-name{font-size:14px;font-weight:600}
-.day-net{font-size:13px;color:var(--c-accent);font-variant-numeric:tabular-nums;font-weight:500}
-.day-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+
+.entries{display:flex;flex-direction:column;gap:8px}
+.entry{border:1px solid var(--c-line);border-radius:12px;padding:10px}
+.entry.is-selected{border-color:var(--c-accent)}
+.entry-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.entry-title{font-size:14px;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.entry-net{font-size:13px;color:var(--c-accent);font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
+.entry-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.entry-fields .date-fld{grid-column:1 / -1}
+@media (max-width:480px){.entry-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.entry-fields .brk-fld{grid-column:1 / -1}}
 .fld{min-width:0}
 .fld label{display:block;font-size:13px;font-weight:500;color:var(--c-muted);margin:0 0 3px}
-.calculator-ui-box input{width:100%;min-width:0;height:40px;padding:0 8px;font:inherit;font-size:14px;font-variant-numeric:tabular-nums;color:#f1f5f9;background:var(--c-panel);border:1px solid var(--c-line2);border-radius:10px}
+.calculator-ui-box input,.calculator-ui-box select{width:100%;min-width:0;height:40px;padding:0 8px;font:inherit;font-size:14px;font-variant-numeric:tabular-nums;color:#f1f5f9;background:var(--c-panel);border:1px solid var(--c-line2);border-radius:10px}
 .calculator-ui-box input::placeholder{color:#7c8ba1}
-.calculator-ui-box input:focus-visible,.calculator-ui-box button:focus-visible{outline:2px solid #5eead4;outline-offset:2px}
+.calculator-ui-box input:focus-visible,.calculator-ui-box select:focus-visible,.calculator-ui-box button:focus-visible{outline:2px solid #5eead4;outline-offset:2px}
 .calculator-ui-box input[aria-invalid="true"]{border-color:var(--c-err)}
-.field-error{margin:4px 0 0;font-size:13px;color:var(--c-err)}
-.field-error[hidden]{display:none}
+.field-error,.field-warn{margin:6px 0 0;font-size:13px}
+.field-error{color:var(--c-err)}
+.field-warn{color:var(--c-warn)}
+.field-error[hidden],.field-warn[hidden]{display:none}
+.hint{margin:0 0 10px;font-size:13px;color:var(--c-muted)}
 .pay-box{border-top:1px solid var(--c-line);margin-top:6px;padding-top:12px}
 .pay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
-.pay-grid .fld label{font-size:13px}
 .btn-row{display:flex;gap:10px;margin:14px 0}
 .btn{flex:1;min-height:44px;padding:0 14px;font:inherit;font-size:15px;font-weight:600;border-radius:12px;cursor:pointer;border:1px solid var(--c-line2);background:transparent;color:var(--c-text)}
 .btn-primary{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-accent-ink)}
 .btn-primary:hover{filter:brightness(1.06)}
 .btn:not(.btn-primary):hover{background:var(--c-panel)}
-.hint{margin:0 0 10px;font-size:13px;color:var(--c-muted)}
 
 /* Result hook */
 .tqc-result-box{position:relative;background:var(--c-panel);border:1px solid #115e59;border-radius:14px;padding:14px 16px}
 .res-label{margin:0;font-size:13px;font-weight:500;color:var(--c-muted)}
-.res-primary{margin:2px 0 0;font-size:clamp(30px,9vw,36px);line-height:1.15;font-weight:700;letter-spacing:-.01em;color:var(--c-accent);font-variant-numeric:tabular-nums}
+.res-primary{margin:2px 0 0;font-size:clamp(30px,9vw,36px);line-height:1.15;font-weight:700;letter-spacing:-.01em;color:var(--c-accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .res-sub{margin:2px 0 0;font-size:14px;color:var(--c-text);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .res-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;margin:12px 0 0;padding-top:10px;border-top:1px solid var(--c-line)}
 .res-grid dt{margin:0;font-size:14px;color:var(--c-muted)}
 .res-grid dd{margin:0;font-size:14px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .res-grid dd.res-strong{color:var(--c-accent);font-size:16px}
-.res-note{margin:10px 0 0;font-size:13px;color:var(--c-muted)}
+.res-note{margin:10px 0 0;font-size:13px;color:var(--c-muted);overflow-wrap:anywhere}
+.res-note.warn{color:var(--c-warn)}
+.res-range{margin:2px 0 0;font-size:13px;color:var(--c-muted);font-variant-numeric:tabular-nums}
 .res-msg{margin:0;font-size:14px;color:var(--c-err);font-weight:500}
 
 /* Article */
@@ -218,7 +246,7 @@ article h2{font-size:clamp(21px,2.6vw,26px);line-height:1.25;font-weight:650;let
 article h2:first-child{margin-top:0}
 article h3{font-size:clamp(18px,2vw,20px);line-height:1.3;font-weight:600;margin:1.2em 0 .35em}
 article p{margin:0 0 .9em;max-width:76ch}
-article ul,article ol.plain{margin:0 0 1em;padding-left:1.3em;max-width:76ch}
+article ul{margin:0 0 1em;padding-left:1.3em;max-width:76ch}
 article li{margin:.25em 0}
 .steps-flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0 0 1em;padding:0;counter-reset:s}
 .steps-flow li{counter-increment:s;margin:0;background:var(--surface-card);border:1px solid var(--surface-border);border-radius:12px;padding:12px 14px}
@@ -234,7 +262,7 @@ article li{margin:.25em 0}
 .data-table-wrapper table{width:100%;min-width:420px;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
 .data-table-wrapper th,.data-table-wrapper td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--surface-border)}
 .data-table-wrapper th{background:var(--surface-inset);font-weight:600}
-.data-table-wrapper tr:last-child td{border-bottom:0}
+.data-table-wrapper tr:last-child td,.data-table-wrapper tr:last-child th{border-bottom:0}
 .data-table-wrapper td.num,.data-table-wrapper th.num{text-align:right}
 .faq-list{max-width:76ch}
 .faq-list details{background:var(--surface-card);border:1px solid var(--surface-border);border-radius:12px;margin:0 0 8px}
@@ -261,100 +289,56 @@ article li{margin:.25em 0}
 
     <section class="tool-suite">
       <h1 class="primary-title">Timesheet Calculator</h1>
-      <p class="tool-lead">Add daily start, end and break times to get weekly hours, overtime and a gross pay estimate.</p>
+      <p class="tool-lead">Choose a period, add your shifts and breaks, and get total hours, overtime and a gross pay estimate.</p>
 
       <div class="calculator-ui-box">
         <form id="ts-form" novalidate autocomplete="off">
+          <div class="period-scroll" id="period-scroll" role="group" aria-label="Timesheet period">
+            <button type="button" class="period-btn" data-period="daily" aria-pressed="false">Daily</button>
+            <button type="button" class="period-btn" data-period="weekly" aria-pressed="true">Weekly</button>
+            <button type="button" class="period-btn" data-period="biweekly" aria-pressed="false">Biweekly</button>
+            <button type="button" class="period-btn" data-period="monthly" aria-pressed="false">Monthly</button>
+          </div>
+          <p class="period-note">Swipe horizontally to view or select a period.</p>
+
+          <div class="date-block">
+            <label for="pdate" id="pdate-label">Start date</label>
+            <input type="date" id="pdate" name="pdate" min="1970-01-01" max="2100-12-31" aria-describedby="range-label err-pdate">
+            <p class="range-label" id="range-label"></p>
+            <p class="field-error" id="err-pdate" hidden></p>
+          </div>
+
           <div class="calc-toolbar">
-            <span class="hint" style="margin:0">Leave days off blank. 24-hour or 12-hour entry follows your device.</span>
-          </div>
-          <fieldset>
-            <legend class="sr-only">Daily start time, end time and unpaid break</legend>
-            <div class="calc-toolbar"><span class="day-name">Weekly entries</span><button type="button" class="link-btn" id="copy-mon">Copy Monday to Tue–Fri</button></div>
-          <div class="day-row" data-day="mon">
-            <div class="day-head"><span class="day-name">Monday</span><span class="day-net" id="net-mon">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-mon">Start<span class="sr-only"> time, Monday</span></label><input type="time" id="start-mon" name="start-mon" autocomplete="off" aria-describedby="err-mon"></div>
-              <div class="fld"><label for="end-mon">End<span class="sr-only"> time, Monday</span></label><input type="time" id="end-mon" name="end-mon" autocomplete="off" aria-describedby="err-mon"></div>
-              <div class="fld"><label for="break-mon">Break (min)<span class="sr-only">, unpaid, Monday</span></label><input type="number" id="break-mon" name="break-mon" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-mon"></div>
+            <span class="toolbar-title" id="entries-title">Work entries <span class="entry-count" id="entry-count"></span></span>
+            <div class="toolbar-btns">
+              <button type="button" class="mini-btn" id="remove-btn" aria-label="Remove selected entry (or the last entry)">&minus; Remove</button>
+              <button type="button" class="mini-btn add" id="add-btn" aria-label="Add another entry">+ Add</button>
             </div>
-            <p class="field-error" id="err-mon" hidden></p>
           </div>
-          <div class="day-row" data-day="tue">
-            <div class="day-head"><span class="day-name">Tuesday</span><span class="day-net" id="net-tue">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-tue">Start<span class="sr-only"> time, Tuesday</span></label><input type="time" id="start-tue" name="start-tue" autocomplete="off" aria-describedby="err-tue"></div>
-              <div class="fld"><label for="end-tue">End<span class="sr-only"> time, Tuesday</span></label><input type="time" id="end-tue" name="end-tue" autocomplete="off" aria-describedby="err-tue"></div>
-              <div class="fld"><label for="break-tue">Break (min)<span class="sr-only">, unpaid, Tuesday</span></label><input type="number" id="break-tue" name="break-tue" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-tue"></div>
-            </div>
-            <p class="field-error" id="err-tue" hidden></p>
-          </div>
-          <div class="day-row" data-day="wed">
-            <div class="day-head"><span class="day-name">Wednesday</span><span class="day-net" id="net-wed">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-wed">Start<span class="sr-only"> time, Wednesday</span></label><input type="time" id="start-wed" name="start-wed" autocomplete="off" aria-describedby="err-wed"></div>
-              <div class="fld"><label for="end-wed">End<span class="sr-only"> time, Wednesday</span></label><input type="time" id="end-wed" name="end-wed" autocomplete="off" aria-describedby="err-wed"></div>
-              <div class="fld"><label for="break-wed">Break (min)<span class="sr-only">, unpaid, Wednesday</span></label><input type="number" id="break-wed" name="break-wed" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-wed"></div>
-            </div>
-            <p class="field-error" id="err-wed" hidden></p>
-          </div>
-          <div class="day-row" data-day="thu">
-            <div class="day-head"><span class="day-name">Thursday</span><span class="day-net" id="net-thu">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-thu">Start<span class="sr-only"> time, Thursday</span></label><input type="time" id="start-thu" name="start-thu" autocomplete="off" aria-describedby="err-thu"></div>
-              <div class="fld"><label for="end-thu">End<span class="sr-only"> time, Thursday</span></label><input type="time" id="end-thu" name="end-thu" autocomplete="off" aria-describedby="err-thu"></div>
-              <div class="fld"><label for="break-thu">Break (min)<span class="sr-only">, unpaid, Thursday</span></label><input type="number" id="break-thu" name="break-thu" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-thu"></div>
-            </div>
-            <p class="field-error" id="err-thu" hidden></p>
-          </div>
-          <div class="day-row" data-day="fri">
-            <div class="day-head"><span class="day-name">Friday</span><span class="day-net" id="net-fri">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-fri">Start<span class="sr-only"> time, Friday</span></label><input type="time" id="start-fri" name="start-fri" autocomplete="off" aria-describedby="err-fri"></div>
-              <div class="fld"><label for="end-fri">End<span class="sr-only"> time, Friday</span></label><input type="time" id="end-fri" name="end-fri" autocomplete="off" aria-describedby="err-fri"></div>
-              <div class="fld"><label for="break-fri">Break (min)<span class="sr-only">, unpaid, Friday</span></label><input type="number" id="break-fri" name="break-fri" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-fri"></div>
-            </div>
-            <p class="field-error" id="err-fri" hidden></p>
-          </div>
-          <div class="day-row" data-day="sat">
-            <div class="day-head"><span class="day-name">Saturday</span><span class="day-net" id="net-sat">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-sat">Start<span class="sr-only"> time, Saturday</span></label><input type="time" id="start-sat" name="start-sat" autocomplete="off" aria-describedby="err-sat"></div>
-              <div class="fld"><label for="end-sat">End<span class="sr-only"> time, Saturday</span></label><input type="time" id="end-sat" name="end-sat" autocomplete="off" aria-describedby="err-sat"></div>
-              <div class="fld"><label for="break-sat">Break (min)<span class="sr-only">, unpaid, Saturday</span></label><input type="number" id="break-sat" name="break-sat" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-sat"></div>
-            </div>
-            <p class="field-error" id="err-sat" hidden></p>
-          </div>
-          <div class="day-row" data-day="sun">
-            <div class="day-head"><span class="day-name">Sunday</span><span class="day-net" id="net-sun">—</span></div>
-            <div class="day-fields">
-              <div class="fld"><label for="start-sun">Start<span class="sr-only"> time, Sunday</span></label><input type="time" id="start-sun" name="start-sun" autocomplete="off" aria-describedby="err-sun"></div>
-              <div class="fld"><label for="end-sun">End<span class="sr-only"> time, Sunday</span></label><input type="time" id="end-sun" name="end-sun" autocomplete="off" aria-describedby="err-sun"></div>
-              <div class="fld"><label for="break-sun">Break (min)<span class="sr-only">, unpaid, Sunday</span></label><input type="number" id="break-sun" name="break-sun" inputmode="numeric" min="0" step="1" placeholder="0" autocomplete="off" aria-describedby="err-sun"></div>
-            </div>
-            <p class="field-error" id="err-sun" hidden></p>
-          </div>
-          </fieldset>
+          <div class="entries" id="entries" role="group" aria-labelledby="entries-title"></div>
+          <button type="button" class="link-btn" id="copy-first">Copy first entry times to all</button>
+          <p class="hint">Time fields follow your browser and device settings (12-hour or 24-hour). Identical start and end times count as 0 h.</p>
 
           <fieldset class="pay-box">
             <legend>Pay settings (optional)</legend>
             <div class="pay-grid">
               <div class="fld"><label for="rate">Hourly rate</label><input type="number" id="rate" name="rate" inputmode="decimal" min="0" step="any" placeholder="0.00" aria-describedby="err-rate"><p class="field-error" id="err-rate" hidden></p></div>
               <div class="fld"><label for="cur">Currency symbol or code</label><input type="text" id="cur" name="cur" maxlength="4" placeholder="Optional"></div>
-              <div class="fld"><label for="thr">Overtime after (hours/week)</label><input type="number" id="thr" name="thr" inputmode="decimal" min="0" max="168" step="any" placeholder="None" aria-describedby="err-thr"><p class="field-error" id="err-thr" hidden></p></div>
+              <div class="fld"><label for="thr">Overtime after (hours)</label><input type="number" id="thr" name="thr" inputmode="decimal" min="0" max="744" step="any" placeholder="None" aria-describedby="err-thr"><p class="field-error" id="err-thr" hidden></p></div>
+              <div class="fld"><label for="basis">Limit applies</label><select id="basis" name="basis"><option value="day">Per day</option><option value="week" selected>Per week</option><option value="period">Per period</option></select></div>
               <div class="fld"><label for="mult">Overtime multiplier</label><input type="number" id="mult" name="mult" inputmode="decimal" min="1" max="10" step="any" value="1.5" aria-describedby="err-mult"><p class="field-error" id="err-mult" hidden></p></div>
             </div>
           </fieldset>
 
           <div class="btn-row">
             <button type="button" class="btn btn-primary" id="calc-btn">Calculate</button>
-            <button type="reset" class="btn" id="reset-btn">Reset</button>
+            <button type="button" class="btn" id="reset-btn">Reset</button>
           </div>
         </form>
 
         <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
           <div class="tqc-result-content">
-            <p class="res-label">Total time this week (HH:MM)</p>
+            <p class="res-label">Total time (HH:MM)</p>
             <p class="res-primary">00:00</p>
             <p class="res-sub">0 h 0 min · 0.00 decimal hours</p>
             <p class="res-note">Enter start and end times to see your total.</p>
@@ -365,72 +349,85 @@ article li{margin:.25em 0}
 
       <article>
         <h2>What Is a Timesheet Calculator?</h2>
-        <p>A timesheet records how long a person worked on each day of a pay period. A timesheet calculator turns the raw start times, end times and breaks into totals you can use: net hours for each day, a weekly total, decimal hours for payroll and, optionally, an estimate of gross pay. Doing this by hand is error-prone because time is not decimal. An hour has 60 minutes, so adding 8:45 and 7:30 digit by digit produces a meaningless 15:75, while the correct total is 16:15.</p>
-        <p>This calculator is useful for employees, freelancers, contractors, students on paid placements and managers who check hours before approving them. It uses plain arithmetic that applies anywhere in the world, with no country-specific payroll rules built in.</p>
+        <p>A timesheet records how long a person worked. A timesheet calculator turns raw start times, end times and breaks into totals you can use: net hours for each entry, a total for the day, week, fortnight or month, decimal hours for payroll and, optionally, an estimate of gross pay. Doing this by hand is error-prone because time is not decimal. Adding 8:45 and 7:30 digit by digit gives a meaningless 15:75, while the correct total is 16:15.</p>
+        <p>The calculator suits employees, freelancers, contractors, students on paid placements and managers who check hours before approving them. It uses plain arithmetic that applies anywhere in the world, with no country-specific payroll rules built in.</p>
 
         <h2>What This Calculator Works Out</h2>
         <ul>
-          <li>Net time for each day: the end time minus the start time minus any unpaid break.</li>
-          <li>A weekly total shown as hours and minutes (HH:MM) and as decimal hours.</li>
-          <li>The number of days worked and the average length of a worked day.</li>
-          <li>An optional split between regular time and overtime, based on a weekly threshold you choose.</li>
-          <li>An optional gross pay estimate based on your hourly rate.</li>
+          <li>Net time for every entry: end time minus start time minus any unpaid break.</li>
+          <li>The total for the chosen period in HH:MM and as decimal hours.</li>
+          <li>Days worked, the number of entries and the average length of a worked day.</li>
+          <li>An optional split between regular time and overtime.</li>
+          <li>An optional gross pay estimate from your hourly rate.</li>
         </ul>
 
         <h2>How to Use the Timesheet Calculator</h2>
         <ol class="steps-flow">
-          <li><strong>Enter start and end times</strong><span>Fill in the start and end time for every day you worked and leave days off blank. For a night shift, enter the real clock times.</span></li>
-          <li><strong>Add unpaid breaks</strong><span>Type each unpaid break in whole minutes. Leave the field empty if the break is paid.</span></li>
-          <li><strong>Set optional pay details</strong><span>Enter an hourly rate. If overtime applies, add the weekly hours after which it starts and the multiplier.</span></li>
-          <li><strong>Read the result</strong><span>Totals update as you type. Press Calculate to refresh them, or Reset to start a new week.</span></li>
+          <li><strong>Pick a period</strong><span>Choose Daily, Weekly, Biweekly or Monthly, then set the date. The date range it covers is shown under the field.</span></li>
+          <li><strong>Fill in your entries</strong><span>Enter the work day, start time, end time and unpaid break in minutes. Leave unused entries empty.</span></li>
+          <li><strong>Add or remove entries</strong><span>Press Add for another shift. Remove deletes the entry you last clicked in, or the last one, and always keeps at least one.</span></li>
+          <li><strong>Set optional pay details</strong><span>Enter an hourly rate, and if overtime applies, the hours limit, its basis and the multiplier.</span></li>
         </ol>
-        <p>The “Copy Monday to Tue–Fri” button saves time when your weekday shifts are identical. You can then adjust any single day.</p>
+        <p>Totals update as you type. “Copy first entry times to all” saves effort when shifts are identical. The time fields follow your browser and device settings, so they may show 12-hour or 24-hour format, but the calculation is the same either way.</p>
+
+        <h2>Choosing a Period</h2>
+        <div class="data-table-wrapper">
+          <table>
+            <thead><tr><th>Period</th><th>Date you choose</th><th>Range covered</th></tr></thead>
+            <tbody>
+              <tr><td>Daily</td><td>One date</td><td>That day; add entries for split shifts</td></tr>
+              <tr><td>Weekly</td><td>Start date</td><td>7 days from the start date</td></tr>
+              <tr><td>Biweekly</td><td>Start date</td><td>14 days from the start date</td></tr>
+              <tr><td>Monthly</td><td>Any date in the month</td><td>The whole calendar month</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Changing the period keeps what you have typed. Entry dates move into the new range, and blank timesheets are refilled with weekday entries.</p>
 
         <h2>Formulas Used</h2>
         <div class="formula-card">
-          <h3>Daily net time</h3>
+          <h3>Net time for one entry</h3>
           <code>Net minutes = (End − Start) − Break</code>
-          <p>If the end time is earlier than the start time, 1,440 minutes are added to the difference because the shift finishes on the following day.</p>
+          <p>If the end is earlier than the start, 1,440 minutes are added to the difference because the shift finishes on the next day. The shift belongs to the date it started.</p>
         </div>
         <div class="formula-card">
-          <h3>Weekly total and display formats</h3>
-          <code>Total minutes = Net(Mon) + Net(Tue) + … + Net(Sun)</code>
+          <h3>Period total and display formats</h3>
+          <code>Total minutes = Net(1) + Net(2) + … + Net(n)</code>
           <code>Hours = floor(Total ÷ 60), Minutes = Total mod 60</code>
           <code>Decimal hours = Total ÷ 60</code>
-          <p>Carrying minutes into hours in this way is the normalisation step: 75 minutes becomes 1 hour 15 minutes.</p>
+          <p>Carrying minutes into hours is the normalisation step: 75 minutes becomes 1 hour 15 minutes.</p>
         </div>
         <div class="formula-card">
           <h3>Overtime and gross pay</h3>
-          <code>Regular minutes = min(Total, Threshold × 60)</code>
-          <code>Overtime minutes = max(0, Total − Threshold × 60)</code>
+          <code>Overtime = sum of max(0, Group total − Limit × 60)</code>
           <code>Gross = Rate × Regular ÷ 60 + Rate × Multiplier × Overtime ÷ 60</code>
-          <p>Without a threshold, every minute is paid at the normal rate.</p>
+          <p>A group is one day, one 7-day block counted from the start date, or the whole period, depending on the basis you select. Without a limit, every minute is paid at the normal rate.</p>
         </div>
 
         <h2>Worked Example</h2>
-        <p>Consider a five-day week with a different start time on Wednesday and an early finish on Friday.</p>
+        <p>Take a weekly period starting on Monday 26 October 2026, with a different start on Wednesday and an early finish on Friday.</p>
         <div class="data-table-wrapper">
           <table>
-            <thead><tr><th>Day</th><th>Start</th><th>End</th><th class="num">Break (min)</th><th class="num">Net time</th></tr></thead>
+            <thead><tr><th>Date</th><th>Start</th><th>End</th><th class="num">Break (min)</th><th class="num">Net time</th></tr></thead>
             <tbody>
-              <tr><td>Monday</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
-              <tr><td>Tuesday</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
-              <tr><td>Wednesday</td><td>08:45</td><td>18:00</td><td class="num">45</td><td class="num">8:30</td></tr>
-              <tr><td>Thursday</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
-              <tr><td>Friday</td><td>09:00</td><td>16:15</td><td class="num">30</td><td class="num">6:45</td></tr>
+              <tr><td>Mon 26 Oct</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
+              <tr><td>Tue 27 Oct</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
+              <tr><td>Wed 28 Oct</td><td>08:45</td><td>18:00</td><td class="num">45</td><td class="num">8:30</td></tr>
+              <tr><td>Thu 29 Oct</td><td>09:00</td><td>17:30</td><td class="num">30</td><td class="num">8:00</td></tr>
+              <tr><td>Fri 30 Oct</td><td>09:00</td><td>16:15</td><td class="num">30</td><td class="num">6:45</td></tr>
               <tr><th scope="row" colspan="4">Weekly total</th><th class="num">39:15</th></tr>
             </tbody>
           </table>
         </div>
-        <p>The five daily results add up to 2,355 minutes, which is 39 hours 15 minutes or 39.25 decimal hours. At a rate of 20.00 per hour with no overtime, gross pay is 39.25 × 20 = 785.00. If overtime starts after 37.5 hours at a multiplier of 1.5, regular pay is 37.5 × 20 = 750.00 and the remaining 1.75 hours earn 1.75 × 20 × 1.5 = 52.50, giving 802.50 in total.</p>
+        <p>The entries add up to 2,355 minutes, which is 39 hours 15 minutes or 39.25 decimal hours. At 20.00 per hour with no overtime, gross pay is 39.25 × 20 = 785.00. With overtime after 37.5 hours per week at a multiplier of 1.5, regular pay is 37.5 × 20 = 750.00 and the other 1.75 hours earn 1.75 × 20 × 1.5 = 52.50, so the total is 802.50. With an 8-hour limit per day instead, only Wednesday’s extra 30 minutes count as overtime: 38.75 × 20 + 0.5 × 20 × 1.5 = 790.00.</p>
+        <p>For split shifts, choose Daily and add a second shift. Working 08:00–12:00 and 13:00–17:30 gives 4:00 + 4:30 = 8:30.</p>
 
-        <h2>Reading Your Result: HH:MM or Decimal Hours</h2>
-        <p>HH:MM is easiest to read, while decimal hours are what most payroll and invoicing systems multiply by a rate. Never type a time such as 7:30 as 7.30 in a rate calculation. Use the decimal figure shown in the result instead. The table lists common conversions.</p>
+        <h2>HH:MM or Decimal Hours</h2>
+        <p>HH:MM is easiest to read, while decimal hours are what most payroll and invoicing systems multiply by a rate. Never type 7:30 as 7.30 in a rate calculation. Use the decimal figure shown in the result.</p>
         <div class="data-table-wrapper">
           <table>
             <thead><tr><th>Minutes</th><th class="num">Decimal hours</th></tr></thead>
             <tbody>
-              <tr><td>5</td><td class="num">0.08</td></tr>
               <tr><td>10</td><td class="num">0.17</td></tr>
               <tr><td>15</td><td class="num">0.25</td></tr>
               <tr><td>20</td><td class="num">0.33</td></tr>
@@ -439,67 +436,67 @@ article li{margin:.25em 0}
             </tbody>
           </table>
         </div>
-        <p>Decimal hours are shown rounded to two places, but the calculation itself uses exact minutes, so no rounding error builds up across the week.</p>
+        <p>Decimals are shown to two places, but the calculation uses exact minutes, so no rounding error builds up.</p>
 
         <h2>Overtime and Gross Pay Estimates</h2>
-        <p>Overtime rules are set by law, contract or company policy and vary widely. Some systems count overtime weekly, some daily, and some pay premium rates on weekends or public holidays. In the United States, for example, the Department of Labor publishes guidance on federal overtime requirements, while other countries use different thresholds and rates. Because this calculator is global, it asks you to supply the threshold and multiplier that apply to you instead of assuming them.</p>
-        <p>Treat the gross pay figure as an estimate. It excludes tax, social contributions, benefits, bonuses and allowances, so it will be higher than take-home pay.</p>
+        <p>Overtime rules are set by law, contract or company policy and vary widely. Some systems count overtime per day, some per week, and some pay premiums on weekends or holidays. In the United States, for example, the Department of Labor publishes guidance on federal overtime, while other countries use different thresholds. Because this calculator is global, you supply the limit, basis and multiplier that apply to you.</p>
+        <p>Treat gross pay as an estimate. It excludes tax, social contributions, benefits, bonuses and allowances, so it is higher than take-home pay.</p>
 
         <h2>Assumptions and Limitations</h2>
         <ul>
-          <li>Each calculation covers one week with seven rows. For a longer period, calculate each week and add the totals.</li>
-          <li>Times are treated as clock times. Daylight-saving changes are not applied, so a shift that spans a clock change can differ from real elapsed time by an hour.</li>
-          <li>Each day holds one shift. For a split shift, enter the first start and the last end, then put the gap in the break field.</li>
-          <li>Identical start and end times count as zero hours, not 24.</li>
-          <li>No rounding policy, paid break, holiday premium or deduction is applied.</li>
+          <li>Weekly blocks for overtime are 7 days counted from the period start, which for Monthly is the 1st of the month.</li>
+          <li>Times are clock times. Daylight-saving changes are not applied, so a shift across a clock change can differ from real elapsed time by an hour.</li>
+          <li>An overnight shift is counted on its start date, and overlapping shifts are rejected rather than merged.</li>
+          <li>Identical start and end times count as zero hours and trigger a warning, not 24 hours.</li>
+          <li>Up to 62 entries are supported. No rounding policy, paid break, holiday premium or deduction is applied.</li>
         </ul>
 
         <h2>Common Timesheet Mistakes</h2>
         <ul>
           <li>Entering a break in hours when the field expects minutes.</li>
           <li>Forgetting to deduct an unpaid lunch break.</li>
-          <li>Reading 7:30 as 7.30 hours instead of 7.5 hours.</li>
-          <li>Mixing up AM and PM when using a 12-hour clock.</li>
+          <li>Reading 7:30 as 7.30 hours instead of 7.5.</li>
+          <li>Mixing up AM and PM on a 12-hour clock.</li>
           <li>Treating gross pay as the amount that will be paid out.</li>
         </ul>
 
         <h2>Who Uses a Timesheet Calculator?</h2>
         <ul>
-          <li><strong>Employees</strong> who want to check their pay against hours worked.</li>
+          <li><strong>Employees</strong> checking pay against hours worked.</li>
           <li><strong>Freelancers and contractors</strong> who bill by the hour.</li>
-          <li><strong>Managers and payroll staff</strong> who review submitted hours.</li>
+          <li><strong>Managers and payroll staff</strong> reviewing submitted hours.</li>
           <li><strong>Students</strong> tracking paid placements or part-time jobs.</li>
         </ul>
 
         <h2>Frequently Asked Questions</h2>
         <div class="faq-list">
         <details>
-          <summary>How does the timesheet calculator work out daily hours?</summary>
-          <div><p>For each day it subtracts the start time from the end time, then subtracts the unpaid break. All arithmetic is done in whole minutes, so each daily result is exact, and the weekly total is the sum of the daily results.</p></div>
+          <summary>How does the timesheet calculator work out hours?</summary>
+          <div><p>For each entry it subtracts the start time from the end time, then subtracts the unpaid break. All arithmetic uses whole minutes, so every entry is exact, and the period total is the sum of the entries. Leave the break empty if your breaks are paid.</p></div>
+        </details>
+        <details>
+          <summary>What do the Daily, Weekly, Biweekly and Monthly periods do?</summary>
+          <div><p>The period sets the date range the entries must fall in. Daily covers one date, Weekly covers 7 days from the start date you choose, Biweekly covers 14 days from the start date, and Monthly covers the whole calendar month that contains the date you choose.</p></div>
         </details>
         <details>
           <summary>How do I enter a shift that finishes after midnight?</summary>
-          <div><p>Enter the real start and end clock times, for example 22:00 and 06:00. When the end time is earlier than the start time, the calculator treats the shift as ending the next day and adds 24 hours to the difference. If the start and end times are identical, that day counts as zero hours.</p></div>
+          <div><p>Enter the real start and end clock times, for example 22:00 and 06:00, on the date the shift began. When the end time is earlier than the start time, the calculator adds 24 hours to the difference. If the two times are identical, the entry counts as zero hours and a warning asks you to check them.</p></div>
+        </details>
+        <details>
+          <summary>Can I enter more than one shift on the same day?</summary>
+          <div><p>Yes. Choose Daily and press Add for each extra shift, or add more entries with the same date in any other period. Shifts that overlap are flagged as errors so the same minutes are never counted twice.</p></div>
         </details>
         <details>
           <summary>What is the difference between 7:30 and 7.5 hours?</summary>
-          <div><p>They are the same amount of time written in two ways. 7:30 means 7 hours and 30 minutes, while 7.5 is decimal hours, where 30 minutes is half of an hour. Payroll systems usually multiply decimal hours by an hourly rate, so the calculator shows both formats.</p></div>
-        </details>
-        <details>
-          <summary>Are breaks subtracted from my total?</summary>
-          <div><p>Yes. Whatever you enter in the break field is treated as unpaid and is subtracted from that day. Leave the field blank or at zero if your breaks are paid.</p></div>
+          <div><p>They are the same amount of time written two ways. 7:30 means 7 hours and 30 minutes, while 7.5 is decimal hours, where 30 minutes is half an hour. Payroll systems usually multiply decimal hours by an hourly rate, so the calculator shows both formats.</p></div>
         </details>
         <details>
           <summary>How is overtime calculated?</summary>
-          <div><p>Overtime is optional. If you enter a weekly threshold in hours, every minute above it is paid at your hourly rate multiplied by the overtime multiplier, and the minutes up to the threshold are paid at the normal rate. Leave the threshold blank to ignore overtime.</p></div>
+          <div><p>Overtime is optional. Enter the number of hours after which overtime starts and choose whether that limit applies per day, per week (each 7-day block from the start date) or per whole period. Minutes above the limit are paid at your hourly rate times the overtime multiplier.</p></div>
         </details>
         <details>
-          <summary>Does it follow my country&#39;s payroll or labour rules?</summary>
-          <div><p>No. The calculator is global and applies plain arithmetic only. Overtime thresholds, daily limits, rounding policies, paid breaks and premium rates differ between countries, industries and contracts, so check your own rules before relying on the figures.</p></div>
-        </details>
-        <details>
-          <summary>Is the gross pay estimate the same as take-home pay?</summary>
-          <div><p>No. Gross pay is the amount earned before tax, social contributions and other deductions. The calculator does not estimate deductions, benefits, bonuses or allowances.</p></div>
+          <summary>Does it follow my country&#39;s payroll rules, and is gross pay my take-home pay?</summary>
+          <div><p>No to both. The calculator is global and uses plain arithmetic only, so check your own contract and local rules for thresholds, premiums, rounding and paid breaks. Gross pay is the amount before tax and other deductions, so it is higher than take-home pay.</p></div>
         </details>
         <details>
           <summary>Is my timesheet data saved or sent anywhere?</summary>
@@ -508,7 +505,7 @@ article li{margin:.25em 0}
         </div>
 
         <h2>Conclusion</h2>
-        <p>Accurate timesheets depend on correct time arithmetic. By converting every shift into whole minutes, subtracting breaks and summing the week, this calculator gives you a reliable total in both HH:MM and decimal form, plus an optional overtime split and gross pay estimate. Check the result against your own contract or local rules before using it for payroll or invoicing.</p>
+        <p>Accurate timesheets depend on correct time arithmetic. By converting every entry into whole minutes, subtracting breaks and summing the period, this calculator gives a reliable total in HH:MM and decimal form, plus an optional overtime split and gross pay estimate. Check the result against your own contract or local rules before using it for payroll or invoicing.</p>
 
         <h2>Sources and Further Reading</h2>
         <ul class="sources">
@@ -524,7 +521,8 @@ article li{margin:.25em 0}
 (function () {
   'use strict';
   /* CORE-START */
-  var DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  var MAXE = 62;
+  var PERIODS = { daily: 'Daily', weekly: 'Weekly', biweekly: 'Biweekly', monthly: 'Monthly' };
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function fmtHM(min) { return pad(Math.floor(min / 60)) + ':' + pad(min % 60); }
   function fmtLong(min) { return Math.floor(min / 60) + ' h ' + (min % 60) + ' min'; }
@@ -535,20 +533,75 @@ article li{margin:.25em 0}
     var h = +m[1], n = +m[2];
     return (h > 23 || n > 59) ? null : h * 60 + n;
   }
-  function evalDay(start, end, brk, badInput) {
-    start = (start || '').trim(); end = (end || '').trim(); brk = (brk || '').trim();
-    if (badInput) { return { state: 'error', msg: 'Enter the break as whole minutes.' }; }
-    if (brk !== '' && !/^\d+$/.test(brk)) { return { state: 'error', msg: 'Enter the break as whole minutes.' }; }
+  /* Dates are handled as whole day numbers since 1970-01-01 (UTC), so time zones and DST never shift a date. */
+  function parseDate(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+    if (!m) { return null; }
+    var y = +m[1], mo = +m[2], d = +m[3];
+    if (y < 1970 || y > 2100) { return null; }
+    var t = Date.UTC(y, mo - 1, d), o = new Date(t);
+    if (o.getUTCFullYear() !== y || o.getUTCMonth() !== mo - 1 || o.getUTCDate() !== d) { return null; }
+    return t / 86400000;
+  }
+  function fmtDate(n) {
+    var o = new Date(n * 86400000);
+    return o.getUTCFullYear() + '-' + pad(o.getUTCMonth() + 1) + '-' + pad(o.getUTCDate());
+  }
+  function periodRange(period, a) {
+    if (period === 'daily') { return { start: a, end: a }; }
+    if (period === 'weekly') { return { start: a, end: a + 6 }; }
+    if (period === 'biweekly') { return { start: a, end: a + 13 }; }
+    var o = new Date(a * 86400000), y = o.getUTCFullYear(), m = o.getUTCMonth();
+    return { start: Date.UTC(y, m, 1) / 86400000, end: Date.UTC(y, m + 1, 0) / 86400000 };
+  }
+  function defaultDates(period, range) {
+    if (period === 'daily') { return [range.start]; }
+    var out = [];
+    for (var d = range.start; d <= range.end; d++) {
+      var wd = new Date(d * 86400000).getUTCDay();
+      if (wd >= 1 && wd <= 5) { out.push(d); }
+    }
+    return out.length ? out : [range.start];
+  }
+  function remapDate(d, oldR, newR) {
+    if (d === null || !oldR) { return newR.start; }
+    var off = d - oldR.start, len = newR.end - newR.start;
+    return newR.start + Math.min(Math.max(off, 0), len);
+  }
+  function evalEntry(e, ctx) {
+    function err(msg) { return { state: 'error', msg: msg }; }
+    var start = (e.start || '').trim(), end = (e.end || '').trim(), brk = (e.brk || '').trim();
+    if (e.bad || (brk !== '' && !/^\d+$/.test(brk))) { return err('Enter the break as whole minutes.'); }
     var b = brk === '' ? 0 : parseInt(brk, 10);
     if (start === '' && end === '') {
-      return b > 0 ? { state: 'error', msg: 'Add start and end times, or clear the break.' } : { state: 'empty', minutes: 0 };
+      return b > 0 ? err('Add start and end times, or clear the break.') : { state: 'empty', minutes: 0 };
     }
-    if (start === '' || end === '') { return { state: 'error', msg: 'Enter both a start and an end time.' }; }
-    var s = parseTime(start), e = parseTime(end);
-    if (s === null || e === null) { return { state: 'error', msg: 'Enter valid times.' }; }
-    var gross = e >= s ? e - s : e + 1440 - s;
-    if (b > gross) { return { state: 'error', msg: 'The break is longer than the shift.' }; }
-    return { state: 'ok', minutes: gross - b, gross: gross };
+    if (start === '' || end === '') { return err('Enter both a start and an end time.'); }
+    var s = parseTime(start), t = parseTime(end);
+    if (s === null || t === null) { return err('Enter valid times.'); }
+    var day;
+    if (ctx.period === 'daily') {
+      if (!ctx.range) { return err('Choose a valid date first.'); }
+      day = ctx.range.start;
+    } else {
+      day = parseDate(e.date);
+      if (day === null) { return err('Choose a valid date.'); }
+      if (ctx.range && (day < ctx.range.start || day > ctx.range.end)) { return err('This date is outside the selected period.'); }
+    }
+    var gross = t >= s ? t - s : t + 1440 - s;
+    if (b > gross) { return err('The break is longer than the shift.'); }
+    var r = { state: 'ok', minutes: gross - b, gross: gross, day: day, startAbs: day * 1440 + s };
+    if (gross === 0) { r.warn = 'Start and end are the same, so this counts as 0 h. Check the times.'; }
+    return r;
+  }
+  function findOverlaps(list) {
+    var sorted = list.slice().sort(function (a, b) { return a.start - b.start || a.idx - b.idx; });
+    var maxEnd = -Infinity, bad = [];
+    sorted.forEach(function (x) {
+      if (x.start < maxEnd) { bad.push(x.idx); }
+      if (x.end > maxEnd) { maxEnd = x.end; }
+    });
+    return bad;
   }
   function evalSettings(rate, thr, mult) {
     var r = { rate: null, thr: null, mult: 1, errors: {} };
@@ -559,7 +612,7 @@ article li{margin:.25em 0}
     }
     if (thr !== '') {
       var t = Number(thr);
-      if (!isFinite(t) || t < 0 || t > 168) { r.errors.thr = 'Enter 0 to 168 hours.'; } else { r.thr = t; }
+      if (!isFinite(t) || t < 0 || t > 744) { r.errors.thr = 'Enter 0 to 744 hours.'; } else { r.thr = t; }
     }
     if (r.thr !== null) {
       if (mult === '') { r.errors.mult = 'Enter a multiplier from 1 to 10.'; }
@@ -570,35 +623,70 @@ article li{margin:.25em 0}
     }
     return r;
   }
-  function splitTime(total, thr) {
-    if (thr === null) { return { reg: total, ot: 0 }; }
-    var lim = Math.round(thr * 60);
-    return { reg: Math.min(total, lim), ot: Math.max(0, total - lim) };
+  function summarize(items, range, basis, thr) {
+    var total = 0, daySet = {}, buckets = {};
+    items.forEach(function (it) {
+      total += it.minutes;
+      if (it.minutes > 0) { daySet[it.day] = true; }
+      var key = basis === 'day' ? it.day : (basis === 'week' ? Math.floor((it.day - range.start) / 7) : 0);
+      buckets[key] = (buckets[key] || 0) + it.minutes;
+    });
+    var ot = 0;
+    if (thr !== null) {
+      var lim = Math.round(thr * 60);
+      Object.keys(buckets).forEach(function (k) { ot += Math.max(0, buckets[k] - lim); });
+    }
+    return { total: total, shifts: items.length, days: Object.keys(daySet).length, reg: total - ot, ot: ot };
   }
-  function grossPay(sp, rate, mult) { return rate * (sp.reg / 60) + rate * mult * (sp.ot / 60); }
+  function grossPay(reg, ot, rate, mult) { return rate * (reg / 60) + rate * mult * (ot / 60); }
   /* CORE-END */
 
   var form = document.getElementById('ts-form');
   var resultContent = document.querySelector('#result .tqc-result-content');
-  if (!form || !resultContent) { return; }
+  var listEl = document.getElementById('entries');
+  if (!form || !resultContent || !listEl) { return; }
   var nf;
   try { nf = new Intl.NumberFormat(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  catch (e) { nf = { format: function (n) { return n.toFixed(2); } }; }
+  catch (e1) { nf = { format: function (n) { return n.toFixed(2); } }; }
+  var dfLong, dfShort;
+  try {
+    dfLong = new Intl.DateTimeFormat(undefined, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    dfShort = new Intl.DateTimeFormat(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+  } catch (e2) { dfLong = dfShort = { format: function (d) { return fmtDate(Math.floor(d.getTime() / 86400000)); } }; }
 
+  var state = { period: 'weekly', entries: [], seq: 0, selected: null, range: null, basisTouched: false };
+  var BASIS_LABEL = { day: 'per day', week: 'per week', period: 'per period' };
+  var ANCHOR_LABEL = { daily: 'Date', weekly: 'Start date', biweekly: 'Start date', monthly: 'Any date in the month' };
+
+  function byId(id) { return document.getElementById(id); }
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) { n.className = cls; }
     if (text !== undefined) { n.textContent = text; }
     return n;
   }
-  function byId(id) { return document.getElementById(id); }
-  function setError(inputIds, errId, msg) {
+  function dayText(n, long) { return (long ? dfLong : dfShort).format(new Date(n * 86400000)); }
+  function rangeText(r) { return r.start === r.end ? dayText(r.start, true) : dayText(r.start, true) + ' \u2013 ' + dayText(r.end, true); }
+  function todayStr() { var t = new Date(); return fmtDate(Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / 86400000); }
+  function defaultBasis(p) { return p === 'daily' ? 'day' : 'week'; }
+  function newEntry(date) { state.seq += 1; return { id: state.seq, date: date === undefined ? '' : date, start: '', end: '', brk: '' }; }
+  function entriesFor(period, range) { return defaultDates(period, range).map(function (d) { return newEntry(fmtDate(d)); }); }
+  function allBlank() { return state.entries.every(function (e) { return !e.start && !e.end && !e.brk; }); }
+  function findEntry(id) { for (var i = 0; i < state.entries.length; i++) { if (state.entries[i].id === id) { return state.entries[i]; } } return null; }
+  function anchorNum() { return parseDate(byId('pdate').value); }
+  function currentRange() { var a = anchorNum(); return a === null ? null : periodRange(state.period, a); }
+
+  function setMsg(inputIds, errId, msg, kind) {
     var box = byId(errId);
-    if (box) { box.textContent = msg || ''; box.hidden = !msg; }
+    if (box) {
+      box.className = kind === 'warn' ? 'field-warn' : 'field-error';
+      box.textContent = msg ? (kind === 'warn' ? '\u26A0 ' + msg : msg) : '';
+      box.hidden = !msg;
+    }
     inputIds.forEach(function (id) {
       var f = byId(id);
       if (!f) { return; }
-      if (msg) { f.setAttribute('aria-invalid', 'true'); } else { f.removeAttribute('aria-invalid'); }
+      if (msg && kind !== 'warn') { f.setAttribute('aria-invalid', 'true'); } else { f.removeAttribute('aria-invalid'); }
     });
   }
   function money(n, cur) {
@@ -606,6 +694,95 @@ article li{margin:.25em 0}
     if (!cur) { return s; }
     return /^[A-Za-z]+$/.test(cur) ? cur + ' ' + s : cur + s;
   }
+
+  /* ---- Entries (DOM built with safe APIs) ---- */
+  function mkInput(type, id, f, val) {
+    var i = document.createElement('input');
+    i.type = type; i.id = id; i.name = id; i.value = val || '';
+    i.setAttribute('data-f', f);
+    i.setAttribute('autocomplete', 'off');
+    return i;
+  }
+  function mkField(cls, id, text, srText, input) {
+    var f = el('div', 'fld' + (cls ? ' ' + cls : ''));
+    var l = el('label', '', text);
+    l.setAttribute('for', id);
+    var sr = el('span', 'sr-only', srText);
+    l.appendChild(sr);
+    f.appendChild(l);
+    f.appendChild(input);
+    return f;
+  }
+  function buildEntry(en, i) {
+    var daily = state.period === 'daily';
+    var word = daily ? 'Shift ' : 'Entry ';
+    var box = el('div', 'entry' + (en.id === state.selected ? ' is-selected' : ''));
+    box.setAttribute('role', 'group');
+    box.setAttribute('aria-label', word + (i + 1));
+    box.setAttribute('data-id', String(en.id));
+    var head = el('div', 'entry-head');
+    var title = el('span', 'entry-title', word + (i + 1));
+    title.id = 'ttl-' + en.id;
+    var net = el('span', 'entry-net', '\u2014');
+    net.id = 'net-' + en.id;
+    head.appendChild(title); head.appendChild(net);
+    box.appendChild(head);
+    var fields = el('div', 'entry-fields');
+    var sfx = ', ' + word.toLowerCase() + (i + 1);
+    if (!daily) {
+      var d = mkInput('date', 'date-' + en.id, 'date', en.date);
+      d.min = '1970-01-01'; d.max = '2100-12-31';
+      d.setAttribute('aria-describedby', 'err-' + en.id);
+      fields.appendChild(mkField('date-fld', 'date-' + en.id, 'Work day', sfx, d));
+    }
+    var s = mkInput('time', 'start-' + en.id, 'start', en.start);
+    var e = mkInput('time', 'end-' + en.id, 'end', en.end);
+    var b = mkInput('number', 'brk-' + en.id, 'brk', en.brk);
+    b.min = '0'; b.step = '1'; b.placeholder = '0'; b.setAttribute('inputmode', 'numeric');
+    [s, e, b].forEach(function (x) { x.setAttribute('aria-describedby', 'err-' + en.id); });
+    fields.appendChild(mkField('', 'start-' + en.id, 'Start time', sfx, s));
+    fields.appendChild(mkField('', 'end-' + en.id, 'End time', sfx, e));
+    fields.appendChild(mkField('brk-fld', 'brk-' + en.id, 'Break (min)', sfx, b));
+    box.appendChild(fields);
+    var msg = el('p', 'field-error');
+    msg.id = 'err-' + en.id; msg.hidden = true;
+    box.appendChild(msg);
+    return box;
+  }
+  function renderEntries() {
+    while (listEl.firstChild) { listEl.removeChild(listEl.firstChild); }
+    state.entries.forEach(function (en, i) { listEl.appendChild(buildEntry(en, i)); });
+    syncControls();
+  }
+  function syncControls() {
+    var n = state.entries.length;
+    byId('remove-btn').disabled = n <= 1;
+    byId('add-btn').disabled = n >= MAXE;
+    byId('entry-count').textContent = '(' + n + (n === 1 ? ' entry' : ' entries') + (n >= MAXE ? ', maximum' : '') + ')';
+  }
+  function syncPeriodUi() {
+    var btns = document.querySelectorAll('.period-btn'), active = null;
+    Array.prototype.forEach.call(btns, function (b) {
+      var on = b.getAttribute('data-period') === state.period;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) { active = b; }
+    });
+    byId('pdate-label').textContent = ANCHOR_LABEL[state.period];
+    var sc = byId('period-scroll');
+    if (active && sc.scrollWidth > sc.clientWidth) {
+      var l = active.offsetLeft, r = l + active.offsetWidth;
+      if (l < sc.scrollLeft) { sc.scrollLeft = Math.max(0, l - 8); }
+      else if (r > sc.scrollLeft + sc.clientWidth) { sc.scrollLeft = r - sc.clientWidth + 8; }
+    }
+  }
+  function select(id) {
+    state.selected = id;
+    Array.prototype.forEach.call(listEl.querySelectorAll('.entry'), function (b) {
+      b.classList.toggle('is-selected', +b.getAttribute('data-id') === id);
+    });
+  }
+
+  /* ---- Rendering the result ---- */
   function addRow(dl, label, value, strong) {
     dl.appendChild(el('dt', '', label));
     dl.appendChild(el('dd', strong ? 'res-strong' : '', value));
@@ -613,75 +790,201 @@ article li{margin:.25em 0}
   function render(sum) {
     while (resultContent.firstChild) { resultContent.removeChild(resultContent.firstChild); }
     if (sum.error) {
-      resultContent.appendChild(el('p', 'res-msg', '\u26A0 Fix the highlighted entries to see your weekly total.'));
+      resultContent.appendChild(el('p', 'res-msg', '\u26A0 Fix the highlighted entries to see your total.'));
       return;
     }
-    resultContent.appendChild(el('p', 'res-label', 'Total time this week (HH:MM)'));
+    resultContent.appendChild(el('p', 'res-label', 'Total time \u00B7 ' + PERIODS[state.period] + ' (HH:MM)'));
     resultContent.appendChild(el('p', 'res-primary', fmtHM(sum.total)));
     resultContent.appendChild(el('p', 'res-sub', fmtLong(sum.total) + ' \u00B7 ' + nf.format(sum.total / 60) + ' decimal hours'));
-    if (sum.days === 0 && sum.rate === null) {
+    if (sum.range) { resultContent.appendChild(el('p', 'res-range', rangeText(sum.range))); }
+    if (sum.shifts === 0) {
       resultContent.appendChild(el('p', 'res-note', 'Enter start and end times to see your total.'));
       return;
     }
     var dl = el('dl', 'res-grid');
     addRow(dl, 'Days worked', String(sum.days));
+    addRow(dl, 'Entries counted', String(sum.shifts));
     if (sum.days > 0) { addRow(dl, 'Average per worked day', fmtHM(Math.round(sum.total / sum.days))); }
     if (sum.thr !== null) {
-      addRow(dl, 'Regular time', fmtHM(sum.sp.reg));
-      addRow(dl, 'Overtime', fmtHM(sum.sp.ot));
+      addRow(dl, 'Regular time', fmtHM(sum.reg));
+      addRow(dl, 'Overtime (' + BASIS_LABEL[sum.basis] + ')', fmtHM(sum.ot));
     }
     if (sum.rate !== null) { addRow(dl, 'Gross pay (estimate)', money(sum.pay, sum.cur), true); }
     resultContent.appendChild(dl);
+    if (sum.warns > 0) {
+      resultContent.appendChild(el('p', 'res-note warn', '\u26A0 ' + sum.warns + (sum.warns === 1 ? ' entry has' : ' entries have') + ' identical start and end times and count as 0 h.'));
+    }
     if (sum.rate !== null) { resultContent.appendChild(el('p', 'res-note', 'Gross pay is before tax and deductions.')); }
   }
 
+  /* ---- Compute ---- */
+  var lastBounds = '';
   function compute() {
-    var total = 0, days = 0, hasError = false;
-    DAYS.forEach(function (d) {
-      var s = byId('start-' + d), e = byId('end-' + d), b = byId('break-' + d);
-      var res = evalDay(s.value, e.value, b.value, b.validity && b.validity.badInput);
-      var net = byId('net-' + d);
-      if (res.state === 'ok') {
-        total += res.minutes; days += 1; net.textContent = fmtShort(res.minutes); setError(['start-' + d, 'end-' + d, 'break-' + d], 'err-' + d, '');
-      } else if (res.state === 'empty') {
-        net.textContent = '\u2014'; setError(['start-' + d, 'end-' + d, 'break-' + d], 'err-' + d, '');
+    var a = anchorNum();
+    var range = a === null ? null : periodRange(state.period, a);
+    var hasError = false;
+    setMsg(['pdate'], 'err-pdate', a === null ? 'Choose a valid date.' : '', 'error');
+    if (a === null) { hasError = true; }
+    byId('range-label').textContent = range ? rangeText(range) : '';
+    var bounds = range ? range.start + '-' + range.end : '';
+    if (bounds !== lastBounds) {
+      lastBounds = bounds;
+      Array.prototype.forEach.call(listEl.querySelectorAll('input[type="date"]'), function (d) {
+        if (range) { d.min = fmtDate(range.start); d.max = fmtDate(range.end); }
+      });
+    }
+    var ctx = { period: state.period, range: range };
+    var results = state.entries.map(function (en) {
+      var b = byId('brk-' + en.id);
+      return evalEntry({ date: en.date, start: en.start, end: en.end, brk: en.brk, bad: !!(b && b.validity && b.validity.badInput) }, ctx);
+    });
+    var list = [];
+    results.forEach(function (r, i) { if (r.state === 'ok' && r.gross > 0) { list.push({ idx: i, start: r.startAbs, end: r.startAbs + r.gross }); } });
+    findOverlaps(list).forEach(function (i) { results[i] = { state: 'error', msg: 'This shift overlaps another shift.' }; });
+    var items = [], warns = 0;
+    results.forEach(function (r, i) {
+      var en = state.entries[i];
+      var ids = ['date-' + en.id, 'start-' + en.id, 'end-' + en.id, 'brk-' + en.id];
+      var net = byId('net-' + en.id), ttl = byId('ttl-' + en.id);
+      if (ttl) {
+        var d = state.period === 'daily' ? null : parseDate(en.date);
+        ttl.textContent = (state.period === 'daily' ? 'Shift ' : 'Entry ') + (i + 1) + (d === null ? '' : ' \u00B7 ' + dayText(d, false));
+      }
+      if (r.state === 'ok') {
+        items.push(r);
+        net.textContent = fmtShort(r.minutes) + ' \u00B7 ' + nf.format(r.minutes / 60) + ' h';
+        if (r.warn) { warns += 1; setMsg(ids, 'err-' + en.id, r.warn, 'warn'); } else { setMsg(ids, 'err-' + en.id, '', 'error'); }
+      } else if (r.state === 'empty') {
+        net.textContent = '\u2014'; setMsg(ids, 'err-' + en.id, '', 'error');
       } else {
-        hasError = true; net.textContent = '\u2014'; setError(['start-' + d, 'end-' + d, 'break-' + d], 'err-' + d, res.msg);
+        hasError = true; net.textContent = '\u2014'; setMsg(ids, 'err-' + en.id, r.msg, 'error');
       }
     });
     var st = evalSettings(byId('rate').value, byId('thr').value, byId('mult').value);
-    setError(['rate'], 'err-rate', st.errors.rate);
-    setError(['thr'], 'err-thr', st.errors.thr);
-    setError(['mult'], 'err-mult', st.errors.mult);
+    setMsg(['rate'], 'err-rate', st.errors.rate, 'error');
+    setMsg(['thr'], 'err-thr', st.errors.thr, 'error');
+    setMsg(['mult'], 'err-mult', st.errors.mult, 'error');
     if (st.errors.rate || st.errors.thr || st.errors.mult) { hasError = true; }
-    if (hasError) { render({ error: true }); return; }
-    var sp = splitTime(total, st.thr);
-    var cur = byId('cur').value.trim();
-    render({
-      error: false, total: total, days: days, thr: st.thr, rate: st.rate, sp: sp, cur: cur,
-      pay: st.rate === null ? 0 : grossPay(sp, st.rate, st.mult)
-    });
+    if (hasError || !range) { render({ error: true }); return; }
+    var basis = byId('basis').value;
+    var sum = summarize(items, range, basis, st.thr);
+    sum.error = false; sum.range = range; sum.thr = st.thr; sum.rate = st.rate; sum.basis = basis; sum.warns = warns;
+    sum.cur = byId('cur').value.trim();
+    sum.pay = st.rate === null ? 0 : grossPay(sum.reg, sum.ot, st.rate, st.mult);
+    render(sum);
   }
 
   var timer = null;
   function later() { clearTimeout(timer); timer = setTimeout(compute, 200); }
   function now() { clearTimeout(timer); compute(); }
-  Array.prototype.forEach.call(form.querySelectorAll('input'), function (f) {
-    f.addEventListener('input', later);
-    f.addEventListener('change', now);
+
+  /* ---- Period and date changes ---- */
+  function remapEntries(oldR, newR) {
+    state.entries.forEach(function (en) {
+      en.date = fmtDate(remapDate(parseDate(en.date), oldR, newR));
+    });
+  }
+  function applyRange(newR) {
+    if (!newR) { return false; }
+    var old = state.range;
+    if (allBlank()) { state.entries = entriesFor(state.period, newR); }
+    else { remapEntries(old, newR); }
+    state.range = newR;
+    return true;
+  }
+  function setPeriod(p) {
+    if (!PERIODS[p]) { return; }
+    state.period = p;
+    applyRange(currentRange());
+    if (!state.basisTouched) { byId('basis').value = defaultBasis(p); }
+    syncPeriodUi(); renderEntries(); now();
+  }
+  function onAnchor() {
+    var r = currentRange();
+    if (r && (!state.range || r.start !== state.range.start || r.end !== state.range.end)) {
+      applyRange(r); renderEntries();
+    }
+  }
+
+  /* ---- Events ---- */
+  function onEntryEvent(ev) {
+    var t = ev.target, f = t.getAttribute && t.getAttribute('data-f');
+    var box = t.closest ? t.closest('.entry') : null;
+    if (!f || !box) { return; }
+    var en = findEntry(+box.getAttribute('data-id'));
+    if (!en) { return; }
+    en[f] = t.value;
+    if (ev.type === 'change') { now(); } else { later(); }
+  }
+  listEl.addEventListener('input', onEntryEvent);
+  listEl.addEventListener('change', onEntryEvent);
+  listEl.addEventListener('focusin', function (ev) {
+    var box = ev.target.closest ? ev.target.closest('.entry') : null;
+    if (box) { select(+box.getAttribute('data-id')); }
+  });
+  ['pdate'].forEach(function (id) {
+    byId(id).addEventListener('input', function () { onAnchor(); later(); });
+    byId(id).addEventListener('change', function () { onAnchor(); now(); });
+  });
+  ['rate', 'cur', 'thr', 'mult', 'basis'].forEach(function (id) {
+    byId(id).addEventListener('input', later);
+    byId(id).addEventListener('change', function () { if (id === 'basis') { state.basisTouched = true; } now(); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.period-btn'), function (b) {
+    b.addEventListener('click', function () { setPeriod(b.getAttribute('data-period')); });
   });
   form.addEventListener('submit', function (ev) { ev.preventDefault(); now(); });
-  form.addEventListener('reset', function () { clearTimeout(timer); setTimeout(compute, 0); });
   byId('calc-btn').addEventListener('click', now);
-  byId('copy-mon').addEventListener('click', function () {
-    ['tue', 'wed', 'thu', 'fri'].forEach(function (d) {
-      byId('start-' + d).value = byId('start-mon').value;
-      byId('end-' + d).value = byId('end-mon').value;
-      byId('break-' + d).value = byId('break-mon').value;
-    });
-    now();
+
+  byId('add-btn').addEventListener('click', function () {
+    if (state.entries.length >= MAXE) { return; }
+    var r = currentRange() || state.range, date = '';
+    if (state.period === 'daily') { date = r ? fmtDate(r.start) : ''; }
+    else if (r) {
+      var last = state.entries.length ? parseDate(state.entries[state.entries.length - 1].date) : null;
+      date = fmtDate(last === null ? r.start : Math.min(last + 1, r.end));
+    }
+    var en = newEntry(date);
+    state.entries.push(en);
+    state.selected = en.id;
+    renderEntries(); now();
+    var first = byId((state.period === 'daily' ? 'start-' : 'date-') + en.id);
+    if (first) { first.focus(); }
   });
-  compute();
+  byId('remove-btn').addEventListener('click', function () {
+    if (state.entries.length <= 1) { return; }
+    var idx = state.entries.length - 1;
+    for (var i = 0; i < state.entries.length; i++) { if (state.entries[i].id === state.selected) { idx = i; } }
+    state.entries.splice(idx, 1);
+    state.selected = null;
+    renderEntries(); now();
+    var rb = byId('remove-btn');
+    (rb.disabled ? byId('add-btn') : rb).focus();
+  });
+  byId('copy-first').addEventListener('click', function () {
+    var f = state.entries[0];
+    state.entries.forEach(function (en) { en.start = f.start; en.end = f.end; en.brk = f.brk; });
+    renderEntries(); now();
+  });
+  byId('reset-btn').addEventListener('click', function () {
+    clearTimeout(timer);
+    byId('pdate').value = todayStr();
+    state.range = null; state.selected = null; state.basisTouched = false;
+    var r = currentRange();
+    state.range = r;
+    state.entries = r ? entriesFor(state.period, r) : [newEntry('')];
+    ['rate', 'cur', 'thr'].forEach(function (id) { byId(id).value = ''; });
+    byId('mult').value = '1.5';
+    byId('basis').value = defaultBasis(state.period);
+    syncPeriodUi(); renderEntries(); compute();
+  });
+
+  /* ---- Init ---- */
+  byId('pdate').value = todayStr();
+  state.range = currentRange();
+  state.entries = state.range ? entriesFor(state.period, state.range) : [newEntry('')];
+  byId('basis').value = defaultBasis(state.period);
+  syncPeriodUi(); renderEntries(); compute();
 })();
 </script>
 <script src="/navigation.js"></script>
