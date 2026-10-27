@@ -167,77 +167,91 @@ a{color:var(--link)}
 .primary-title{margin:0 0 6px;text-align:center;font-size:clamp(26px,4.4vw,34px);line-height:1.2;font-weight:700;letter-spacing:-.02em;color:var(--text)}
 .tool-lead{margin:0 auto 12px;max-width:460px;text-align:center;font-size:14px;line-height:1.5;color:var(--text-muted)}
 
-/* Calculator card: always dark (P3) */
-.calculator-ui-box{--c-bg:#020617;--c-panel:#0f172a;--c-line:#1e293b;--c-line2:#334155;--c-text:#e2e8f0;--c-muted:#94a3b8;--c-accent:#2dd4bf;--c-accent-ink:#042f2e;--c-err:#fca5a5;--c-warn:#fcd34d;
-  width:min(100%,460px);min-width:0;align-self:center !important;margin:0 auto 26px auto !important;
-  background:var(--c-bg);border:1px solid var(--c-line);border-radius:18px;padding:16px;color:var(--c-text);
-  color-scheme:dark;box-shadow:0 8px 28px rgba(2,6,23,.22);overflow:visible;font-size:14px;line-height:1.45}
+/* Calculator card: semi-3D obsidian glass slab (user design brief; P3 width/centering rules kept) */
+.calculator-ui-box{--c-bg:#07070B;--c-bg2:#0F172A;--c-inset:#111827;--c-inset2:#1E293B;--c-text:#F8FAFC;--c-muted:#A8B3C7;--c-gold:#F59E0B;--c-gold-soft:#FBBF24;--c-em:#10B981;--c-em-soft:#34D399;--c-em-ink:#022C22;--c-line:rgba(148,163,184,.16);--c-err:#FCA5A5;--c-warn:#FCD34D;
+  position:relative;width:min(100%,460px);min-width:0;align-self:center !important;margin:0 auto 34px auto !important;
+  background:linear-gradient(160deg,var(--c-bg) 0%,#0B1020 45%,var(--c-bg2) 100%);
+  border:1px solid rgba(245,158,11,.6);border-radius:20px;padding:16px;color:var(--c-text);color-scheme:dark;overflow:visible;font-size:14px;line-height:1.45;
+  box-shadow:0 0 0 3px #07070B,0 0 0 4px rgba(16,185,129,.7),0 0 26px rgba(16,185,129,.22),0 0 60px rgba(245,158,11,.12),0 22px 34px -8px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.09),inset 0 0 40px rgba(16,185,129,.04)}
+.calculator-ui-box::after{content:"";position:absolute;left:5%;right:5%;bottom:-17px;height:12px;border-radius:0 0 22px 22px;background:linear-gradient(180deg,#0A0F1C,#05060A);box-shadow:0 8px 18px rgba(0,0,0,.55),inset 0 1px 0 rgba(245,158,11,.25);pointer-events:none}
 .calculator-ui-box fieldset{border:0;margin:0;padding:0;min-width:0}
-.calculator-ui-box legend{padding:0;font-size:14px;font-weight:600;color:var(--c-text)}
+.calculator-ui-box legend{padding:0;font-size:14px;font-weight:600;color:var(--c-gold-soft)}
 
 /* Period selector: scrolls horizontally inside the card only */
-.period-scroll{position:relative;display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;margin:0 -2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#334155 transparent}
-.period-btn{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:0 16px;font:inherit;font-size:14px;font-weight:500;color:var(--c-text);background:transparent;border:1px solid var(--c-line2);border-radius:999px;cursor:pointer}
-.period-btn:hover{background:var(--c-panel)}
-.period-btn[aria-pressed="true"]{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-accent-ink);font-weight:700}
+.period-scroll{position:relative;display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 10px;margin:0 -2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#334155 transparent}
+.period-btn{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:0 16px;font:inherit;font-size:14px;font-weight:500;color:var(--c-text);background:linear-gradient(180deg,#0B1220,var(--c-inset));border:1px solid rgba(245,158,11,.28);border-radius:999px;cursor:pointer;box-shadow:inset 0 2px 4px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.04)}
+.period-btn:hover{border-color:rgba(245,158,11,.6)}
+.period-btn[aria-pressed="true"]{background:linear-gradient(180deg,var(--c-em-soft),var(--c-em));border-color:#6EE7B7;color:var(--c-em-ink);font-weight:700;box-shadow:0 3px 0 #047857,0 6px 14px rgba(16,185,129,.4),inset 0 1px 0 rgba(255,255,255,.4)}
 .period-note{display:none;margin:0 0 8px;font-size:13px;color:var(--c-muted)}
 @media (max-width:520px){.period-note{display:block}}
 
 .date-block{margin:4px 0 8px}
 .date-block label{display:block;font-size:13px;font-weight:500;color:var(--c-muted);margin:0 0 3px}
-.range-label{margin:4px 0 0;font-size:13px;color:var(--c-accent);font-variant-numeric:tabular-nums}
+.range-label{margin:4px 0 0;font-size:13px;color:var(--c-gold-soft);font-variant-numeric:tabular-nums}
 
-.calc-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.calc-toolbar{margin:10px 0 6px}
 .toolbar-title{font-size:14px;font-weight:600}
 .entry-count{font-size:13px;font-weight:400;color:var(--c-muted)}
-.toolbar-btns{display:flex;gap:8px}
-.mini-btn{min-height:40px;padding:0 14px;font:inherit;font-size:14px;font-weight:600;color:var(--c-text);background:transparent;border:1px solid var(--c-line2);border-radius:10px;cursor:pointer;white-space:nowrap}
-.mini-btn:hover:not(:disabled){background:var(--c-panel)}
-.mini-btn.add{color:var(--c-accent);border-color:#115e59}
-.mini-btn:disabled{opacity:.45;cursor:not-allowed}
-.link-btn{font:inherit;font-size:13px;font-weight:500;color:var(--c-accent);background:none;border:0;padding:8px 0;cursor:pointer;min-height:36px}
-.link-btn:hover{text-decoration:underline}
 
 .entries{display:flex;flex-direction:column;gap:8px}
-.entry{border:1px solid var(--c-line);border-radius:12px;padding:10px}
-.entry.is-selected{border-color:var(--c-accent)}
+.entry{border:1px solid var(--c-line);border-radius:14px;padding:10px;background:linear-gradient(180deg,rgba(30,41,59,.38),rgba(15,23,42,.5));box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 6px 12px -6px rgba(0,0,0,.6)}
+.entry.is-selected{border-color:rgba(16,185,129,.85);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(16,185,129,.35),0 0 18px rgba(16,185,129,.18)}
 .entry-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
 .entry-title{font-size:14px;font-weight:600;min-width:0;overflow-wrap:anywhere}
-.entry-net{font-size:13px;color:var(--c-accent);font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
+.entry-net{font-size:13px;color:var(--c-em-soft);font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
 .entry-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .entry-fields .date-fld{grid-column:1 / -1}
 @media (max-width:480px){.entry-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.entry-fields .brk-fld{grid-column:1 / -1}}
 .fld{min-width:0}
 .fld label{display:block;font-size:13px;font-weight:500;color:var(--c-muted);margin:0 0 3px}
-.calculator-ui-box input,.calculator-ui-box select{width:100%;min-width:0;height:40px;padding:0 8px;font:inherit;font-size:14px;font-variant-numeric:tabular-nums;color:#f1f5f9;background:var(--c-panel);border:1px solid var(--c-line2);border-radius:10px}
-.calculator-ui-box input::placeholder{color:#7c8ba1}
-.calculator-ui-box input:focus-visible,.calculator-ui-box select:focus-visible,.calculator-ui-box button:focus-visible{outline:2px solid #5eead4;outline-offset:2px}
-.calculator-ui-box input[aria-invalid="true"]{border-color:var(--c-err)}
+
+/* Deeply inset 3D fields with gold inner stroke; emerald focus ring */
+.calculator-ui-box input,.calculator-ui-box select{width:100%;min-width:0;height:40px;padding:0 10px;font:inherit;font-size:14px;font-variant-numeric:tabular-nums;color:var(--c-text);background:linear-gradient(180deg,#0D1320,var(--c-inset));border:1px solid var(--c-inset2);border-radius:12px;box-shadow:inset 0 3px 6px rgba(0,0,0,.65),inset 0 0 0 1px rgba(245,158,11,.14),0 1px 0 rgba(255,255,255,.05)}
+.calculator-ui-box input::placeholder{color:#8190A7}
+.calculator-ui-box input:focus-visible,.calculator-ui-box select:focus-visible{outline:2px solid var(--c-em-soft);outline-offset:1px;border-color:var(--c-em);box-shadow:inset 0 3px 6px rgba(0,0,0,.65),0 0 0 4px rgba(16,185,129,.22),0 0 14px rgba(245,158,11,.25)}
+.calculator-ui-box button:focus-visible{outline:2px solid var(--c-em-soft);outline-offset:2px}
+.calculator-ui-box input[aria-invalid="true"]{border-color:var(--c-err);box-shadow:inset 0 3px 6px rgba(0,0,0,.65),inset 0 0 0 1px rgba(252,165,165,.35)}
 .field-error,.field-warn{margin:6px 0 0;font-size:13px}
 .field-error{color:var(--c-err)}
 .field-warn{color:var(--c-warn)}
 .field-error[hidden],.field-warn[hidden]{display:none}
-.hint{margin:0 0 10px;font-size:13px;color:var(--c-muted)}
-.pay-box{border-top:1px solid var(--c-line);margin-top:6px;padding-top:12px}
-.pay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
-.btn-row{display:flex;gap:10px;margin:14px 0}
-.btn{flex:1;min-height:44px;padding:0 14px;font:inherit;font-size:15px;font-weight:600;border-radius:12px;cursor:pointer;border:1px solid var(--c-line2);background:transparent;color:var(--c-text)}
-.btn-primary{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-accent-ink)}
-.btn-primary:hover{filter:brightness(1.06)}
-.btn:not(.btn-primary):hover{background:var(--c-panel)}
 
-/* Result hook */
-.tqc-result-box{position:relative;background:var(--c-panel);border:1px solid #115e59;border-radius:14px;padding:14px 16px}
+/* Add / Remove sit directly under the entries */
+.entry-actions{display:flex;gap:10px;margin:10px 0 0}
+.mini-btn{flex:1;min-height:44px;padding:0 14px;font:inherit;font-size:14px;font-weight:600;color:var(--c-text);background:rgba(30,41,59,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(245,158,11,.35);border-radius:999px;cursor:pointer;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 3px 0 rgba(0,0,0,.45)}
+.mini-btn.add{color:var(--c-em-soft);border-color:rgba(16,185,129,.7)}
+.mini-btn:hover:not(:disabled){background:rgba(51,65,85,.55)}
+.mini-btn:active:not(:disabled){transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 1px 0 rgba(0,0,0,.45)}
+.mini-btn:disabled{opacity:.45;cursor:not-allowed}
+.link-btn{font:inherit;font-size:13px;font-weight:500;color:var(--c-gold-soft);background:none;border:0;padding:8px 0;margin-top:4px;cursor:pointer;min-height:36px}
+.link-btn:hover{text-decoration:underline}
+.hint{margin:0 0 10px;font-size:13px;color:var(--c-muted)}
+.pay-box{border-top:1px solid rgba(245,158,11,.2);margin-top:6px;padding-top:12px}
+.pay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+
+/* 3D pill actions */
+.btn-row{display:flex;gap:12px;margin:14px 0 20px}
+.btn{flex:1;min-height:46px;padding:0 14px;font:inherit;font-size:15px;font-weight:600;border-radius:999px;cursor:pointer;color:var(--c-text);background:rgba(30,41,59,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(245,158,11,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 0 rgba(0,0,0,.45)}
+.btn-primary{background:linear-gradient(180deg,var(--c-em-soft),var(--c-em));border-color:#6EE7B7;color:var(--c-em-ink);font-weight:700;box-shadow:0 4px 0 #047857,0 10px 20px rgba(16,185,129,.35),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn:not(.btn-primary):hover{background:rgba(51,65,85,.55)}
+.btn:active{transform:translateY(3px)}
+.btn-primary:active{box-shadow:0 1px 0 #047857,0 4px 10px rgba(16,185,129,.3),inset 0 1px 0 rgba(255,255,255,.4)}
+
+/* Result hook: embossed, layered card with emerald-to-gold glow */
+.tqc-result-box{position:relative;background:linear-gradient(155deg,rgba(6,78,59,.7) 0%,rgba(15,23,42,.95) 48%,rgba(120,53,15,.5) 100%);border:1px solid rgba(245,158,11,.5);border-radius:16px;padding:16px 18px;
+  box-shadow:0 7px 0 -3px #064E3B,0 14px 0 -7px #78350F,0 24px 28px -8px rgba(0,0,0,.6),0 0 34px rgba(16,185,129,.2),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -14px 26px rgba(0,0,0,.4)}
 .res-label{margin:0;font-size:13px;font-weight:500;color:var(--c-muted)}
-.res-primary{margin:2px 0 0;font-size:clamp(30px,9vw,36px);line-height:1.15;font-weight:700;letter-spacing:-.01em;color:var(--c-accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.res-primary{margin:2px 0 0;font-size:clamp(32px,9vw,40px);line-height:1.15;font-weight:700;letter-spacing:-.01em;color:var(--c-em-soft);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){.res-primary{background:linear-gradient(90deg,var(--c-em-soft),var(--c-gold-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 10px rgba(16,185,129,.35))}}
 .res-sub{margin:2px 0 0;font-size:14px;color:var(--c-text);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.res-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;margin:12px 0 0;padding-top:10px;border-top:1px solid var(--c-line)}
+.res-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;margin:12px 0 0;padding-top:10px;border-top:1px solid rgba(245,158,11,.25)}
 .res-grid dt{margin:0;font-size:14px;color:var(--c-muted)}
 .res-grid dd{margin:0;font-size:14px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.res-grid dd.res-strong{color:var(--c-accent);font-size:16px}
+.res-grid dd.res-strong{color:var(--c-gold-soft);font-size:16px}
 .res-note{margin:10px 0 0;font-size:13px;color:var(--c-muted);overflow-wrap:anywhere}
 .res-note.warn{color:var(--c-warn)}
-.res-range{margin:2px 0 0;font-size:13px;color:var(--c-muted);font-variant-numeric:tabular-nums}
+.res-range{margin:2px 0 0;font-size:13px;color:var(--c-gold-soft);font-variant-numeric:tabular-nums}
 .res-msg{margin:0;font-size:14px;color:var(--c-err);font-weight:500}
 
 /* Article */
@@ -309,13 +323,13 @@ article li{margin:.25em 0}
           </div>
 
           <div class="calc-toolbar">
-            <span class="toolbar-title" id="entries-title">Work entries <span class="entry-count" id="entry-count"></span></span>
-            <div class="toolbar-btns">
-              <button type="button" class="mini-btn" id="remove-btn" aria-label="Remove selected entry (or the last entry)">&minus; Remove</button>
-              <button type="button" class="mini-btn add" id="add-btn" aria-label="Add another entry">+ Add</button>
-            </div>
+            <span class="toolbar-title" id="entries-title">Work entries <span class="entry-count" id="entry-count" aria-live="polite"></span></span>
           </div>
           <div class="entries" id="entries" role="group" aria-labelledby="entries-title"></div>
+          <div class="entry-actions">
+            <button type="button" class="mini-btn" id="remove-btn" aria-label="Remove selected entry (or the last entry)">&minus; Remove</button>
+            <button type="button" class="mini-btn add" id="add-btn" aria-label="Add another entry">+ Add</button>
+          </div>
           <button type="button" class="link-btn" id="copy-first">Copy first entry times to all</button>
           <p class="hint">Time fields follow your browser and device settings (12-hour or 24-hour). Identical start and end times count as 0 h.</p>
 
@@ -775,6 +789,11 @@ article li{margin:.25em 0}
       else if (r > sc.scrollLeft + sc.clientWidth) { sc.scrollLeft = r - sc.clientWidth + 8; }
     }
   }
+  /* After the list grows or shrinks, scroll so the Add/Remove buttons stay where the user's finger or pointer is. */
+  function keepInView(btn, oldTop) {
+    var d = btn.getBoundingClientRect().top - oldTop;
+    if (d) { window.scrollBy(0, d); }
+  }
   function select(id) {
     state.selected = id;
     Array.prototype.forEach.call(listEl.querySelectorAll('.entry'), function (b) {
@@ -944,22 +963,25 @@ article li{margin:.25em 0}
       var last = state.entries.length ? parseDate(state.entries[state.entries.length - 1].date) : null;
       date = fmtDate(last === null ? r.start : Math.min(last + 1, r.end));
     }
-    var en = newEntry(date);
+    var en = newEntry(date), btn = byId('add-btn'), top = btn.getBoundingClientRect().top;
     state.entries.push(en);
     state.selected = en.id;
     renderEntries(); now();
-    var first = byId((state.period === 'daily' ? 'start-' : 'date-') + en.id);
-    if (first) { first.focus(); }
+    var target = btn.disabled ? byId('remove-btn') : btn;
+    if (btn.disabled) { target.focus(); }
+    keepInView(target, top);
   });
   byId('remove-btn').addEventListener('click', function () {
     if (state.entries.length <= 1) { return; }
     var idx = state.entries.length - 1;
     for (var i = 0; i < state.entries.length; i++) { if (state.entries[i].id === state.selected) { idx = i; } }
+    var rb = byId('remove-btn'), top = rb.getBoundingClientRect().top;
     state.entries.splice(idx, 1);
     state.selected = null;
     renderEntries(); now();
-    var rb = byId('remove-btn');
-    (rb.disabled ? byId('add-btn') : rb).focus();
+    var target = rb.disabled ? byId('add-btn') : rb;
+    target.focus();
+    keepInView(target, top);
   });
   byId('copy-first').addEventListener('click', function () {
     var f = state.entries[0];
