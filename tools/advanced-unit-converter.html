@@ -129,14 +129,13 @@
 
     <style>
         /* ==========================================================================
-           P4: DYNAMIC CATEGORY-AWARE & THEME-AWARE DESIGN TOKENS
+           DYNAMIC CATEGORY-AWARE & THEME-AWARE DESIGN TOKENS
            ========================================================================== */
         :root,
         html[data-theme="light"] {
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
-            /* Neutral Light Baseline */
             --surface-page: #F1F5F9;
             --article-bg: #FFFFFF;
             --article-soft: #F8FAFC;
@@ -144,14 +143,13 @@
             --surface-inset: #F1F5F9;
             --surface-border: #E2E8F0;
             --text-main: #0F172A;
-            --text-body: #334155;
-            --text-muted: #64748B;
+            --text-body: #1E293B; /* Slightly darker and more readable */
+            --text-muted: #475569;
             --link-color: #059669;
             --table-stripe: #F8FAFC;
         }
 
         html[data-theme="dark"] {
-            /* Neutral Dark Baseline */
             --surface-page: #050811;
             --article-bg: #0B1120;
             --article-soft: #111827;
@@ -159,7 +157,7 @@
             --surface-inset: #070A12;
             --surface-border: #1E293B;
             --text-main: #F8FAFC;
-            --text-body: #CBD5E1;
+            --text-body: #E2E8F0; /* Brighter, highly readable body text */
             --text-muted: #94A3B8;
             --link-color: #34D399;
             --table-stripe: #0F172A;
@@ -167,85 +165,51 @@
 
         /* Category Undertones — Light Theme */
         html[data-theme="light"][data-category="utility"] {
-            --surface-page: #F0F4F8;
-            --article-bg: #FAFBFD;
-            --article-soft: #F1F5F9;
-            --surface-card: #FFFFFF;
-            --surface-border: #CBD5E1;
+            --surface-page: #F0F4F8; --article-bg: #FAFBFD; --article-soft: #F1F5F9; --surface-card: #FFFFFF; --surface-border: #CBD5E1;
         }
         html[data-theme="light"][data-category="math"],
         html[data-theme="light"][data-category="time"],
         html[data-theme="light"][data-category="health"] {
-            --surface-page: #F0FDFA;
-            --article-bg: #FAFFFE;
-            --article-soft: #CCFBF1;
-            --surface-border: #99F6E4;
+            --surface-page: #F0FDFA; --article-bg: #FAFFFE; --article-soft: #CCFBF1; --surface-border: #99F6E4;
         }
         html[data-theme="light"][data-category="finance"] {
-            --surface-page: #ECFDF5;
-            --article-bg: #FAFFFD;
-            --article-soft: #D1FAE5;
-            --surface-border: #A7F3D0;
+            --surface-page: #ECFDF5; --article-bg: #FAFFFD; --article-soft: #D1FAE5; --surface-border: #A7F3D0;
         }
         html[data-theme="light"][data-category="science"],
         html[data-theme="light"][data-category="education"] {
-            --surface-page: #EFF6FF;
-            --article-bg: #FAFCFF;
-            --article-soft: #DBEAFE;
-            --surface-border: #BFDBFE;
+            --surface-page: #EFF6FF; --article-bg: #FAFCFF; --article-soft: #DBEAFE; --surface-border: #BFDBFE;
         }
 
         /* Category Undertones — Dark Theme */
         html[data-theme="dark"][data-category="utility"] {
-            --surface-page: #060913;
-            --article-bg: #0B1120;
-            --article-soft: #131C31;
-            --surface-card: #0F172A;
-            --surface-border: #1E293B;
+            --surface-page: #060913; --article-bg: #0B1120; --article-soft: #131C31; --surface-card: #0F172A; --surface-border: #1E293B;
         }
         html[data-theme="dark"][data-category="math"],
         html[data-theme="dark"][data-category="time"],
         html[data-theme="dark"][data-category="health"] {
-            --surface-page: #040D12;
-            --article-bg: #08161E;
-            --article-soft: #0D222E;
-            --surface-border: #15384A;
+            --surface-page: #040D12; --article-bg: #08161E; --article-soft: #0D222E; --surface-border: #15384A;
         }
         html[data-theme="dark"][data-category="finance"] {
-            --surface-page: #040E0B;
-            --article-bg: #071712;
-            --article-soft: #0C241C;
-            --surface-border: #143B2E;
+            --surface-page: #040E0B; --article-bg: #071712; --article-soft: #0C241C; --surface-border: #143B2E;
         }
         html[data-theme="dark"][data-category="science"],
         html[data-theme="dark"][data-category="education"] {
-            --surface-page: #060814;
-            --article-bg: #0B1026;
-            --article-soft: #121A3A;
-            --surface-border: #1E2B58;
+            --surface-page: #060814; --article-bg: #0B1026; --article-soft: #121A3A; --surface-border: #1E2B58;
         }
 
-        /* ==========================================================================
-           BASE RESET & TYPOGRAPHY (P4 SCALE)
-           ========================================================================== */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: var(--font-sans);
             background-color: var(--surface-page);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.65;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            font-size: 1.02rem; /* Slightly larger base text for superior readability */
         }
 
-        /* ==========================================================================
-           P5 & MASTER PROMPT: PAGE GRID CONTRACT
-           ========================================================================== */
         .tqc-page-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -262,77 +226,32 @@
             }
         }
 
-        .main-body {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            min-width: 0;
-        }
+        .main-body { display: flex; flex-direction: column; width: 100%; min-width: 0; }
+        .sidebar { width: 100%; min-width: 0; }
 
-        .sidebar {
-            width: 100%;
-            min-width: 0;
-        }
-
-        /* ==========================================================================
-           P5: BREADCRUMB NAVIGATION
-           ========================================================================== */
         .breadcrumb-trail {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.88rem;
-            line-height: 1.4;
-            color: var(--text-muted);
-            margin: 0 0 10px 0;
+            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+            font-size: 0.92rem; line-height: 1.4; color: var(--text-muted); margin: 0 0 12px 0;
         }
+        .breadcrumb-trail a { color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+        .breadcrumb-trail a:hover { color: var(--link-color); text-decoration: underline; }
+        .breadcrumb-trail .bc-current { color: var(--text-main); font-weight: 500; }
 
-        .breadcrumb-trail a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .breadcrumb-trail a:hover,
-        .breadcrumb-trail a:focus-visible {
-            color: var(--link-color);
-            text-decoration: underline;
-        }
-
-        .breadcrumb-trail .bc-current {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        /* ==========================================================================
-           P2, P5, P6: TOOL SUITE, LEFT-ALIGNED TITLE & 12PX GAP
-           ========================================================================== */
-        .tool-suite {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
+        .tool-suite { display: flex; flex-direction: column; width: 100%; }
 
         .primary-title {
-            font-size: clamp(1.5rem, 3.2vw, 2rem);
-            font-weight: 700;
-            line-height: 1.25;
-            letter-spacing: -0.035em;
-            text-align: left;
-            color: var(--text-main);
-            margin: 0 0 12px 0;
+            font-size: clamp(1.6rem, 3.4vw, 2.1rem);
+            font-weight: 700; line-height: 1.22; letter-spacing: -0.035em;
+            text-align: left; color: var(--text-main); margin: 0 0 12px 0;
         }
 
-        /* ==========================================================================
-           P1 & P6: SEMI-3D DARK-MODE GLASS SLAB CALCULATOR (540px CENTERED)
-           ========================================================================== */
+        /* Calculator UI Box (540px Centered) */
         .calculator-ui-box {
             width: min(100%, 540px);
             max-width: 540px;
             align-self: center !important;
             margin: 0 auto 26px auto !important;
-            padding: 22px 20px 24px;
+            padding: 24px 22px 26px;
             border-radius: 20px;
             background:
                 linear-gradient(165deg, #07070B 0%, #0B1120 48%, #0F172A 100%) padding-box,
@@ -348,644 +267,187 @@
         }
 
         @media (min-width: 640px) {
-            .calculator-ui-box {
-                padding: 26px 26px 28px;
-            }
+            .calculator-ui-box { padding: 28px 28px 30px; }
         }
 
-        /* Reflective bottom pedestal accent */
         .calculator-ui-box::after {
-            content: "";
-            position: absolute;
-            left: 12%;
-            right: 12%;
-            bottom: -8px;
-            height: 8px;
+            content: ""; position: absolute; left: 12%; right: 12%; bottom: -8px; height: 8px;
             background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.38) 0%, rgba(245, 158, 11, 0.18) 50%, transparent 78%);
-            filter: blur(4px);
-            pointer-events: none;
+            filter: blur(4px); pointer-events: none;
         }
 
-        /* Top Search & Quick Filter Bar */
-        .auc-top-bar {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
+        .auc-top-bar { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
+        @media (min-width: 480px) { .auc-top-bar { grid-template-columns: 1.2fr 1fr; } }
 
-        @media (min-width: 480px) {
-            .auc-top-bar {
-                grid-template-columns: 1.15fr 1fr;
-            }
-        }
+        .auc-field-group { display: flex; flex-direction: column; gap: 6px; }
+        .auc-label { font-size: 0.875rem; font-weight: 600; color: #E2E8F0; letter-spacing: 0.01em; display: flex; align-items: center; justify-content: space-between; }
+        .auc-label-accent { color: #F59E0B; font-size: 0.78rem; font-weight: 500; }
 
-        .auc-field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .auc-label {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: #CBD5E1;
-            letter-spacing: 0.01em;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .auc-label-accent {
-            color: #F59E0B;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        /* Deeply Inset 3D Dark Surface Inputs & Dropdowns (P1) */
-        .auc-input,
-        .auc-select {
+        .auc-input, .auc-select {
             width: 100%;
             background: linear-gradient(180deg, #111827 0%, #1E293B 100%);
             color: #F8FAFC;
-            border: 1px solid rgba(245, 158, 11, 0.28);
+            border: 1px solid rgba(245, 158, 11, 0.32);
             border-radius: 11px;
-            padding: 10px 12px;
-            font-size: 0.9375rem;
+            padding: 12px 14px;
+            font-size: 1rem; /* Slightly larger, clearer input text */
             font-family: var(--font-sans);
-            box-shadow:
-                inset 0 2px 5px rgba(0, 0, 0, 0.65),
-                inset 0 0 0 1px rgba(16, 185, 129, 0.12),
-                0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
-            outline: none;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(16, 185, 129, 0.12);
+            outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;
         }
-
-        .auc-input::placeholder {
-            color: #64748B;
-        }
-
-        .auc-input:focus,
-        .auc-select:focus {
+        .auc-input::placeholder { color: #64748B; }
+        .auc-input:focus, .auc-select:focus {
             border-color: #10B981;
-            box-shadow:
-                inset 0 2px 5px rgba(0, 0, 0, 0.7),
-                0 0 0 3px rgba(16, 185, 129, 0.25),
-                0 0 12px rgba(245, 158, 11, 0.2);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7), 0 0 0 3px rgba(16, 185, 129, 0.25), 0 0 12px rgba(245, 158, 11, 0.2);
         }
+        .auc-select option, .auc-select optgroup { background-color: #0F172A; color: #F8FAFC; }
 
-        .auc-select option,
-        .auc-select optgroup {
-            background-color: #0F172A;
-            color: #F8FAFC;
-        }
-
-        /* Group Pill Filter Strip */
-        .auc-group-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 14px;
-            scrollbar-width: thin;
-            scrollbar-color: #334155 transparent;
-        }
-
+        .auc-group-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 14px; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
         .auc-group-tab {
-            flex: 0 0 auto;
-            background: #111827;
-            color: #94A3B8;
-            border: 1px solid #1E293B;
-            border-radius: 999px;
-            padding: 5px 11px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
+            flex: 0 0 auto; background: #111827; color: #94A3B8; border: 1px solid #1E293B; border-radius: 999px;
+            padding: 6px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease;
         }
-
-        .auc-group-tab:hover {
-            color: #F8FAFC;
-            border-color: rgba(245, 158, 11, 0.45);
-        }
-
+        .auc-group-tab:hover { color: #F8FAFC; border-color: rgba(245, 158, 11, 0.45); }
         .auc-group-tab.active {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(245, 158, 11, 0.22));
-            color: #F8FAFC;
-            border-color: #10B981;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            color: #F8FAFC; border-color: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
         }
 
-        /* Main Value + Precision Row */
-        .auc-value-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
+        .auc-value-row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
+        @media (min-width: 440px) { .auc-value-row { grid-template-columns: 1.4fr 1fr; } }
+        .auc-num-input { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 1.1rem; }
 
-        @media (min-width: 440px) {
-            .auc-value-row {
-                grid-template-columns: 1.5fr 1fr;
-            }
-        }
-
-        .auc-num-input {
-            font-variant-numeric: tabular-nums;
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        /* From / Swap / To Grid */
-        .auc-unit-bridge {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 8px;
-            align-items: end;
-            margin-bottom: 14px;
-        }
-
+        .auc-unit-bridge { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: end; margin-bottom: 16px; }
         @media (max-width: 440px) {
-            .auc-unit-bridge {
-                grid-template-columns: 1fr;
-            }
-            .auc-swap-wrap {
-                display: flex;
-                justify-content: center;
-                margin: 2px 0;
-            }
+            .auc-unit-bridge { grid-template-columns: 1fr; }
+            .auc-swap-wrap { display: flex; justify-content: center; margin: 4px 0; }
         }
 
         .auc-swap-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 999px;
-            border: 1px solid rgba(245, 158, 11, 0.45);
-            background: linear-gradient(145deg, #1E293B, #0F172A);
-            color: #F8FAFC;
-            font-size: 1.15rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.45),
-                inset 0 1px 1px rgba(255, 255, 255, 0.12);
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(245, 158, 11, 0.45);
+            background: linear-gradient(145deg, #1E293B, #0F172A); color: #F8FAFC; font-size: 1.2rem;
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
+        .auc-swap-btn:hover { border-color: #10B981; color: #34D399; transform: rotate(180deg); }
 
-        .auc-swap-btn:hover,
-        .auc-swap-btn:focus-visible {
-            border-color: #10B981;
-            color: #34D399;
-            transform: rotate(180deg);
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
-            outline: none;
-        }
-
-        /* Format Mode Bar */
         .auc-options-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 8px 11px;
-            border-radius: 10px;
-            background: rgba(17, 24, 39, 0.75);
-            border: 1px solid #1E293B;
-            margin-bottom: 14px;
-            font-size: 0.8rem;
-            color: #CBD5E1;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 9px 12px; border-radius: 10px; background: rgba(17, 24, 39, 0.75); border: 1px solid #1E293B;
+            margin-bottom: 16px; font-size: 0.85rem; color: #CBD5E1;
         }
+        .auc-Format-radios { display: flex; gap: 12px; align-items: center; }
+        .auc-Format-radios label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .auc-Format-radios input[type="radio"] { accent-color: #10B981; }
 
-        .auc-Format-radios {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .auc-Format-radios label {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .auc-Format-radios input[type="radio"] {
-            accent-color: #10B981;
-        }
-
-        /* Validation Banner */
         .auc-error-banner {
-            display: none;
-            background: rgba(239, 68, 68, 0.14);
-            border: 1px solid rgba(248, 113, 113, 0.5);
-            color: #FCA5A5;
-            padding: 9px 12px;
-            border-radius: 10px;
-            font-size: 0.825rem;
-            margin-bottom: 12px;
+            display: none; background: rgba(239, 68, 68, 0.14); border: 1px solid rgba(248, 113, 113, 0.5);
+            color: #FCA5A5; padding: 10px 14px; border-radius: 10px; font-size: 0.88rem; margin-bottom: 14px;
         }
+        .auc-error-banner.visible { display: block; }
 
-        .auc-error-banner.visible {
-            display: block;
-        }
-
-        /* 3D Pill Action Buttons (P1) */
-        .auc-action-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
+        .auc-action-row { display: flex; gap: 12px; margin-bottom: 18px; }
         .auc-btn-primary {
-            flex: 2;
-            padding: 11px 18px;
-            border-radius: 999px;
-            border: 1px solid rgba(16, 185, 129, 0.65);
-            background: linear-gradient(180deg, #10B981 0%, #059669 100%);
-            color: #04130E;
-            font-weight: 700;
-            font-size: 0.9375rem;
-            letter-spacing: 0.01em;
-            cursor: pointer;
-            box-shadow:
-                0 6px 18px rgba(16, 185, 129, 0.38),
-                inset 0 1px 1px rgba(255, 255, 255, 0.45);
-            transition: transform 0.12s ease, filter 0.15s ease;
+            flex: 2; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(16, 185, 129, 0.65);
+            background: linear-gradient(180deg, #10B981 0%, #059669 100%); color: #04130E; font-weight: 700;
+            font-size: 1rem; cursor: pointer; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            transition: filter 0.15s ease;
         }
-
-        .auc-btn-primary:hover {
-            filter: brightness(1.08);
-        }
-
-        .auc-btn-primary:active {
-            transform: translateY(1px);
-        }
+        .auc-btn-primary:hover { filter: brightness(1.08); }
 
         .auc-btn-secondary {
-            flex: 1;
-            padding: 11px 14px;
-            border-radius: 999px;
-            border: 1px solid rgba(245, 158, 11, 0.32);
-            background: rgba(17, 24, 39, 0.72);
-            color: #E2E8F0;
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
-            transition: background 0.15s ease, border-color 0.15s ease;
+            flex: 1; padding: 12px 14px; border-radius: 999px; border: 1px solid rgba(245, 158, 11, 0.32);
+            background: rgba(17, 24, 39, 0.72); color: #E2E8F0; font-weight: 600; font-size: 0.92rem;
+            cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease;
         }
+        .auc-btn-secondary:hover { background: rgba(30, 41, 59, 0.9); border-color: #F59E0B; }
 
-        .auc-btn-secondary:hover {
-            background: rgba(30, 41, 59, 0.9);
-            border-color: #F59E0B;
-        }
-
-        /* ==========================================================================
-           P1 & SECTION 9: EMBOSSED 3D RESULT CARD CONTRACT
-           ========================================================================== */
+        /* Result Panel Contract */
         #result.tqc-result-box {
-            border-radius: 16px;
-            padding: 18px 16px;
-            background:
-                radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 60%),
-                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 65%),
-                linear-gradient(180deg, #09131C 0%, #050B11 100%);
+            border-radius: 16px; padding: 20px 18px;
+            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 65%),
+                        linear-gradient(180deg, #09131C 0%, #050B11 100%);
             border: 1px solid rgba(16, 185, 129, 0.45);
-            box-shadow:
-                inset 0 2px 6px rgba(0, 0, 0, 0.75),
-                inset 0 0 0 1px rgba(245, 158, 11, 0.18),
-                0 10px 24px -8px rgba(0, 0, 0, 0.7);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.75), 0 10px 24px -8px rgba(0, 0, 0, 0.7);
         }
 
-        .tqc-result-content {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .auc-res-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #94A3B8;
-        }
-
-        .auc-fav-btn {
-            background: transparent;
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            color: #F59E0B;
-            border-radius: 999px;
-            padding: 3px 9px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .auc-fav-btn.saved {
-            background: rgba(245, 158, 11, 0.2);
-            color: #FDE68A;
-        }
+        .tqc-result-content { display: flex; flex-direction: column; gap: 12px; }
+        .auc-res-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #94A3B8; }
+        .auc-fav-btn { background: transparent; border: 1px solid rgba(245, 158, 11, 0.4); color: #F59E0B; border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .auc-fav-btn.saved { background: rgba(245, 158, 11, 0.2); color: #FDE68A; }
 
         .auc-primary-figure {
-            font-size: clamp(1.65rem, 4.5vw, 2.2rem);
-            font-weight: 800;
-            line-height: 1.2;
-            font-variant-numeric: tabular-nums;
+            font-size: clamp(1.8rem, 4.8vw, 2.4rem); font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums;
             background: linear-gradient(95deg, #34D399 0%, #10B981 45%, #F59E0B 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            word-break: break-word;
+            -webkit-background-clip: text; background-clip: text; color: transparent; word-break: break-word;
         }
 
-        .auc-equation-line {
-            font-size: 0.9rem;
-            color: #E2E8F0;
-            font-weight: 500;
-            font-variant-numeric: tabular-nums;
-        }
+        .auc-equation-line { font-size: 0.96rem; color: #F1F5F9; font-weight: 500; font-variant-numeric: tabular-nums; }
 
         .auc-meta-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 6px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(148, 163, 184, 0.16);
-            font-size: 0.79rem;
-            color: #CBD5E1;
+            display: grid; grid-template-columns: 1fr; gap: 8px; padding-top: 12px;
+            border-top: 1px solid rgba(148, 163, 184, 0.16); font-size: 0.84rem; color: #CBD5E1;
         }
+        .auc-meta-row { display: flex; justify-content: space-between; gap: 10px; }
+        .auc-meta-row code { font-family: var(--font-mono); color: #FCD34D; font-size: 0.8rem; }
 
-        .auc-meta-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-        }
+        .auc-sub-drawer { margin-top: 10px; background: rgba(15, 23, 42, 0.7); border: 1px solid #1E293B; border-radius: 10px; overflow: hidden; }
+        .auc-sub-drawer summary { padding: 10px 14px; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .auc-sub-drawer summary:hover { color: #34D399; }
+        .auc-all-units-list { max-height: 220px; overflow-y: auto; padding: 8px 12px 12px; border-top: 1px solid #1E293B; display: grid; grid-template-columns: 1fr; gap: 6px; font-size: 0.82rem; }
+        .auc-unit-row { display: flex; justify-content: space-between; padding: 5px 8px; border-radius: 6px; background: rgba(17, 24, 39, 0.6); font-variant-numeric: tabular-nums; }
+        .auc-unit-row strong { color: #34D399; }
 
-        .auc-meta-row code {
-            font-family: var(--font-mono);
-            color: #FCD34D;
-            font-size: 0.76rem;
-        }
+        .auc-chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+        .auc-chip { background: #111827; border: 1px solid #1E293B; color: #CBD5E1; border-radius: 999px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; transition: border-color 0.15s ease; }
+        .auc-chip:hover { border-color: #F59E0B; color: #F8FAFC; }
 
-        /* Multi-Unit Comparison Drawer & Favorites inside Calculator */
-        .auc-sub-drawer {
-            margin-top: 10px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid #1E293B;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .auc-sub-drawer summary {
-            padding: 9px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #CBD5E1;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .auc-sub-drawer summary:hover {
-            color: #34D399;
-        }
-
-        .auc-all-units-list {
-            max-height: 210px;
-            overflow-y: auto;
-            padding: 6px 12px 10px;
-            border-top: 1px solid #1E293B;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 5px;
-            font-size: 0.78rem;
-        }
-
-        .auc-unit-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 6px;
-            border-radius: 6px;
-            background: rgba(17, 24, 39, 0.6);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .auc-unit-row strong {
-            color: #34D399;
-        }
-
-        .auc-chip-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
-        }
-
-        .auc-chip {
-            background: #111827;
-            border: 1px solid #1E293B;
-            color: #CBD5E1;
-            border-radius: 999px;
-            padding: 4px 10px;
-            font-size: 0.73rem;
-            cursor: pointer;
-            transition: border-color 0.15s ease;
-        }
-
-        .auc-chip:hover {
-            border-color: #F59E0B;
-            color: #F8FAFC;
-        }
-
-        /* ==========================================================================
-           P3 & P4: ARTICLE, FORMULA, TABLE & FAQ STYLING
-           ========================================================================== */
+        /* Article Styles (Clean & Slightly Larger for Maximum Readability) */
         article.auc-article {
-            background-color: var(--article-bg);
-            border: 1px solid var(--surface-border);
-            border-radius: 18px;
-            padding: 24px 20px;
-            color: var(--text-body);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            background-color: var(--article-bg); border: 1px solid var(--surface-border); border-radius: 18px;
+            padding: 28px 24px; color: var(--text-body); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
-
-        @media (min-width: 768px) {
-            article.auc-article {
-                padding: 34px 36px;
-            }
-        }
+        @media (min-width: 768px) { article.auc-article { padding: 40px 42px; } }
 
         article.auc-article h2 {
-            font-size: clamp(1.3125rem, 2.2vw, 1.65rem);
-            line-height: 1.22;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 30px 0 12px 0;
-            letter-spacing: -0.02em;
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem); line-height: 1.24; font-weight: 700; color: var(--text-main); margin: 34px 0 14px 0; letter-spacing: -0.02em;
         }
+        article.auc-article h2:first-of-type { margin-top: 0; }
+        article.auc-article h3 { font-size: clamp(1.18rem, 1.9vw, 1.38rem); line-height: 1.3; font-weight: 600; color: var(--text-main); margin: 24px 0 10px 0; }
+        
+        article.auc-article p { font-size: 1.08rem; line-height: 1.72; margin: 0 0 16px 0; max-width: 76ch; }
+        article.auc-article ul, article.auc-article ol { margin: 0 0 18px 0; padding-left: 24px; max-width: 76ch; }
+        article.auc-article li { margin-bottom: 9px; line-height: 1.65; font-size: 1.05rem; }
+        article.auc-article a { color: var(--link-color); text-decoration: underline; text-underline-offset: 2px; }
 
-        article.auc-article h2:first-of-type {
-            margin-top: 0;
-        }
-
-        article.auc-article h3 {
-            font-size: clamp(1.125rem, 1.8vw, 1.32rem);
-            line-height: 1.28;
-            font-weight: 600;
-            color: var(--text-main);
-            margin: 22px 0 8px 0;
-        }
-
-        article.auc-article p {
-            font-size: 1.02rem;
-            line-height: 1.66;
-            margin: 0 0 14px 0;
-            max-width: 76ch;
-        }
-
-        article.auc-article ul,
-        article.auc-article ol {
-            margin: 0 0 16px 0;
-            padding-left: 22px;
-            max-width: 76ch;
-        }
-
-        article.auc-article li {
-            margin-bottom: 7px;
-            line-height: 1.6;
-        }
-
-        article.auc-article a {
-            color: var(--link-color);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        /* Layered Surface Callout & Formula Blocks (P4) */
-        .auc-surface-box {
-            background-color: var(--article-soft);
-            border: 1px solid var(--surface-border);
-            border-left: 4px solid #10B981;
-            border-radius: 12px;
-            padding: 15px 18px;
-            margin: 18px 0;
-        }
-
+        .auc-surface-box { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-left: 4px solid #10B981; border-radius: 12px; padding: 18px 20px; margin: 20px 0; font-size: 1.04rem; }
         .auc-formula-card {
-            background-color: var(--surface-inset);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin: 14px 0;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--text-main);
-            overflow-x: auto;
+            background-color: var(--surface-inset); border: 1px solid var(--surface-border); border-radius: 12px;
+            padding: 16px 18px; margin: 16px 0; font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-main); overflow-x: auto;
         }
 
-        /* Responsive Table Wrapper */
-        .data-table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            margin: 18px 0 22px;
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-        }
+        .data-table-wrapper { width: 100%; overflow-x: auto; margin: 20px 0 24px; border: 1px solid var(--surface-border); border-radius: 12px; }
+        .auc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
+        .auc-table th, .auc-table td { padding: 12px 15px; border-bottom: 1px solid var(--surface-border); }
+        .auc-table th { background-color: var(--article-soft); color: var(--text-main); font-weight: 600; white-space: nowrap; }
+        .auc-table tr:nth-child(even) td { background-color: var(--table-stripe); }
+        .auc-table td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
-        .auc-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            text-align: left;
-        }
-
-        .auc-table th,
-        .auc-table td {
-            padding: 10px 13px;
-            border-bottom: 1px solid var(--surface-border);
-        }
-
-        .auc-table th {
-            background-color: var(--article-soft);
-            color: var(--text-main);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .auc-table tr:nth-child(even) td {
-            background-color: var(--table-stripe);
-        }
-
-        .auc-table td.num {
-            font-family: var(--font-mono);
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Clean Collapsible FAQ Items (No Inline Microdata per P5) */
-        .auc-faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        details.auc-faq-item {
-            background-color: var(--article-soft);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            padding: 13px 16px;
-        }
-
-        details.auc-faq-item summary {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text-main);
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        details.auc-faq-item summary::-webkit-details-marker {
-            display: none;
-        }
-
-        details.auc-faq-item summary::after {
-            content: "+";
-            font-weight: 700;
-            color: #10B981;
-            font-size: 1.2rem;
-            line-height: 1;
-        }
-
-        details.auc-faq-item[open] summary::after {
-            content: "−";
-        }
-
-        .auc-faq-body {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--surface-border);
-            font-size: 0.95rem;
-            line-height: 1.62;
-            color: var(--text-body);
-        }
+        .auc-faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+        details.auc-faq-item { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-radius: 12px; padding: 15px 18px; }
+        details.auc-faq-item summary { font-weight: 600; font-size: 1.08rem; color: var(--text-main); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        details.auc-faq-item summary::-webkit-details-marker { display: none; }
+        details.auc-faq-item summary::after { content: "+"; font-weight: 700; color: #10B981; font-size: 1.3rem; line-height: 1; }
+        details.auc-faq-item[open] summary::after { content: "−"; }
+        .auc-faq-body { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--surface-border); font-size: 1.02rem; line-height: 1.68; color: var(--text-body); }
     </style>
 </head>
 <body>
     <div class="tqc-page-grid">
         <main class="main-body">
-            <!-- Visible Accessible Breadcrumb (P5) -->
+            <!-- Visible Accessible Breadcrumb -->
             <nav class="breadcrumb-trail" aria-label="Breadcrumb">
                 <a href="https://thequantcal.pages.dev/">Home</a>
                 <span aria-hidden="true">&rarr;</span>
@@ -1087,7 +549,7 @@
                         <button type="button" id="auc-reset-btn" class="auc-btn-secondary">Reset</button>
                     </div>
 
-                    <!-- Primary Result Hook Contract (Section 9) -->
+                    <!-- Primary Result Hook Contract -->
                     <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
                         <div class="tqc-result-content">
                             <div class="auc-res-header">
@@ -1108,7 +570,7 @@
                                 </div>
                                 <div class="auc-meta-row">
                                     <span>Conversion Relation:</span>
-                                    <code id="auc-formula-text">y = x &times; 3.280839895</code>
+                                    <code id="auc-formula-text">y = x × 3.280839895</code>
                                 </div>
                             </div>
 
@@ -1128,38 +590,38 @@
                 </div>
             </section>
 
-            <!-- Comprehensive Educational Article (P3 & Section 13: 1,450+ Words) -->
+            <!-- Comprehensive Educational Article (Cleaned of all raw LaTeX code artifacts) -->
             <article class="auc-article">
                 <h2>Understanding Dimensional Analysis and High-Precision Unit Conversion</h2>
-                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds ($\text{lbf}\cdot\text{s}$) while the spacecraft's navigation algorithm expected metric Newton-seconds ($\text{N}\cdot\text{s}$) without executing a conversion factor of $4.448221615$.</p>
+                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (lbf·s) while the spacecraft's navigation algorithm expected metric Newton-seconds (N·s) without executing a conversion factor of 4.448221615.</p>
                 <p>The <strong>Advanced Unit Converter</strong> eliminates multi-page lookup friction by unifying 28 dimensionally isolated categories—spanning everyday weights and measures, rotational kinematics, fluid mechanics, thermodynamics, digital bandwidth, electromagnetism, and analytical chemistry—under a single double-precision conversion engine. Instead of relying on rounded three-digit approximations, the engine routes every calculation through authoritative <a href="https://www.nist.gov/pml/owm/metric-si/si-units" target="_blank" rel="noopener">International System of Units (SI)</a> base standards and exact <a href="https://www.nist.gov/pml/special-publication-811" target="_blank" rel="noopener">NIST Special Publication 811</a> definitions.</p>
 
                 <h2>How the Centralized Base-Pivot Conversion Engine Works</h2>
-                <p>A naive unit converter spanning 12 units in a single category would require $12 \times 11 = 132$ separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
+                <p>A naive unit converter spanning 12 units in a single category would require 12 × 11 = 132 separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
                 <ol>
-                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value $x$ in source unit $U_{\text{from}}$ is first converted to the category's fundamental SI base unit $B$ using an exact scaling factor $k_{\text{from}}$ (or an affine offset function for non-linear scales).</li>
-                    <li><strong>Projection to the Target Unit:</strong> The canonical base value $B$ is then divided by the exact scaling factor $k_{\text{to}}$ of the target unit $U_{\text{to}}$.</li>
+                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value x in source unit U<sub>from</sub> is first converted to the category's fundamental SI base unit B using an exact scaling factor k<sub>from</sub> (or an affine offset function for non-linear scales).</li>
+                    <li><strong>Projection to the Target Unit:</strong> The canonical base value B is then divided by the exact scaling factor k<sub>to</sub> of the target unit U<sub>to</sub>.</li>
                 </ol>
 
                 <div class="auc-formula-card">
-                    Linear Pivot Formula:   y = x &times; ( k_from / k_to )<br>
+                    Linear Pivot Formula:   y = x × ( k_from / k_to )<br>
                     Affine Offset Formula:  y = f_to⁻¹( f_from(x) )
                 </div>
 
-                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing $x \times (k_{\text{from}} / k_{\text{to}})$ internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
+                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing x × (k<sub>from</sub> / k<sub>to</sub>) internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
 
                 <h3>Affine Offset Transformations in Thermodynamic Temperature Scales</h3>
-                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius ($^\circ\text{C}$), Fahrenheit ($^\circ\text{F}$), Kelvin ($\text{K}$), and Rankine ($^\circ\text{R}$) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
+                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
 
                 <div class="auc-formula-card">
-                    Celsius to Kelvin:      T(K) = T(&deg;C) + 273.15<br>
-                    Fahrenheit to Kelvin:   T(K) = (T(&deg;F) + 459.67) &times; (5 / 9)<br>
-                    Rankine to Kelvin:      T(K) = T(&deg;R) &times; (5 / 9)<br>
-                    Kelvin to Fahrenheit:   T(&deg;F) = T(K) &times; (9 / 5) - 459.67
+                    Celsius to Kelvin:      T(K) = T(°C) + 273.15<br>
+                    Fahrenheit to Kelvin:   T(K) = (T(°F) + 459.67) × (5 / 9)<br>
+                    Rankine to Kelvin:      T(K) = T(°R) × (5 / 9)<br>
+                    Kelvin to Fahrenheit:   T(°F) = T(K) × (9 / 5) - 459.67
                 </div>
 
                 <div class="auc-surface-box">
-                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero ($0\text{ K}$, $-273.15\text{ }^\circ\text{C}$, $-459.67\text{ }^\circ\text{F}$, or $0\text{ }^\circ\text{R}$). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
+                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero (0 K, -273.15 °C, -459.67 °F, or 0 °R). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
                 </div>
 
                 <h2>Critical Engineering and Digital Distinctions</h2>
@@ -1167,20 +629,20 @@
                 <h3>1. Decimal SI Storage (MB, GB, TB) vs. Binary IEC Storage (MiB, GiB, TiB)</h3>
                 <p>One of the most persistent sources of confusion in computer science is the discrepancy between base-10 decimal prefixes standardized by the <a href="https://www.bipm.org/en/measurement-units/si-prefixes" target="_blank" rel="noopener">International Bureau of Weights and Measures (BIPM)</a> and base-2 binary prefixes standardized by the International Electrotechnical Commission (IEC 80000-13):</p>
                 <ul>
-                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of $10^3 = 1,000$. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly $1,000,000,000,000\text{ bytes}$ ($10^{12}\text{ B}$).</li>
-                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of $2^{10} = 1,024$. RAM modules and operating system file managers calculate a Gibibyte ($\text{GiB}$) as $1,024^3 = 1,073,741,824\text{ bytes}$ ($2^{30}\text{ B}$).</li>
-                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second ($\text{Mbps}$, $\text{Gbps}$), while local disk write speeds are measured in Bytes per second ($\text{MB/s}$) or Mebibytes per second ($\text{MiB/s}$). Because $1\text{ Byte} = 8\text{ bits}$, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
+                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of 10³ = 1,000. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly 1,000,000,000,000 bytes (10¹² B).</li>
+                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of 2¹⁰ = 1,024. RAM modules and operating system file managers calculate a Gibibyte (GiB) as 1,024³ = 1,073,741,824 bytes (2³⁰ B).</li>
+                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second (Mbps, Gbps), while local disk write speeds are measured in Bytes per second (MB/s) or Mebibytes per second (MiB/s). Because 1 Byte = 8 bits, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
                 </ul>
 
                 <h3>2. Dynamic Viscosity vs. Kinematic Viscosity in Fluid Mechanics</h3>
-                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density ($\rho$):</p>
+                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density (ρ):</p>
                 <ul>
-                    <li><strong>Dynamic (Absolute) Viscosity ($\mu$):</strong> Quantifies internal shear stress per unit velocity gradient ($\text{Pa}\cdot\text{s}$ or $\text{N}\cdot\text{s/m}^2$). In CGS laboratory tables, it is widely cited in Poise ($\text{P}$) and centipoise ($\text{cP}$), where $1\text{ cP} = 0.001\text{ Pa}\cdot\text{s}$ (approx. the viscosity of water at $20\text{ }^\circ\text{C}$).</li>
-                    <li><strong>Kinematic Viscosity ($\nu$):</strong> Defined as $\nu = \mu / \rho$, with dimensions of $\text{L}^2\cdot\text{T}^{-1}$ ($\text{m}^2/\text{s}$). In petroleum and lubrication testing, it is measured in Stokes ($\text{St}$) and centistokes ($\text{cSt}$), where $1\text{ cSt} = 1\text{ mm}^2/\text{s} = 10^{-6}\text{ m}^2/\text{s}$.</li>
+                    <li><strong>Dynamic (Absolute) Viscosity (μ):</strong> Quantifies internal shear stress per unit velocity gradient (Pa·s or N·s/m²). In CGS laboratory tables, it is widely cited in Poise (P) and centipoise (cP), where 1 cP = 0.001 Pa·s (approx. the viscosity of water at 20 °C).</li>
+                    <li><strong>Kinematic Viscosity (ν):</strong> Defined as ν = μ / ρ, with dimensions of L²·T⁻¹ (m²/s). In petroleum and lubrication testing, it is measured in Stokes (St) and centistokes (cSt), where 1 cSt = 1 mm²/s = 10⁻⁶ m²/s.</li>
                 </ul>
 
                 <h3>3. Mass (lb, kg) vs. Mechanical Force (lbf, N) and Torque (N·m, lbf·ft)</h3>
-                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass ($1\text{ lb} = 0.45359237\text{ kg}$) exerts a downward force of one pound-force ($1\text{ lbf}$) only under standard Earth gravitational acceleration ($g_0 = 9.80665\text{ m/s}^2$). Multiplying $0.45359237\text{ kg} \times 9.80665\text{ m/s}^2$ yields the exact definition $1\text{ lbf} = 4.4482216152605\text{ N}$. Similarly, although <strong>Torque</strong> ($\text{N}\cdot\text{m}$) and <strong>Energy/Work</strong> ($\text{J}$) share the base dimensional product $\text{kg}\cdot\text{m}^2/\text{s}^2$, torque is a vector cross-product ($\mathbf{r} \times \mathbf{F}$) whereas energy is a scalar dot-product ($\mathbf{F} \cdot \mathbf{d}$), so they are kept in separate categories to prevent semantic errors.</p>
+                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass (1 lb = 0.45359237 kg) exerts a downward force of one pound-force (1 lbf) only under standard Earth gravitational acceleration (g₀ = 9.80665 m/s²). Multiplying 0.45359237 kg × 9.80665 m/s² yields the exact definition 1 lbf = 4.4482216152605 N. Similarly, although <strong>Torque</strong> (N·m) and <strong>Energy/Work</strong> (J) share the base dimensional product kg·m²/s², torque is a vector cross-product (r × F) whereas energy is a scalar dot-product (F · d), so they are kept in separate categories to prevent semantic errors.</p>
 
                 <h2>Authoritative Reference Table of Exact Conversion Constants</h2>
                 <p>The table below summarizes the canonical SI base units and exact reference conversion constants implemented inside the calculator engine:</p>
@@ -1200,85 +662,85 @@
                             <tr>
                                 <td>Everyday</td>
                                 <td>Length</td>
-                                <td>Meter ($\text{m}$)</td>
-                                <td>International Foot ($\text{ft}$)</td>
+                                <td>Meter (m)</td>
+                                <td>International Foot (ft)</td>
                                 <td class="num">0.3048 m (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Mass / Weight</td>
-                                <td>Kilogram ($\text{kg}$)</td>
-                                <td>Avoirdupois Pound ($\text{lb}$)</td>
+                                <td>Kilogram (kg)</td>
+                                <td>Avoirdupois Pound (lb)</td>
                                 <td class="num">0.45359237 kg (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Volume</td>
-                                <td>Cubic Meter ($\text{m}^3$)</td>
-                                <td>US Liquid Gallon ($\text{gal}$)</td>
+                                <td>Cubic Meter (m³)</td>
+                                <td>US Liquid Gallon (gal)</td>
                                 <td class="num">0.003785411784 m³ (exact)</td>
                             </tr>
                             <tr>
                                 <td>Motion</td>
                                 <td>Speed</td>
-                                <td>Meter/sec ($\text{m/s}$)</td>
-                                <td>Nautical Knot ($\text{kn}$)</td>
+                                <td>Meter/sec (m/s)</td>
+                                <td>Nautical Knot (kn)</td>
                                 <td class="num">0.5144444444 m/s (1852/3600)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Pressure</td>
-                                <td>Pascal ($\text{Pa}$)</td>
-                                <td>Pound/sq inch ($\text{psi}$)</td>
+                                <td>Pascal (Pa)</td>
+                                <td>Pound/sq inch (psi)</td>
                                 <td class="num">6894.757293168 Pa</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Force</td>
-                                <td>Newton ($\text{N}$)</td>
-                                <td>Pound-force ($\text{lbf}$)</td>
+                                <td>Newton (N)</td>
+                                <td>Pound-force (lbf)</td>
                                 <td class="num">4.4482216152605 N (exact)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Torque</td>
-                                <td>Newton-meter ($\text{N}\cdot\text{m}$)</td>
-                                <td>Pound-foot ($\text{lbf}\cdot\text{ft}$)</td>
+                                <td>Newton-meter (N·m)</td>
+                                <td>Pound-foot (lbf·ft)</td>
                                 <td class="num">1.3558179483314 N·m</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Dynamic Viscosity</td>
-                                <td>Pascal-second ($\text{Pa}\cdot\text{s}$)</td>
-                                <td>Centipoise ($\text{cP}$)</td>
+                                <td>Pascal-second (Pa·s)</td>
+                                <td>Centipoise (cP)</td>
                                 <td class="num">0.001 Pa·s (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Energy / Work</td>
-                                <td>Joule ($\text{J}$)</td>
-                                <td>IT British Thermal Unit ($\text{BTU}_{\text{IT}}$)</td>
+                                <td>Joule (J)</td>
+                                <td>IT British Thermal Unit (BTU_IT)</td>
                                 <td class="num">1055.05585262 J (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Power</td>
-                                <td>Watt ($\text{W}$)</td>
-                                <td>Mechanical Horsepower ($\text{hp}$)</td>
+                                <td>Watt (W)</td>
+                                <td>Mechanical Horsepower (hp)</td>
                                 <td class="num">745.69987158227 W</td>
                             </tr>
                             <tr>
                                 <td>Digital</td>
                                 <td>Data Storage</td>
-                                <td>Byte ($\text{B}$)</td>
-                                <td>Gibibyte ($\text{GiB}$)</td>
+                                <td>Byte (B)</td>
+                                <td>Gibibyte (GiB)</td>
                                 <td class="num">1,073,741,824 B (2³⁰ exact)</td>
                             </tr>
                             <tr>
                                 <td>Scientific</td>
                                 <td>Magnetic Field</td>
-                                <td>Tesla ($\text{T}$)</td>
-                                <td>Gauss ($\text{G}$)</td>
+                                <td>Tesla (T)</td>
+                                <td>Gauss (G)</td>
                                 <td class="num">0.0001 T (10⁻⁴ exact)</td>
                             </tr>
                         </tbody>
@@ -1288,36 +750,36 @@
                 <h2>Step-by-Step Worked Engineering &amp; Digital Examples</h2>
 
                 <h3>Example 1: Converting Hydraulic Pump Pressure from PSI to Bar and Megapascals (MPa)</h3>
-                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of $3,500\text{ psi}$ and you need the equivalent pressure in $\text{bar}$ and $\text{MPa}$:</p>
+                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of 3,500 psi and you need the equivalent pressure in bar and MPa:</p>
                 <ol>
                     <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Engineering &rarr; Pressure</em>, enter <code>3500</code>, and set From Unit to <em>Pound per square inch (psi)</em>.</li>
-                    <li><strong>Convert to SI Base (Pascal):</strong> Using $1\text{ psi} = 6,894.757293168\text{ Pa}$, multiply $3,500 \times 6,894.757293168 = 24,131,650.526088\text{ Pa}$.</li>
+                    <li><strong>Convert to SI Base (Pascal):</strong> Using 1 psi = 6,894.757293168 Pa, multiply 3,500 × 6,894.757293168 = 24,131,650.526088 Pa.</li>
                     <li><strong>Project to Target Units:</strong>
                         <ul>
-                            <li>In <strong>Bar</strong> ($1\text{ bar} = 100,000\text{ Pa}$): $24,131,650.526088 / 100,000 = \mathbf{241.316505\text{ bar}}$.</li>
-                            <li>In <strong>Megapascals</strong> ($1\text{ MPa} = 1,000,000\text{ Pa}$): $24,131,650.526088 / 1,000,000 = \mathbf{24.131651\text{ MPa}}$.</li>
+                            <li>In <strong>Bar</strong> (1 bar = 100,000 Pa): 24,131,650.526088 / 100,000 = <strong>241.316505 bar</strong>.</li>
+                            <li>In <strong>Megapascals</strong> (1 MPa = 1,000,000 Pa): 24,131,650.526088 / 1,000,000 = <strong>24.131651 MPa</strong>.</li>
                         </ul>
                     </li>
                 </ol>
 
                 <h3>Example 2: Reconciling a 2 Terabyte (TB) NVMe Drive in Binary Gibibytes (GiB)</h3>
-                <p>A cloud server administrator installs a drive marketed as $2\text{ TB}$ decimal capacity and wants to verify the exact binary $\text{GiB}$ capacity reported by the Linux kernel:</p>
+                <p>A cloud server administrator installs a drive marketed as 2 TB decimal capacity and wants to verify the exact binary GiB capacity reported by the Linux kernel:</p>
                 <ol>
                     <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Digital &rarr; Data Storage</em>, enter <code>2</code>, set From Unit to <em>Terabyte (TB - Decimal)</em>, and To Unit to <em>Gibibyte (GiB - Binary)</em>.</li>
-                    <li><strong>Convert to Base Bytes:</strong> $2\text{ TB} \times 10^{12}\text{ B/TB} = 2,000,000,000,000\text{ Bytes}$.</li>
-                    <li><strong>Project to Binary GiB:</strong> Divide by $2^{30}\text{ Bytes/GiB}$ ($1,073,741,824\text{ B}$):
-                        $$2,000,000,000,000 / 1,073,741,824 = \mathbf{1,862.645149\text{ GiB}}$$
+                    <li><strong>Convert to Base Bytes:</strong> 2 TB × 10¹² B/TB = 2,000,000,000,000 Bytes.</li>
+                    <li><strong>Project to Binary GiB:</strong> Divide by 2³⁰ Bytes/GiB (1,073,741,824 B):
+                        <br><code>2,000,000,000,000 / 1,073,741,824 = 1,862.645149 GiB</code>
                     </li>
                 </ol>
 
                 <h2>Assumptions, Limitations, and Practical Tips</h2>
                 <ul>
-                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force $\text{kgf}$ and pound-force $\text{lbf}$) assume standard sea-level acceleration $g_0 = 9.80665\text{ m/s}^2$. Local gravitational acceleration varies by latitude and altitude (roughly $9.78\text{ m/s}^2$ at the equator to $9.83\text{ m/s}^2$ at the poles).</li>
-                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions ($1\text{ cal}_{\text{IT}} = 4.1868\text{ J}$ and $1\text{ BTU}_{\text{IT}} = 1,055.05585262\text{ J}$). Chemical thermodynamics papers occasionally use the thermochemical calorie ($4.184\text{ J}$).</li>
-                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as $365.2425\text{ days}$ ($31,556,952\text{ seconds}$) and an average month as $1/12$ of a mean Gregorian year ($30.436875\text{ days}$). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
+                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force kgf and pound-force lbf) assume standard sea-level acceleration g₀ = 9.80665 m/s². Local gravitational acceleration varies by latitude and altitude.</li>
+                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions (1 cal_IT = 4.1868 J and 1 BTU_IT = 1,055.05585262 J).</li>
+                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as 365.2425 days (31,556,952 seconds) and an average month as 1/12 of a mean Gregorian year (30.436875 days).</li>
                 </ul>
 
-                <!-- Visible FAQ Section Matching FAQPage Schema Exactly (8 FAQs, Zero Inline Microdata) -->
+                <!-- Visible FAQ Section Matching FAQPage Schema Exactly -->
                 <h2>Frequently Asked Questions (FAQs)</h2>
                 <div class="auc-faq-list">
                     <details class="auc-faq-item" open>
@@ -1363,18 +825,15 @@
             </article>
         </main>
 
-        <!-- Empty Sidebar Placeholder for Global Script Injection (P5) -->
         <aside class="sidebar"></aside>
     </div>
 
-    <!-- Scoped Page-Specific Conversion Engine (IIFE to avoid Global Pollution) -->
+    <!-- Scoped Page-Specific Conversion Engine Script -->
     <script>
     (function () {
         "use strict";
 
-        // Centralized 28-Category Conversion Database (Exact NIST / BIPM / IEC Factors)
         const REGISTRY = {
-            // ==================== 1. EVERYDAY ====================
             length: {
                 group: "Everyday", name: "Length & Distance", base: "m",
                 units: {
@@ -1504,8 +963,6 @@
                     yr:  { name: "Mean Gregorian Year (yr)", factor: 31556952 }
                 }
             },
-
-            // ==================== 2. MOTION ====================
             speed: {
                 group: "Motion", name: "Speed & Velocity", base: "m/s",
                 units: {
@@ -1558,8 +1015,6 @@
                     rpm: { name: "Cycles per minute (CPM / RPM)", factor: 1 / 60 }
                 }
             },
-
-            // ==================== 3. ENGINEERING ====================
             pressure: {
                 group: "Engineering", name: "Pressure & Stress", base: "Pa",
                 units: {
@@ -1645,8 +1100,6 @@
                     ft2s: { name: "Square foot per second (ft²/s)", factor: 0.09290304 }
                 }
             },
-
-            // ==================== 4. ENERGY & THERMAL ====================
             energy: {
                 group: "Energy & Thermal", name: "Energy & Work", base: "J",
                 units: {
@@ -1696,8 +1149,6 @@
                     calscmC: { name: "Calorie/(s·cm·°C)", factor: 418.68 }
                 }
             },
-
-            // ==================== 5. DIGITAL ====================
             data_storage: {
                 group: "Digital", name: "Digital Data Storage", base: "B",
                 units: {
@@ -1731,8 +1182,6 @@
                     MiBps:{ name: "Mebibyte per second (MiB/s)", factor: 8388608 }
                 }
             },
-
-            // ==================== 6. ELECTRICAL ====================
             current: {
                 group: "Electrical", name: "Electric Current", base: "A",
                 units: {
@@ -1795,8 +1244,6 @@
                     nH: { name: "Nanohenry (nH)", factor: 1e-9 }
                 }
             },
-
-            // ==================== 7. SCIENTIFIC ====================
             molar_mass: {
                 group: "Scientific", name: "Molar Mass", base: "kg/mol",
                 units: {
@@ -1840,7 +1287,6 @@
             }
         };
 
-        // DOM References
         const elCategory = document.getElementById("auc-category");
         const elSearch = document.getElementById("auc-search");
         const elInputVal = document.getElementById("auc-input-val");
@@ -1882,15 +1328,11 @@
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 return raw ? JSON.parse(raw) : DEFAULT_PRESETS;
-            } catch (e) {
-                return DEFAULT_PRESETS;
-            }
+            } catch (e) { return DEFAULT_PRESETS; }
         }
 
         function saveFavorites(list) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
-            } catch (e) { /* Ignore storage quota errors */ }
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10))); } catch (e) {}
         }
 
         let favorites = loadFavorites();
@@ -1911,10 +1353,7 @@
             }
             const factor = Math.pow(10, decimals);
             const rounded = Math.round((num + Number.EPSILON) * factor) / factor;
-            return rounded.toLocaleString("en-US", {
-                maximumFractionDigits: decimals,
-                useGrouping: mode === "standard" || mode === "auto"
-            });
+            return rounded.toLocaleString("en-US", { maximumFractionDigits: decimals, useGrouping: mode === "standard" || mode === "auto" });
         }
 
         function populateCategories(filterText) {
@@ -1929,7 +1368,6 @@
                 const cat = REGISTRY[catKey];
                 if (activeGroup !== "all" && cat.group !== activeGroup) return;
 
-                // Match category name or any unit inside category
                 const catMatch = cat.name.toLowerCase().indexOf(query) !== -1 || cat.group.toLowerCase().indexOf(query) !== -1;
                 const unitMatch = Object.keys(cat.units).some(function (uKey) {
                     return uKey.toLowerCase().indexOf(query) !== -1 || cat.units[uKey].name.toLowerCase().indexOf(query) !== -1;
@@ -1982,14 +1420,11 @@
                 elToUnit.add(new Option(uObj.name, uKey));
             });
 
-            // If user typed a specific unit in search, auto-select it in From if matched
             if (unitFilterQuery) {
                 const matchedKey = unitKeys.find(function (k) {
                     return cat.units[k].name.toLowerCase().indexOf(unitFilterQuery) !== -1;
                 });
-                if (matchedKey) {
-                    elFromUnit.value = matchedKey;
-                }
+                if (matchedKey) elFromUnit.value = matchedKey;
             } else if (unitKeys.indexOf(prevFrom) !== -1) {
                 elFromUnit.value = prevFrom;
             }
@@ -2048,9 +1483,8 @@
 
             if (cat.affine) {
                 baseVal = fromObj.toBase(val);
-                // Absolute zero physical check (allow tiny floating-point tolerance)
                 if (baseVal < -1e-9) {
-                    showError("Physical Boundary Error: " + val + " " + fromKey + " is below absolute zero (0 K / -273.15 °C / -459.67 °F).");
+                    showError("Physical Boundary Error: " + val + " " + fromKey + " is below absolute zero.");
                     elPrimaryOutput.textContent = "Below Absolute Zero";
                     return;
                 }
@@ -2077,7 +1511,6 @@
             elBaseEquiv.textContent = formatNumber(baseVal, decimals, mode) + " " + cat.base;
             elFormulaText.textContent = formulaDisplay;
 
-            // Populate All Compatible Units Drawer
             const allKeys = Object.keys(cat.units);
             elAllUnitsCount.textContent = allKeys.length + " units";
             elAllUnitsGrid.innerHTML = "";
@@ -2102,9 +1535,7 @@
             const cat = elCategory.value;
             const from = elFromUnit.value;
             const to = elToUnit.value;
-            return favorites.some(function (f) {
-                return f.cat === cat && f.from === from && f.to === to;
-            });
+            return favorites.some(function (f) { return f.cat === cat && f.from === from && f.to === to; });
         }
 
         function updateFavButtonState() {
@@ -2125,7 +1556,6 @@
                 chip.type = "button";
                 chip.className = "auc-chip";
                 chip.textContent = pair.label || (pair.from + " → " + pair.to);
-                chip.title = "Switch to " + REGISTRY[pair.cat].name + " (" + pair.from + " to " + pair.to + ")";
                 chip.addEventListener("click", function () {
                     activeGroup = "all";
                     groupTabs.forEach(function (t) {
@@ -2144,7 +1574,6 @@
             });
         }
 
-        // Event Listeners
         groupTabs.forEach(function (tab) {
             tab.addEventListener("click", function () {
                 activeGroup = tab.dataset.group;
@@ -2157,14 +1586,8 @@
             });
         });
 
-        elSearch.addEventListener("input", function () {
-            populateCategories(elSearch.value);
-        });
-
-        elCategory.addEventListener("change", function () {
-            populateUnitSelectors("");
-        });
-
+        elSearch.addEventListener("input", function () { populateCategories(elSearch.value); });
+        elCategory.addEventListener("change", function () { populateUnitSelectors(""); });
         elInputVal.addEventListener("input", calculate);
         elPrecision.addEventListener("change", calculate);
         elFromUnit.addEventListener("change", calculate);
@@ -2204,9 +1627,7 @@
             const from = elFromUnit.value;
             const to = elToUnit.value;
             if (isCurrentPairSaved()) {
-                favorites = favorites.filter(function (f) {
-                    return !(f.cat === cat && f.from === from && f.to === to);
-                });
+                favorites = favorites.filter(function (f) { return !(f.cat === cat && f.from === from && f.to === to); });
             } else {
                 favorites.unshift({ cat: cat, from: from, to: to, label: from + " → " + to });
             }
@@ -2215,13 +1636,11 @@
             renderFavoriteChips();
         });
 
-        // Initialize Calculator
         populateCategories("");
         renderFavoriteChips();
     })();
     </script>
 
-    <!-- Shared Website Navigation & Action Script Integration (Section 15) -->
     <script src="/navigation.js" defer></script>
 </body>
 </html>
