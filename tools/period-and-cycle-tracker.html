@@ -233,7 +233,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .tile-val{margin:0;font-size:15px;font-weight:700;color:#F0FDF4}
 @media (max-width:380px){.tiles{grid-template-columns:1fr}}
 
-/* Article – soft neutral background matching screenshot */
+/* Article */
 article{
   background:var(--article-bg);
   border-radius:16px;
@@ -241,9 +241,24 @@ article{
   border:1px solid var(--line);
   margin-top:8px;
 }
-article h2{margin:1.55em 0 0.5em;font-size:clamp(1.28rem,2.8vw,1.55rem);font-weight:750;color:var(--head);line-height:1.25}
+article h2{
+  margin:1.7em 0 0.55em;
+  font-size:clamp(1.28rem,2.8vw,1.55rem);
+  font-weight:750;
+  color:var(--head);
+  line-height:1.25;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
 article h2:first-child{margin-top:0.15em}
-article h3{margin:1.2em 0 0.4em;font-size:clamp(1.08rem,2.2vw,1.22rem);font-weight:700;color:var(--head)}
+article h3{
+  margin:1.35em 0 0.45em;
+  font-size:clamp(1.08rem,2.2vw,1.22rem);
+  font-weight:700;
+  color:var(--head);
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
 article p{margin:0 0 0.85em;font-size:16.5px;line-height:1.62;color:var(--text)}
 article ul,article ol{margin:0 0 1em;padding-left:1.35em;font-size:16.5px;line-height:1.55}
 article li{margin-bottom:0.35em}
@@ -261,8 +276,8 @@ article li{margin-bottom:0.35em}
   display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;
 }
 
-/* FAQ – clean numbered cards matching screenshot style */
-.faq-list{display:flex;flex-direction:column;gap:10px;margin:1.2em 0 0.5em}
+/* ========== FAQ – Clean collapsible cards with smooth slide ========== */
+.faq-list{display:flex;flex-direction:column;gap:10px;margin:1.3em 0 0.5em}
 details.faq{
   background:#ffffff;
   border:1px solid #e2e8f0;
@@ -276,34 +291,59 @@ details.faq{
 details.faq summary{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   cursor:pointer;
-  font-weight:600;
+  font-weight:700;          /* Bolder question */
   font-size:15.5px;
   color:var(--head);
   list-style:none;
-  padding:14px 16px;
+  padding:15px 16px;
   margin:0;
   user-select:none;
+  transition:background 0.2s ease;
 }
+details.faq summary:hover{background:rgba(0,0,0,0.02)}
+:root[data-theme="dark"] details.faq summary:hover{background:rgba(255,255,255,0.03)}
 details.faq summary::-webkit-details-marker{display:none}
 details.faq summary::marker{display:none;content:""}
 details.faq summary .faq-icon{
   flex-shrink:0;
-  font-size:12px;
+  font-size:11px;
   color:var(--muted);
-  transition:transform 0.2s ease;
+  transition:transform 0.25s ease;
 }
 details.faq[open] summary .faq-icon{
   transform:rotate(90deg);
 }
+
+/* Smooth slide animation */
 details.faq .faq-answer{
-  padding:0 16px 14px 38px;
-  font-size:15px;
-  line-height:1.58;
-  color:var(--text);
+  display:grid;
+  grid-template-rows:0fr;
+  transition:grid-template-rows 0.3s ease;
 }
-details.faq .faq-answer p{margin:0}
+details.faq[open] .faq-answer{
+  grid-template-rows:1fr;
+}
+details.faq .faq-answer > div{
+  overflow:hidden;
+  padding:0 16px 0 40px;
+}
+details.faq[open] .faq-answer > div{
+  padding-bottom:15px;
+}
+details.faq .faq-answer p{
+  margin:0;
+  font-size:15px;
+  font-weight:400;          /* Lighter answer */
+  line-height:1.6;
+  color:var(--text);
+  opacity:0;
+  transition:opacity 0.25s ease 0.05s;
+}
+details.faq[open] .faq-answer p{
+  opacity:1;
+}
 
 .sidebar{min-height:40px}
 @media (max-width:900px){.sidebar{display:none}}
@@ -446,49 +486,65 @@ details.faq .faq-answer p{margin:0}
         **Summary:**
 <span class="faq-icon">▶</span> 1. How is the next period date calculated?
           <div class="faq-answer">
-            <p>The next period start date is calculated by adding your average cycle length (in days) to the first day of your last menstrual period (LMP). For example, if your last period began on 1 March and your cycle length is 28 days, the next period is expected on 29 March.</p>
+            <div>
+              <p>The next period start date is calculated by adding your average cycle length (in days) to the first day of your last menstrual period (LMP). For example, if your last period began on 1 March and your cycle length is 28 days, the next period is expected on 29 March.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 2. What is a normal menstrual cycle length?
           <div class="faq-answer">
-            <p>A normal cycle length is usually between 21 and 35 days, measured from the first day of one period to the first day of the next. The commonly cited average is 28 days, but only a minority of people have an exactly 28-day cycle. Consistency matters more than matching the textbook number.</p>
+            <div>
+              <p>A normal cycle length is usually between 21 and 35 days, measured from the first day of one period to the first day of the next. The commonly cited average is 28 days, but only a minority of people have an exactly 28-day cycle. Consistency matters more than matching the textbook number.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 3. How is ovulation estimated?
           <div class="faq-answer">
-            <p>Ovulation is estimated by subtracting a typical luteal-phase length of 14 days from the cycle length. On a 28-day cycle this places ovulation around day 14. The fertile window is then approximated as the five days before ovulation plus the day of ovulation itself, because sperm can survive several days.</p>
+            <div>
+              <p>Ovulation is estimated by subtracting a typical luteal-phase length of 14 days from the cycle length. On a 28-day cycle this places ovulation around day 14. The fertile window is then approximated as the five days before ovulation plus the day of ovulation itself, because sperm can survive several days.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 4. Can this calculator be used as contraception?
           <div class="faq-answer">
-            <p>No. Calendar-based predictions have a relatively high typical-use failure rate and are not reliable enough to prevent pregnancy on their own. Always use a proven method of contraception if pregnancy prevention is your goal, and consult a healthcare professional for personal advice.</p>
+            <div>
+              <p>No. Calendar-based predictions have a relatively high typical-use failure rate and are not reliable enough to prevent pregnancy on their own. Always use a proven method of contraception if pregnancy prevention is your goal, and consult a healthcare professional for personal advice.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 5. Why do my cycles vary from month to month?
           <div class="faq-answer">
-            <p>Stress, travel, illness, significant weight change, intense exercise, sleep disruption and hormonal fluctuations can all shift cycle length. Variation of up to about seven days is common. Larger or persistent changes should be discussed with a doctor.</p>
+            <div>
+              <p>Stress, travel, illness, significant weight change, intense exercise, sleep disruption and hormonal fluctuations can all shift cycle length. Variation of up to about seven days is common. Larger or persistent changes should be discussed with a doctor.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 6. How many cycles should I track for a reliable average?
           <div class="faq-answer">
-            <p>Track at least three consecutive cycles for a useful average. Six or more cycles give a more stable personal average and better reveal your usual range of variation.</p>
+            <div>
+              <p>Track at least three consecutive cycles for a useful average. Six or more cycles give a more stable personal average and better reveal your usual range of variation.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 7. What is the difference between cycle length and period duration?
           <div class="faq-answer">
-            <p>Cycle length is the number of days from the first day of one period to the first day of the next period. Period duration is simply how many days the bleeding lasts (typically 3–7 days). They are separate measurements.</p>
+            <div>
+              <p>Cycle length is the number of days from the first day of one period to the first day of the next period. Period duration is simply how many days the bleeding lasts (typically 3–7 days). They are separate measurements.</p>
+            </div>
           </div>
 
         **Summary:**
 <span class="faq-icon">▶</span> 8. Does the calculator store my data?
           <div class="faq-answer">
-            <p>No. All calculations run entirely in your browser. The dates and numbers you enter are not sent to any server and are not stored by TheQuantCalc.</p>
+            <div>
+              <p>No. All calculations run entirely in your browser. The dates and numbers you enter are not sent to any server and are not stored by TheQuantCalc.</p>
+            </div>
           </div>
       </div>
 
