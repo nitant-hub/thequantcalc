@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Unit Converter — Engineering, Scientific & Everyday Units | TheQuantCalc</title>
-    <meta name="description" content="Convert over 210 units across 28 measurement categories including length, mass, temperature, pressure, torque, viscosity, digital storage, electrical, and scientific units with adjustable precision.">
+    <title>Advanced Unit Converter – 240+ Units | TheQuantCalc</title>
+    <meta name="description" content="Convert 240+ units across 34 categories: length, mass, temperature, pressure, torque, viscosity, data storage, electrical and more. Adjustable precision.">
     <link rel="canonical" href="https://thequantcal.pages.dev/tools/advanced-unit-converter">
-    <meta property="og:title" content="Advanced Unit Converter — Engineering, Scientific & Everyday Units | TheQuantCalc">
-    <meta property="og:description" content="All-in-one precision unit converter across 28 everyday, engineering, thermal, digital, electrical, and scientific categories.">
+    <meta property="og:title" content="Advanced Unit Converter – 240+ Units | TheQuantCalc">
+    <meta property="og:description" content="All-in-one precision unit converter: 240+ units across 34 everyday, engineering, thermal, digital, electrical, and scientific categories.">
     <meta property="og:url" content="https://thequantcal.pages.dev/tools/advanced-unit-converter">
     <meta property="og:type" content="website">
 
@@ -20,7 +20,7 @@
           "@type": "WebApplication",
           "name": "Advanced Unit Converter",
           "url": "https://thequantcal.pages.dev/tools/advanced-unit-converter",
-          "description": "An all-in-one client-side unit conversion calculator supporting 28 measurement domains across everyday, motion, engineering, thermal, digital, electrical, and scientific categories.",
+          "description": "An all-in-one client-side unit conversion calculator supporting 34 measurement categories and 240+ units across everyday, motion, engineering, thermal, digital, electrical, and scientific domains.",
           "applicationCategory": "UtilityApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires JavaScript",
@@ -47,7 +47,7 @@
               "name": "What is the exact difference between Megabytes (MB) and Mebibytes (MiB) in digital storage?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Under the International System of Units (SI) and IEC 80000-13 standards, a Megabyte (MB) is a decimal unit equal to 1,000,000 bytes (10^6 bytes), whereas a Mebibyte (MiB) is a binary unit equal to 1,048,576 bytes (2^20 bytes). Storage hardware manufacturers advertise drive capacity in decimal gigabytes and terabytes, while operating systems often calculate memory and file sizes using binary powers of 1,024, causing a 1 TB drive (10^12 bytes) to display as approximately 931.32 GiB."
+                "text": "Under the International System of Units (SI) and IEC 80000-13 standards, a Megabyte (MB) is a decimal unit equal to 1,000,000 bytes (10⁶ bytes), whereas a Mebibyte (MiB) is a binary unit equal to 1,048,576 bytes (2²⁰ bytes). Storage hardware manufacturers advertise drive capacity in decimal gigabytes and terabytes, while operating systems often calculate memory and file sizes using binary powers of 1,024, causing a 1 TB drive (10¹² bytes) to display as approximately 931.32 GiB."
               }
             },
             {
@@ -79,7 +79,7 @@
               "name": "Can negative numbers be entered for all measurement categories?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, negative values are permitted for vector displacements, gauge pressures, temperature scales, electric potentials, and temperature differentials. However, for absolute thermodynamic temperature scales, the converter validates against physical impossibility: values below absolute zero (-273.15 °C, -459.67 °F, or 0 K) trigger an immediate physical boundary warning."
+                "text": "Yes, the converter accepts negative values in every category, which is useful for vector displacements, gauge pressures, temperatures, electric potentials, and other signed quantities. It does not block negative inputs for quantities that are normally non-negative, such as mass or absolute pressure, so check your values. The one physical boundary it enforces is in the Temperature category: values below absolute zero (-273.15 °C, -459.67 °F, 0 K, or 0 °R) trigger an immediate physical boundary warning."
               }
             },
             {
@@ -325,14 +325,15 @@
         }
 
         /* ==========================================================================
-           P1 & P6: SEMI-3D DARK-MODE GLASS SLAB CALCULATOR (540px CENTERED)
+           P1 & P6: SEMI-3D DARK-MODE GLASS SLAB CALCULATOR (600px CENTERED)
+           Text sizes enlarged for readability (labels 15px, inputs 17px, buttons 17px)
            ========================================================================== */
         .calculator-ui-box {
-            width: min(100%, 540px);
-            max-width: 540px;
+            width: min(100%, 600px);
+            max-width: 600px;
             align-self: center !important;
             margin: 0 auto 26px auto !important;
-            padding: 22px 20px 24px;
+            padding: 22px 18px 24px;
             border-radius: 20px;
             background:
                 linear-gradient(165deg, #07070B 0%, #0B1120 48%, #0F172A 100%) padding-box,
@@ -349,7 +350,7 @@
 
         @media (min-width: 640px) {
             .calculator-ui-box {
-                padding: 26px 26px 28px;
+                padding: 28px 30px 30px;
             }
         }
 
@@ -370,11 +371,11 @@
         .auc-top-bar {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 14px;
+            margin-bottom: 16px;
         }
 
-        @media (min-width: 480px) {
+        @media (min-width: 520px) {
             .auc-top-bar {
                 grid-template-columns: 1.15fr 1fr;
             }
@@ -383,35 +384,39 @@
         .auc-field-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
+            min-width: 0;
         }
 
         .auc-label {
-            font-size: 0.8125rem;
+            font-size: 0.9375rem;
             font-weight: 600;
-            color: #CBD5E1;
+            color: #E2E8F0;
             letter-spacing: 0.01em;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 8px;
         }
 
         .auc-label-accent {
             color: #F59E0B;
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         /* Deeply Inset 3D Dark Surface Inputs & Dropdowns (P1) */
         .auc-input,
         .auc-select {
             width: 100%;
+            min-height: 46px;
             background: linear-gradient(180deg, #111827 0%, #1E293B 100%);
             color: #F8FAFC;
             border: 1px solid rgba(245, 158, 11, 0.28);
-            border-radius: 11px;
-            padding: 10px 12px;
-            font-size: 0.9375rem;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-size: 1.0625rem;
             font-family: var(--font-sans);
             box-shadow:
                 inset 0 2px 5px rgba(0, 0, 0, 0.65),
@@ -419,10 +424,11 @@
                 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: border-color 0.18s ease, box-shadow 0.18s ease;
             outline: none;
+            text-overflow: ellipsis;
         }
 
         .auc-input::placeholder {
-            color: #64748B;
+            color: #7C8CA3;
         }
 
         .auc-input:focus,
@@ -443,10 +449,10 @@
         /* Group Pill Filter Strip */
         .auc-group-tabs {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 14px;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
             scrollbar-width: thin;
             scrollbar-color: #334155 transparent;
         }
@@ -454,11 +460,11 @@
         .auc-group-tab {
             flex: 0 0 auto;
             background: #111827;
-            color: #94A3B8;
+            color: #A8B5C8;
             border: 1px solid #1E293B;
             border-radius: 999px;
-            padding: 5px 11px;
-            font-size: 0.75rem;
+            padding: 8px 15px;
+            font-size: 0.9375rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -467,6 +473,11 @@
         .auc-group-tab:hover {
             color: #F8FAFC;
             border-color: rgba(245, 158, 11, 0.45);
+        }
+
+        .auc-group-tab:focus-visible {
+            outline: 2px solid #10B981;
+            outline-offset: 2px;
         }
 
         .auc-group-tab.active {
@@ -480,32 +491,32 @@
         .auc-value-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 14px;
+            margin-bottom: 16px;
         }
 
-        @media (min-width: 440px) {
+        @media (min-width: 520px) {
             .auc-value-row {
-                grid-template-columns: 1.5fr 1fr;
+                grid-template-columns: 1.4fr 1fr;
             }
         }
 
         .auc-num-input {
             font-variant-numeric: tabular-nums;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1.1875rem;
         }
 
         /* From / Swap / To Grid */
         .auc-unit-bridge {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
-            gap: 8px;
+            gap: 10px;
             align-items: end;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
-        @media (max-width: 440px) {
+        @media (max-width: 520px) {
             .auc-unit-bridge {
                 grid-template-columns: 1fr;
             }
@@ -517,13 +528,13 @@
         }
 
         .auc-swap-btn {
-            width: 42px;
-            height: 42px;
+            width: 46px;
+            height: 46px;
             border-radius: 999px;
             border: 1px solid rgba(245, 158, 11, 0.45);
             background: linear-gradient(145deg, #1E293B, #0F172A);
             color: #F8FAFC;
-            font-size: 1.15rem;
+            font-size: 1.35rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -549,31 +560,34 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            padding: 8px 11px;
-            border-radius: 10px;
+            gap: 10px;
+            padding: 11px 14px;
+            border-radius: 12px;
             background: rgba(17, 24, 39, 0.75);
             border: 1px solid #1E293B;
-            margin-bottom: 14px;
-            font-size: 0.8rem;
-            color: #CBD5E1;
+            margin-bottom: 16px;
+            font-size: 0.9375rem;
+            color: #E2E8F0;
         }
 
-        .auc-Format-radios {
+        .auc-format-radios {
             display: flex;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 14px;
             align-items: center;
         }
 
-        .auc-Format-radios label {
+        .auc-format-radios label {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             cursor: pointer;
         }
 
-        .auc-Format-radios input[type="radio"] {
+        .auc-format-radios input[type="radio"] {
             accent-color: #10B981;
+            width: 17px;
+            height: 17px;
         }
 
         /* Validation Banner */
@@ -582,10 +596,11 @@
             background: rgba(239, 68, 68, 0.14);
             border: 1px solid rgba(248, 113, 113, 0.5);
             color: #FCA5A5;
-            padding: 9px 12px;
-            border-radius: 10px;
-            font-size: 0.825rem;
-            margin-bottom: 12px;
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-size: 0.9375rem;
+            line-height: 1.45;
+            margin-bottom: 14px;
         }
 
         .auc-error-banner.visible {
@@ -595,19 +610,19 @@
         /* 3D Pill Action Buttons (P1) */
         .auc-action-row {
             display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .auc-btn-primary {
             flex: 2;
-            padding: 11px 18px;
+            padding: 13px 20px;
             border-radius: 999px;
             border: 1px solid rgba(16, 185, 129, 0.65);
             background: linear-gradient(180deg, #10B981 0%, #059669 100%);
             color: #04130E;
             font-weight: 700;
-            font-size: 0.9375rem;
+            font-size: 1.0625rem;
             letter-spacing: 0.01em;
             cursor: pointer;
             box-shadow:
@@ -626,13 +641,13 @@
 
         .auc-btn-secondary {
             flex: 1;
-            padding: 11px 14px;
+            padding: 13px 16px;
             border-radius: 999px;
             border: 1px solid rgba(245, 158, 11, 0.32);
             background: rgba(17, 24, 39, 0.72);
             color: #E2E8F0;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
             transition: background 0.15s ease, border-color 0.15s ease;
@@ -648,7 +663,7 @@
            ========================================================================== */
         #result.tqc-result-box {
             border-radius: 16px;
-            padding: 18px 16px;
+            padding: 20px 18px;
             background:
                 radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 60%),
                 radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 65%),
@@ -663,17 +678,18 @@
         .tqc-result-content {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .auc-res-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.75rem;
+            gap: 10px;
+            font-size: 0.8125rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: #94A3B8;
+            color: #A8B5C8;
         }
 
         .auc-fav-btn {
@@ -681,10 +697,11 @@
             border: 1px solid rgba(245, 158, 11, 0.4);
             color: #F59E0B;
             border-radius: 999px;
-            padding: 3px 9px;
-            font-size: 0.72rem;
+            padding: 6px 13px;
+            font-size: 0.8125rem;
             font-weight: 600;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .auc-fav-btn.saved {
@@ -693,7 +710,7 @@
         }
 
         .auc-primary-figure {
-            font-size: clamp(1.65rem, 4.5vw, 2.2rem);
+            font-size: clamp(1.9rem, 5.2vw, 2.5rem);
             font-weight: 800;
             line-height: 1.2;
             font-variant-numeric: tabular-nums;
@@ -705,53 +722,58 @@
         }
 
         .auc-equation-line {
-            font-size: 0.9rem;
+            font-size: 1rem;
+            line-height: 1.5;
             color: #E2E8F0;
             font-weight: 500;
             font-variant-numeric: tabular-nums;
+            word-break: break-word;
         }
 
         .auc-meta-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 6px;
-            padding-top: 10px;
+            gap: 8px;
+            padding-top: 12px;
             border-top: 1px solid rgba(148, 163, 184, 0.16);
-            font-size: 0.79rem;
-            color: #CBD5E1;
+            font-size: 0.9375rem;
+            color: #D5DEEA;
         }
 
         .auc-meta-row {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
-            gap: 8px;
+            gap: 4px 12px;
         }
 
         .auc-meta-row code {
             font-family: var(--font-mono);
             color: #FCD34D;
-            font-size: 0.76rem;
+            font-size: 0.875rem;
+            word-break: break-word;
         }
 
         /* Multi-Unit Comparison Drawer & Favorites inside Calculator */
         .auc-sub-drawer {
-            margin-top: 10px;
+            margin-top: 12px;
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid #1E293B;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
         }
 
         .auc-sub-drawer summary {
-            padding: 9px 12px;
-            font-size: 0.8rem;
+            padding: 12px 14px;
+            font-size: 0.9375rem;
             font-weight: 600;
-            color: #CBD5E1;
+            color: #E2E8F0;
             cursor: pointer;
             user-select: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
         .auc-sub-drawer summary:hover {
@@ -759,43 +781,50 @@
         }
 
         .auc-all-units-list {
-            max-height: 210px;
+            max-height: 280px;
             overflow-y: auto;
-            padding: 6px 12px 10px;
+            padding: 8px 14px 12px;
             border-top: 1px solid #1E293B;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 5px;
-            font-size: 0.78rem;
+            gap: 6px;
+            font-size: 0.9rem;
         }
 
         .auc-unit-row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 6px;
-            border-radius: 6px;
+            gap: 12px;
+            padding: 6px 9px;
+            border-radius: 8px;
             background: rgba(17, 24, 39, 0.6);
             font-variant-numeric: tabular-nums;
         }
 
+        .auc-unit-row span {
+            min-width: 0;
+        }
+
         .auc-unit-row strong {
             color: #34D399;
+            text-align: right;
+            word-break: break-word;
         }
 
         .auc-chip-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
+            gap: 8px;
+            margin-top: 14px;
         }
 
         .auc-chip {
             background: #111827;
             border: 1px solid #1E293B;
-            color: #CBD5E1;
+            color: #D5DEEA;
             border-radius: 999px;
-            padding: 4px 10px;
-            font-size: 0.73rem;
+            padding: 7px 14px;
+            font-size: 0.875rem;
             cursor: pointer;
             transition: border-color 0.15s ease;
         }
@@ -999,16 +1028,16 @@
                 <h1 id="calc-main-title" class="primary-title">Advanced Unit Converter</h1>
 
                 <div class="calculator-ui-box">
-                    <!-- Quick Group Filter Tabs -->
-                    <div class="auc-group-tabs" role="tablist" aria-label="Filter measurement domain groups">
-                        <button type="button" class="auc-group-tab active" data-group="all" role="tab" aria-selected="true">All (28)</button>
-                        <button type="button" class="auc-group-tab" data-group="Everyday" role="tab" aria-selected="false">Everyday</button>
-                        <button type="button" class="auc-group-tab" data-group="Motion" role="tab" aria-selected="false">Motion</button>
-                        <button type="button" class="auc-group-tab" data-group="Engineering" role="tab" aria-selected="false">Engineering</button>
-                        <button type="button" class="auc-group-tab" data-group="Energy & Thermal" role="tab" aria-selected="false">Thermal</button>
-                        <button type="button" class="auc-group-tab" data-group="Digital" role="tab" aria-selected="false">Digital</button>
-                        <button type="button" class="auc-group-tab" data-group="Electrical" role="tab" aria-selected="false">Electrical</button>
-                        <button type="button" class="auc-group-tab" data-group="Scientific" role="tab" aria-selected="false">Scientific</button>
+                    <!-- Quick Group Filter (toggle buttons, no tab roles) -->
+                    <div class="auc-group-tabs" role="group" aria-label="Filter measurement domain groups">
+                        <button type="button" class="auc-group-tab active" data-group="all" aria-pressed="true">All (34)</button>
+                        <button type="button" class="auc-group-tab" data-group="Everyday" aria-pressed="false">Everyday</button>
+                        <button type="button" class="auc-group-tab" data-group="Motion" aria-pressed="false">Motion</button>
+                        <button type="button" class="auc-group-tab" data-group="Engineering" aria-pressed="false">Engineering</button>
+                        <button type="button" class="auc-group-tab" data-group="Energy & Thermal" aria-pressed="false">Thermal</button>
+                        <button type="button" class="auc-group-tab" data-group="Digital" aria-pressed="false">Digital</button>
+                        <button type="button" class="auc-group-tab" data-group="Electrical" aria-pressed="false">Electrical</button>
+                        <button type="button" class="auc-group-tab" data-group="Scientific" aria-pressed="false">Scientific</button>
                     </div>
 
                     <!-- Search Filter + Category Dropdown -->
@@ -1016,7 +1045,7 @@
                         <div class="auc-field-group">
                             <label class="auc-label" for="auc-category">
                                 <span>Measurement Category</span>
-                                <span class="auc-label-accent" id="auc-cat-count">28 domains</span>
+                                <span class="auc-label-accent" id="auc-cat-count">34 domains</span>
                             </label>
                             <select id="auc-category" class="auc-select" aria-label="Select measurement category"></select>
                         </div>
@@ -1071,7 +1100,7 @@
                     <!-- Output Notation Controls -->
                     <div class="auc-options-bar">
                         <span>Notation Mode:</span>
-                        <div class="auc-Format-radios" role="radiogroup" aria-label="Number formatting mode">
+                        <div class="auc-format-radios" role="radiogroup" aria-label="Number formatting mode">
                             <label><input type="radio" name="auc-notation" value="auto" checked> Auto</label>
                             <label><input type="radio" name="auc-notation" value="standard"> Standard</label>
                             <label><input type="radio" name="auc-notation" value="scientific"> Scientific</label>
@@ -1091,7 +1120,7 @@
                     <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
                         <div class="tqc-result-content">
                             <div class="auc-res-header">
-                                <span id="auc-res-category-tag">Everyday &bull; Length</span>
+                                <span id="auc-res-category-tag">Everyday &bull; Length &amp; Distance</span>
                                 <button type="button" id="auc-fav-toggle" class="auc-fav-btn" title="Save this unit pair to favorites">&#9734; Save Pair</button>
                             </div>
                             <div id="auc-primary-output" class="auc-primary-figure">3.28084 ft</div>
@@ -1131,14 +1160,14 @@
             <!-- Comprehensive Educational Article (P3 & Section 13: 1,450+ Words) -->
             <article class="auc-article">
                 <h2>Understanding Dimensional Analysis and High-Precision Unit Conversion</h2>
-                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds ($\text{lbf}\cdot\text{s}$) while the spacecraft's navigation algorithm expected metric Newton-seconds ($\text{N}\cdot\text{s}$) without executing a conversion factor of $4.448221615$.</p>
-                <p>The <strong>Advanced Unit Converter</strong> eliminates multi-page lookup friction by unifying 28 dimensionally isolated categories—spanning everyday weights and measures, rotational kinematics, fluid mechanics, thermodynamics, digital bandwidth, electromagnetism, and analytical chemistry—under a single double-precision conversion engine. Instead of relying on rounded three-digit approximations, the engine routes every calculation through authoritative <a href="https://www.nist.gov/pml/owm/metric-si/si-units" target="_blank" rel="noopener">International System of Units (SI)</a> base standards and exact <a href="https://www.nist.gov/pml/special-publication-811" target="_blank" rel="noopener">NIST Special Publication 811</a> definitions.</p>
+                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (lbf·s) while the spacecraft's navigation algorithm expected metric Newton-seconds (N·s) without executing a conversion factor of 4.448221615.</p>
+                <p>The <strong>Advanced Unit Converter</strong> eliminates multi-page lookup friction by unifying 34 dimensionally isolated categories—spanning everyday weights and measures, rotational kinematics, fluid mechanics, thermodynamics, digital bandwidth, electromagnetism, and analytical chemistry—under a single double-precision conversion engine. Instead of relying on rounded three-digit approximations, the engine routes every calculation through authoritative <a href="https://www.nist.gov/pml/owm/metric-si/si-units" target="_blank" rel="noopener">International System of Units (SI)</a> base standards and exact <a href="https://www.nist.gov/pml/special-publication-811" target="_blank" rel="noopener">NIST Special Publication 811</a> definitions.</p>
 
                 <h2>How the Centralized Base-Pivot Conversion Engine Works</h2>
-                <p>A naive unit converter spanning 12 units in a single category would require $12 \times 11 = 132$ separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
+                <p>A naive unit converter spanning 12 units in a single category would require 12 × 11 = 132 separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
                 <ol>
-                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value $x$ in source unit $U_{\text{from}}$ is first converted to the category's fundamental SI base unit $B$ using an exact scaling factor $k_{\text{from}}$ (or an affine offset function for non-linear scales).</li>
-                    <li><strong>Projection to the Target Unit:</strong> The canonical base value $B$ is then divided by the exact scaling factor $k_{\text{to}}$ of the target unit $U_{\text{to}}$.</li>
+                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value <em>x</em> in source unit <em>U</em><sub>from</sub> is first converted to the category's fundamental SI base unit <em>B</em> using an exact scaling factor <em>k</em><sub>from</sub> (or an affine offset function for non-linear scales).</li>
+                    <li><strong>Projection to the Target Unit:</strong> The canonical base value <em>B</em> is then divided by the exact scaling factor <em>k</em><sub>to</sub> of the target unit <em>U</em><sub>to</sub>.</li>
                 </ol>
 
                 <div class="auc-formula-card">
@@ -1146,10 +1175,10 @@
                     Affine Offset Formula:  y = f_to⁻¹( f_from(x) )
                 </div>
 
-                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing $x \times (k_{\text{from}} / k_{\text{to}})$ internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
+                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing <em>x</em> × (<em>k</em><sub>from</sub> / <em>k</em><sub>to</sub>) internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
 
                 <h3>Affine Offset Transformations in Thermodynamic Temperature Scales</h3>
-                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius ($^\circ\text{C}$), Fahrenheit ($^\circ\text{F}$), Kelvin ($\text{K}$), and Rankine ($^\circ\text{R}$) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
+                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
 
                 <div class="auc-formula-card">
                     Celsius to Kelvin:      T(K) = T(&deg;C) + 273.15<br>
@@ -1159,7 +1188,7 @@
                 </div>
 
                 <div class="auc-surface-box">
-                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero ($0\text{ K}$, $-273.15\text{ }^\circ\text{C}$, $-459.67\text{ }^\circ\text{F}$, or $0\text{ }^\circ\text{R}$). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
+                    <strong>Physical Boundary Enforcement:</strong> Absolute zero (0 K, −273.15 °C, −459.67 °F, or 0 °R) is the lower limit of the thermodynamic temperature scale. If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
                 </div>
 
                 <h2>Critical Engineering and Digital Distinctions</h2>
@@ -1167,23 +1196,23 @@
                 <h3>1. Decimal SI Storage (MB, GB, TB) vs. Binary IEC Storage (MiB, GiB, TiB)</h3>
                 <p>One of the most persistent sources of confusion in computer science is the discrepancy between base-10 decimal prefixes standardized by the <a href="https://www.bipm.org/en/measurement-units/si-prefixes" target="_blank" rel="noopener">International Bureau of Weights and Measures (BIPM)</a> and base-2 binary prefixes standardized by the International Electrotechnical Commission (IEC 80000-13):</p>
                 <ul>
-                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of $10^3 = 1,000$. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly $1,000,000,000,000\text{ bytes}$ ($10^{12}\text{ B}$).</li>
-                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of $2^{10} = 1,024$. RAM modules and operating system file managers calculate a Gibibyte ($\text{GiB}$) as $1,024^3 = 1,073,741,824\text{ bytes}$ ($2^{30}\text{ B}$).</li>
-                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second ($\text{Mbps}$, $\text{Gbps}$), while local disk write speeds are measured in Bytes per second ($\text{MB/s}$) or Mebibytes per second ($\text{MiB/s}$). Because $1\text{ Byte} = 8\text{ bits}$, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
+                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of 10<sup>3</sup> = 1,000. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly 1,000,000,000,000 bytes (10<sup>12</sup> B).</li>
+                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of 2<sup>10</sup> = 1,024. RAM modules and operating system file managers calculate a Gibibyte (GiB) as 1,024<sup>3</sup> = 1,073,741,824 bytes (2<sup>30</sup> B).</li>
+                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second (Mbps, Gbps), while local disk write speeds are measured in Bytes per second (MB/s) or Mebibytes per second (MiB/s). Because 1 Byte = 8 bits, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
                 </ul>
 
                 <h3>2. Dynamic Viscosity vs. Kinematic Viscosity in Fluid Mechanics</h3>
-                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density ($\rho$):</p>
+                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density (ρ):</p>
                 <ul>
-                    <li><strong>Dynamic (Absolute) Viscosity ($\mu$):</strong> Quantifies internal shear stress per unit velocity gradient ($\text{Pa}\cdot\text{s}$ or $\text{N}\cdot\text{s/m}^2$). In CGS laboratory tables, it is widely cited in Poise ($\text{P}$) and centipoise ($\text{cP}$), where $1\text{ cP} = 0.001\text{ Pa}\cdot\text{s}$ (approx. the viscosity of water at $20\text{ }^\circ\text{C}$).</li>
-                    <li><strong>Kinematic Viscosity ($\nu$):</strong> Defined as $\nu = \mu / \rho$, with dimensions of $\text{L}^2\cdot\text{T}^{-1}$ ($\text{m}^2/\text{s}$). In petroleum and lubrication testing, it is measured in Stokes ($\text{St}$) and centistokes ($\text{cSt}$), where $1\text{ cSt} = 1\text{ mm}^2/\text{s} = 10^{-6}\text{ m}^2/\text{s}$.</li>
+                    <li><strong>Dynamic (Absolute) Viscosity (μ):</strong> Quantifies internal shear stress per unit velocity gradient (Pa·s or N·s/m²). In CGS laboratory tables, it is widely cited in Poise (P) and centipoise (cP), where 1 cP = 0.001 Pa·s (approx. the viscosity of water at 20 °C).</li>
+                    <li><strong>Kinematic Viscosity (ν):</strong> Defined as ν = μ / ρ, with dimensions of L²·T<sup>−1</sup> (m²/s). In petroleum and lubrication testing, it is measured in Stokes (St) and centistokes (cSt), where 1 cSt = 1 mm²/s = 10<sup>−6</sup> m²/s.</li>
                 </ul>
 
                 <h3>3. Mass (lb, kg) vs. Mechanical Force (lbf, N) and Torque (N·m, lbf·ft)</h3>
-                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass ($1\text{ lb} = 0.45359237\text{ kg}$) exerts a downward force of one pound-force ($1\text{ lbf}$) only under standard Earth gravitational acceleration ($g_0 = 9.80665\text{ m/s}^2$). Multiplying $0.45359237\text{ kg} \times 9.80665\text{ m/s}^2$ yields the exact definition $1\text{ lbf} = 4.4482216152605\text{ N}$. Similarly, although <strong>Torque</strong> ($\text{N}\cdot\text{m}$) and <strong>Energy/Work</strong> ($\text{J}$) share the base dimensional product $\text{kg}\cdot\text{m}^2/\text{s}^2$, torque is a vector cross-product ($\mathbf{r} \times \mathbf{F}$) whereas energy is a scalar dot-product ($\mathbf{F} \cdot \mathbf{d}$), so they are kept in separate categories to prevent semantic errors.</p>
+                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass (1 lb = 0.45359237 kg) exerts a downward force of one pound-force (1 lbf) only under standard Earth gravitational acceleration (<em>g</em><sub>0</sub> = 9.80665 m/s²). Multiplying 0.45359237 kg × 9.80665 m/s² yields the exact definition 1 lbf = 4.4482216152605 N. Similarly, although <strong>Torque</strong> (N·m) and <strong>Energy/Work</strong> (J) share the base dimensional product kg·m²/s², torque is a vector cross-product (<strong>r</strong> × <strong>F</strong>) whereas energy is a scalar dot-product (<strong>F</strong> · <strong>d</strong>), so they are kept in separate categories to prevent semantic errors.</p>
 
-                <h2>Authoritative Reference Table of Exact Conversion Constants</h2>
-                <p>The table below summarizes the canonical SI base units and exact reference conversion constants implemented inside the calculator engine:</p>
+                <h2>Authoritative Reference Table of Conversion Constants</h2>
+                <p>The table below summarizes the canonical SI base units and reference conversion constants implemented inside the calculator engine. “Exact” marks a value fixed by definition; “derived” marks a value computed from exact definitions and shown here rounded.</p>
 
                 <div class="data-table-wrapper">
                     <table class="auc-table">
@@ -1193,93 +1222,93 @@
                                 <th>Category</th>
                                 <th>SI Base Unit</th>
                                 <th>Common Non-SI Unit</th>
-                                <th>Exact / Standard SI Factor</th>
+                                <th>SI Conversion Factor</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Length</td>
-                                <td>Meter ($\text{m}$)</td>
-                                <td>International Foot ($\text{ft}$)</td>
+                                <td>Meter (m)</td>
+                                <td>International Foot (ft)</td>
                                 <td class="num">0.3048 m (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Mass / Weight</td>
-                                <td>Kilogram ($\text{kg}$)</td>
-                                <td>Avoirdupois Pound ($\text{lb}$)</td>
+                                <td>Kilogram (kg)</td>
+                                <td>Avoirdupois Pound (lb)</td>
                                 <td class="num">0.45359237 kg (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Volume</td>
-                                <td>Cubic Meter ($\text{m}^3$)</td>
-                                <td>US Liquid Gallon ($\text{gal}$)</td>
+                                <td>Cubic Meter (m³)</td>
+                                <td>US Liquid Gallon (gal)</td>
                                 <td class="num">0.003785411784 m³ (exact)</td>
                             </tr>
                             <tr>
                                 <td>Motion</td>
                                 <td>Speed</td>
-                                <td>Meter/sec ($\text{m/s}$)</td>
-                                <td>Nautical Knot ($\text{kn}$)</td>
-                                <td class="num">0.5144444444 m/s (1852/3600)</td>
+                                <td>Meter/sec (m/s)</td>
+                                <td>Nautical Knot (kn)</td>
+                                <td class="num">1852/3600 m/s ≈ 0.514444 (exact ratio)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Pressure</td>
-                                <td>Pascal ($\text{Pa}$)</td>
-                                <td>Pound/sq inch ($\text{psi}$)</td>
-                                <td class="num">6894.757293168 Pa</td>
+                                <td>Pascal (Pa)</td>
+                                <td>Pound/sq inch (psi)</td>
+                                <td class="num">6894.757293168 Pa (derived)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Force</td>
-                                <td>Newton ($\text{N}$)</td>
-                                <td>Pound-force ($\text{lbf}$)</td>
+                                <td>Newton (N)</td>
+                                <td>Pound-force (lbf)</td>
                                 <td class="num">4.4482216152605 N (exact)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Torque</td>
-                                <td>Newton-meter ($\text{N}\cdot\text{m}$)</td>
-                                <td>Pound-foot ($\text{lbf}\cdot\text{ft}$)</td>
-                                <td class="num">1.3558179483314 N·m</td>
+                                <td>Newton-meter (N·m)</td>
+                                <td>Pound-foot (lbf·ft)</td>
+                                <td class="num">1.3558179483314 N·m (derived)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Dynamic Viscosity</td>
-                                <td>Pascal-second ($\text{Pa}\cdot\text{s}$)</td>
-                                <td>Centipoise ($\text{cP}$)</td>
+                                <td>Pascal-second (Pa·s)</td>
+                                <td>Centipoise (cP)</td>
                                 <td class="num">0.001 Pa·s (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Energy / Work</td>
-                                <td>Joule ($\text{J}$)</td>
-                                <td>IT British Thermal Unit ($\text{BTU}_{\text{IT}}$)</td>
+                                <td>Joule (J)</td>
+                                <td>IT British Thermal Unit (BTU<sub>IT</sub>)</td>
                                 <td class="num">1055.05585262 J (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Power</td>
-                                <td>Watt ($\text{W}$)</td>
-                                <td>Mechanical Horsepower ($\text{hp}$)</td>
-                                <td class="num">745.69987158227 W</td>
+                                <td>Watt (W)</td>
+                                <td>Mechanical Horsepower (hp)</td>
+                                <td class="num">745.69987158227 W (derived)</td>
                             </tr>
                             <tr>
                                 <td>Digital</td>
                                 <td>Data Storage</td>
-                                <td>Byte ($\text{B}$)</td>
-                                <td>Gibibyte ($\text{GiB}$)</td>
-                                <td class="num">1,073,741,824 B (2³⁰ exact)</td>
+                                <td>Byte (B)</td>
+                                <td>Gibibyte (GiB)</td>
+                                <td class="num">1,073,741,824 B (2³⁰, exact)</td>
                             </tr>
                             <tr>
                                 <td>Scientific</td>
                                 <td>Magnetic Field</td>
-                                <td>Tesla ($\text{T}$)</td>
-                                <td>Gauss ($\text{G}$)</td>
-                                <td class="num">0.0001 T (10⁻⁴ exact)</td>
+                                <td>Tesla (T)</td>
+                                <td>Gauss (G)</td>
+                                <td class="num">0.0001 T (10⁻⁴, exact)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1288,33 +1317,36 @@
                 <h2>Step-by-Step Worked Engineering &amp; Digital Examples</h2>
 
                 <h3>Example 1: Converting Hydraulic Pump Pressure from PSI to Bar and Megapascals (MPa)</h3>
-                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of $3,500\text{ psi}$ and you need the equivalent pressure in $\text{bar}$ and $\text{MPa}$:</p>
+                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of 3,500 psi and you need the equivalent pressure in bar and MPa:</p>
                 <ol>
-                    <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Engineering &rarr; Pressure</em>, enter <code>3500</code>, and set From Unit to <em>Pound per square inch (psi)</em>.</li>
-                    <li><strong>Convert to SI Base (Pascal):</strong> Using $1\text{ psi} = 6,894.757293168\text{ Pa}$, multiply $3,500 \times 6,894.757293168 = 24,131,650.526088\text{ Pa}$.</li>
+                    <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Engineering &rarr; Pressure &amp; Stress</em>, enter <code>3500</code>, and set From Unit to <em>Pound per square inch (psi)</em>.</li>
+                    <li><strong>Convert to SI Base (Pascal):</strong> Using 1 psi = 6,894.757293168 Pa, multiply 3,500 × 6,894.757293168 = 24,131,650.526088 Pa.</li>
                     <li><strong>Project to Target Units:</strong>
                         <ul>
-                            <li>In <strong>Bar</strong> ($1\text{ bar} = 100,000\text{ Pa}$): $24,131,650.526088 / 100,000 = \mathbf{241.316505\text{ bar}}$.</li>
-                            <li>In <strong>Megapascals</strong> ($1\text{ MPa} = 1,000,000\text{ Pa}$): $24,131,650.526088 / 1,000,000 = \mathbf{24.131651\text{ MPa}}$.</li>
+                            <li>In <strong>Bar</strong> (1 bar = 100,000 Pa): 24,131,650.526088 / 100,000 = <strong>241.316505 bar</strong>.</li>
+                            <li>In <strong>Megapascals</strong> (1 MPa = 1,000,000 Pa): 24,131,650.526088 / 1,000,000 = <strong>24.131651 MPa</strong>.</li>
                         </ul>
                     </li>
                 </ol>
 
                 <h3>Example 2: Reconciling a 2 Terabyte (TB) NVMe Drive in Binary Gibibytes (GiB)</h3>
-                <p>A cloud server administrator installs a drive marketed as $2\text{ TB}$ decimal capacity and wants to verify the exact binary $\text{GiB}$ capacity reported by the Linux kernel:</p>
+                <p>A cloud server administrator installs a drive marketed as 2 TB decimal capacity and wants to verify the exact binary GiB capacity reported by the Linux kernel:</p>
                 <ol>
-                    <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Digital &rarr; Data Storage</em>, enter <code>2</code>, set From Unit to <em>Terabyte (TB - Decimal)</em>, and To Unit to <em>Gibibyte (GiB - Binary)</em>.</li>
-                    <li><strong>Convert to Base Bytes:</strong> $2\text{ TB} \times 10^{12}\text{ B/TB} = 2,000,000,000,000\text{ Bytes}$.</li>
-                    <li><strong>Project to Binary GiB:</strong> Divide by $2^{30}\text{ Bytes/GiB}$ ($1,073,741,824\text{ B}$):
-                        $$2,000,000,000,000 / 1,073,741,824 = \mathbf{1,862.645149\text{ GiB}}$$
+                    <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Digital &rarr; Digital Data Storage</em>, enter <code>2</code>, set From Unit to <em>Terabyte — Decimal (10¹² B)</em>, and To Unit to <em>Gibibyte — Binary (2³⁰ B)</em>.</li>
+                    <li><strong>Convert to Base Bytes:</strong> 2 TB × 10<sup>12</sup> B/TB = 2,000,000,000,000 Bytes.</li>
+                    <li><strong>Project to Binary GiB:</strong> Divide by 2<sup>30</sup> Bytes/GiB (1,073,741,824 B):
+                        <div class="auc-formula-card">2,000,000,000,000 ÷ 1,073,741,824 = <strong>1,862.645149 GiB</strong></div>
                     </li>
                 </ol>
 
                 <h2>Assumptions, Limitations, and Practical Tips</h2>
                 <ul>
-                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force $\text{kgf}$ and pound-force $\text{lbf}$) assume standard sea-level acceleration $g_0 = 9.80665\text{ m/s}^2$. Local gravitational acceleration varies by latitude and altitude (roughly $9.78\text{ m/s}^2$ at the equator to $9.83\text{ m/s}^2$ at the poles).</li>
-                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions ($1\text{ cal}_{\text{IT}} = 4.1868\text{ J}$ and $1\text{ BTU}_{\text{IT}} = 1,055.05585262\text{ J}$). Chemical thermodynamics papers occasionally use the thermochemical calorie ($4.184\text{ J}$).</li>
-                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as $365.2425\text{ days}$ ($31,556,952\text{ seconds}$) and an average month as $1/12$ of a mean Gregorian year ($30.436875\text{ days}$). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
+                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force kgf and pound-force lbf) assume standard sea-level acceleration <em>g</em><sub>0</sub> = 9.80665 m/s². Local gravitational acceleration varies by latitude and altitude (roughly 9.78 m/s² at the equator to 9.83 m/s² at the poles).</li>
+                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Table (IT) definitions (1 cal<sub>IT</sub> = 4.1868 J and 1 BTU<sub>IT</sub> = 1,055.05585262 J). Chemical thermodynamics papers occasionally use the thermochemical calorie (4.184 J).</li>
+                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as 365.2425 days (31,556,952 seconds) and an average month as 1/12 of a mean Gregorian year (30.436875 days). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
+                    <li><strong>Mach Number Reference:</strong> The Mach unit uses the speed of sound in dry air at 20 °C (343.2 m/s). At ISA sea-level conditions (15 °C) the speed of sound is about 340.29 m/s, and the real value changes with temperature and altitude.</li>
+                    <li><strong>Torr vs. mmHg:</strong> Torr is defined as exactly 1/760 of a standard atmosphere. Conventional millimeters of mercury differ from it by roughly one part in seven million, which is negligible for most practical work.</li>
+                    <li><strong>Dalton and Kilodalton in Molar Mass:</strong> Da and kDa are atomic-mass units (mass per particle), not true molar masses. They are included here because 1 Da corresponds numerically to 1 g/mol and 1 kDa to 1 kg/mol (equal to within about one part in a billion).</li>
                 </ul>
 
                 <!-- Visible FAQ Section Matching FAQPage Schema Exactly (8 FAQs, Zero Inline Microdata) -->
@@ -1327,7 +1359,7 @@
 
                     <details class="auc-faq-item">
                         <summary>What is the exact difference between Megabytes (MB) and Mebibytes (MiB) in digital storage?</summary>
-                        <div class="auc-faq-body">Under the International System of Units (SI) and IEC 80000-13 standards, a Megabyte (MB) is a decimal unit equal to 1,000,000 bytes (10^6 bytes), whereas a Mebibyte (MiB) is a binary unit equal to 1,048,576 bytes (2^20 bytes). Storage hardware manufacturers advertise drive capacity in decimal gigabytes and terabytes, while operating systems often calculate memory and file sizes using binary powers of 1,024, causing a 1 TB drive (10^12 bytes) to display as approximately 931.32 GiB.</div>
+                        <div class="auc-faq-body">Under the International System of Units (SI) and IEC 80000-13 standards, a Megabyte (MB) is a decimal unit equal to 1,000,000 bytes (10⁶ bytes), whereas a Mebibyte (MiB) is a binary unit equal to 1,048,576 bytes (2²⁰ bytes). Storage hardware manufacturers advertise drive capacity in decimal gigabytes and terabytes, while operating systems often calculate memory and file sizes using binary powers of 1,024, causing a 1 TB drive (10¹² bytes) to display as approximately 931.32 GiB.</div>
                     </details>
 
                     <details class="auc-faq-item">
@@ -1347,7 +1379,7 @@
 
                     <details class="auc-faq-item">
                         <summary>Can negative numbers be entered for all measurement categories?</summary>
-                        <div class="auc-faq-body">Yes, negative values are permitted for vector displacements, gauge pressures, temperature scales, electric potentials, and temperature differentials. However, for absolute thermodynamic temperature scales, the converter validates against physical impossibility: values below absolute zero (-273.15 °C, -459.67 °F, or 0 K) trigger an immediate physical boundary warning.</div>
+                        <div class="auc-faq-body">Yes, the converter accepts negative values in every category, which is useful for vector displacements, gauge pressures, temperatures, electric potentials, and other signed quantities. It does not block negative inputs for quantities that are normally non-negative, such as mass or absolute pressure, so check your values. The one physical boundary it enforces is in the Temperature category: values below absolute zero (-273.15 °C, -459.67 °F, 0 K, or 0 °R) trigger an immediate physical boundary warning.</div>
                     </details>
 
                     <details class="auc-faq-item">
@@ -1372,47 +1404,48 @@
     (function () {
         "use strict";
 
-        // Centralized 28-Category Conversion Database (Exact NIST / BIPM / IEC Factors)
+        // Centralized 34-Category Conversion Database (Exact NIST / BIPM / IEC Factors)
+        // name = long label shown in dropdowns; sym = short symbol shown in results.
         const REGISTRY = {
             // ==================== 1. EVERYDAY ====================
             length: {
                 group: "Everyday", name: "Length & Distance", base: "m",
                 units: {
-                    m:   { name: "Meter (m)", factor: 1 },
-                    km:  { name: "Kilometer (km)", factor: 1000 },
-                    cm:  { name: "Centimeter (cm)", factor: 0.01 },
-                    mm:  { name: "Millimeter (mm)", factor: 0.001 },
-                    um:  { name: "Micrometer (µm)", factor: 1e-6 },
-                    nm:  { name: "Nanometer (nm)", factor: 1e-9 },
-                    mi:  { name: "Mile (mi)", factor: 1609.344 },
-                    yd:  { name: "Yard (yd)", factor: 0.9144 },
-                    ft:  { name: "Foot (ft)", factor: 0.3048 },
-                    in:  { name: "Inch (in)", factor: 0.0254 },
-                    nmi: { name: "Nautical Mile (nmi)", factor: 1852 },
-                    ly:  { name: "Light-Year (ly)", factor: 9460730472580800 }
+                    m:   { name: "Meter (m)", sym: "m", factor: 1 },
+                    km:  { name: "Kilometer (km)", sym: "km", factor: 1000 },
+                    cm:  { name: "Centimeter (cm)", sym: "cm", factor: 0.01 },
+                    mm:  { name: "Millimeter (mm)", sym: "mm", factor: 0.001 },
+                    um:  { name: "Micrometer (µm)", sym: "µm", factor: 1e-6 },
+                    nm:  { name: "Nanometer (nm)", sym: "nm", factor: 1e-9 },
+                    mi:  { name: "Mile (mi)", sym: "mi", factor: 1609.344 },
+                    yd:  { name: "Yard (yd)", sym: "yd", factor: 0.9144 },
+                    ft:  { name: "Foot (ft)", sym: "ft", factor: 0.3048 },
+                    in:  { name: "Inch (in)", sym: "in", factor: 0.0254 },
+                    nmi: { name: "Nautical Mile (nmi)", sym: "nmi", factor: 1852 },
+                    ly:  { name: "Light-Year (ly)", sym: "ly", factor: 9460730472580800 }
                 }
             },
             mass: {
                 group: "Everyday", name: "Mass & Weight", base: "kg",
                 units: {
-                    kg:  { name: "Kilogram (kg)", factor: 1 },
-                    g:   { name: "Gram (g)", factor: 0.001 },
-                    mg:  { name: "Milligram (mg)", factor: 1e-6 },
-                    ug:  { name: "Microgram (µg)", factor: 1e-9 },
-                    t:   { name: "Metric Ton / Tonne (t)", factor: 1000 },
-                    lb:  { name: "Pound (lb)", factor: 0.45359237 },
-                    oz:  { name: "Ounce (oz)", factor: 0.028349523125 },
-                    st:  { name: "Stone (st)", factor: 6.35029318 },
-                    ton_us: { name: "US Short Ton (ton)", factor: 907.18474 },
-                    ton_uk: { name: "UK Long Ton (long ton)", factor: 1016.0469088 },
-                    ct:  { name: "Metric Carat (ct)", factor: 0.0002 }
+                    kg:  { name: "Kilogram (kg)", sym: "kg", factor: 1 },
+                    g:   { name: "Gram (g)", sym: "g", factor: 0.001 },
+                    mg:  { name: "Milligram (mg)", sym: "mg", factor: 1e-6 },
+                    ug:  { name: "Microgram (µg)", sym: "µg", factor: 1e-9 },
+                    t:   { name: "Metric Ton / Tonne (t)", sym: "t", factor: 1000 },
+                    lb:  { name: "Pound (lb)", sym: "lb", factor: 0.45359237 },
+                    oz:  { name: "Ounce (oz)", sym: "oz", factor: 0.028349523125 },
+                    st:  { name: "Stone (st)", sym: "st", factor: 6.35029318 },
+                    ton_us: { name: "US Short Ton (ton)", sym: "US ton", factor: 907.18474 },
+                    ton_uk: { name: "UK Long Ton (long ton)", sym: "long ton", factor: 1016.0469088 },
+                    ct:  { name: "Metric Carat (ct)", sym: "ct", factor: 0.0002 }
                 }
             },
             temperature: {
                 group: "Everyday", name: "Temperature", base: "K", affine: true,
                 units: {
                     C: {
-                        name: "Celsius (°C)",
+                        name: "Celsius (°C)", sym: "°C",
                         toBase: function (v) { return v + 273.15; },
                         fromBase: function (k) { return k - 273.15; },
                         formulaTo: function (target) {
@@ -1423,7 +1456,7 @@
                         }
                     },
                     F: {
-                        name: "Fahrenheit (°F)",
+                        name: "Fahrenheit (°F)", sym: "°F",
                         toBase: function (v) { return (v + 459.67) * (5 / 9); },
                         fromBase: function (k) { return (k * (9 / 5)) - 459.67; },
                         formulaTo: function (target) {
@@ -1434,7 +1467,7 @@
                         }
                     },
                     K: {
-                        name: "Kelvin (K)",
+                        name: "Kelvin (K)", sym: "K",
                         toBase: function (v) { return v; },
                         fromBase: function (k) { return k; },
                         formulaTo: function (target) {
@@ -1445,7 +1478,7 @@
                         }
                     },
                     R: {
-                        name: "Rankine (°R)",
+                        name: "Rankine (°R)", sym: "°R",
                         toBase: function (v) { return v * (5 / 9); },
                         fromBase: function (k) { return k * (9 / 5); },
                         formulaTo: function (target) {
@@ -1460,48 +1493,48 @@
             area: {
                 group: "Everyday", name: "Area", base: "m²",
                 units: {
-                    m2:  { name: "Square Meter (m²)", factor: 1 },
-                    km2: { name: "Square Kilometer (km²)", factor: 1e6 },
-                    cm2: { name: "Square Centimeter (cm²)", factor: 1e-4 },
-                    mm2: { name: "Square Millimeter (mm²)", factor: 1e-6 },
-                    ha:  { name: "Hectare (ha)", factor: 10000 },
-                    ac:  { name: "Acre (ac)", factor: 4046.8564224 },
-                    ft2: { name: "Square Foot (ft²)", factor: 0.09290304 },
-                    yd2: { name: "Square Yard (yd²)", factor: 0.83612736 },
-                    in2: { name: "Square Inch (in²)", factor: 0.00064516 },
-                    mi2: { name: "Square Mile (mi²)", factor: 2589988.110336 }
+                    m2:  { name: "Square Meter (m²)", sym: "m²", factor: 1 },
+                    km2: { name: "Square Kilometer (km²)", sym: "km²", factor: 1e6 },
+                    cm2: { name: "Square Centimeter (cm²)", sym: "cm²", factor: 1e-4 },
+                    mm2: { name: "Square Millimeter (mm²)", sym: "mm²", factor: 1e-6 },
+                    ha:  { name: "Hectare (ha)", sym: "ha", factor: 10000 },
+                    ac:  { name: "Acre (ac)", sym: "ac", factor: 4046.8564224 },
+                    ft2: { name: "Square Foot (ft²)", sym: "ft²", factor: 0.09290304 },
+                    yd2: { name: "Square Yard (yd²)", sym: "yd²", factor: 0.83612736 },
+                    in2: { name: "Square Inch (in²)", sym: "in²", factor: 0.00064516 },
+                    mi2: { name: "Square Mile (mi²)", sym: "mi²", factor: 2589988.110336 }
                 }
             },
             volume: {
                 group: "Everyday", name: "Volume & Capacity", base: "m³",
                 units: {
-                    L:      { name: "Liter (L)", factor: 0.001 },
-                    mL:     { name: "Milliliter (mL)", factor: 1e-6 },
-                    m3:     { name: "Cubic Meter (m³)", factor: 1 },
-                    cm3:    { name: "Cubic Centimeter (cm³)", factor: 1e-6 },
-                    gal_us: { name: "US Liquid Gallon (gal)", factor: 0.003785411784 },
-                    qt_us:  { name: "US Liquid Quart (qt)", factor: 0.000946352946 },
-                    pt_us:  { name: "US Liquid Pint (pt)", factor: 0.000473176473 },
-                    floz_us:{ name: "US Fluid Ounce (fl oz)", factor: 2.95735295625e-5 },
-                    gal_uk: { name: "Imperial Gallon (UK gal)", factor: 0.00454609 },
-                    floz_uk:{ name: "Imperial Fluid Ounce (UK fl oz)", factor: 2.84130625e-5 },
-                    ft3:    { name: "Cubic Foot (ft³)", factor: 0.028316846592 },
-                    in3:    { name: "Cubic Inch (in³)", factor: 1.6387064e-5 }
+                    L:      { name: "Liter (L)", sym: "L", factor: 0.001 },
+                    mL:     { name: "Milliliter (mL)", sym: "mL", factor: 1e-6 },
+                    m3:     { name: "Cubic Meter (m³)", sym: "m³", factor: 1 },
+                    cm3:    { name: "Cubic Centimeter (cm³)", sym: "cm³", factor: 1e-6 },
+                    gal_us: { name: "US Liquid Gallon (gal)", sym: "gal (US)", factor: 0.003785411784 },
+                    qt_us:  { name: "US Liquid Quart (qt)", sym: "qt (US)", factor: 0.000946352946 },
+                    pt_us:  { name: "US Liquid Pint (pt)", sym: "pt (US)", factor: 0.000473176473 },
+                    floz_us:{ name: "US Fluid Ounce (fl oz)", sym: "fl oz (US)", factor: 2.95735295625e-5 },
+                    gal_uk: { name: "Imperial Gallon (UK gal)", sym: "gal (UK)", factor: 0.00454609 },
+                    floz_uk:{ name: "Imperial Fluid Ounce (UK fl oz)", sym: "fl oz (UK)", factor: 2.84130625e-5 },
+                    ft3:    { name: "Cubic Foot (ft³)", sym: "ft³", factor: 0.028316846592 },
+                    in3:    { name: "Cubic Inch (in³)", sym: "in³", factor: 1.6387064e-5 }
                 }
             },
             time: {
                 group: "Everyday", name: "Time", base: "s",
                 units: {
-                    s:   { name: "Second (s)", factor: 1 },
-                    ms:  { name: "Millisecond (ms)", factor: 1e-3 },
-                    us:  { name: "Microsecond (µs)", factor: 1e-6 },
-                    ns:  { name: "Nanosecond (ns)", factor: 1e-9 },
-                    min: { name: "Minute (min)", factor: 60 },
-                    hr:  { name: "Hour (h)", factor: 3600 },
-                    day: { name: "Day (d)", factor: 86400 },
-                    wk:  { name: "Week (wk)", factor: 604800 },
-                    mo:  { name: "Mean Month (30.437 d)", factor: 2629746 },
-                    yr:  { name: "Mean Gregorian Year (yr)", factor: 31556952 }
+                    s:   { name: "Second (s)", sym: "s", factor: 1 },
+                    ms:  { name: "Millisecond (ms)", sym: "ms", factor: 1e-3 },
+                    us:  { name: "Microsecond (µs)", sym: "µs", factor: 1e-6 },
+                    ns:  { name: "Nanosecond (ns)", sym: "ns", factor: 1e-9 },
+                    min: { name: "Minute (min)", sym: "min", factor: 60 },
+                    hr:  { name: "Hour (h)", sym: "h", factor: 3600 },
+                    day: { name: "Day (d)", sym: "d", factor: 86400 },
+                    wk:  { name: "Week (wk)", sym: "wk", factor: 604800 },
+                    mo:  { name: "Mean Month (30.437 d)", sym: "mo", factor: 2629746 },
+                    yr:  { name: "Mean Gregorian Year (yr)", sym: "yr", factor: 31556952 }
                 }
             },
 
@@ -1509,53 +1542,53 @@
             speed: {
                 group: "Motion", name: "Speed & Velocity", base: "m/s",
                 units: {
-                    mps:  { name: "Meter per second (m/s)", factor: 1 },
-                    kmh:  { name: "Kilometer per hour (km/h)", factor: 1 / 3.6 },
-                    mph:  { name: "Mile per hour (mph)", factor: 0.44704 },
-                    fps:  { name: "Foot per second (ft/s)", factor: 0.3048 },
-                    kn:   { name: "Knot (kn)", factor: 1852 / 3600 },
-                    mach: { name: "Mach (ISA Sea Level 20°C)", factor: 343.2 }
+                    mps:  { name: "Meter per second (m/s)", sym: "m/s", factor: 1 },
+                    kmh:  { name: "Kilometer per hour (km/h)", sym: "km/h", factor: 1 / 3.6 },
+                    mph:  { name: "Mile per hour (mph)", sym: "mph", factor: 0.44704 },
+                    fps:  { name: "Foot per second (ft/s)", sym: "ft/s", factor: 0.3048 },
+                    kn:   { name: "Knot (kn)", sym: "kn", factor: 1852 / 3600 },
+                    mach: { name: "Mach (speed of sound, 20 °C air)", sym: "Ma", factor: 343.2 }
                 }
             },
             acceleration: {
                 group: "Motion", name: "Acceleration", base: "m/s²",
                 units: {
-                    mps2: { name: "Meter per sq. second (m/s²)", factor: 1 },
-                    g0:   { name: "Standard Gravity (g₀)", factor: 9.80665 },
-                    fps2: { name: "Foot per sq. second (ft/s²)", factor: 0.3048 },
-                    cmps2:{ name: "Gal / cm per sq. second (Gal)", factor: 0.01 },
-                    inps2:{ name: "Inch per sq. second (in/s²)", factor: 0.0254 }
+                    mps2: { name: "Meter per sq. second (m/s²)", sym: "m/s²", factor: 1 },
+                    g0:   { name: "Standard Gravity (g₀)", sym: "g₀", factor: 9.80665 },
+                    fps2: { name: "Foot per sq. second (ft/s²)", sym: "ft/s²", factor: 0.3048 },
+                    cmps2:{ name: "Gal / cm per sq. second (Gal)", sym: "Gal", factor: 0.01 },
+                    inps2:{ name: "Inch per sq. second (in/s²)", sym: "in/s²", factor: 0.0254 }
                 }
             },
             angle: {
                 group: "Motion", name: "Plane Angle", base: "rad",
                 units: {
-                    deg:  { name: "Degree (°)", factor: Math.PI / 180 },
-                    rad:  { name: "Radian (rad)", factor: 1 },
-                    grad: { name: "Gradian / Gon (grad)", factor: Math.PI / 200 },
-                    arcmin:{ name: "Arcminute (′)", factor: Math.PI / 10800 },
-                    arcsec:{ name: "Arcsecond (″)", factor: Math.PI / 648000 },
-                    rev:  { name: "Revolution / Turn (rev)", factor: 2 * Math.PI }
+                    deg:  { name: "Degree (°)", sym: "°", factor: Math.PI / 180 },
+                    rad:  { name: "Radian (rad)", sym: "rad", factor: 1 },
+                    grad: { name: "Gradian / Gon (grad)", sym: "grad", factor: Math.PI / 200 },
+                    arcmin:{ name: "Arcminute (′)", sym: "′", factor: Math.PI / 10800 },
+                    arcsec:{ name: "Arcsecond (″)", sym: "″", factor: Math.PI / 648000 },
+                    rev:  { name: "Revolution / Turn (rev)", sym: "rev", factor: 2 * Math.PI }
                 }
             },
             angular_velocity: {
                 group: "Motion", name: "Angular Velocity", base: "rad/s",
                 units: {
-                    rads: { name: "Radian per second (rad/s)", factor: 1 },
-                    rpm:  { name: "Revolution per minute (RPM)", factor: (2 * Math.PI) / 60 },
-                    rps:  { name: "Revolution per second (RPS)", factor: 2 * Math.PI },
-                    degs: { name: "Degree per second (°/s)", factor: Math.PI / 180 }
+                    rads: { name: "Radian per second (rad/s)", sym: "rad/s", factor: 1 },
+                    rpm:  { name: "Revolution per minute (RPM)", sym: "rpm", factor: (2 * Math.PI) / 60 },
+                    rps:  { name: "Revolution per second (RPS)", sym: "rev/s", factor: 2 * Math.PI },
+                    degs: { name: "Degree per second (°/s)", sym: "°/s", factor: Math.PI / 180 }
                 }
             },
             frequency: {
                 group: "Motion", name: "Frequency", base: "Hz",
                 units: {
-                    Hz:  { name: "Hertz (Hz)", factor: 1 },
-                    kHz: { name: "Kilohertz (kHz)", factor: 1e3 },
-                    MHz: { name: "Megahertz (MHz)", factor: 1e6 },
-                    GHz: { name: "Gigahertz (GHz)", factor: 1e9 },
-                    THz: { name: "Terahertz (THz)", factor: 1e12 },
-                    rpm: { name: "Cycles per minute (CPM / RPM)", factor: 1 / 60 }
+                    Hz:  { name: "Hertz (Hz)", sym: "Hz", factor: 1 },
+                    kHz: { name: "Kilohertz (kHz)", sym: "kHz", factor: 1e3 },
+                    MHz: { name: "Megahertz (MHz)", sym: "MHz", factor: 1e6 },
+                    GHz: { name: "Gigahertz (GHz)", sym: "GHz", factor: 1e9 },
+                    THz: { name: "Terahertz (THz)", sym: "THz", factor: 1e12 },
+                    rpm: { name: "Cycles per minute (CPM)", sym: "cpm", factor: 1 / 60 }
                 }
             },
 
@@ -1563,86 +1596,86 @@
             pressure: {
                 group: "Engineering", name: "Pressure & Stress", base: "Pa",
                 units: {
-                    Pa:   { name: "Pascal (Pa)", factor: 1 },
-                    kPa:  { name: "Kilopascal (kPa)", factor: 1e3 },
-                    MPa:  { name: "Megapascal (MPa)", factor: 1e6 },
-                    GPa:  { name: "Gigapascal (GPa)", factor: 1e9 },
-                    bar:  { name: "Bar (bar)", factor: 1e5 },
-                    mbar: { name: "Millibar (mbar)", factor: 100 },
-                    psi:  { name: "Pound per sq. inch (psi)", factor: 6894.757293168 },
-                    ksi:  { name: "Kilopound per sq. inch (ksi)", factor: 6894757.293168 },
-                    atm:  { name: "Standard Atmosphere (atm)", factor: 101325 },
-                    torr: { name: "Torr / mmHg (0°C)", factor: 101325 / 760 },
-                    inhg: { name: "Inch of Mercury (inHg)", factor: 3386.389 }
+                    Pa:   { name: "Pascal (Pa)", sym: "Pa", factor: 1 },
+                    kPa:  { name: "Kilopascal (kPa)", sym: "kPa", factor: 1e3 },
+                    MPa:  { name: "Megapascal (MPa)", sym: "MPa", factor: 1e6 },
+                    GPa:  { name: "Gigapascal (GPa)", sym: "GPa", factor: 1e9 },
+                    bar:  { name: "Bar (bar)", sym: "bar", factor: 1e5 },
+                    mbar: { name: "Millibar (mbar)", sym: "mbar", factor: 100 },
+                    psi:  { name: "Pound per sq. inch (psi)", sym: "psi", factor: 6894.757293168 },
+                    ksi:  { name: "Kilopound per sq. inch (ksi)", sym: "ksi", factor: 6894757.293168 },
+                    atm:  { name: "Standard Atmosphere (atm)", sym: "atm", factor: 101325 },
+                    torr: { name: "Torr (1/760 atm)", sym: "Torr", factor: 101325 / 760 },
+                    inhg: { name: "Inch of Mercury (inHg)", sym: "inHg", factor: 3386.389 }
                 }
             },
             force: {
                 group: "Engineering", name: "Force", base: "N",
                 units: {
-                    N:   { name: "Newton (N)", factor: 1 },
-                    kN:  { name: "Kilonewton (kN)", factor: 1e3 },
-                    MN:  { name: "Meganewton (MN)", factor: 1e6 },
-                    dyn: { name: "Dyne (dyn)", factor: 1e-5 },
-                    lbf: { name: "Pound-force (lbf)", factor: 4.4482216152605 },
-                    kip: { name: "Kip-force (1,000 lbf)", factor: 4448.2216152605 },
-                    kgf: { name: "Kilogram-force / Kilopond (kgf)", factor: 9.80665 },
-                    pdl: { name: "Poundal (pdl)", factor: 0.138254954376 }
+                    N:   { name: "Newton (N)", sym: "N", factor: 1 },
+                    kN:  { name: "Kilonewton (kN)", sym: "kN", factor: 1e3 },
+                    MN:  { name: "Meganewton (MN)", sym: "MN", factor: 1e6 },
+                    dyn: { name: "Dyne (dyn)", sym: "dyn", factor: 1e-5 },
+                    lbf: { name: "Pound-force (lbf)", sym: "lbf", factor: 4.4482216152605 },
+                    kip: { name: "Kip-force (1,000 lbf)", sym: "kip", factor: 4448.2216152605 },
+                    kgf: { name: "Kilogram-force / Kilopond (kgf)", sym: "kgf", factor: 9.80665 },
+                    pdl: { name: "Poundal (pdl)", sym: "pdl", factor: 0.138254954376 }
                 }
             },
             torque: {
                 group: "Engineering", name: "Torque (Moment of Force)", base: "N·m",
                 units: {
-                    Nm:   { name: "Newton-meter (N·m)", factor: 1 },
-                    kNm:  { name: "Kilonewton-meter (kN·m)", factor: 1000 },
-                    Ncm:  { name: "Newton-centimeter (N·cm)", factor: 0.01 },
-                    lbfft:{ name: "Pound-foot (lbf·ft)", factor: 1.3558179483314 },
-                    lbfin:{ name: "Pound-inch (lbf·in)", factor: 0.1129848290276 },
-                    kgfm: { name: "Kilogram-force meter (kgf·m)", factor: 9.80665 }
+                    Nm:   { name: "Newton-meter (N·m)", sym: "N·m", factor: 1 },
+                    kNm:  { name: "Kilonewton-meter (kN·m)", sym: "kN·m", factor: 1000 },
+                    Ncm:  { name: "Newton-centimeter (N·cm)", sym: "N·cm", factor: 0.01 },
+                    lbfft:{ name: "Pound-foot (lbf·ft)", sym: "lbf·ft", factor: 1.3558179483314004 },
+                    lbfin:{ name: "Pound-inch (lbf·in)", sym: "lbf·in", factor: 0.1129848290276167 },
+                    kgfm: { name: "Kilogram-force meter (kgf·m)", sym: "kgf·m", factor: 9.80665 }
                 }
             },
             density: {
                 group: "Engineering", name: "Mass Density", base: "kg/m³",
                 units: {
-                    kgm3: { name: "Kilogram per cubic meter (kg/m³)", factor: 1 },
-                    gcm3: { name: "Gram per cubic centimeter (g/cm³)", factor: 1000 },
-                    kgL:  { name: "Kilogram per liter (kg/L)", factor: 1000 },
-                    gL:   { name: "Gram per liter (g/L)", factor: 1 },
-                    lbft3:{ name: "Pound per cubic foot (lb/ft³)", factor: 16.01846337396 },
-                    lbin3:{ name: "Pound per cubic inch (lb/in³)", factor: 27679.9047102 },
-                    lbgal:{ name: "Pound per US gallon (lb/gal)", factor: 119.8264273169 }
+                    kgm3: { name: "Kilogram per cubic meter (kg/m³)", sym: "kg/m³", factor: 1 },
+                    gcm3: { name: "Gram per cubic centimeter (g/cm³)", sym: "g/cm³", factor: 1000 },
+                    kgL:  { name: "Kilogram per liter (kg/L)", sym: "kg/L", factor: 1000 },
+                    gL:   { name: "Gram per liter (g/L)", sym: "g/L", factor: 1 },
+                    lbft3:{ name: "Pound per cubic foot (lb/ft³)", sym: "lb/ft³", factor: 16.01846337396 },
+                    lbin3:{ name: "Pound per cubic inch (lb/in³)", sym: "lb/in³", factor: 27679.9047102 },
+                    lbgal:{ name: "Pound per US gallon (lb/gal)", sym: "lb/gal", factor: 119.8264273169 }
                 }
             },
             flow_rate: {
                 group: "Engineering", name: "Volumetric Flow Rate", base: "m³/s",
                 units: {
-                    m3s:   { name: "Cubic meter per second (m³/s)", factor: 1 },
-                    m3h:   { name: "Cubic meter per hour (m³/h)", factor: 1 / 3600 },
-                    Ls:    { name: "Liter per second (L/s)", factor: 0.001 },
-                    Lmin:  { name: "Liter per minute (L/min)", factor: 0.001 / 60 },
-                    gpm_us:{ name: "US Gallon per minute (GPM)", factor: 0.003785411784 / 60 },
-                    cfm:   { name: "Cubic foot per minute (CFM)", factor: 0.028316846592 / 60 },
-                    cfs:   { name: "Cubic foot per second (cfs / cusec)", factor: 0.028316846592 }
+                    m3s:   { name: "Cubic meter per second (m³/s)", sym: "m³/s", factor: 1 },
+                    m3h:   { name: "Cubic meter per hour (m³/h)", sym: "m³/h", factor: 1 / 3600 },
+                    Ls:    { name: "Liter per second (L/s)", sym: "L/s", factor: 0.001 },
+                    Lmin:  { name: "Liter per minute (L/min)", sym: "L/min", factor: 0.001 / 60 },
+                    gpm_us:{ name: "US Gallon per minute (GPM)", sym: "gpm", factor: 0.003785411784 / 60 },
+                    cfm:   { name: "Cubic foot per minute (CFM)", sym: "cfm", factor: 0.028316846592 / 60 },
+                    cfs:   { name: "Cubic foot per second (cfs / cusec)", sym: "cfs", factor: 0.028316846592 }
                 }
             },
             dynamic_viscosity: {
                 group: "Engineering", name: "Dynamic Viscosity", base: "Pa·s",
                 units: {
-                    Pas:   { name: "Pascal-second (Pa·s)", factor: 1 },
-                    mPas:  { name: "Millipascal-second (mPa·s)", factor: 0.001 },
-                    P:     { name: "Poise (P)", factor: 0.1 },
-                    cP:    { name: "Centipoise (cP)", factor: 0.001 },
-                    lbfts: { name: "Pound per foot-second (lb/(ft·s))", factor: 1.48816394357 },
-                    lbfsft2:{ name: "Pound-force second per sq. ft (lbf·s/ft²)", factor: 47.8802589803 }
+                    Pas:   { name: "Pascal-second (Pa·s)", sym: "Pa·s", factor: 1 },
+                    mPas:  { name: "Millipascal-second (mPa·s)", sym: "mPa·s", factor: 0.001 },
+                    P:     { name: "Poise (P)", sym: "P", factor: 0.1 },
+                    cP:    { name: "Centipoise (cP)", sym: "cP", factor: 0.001 },
+                    lbfts: { name: "Pound per foot-second (lb/(ft·s))", sym: "lb/(ft·s)", factor: 1.48816394357 },
+                    lbfsft2:{ name: "Pound-force second per sq. ft (lbf·s/ft²)", sym: "lbf·s/ft²", factor: 47.8802589803 }
                 }
             },
             kinematic_viscosity: {
                 group: "Engineering", name: "Kinematic Viscosity", base: "m²/s",
                 units: {
-                    m2s:  { name: "Square meter per second (m²/s)", factor: 1 },
-                    mm2s: { name: "Square millimeter per second (mm²/s)", factor: 1e-6 },
-                    St:   { name: "Stokes (St)", factor: 1e-4 },
-                    cSt:  { name: "Centistokes (cSt)", factor: 1e-6 },
-                    ft2s: { name: "Square foot per second (ft²/s)", factor: 0.09290304 }
+                    m2s:  { name: "Square meter per second (m²/s)", sym: "m²/s", factor: 1 },
+                    mm2s: { name: "Square millimeter per second (mm²/s)", sym: "mm²/s", factor: 1e-6 },
+                    St:   { name: "Stokes (St)", sym: "St", factor: 1e-4 },
+                    cSt:  { name: "Centistokes (cSt)", sym: "cSt", factor: 1e-6 },
+                    ft2s: { name: "Square foot per second (ft²/s)", sym: "ft²/s", factor: 0.09290304 }
                 }
             },
 
@@ -1650,50 +1683,50 @@
             energy: {
                 group: "Energy & Thermal", name: "Energy & Work", base: "J",
                 units: {
-                    J:    { name: "Joule (J)", factor: 1 },
-                    kJ:   { name: "Kilojoule (kJ)", factor: 1e3 },
-                    MJ:   { name: "Megajoule (MJ)", factor: 1e6 },
-                    Wh:   { name: "Watt-hour (Wh)", factor: 3600 },
-                    kWh:  { name: "Kilowatt-hour (kWh)", factor: 3.6e6 },
-                    cal:  { name: "Calorie (IT cal)", factor: 4.1868 },
-                    kcal: { name: "Kilocalorie / Food Calorie (kcal)", factor: 4186.8 },
-                    btu:  { name: "British Thermal Unit (BTU_IT)", factor: 1055.05585262 },
-                    ftlbf:{ name: "Foot-pound force (ft·lbf)", factor: 1.3558179483314 },
-                    eV:   { name: "Electronvolt (eV)", factor: 1.602176634e-19 },
-                    erg:  { name: "Erg (erg)", factor: 1e-7 }
+                    J:    { name: "Joule (J)", sym: "J", factor: 1 },
+                    kJ:   { name: "Kilojoule (kJ)", sym: "kJ", factor: 1e3 },
+                    MJ:   { name: "Megajoule (MJ)", sym: "MJ", factor: 1e6 },
+                    Wh:   { name: "Watt-hour (Wh)", sym: "Wh", factor: 3600 },
+                    kWh:  { name: "Kilowatt-hour (kWh)", sym: "kWh", factor: 3.6e6 },
+                    cal:  { name: "Calorie (IT cal)", sym: "cal", factor: 4.1868 },
+                    kcal: { name: "Kilocalorie / Food Calorie (kcal)", sym: "kcal", factor: 4186.8 },
+                    btu:  { name: "British Thermal Unit (BTU_IT)", sym: "BTU", factor: 1055.05585262 },
+                    ftlbf:{ name: "Foot-pound force (ft·lbf)", sym: "ft·lbf", factor: 1.3558179483314004 },
+                    eV:   { name: "Electronvolt (eV)", sym: "eV", factor: 1.602176634e-19 },
+                    erg:  { name: "Erg (erg)", sym: "erg", factor: 1e-7 }
                 }
             },
             power: {
                 group: "Energy & Thermal", name: "Power", base: "W",
                 units: {
-                    W:     { name: "Watt (W)", factor: 1 },
-                    kW:    { name: "Kilowatt (kW)", factor: 1e3 },
-                    MW:    { name: "Megawatt (MW)", factor: 1e6 },
-                    GW:    { name: "Gigawatt (GW)", factor: 1e9 },
-                    mW:    { name: "Milliwatt (mW)", factor: 1e-3 },
-                    hp_i:  { name: "Mechanical Horsepower (hp)", factor: 745.69987158227 },
-                    hp_m:  { name: "Metric Horsepower (PS / cv)", factor: 735.49875 },
-                    btuh:  { name: "BTU per hour (BTU/h)", factor: 1055.05585262 / 3600 },
-                    ton_r: { name: "Ton of Refrigeration (TR)", factor: 3516.8528420667 }
+                    W:     { name: "Watt (W)", sym: "W", factor: 1 },
+                    kW:    { name: "Kilowatt (kW)", sym: "kW", factor: 1e3 },
+                    MW:    { name: "Megawatt (MW)", sym: "MW", factor: 1e6 },
+                    GW:    { name: "Gigawatt (GW)", sym: "GW", factor: 1e9 },
+                    mW:    { name: "Milliwatt (mW)", sym: "mW", factor: 1e-3 },
+                    hp_i:  { name: "Mechanical Horsepower (hp)", sym: "hp", factor: 745.69987158227 },
+                    hp_m:  { name: "Metric Horsepower (PS / cv)", sym: "PS", factor: 735.49875 },
+                    btuh:  { name: "BTU per hour (BTU/h)", sym: "BTU/h", factor: 1055.05585262 / 3600 },
+                    ton_r: { name: "Ton of Refrigeration (TR)", sym: "TR", factor: 3516.8528420667 }
                 }
             },
             heat_capacity: {
                 group: "Energy & Thermal", name: "Specific Heat Capacity", base: "J/(kg·K)",
                 units: {
-                    JkgK:   { name: "Joule per kg-Kelvin (J/(kg·K))", factor: 1 },
-                    kJkgK:  { name: "Kilojoule per kg-Kelvin (kJ/(kg·K))", factor: 1000 },
-                    JgC:    { name: "Joule per gram-Celsius (J/(g·°C))", factor: 1000 },
-                    calgC:  { name: "Calorie per gram-Celsius (cal/(g·°C))", factor: 4186.8 },
-                    btulbF: { name: "BTU per pound-Fahrenheit (BTU/(lb·°F))", factor: 4186.8 }
+                    JkgK:   { name: "Joule per kg-Kelvin (J/(kg·K))", sym: "J/(kg·K)", factor: 1 },
+                    kJkgK:  { name: "Kilojoule per kg-Kelvin (kJ/(kg·K))", sym: "kJ/(kg·K)", factor: 1000 },
+                    JgC:    { name: "Joule per gram-Celsius (J/(g·°C))", sym: "J/(g·°C)", factor: 1000 },
+                    calgC:  { name: "Calorie per gram-Celsius (cal/(g·°C))", sym: "cal/(g·°C)", factor: 4186.8 },
+                    btulbF: { name: "BTU per pound-Fahrenheit (BTU/(lb·°F))", sym: "BTU/(lb·°F)", factor: 4186.8 }
                 }
             },
             thermal_conductivity: {
                 group: "Energy & Thermal", name: "Thermal Conductivity", base: "W/(m·K)",
                 units: {
-                    WmK:     { name: "Watt per meter-Kelvin (W/(m·K))", factor: 1 },
-                    WcmK:    { name: "Watt per cm-Kelvin (W/(cm·K))", factor: 100 },
-                    btuhftF: { name: "BTU/(h·ft·°F)", factor: 1.730734666 },
-                    calscmC: { name: "Calorie/(s·cm·°C)", factor: 418.68 }
+                    WmK:     { name: "Watt per meter-Kelvin (W/(m·K))", sym: "W/(m·K)", factor: 1 },
+                    WcmK:    { name: "Watt per cm-Kelvin (W/(cm·K))", sym: "W/(cm·K)", factor: 100 },
+                    btuhftF: { name: "BTU/(h·ft·°F)", sym: "BTU/(h·ft·°F)", factor: 1.730734666 },
+                    calscmC: { name: "Calorie/(s·cm·°C)", sym: "cal/(s·cm·°C)", factor: 418.68 }
                 }
             },
 
@@ -1701,34 +1734,34 @@
             data_storage: {
                 group: "Digital", name: "Digital Data Storage", base: "B",
                 units: {
-                    bit: { name: "Bit (b)", factor: 0.125 },
-                    B:   { name: "Byte (B)", factor: 1 },
-                    KB:  { name: "Kilobyte — Decimal (10³ B)", factor: 1e3 },
-                    MB:  { name: "Megabyte — Decimal (10⁶ B)", factor: 1e6 },
-                    GB:  { name: "Gigabyte — Decimal (10⁹ B)", factor: 1e9 },
-                    TB:  { name: "Terabyte — Decimal (10¹² B)", factor: 1e12 },
-                    PB:  { name: "Petabyte — Decimal (10¹⁵ B)", factor: 1e15 },
-                    KiB: { name: "Kibibyte — Binary (2¹⁰ B)", factor: 1024 },
-                    MiB: { name: "Mebibyte — Binary (2²⁰ B)", factor: 1048576 },
-                    GiB: { name: "Gibibyte — Binary (2³⁰ B)", factor: 1073741824 },
-                    TiB: { name: "Tebibyte — Binary (2⁴⁰ B)", factor: 1099511627776 },
-                    PiB: { name: "Pebibyte — Binary (2⁵⁰ B)", factor: 1125899906842624 }
+                    bit: { name: "Bit (b)", sym: "bit", factor: 0.125 },
+                    B:   { name: "Byte (B)", sym: "B", factor: 1 },
+                    KB:  { name: "Kilobyte — Decimal (10³ B)", sym: "kB", factor: 1e3 },
+                    MB:  { name: "Megabyte — Decimal (10⁶ B)", sym: "MB", factor: 1e6 },
+                    GB:  { name: "Gigabyte — Decimal (10⁹ B)", sym: "GB", factor: 1e9 },
+                    TB:  { name: "Terabyte — Decimal (10¹² B)", sym: "TB", factor: 1e12 },
+                    PB:  { name: "Petabyte — Decimal (10¹⁵ B)", sym: "PB", factor: 1e15 },
+                    KiB: { name: "Kibibyte — Binary (2¹⁰ B)", sym: "KiB", factor: 1024 },
+                    MiB: { name: "Mebibyte — Binary (2²⁰ B)", sym: "MiB", factor: 1048576 },
+                    GiB: { name: "Gibibyte — Binary (2³⁰ B)", sym: "GiB", factor: 1073741824 },
+                    TiB: { name: "Tebibyte — Binary (2⁴⁰ B)", sym: "TiB", factor: 1099511627776 },
+                    PiB: { name: "Pebibyte — Binary (2⁵⁰ B)", sym: "PiB", factor: 1125899906842624 }
                 }
             },
             data_rate: {
                 group: "Digital", name: "Data Transfer Rate", base: "bps",
                 units: {
-                    bps:  { name: "Bit per second (bps)", factor: 1 },
-                    kbps: { name: "Kilobit per second (kbps)", factor: 1e3 },
-                    Mbps: { name: "Megabit per second (Mbps)", factor: 1e6 },
-                    Gbps: { name: "Gigabit per second (Gbps)", factor: 1e9 },
-                    Tbps: { name: "Terabit per second (Tbps)", factor: 1e12 },
-                    Bps:  { name: "Byte per second (B/s)", factor: 8 },
-                    KBps: { name: "Kilobyte per second (KB/s)", factor: 8e3 },
-                    MBps: { name: "Megabyte per second (MB/s)", factor: 8e6 },
-                    GBps: { name: "Gigabyte per second (GB/s)", factor: 8e9 },
-                    KiBps:{ name: "Kibibyte per second (KiB/s)", factor: 8192 },
-                    MiBps:{ name: "Mebibyte per second (MiB/s)", factor: 8388608 }
+                    bps:  { name: "Bit per second (bps)", sym: "bps", factor: 1 },
+                    kbps: { name: "Kilobit per second (kbps)", sym: "kbps", factor: 1e3 },
+                    Mbps: { name: "Megabit per second (Mbps)", sym: "Mbps", factor: 1e6 },
+                    Gbps: { name: "Gigabit per second (Gbps)", sym: "Gbps", factor: 1e9 },
+                    Tbps: { name: "Terabit per second (Tbps)", sym: "Tbps", factor: 1e12 },
+                    Bps:  { name: "Byte per second (B/s)", sym: "B/s", factor: 8 },
+                    KBps: { name: "Kilobyte per second (kB/s)", sym: "kB/s", factor: 8e3 },
+                    MBps: { name: "Megabyte per second (MB/s)", sym: "MB/s", factor: 8e6 },
+                    GBps: { name: "Gigabyte per second (GB/s)", sym: "GB/s", factor: 8e9 },
+                    KiBps:{ name: "Kibibyte per second (KiB/s)", sym: "KiB/s", factor: 8192 },
+                    MiBps:{ name: "Mebibyte per second (MiB/s)", sym: "MiB/s", factor: 8388608 }
                 }
             },
 
@@ -1736,63 +1769,63 @@
             current: {
                 group: "Electrical", name: "Electric Current", base: "A",
                 units: {
-                    A:  { name: "Ampere (A)", factor: 1 },
-                    kA: { name: "Kiloampere (kA)", factor: 1e3 },
-                    mA: { name: "Milliampere (mA)", factor: 1e-3 },
-                    uA: { name: "Microampere (µA)", factor: 1e-6 },
-                    nA: { name: "Nanoampere (nA)", factor: 1e-9 },
-                    abA:{ name: "Abampere / Biot (abA)", factor: 10 }
+                    A:  { name: "Ampere (A)", sym: "A", factor: 1 },
+                    kA: { name: "Kiloampere (kA)", sym: "kA", factor: 1e3 },
+                    mA: { name: "Milliampere (mA)", sym: "mA", factor: 1e-3 },
+                    uA: { name: "Microampere (µA)", sym: "µA", factor: 1e-6 },
+                    nA: { name: "Nanoampere (nA)", sym: "nA", factor: 1e-9 },
+                    abA:{ name: "Abampere / Biot (abA)", sym: "abA", factor: 10 }
                 }
             },
             voltage: {
                 group: "Electrical", name: "Electric Potential & Voltage", base: "V",
                 units: {
-                    V:  { name: "Volt (V)", factor: 1 },
-                    kV: { name: "Kilovolt (kV)", factor: 1e3 },
-                    MV: { name: "Megavolt (MV)", factor: 1e6 },
-                    mV: { name: "Millivolt (mV)", factor: 1e-3 },
-                    uV: { name: "Microvolt (µV)", factor: 1e-6 }
+                    V:  { name: "Volt (V)", sym: "V", factor: 1 },
+                    kV: { name: "Kilovolt (kV)", sym: "kV", factor: 1e3 },
+                    MV: { name: "Megavolt (MV)", sym: "MV", factor: 1e6 },
+                    mV: { name: "Millivolt (mV)", sym: "mV", factor: 1e-3 },
+                    uV: { name: "Microvolt (µV)", sym: "µV", factor: 1e-6 }
                 }
             },
             resistance: {
                 group: "Electrical", name: "Electrical Resistance", base: "Ω",
                 units: {
-                    ohm:  { name: "Ohm (Ω)", factor: 1 },
-                    mohm: { name: "Milliohm (mΩ)", factor: 1e-3 },
-                    kohm: { name: "Kiloohm (kΩ)", factor: 1e3 },
-                    Mohm: { name: "Megaohm (MΩ)", factor: 1e6 },
-                    Gohm: { name: "Gigaohm (GΩ)", factor: 1e9 }
+                    ohm:  { name: "Ohm (Ω)", sym: "Ω", factor: 1 },
+                    mohm: { name: "Milliohm (mΩ)", sym: "mΩ", factor: 1e-3 },
+                    kohm: { name: "Kiloohm (kΩ)", sym: "kΩ", factor: 1e3 },
+                    Mohm: { name: "Megaohm (MΩ)", sym: "MΩ", factor: 1e6 },
+                    Gohm: { name: "Gigaohm (GΩ)", sym: "GΩ", factor: 1e9 }
                 }
             },
             capacitance: {
                 group: "Electrical", name: "Electrical Capacitance", base: "F",
                 units: {
-                    F:  { name: "Farad (F)", factor: 1 },
-                    mF: { name: "Millifarad (mF)", factor: 1e-3 },
-                    uF: { name: "Microfarad (µF)", factor: 1e-6 },
-                    nF: { name: "Nanofarad (nF)", factor: 1e-9 },
-                    pF: { name: "Picofarad (pF)", factor: 1e-12 }
+                    F:  { name: "Farad (F)", sym: "F", factor: 1 },
+                    mF: { name: "Millifarad (mF)", sym: "mF", factor: 1e-3 },
+                    uF: { name: "Microfarad (µF)", sym: "µF", factor: 1e-6 },
+                    nF: { name: "Nanofarad (nF)", sym: "nF", factor: 1e-9 },
+                    pF: { name: "Picofarad (pF)", sym: "pF", factor: 1e-12 }
                 }
             },
             charge: {
                 group: "Electrical", name: "Electric Charge", base: "C",
                 units: {
-                    C:   { name: "Coulomb (C)", factor: 1 },
-                    mC:  { name: "Millicoulomb (mC)", factor: 1e-3 },
-                    uC:  { name: "Microcoulomb (µC)", factor: 1e-6 },
-                    nC:  { name: "Nanocoulomb (nC)", factor: 1e-9 },
-                    Ah:  { name: "Ampere-hour (Ah)", factor: 3600 },
-                    mAh: { name: "Milliampere-hour (mAh)", factor: 3.6 },
-                    e:   { name: "Elementary Charge (e)", factor: 1.602176634e-19 }
+                    C:   { name: "Coulomb (C)", sym: "C", factor: 1 },
+                    mC:  { name: "Millicoulomb (mC)", sym: "mC", factor: 1e-3 },
+                    uC:  { name: "Microcoulomb (µC)", sym: "µC", factor: 1e-6 },
+                    nC:  { name: "Nanocoulomb (nC)", sym: "nC", factor: 1e-9 },
+                    Ah:  { name: "Ampere-hour (Ah)", sym: "Ah", factor: 3600 },
+                    mAh: { name: "Milliampere-hour (mAh)", sym: "mAh", factor: 3.6 },
+                    e:   { name: "Elementary Charge (e)", sym: "e", factor: 1.602176634e-19 }
                 }
             },
             inductance: {
                 group: "Electrical", name: "Electrical Inductance", base: "H",
                 units: {
-                    H:  { name: "Henry (H)", factor: 1 },
-                    mH: { name: "Millihenry (mH)", factor: 1e-3 },
-                    uH: { name: "Microhenry (µH)", factor: 1e-6 },
-                    nH: { name: "Nanohenry (nH)", factor: 1e-9 }
+                    H:  { name: "Henry (H)", sym: "H", factor: 1 },
+                    mH: { name: "Millihenry (mH)", sym: "mH", factor: 1e-3 },
+                    uH: { name: "Microhenry (µH)", sym: "µH", factor: 1e-6 },
+                    nH: { name: "Nanohenry (nH)", sym: "nH", factor: 1e-9 }
                 }
             },
 
@@ -1800,45 +1833,48 @@
             molar_mass: {
                 group: "Scientific", name: "Molar Mass", base: "kg/mol",
                 units: {
-                    gmol:  { name: "Gram per mole (g/mol)", factor: 0.001 },
-                    kgmol: { name: "Kilogram per mole (kg/mol)", factor: 1 },
-                    Da:    { name: "Dalton / Unified Atomic Mass (Da)", factor: 0.001 },
-                    kDa:   { name: "Kilodalton (kDa)", factor: 1 },
-                    kgkmol:{ name: "Kilogram per kilomole (kg/kmol)", factor: 0.001 }
+                    gmol:  { name: "Gram per mole (g/mol)", sym: "g/mol", factor: 0.001 },
+                    kgmol: { name: "Kilogram per mole (kg/mol)", sym: "kg/mol", factor: 1 },
+                    Da:    { name: "Dalton (Da) ≈ g/mol numerically", sym: "Da", factor: 0.001 },
+                    kDa:   { name: "Kilodalton (kDa) ≈ kg/mol numerically", sym: "kDa", factor: 1 },
+                    kgkmol:{ name: "Kilogram per kilomole (kg/kmol)", sym: "kg/kmol", factor: 0.001 }
                 }
             },
             concentration: {
                 group: "Scientific", name: "Molar Concentration (Molarity)", base: "mol/m³",
                 units: {
-                    M:     { name: "Molar — mol/L (M)", factor: 1000 },
-                    mM:    { name: "Millimolar — mmol/L (mM)", factor: 1 },
-                    uM:    { name: "Micromolar — µmol/L (µM)", factor: 1e-3 },
-                    nM:    { name: "Nanomolar — nmol/L (nM)", factor: 1e-6 },
-                    molm3: { name: "Mole per cubic meter (mol/m³)", factor: 1 }
+                    M:     { name: "Molar — mol/L (M)", sym: "M", factor: 1000 },
+                    mM:    { name: "Millimolar — mmol/L (mM)", sym: "mM", factor: 1 },
+                    uM:    { name: "Micromolar — µmol/L (µM)", sym: "µM", factor: 1e-3 },
+                    nM:    { name: "Nanomolar — nmol/L (nM)", sym: "nM", factor: 1e-6 },
+                    molm3: { name: "Mole per cubic meter (mol/m³)", sym: "mol/m³", factor: 1 }
                 }
             },
             magnetic_field: {
                 group: "Scientific", name: "Magnetic Flux Density (B-Field)", base: "T",
                 units: {
-                    T:  { name: "Tesla (T)", factor: 1 },
-                    mT: { name: "Millitesla (mT)", factor: 1e-3 },
-                    uT: { name: "Microtesla (µT)", factor: 1e-6 },
-                    nT: { name: "Nanotesla / Gamma (nT)", factor: 1e-9 },
-                    G:  { name: "Gauss (G)", factor: 1e-4 },
-                    mG: { name: "Milligauss (mG)", factor: 1e-7 }
+                    T:  { name: "Tesla (T)", sym: "T", factor: 1 },
+                    mT: { name: "Millitesla (mT)", sym: "mT", factor: 1e-3 },
+                    uT: { name: "Microtesla (µT)", sym: "µT", factor: 1e-6 },
+                    nT: { name: "Nanotesla / Gamma (nT)", sym: "nT", factor: 1e-9 },
+                    G:  { name: "Gauss (G)", sym: "G", factor: 1e-4 },
+                    mG: { name: "Milligauss (mG)", sym: "mG", factor: 1e-7 }
                 }
             },
             illuminance: {
                 group: "Scientific", name: "Illuminance (Light Intensity)", base: "lx",
                 units: {
-                    lx:  { name: "Lux (lx = lm/m²)", factor: 1 },
-                    klx: { name: "Kilolux (klx)", factor: 1000 },
-                    mlx: { name: "Millilux (mlx)", factor: 0.001 },
-                    fc:  { name: "Foot-candle (fc = lm/ft²)", factor: 10.7639104167 },
-                    ph:  { name: "Phot (ph = lm/cm²)", factor: 10000 }
+                    lx:  { name: "Lux (lx = lm/m²)", sym: "lx", factor: 1 },
+                    klx: { name: "Kilolux (klx)", sym: "klx", factor: 1000 },
+                    mlx: { name: "Millilux (mlx)", sym: "mlx", factor: 0.001 },
+                    fc:  { name: "Foot-candle (fc = lm/ft²)", sym: "fc", factor: 10.7639104167 },
+                    ph:  { name: "Phot (ph = lm/cm²)", sym: "ph", factor: 10000 }
                 }
             }
         };
+
+        // Live counts (used for the "All (N)" tab so the number never goes stale)
+        const CATEGORY_COUNT = Object.keys(REGISTRY).length;
 
         // DOM References
         const elCategory = document.getElementById("auc-category");
@@ -1867,361 +1903,4 @@
         const groupTabs = document.querySelectorAll(".auc-group-tab");
 
         let activeGroup = "all";
-        const STORAGE_KEY = "tqc_auc_fav_pairs_v1";
-
-        const DEFAULT_PRESETS = [
-            { cat: "length", from: "m", to: "ft", label: "m → ft" },
-            { cat: "mass", from: "kg", to: "lb", label: "kg → lb" },
-            { cat: "temperature", from: "C", to: "F", label: "°C → °F" },
-            { cat: "pressure", from: "psi", to: "bar", label: "psi → bar" },
-            { cat: "data_storage", from: "TB", to: "GiB", label: "TB → GiB" },
-            { cat: "torque", from: "Nm", to: "lbfft", label: "N·m → lbf·ft" }
-        ];
-
-        function loadFavorites() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                return raw ? JSON.parse(raw) : DEFAULT_PRESETS;
-            } catch (e) {
-                return DEFAULT_PRESETS;
-            }
-        }
-
-        function saveFavorites(list) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
-            } catch (e) { /* Ignore storage quota errors */ }
-        }
-
-        let favorites = loadFavorites();
-
-        function getNotationMode() {
-            const checked = document.querySelector('input[name="auc-notation"]:checked');
-            return checked ? checked.value : "auto";
-        }
-
-        function formatNumber(num, decimals, mode) {
-            if (!Number.isFinite(num)) return "Undefined";
-            if (Object.is(num, -0) || Math.abs(num) < 1e-15) num = 0;
-            if (num === 0) return "0";
-
-            const abs = Math.abs(num);
-            if (mode === "scientific" || (mode === "auto" && (abs >= 1e9 || abs < 1e-5))) {
-                return num.toExponential(Math.min(decimals, 8)).replace(/\.?0+e/, "e");
-            }
-            const factor = Math.pow(10, decimals);
-            const rounded = Math.round((num + Number.EPSILON) * factor) / factor;
-            return rounded.toLocaleString("en-US", {
-                maximumFractionDigits: decimals,
-                useGrouping: mode === "standard" || mode === "auto"
-            });
-        }
-
-        function populateCategories(filterText) {
-            const currentCat = elCategory.value || "length";
-            elCategory.innerHTML = "";
-            const query = (filterText || "").trim().toLowerCase();
-
-            const grouped = {};
-            let matchCount = 0;
-
-            Object.keys(REGISTRY).forEach(function (catKey) {
-                const cat = REGISTRY[catKey];
-                if (activeGroup !== "all" && cat.group !== activeGroup) return;
-
-                // Match category name or any unit inside category
-                const catMatch = cat.name.toLowerCase().indexOf(query) !== -1 || cat.group.toLowerCase().indexOf(query) !== -1;
-                const unitMatch = Object.keys(cat.units).some(function (uKey) {
-                    return uKey.toLowerCase().indexOf(query) !== -1 || cat.units[uKey].name.toLowerCase().indexOf(query) !== -1;
-                });
-
-                if (!query || catMatch || unitMatch) {
-                    if (!grouped[cat.group]) grouped[cat.group] = [];
-                    grouped[cat.group].push({ key: catKey, name: cat.name });
-                    matchCount++;
-                }
-            });
-
-            Object.keys(grouped).forEach(function (grpName) {
-                const optgroup = document.createElement("optgroup");
-                optgroup.label = grpName;
-                grouped[grpName].forEach(function (item) {
-                    const opt = document.createElement("option");
-                    opt.value = item.key;
-                    opt.textContent = item.name;
-                    optgroup.appendChild(opt);
-                });
-                elCategory.appendChild(optgroup);
-            });
-
-            elCatCount.textContent = matchCount + (matchCount === 1 ? " domain" : " domains");
-
-            if (elCategory.querySelector('option[value="' + currentCat + '"]')) {
-                elCategory.value = currentCat;
-            } else if (elCategory.options.length > 0) {
-                elCategory.selectedIndex = 0;
-            }
-            populateUnitSelectors(query);
-        }
-
-        function populateUnitSelectors(unitFilterQuery) {
-            const catKey = elCategory.value;
-            if (!catKey || !REGISTRY[catKey]) return;
-
-            const cat = REGISTRY[catKey];
-            const prevFrom = elFromUnit.value;
-            const prevTo = elToUnit.value;
-
-            elFromUnit.innerHTML = "";
-            elToUnit.innerHTML = "";
-
-            const unitKeys = Object.keys(cat.units);
-            unitKeys.forEach(function (uKey) {
-                const uObj = cat.units[uKey];
-                elFromUnit.add(new Option(uObj.name, uKey));
-                elToUnit.add(new Option(uObj.name, uKey));
-            });
-
-            // If user typed a specific unit in search, auto-select it in From if matched
-            if (unitFilterQuery) {
-                const matchedKey = unitKeys.find(function (k) {
-                    return cat.units[k].name.toLowerCase().indexOf(unitFilterQuery) !== -1;
-                });
-                if (matchedKey) {
-                    elFromUnit.value = matchedKey;
-                }
-            } else if (unitKeys.indexOf(prevFrom) !== -1) {
-                elFromUnit.value = prevFrom;
-            }
-
-            if (unitKeys.indexOf(prevTo) !== -1 && prevTo !== elFromUnit.value) {
-                elToUnit.value = prevTo;
-            } else if (unitKeys.length > 1) {
-                elToUnit.selectedIndex = elFromUnit.selectedIndex === 0 ? 1 : 0;
-            }
-
-            elBaseIndicator.textContent = "Base: " + cat.base;
-            calculate();
-        }
-
-        function showError(msg) {
-            if (!msg) {
-                elError.textContent = "";
-                elError.classList.remove("visible");
-                return;
-            }
-            elError.textContent = msg;
-            elError.classList.add("visible");
-        }
-
-        function calculate() {
-            const catKey = elCategory.value;
-            if (!catKey || !REGISTRY[catKey]) return;
-
-            const cat = REGISTRY[catKey];
-            const rawText = elInputVal.value.trim();
-            const decimals = parseInt(elPrecision.value, 10) || 6;
-            const mode = getNotationMode();
-            const fromKey = elFromUnit.value;
-            const toKey = elToUnit.value;
-
-            if (rawText === "") {
-                showError("Enter a numeric value above to calculate the conversion.");
-                elPrimaryOutput.textContent = "—";
-                elFullEquation.textContent = "Awaiting numeric input...";
-                return;
-            }
-
-            const val = Number(rawText);
-            if (!Number.isFinite(val)) {
-                showError("Please enter a valid finite number.");
-                elPrimaryOutput.textContent = "Invalid Input";
-                return;
-            }
-
-            const fromObj = cat.units[fromKey];
-            const toObj = cat.units[toKey];
-            let baseVal = 0;
-            let result = 0;
-            let reverseOne = 0;
-            let formulaDisplay = "";
-
-            if (cat.affine) {
-                baseVal = fromObj.toBase(val);
-                // Absolute zero physical check (allow tiny floating-point tolerance)
-                if (baseVal < -1e-9) {
-                    showError("Physical Boundary Error: " + val + " " + fromKey + " is below absolute zero (0 K / -273.15 °C / -459.67 °F).");
-                    elPrimaryOutput.textContent = "Below Absolute Zero";
-                    return;
-                }
-                result = toObj.fromBase(baseVal);
-                reverseOne = fromObj.fromBase(toObj.toBase(1));
-                formulaDisplay = fromObj.formulaTo(toKey);
-            } else {
-                baseVal = val * fromObj.factor;
-                result = baseVal / toObj.factor;
-                const scaleFactor = fromObj.factor / toObj.factor;
-                reverseOne = toObj.factor / fromObj.factor;
-                formulaDisplay = "y = x × " + formatNumber(scaleFactor, 8, "auto");
-            }
-
-            showError("");
-
-            const formattedMain = formatNumber(result, decimals, mode);
-            const formattedIn = formatNumber(val, decimals, "Standard");
-
-            elResCategoryTag.textContent = cat.group + " • " + cat.name;
-            elPrimaryOutput.textContent = formattedMain + " " + toKey;
-            elFullEquation.textContent = formattedIn + " " + fromObj.name + " = " + formattedMain + " " + toObj.name;
-            elReverseText.textContent = "1 " + toKey + " = " + formatNumber(reverseOne, decimals, mode) + " " + fromKey;
-            elBaseEquiv.textContent = formatNumber(baseVal, decimals, mode) + " " + cat.base;
-            elFormulaText.textContent = formulaDisplay;
-
-            // Populate All Compatible Units Drawer
-            const allKeys = Object.keys(cat.units);
-            elAllUnitsCount.textContent = allKeys.length + " units";
-            elAllUnitsGrid.innerHTML = "";
-            allKeys.forEach(function (uKey) {
-                const u = cat.units[uKey];
-                const eqVal = cat.affine ? u.fromBase(baseVal) : (baseVal / u.factor);
-                const row = document.createElement("div");
-                row.className = "auc-unit-row";
-                const nameSpan = document.createElement("span");
-                nameSpan.textContent = u.name;
-                const valStrong = document.createElement("strong");
-                valStrong.textContent = formatNumber(eqVal, decimals, mode) + " " + uKey;
-                row.appendChild(nameSpan);
-                row.appendChild(valStrong);
-                elAllUnitsGrid.appendChild(row);
-            });
-
-            updateFavButtonState();
-        }
-
-        function isCurrentPairSaved() {
-            const cat = elCategory.value;
-            const from = elFromUnit.value;
-            const to = elToUnit.value;
-            return favorites.some(function (f) {
-                return f.cat === cat && f.from === from && f.to === to;
-            });
-        }
-
-        function updateFavButtonState() {
-            if (isCurrentPairSaved()) {
-                elFavToggle.textContent = "★ Saved";
-                elFavToggle.classList.add("saved");
-            } else {
-                elFavToggle.textContent = "☆ Save Pair";
-                elFavToggle.classList.remove("saved");
-            }
-        }
-
-        function renderFavoriteChips() {
-            elQuickPairs.innerHTML = "";
-            favorites.forEach(function (pair) {
-                if (!REGISTRY[pair.cat]) return;
-                const chip = document.createElement("button");
-                chip.type = "button";
-                chip.className = "auc-chip";
-                chip.textContent = pair.label || (pair.from + " → " + pair.to);
-                chip.title = "Switch to " + REGISTRY[pair.cat].name + " (" + pair.from + " to " + pair.to + ")";
-                chip.addEventListener("click", function () {
-                    activeGroup = "all";
-                    groupTabs.forEach(function (t) {
-                        t.classList.toggle("active", t.dataset.group === "all");
-                        t.setAttribute("aria-selected", t.dataset.group === "all" ? "true" : "false");
-                    });
-                    elSearch.value = "";
-                    populateCategories("");
-                    elCategory.value = pair.cat;
-                    populateUnitSelectors("");
-                    elFromUnit.value = pair.from;
-                    elToUnit.value = pair.to;
-                    calculate();
-                });
-                elQuickPairs.appendChild(chip);
-            });
-        }
-
-        // Event Listeners
-        groupTabs.forEach(function (tab) {
-            tab.addEventListener("click", function () {
-                activeGroup = tab.dataset.group;
-                groupTabs.forEach(function (t) {
-                    const isAct = t === tab;
-                    t.classList.toggle("active", isAct);
-                    t.setAttribute("aria-selected", isAct ? "true" : "false");
-                });
-                populateCategories(elSearch.value);
-            });
-        });
-
-        elSearch.addEventListener("input", function () {
-            populateCategories(elSearch.value);
-        });
-
-        elCategory.addEventListener("change", function () {
-            populateUnitSelectors("");
-        });
-
-        elInputVal.addEventListener("input", calculate);
-        elPrecision.addEventListener("change", calculate);
-        elFromUnit.addEventListener("change", calculate);
-        elToUnit.addEventListener("change", calculate);
-        elCalcBtn.addEventListener("click", calculate);
-
-        document.querySelectorAll('input[name="auc-notation"]').forEach(function (radio) {
-            radio.addEventListener("change", calculate);
-        });
-
-        elSwapBtn.addEventListener("click", function () {
-            const temp = elFromUnit.value;
-            elFromUnit.value = elToUnit.value;
-            elToUnit.value = temp;
-            calculate();
-        });
-
-        elResetBtn.addEventListener("click", function () {
-            activeGroup = "all";
-            groupTabs.forEach(function (t) {
-                const isAll = t.dataset.group === "all";
-                t.classList.toggle("active", isAll);
-                t.setAttribute("aria-selected", isAll ? "true" : "false");
-            });
-            elSearch.value = "";
-            elInputVal.value = "1";
-            elPrecision.value = "6";
-            const autoRadio = document.querySelector('input[name="auc-notation"][value="auto"]');
-            if (autoRadio) autoRadio.checked = true;
-            populateCategories("");
-            elCategory.value = "length";
-            populateUnitSelectors("");
-        });
-
-        elFavToggle.addEventListener("click", function () {
-            const cat = elCategory.value;
-            const from = elFromUnit.value;
-            const to = elToUnit.value;
-            if (isCurrentPairSaved()) {
-                favorites = favorites.filter(function (f) {
-                    return !(f.cat === cat && f.from === from && f.to === to);
-                });
-            } else {
-                favorites.unshift({ cat: cat, from: from, to: to, label: from + " → " + to });
-            }
-            saveFavorites(favorites);
-            updateFavButtonState();
-            renderFavoriteChips();
-        });
-
-        // Initialize Calculator
-        populateCategories("");
-        renderFavoriteChips();
-    })();
-    </script>
-
-    <!-- Shared Website Navigation & Action Script Integration (Section 15) -->
-    <script src="/navigation.js" defer></script>
-</body>
-</html>
+        let
