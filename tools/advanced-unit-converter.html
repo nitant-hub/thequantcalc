@@ -1,15 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" data-category="utility">
+<html lang="en" data-theme="dark" data-category="utility">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-      try {
-        if (localStorage.getItem("theme") === "dark") {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      } catch (e) {}
-    </script>
     <title>Advanced Unit Converter — Engineering, Scientific & Everyday Units | TheQuantCalc</title>
     <meta name="description" content="Convert over 210 units across 28 measurement categories including length, mass, temperature, pressure, torque, viscosity, digital storage, electrical, and scientific units with adjustable precision.">
     <link rel="canonical" href="https://thequantcal.pages.dev/tools/advanced-unit-converter">
@@ -17,17 +10,6 @@
     <meta property="og:description" content="All-in-one precision unit converter across 28 everyday, engineering, thermal, digital, electrical, and scientific categories.">
     <meta property="og:url" content="https://thequantcal.pages.dev/tools/advanced-unit-converter">
     <meta property="og:type" content="website">
-
-    <script>
-    /* Keep the page in light mode by default; never follow the phone's night mode automatically. */
-    (function () {
-        try {
-            var el = document.documentElement;
-            el.setAttribute("data-theme", "light");
-            el.style.colorScheme = "light";
-        } catch (e) {}
-    })();
-    </script>
 
     <!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
     <script type="application/ld+json">
@@ -151,7 +133,6 @@
            ========================================================================== */
         :root,
         html[data-theme="light"] {
-            color-scheme: light;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
@@ -170,8 +151,7 @@
         }
 
         html[data-theme="dark"] {
-            color-scheme: dark;
-            /* Neutral Dark Baseline (only used if a user manually picks dark via the site toggle) */
+            /* Neutral Dark Baseline */
             --surface-page: #050811;
             --article-bg: #0B1120;
             --article-soft: #111827;
@@ -267,32 +247,31 @@
            P5 & MASTER PROMPT: PAGE GRID CONTRACT
            ========================================================================== */
         .tqc-page-grid {
-            width: min(1180px, calc(100% - 32px));
-            margin: 22px auto 55px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 18px 16px 56px;
         }
 
-        .main-body,
-        .dyn-left-split,
-        .tool-suite {
-            min-width: 0;
+        @media (min-width: 1024px) {
+            .tqc-page-grid {
+                grid-template-columns: minmax(0, 71%) minmax(0, 29%);
+                padding: 24px 28px 64px;
+            }
+        }
+
+        .main-body {
+            display: flex;
+            flex-direction: column;
             width: 100%;
+            min-width: 0;
         }
 
         .sidebar {
+            width: 100%;
             min-width: 0;
-        }
-
-        @media (min-width: 900px) {
-            .tqc-page-grid {
-                width: min(1240px, calc(100% - 48px));
-            }
-        }
-
-        @media (max-width: 767px) {
-            .tqc-page-grid {
-                width: calc(100% - 24px);
-                margin-top: 16px;
-            }
         }
 
         /* ==========================================================================
@@ -347,7 +326,6 @@
 
         /* ==========================================================================
            P1 & P6: SEMI-3D DARK-MODE GLASS SLAB CALCULATOR (540px CENTERED)
-           Obsidian, Gold & Emerald
            ========================================================================== */
         .calculator-ui-box {
             width: min(100%, 540px);
@@ -441,11 +419,7 @@
                 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: border-color 0.18s ease, box-shadow 0.18s ease;
             outline: none;
-            color-scheme: dark;
         }
-
-        .auc-input, .auc-select { color-scheme: dark; }
-        article.auc-article sub, article.auc-article sup { font-size: 0.75em; line-height: 0; }
 
         .auc-input::placeholder {
             color: #64748B;
@@ -464,26 +438,6 @@
         .auc-select optgroup {
             background-color: #0F172A;
             color: #F8FAFC;
-        }
-
-        /* Defensive: keep calculator text visible even if a global stylesheet restyles form fields */
-        .calculator-ui-box select.auc-select,
-        .calculator-ui-box input.auc-input {
-            color: #F8FAFC !important;
-            -webkit-text-fill-color: #F8FAFC !important;
-            background-color: #111827 !important;
-            background-image: linear-gradient(180deg, #111827 0%, #1E293B 100%) !important;
-            opacity: 1 !important;
-        }
-        .calculator-ui-box select.auc-select option,
-        .calculator-ui-box select.auc-select optgroup {
-            color: #F8FAFC !important;
-            -webkit-text-fill-color: #F8FAFC !important;
-            background-color: #0F172A !important;
-        }
-        .calculator-ui-box input.auc-input::placeholder {
-            color: #64748B !important;
-            -webkit-text-fill-color: #64748B !important;
         }
 
         /* Group Pill Filter Strip */
@@ -915,22 +869,6 @@
             text-underline-offset: 2px;
         }
 
-        /* Plain-text math helpers (replaces raw LaTeX) */
-        article.auc-article var {
-            font-style: italic;
-            font-family: Georgia, "Times New Roman", serif;
-        }
-
-        article.auc-article sub,
-        article.auc-article sup {
-            font-size: 0.75em;
-            line-height: 0;
-        }
-
-        article.auc-article .nowrap {
-            white-space: nowrap;
-        }
-
         /* Layered Surface Callout & Formula Blocks (P4) */
         .auc-surface-box {
             background-color: var(--article-soft);
@@ -1047,17 +985,17 @@
 <body>
     <div class="tqc-page-grid">
         <main class="main-body">
-            <div class="dyn-left-split">
-                <div class="tool-suite">
             <!-- Visible Accessible Breadcrumb (P5) -->
             <nav class="breadcrumb-trail" aria-label="Breadcrumb">
                 <a href="https://thequantcal.pages.dev/">Home</a>
-                <span aria-hidden="true">/</span>
+                <span aria-hidden="true">&rarr;</span>
                 <a href="https://thequantcal.pages.dev/#utility">Utility</a>
-                <span aria-hidden="true">/</span>
+                <span aria-hidden="true">&rarr;</span>
                 <span class="bc-current" aria-current="page">Advanced Unit Converter</span>
             </nav>
 
+            <!-- Calculator Suite Section -->
+            <section class="tool-suite" aria-labelledby="calc-main-title">
                 <h1 id="calc-main-title" class="primary-title">Advanced Unit Converter</h1>
 
                 <div class="calculator-ui-box">
@@ -1188,19 +1126,19 @@
                     <!-- Saved Favorites & Recent Pairs Strip -->
                     <div id="auc-quick-pairs" class="auc-chip-bar" aria-label="Favorite and quick conversion pairs"></div>
                 </div>
-                </div>
+            </section>
 
-            <!-- Comprehensive Educational Article (plain HTML — no LaTeX) -->
+            <!-- Comprehensive Educational Article (P3 & Section 13: 1,450+ Words) -->
             <article class="auc-article">
                 <h2>Understanding Dimensional Analysis and High-Precision Unit Conversion</h2>
-                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (<span class="nowrap">lbf·s</span>) while the spacecraft's navigation algorithm expected metric Newton-seconds (<span class="nowrap">N·s</span>) without executing a conversion factor of 4.448221615.</p>
+                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds ($\text{lbf}\cdot\text{s}$) while the spacecraft's navigation algorithm expected metric Newton-seconds ($\text{N}\cdot\text{s}$) without executing a conversion factor of $4.448221615$.</p>
                 <p>The <strong>Advanced Unit Converter</strong> eliminates multi-page lookup friction by unifying 28 dimensionally isolated categories—spanning everyday weights and measures, rotational kinematics, fluid mechanics, thermodynamics, digital bandwidth, electromagnetism, and analytical chemistry—under a single double-precision conversion engine. Instead of relying on rounded three-digit approximations, the engine routes every calculation through authoritative <a href="https://www.nist.gov/pml/owm/metric-si/si-units" target="_blank" rel="noopener">International System of Units (SI)</a> base standards and exact <a href="https://www.nist.gov/pml/special-publication-811" target="_blank" rel="noopener">NIST Special Publication 811</a> definitions.</p>
 
                 <h2>How the Centralized Base-Pivot Conversion Engine Works</h2>
-                <p>A naive unit converter spanning 12 units in a single category would require 12 × 11 = 132 separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
+                <p>A naive unit converter spanning 12 units in a single category would require $12 \times 11 = 132$ separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
                 <ol>
-                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value <var>x</var> in source unit <var>U</var><sub>from</sub> is first converted to the category's fundamental SI base unit <var>B</var> using an exact scaling factor <var>k</var><sub>from</sub> (or an affine offset function for non-linear scales).</li>
-                    <li><strong>Projection to the Target Unit:</strong> The canonical base value <var>B</var> is then divided by the exact scaling factor <var>k</var><sub>to</sub> of the target unit <var>U</var><sub>to</sub>.</li>
+                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value $x$ in source unit $U_{\text{from}}$ is first converted to the category's fundamental SI base unit $B$ using an exact scaling factor $k_{\text{from}}$ (or an affine offset function for non-linear scales).</li>
+                    <li><strong>Projection to the Target Unit:</strong> The canonical base value $B$ is then divided by the exact scaling factor $k_{\text{to}}$ of the target unit $U_{\text{to}}$.</li>
                 </ol>
 
                 <div class="auc-formula-card">
@@ -1208,10 +1146,10 @@
                     Affine Offset Formula:  y = f_to⁻¹( f_from(x) )
                 </div>
 
-                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing <var>x</var> × (<var>k</var><sub>from</sub> / <var>k</var><sub>to</sub>) internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
+                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing $x \times (k_{\text{from}} / k_{\text{to}})$ internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
 
                 <h3>Affine Offset Transformations in Thermodynamic Temperature Scales</h3>
-                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
+                <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius ($^\circ\text{C}$), Fahrenheit ($^\circ\text{F}$), Kelvin ($\text{K}$), and Rankine ($^\circ\text{R}$) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
 
                 <div class="auc-formula-card">
                     Celsius to Kelvin:      T(K) = T(&deg;C) + 273.15<br>
@@ -1221,7 +1159,7 @@
                 </div>
 
                 <div class="auc-surface-box">
-                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero (0 K, −273.15 °C, −459.67 °F, or 0 °R). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
+                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero ($0\text{ K}$, $-273.15\text{ }^\circ\text{C}$, $-459.67\text{ }^\circ\text{F}$, or $0\text{ }^\circ\text{R}$). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
                 </div>
 
                 <h2>Critical Engineering and Digital Distinctions</h2>
@@ -1229,20 +1167,20 @@
                 <h3>1. Decimal SI Storage (MB, GB, TB) vs. Binary IEC Storage (MiB, GiB, TiB)</h3>
                 <p>One of the most persistent sources of confusion in computer science is the discrepancy between base-10 decimal prefixes standardized by the <a href="https://www.bipm.org/en/measurement-units/si-prefixes" target="_blank" rel="noopener">International Bureau of Weights and Measures (BIPM)</a> and base-2 binary prefixes standardized by the International Electrotechnical Commission (IEC 80000-13):</p>
                 <ul>
-                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of 10<sup>3</sup> = 1,000. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly 1,000,000,000,000 bytes (10<sup>12</sup> B).</li>
-                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of 2<sup>10</sup> = 1,024. RAM modules and operating system file managers calculate a Gibibyte (GiB) as 1,024<sup>3</sup> = 1,073,741,824 bytes (2<sup>30</sup> B).</li>
-                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second (Mbps, Gbps), while local disk write speeds are measured in Bytes per second (MB/s) or Mebibytes per second (MiB/s). Because 1 Byte = 8 bits, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
+                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of $10^3 = 1,000$. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly $1,000,000,000,000\text{ bytes}$ ($10^{12}\text{ B}$).</li>
+                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of $2^{10} = 1,024$. RAM modules and operating system file managers calculate a Gibibyte ($\text{GiB}$) as $1,024^3 = 1,073,741,824\text{ bytes}$ ($2^{30}\text{ B}$).</li>
+                    <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second ($\text{Mbps}$, $\text{Gbps}$), while local disk write speeds are measured in Bytes per second ($\text{MB/s}$) or Mebibytes per second ($\text{MiB/s}$). Because $1\text{ Byte} = 8\text{ bits}$, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
                 </ul>
 
                 <h3>2. Dynamic Viscosity vs. Kinematic Viscosity in Fluid Mechanics</h3>
-                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density (ρ):</p>
+                <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density ($\rho$):</p>
                 <ul>
-                    <li><strong>Dynamic (Absolute) Viscosity (μ):</strong> Quantifies internal shear stress per unit velocity gradient (Pa·s or N·s/m²). In CGS laboratory tables, it is widely cited in Poise (P) and centipoise (cP), where 1 cP = 0.001 Pa·s (approx. the viscosity of water at 20 °C).</li>
-                    <li><strong>Kinematic Viscosity (ν):</strong> Defined as ν = μ / ρ, with dimensions of L²·T⁻¹ (m²/s). In petroleum and lubrication testing, it is measured in Stokes (St) and centistokes (cSt), where 1 cSt = 1 mm²/s = 10<sup>−6</sup> m²/s.</li>
+                    <li><strong>Dynamic (Absolute) Viscosity ($\mu$):</strong> Quantifies internal shear stress per unit velocity gradient ($\text{Pa}\cdot\text{s}$ or $\text{N}\cdot\text{s/m}^2$). In CGS laboratory tables, it is widely cited in Poise ($\text{P}$) and centipoise ($\text{cP}$), where $1\text{ cP} = 0.001\text{ Pa}\cdot\text{s}$ (approx. the viscosity of water at $20\text{ }^\circ\text{C}$).</li>
+                    <li><strong>Kinematic Viscosity ($\nu$):</strong> Defined as $\nu = \mu / \rho$, with dimensions of $\text{L}^2\cdot\text{T}^{-1}$ ($\text{m}^2/\text{s}$). In petroleum and lubrication testing, it is measured in Stokes ($\text{St}$) and centistokes ($\text{cSt}$), where $1\text{ cSt} = 1\text{ mm}^2/\text{s} = 10^{-6}\text{ m}^2/\text{s}$.</li>
                 </ul>
 
                 <h3>3. Mass (lb, kg) vs. Mechanical Force (lbf, N) and Torque (N·m, lbf·ft)</h3>
-                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass (1 lb = 0.45359237 kg) exerts a downward force of one pound-force (1 lbf) only under standard Earth gravitational acceleration (<var>g</var><sub>0</sub> = 9.80665 m/s²). Multiplying 0.45359237 kg × 9.80665 m/s² yields the exact definition 1 lbf = 4.4482216152605 N. Similarly, although <strong>Torque</strong> (N·m) and <strong>Energy/Work</strong> (J) share the base dimensional product kg·m²/s², torque is a vector cross-product (<strong>r</strong> × <strong>F</strong>) whereas energy is a scalar dot-product (<strong>F</strong> · <strong>d</strong>), so they are kept in separate categories to prevent semantic errors.</p>
+                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass ($1\text{ lb} = 0.45359237\text{ kg}$) exerts a downward force of one pound-force ($1\text{ lbf}$) only under standard Earth gravitational acceleration ($g_0 = 9.80665\text{ m/s}^2$). Multiplying $0.45359237\text{ kg} \times 9.80665\text{ m/s}^2$ yields the exact definition $1\text{ lbf} = 4.4482216152605\text{ N}$. Similarly, although <strong>Torque</strong> ($\text{N}\cdot\text{m}$) and <strong>Energy/Work</strong> ($\text{J}$) share the base dimensional product $\text{kg}\cdot\text{m}^2/\text{s}^2$, torque is a vector cross-product ($\mathbf{r} \times \mathbf{F}$) whereas energy is a scalar dot-product ($\mathbf{F} \cdot \mathbf{d}$), so they are kept in separate categories to prevent semantic errors.</p>
 
                 <h2>Authoritative Reference Table of Exact Conversion Constants</h2>
                 <p>The table below summarizes the canonical SI base units and exact reference conversion constants implemented inside the calculator engine:</p>
@@ -1262,85 +1200,85 @@
                             <tr>
                                 <td>Everyday</td>
                                 <td>Length</td>
-                                <td>Meter (m)</td>
-                                <td>International Foot (ft)</td>
+                                <td>Meter ($\text{m}$)</td>
+                                <td>International Foot ($\text{ft}$)</td>
                                 <td class="num">0.3048 m (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Mass / Weight</td>
-                                <td>Kilogram (kg)</td>
-                                <td>Avoirdupois Pound (lb)</td>
+                                <td>Kilogram ($\text{kg}$)</td>
+                                <td>Avoirdupois Pound ($\text{lb}$)</td>
                                 <td class="num">0.45359237 kg (exact)</td>
                             </tr>
                             <tr>
                                 <td>Everyday</td>
                                 <td>Volume</td>
-                                <td>Cubic Meter (m³)</td>
-                                <td>US Liquid Gallon (gal)</td>
+                                <td>Cubic Meter ($\text{m}^3$)</td>
+                                <td>US Liquid Gallon ($\text{gal}$)</td>
                                 <td class="num">0.003785411784 m³ (exact)</td>
                             </tr>
                             <tr>
                                 <td>Motion</td>
                                 <td>Speed</td>
-                                <td>Meter/sec (m/s)</td>
-                                <td>Nautical Knot (kn)</td>
+                                <td>Meter/sec ($\text{m/s}$)</td>
+                                <td>Nautical Knot ($\text{kn}$)</td>
                                 <td class="num">0.5144444444 m/s (1852/3600)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Pressure</td>
-                                <td>Pascal (Pa)</td>
-                                <td>Pound/sq inch (psi)</td>
+                                <td>Pascal ($\text{Pa}$)</td>
+                                <td>Pound/sq inch ($\text{psi}$)</td>
                                 <td class="num">6894.757293168 Pa</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Force</td>
-                                <td>Newton (N)</td>
-                                <td>Pound-force (lbf)</td>
+                                <td>Newton ($\text{N}$)</td>
+                                <td>Pound-force ($\text{lbf}$)</td>
                                 <td class="num">4.4482216152605 N (exact)</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Torque</td>
-                                <td>Newton-meter (N·m)</td>
-                                <td>Pound-foot (lbf·ft)</td>
+                                <td>Newton-meter ($\text{N}\cdot\text{m}$)</td>
+                                <td>Pound-foot ($\text{lbf}\cdot\text{ft}$)</td>
                                 <td class="num">1.3558179483314 N·m</td>
                             </tr>
                             <tr>
                                 <td>Engineering</td>
                                 <td>Dynamic Viscosity</td>
-                                <td>Pascal-second (Pa·s)</td>
-                                <td>Centipoise (cP)</td>
+                                <td>Pascal-second ($\text{Pa}\cdot\text{s}$)</td>
+                                <td>Centipoise ($\text{cP}$)</td>
                                 <td class="num">0.001 Pa·s (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Energy / Work</td>
-                                <td>Joule (J)</td>
-                                <td>IT British Thermal Unit (BTU<sub>IT</sub>)</td>
+                                <td>Joule ($\text{J}$)</td>
+                                <td>IT British Thermal Unit ($\text{BTU}_{\text{IT}}$)</td>
                                 <td class="num">1055.05585262 J (exact)</td>
                             </tr>
                             <tr>
                                 <td>Energy &amp; Thermal</td>
                                 <td>Power</td>
-                                <td>Watt (W)</td>
-                                <td>Mechanical Horsepower (hp)</td>
+                                <td>Watt ($\text{W}$)</td>
+                                <td>Mechanical Horsepower ($\text{hp}$)</td>
                                 <td class="num">745.69987158227 W</td>
                             </tr>
                             <tr>
                                 <td>Digital</td>
                                 <td>Data Storage</td>
-                                <td>Byte (B)</td>
-                                <td>Gibibyte (GiB)</td>
+                                <td>Byte ($\text{B}$)</td>
+                                <td>Gibibyte ($\text{GiB}$)</td>
                                 <td class="num">1,073,741,824 B (2³⁰ exact)</td>
                             </tr>
                             <tr>
                                 <td>Scientific</td>
                                 <td>Magnetic Field</td>
-                                <td>Tesla (T)</td>
-                                <td>Gauss (G)</td>
+                                <td>Tesla ($\text{T}$)</td>
+                                <td>Gauss ($\text{G}$)</td>
                                 <td class="num">0.0001 T (10⁻⁴ exact)</td>
                             </tr>
                         </tbody>
@@ -1350,33 +1288,33 @@
                 <h2>Step-by-Step Worked Engineering &amp; Digital Examples</h2>
 
                 <h3>Example 1: Converting Hydraulic Pump Pressure from PSI to Bar and Megapascals (MPa)</h3>
-                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of 3,500 psi and you need the equivalent pressure in bar and MPa:</p>
+                <p>Suppose a civil geotechnical testing rig specifies a hydraulic jack operating pressure of $3,500\text{ psi}$ and you need the equivalent pressure in $\text{bar}$ and $\text{MPa}$:</p>
                 <ol>
                     <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Engineering &rarr; Pressure</em>, enter <code>3500</code>, and set From Unit to <em>Pound per square inch (psi)</em>.</li>
-                    <li><strong>Convert to SI Base (Pascal):</strong> Using 1 psi = 6,894.757293168 Pa, multiply 3,500 × 6,894.757293168 = 24,131,650.526088 Pa.</li>
+                    <li><strong>Convert to SI Base (Pascal):</strong> Using $1\text{ psi} = 6,894.757293168\text{ Pa}$, multiply $3,500 \times 6,894.757293168 = 24,131,650.526088\text{ Pa}$.</li>
                     <li><strong>Project to Target Units:</strong>
                         <ul>
-                            <li>In <strong>Bar</strong> (1 bar = 100,000 Pa): 24,131,650.526088 / 100,000 = <strong>241.316505 bar</strong>.</li>
-                            <li>In <strong>Megapascals</strong> (1 MPa = 1,000,000 Pa): 24,131,650.526088 / 1,000,000 = <strong>24.131651 MPa</strong>.</li>
+                            <li>In <strong>Bar</strong> ($1\text{ bar} = 100,000\text{ Pa}$): $24,131,650.526088 / 100,000 = \mathbf{241.316505\text{ bar}}$.</li>
+                            <li>In <strong>Megapascals</strong> ($1\text{ MPa} = 1,000,000\text{ Pa}$): $24,131,650.526088 / 1,000,000 = \mathbf{24.131651\text{ MPa}}$.</li>
                         </ul>
                     </li>
                 </ol>
 
                 <h3>Example 2: Reconciling a 2 Terabyte (TB) NVMe Drive in Binary Gibibytes (GiB)</h3>
-                <p>A cloud server administrator installs a drive marketed as 2 TB decimal capacity and wants to verify the exact binary GiB capacity reported by the Linux kernel:</p>
+                <p>A cloud server administrator installs a drive marketed as $2\text{ TB}$ decimal capacity and wants to verify the exact binary $\text{GiB}$ capacity reported by the Linux kernel:</p>
                 <ol>
                     <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Digital &rarr; Data Storage</em>, enter <code>2</code>, set From Unit to <em>Terabyte (TB - Decimal)</em>, and To Unit to <em>Gibibyte (GiB - Binary)</em>.</li>
-                    <li><strong>Convert to Base Bytes:</strong> 2 TB × 10<sup>12</sup> B/TB = 2,000,000,000,000 Bytes.</li>
-                    <li><strong>Project to Binary GiB:</strong> Divide by 2<sup>30</sup> Bytes/GiB (1,073,741,824 B):
-                        <div class="auc-formula-card">2,000,000,000,000 / 1,073,741,824 = 1,862.645149 GiB</div>
+                    <li><strong>Convert to Base Bytes:</strong> $2\text{ TB} \times 10^{12}\text{ B/TB} = 2,000,000,000,000\text{ Bytes}$.</li>
+                    <li><strong>Project to Binary GiB:</strong> Divide by $2^{30}\text{ Bytes/GiB}$ ($1,073,741,824\text{ B}$):
+                        $$2,000,000,000,000 / 1,073,741,824 = \mathbf{1,862.645149\text{ GiB}}$$
                     </li>
                 </ol>
 
                 <h2>Assumptions, Limitations, and Practical Tips</h2>
                 <ul>
-                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force (kgf) and pound-force (lbf)) assume standard sea-level acceleration <var>g</var><sub>0</sub> = 9.80665 m/s². Local gravitational acceleration varies by latitude and altitude (roughly 9.78 m/s² at the equator to 9.83 m/s² at the poles).</li>
-                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions (1 cal<sub>IT</sub> = 4.1868 J and 1 BTU<sub>IT</sub> = 1,055.05585262 J). Chemical thermodynamics papers occasionally use the thermochemical calorie (4.184 J).</li>
-                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as 365.2425 days (31,556,952 seconds) and an average month as 1/12 of a mean Gregorian year (30.436875 days). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
+                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force $\text{kgf}$ and pound-force $\text{lbf}$) assume standard sea-level acceleration $g_0 = 9.80665\text{ m/s}^2$. Local gravitational acceleration varies by latitude and altitude (roughly $9.78\text{ m/s}^2$ at the equator to $9.83\text{ m/s}^2$ at the poles).</li>
+                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions ($1\text{ cal}_{\text{IT}} = 4.1868\text{ J}$ and $1\text{ BTU}_{\text{IT}} = 1,055.05585262\text{ J}$). Chemical thermodynamics papers occasionally use the thermochemical calorie ($4.184\text{ J}$).</li>
+                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as $365.2425\text{ days}$ ($31,556,952\text{ seconds}$) and an average month as $1/12$ of a mean Gregorian year ($30.436875\text{ days}$). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
                 </ul>
 
                 <!-- Visible FAQ Section Matching FAQPage Schema Exactly (8 FAQs, Zero Inline Microdata) -->
@@ -1423,10 +1361,10 @@
                     </details>
                 </div>
             </article>
-            </div>
-
-            <aside class="sidebar" aria-label="Related tools and advertisements"></aside>
         </main>
+
+        <!-- Empty Sidebar Placeholder for Global Script Injection (P5) -->
+        <aside class="sidebar"></aside>
     </div>
 
     <!-- Scoped Page-Specific Conversion Engine (IIFE to avoid Global Pollution) -->
@@ -1962,42 +1900,328 @@
             return checked ? checked.value : "auto";
         }
 
-        function toSuperscript(str) {
-            var map = { "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","-":"⁻","+":"" };
-            return String(str).split("").map(function (c) { return map[c] !== undefined ? map[c] : c; }).join("");
-        }
-
-        function formatScientific(num, decimals) {
-            var parts = num.toExponential(Math.min(decimals, 8)).split("e");
-            var mantissa = parts[0];
-            if (mantissa.indexOf(".") !== -1) mantissa = mantissa.replace(/0+$/, "").replace(/\.$/, "");
-            return mantissa + " × 10" + toSuperscript(parseInt(parts[1], 10));
-        }
-
         function formatNumber(num, decimals, mode) {
             if (!Number.isFinite(num)) return "Undefined";
             if (Object.is(num, -0) || Math.abs(num) < 1e-15) num = 0;
             if (num === 0) return "0";
 
             const abs = Math.abs(num);
-            const roundsToZero = abs < Math.pow(10, -decimals) / 2;
-            if (mode === "scientific" || abs >= 1e15 || roundsToZero) {
-                return formatScientific(num, decimals);
+            if (mode === "scientific" || (mode === "auto" && (abs >= 1e9 || abs < 1e-5))) {
+                return num.toExponential(Math.min(decimals, 8)).replace(/\.?0+e/, "e");
             }
-            return num.toLocaleString("en-US", {
+            const factor = Math.pow(10, decimals);
+            const rounded = Math.round((num + Number.EPSILON) * factor) / factor;
+            return rounded.toLocaleString("en-US", {
                 maximumFractionDigits: decimals,
-                useGrouping: true
+                useGrouping: mode === "standard" || mode === "auto"
             });
-        }
-
-        // Short display symbol, e.g. "Square Kilometer (km²)" -> "km²"
-        function unitSymbol(unitObj, key) {
-            var m = unitObj.name.match(/\(([^()]+)\)\s*$/);
-            if (m && m[1].length <= 14 && m[1].indexOf(" ") === -1) return m[1];
-            return key;
         }
 
         function populateCategories(filterText) {
             const currentCat = elCategory.value || "length";
             elCategory.innerHTML = "";
-            const query = (filt
+            const query = (filterText || "").trim().toLowerCase();
+
+            const grouped = {};
+            let matchCount = 0;
+
+            Object.keys(REGISTRY).forEach(function (catKey) {
+                const cat = REGISTRY[catKey];
+                if (activeGroup !== "all" && cat.group !== activeGroup) return;
+
+                // Match category name or any unit inside category
+                const catMatch = cat.name.toLowerCase().indexOf(query) !== -1 || cat.group.toLowerCase().indexOf(query) !== -1;
+                const unitMatch = Object.keys(cat.units).some(function (uKey) {
+                    return uKey.toLowerCase().indexOf(query) !== -1 || cat.units[uKey].name.toLowerCase().indexOf(query) !== -1;
+                });
+
+                if (!query || catMatch || unitMatch) {
+                    if (!grouped[cat.group]) grouped[cat.group] = [];
+                    grouped[cat.group].push({ key: catKey, name: cat.name });
+                    matchCount++;
+                }
+            });
+
+            Object.keys(grouped).forEach(function (grpName) {
+                const optgroup = document.createElement("optgroup");
+                optgroup.label = grpName;
+                grouped[grpName].forEach(function (item) {
+                    const opt = document.createElement("option");
+                    opt.value = item.key;
+                    opt.textContent = item.name;
+                    optgroup.appendChild(opt);
+                });
+                elCategory.appendChild(optgroup);
+            });
+
+            elCatCount.textContent = matchCount + (matchCount === 1 ? " domain" : " domains");
+
+            if (elCategory.querySelector('option[value="' + currentCat + '"]')) {
+                elCategory.value = currentCat;
+            } else if (elCategory.options.length > 0) {
+                elCategory.selectedIndex = 0;
+            }
+            populateUnitSelectors(query);
+        }
+
+        function populateUnitSelectors(unitFilterQuery) {
+            const catKey = elCategory.value;
+            if (!catKey || !REGISTRY[catKey]) return;
+
+            const cat = REGISTRY[catKey];
+            const prevFrom = elFromUnit.value;
+            const prevTo = elToUnit.value;
+
+            elFromUnit.innerHTML = "";
+            elToUnit.innerHTML = "";
+
+            const unitKeys = Object.keys(cat.units);
+            unitKeys.forEach(function (uKey) {
+                const uObj = cat.units[uKey];
+                elFromUnit.add(new Option(uObj.name, uKey));
+                elToUnit.add(new Option(uObj.name, uKey));
+            });
+
+            // If user typed a specific unit in search, auto-select it in From if matched
+            if (unitFilterQuery) {
+                const matchedKey = unitKeys.find(function (k) {
+                    return cat.units[k].name.toLowerCase().indexOf(unitFilterQuery) !== -1;
+                });
+                if (matchedKey) {
+                    elFromUnit.value = matchedKey;
+                }
+            } else if (unitKeys.indexOf(prevFrom) !== -1) {
+                elFromUnit.value = prevFrom;
+            }
+
+            if (unitKeys.indexOf(prevTo) !== -1 && prevTo !== elFromUnit.value) {
+                elToUnit.value = prevTo;
+            } else if (unitKeys.length > 1) {
+                elToUnit.selectedIndex = elFromUnit.selectedIndex === 0 ? 1 : 0;
+            }
+
+            elBaseIndicator.textContent = "Base: " + cat.base;
+            calculate();
+        }
+
+        function showError(msg) {
+            if (!msg) {
+                elError.textContent = "";
+                elError.classList.remove("visible");
+                return;
+            }
+            elError.textContent = msg;
+            elError.classList.add("visible");
+        }
+
+        function calculate() {
+            const catKey = elCategory.value;
+            if (!catKey || !REGISTRY[catKey]) return;
+
+            const cat = REGISTRY[catKey];
+            const rawText = elInputVal.value.trim();
+            const decimals = parseInt(elPrecision.value, 10) || 6;
+            const mode = getNotationMode();
+            const fromKey = elFromUnit.value;
+            const toKey = elToUnit.value;
+
+            if (rawText === "") {
+                showError("Enter a numeric value above to calculate the conversion.");
+                elPrimaryOutput.textContent = "—";
+                elFullEquation.textContent = "Awaiting numeric input...";
+                return;
+            }
+
+            const val = Number(rawText);
+            if (!Number.isFinite(val)) {
+                showError("Please enter a valid finite number.");
+                elPrimaryOutput.textContent = "Invalid Input";
+                return;
+            }
+
+            const fromObj = cat.units[fromKey];
+            const toObj = cat.units[toKey];
+            let baseVal = 0;
+            let result = 0;
+            let reverseOne = 0;
+            let formulaDisplay = "";
+
+            if (cat.affine) {
+                baseVal = fromObj.toBase(val);
+                // Absolute zero physical check (allow tiny floating-point tolerance)
+                if (baseVal < -1e-9) {
+                    showError("Physical Boundary Error: " + val + " " + fromKey + " is below absolute zero (0 K / -273.15 °C / -459.67 °F).");
+                    elPrimaryOutput.textContent = "Below Absolute Zero";
+                    return;
+                }
+                result = toObj.fromBase(baseVal);
+                reverseOne = fromObj.fromBase(toObj.toBase(1));
+                formulaDisplay = fromObj.formulaTo(toKey);
+            } else {
+                baseVal = val * fromObj.factor;
+                result = baseVal / toObj.factor;
+                const scaleFactor = fromObj.factor / toObj.factor;
+                reverseOne = toObj.factor / fromObj.factor;
+                formulaDisplay = "y = x × " + formatNumber(scaleFactor, 8, "auto");
+            }
+
+            showError("");
+
+            const formattedMain = formatNumber(result, decimals, mode);
+            const formattedIn = formatNumber(val, decimals, "Standard");
+
+            elResCategoryTag.textContent = cat.group + " • " + cat.name;
+            elPrimaryOutput.textContent = formattedMain + " " + toKey;
+            elFullEquation.textContent = formattedIn + " " + fromObj.name + " = " + formattedMain + " " + toObj.name;
+            elReverseText.textContent = "1 " + toKey + " = " + formatNumber(reverseOne, decimals, mode) + " " + fromKey;
+            elBaseEquiv.textContent = formatNumber(baseVal, decimals, mode) + " " + cat.base;
+            elFormulaText.textContent = formulaDisplay;
+
+            // Populate All Compatible Units Drawer
+            const allKeys = Object.keys(cat.units);
+            elAllUnitsCount.textContent = allKeys.length + " units";
+            elAllUnitsGrid.innerHTML = "";
+            allKeys.forEach(function (uKey) {
+                const u = cat.units[uKey];
+                const eqVal = cat.affine ? u.fromBase(baseVal) : (baseVal / u.factor);
+                const row = document.createElement("div");
+                row.className = "auc-unit-row";
+                const nameSpan = document.createElement("span");
+                nameSpan.textContent = u.name;
+                const valStrong = document.createElement("strong");
+                valStrong.textContent = formatNumber(eqVal, decimals, mode) + " " + uKey;
+                row.appendChild(nameSpan);
+                row.appendChild(valStrong);
+                elAllUnitsGrid.appendChild(row);
+            });
+
+            updateFavButtonState();
+        }
+
+        function isCurrentPairSaved() {
+            const cat = elCategory.value;
+            const from = elFromUnit.value;
+            const to = elToUnit.value;
+            return favorites.some(function (f) {
+                return f.cat === cat && f.from === from && f.to === to;
+            });
+        }
+
+        function updateFavButtonState() {
+            if (isCurrentPairSaved()) {
+                elFavToggle.textContent = "★ Saved";
+                elFavToggle.classList.add("saved");
+            } else {
+                elFavToggle.textContent = "☆ Save Pair";
+                elFavToggle.classList.remove("saved");
+            }
+        }
+
+        function renderFavoriteChips() {
+            elQuickPairs.innerHTML = "";
+            favorites.forEach(function (pair) {
+                if (!REGISTRY[pair.cat]) return;
+                const chip = document.createElement("button");
+                chip.type = "button";
+                chip.className = "auc-chip";
+                chip.textContent = pair.label || (pair.from + " → " + pair.to);
+                chip.title = "Switch to " + REGISTRY[pair.cat].name + " (" + pair.from + " to " + pair.to + ")";
+                chip.addEventListener("click", function () {
+                    activeGroup = "all";
+                    groupTabs.forEach(function (t) {
+                        t.classList.toggle("active", t.dataset.group === "all");
+                        t.setAttribute("aria-selected", t.dataset.group === "all" ? "true" : "false");
+                    });
+                    elSearch.value = "";
+                    populateCategories("");
+                    elCategory.value = pair.cat;
+                    populateUnitSelectors("");
+                    elFromUnit.value = pair.from;
+                    elToUnit.value = pair.to;
+                    calculate();
+                });
+                elQuickPairs.appendChild(chip);
+            });
+        }
+
+        // Event Listeners
+        groupTabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                activeGroup = tab.dataset.group;
+                groupTabs.forEach(function (t) {
+                    const isAct = t === tab;
+                    t.classList.toggle("active", isAct);
+                    t.setAttribute("aria-selected", isAct ? "true" : "false");
+                });
+                populateCategories(elSearch.value);
+            });
+        });
+
+        elSearch.addEventListener("input", function () {
+            populateCategories(elSearch.value);
+        });
+
+        elCategory.addEventListener("change", function () {
+            populateUnitSelectors("");
+        });
+
+        elInputVal.addEventListener("input", calculate);
+        elPrecision.addEventListener("change", calculate);
+        elFromUnit.addEventListener("change", calculate);
+        elToUnit.addEventListener("change", calculate);
+        elCalcBtn.addEventListener("click", calculate);
+
+        document.querySelectorAll('input[name="auc-notation"]').forEach(function (radio) {
+            radio.addEventListener("change", calculate);
+        });
+
+        elSwapBtn.addEventListener("click", function () {
+            const temp = elFromUnit.value;
+            elFromUnit.value = elToUnit.value;
+            elToUnit.value = temp;
+            calculate();
+        });
+
+        elResetBtn.addEventListener("click", function () {
+            activeGroup = "all";
+            groupTabs.forEach(function (t) {
+                const isAll = t.dataset.group === "all";
+                t.classList.toggle("active", isAll);
+                t.setAttribute("aria-selected", isAll ? "true" : "false");
+            });
+            elSearch.value = "";
+            elInputVal.value = "1";
+            elPrecision.value = "6";
+            const autoRadio = document.querySelector('input[name="auc-notation"][value="auto"]');
+            if (autoRadio) autoRadio.checked = true;
+            populateCategories("");
+            elCategory.value = "length";
+            populateUnitSelectors("");
+        });
+
+        elFavToggle.addEventListener("click", function () {
+            const cat = elCategory.value;
+            const from = elFromUnit.value;
+            const to = elToUnit.value;
+            if (isCurrentPairSaved()) {
+                favorites = favorites.filter(function (f) {
+                    return !(f.cat === cat && f.from === from && f.to === to);
+                });
+            } else {
+                favorites.unshift({ cat: cat, from: from, to: to, label: from + " → " + to });
+            }
+            saveFavorites(favorites);
+            updateFavButtonState();
+            renderFavoriteChips();
+        });
+
+        // Initialize Calculator
+        populateCategories("");
+        renderFavoriteChips();
+    })();
+    </script>
+
+    <!-- Shared Website Navigation & Action Script Integration (Section 15) -->
+    <script src="/navigation.js" defer></script>
+</body>
+</html>
