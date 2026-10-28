@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-category="health">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07070B">
+  <title>Pregnancy Weight Gain Calculator – ACOG &amp; IOM Guidelines | TheQuantCalc</title>
+  <meta name="description" content="Calculate your recommended pregnancy weight gain range, weekly rate, and trimester milestones based on pre-pregnancy BMI, gestational week, and pregnancy type (single vs. twins) using ACOG and IOM guidelines.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://thequantcal.pages.dev/pregnancy-weight-gain-calculator/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheQuantCalc">
+  <meta property="og:title" content="Pregnancy Weight Gain Calculator | TheQuantCalc">
+  <meta property="og:description" content="Personalized gestational weight gain targets, trimester milestone projections, and week-by-week progress tracking based on ACOG/IOM standards.">
+  <meta property="og:url" content="https://thequantcal.pages.dev/pregnancy-weight-gain-calculator/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pregnancy Weight Gain Calculator | TheQuantCalc">
+  <meta name="twitter:description" content="Personalized gestational weight gain targets, trimester milestone projections, and week-by-week progress tracking based on ACOG/IOM standards.">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f7fafc;
+      --text: #172435;
+      --muted: #526174;
+      --border: #d8e1eb;
+      --accent: #087f69;
+      --accent-strong: #056653;
+      --accent-soft: #e0f7ef;
+      --focus: #087f69;
+      --shadow: 0 14px 38px rgba(12, 32, 54, .09);
+      --danger: #b42318;
+      --danger-bg: #fff0ee;
+      --info-bg: #eaf4ff;
+      --info-text: #173e65;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --page-bg: #08111e;
+      --surface: #101d2c;
+      --surface-soft: #142436;
+      --text: #edf5ff;
+      --muted: #bdcbd9;
+      --border: #2c4054;
+      --accent: #52f0c0;
+      --accent-strong: #8af8d7;
+      --accent-soft: #12382f;
+      --focus: #52f0c0;
+      --shadow: 0 16px 42px rgba(0, 0, 0, .25);
+      --danger: #ffb4aa;
+      --danger-bg: #421e21;
+      --info-bg: #152d46;
+      --info-text: #d5eaff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent-strong); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, .table-scroll:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    .tqc-page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.15fr) minmax(250px, .95fr);
+      gap: 24px;
+      width: min(1240px, calc(100% - 32px));
+      margin: 24px auto 56px;
+      align-items: start;
+    }
+    .main-body { min-width: 0; }
+    .sidebar { min-width: 0; min-height: 1px; }
+    .breadcrumbs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: .88rem;
+      margin: 0 0 16px;
+    }
+    .breadcrumbs a { color: inherit; text-decoration: none; transition: color .15s ease; }
+    .breadcrumbs a:hover { color: var(--accent-strong); text-decoration: underline; }
+    .page-heading {
+      margin: 0 0 8px;
+      font-size: clamp(1.65rem, 3.2vw, 2.25rem);
+      line-height: 1.2;
+      letter-spacing: -.035em;
+    }
+    .page-intro { color: var(--muted); margin: 0 0 22px; max-width: 75ch; }
+    .tool-suite { margin-bottom: 26px; }
+
+    /* ========================================================
+       THEME OVERRIDE: OBSIDIAN, GOLD & EMERALD (3D SaaS Slab)
+       ======================================================== */
+    .calculator-ui-box {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: min(580px, 100%);
+      max-width: 580px;
+      margin-inline: auto;
+      border-radius: 26px;
+      padding: clamp(20px, 3.2vw, 32px);
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(245, 158, 11, .14), transparent 46%),
+        radial-gradient(ellipse at 88% 8%, rgba(16, 185, 129, .18), transparent 42%),
+        linear-gradient(155deg, rgba(15, 23, 42, .96) 0%, rgba(10, 14, 26, .98) 52%, rgba(7, 7, 11, 1) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      color: #F8FAFC;
+      border: 1px solid rgba(245, 158, 11, .38);
+      box-shadow:
+        0 0 0 1px rgba(16, 185, 129, .32),
+        0 24px 56px rgba(0, 0, 0, .58),
+        0 12px 24px rgba(16, 185, 129, .08),
+        inset 0 1px 0 rgba(255, 255, 255, .15);
+    }
+    .calculator-ui-box::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(245, 158, 11, .06), transparent 32%, rgba(16, 185, 129, .06));
+    }
+    /* Dark reflective pedestal reflection */
+    .calculator-ui-box::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, .5), rgba(245, 158, 11, .5), transparent);
+      box-shadow: 0 4px 18px rgba(16, 185, 129, .35);
+    }
+    .calc-eyebrow {
+      margin: 0 0 5px;
+      color: #10B981;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .calc-eyebrow::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #F59E0B;
+      box-shadow: 0 0 8px #F59E0B;
+    }
+    .calc-title {
+      margin: 0;
+      color: #F8FAFC;
+      font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+      line-height: 1.2;
+      letter-spacing: -.025em;
+    }
+    .calc-subtitle { margin: 8px 0 20px; color: #CBD5E1; font-size: .93rem; }
+
+    /* Segmented Unit Toggle */
+    .unit-toggle-row {
+      display: flex;
+      background: #111827;
+      border: 1px solid rgba(245, 158, 11, .28);
+      border-radius: 12px;
+      padding: 3px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, .5);
+    }
+    .unit-toggle-btn {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: #94A3B8;
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 750;
+      padding: 8px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .unit-toggle-btn.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(15, 23, 42, .8));
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, .45);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
+    }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .field { min-width: 0; }
+    .field.full-span { grid-column: 1 / -1; }
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #F1F5F9;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+    .field input, .field select {
+      width: 100%;
+      min-width: 0;
+      min-height: 48px;
+      border-radius: 12px;
+      padding: 10px 13px;
+      background: #111827;
+      color: #F8FAFC;
+      border: 1px solid rgba(245, 158, 11, .22);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, .6), 0 1px 0 rgba(255, 255, 255, .04);
+      font: inherit;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .field select { cursor: pointer; }
+    .field input:focus, .field select:focus {
+      border-color: #10B981;
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, .6),
+        0 0 0 3px rgba(16, 185, 129, .32);
+      outline: none;
+    }
+    .field small { display: block; margin-top: 5px; color: #94A3B8; font-size: .78rem; line-height: 1.35; }
+    .field input[aria-invalid="true"], .field select[aria-invalid="true"] {
+      border-color: #F87171 !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, .6), 0 0 0 2px rgba(248, 113, 113, .35) !important;
+    }
+
+    .calc-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .calc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 800;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+    .calc-btn-primary {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 55%, #059669 100%);
+      color: #022016;
+      border: 1px solid rgba(255, 255, 255, .3);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, .36), inset 0 1px 0 rgba(255, 255, 255, .4);
+    }
+    .calc-btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 10px 28px rgba(16, 185, 129, .48); }
+    .calc-btn-primary:active { transform: translateY(0); filter: brightness(.95); }
+
+    .calc-btn-secondary {
+      background: rgba(30, 41, 59, .6);
+      border: 1px solid rgba(245, 158, 11, .32);
+      color: #F8FAFC;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+    .calc-btn-secondary:hover { background: rgba(30, 41, 59, .9); border-color: #F59E0B; transform: translateY(-1px); }
+    .calc-btn-secondary:active { transform: translateY(0); }
+
+    .calc-error {
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border: 1px solid #F87171;
+      border-radius: 12px;
+      background: rgba(66, 30, 33, .85);
+      color: #FECACA;
+      font-size: .86rem;
+    }
+    [hidden] { display: none !important; }
+
+    /* Result Panel: Embossed Layered 3D Card */
+    .result-panel {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(245, 158, 11, .25);
+    }
+    .result-heading {
+      margin: 0 0 14px;
+      color: #F8FAFC;
+      font-size: 1.15rem;
+      letter-spacing: -.01em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .bmi-badge {
+      font-size: .75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, .15);
+      border: 1px solid rgba(245, 158, 11, .4);
+      color: #FCD34D;
+      font-weight: 750;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .result-card {
+      min-width: 0;
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(150deg, rgba(30, 41, 59, .65), rgba(15, 23, 42, .85));
+      border: 1px solid rgba(16, 185, 129, .22);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .08),
+        0 6px 16px rgba(0, 0, 0, .4);
+    }
+    .result-card-hero {
+      grid-column: 1 / -1;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(245, 158, 11, .48);
+      background:
+        radial-gradient(ellipse at 90% 0%, rgba(245, 158, 11, .18), transparent 50%),
+        linear-gradient(135deg, rgba(16, 185, 129, .18) 0%, rgba(15, 23, 42, .92) 100%);
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, .45),
+        inset 0 1px 0 rgba(255, 255, 255, .15);
+    }
+    .result-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #CBD5E1;
+      font-size: .78rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .result-value {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+      font-weight: 850;
+      line-height: 1.25;
+      background: linear-gradient(135deg, #F8FAFC 30%, #34D399 70%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .result-card-hero .result-value {
+      font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+      background: linear-gradient(135deg, #F8FAFC 20%, #FCD34D 60%, #34D399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .result-detail { display: block; margin-top: 5px; color: #94A3B8; font-size: .8rem; }
+
+    /* Visual 3D Progress Gauge */
+    .gauge-wrap {
+      margin-top: 14px;
+      border: 1px solid rgba(245, 158, 11, .28);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(17, 24, 39, .7);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, .5);
+    }
+    .gauge-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: .84rem;
+      color: #E2E8F0;
+    }
+    .gauge-track {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      background: #0B1120;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, .7);
+    }
+    .gauge-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #10B981, #F59E0B);
+      transition: width .35s ease;
+      box-shadow: 0 0 12px rgba(245, 158, 11, .45);
+    }
+    .gauge-status {
+      margin-top: 10px;
+      font-size: .81rem;
+      color: #CBD5E1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .gauge-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+
+    /* Trimester Milestone Breakdown Table (3D Obsidian Bento Card) */
+    .milestone-wrap {
+      margin-top: 14px;
+      border: 1px solid rgba(16, 185, 129, .28);
+      border-radius: 18px;
+      padding: 15px 16px;
+      background: linear-gradient(155deg, rgba(17, 24, 39, .78), rgba(11, 17, 32, .9));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 6px 16px rgba(0, 0, 0, .35);
+    }
+    .milestone-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 0 10px;
+    }
+    .milestone-title {
+      margin: 0;
+      color: #F8FAFC;
+      font-size: .86rem;
+      font-weight: 750;
+      letter-spacing: .01em;
+    }
+    .milestone-sub {
+      color: #FCD34D;
+      font-size: .74rem;
+      font-weight: 700;
+    }
+    .milestone-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+      color: #CBD5E1;
+    }
+    .milestone-table th,
+    .milestone-table td {
+      padding: 8px 6px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+    .milestone-table th {
+      color: #34D399;
+      font-weight: 750;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .milestone-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .milestone-table tbody tr.active-trimester {
+      background: linear-gradient(90deg, rgba(16, 185, 129, .16), rgba(245, 158, 11, .08));
+    }
+    .milestone-table tbody tr.active-trimester td:first-child {
+      color: #FCD34D;
+      font-weight: 800;
+    }
+    .trimester-pill {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 1px 6px;
+      font-size: .66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, .2);
+      border: 1px solid rgba(245, 158, 11, .5);
+      color: #FCD34D;
+      vertical-align: middle;
+    }
+
+    .disclaimer-in-card { margin: 16px 0 0; color: #94A3B8; font-size: .78rem; line-height: 1.45; }
+
+    /* Article Card */
+    .article-card {
+      padding: clamp(19px, 3vw, 30px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .article-card h2 {
+      margin: 1.65em 0 .55em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+      line-height: 1.39;
+      letter-spacing: -.02em;
+    }
+    .article-card h2:first-child {
+      margin-top: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .article-card h3 { margin: 1.25em 0 .4em; font-size: 1.08rem; line-height: 1.35; }
+    .article-card p, .article-card li { color: var(--text); }
+    .article-card p { margin: .7em 0; }
+    .article-card ul, .article-card ol { padding-left: 1.35rem; }
+    .note-box { margin: 18px 0; padding: 14px 16px; border-left: 4px solid var(--accent); border-radius: 10px; background: var(--accent-soft); }
+    .note-box p { margin: 0; }
+    .medical-note { background: var(--info-bg); color: var(--info-text); border-left-color: #4295e8; }
+    .medical-note p { color: var(--info-text); }
+    .faq-list details { margin: 10px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-soft); }
+    .faq-list summary { padding: 14px 16px; cursor: pointer; font-weight: 750; line-height: 1.4; }
+    .faq-answer { padding: 0 16px 14px; color: var(--muted); }
+    .faq-answer p { margin: 0; color: inherit; }
+    .sources-list li { margin: 9px 0; }
+    .last-updated { color: var(--muted); font-size: .86rem; }
+
+    /* Horizontally scrollable reference table */
+    .table-scroll {
+      width: 100%;
+      max-width: 100%;
+      margin: 18px 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      -webkit-overflow-scrolling: touch;
+    }
+    .cycle-reference-table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .cycle-reference-table th,
+    .cycle-reference-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .cycle-reference-table thead th {
+      background: var(--surface-soft);
+      color: var(--text);
+      font-weight: 800;
+    }
+    .cycle-reference-table tbody th { color: var(--text); font-weight: 750; }
+    .cycle-reference-table tbody td { color: var(--muted); }
+    .cycle-reference-table tbody tr:last-child th,
+    .cycle-reference-table tbody tr:last-child td { border-bottom: 0; }
+    .table-note { color: var(--muted) !important; font-size: .86rem; }
+
+    @media (max-width: 820px) {
+      .tqc-page-grid { grid-template-columns: minmax(0, 1fr); width: min(760px, calc(100% - 24px)); gap: 18px; margin-top: 18px; }
+      .sidebar { display: none; }
+    }
+    @media (max-width: 520px) {
+      .tqc-page-grid { width: calc(100% - 20px); margin-top: 14px; }
+      .calculator-ui-box { width: 100%; max-width: 580px; border-radius: 20px; padding: 18px; }
+      .form-grid, .result-grid { grid-template-columns: minmax(0, 1fr); }
+      .calc-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .calc-btn { padding: 10px 14px; }
+      .article-card { padding: 18px; border-radius: 16px; }
+      .cycle-reference-table th, .cycle-reference-table td { padding: 11px 12px; }
+      .milestone-table th, .milestone-table td { font-size: .74rem; padding: 7px 4px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pregnancy Weight Gain Calculator",
+    "url": "https://thequantcal.pages.dev/pregnancy-weight-gain-calculator/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "description": "Calculate recommended pregnancy weight gain ranges, trimester milestones, and target progress by gestational week based on pre-pregnancy BMI, gestational age, and pregnancy type under ACOG and IOM clinical guidelines.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "TheQuantCalc", "url": "https://thequantcal.pages.dev/" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://thequantcal.pages.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Health",
+        "item": "https://thequantcal.pages.dev/health/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Pregnancy Weight Gain Calculator",
+        "item": "https://thequantcal.pages.dev/pregnancy-weight-gain-calculator/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is recommended pregnancy weight gain calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Guideline targets are determined by your pre-pregnancy Body Mass Index (BMI) and whether you are carrying a single fetus or twins, following the Institute of Medicine (IOM) and American College of Obstetricians and Gynecologists (ACOG) guidelines."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much weight should I gain during the first trimester?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "During the first trimester (weeks 1 to 13), fetal growth is small, and most guidelines recommend gaining between 1.0 to 4.5 lbs (0.5 to 2.0 kg) in total, regardless of starting BMI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much weight should I gain per week in the second and third trimesters?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In the 2nd and 3rd trimesters, weight gain is steady: about 1.0 lb (0.5 kg) per week for underweight or normal-weight individuals, 0.6 lb (0.3 kg) per week for overweight individuals, and 0.5 lb (0.2 kg) per week for obese individuals carrying singletons."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I am carrying twins?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Twin pregnancies require higher nutritional support. Normal-weight individuals carrying twins are advised to gain 37–54 lbs (16.8–24.5 kg), overweight individuals 31–50 lbs (14.1–22.7 kg), and obese individuals 25–42 lbs (11.3–19.1 kg)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to lose weight while pregnant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Weight loss diets are generally not recommended during pregnancy because insufficient caloric and nutrient intake can restrict fetal development and lead to low birth weight. Consult your obstetrician before modifying dietary intake."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this calculator store or transmit my health information?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All calculations are executed locally within your device's web browser. No entered height, weight, or gestational details are ever recorded or sent to a server."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="tqc-page-grid">
+    <main class="main-body">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="https://thequantcal.pages.dev/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="https://thequantcal.pages.dev/health/">Health</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Pregnancy Weight Gain Calculator</span>
+      </nav>
+
+      <header>
+        <h1 class="page-heading">Pregnancy Weight Gain Calculator</h1>
+        <p class="page-intro">Track healthy gestational weight gain targets, trimester milestones, and week-by-week progress tailored to your pre-pregnancy BMI, gestational week, and pregnancy type following clinical ACOG and IOM standards.</p>
+      </header>
+
+      <section class="tool-suite" aria-labelledby="calc-heading">
+        <div class="calculator-ui-box">
+          <div class="calc-eyebrow">TheQuantCalc · Obsidian Health Suite</div>
+          <h2 class="calc-title" id="calc-heading">Gestational Weight Tracker</h2>
+          <p class="calc-subtitle">Clinical IOM &amp; ACOG reference modeling. Processed client-side.</p>
+
+          <div class="unit-toggle-row" role="tablist" aria-label="Unit system selector">
+            <button type="button" class="unit-toggle-btn active" id="unitMetric" role="tab" aria-selected="true">Metric (kg, cm)</button>
+            <button type="button" class="unit-toggle-btn" id="unitUS" role="tab" aria-selected="false">Imperial (lbs, ft/in)</button>
+          </div>
+
+          <form id="weightForm" novalidate>
+            <div class="form-grid">
+              <div class="field" id="heightFieldMetric">
+                <label for="heightCm">Height (cm)</label>
+                <input id="heightCm" name="heightCm" type="number" min="120" max="230" step="0.5" value="165" required inputmode="decimal">
+                <small>Adult height: 120–230 cm.</small>
+              </div>
+
+              <div class="field" id="heightFieldUS" hidden>
+                <label for="heightInches">Height (inches)</label>
+                <input id="heightInches" name="heightInches" type="number" min="48" max="90" step="0.5" value="65" inputmode="decimal">
+                <small>Total inches (e.g., 5 ft 5 in = 65 in).</small>
+              </div>
+
+              <div class="field">
+                <label for="prePregnancyWeight" id="preWeightLabel">Pre-pregnancy weight (kg)</label>
+                <input id="prePregnancyWeight" name="prePregnancyWeight" type="number" min="30" max="250" step="0.1" value="60" required inputmode="decimal">
+                <small>Weight just before conception.</small>
+              </div>
+
+              <div class="field">
+                <label for="currentWeight" id="currWeightLabel">Current weight (kg)</label>
+                <input id="currentWeight" name="currentWeight" type="number" min="30" max="260" step="0.1" value="64" required inputmode="decimal">
+                <small>Your most recent weigh-in.</small>
+              </div>
+
+              <div class="field">
+                <label for="gestationalWeek">Gestational age (weeks)</label>
+                <input id="gestationalWeek" name="gestationalWeek" type="number" min="1" max="42" step="1" value="20" required inputmode="numeric">
+                <small>Current week of pregnancy (1–42).</small>
+              </div>
+
+              <div class="field full-span">
+                <label for="pregnancyType">Pregnancy type</label>
+                <select id="pregnancyType" name="pregnancyType" required>
+                  <option value="single" selected>Single baby (Singleton)</option>
+                  <option value="twins">Twins</option>
+                </select>
+                <small>Twin pregnancies require higher clinical nutritional targets.</small>
+              </div>
+            </div>
+
+            <div class="calc-actions">
+              <button class="calc-btn calc-btn-primary" type="submit">Calculate Targets</button>
+              <button class="calc-btn calc-btn-secondary" id="resetBtn" type="reset">Reset</button>
+            </div>
+            <p id="formError" class="calc-error" role="alert" hidden></p>
+          </form>
+
+          <section id="result" class="result-panel tqc-result-box" data-tqc-result aria-labelledby="result-heading" aria-live="polite" aria-atomic="true" hidden>
+            <div class="result-heading">
+              <h3 id="result-heading" style="margin:0;font-size:1.15rem;">Your Weight Targets</h3>
+              <span id="bmiBadge" class="bmi-badge">Normal BMI: 22.0</span>
+            </div>
+
+            <div class="result-grid">
+              <div class="result-card result-card-hero">
+                <span class="result-label">Recommended Target at Week <span id="targetWeekNum">20</span></span>
+                <strong id="targetRangeThisWeek" class="result-value">—</strong>
+                <span id="targetWeightAbsolute" class="result-detail">Target total weight: —</span>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">Your Current Gain</span>
+                <strong id="currentGainValue" class="result-value">—</strong>
+                <span id="currentGainDetail" class="result-detail">Since conception</span>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">Total 40-Week Recommended</span>
+                <strong id="totalFullTermRange" class="result-value">—</strong>
+                <span class="result-detail">Full-term delivery range</span>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">2nd &amp; 3rd Trimester Rate</span>
+                <strong id="weeklyRateTarget" class="result-value">—</strong>
+                <span class="result-detail">Per week after week 13</span>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">Pre-pregnancy BMI</span>
+                <strong id="preBmiValue" class="result-value">—</strong>
+                <span id="bmiCategoryText" class="result-detail">Normal weight</span>
+              </div>
+            </div>
+
+            <div class="gauge-wrap">
+              <div class="gauge-top">
+                <strong>Progress at Week <span id="gaugeWeek">20</span></strong>
+                <span id="progressPercentText">50% of full term</span>
+              </div>
+              <div class="gauge-track" role="progressbar" id="gainProgress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="gauge-fill" id="gaugeFill" style="width: 0%;"></div>
+              </div>
+              <div class="gauge-status">
+                <span class="gauge-status-dot" id="statusDot" style="background:#10B981;"></span>
+                <span id="statusMessage">Your weight gain is tracking within the clinical recommended target.</span>
+              </div>
+            </div>
+
+            <div class="milestone-wrap">
+              <div class="milestone-header">
+                <h4 class="milestone-title">Trimester Milestone Breakdown</h4>
+                <span class="milestone-sub" id="activeTrimesterLabel">Trimester 2 Active</span>
+              </div>
+              <table class="milestone-table" aria-label="Trimester milestone weight gain targets">
+                <thead>
+                  <tr>
+                    <th scope="col">Milestone</th>
+                    <th scope="col">Cumulative Gain</th>
+                    <th scope="col">Target Scale Weight</th>
+                  </tr>
+                </thead>
+                <tbody id="milestoneBody"></tbody>
+              </table>
+            </div>
+
+            <p class="disclaimer-in-card">These calculations are based on clinical guidelines established by the Institute of Medicine (IOM) and American College of Obstetricians and Gynecologists (ACOG). Always consult your OB-GYN or midwife for individualized medical guidance.</p>
+          </section>
+        </div>
+      </section>
+
+      <article class="article-card">
+        <h2>How to use this pregnancy weight gain calculator</h2>
+        <ol>
+          <li>Select your preferred unit system (Metric or Imperial).</li>
+          <li>Enter your height and your pre-pregnancy weight (your typical weight before becoming pregnant).</li>
+          <li>Enter your current weight and current gestational age in completed weeks.</li>
+          <li>Specify whether you are expecting a singleton or twins.</li>
+          <li>Click <strong>Calculate Targets</strong> to view your personalized weight gain curve, current status, and trimester-by-trimester milestone table.</li>
+        </ol>
+
+        <div class="note-box medical-note">
+          <p><strong>Clinical note:</strong> Healthy weight gain during pregnancy varies widely based on pre-pregnancy Body Mass Index (BMI). Calorie restriction or intentional weight loss during pregnancy is generally unsafe. Discuss your weight changes at every prenatal appointment.</p>
+        </div>
+
+        <h2>IOM &amp; ACOG Pregnancy Weight Gain Guidelines</h2>
+        <p>In 2009, the Institute of Medicine (now the National Academy of Medicine), endorsed by the American College of Obstetricians and Gynecologists (ACOG), established gestational weight gain guidelines categorized by pre-pregnancy BMI.</p>
+
+        <div class="table-scroll" role="region" aria-label="IOM Pregnancy Weight Gain Reference Guidelines" tabindex="0">
+          <table class="cycle-reference-table">
+            <thead>
+              <tr>
+                <th scope="col">Pre-pregnancy Category</th>
+                <th scope="col">BMI (kg/m²)</th>
+                <th scope="col">Singleton Total Gain</th>
+                <th scope="col">Weekly Gain (Trimesters 2 &amp; 3)</th>
+                <th scope="col">Twin Total Gain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Underweight</th>
+                <td>&lt; 18.5</td>
+                <td>28–40 lbs (12.5–18.0 kg)</td>
+                <td>~1.0 lb/wk (0.5 kg/wk)</td>
+                <td>Insufficient data</td>
+              </tr>
+              <tr>
+                <th scope="row">Normal Weight</th>
+                <td>18.5–24.9</td>
+                <td>25–35 lbs (11.5–16.0 kg)</td>
+                <td>~1.0 lb/wk (0.4 kg/wk)</td>
+                <td>37–54 lbs (16.8–24.5 kg)</td>
+              </tr>
+              <tr>
+                <th scope="row">Overweight</th>
+                <td>25.0–29.9</td>
+                <td>15–25 lbs (7.0–11.5 kg)</td>
+                <td>~0.6 lb/wk (0.3 kg/wk)</td>
+                <td>31–50 lbs (14.1–22.7 kg)</td>
+              </tr>
+              <tr>
+                <th scope="row">Obese</th>
+                <td>≥ 30.0</td>
+                <td>11–20 lbs (5.0–9.0 kg)</td>
+                <td>~0.5 lb/wk (0.2 kg/wk)</td>
+                <td>25–42 lbs (11.3–19.1 kg)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">Source: Institute of Medicine (IOM) / American College of Obstetricians and Gynecologists (ACOG) Committee Opinion No. 548.</p>
+
+        <h2>Where does the pregnancy weight go?</h2>
+        <p>A common misconception is that all pregnancy weight gain represents maternal body fat. In reality, a full-term pregnancy distributes weight across multiple physiological components:</p>
+        <ul>
+          <li><strong>Baby:</strong> 7 to 8 lbs (3.0 to 3.6 kg)</li>
+          <li><strong>Placenta:</strong> 1.5 lbs (0.7 kg)</li>
+          <li><strong>Amniotic fluid:</strong> 2 lbs (0.9 kg)</li>
+          <li><strong>Uterine growth:</strong> 2 lbs (0.9 kg)</li>
+          <li><strong>Maternal breast tissue:</strong> 2 lbs (0.9 kg)</li>
+          <li><strong>Increased blood volume:</strong> 3 to 4 lbs (1.4 to 1.8 kg)</li>
+          <li><strong>Maternal body fluids:</strong> 3 to 4 lbs (1.4 to 1.8 kg)</li>
+          <li><strong>Maternal fat and nutrient stores:</strong> 6 to 8 lbs (2.7 to 3.6 kg)</li>
+        </ul>
+
+        <h2>Trimester-by-trimester weight gain patterns</h2>
+        <h3>First trimester (Weeks 1 to 13)</h3>
+        <p>During the first 13 weeks, the embryo and placenta are microscopic or small. Normal weight gain is modest: typically between 1.0 and 4.5 lbs (0.5 to 2.0 kg) total. Due to morning sickness and nausea, some individuals gain very little or temporarily lose slight weight, which is usually resolved in the second trimester.</p>
+
+        <h3>Second &amp; third trimesters (Weeks 14 to 40)</h3>
+        <p>Fetal bone ossification, organ maturation, fat accumulation, and maternal fluid expansion accelerate. Weight gain typically becomes regular, progressing at approximately 0.5 to 1.0 lb per week depending on starting BMI.</p>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details>
+            <summary>How is recommended pregnancy weight gain calculated?</summary>
+            <div class="faq-answer"><p>Clinical guidelines calculate your baseline Body Mass Index (BMI = weight in kg / height in meters squared). Targets are set using IOM standards based on whether your starting BMI is categorized as underweight, normal, overweight, or obese.</p></div>
+          </details>
+          <details>
+            <summary>How much weight should I gain during the first trimester?</summary>
+            <div class="faq-answer"><p>Clinical recommendations target an overall gain of 1.0 to 4.5 lbs (0.5 to 2.0 kg) throughout the entire first trimester (weeks 1 to 13).</p></div>
+          </details>
+          <details>
+            <summary>How much weight should I gain per week in the second and third trimesters?</summary>
+            <div class="faq-answer"><p>Normal-weight individuals typically aim for ~1.0 lb (0.4–0.5 kg) per week. Overweight individuals aim for ~0.6 lb (0.3 kg) per week, and obese individuals aim for ~0.5 lb (0.2 kg) per week.</p></div>
+          </details>
+          <details>
+            <summary>What if I am carrying twins?</summary>
+            <div class="faq-answer"><p>Twin pregnancies have higher caloric requirements. Normal-weight women expecting twins are advised to gain 37–54 lbs (16.8–24.5 kg) to support dual fetal growth.</p></div>
+          </details>
+          <details>
+            <summary>Is it safe to lose weight while pregnant?</summary>
+            <div class="faq-answer"><p>No. Weight loss diets during pregnancy risk depriving the fetus of essential macronutrients, vitamins, and minerals. Consult your maternal healthcare provider if you have concerns about your weight.</p></div>
+          </details>
+          <details>
+            <summary>Does this tracker save my health data?</summary>
+            <div class="faq-answer"><p>No. This tool operates 100% locally in your web browser. No measurements or gestational details are ever collected, transmitted, or stored on any server.</p></div>
+          </details>
+        </div>
+
+        <h2>Sources and further reading</h2>
+        <ul class="sources-list">
+          <li><a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2013/01/weight-gain-during-pregnancy" target="_blank" rel="noopener noreferrer">ACOG — Weight Gain During Pregnancy (Committee Opinion No. 548)</a></li>
+          <li><a href="https://www.cdc.gov/reproductivehealth/maternalinfanthealth/pregnancy-weight-gain.htm" target="_blank" rel="noopener noreferrer">CDC — Weight Gain During Pregnancy Guidelines</a></li>
+          <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK32813/" target="_blank" rel="noopener noreferrer">National Academies of Sciences, Engineering, and Medicine (IOM) — Weight Gain During Pregnancy: Reexamining the Guidelines</a></li>
+        </ul>
+        <p class="last-updated">Last reviewed for clinical consistency: October 2026. This calculator provides educational estimates based on IOM/ACOG standards and does not replace individualized clinical prenatal care.</p>
+      </article>
+    </main>
+    <aside class="sidebar" aria-label="Related tools sidebar"></aside>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      let currentUnit = "metric";
+
+      const unitMetricBtn = document.getElementById("unitMetric");
+      const unitUSBtn = document.getElementById("unitUS");
+      const heightFieldMetric = document.getElementById("heightFieldMetric");
+      const heightFieldUS = document.getElementById("heightFieldUS");
+      const heightCmInput = document.getElementById("heightCm");
+      const heightInchesInput = document.getElementById("heightInches");
+      const prePregnancyWeightInput = document.getElementById("prePregnancyWeight");
+      const currentWeightInput = document.getElementById("currentWeight");
+      const preWeightLabel = document.getElementById("preWeightLabel");
+      const currWeightLabel = document.getElementById("currWeightLabel");
+      const gestationalWeekInput = document.getElementById("gestationalWeek");
+      const pregnancyTypeInput = document.getElementById("pregnancyType");
+      const form = document.getElementById("weightForm");
+      const errorBox = document.getElementById("formError");
+      const result = document.getElementById("result");
+      const milestoneBody = document.getElementById("milestoneBody");
+      const activeTrimesterLabel = document.getElementById("activeTrimesterLabel");
+
+      // IOM / ACOG Guidelines Parameters (Weight in kg)
+      const GUIDELINES = {
+        single: {
+          underweight: { minTotal: 12.5, maxTotal: 18.0, t1Min: 0.5, t1Max: 2.0, weeklyRateMin: 0.44, weeklyRateMax: 0.58 },
+          normal:      { minTotal: 11.5, maxTotal: 16.0, t1Min: 0.5, t1Max: 2.0, weeklyRateMin: 0.35, weeklyRateMax: 0.50 },
+          overweight:  { minTotal: 7.0,  maxTotal: 11.5, t1Min: 0.5, t1Max: 2.0, weeklyRateMin: 0.23, weeklyRateMax: 0.33 },
+          obese:       { minTotal: 5.0,  maxTotal: 9.0,  t1Min: 0.5, t1Max: 2.0, weeklyRateMin: 0.17, weeklyRateMax: 0.27 }
+        },
+        twins: {
+          underweight: { minTotal: 14.0, maxTotal: 20.0, t1Min: 1.0, t1Max: 3.0, weeklyRateMin: 0.50, weeklyRateMax: 0.70 },
+          normal:      { minTotal: 16.8, maxTotal: 24.5, t1Min: 1.0, t1Max: 3.0, weeklyRateMin: 0.60, weeklyRateMax: 0.80 },
+          overweight:  { minTotal: 14.1, maxTotal: 22.7, t1Min: 1.0, t1Max: 3.0, weeklyRateMin: 0.50, weeklyRateMax: 0.73 },
+          obese:       { minTotal: 11.3, maxTotal: 19.1, t1Min: 1.0, t1Max: 3.0, weeklyRateMin: 0.40, weeklyRateMax: 0.60 }
+        }
+      };
+
+      function getGainAtWeek(w, targets) {
+        if (w <= 13) {
+          const fraction = w / 13;
+          return {
+            min: targets.t1Min * fraction,
+            max: targets.t1Max * fraction
+          };
+        }
+        const postT1Weeks = w - 13;
+        return {
+          min: targets.t1Min + (postT1Weeks * targets.weeklyRateMin),
+          max: targets.t1Max + (postT1Weeks * targets.weeklyRateMax)
+        };
+      }
+
+      function renderMilestones(week, preKg, targets, formatVal) {
+        milestoneBody.replaceChildren();
+        const activeTrimester = week <= 13 ? 1 : (week <= 27 ? 2 : 3);
+        activeTrimesterLabel.textContent = `Trimester ${activeTrimester} Active`;
+
+        const milestones = [
+          {
+            trimester: 1,
+            label: "Trimester 1 (Wk 13)",
+            gainMin: targets.t1Min,
+            gainMax: targets.t1Max
+          },
+          {
+            trimester: 2,
+            label: "Trimester 2 (Wk 27)",
+            gainMin: getGainAtWeek(27, targets).min,
+            gainMax: getGainAtWeek(27, targets).max
+          },
+          {
+            trimester: 3,
+            label: "Full Term (Wk 40)",
+            gainMin: targets.minTotal,
+            gainMax: targets.maxTotal
+          }
+        ];
+
+        milestones.forEach((m) => {
+          const tr = document.createElement("tr");
+          if (m.trimester === activeTrimester) {
+            tr.className = "active-trimester";
+          }
+
+          const tdMilestone = document.createElement("td");
+          tdMilestone.textContent = m.label;
+          if (m.trimester === activeTrimester) {
+            const pill = document.createElement("span");
+            pill.className = "trimester-pill";
+            pill.textContent = "Current";
+            tdMilestone.appendChild(pill);
+          }
+
+          const tdGain = document.createElement("td");
+          tdGain.textContent = `+${formatVal(m.gainMin)} – +${formatVal(m.gainMax)}`;
+
+          const tdScale = document.createElement("td");
+          tdScale.textContent = `${formatVal(preKg + m.gainMin)} – ${formatVal(preKg + m.gainMax)}`;
+
+          tr.append(tdMilestone, tdGain, tdScale);
+          milestoneBody.appendChild(tr);
+        });
+      }
+
+      function setUnit(unit) {
+        if (currentUnit === unit) return;
+        currentUnit = unit;
+        if (unit === "metric") {
+          unitMetricBtn.classList.add("active");
+          unitMetricBtn.setAttribute("aria-selected", "true");
+          unitUSBtn.classList.remove("active");
+          unitUSBtn.setAttribute("aria-selected", "false");
+          heightFieldMetric.hidden = false;
+          heightFieldUS.hidden = true;
+          preWeightLabel.textContent = "Pre-pregnancy weight (kg)";
+          currWeightLabel.textContent = "Current weight (kg)";
+
+          const inVal = Number(heightInchesInput.value);
+          if (inVal > 0) heightCmInput.value = (inVal * 2.54).toFixed(1);
+          const preVal = Number(prePregnancyWeightInput.value);
+          if (preVal > 0) prePregnancyWeightInput.value = (preVal * 0.453592).toFixed(1);
+          const currVal = Number(currentWeightInput.value);
+          if (currVal > 0) currentWeightInput.value = (currVal * 0.453592).toFixed(1);
+        } else {
+          unitUSBtn.classList.add("active");
+          unitUSBtn.setAttribute("aria-selected", "true");
+          unitMetricBtn.classList.remove("active");
+          unitMetricBtn.setAttribute("aria-selected", "false");
+          heightFieldMetric.hidden = true;
+          heightFieldUS.hidden = false;
+          preWeightLabel.textContent = "Pre-pregnancy weight (lbs)";
+          currWeightLabel.textContent = "Current weight (lbs)";
+
+          const cmVal = Number(heightCmInput.value);
+          if (cmVal > 0) heightInchesInput.value = (cmVal / 2.54).toFixed(1);
+          const preVal = Number(prePregnancyWeightInput.value);
+          if (preVal > 0) prePregnancyWeightInput.value = (preVal / 0.453592).toFixed(1);
+          const currVal = Number(currentWeightInput.value);
+          if (currVal > 0) currentWeightInput.value = (currVal / 0.453592).toFixed(1);
+        }
+        if (!result.hidden) calculate();
+      }
+
+      unitMetricBtn.addEventListener("click", () => setUnit("metric"));
+      unitUSBtn.addEventListener("click", () => setUnit("imperial"));
+
+      function showError(message, input) {
+        errorBox.textContent = message;
+        errorBox.hidden = false;
+        result.hidden = true;
+        if (input) {
+          input.setAttribute("aria-invalid", "true");
+          input.focus();
+        }
+      }
+
+      function clearErrors() {
+        errorBox.hidden = true;
+        errorBox.textContent = "";
+        [heightCmInput, heightInchesInput, prePregnancyWeightInput, currentWeightInput, gestationalWeekInput].forEach(inp => {
+          inp.removeAttribute("aria-invalid");
+        });
+      }
+
+      function calculate() {
+        clearErrors();
+        try {
+          let heightM = 0;
+          if (currentUnit === "metric") {
+            const cm = Number(heightCmInput.value);
+            if (!cm || cm < 120 || cm > 230) throw { message: "Enter height between 120 and 230 cm.", input: heightCmInput };
+            heightM = cm / 100;
+          } else {
+            const inches = Number(heightInchesInput.value);
+            if (!inches || inches < 48 || inches > 90) throw { message: "Enter height between 48 and 90 inches.", input: heightInchesInput };
+            heightM = (inches * 2.54) / 100;
+          }
+
+          let preKg = 0;
+          let currKg = 0;
+          if (currentUnit === "metric") {
+            preKg = Number(prePregnancyWeightInput.value);
+            currKg = Number(currentWeightInput.value);
+            if (!preKg || preKg < 30 || preKg > 250) throw { message: "Enter pre-pregnancy weight between 30 and 250 kg.", input: prePregnancyWeightInput };
+            if (!currKg || currKg < 30 || currKg > 260) throw { message: "Enter current weight between 30 and 260 kg.", input: currentWeightInput };
+          } else {
+            const preLbs = Number(prePregnancyWeightInput.value);
+            const currLbs = Number(currentWeightInput.value);
+            if (!preLbs || preLbs < 66 || preLbs > 550) throw { message: "Enter pre-pregnancy weight between 66 and 550 lbs.", input: prePregnancyWeightInput };
+            if (!currLbs || currLbs < 66 || currLbs > 570) throw { message: "Enter current weight between 66 and 570 lbs.", input: currentWeightInput };
+            preKg = preLbs * 0.453592;
+            currKg = currLbs * 0.453592;
+          }
+
+          const week = Number(gestationalWeekInput.value);
+          if (!week || !Number.isInteger(week) || week < 1 || week > 42) {
+            throw { message: "Gestational week must be a whole number from 1 to 42.", input: gestationalWeekInput };
+          }
+
+          const pregType = pregnancyTypeInput.value;
+          const bmi = preKg / (heightM * heightM);
+
+          let category = "normal";
+          let categoryName = "Normal Weight";
+          if (bmi < 18.5) {
+            category = "underweight";
+            categoryName = "Underweight";
+          } else if (bmi < 25.0) {
+            category = "normal";
+            categoryName = "Normal Weight";
+          } else if (bmi < 30.0) {
+            category = "overweight";
+            categoryName = "Overweight";
+          } else {
+            category = "obese";
+            categoryName = "Obese";
+          }
+
+          const targets = GUIDELINES[pregType][category];
+          const currentWeekTarget = getGainAtWeek(week, targets);
+          const minGain = currentWeekTarget.min;
+          const maxGain = currentWeekTarget.max;
+
+          const actualGainKg = currKg - preKg;
+          const unitStr = currentUnit === "metric" ? "kg" : "lbs";
+          const convert = (valKg) => currentUnit === "metric" ? valKg : (valKg / 0.453592);
+          const formatVal = (valKg) => `${convert(valKg).toFixed(1)} ${unitStr}`;
+
+          // Output displays
+          document.getElementById("targetWeekNum").textContent = week;
+          document.getElementById("gaugeWeek").textContent = week;
+          document.getElementById("bmiBadge").textContent = `${categoryName} (BMI: ${bmi.toFixed(1)})`;
+          document.getElementById("preBmiValue").textContent = bmi.toFixed(1);
+          document.getElementById("bmiCategoryText").textContent = `${categoryName} (<18.5–≥30 scale)`;
+
+          const minGainStr = formatVal(minGain);
+          const maxGainStr = formatVal(maxGain);
+          document.getElementById("targetRangeThisWeek").textContent = `${minGainStr} – ${maxGainStr}`;
+
+          const minTargetAbs = formatVal(preKg + minGain);
+          const maxTargetAbs = formatVal(preKg + maxGain);
+          document.getElementById("targetWeightAbsolute").textContent = `Recommended scale reading: ${minTargetAbs} – ${maxTargetAbs}`;
+
+          const actualGainFormatted = (actualGainKg >= 0 ? "+" : "") + formatVal(actualGainKg);
+          document.getElementById("currentGainValue").textContent = actualGainFormatted;
+          document.getElementById("currentGainDetail").textContent = `${(currKg >= preKg ? "Gained" : "Lost")} ${Math.abs(convert(actualGainKg)).toFixed(1)} ${unitStr} since pre-pregnancy`;
+
+          document.getElementById("totalFullTermRange").textContent = `${formatVal(targets.minTotal)} – ${formatVal(targets.maxTotal)}`;
+          document.getElementById("weeklyRateTarget").textContent = `${formatVal(targets.weeklyRateMin)} – ${formatVal(targets.weeklyRateMax)}/wk`;
+
+          // Progress Gauge Logic
+          const progressPercent = Math.min(100, Math.max(0, Math.round((week / 40) * 100)));
+          document.getElementById("gaugeFill").style.width = `${progressPercent}%`;
+          document.getElementById("gainProgress").setAttribute("aria-valuenow", progressPercent);
+          document.getElementById("progressPercentText").textContent = `${progressPercent}% of full-term gestation (Week ${week} of 40)`;
+
+          const statusDot = document.getElementById("statusDot");
+          const statusMessage = document.getElementById("statusMessage");
+
+          if (actualGainKg < minGain - 0.5) {
+            statusDot.style.background = "#F59E0B";
+            statusMessage.textContent = `Your weight gain is currently below the typical IOM target range for week ${week}. Discuss your nutrition with your provider.`;
+          } else if (actualGainKg > maxGain + 0.5) {
+            statusDot.style.background = "#F59E0B";
+            statusMessage.textContent = `Your weight gain is currently above the typical IOM target range for week ${week}. Review gradual weekly rates with your doctor.`;
+          } else {
+            statusDot.style.background = "#10B981";
+            statusMessage.textContent = `Your weight gain is tracking right within the healthy IOM target range for week ${week}.`;
+          }
+
+          // Render Trimester Milestone Table
+          renderMilestones(week, preKg, targets, formatVal);
+
+          result.hidden = false;
+          result.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "nearest"
+          });
+        } catch (err) {
+          showError(err && err.message ? err.message : "Please verify your input values and try again.", err && err.input);
+        }
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        calculate();
+      });
+
+      form.addEventListener("input", (e) => {
+        if (e.target && e.target.hasAttribute("aria-invalid")) {
+          e.target.removeAttribute("aria-invalid");
+        }
+        if (!errorBox.hidden) {
+          errorBox.hidden = true;
+          errorBox.textContent = "";
+        }
+      });
+
+      form.addEventListener("reset", () => {
+        window.setTimeout(() => {
+          clearErrors();
+          result.hidden = true;
+          gestationalWeekInput.value = "20";
+          pregnancyTypeInput.value = "single";
+          if (currentUnit === "metric") {
+            heightCmInput.value = "165";
+            prePregnancyWeightInput.value = "60";
+            currentWeightInput.value = "64";
+          } else {
+            heightInchesInput.value = "65";
+            prePregnancyWeightInput.value = "132";
+            currentWeightInput.value = "141";
+          }
+        }, 0);
+      });
+    })();
+  </script>
+
+  <script src="/navigation.js" defer></script>
+</body>
+</html>
