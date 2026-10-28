@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-category="utility">
+<html lang="en" data-theme="light" data-category="utility">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <script>try{document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light";}catch(e){}</script>
+    <!-- Opt out of browser auto dark mode / forced darkening on mobile -->
+    <meta name="supported-color-schemes" content="light">
     <title>Advanced Unit Converter — Engineering, Scientific & Everyday Units | TheQuantCalc</title>
     <meta name="description" content="Convert over 210 units across 28 measurement categories including length, mass, temperature, pressure, torque, viscosity, digital storage, electrical, and scientific units with adjustable precision.">
     <link rel="canonical" href="https://thequantcal.pages.dev/tools/advanced-unit-converter">
@@ -10,6 +14,17 @@
     <meta property="og:description" content="All-in-one precision unit converter across 28 everyday, engineering, thermal, digital, electrical, and scientific categories.">
     <meta property="og:url" content="https://thequantcal.pages.dev/tools/advanced-unit-converter">
     <meta property="og:type" content="website">
+
+    <script>
+    /* Keep the page in light mode by default; never follow the phone's night mode automatically. */
+    (function () {
+        try {
+            var el = document.documentElement;
+            el.setAttribute("data-theme", "light");
+            el.style.colorScheme = "light";
+        } catch (e) {}
+    })();
+    </script>
 
     <!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
     <script type="application/ld+json">
@@ -129,13 +144,16 @@
 
     <style>
         /* ==========================================================================
-           DYNAMIC CATEGORY-AWARE & THEME-AWARE DESIGN TOKENS
+           P4: DYNAMIC CATEGORY-AWARE & THEME-AWARE DESIGN TOKENS
            ========================================================================== */
         :root,
         html[data-theme="light"] {
+            color-scheme: light;
+            color-scheme: light;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
+            /* Neutral Light Baseline */
             --surface-page: #F1F5F9;
             --article-bg: #FFFFFF;
             --article-soft: #F8FAFC;
@@ -143,13 +161,16 @@
             --surface-inset: #F1F5F9;
             --surface-border: #E2E8F0;
             --text-main: #0F172A;
-            --text-body: #1E293B; /* Slightly darker and more readable */
-            --text-muted: #475569;
+            --text-body: #334155;
+            --text-muted: #64748B;
             --link-color: #059669;
             --table-stripe: #F8FAFC;
         }
 
         html[data-theme="dark"] {
+            color-scheme: dark;
+            color-scheme: dark;
+            /* Neutral Dark Baseline (only used if a user manually picks dark via the site toggle) */
             --surface-page: #050811;
             --article-bg: #0B1120;
             --article-soft: #111827;
@@ -157,7 +178,7 @@
             --surface-inset: #070A12;
             --surface-border: #1E293B;
             --text-main: #F8FAFC;
-            --text-body: #E2E8F0; /* Brighter, highly readable body text */
+            --text-body: #CBD5E1;
             --text-muted: #94A3B8;
             --link-color: #34D399;
             --table-stripe: #0F172A;
@@ -165,51 +186,85 @@
 
         /* Category Undertones — Light Theme */
         html[data-theme="light"][data-category="utility"] {
-            --surface-page: #F0F4F8; --article-bg: #FAFBFD; --article-soft: #F1F5F9; --surface-card: #FFFFFF; --surface-border: #CBD5E1;
+            --surface-page: #F0F4F8;
+            --article-bg: #FAFBFD;
+            --article-soft: #F1F5F9;
+            --surface-card: #FFFFFF;
+            --surface-border: #CBD5E1;
         }
         html[data-theme="light"][data-category="math"],
         html[data-theme="light"][data-category="time"],
         html[data-theme="light"][data-category="health"] {
-            --surface-page: #F0FDFA; --article-bg: #FAFFFE; --article-soft: #CCFBF1; --surface-border: #99F6E4;
+            --surface-page: #F0FDFA;
+            --article-bg: #FAFFFE;
+            --article-soft: #CCFBF1;
+            --surface-border: #99F6E4;
         }
         html[data-theme="light"][data-category="finance"] {
-            --surface-page: #ECFDF5; --article-bg: #FAFFFD; --article-soft: #D1FAE5; --surface-border: #A7F3D0;
+            --surface-page: #ECFDF5;
+            --article-bg: #FAFFFD;
+            --article-soft: #D1FAE5;
+            --surface-border: #A7F3D0;
         }
         html[data-theme="light"][data-category="science"],
         html[data-theme="light"][data-category="education"] {
-            --surface-page: #EFF6FF; --article-bg: #FAFCFF; --article-soft: #DBEAFE; --surface-border: #BFDBFE;
+            --surface-page: #EFF6FF;
+            --article-bg: #FAFCFF;
+            --article-soft: #DBEAFE;
+            --surface-border: #BFDBFE;
         }
 
         /* Category Undertones — Dark Theme */
         html[data-theme="dark"][data-category="utility"] {
-            --surface-page: #060913; --article-bg: #0B1120; --article-soft: #131C31; --surface-card: #0F172A; --surface-border: #1E293B;
+            --surface-page: #060913;
+            --article-bg: #0B1120;
+            --article-soft: #131C31;
+            --surface-card: #0F172A;
+            --surface-border: #1E293B;
         }
         html[data-theme="dark"][data-category="math"],
         html[data-theme="dark"][data-category="time"],
         html[data-theme="dark"][data-category="health"] {
-            --surface-page: #040D12; --article-bg: #08161E; --article-soft: #0D222E; --surface-border: #15384A;
+            --surface-page: #040D12;
+            --article-bg: #08161E;
+            --article-soft: #0D222E;
+            --surface-border: #15384A;
         }
         html[data-theme="dark"][data-category="finance"] {
-            --surface-page: #040E0B; --article-bg: #071712; --article-soft: #0C241C; --surface-border: #143B2E;
+            --surface-page: #040E0B;
+            --article-bg: #071712;
+            --article-soft: #0C241C;
+            --surface-border: #143B2E;
         }
         html[data-theme="dark"][data-category="science"],
         html[data-theme="dark"][data-category="education"] {
-            --surface-page: #060814; --article-bg: #0B1026; --article-soft: #121A3A; --surface-border: #1E2B58;
+            --surface-page: #060814;
+            --article-bg: #0B1026;
+            --article-soft: #121A3A;
+            --surface-border: #1E2B58;
         }
 
-        *, *::before, *::after { box-sizing: border-box; }
+        /* ==========================================================================
+           BASE RESET & TYPOGRAPHY (P4 SCALE)
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
 
         body {
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             font-family: var(--font-sans);
             background-color: var(--surface-page);
             color: var(--text-main);
-            line-height: 1.65;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            font-size: 1.02rem; /* Slightly larger base text for superior readability */
         }
 
+        /* ==========================================================================
+           P5 & MASTER PROMPT: PAGE GRID CONTRACT
+           ========================================================================== */
         .tqc-page-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -226,32 +281,78 @@
             }
         }
 
-        .main-body { display: flex; flex-direction: column; width: 100%; min-width: 0; }
-        .sidebar { width: 100%; min-width: 0; }
-
-        .breadcrumb-trail {
-            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
-            font-size: 0.92rem; line-height: 1.4; color: var(--text-muted); margin: 0 0 12px 0;
+        .main-body {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-width: 0;
         }
-        .breadcrumb-trail a { color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
-        .breadcrumb-trail a:hover { color: var(--link-color); text-decoration: underline; }
-        .breadcrumb-trail .bc-current { color: var(--text-main); font-weight: 500; }
 
-        .tool-suite { display: flex; flex-direction: column; width: 100%; }
+        .sidebar {
+            width: 100%;
+            min-width: 0;
+        }
+
+        /* ==========================================================================
+           P5: BREADCRUMB NAVIGATION
+           ========================================================================== */
+        .breadcrumb-trail {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+            margin: 0 0 10px 0;
+        }
+
+        .breadcrumb-trail a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .breadcrumb-trail a:hover,
+        .breadcrumb-trail a:focus-visible {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+
+        .breadcrumb-trail .bc-current {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           P2, P5, P6: TOOL SUITE, LEFT-ALIGNED TITLE & 12PX GAP
+           ========================================================================== */
+        .tool-suite {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
 
         .primary-title {
-            font-size: clamp(1.6rem, 3.4vw, 2.1rem);
-            font-weight: 700; line-height: 1.22; letter-spacing: -0.035em;
-            text-align: left; color: var(--text-main); margin: 0 0 12px 0;
+            font-size: clamp(1.5rem, 3.2vw, 2rem);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.035em;
+            text-align: left;
+            color: var(--text-main);
+            margin: 0 0 12px 0;
         }
 
-        /* Calculator UI Box (540px Centered) */
+        /* ==========================================================================
+           P1 & P6: SEMI-3D DARK-MODE GLASS SLAB CALCULATOR (540px CENTERED)
+           Obsidian, Gold & Emerald
+           ========================================================================== */
         .calculator-ui-box {
             width: min(100%, 540px);
             max-width: 540px;
             align-self: center !important;
             margin: 0 auto 26px auto !important;
-            padding: 24px 22px 26px;
+            padding: 22px 20px 24px;
             border-radius: 20px;
             background:
                 linear-gradient(165deg, #07070B 0%, #0B1120 48%, #0F172A 100%) padding-box,
@@ -267,187 +368,664 @@
         }
 
         @media (min-width: 640px) {
-            .calculator-ui-box { padding: 28px 28px 30px; }
+            .calculator-ui-box {
+                padding: 26px 26px 28px;
+            }
         }
 
+        /* Reflective bottom pedestal accent */
         .calculator-ui-box::after {
-            content: ""; position: absolute; left: 12%; right: 12%; bottom: -8px; height: 8px;
+            content: "";
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            bottom: -8px;
+            height: 8px;
             background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.38) 0%, rgba(245, 158, 11, 0.18) 50%, transparent 78%);
-            filter: blur(4px); pointer-events: none;
+            filter: blur(4px);
+            pointer-events: none;
         }
 
-        .auc-top-bar { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
-        @media (min-width: 480px) { .auc-top-bar { grid-template-columns: 1.2fr 1fr; } }
+        /* Top Search & Quick Filter Bar */
+        .auc-top-bar {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
 
-        .auc-field-group { display: flex; flex-direction: column; gap: 6px; }
-        .auc-label { font-size: 0.875rem; font-weight: 600; color: #E2E8F0; letter-spacing: 0.01em; display: flex; align-items: center; justify-content: space-between; }
-        .auc-label-accent { color: #F59E0B; font-size: 0.78rem; font-weight: 500; }
+        @media (min-width: 480px) {
+            .auc-top-bar {
+                grid-template-columns: 1.15fr 1fr;
+            }
+        }
 
-        .auc-input, .auc-select {
+        .auc-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .auc-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #CBD5E1;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .auc-label-accent {
+            color: #F59E0B;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Deeply Inset 3D Dark Surface Inputs & Dropdowns (P1) */
+        .auc-input,
+        .auc-select {
             width: 100%;
             background: linear-gradient(180deg, #111827 0%, #1E293B 100%);
             color: #F8FAFC;
-            border: 1px solid rgba(245, 158, 11, 0.32);
+            border: 1px solid rgba(245, 158, 11, 0.28);
             border-radius: 11px;
-            padding: 12px 14px;
-            font-size: 1rem; /* Slightly larger, clearer input text */
+            padding: 10px 12px;
+            font-size: 0.9375rem;
             font-family: var(--font-sans);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(16, 185, 129, 0.12);
-            outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            box-shadow:
+                inset 0 2px 5px rgba(0, 0, 0, 0.65),
+                inset 0 0 0 1px rgba(16, 185, 129, 0.12),
+                0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            outline: none;
+            color-scheme: dark;
         }
-        .auc-input::placeholder { color: #64748B; }
-        .auc-input:focus, .auc-select:focus {
-            border-color: #10B981;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7), 0 0 0 3px rgba(16, 185, 129, 0.25), 0 0 12px rgba(245, 158, 11, 0.2);
-        }
-        .auc-select option, .auc-select optgroup { background-color: #0F172A; color: #F8FAFC; }
 
-        .auc-group-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 14px; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
-        .auc-group-tab {
-            flex: 0 0 auto; background: #111827; color: #94A3B8; border: 1px solid #1E293B; border-radius: 999px;
-            padding: 6px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease;
+        .auc-input, .auc-select { color-scheme: dark; }
+        article.auc-article sub, article.auc-article sup { font-size: 0.75em; line-height: 0; }
+
+        .auc-input::placeholder {
+            color: #64748B;
         }
-        .auc-group-tab:hover { color: #F8FAFC; border-color: rgba(245, 158, 11, 0.45); }
+
+        .auc-input:focus,
+        .auc-select:focus {
+            border-color: #10B981;
+            box-shadow:
+                inset 0 2px 5px rgba(0, 0, 0, 0.7),
+                0 0 0 3px rgba(16, 185, 129, 0.25),
+                0 0 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .auc-select option,
+        .auc-select optgroup {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+
+        /* Group Pill Filter Strip */
+        .auc-group-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+            scrollbar-width: thin;
+            scrollbar-color: #334155 transparent;
+        }
+
+        .auc-group-tab {
+            flex: 0 0 auto;
+            background: #111827;
+            color: #94A3B8;
+            border: 1px solid #1E293B;
+            border-radius: 999px;
+            padding: 5px 11px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .auc-group-tab:hover {
+            color: #F8FAFC;
+            border-color: rgba(245, 158, 11, 0.45);
+        }
+
         .auc-group-tab.active {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(245, 158, 11, 0.22));
-            color: #F8FAFC; border-color: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            color: #F8FAFC;
+            border-color: #10B981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
         }
 
-        .auc-value-row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
-        @media (min-width: 440px) { .auc-value-row { grid-template-columns: 1.4fr 1fr; } }
-        .auc-num-input { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 1.1rem; }
+        /* Main Value + Precision Row */
+        .auc-value-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
 
-        .auc-unit-bridge { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: end; margin-bottom: 16px; }
+        @media (min-width: 440px) {
+            .auc-value-row {
+                grid-template-columns: 1.5fr 1fr;
+            }
+        }
+
+        .auc-num-input {
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        /* From / Swap / To Grid */
+        .auc-unit-bridge {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 8px;
+            align-items: end;
+            margin-bottom: 14px;
+        }
+
         @media (max-width: 440px) {
-            .auc-unit-bridge { grid-template-columns: 1fr; }
-            .auc-swap-wrap { display: flex; justify-content: center; margin: 4px 0; }
+            .auc-unit-bridge {
+                grid-template-columns: 1fr;
+            }
+            .auc-swap-wrap {
+                display: flex;
+                justify-content: center;
+                margin: 2px 0;
+            }
         }
 
         .auc-swap-btn {
-            width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(245, 158, 11, 0.45);
-            background: linear-gradient(145deg, #1E293B, #0F172A); color: #F8FAFC; font-size: 1.2rem;
-            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.12);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            background: linear-gradient(145deg, #1E293B, #0F172A);
+            color: #F8FAFC;
+            font-size: 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .auc-swap-btn:hover { border-color: #10B981; color: #34D399; transform: rotate(180deg); }
 
+        .auc-swap-btn:hover,
+        .auc-swap-btn:focus-visible {
+            border-color: #10B981;
+            color: #34D399;
+            transform: rotate(180deg);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+            outline: none;
+        }
+
+        /* Format Mode Bar */
         .auc-options-bar {
-            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
-            padding: 9px 12px; border-radius: 10px; background: rgba(17, 24, 39, 0.75); border: 1px solid #1E293B;
-            margin-bottom: 16px; font-size: 0.85rem; color: #CBD5E1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 8px 11px;
+            border-radius: 10px;
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid #1E293B;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+            color: #CBD5E1;
         }
-        .auc-Format-radios { display: flex; gap: 12px; align-items: center; }
-        .auc-Format-radios label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
-        .auc-Format-radios input[type="radio"] { accent-color: #10B981; }
 
+        .auc-Format-radios {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .auc-Format-radios label {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .auc-Format-radios input[type="radio"] {
+            accent-color: #10B981;
+        }
+
+        /* Validation Banner */
         .auc-error-banner {
-            display: none; background: rgba(239, 68, 68, 0.14); border: 1px solid rgba(248, 113, 113, 0.5);
-            color: #FCA5A5; padding: 10px 14px; border-radius: 10px; font-size: 0.88rem; margin-bottom: 14px;
+            display: none;
+            background: rgba(239, 68, 68, 0.14);
+            border: 1px solid rgba(248, 113, 113, 0.5);
+            color: #FCA5A5;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.825rem;
+            margin-bottom: 12px;
         }
-        .auc-error-banner.visible { display: block; }
 
-        .auc-action-row { display: flex; gap: 12px; margin-bottom: 18px; }
-        .auc-btn-primary {
-            flex: 2; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(16, 185, 129, 0.65);
-            background: linear-gradient(180deg, #10B981 0%, #059669 100%); color: #04130E; font-weight: 700;
-            font-size: 1rem; cursor: pointer; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-            transition: filter 0.15s ease;
+        .auc-error-banner.visible {
+            display: block;
         }
-        .auc-btn-primary:hover { filter: brightness(1.08); }
+
+        /* 3D Pill Action Buttons (P1) */
+        .auc-action-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .auc-btn-primary {
+            flex: 2;
+            padding: 11px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(16, 185, 129, 0.65);
+            background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+            color: #04130E;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            box-shadow:
+                0 6px 18px rgba(16, 185, 129, 0.38),
+                inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            transition: transform 0.12s ease, filter 0.15s ease;
+        }
+
+        .auc-btn-primary:hover {
+            filter: brightness(1.08);
+        }
+
+        .auc-btn-primary:active {
+            transform: translateY(1px);
+        }
 
         .auc-btn-secondary {
-            flex: 1; padding: 12px 14px; border-radius: 999px; border: 1px solid rgba(245, 158, 11, 0.32);
-            background: rgba(17, 24, 39, 0.72); color: #E2E8F0; font-weight: 600; font-size: 0.92rem;
-            cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease;
+            flex: 1;
+            padding: 11px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(245, 158, 11, 0.32);
+            background: rgba(17, 24, 39, 0.72);
+            color: #E2E8F0;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            transition: background 0.15s ease, border-color 0.15s ease;
         }
-        .auc-btn-secondary:hover { background: rgba(30, 41, 59, 0.9); border-color: #F59E0B; }
 
-        /* Result Panel Contract */
+        .auc-btn-secondary:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #F59E0B;
+        }
+
+        /* ==========================================================================
+           P1 & SECTION 9: EMBOSSED 3D RESULT CARD CONTRACT
+           ========================================================================== */
         #result.tqc-result-box {
-            border-radius: 16px; padding: 20px 18px;
-            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 60%),
-                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 65%),
-                        linear-gradient(180deg, #09131C 0%, #050B11 100%);
+            border-radius: 16px;
+            padding: 18px 16px;
+            background:
+                radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 60%),
+                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 65%),
+                linear-gradient(180deg, #09131C 0%, #050B11 100%);
             border: 1px solid rgba(16, 185, 129, 0.45);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.75), 0 10px 24px -8px rgba(0, 0, 0, 0.7);
+            box-shadow:
+                inset 0 2px 6px rgba(0, 0, 0, 0.75),
+                inset 0 0 0 1px rgba(245, 158, 11, 0.18),
+                0 10px 24px -8px rgba(0, 0, 0, 0.7);
         }
 
-        .tqc-result-content { display: flex; flex-direction: column; gap: 12px; }
-        .auc-res-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #94A3B8; }
-        .auc-fav-btn { background: transparent; border: 1px solid rgba(245, 158, 11, 0.4); color: #F59E0B; border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
-        .auc-fav-btn.saved { background: rgba(245, 158, 11, 0.2); color: #FDE68A; }
+        .tqc-result-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .auc-res-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94A3B8;
+        }
+
+        .auc-fav-btn {
+            background: transparent;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #F59E0B;
+            border-radius: 999px;
+            padding: 3px 9px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auc-fav-btn.saved {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FDE68A;
+        }
 
         .auc-primary-figure {
-            font-size: clamp(1.8rem, 4.8vw, 2.4rem); font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums;
+            font-size: clamp(1.65rem, 4.5vw, 2.2rem);
+            font-weight: 800;
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
             background: linear-gradient(95deg, #34D399 0%, #10B981 45%, #F59E0B 100%);
-            -webkit-background-clip: text; background-clip: text; color: transparent; word-break: break-word;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            word-break: break-word;
         }
 
-        .auc-equation-line { font-size: 0.96rem; color: #F1F5F9; font-weight: 500; font-variant-numeric: tabular-nums; }
+        .auc-equation-line {
+            font-size: 0.9rem;
+            color: #E2E8F0;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
 
         .auc-meta-grid {
-            display: grid; grid-template-columns: 1fr; gap: 8px; padding-top: 12px;
-            border-top: 1px solid rgba(148, 163, 184, 0.16); font-size: 0.84rem; color: #CBD5E1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(148, 163, 184, 0.16);
+            font-size: 0.79rem;
+            color: #CBD5E1;
         }
-        .auc-meta-row { display: flex; justify-content: space-between; gap: 10px; }
-        .auc-meta-row code { font-family: var(--font-mono); color: #FCD34D; font-size: 0.8rem; }
 
-        .auc-sub-drawer { margin-top: 10px; background: rgba(15, 23, 42, 0.7); border: 1px solid #1E293B; border-radius: 10px; overflow: hidden; }
-        .auc-sub-drawer summary { padding: 10px 14px; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .auc-sub-drawer summary:hover { color: #34D399; }
-        .auc-all-units-list { max-height: 220px; overflow-y: auto; padding: 8px 12px 12px; border-top: 1px solid #1E293B; display: grid; grid-template-columns: 1fr; gap: 6px; font-size: 0.82rem; }
-        .auc-unit-row { display: flex; justify-content: space-between; padding: 5px 8px; border-radius: 6px; background: rgba(17, 24, 39, 0.6); font-variant-numeric: tabular-nums; }
-        .auc-unit-row strong { color: #34D399; }
+        .auc-meta-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
 
-        .auc-chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
-        .auc-chip { background: #111827; border: 1px solid #1E293B; color: #CBD5E1; border-radius: 999px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; transition: border-color 0.15s ease; }
-        .auc-chip:hover { border-color: #F59E0B; color: #F8FAFC; }
+        .auc-meta-row code {
+            font-family: var(--font-mono);
+            color: #FCD34D;
+            font-size: 0.76rem;
+        }
 
-        /* Article Styles (Clean & Slightly Larger for Maximum Readability) */
+        /* Multi-Unit Comparison Drawer & Favorites inside Calculator */
+        .auc-sub-drawer {
+            margin-top: 10px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid #1E293B;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .auc-sub-drawer summary {
+            padding: 9px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #CBD5E1;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .auc-sub-drawer summary:hover {
+            color: #34D399;
+        }
+
+        .auc-all-units-list {
+            max-height: 210px;
+            overflow-y: auto;
+            padding: 6px 12px 10px;
+            border-top: 1px solid #1E293B;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5px;
+            font-size: 0.78rem;
+        }
+
+        .auc-unit-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 6px;
+            border-radius: 6px;
+            background: rgba(17, 24, 39, 0.6);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .auc-unit-row strong {
+            color: #34D399;
+        }
+
+        .auc-chip-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .auc-chip {
+            background: #111827;
+            border: 1px solid #1E293B;
+            color: #CBD5E1;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 0.73rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+
+        .auc-chip:hover {
+            border-color: #F59E0B;
+            color: #F8FAFC;
+        }
+
+        /* ==========================================================================
+           P3 & P4: ARTICLE, FORMULA, TABLE & FAQ STYLING
+           ========================================================================== */
         article.auc-article {
-            background-color: var(--article-bg); border: 1px solid var(--surface-border); border-radius: 18px;
-            padding: 28px 24px; color: var(--text-body); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            background-color: var(--article-bg);
+            border: 1px solid var(--surface-border);
+            border-radius: 18px;
+            padding: 24px 20px;
+            color: var(--text-body);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
-        @media (min-width: 768px) { article.auc-article { padding: 40px 42px; } }
+
+        @media (min-width: 768px) {
+            article.auc-article {
+                padding: 34px 36px;
+            }
+        }
 
         article.auc-article h2 {
-            font-size: clamp(1.4rem, 2.4vw, 1.8rem); line-height: 1.24; font-weight: 700; color: var(--text-main); margin: 34px 0 14px 0; letter-spacing: -0.02em;
+            font-size: clamp(1.3125rem, 2.2vw, 1.65rem);
+            line-height: 1.22;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 30px 0 12px 0;
+            letter-spacing: -0.02em;
         }
-        article.auc-article h2:first-of-type { margin-top: 0; }
-        article.auc-article h3 { font-size: clamp(1.18rem, 1.9vw, 1.38rem); line-height: 1.3; font-weight: 600; color: var(--text-main); margin: 24px 0 10px 0; }
-        
-        article.auc-article p { font-size: 1.08rem; line-height: 1.72; margin: 0 0 16px 0; max-width: 76ch; }
-        article.auc-article ul, article.auc-article ol { margin: 0 0 18px 0; padding-left: 24px; max-width: 76ch; }
-        article.auc-article li { margin-bottom: 9px; line-height: 1.65; font-size: 1.05rem; }
-        article.auc-article a { color: var(--link-color); text-decoration: underline; text-underline-offset: 2px; }
 
-        .auc-surface-box { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-left: 4px solid #10B981; border-radius: 12px; padding: 18px 20px; margin: 20px 0; font-size: 1.04rem; }
+        article.auc-article h2:first-of-type {
+            margin-top: 0;
+        }
+
+        article.auc-article h3 {
+            font-size: clamp(1.125rem, 1.8vw, 1.32rem);
+            line-height: 1.28;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 22px 0 8px 0;
+        }
+
+        article.auc-article p {
+            font-size: 1.02rem;
+            line-height: 1.66;
+            margin: 0 0 14px 0;
+            max-width: 76ch;
+        }
+
+        article.auc-article ul,
+        article.auc-article ol {
+            margin: 0 0 16px 0;
+            padding-left: 22px;
+            max-width: 76ch;
+        }
+
+        article.auc-article li {
+            margin-bottom: 7px;
+            line-height: 1.6;
+        }
+
+        article.auc-article a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        /* Plain-text math helpers (replaces raw LaTeX) */
+        article.auc-article var {
+            font-style: italic;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        article.auc-article sub,
+        article.auc-article sup {
+            font-size: 0.75em;
+            line-height: 0;
+        }
+
+        article.auc-article .nowrap {
+            white-space: nowrap;
+        }
+
+        /* Layered Surface Callout & Formula Blocks (P4) */
+        .auc-surface-box {
+            background-color: var(--article-soft);
+            border: 1px solid var(--surface-border);
+            border-left: 4px solid #10B981;
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin: 18px 0;
+        }
+
         .auc-formula-card {
-            background-color: var(--surface-inset); border: 1px solid var(--surface-border); border-radius: 12px;
-            padding: 16px 18px; margin: 16px 0; font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-main); overflow-x: auto;
+            background-color: var(--surface-inset);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-main);
+            overflow-x: auto;
         }
 
-        .data-table-wrapper { width: 100%; overflow-x: auto; margin: 20px 0 24px; border: 1px solid var(--surface-border); border-radius: 12px; }
-        .auc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
-        .auc-table th, .auc-table td { padding: 12px 15px; border-bottom: 1px solid var(--surface-border); }
-        .auc-table th { background-color: var(--article-soft); color: var(--text-main); font-weight: 600; white-space: nowrap; }
-        .auc-table tr:nth-child(even) td { background-color: var(--table-stripe); }
-        .auc-table td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+        /* Responsive Table Wrapper */
+        .data-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 18px 0 22px;
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+        }
 
-        .auc-faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
-        details.auc-faq-item { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-radius: 12px; padding: 15px 18px; }
-        details.auc-faq-item summary { font-weight: 600; font-size: 1.08rem; color: var(--text-main); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-        details.auc-faq-item summary::-webkit-details-marker { display: none; }
-        details.auc-faq-item summary::after { content: "+"; font-weight: 700; color: #10B981; font-size: 1.3rem; line-height: 1; }
-        details.auc-faq-item[open] summary::after { content: "−"; }
-        .auc-faq-body { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--surface-border); font-size: 1.02rem; line-height: 1.68; color: var(--text-body); }
+        .auc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .auc-table th,
+        .auc-table td {
+            padding: 10px 13px;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .auc-table th {
+            background-color: var(--article-soft);
+            color: var(--text-main);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .auc-table tr:nth-child(even) td {
+            background-color: var(--table-stripe);
+        }
+
+        .auc-table td.num {
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Clean Collapsible FAQ Items (No Inline Microdata per P5) */
+        .auc-faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        details.auc-faq-item {
+            background-color: var(--article-soft);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 13px 16px;
+        }
+
+        details.auc-faq-item summary {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        details.auc-faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.auc-faq-item summary::after {
+            content: "+";
+            font-weight: 700;
+            color: #10B981;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        details.auc-faq-item[open] summary::after {
+            content: "−";
+        }
+
+        .auc-faq-body {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--surface-border);
+            font-size: 0.95rem;
+            line-height: 1.62;
+            color: var(--text-body);
+        }
     </style>
 </head>
 <body>
     <div class="tqc-page-grid">
         <main class="main-body">
-            <!-- Visible Accessible Breadcrumb -->
+            <!-- Visible Accessible Breadcrumb (P5) -->
             <nav class="breadcrumb-trail" aria-label="Breadcrumb">
                 <a href="https://thequantcal.pages.dev/">Home</a>
                 <span aria-hidden="true">&rarr;</span>
@@ -549,7 +1127,7 @@
                         <button type="button" id="auc-reset-btn" class="auc-btn-secondary">Reset</button>
                     </div>
 
-                    <!-- Primary Result Hook Contract -->
+                    <!-- Primary Result Hook Contract (Section 9) -->
                     <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
                         <div class="tqc-result-content">
                             <div class="auc-res-header">
@@ -570,7 +1148,7 @@
                                 </div>
                                 <div class="auc-meta-row">
                                     <span>Conversion Relation:</span>
-                                    <code id="auc-formula-text">y = x × 3.280839895</code>
+                                    <code id="auc-formula-text">y = x &times; 3.280839895</code>
                                 </div>
                             </div>
 
@@ -590,38 +1168,38 @@
                 </div>
             </section>
 
-            <!-- Comprehensive Educational Article (Cleaned of all raw LaTeX code artifacts) -->
+            <!-- Comprehensive Educational Article (plain HTML — no LaTeX) -->
             <article class="auc-article">
                 <h2>Understanding Dimensional Analysis and High-Precision Unit Conversion</h2>
-                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (lbf·s) while the spacecraft's navigation algorithm expected metric Newton-seconds (N·s) without executing a conversion factor of 4.448221615.</p>
+                <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (<span class="nowrap">lbf·s</span>) while the spacecraft's navigation algorithm expected metric Newton-seconds (<span class="nowrap">N·s</span>) without executing a conversion factor of 4.448221615.</p>
                 <p>The <strong>Advanced Unit Converter</strong> eliminates multi-page lookup friction by unifying 28 dimensionally isolated categories—spanning everyday weights and measures, rotational kinematics, fluid mechanics, thermodynamics, digital bandwidth, electromagnetism, and analytical chemistry—under a single double-precision conversion engine. Instead of relying on rounded three-digit approximations, the engine routes every calculation through authoritative <a href="https://www.nist.gov/pml/owm/metric-si/si-units" target="_blank" rel="noopener">International System of Units (SI)</a> base standards and exact <a href="https://www.nist.gov/pml/special-publication-811" target="_blank" rel="noopener">NIST Special Publication 811</a> definitions.</p>
 
                 <h2>How the Centralized Base-Pivot Conversion Engine Works</h2>
                 <p>A naive unit converter spanning 12 units in a single category would require 12 × 11 = 132 separate hardcoded formulas, creating a high risk of asymmetric rounding drift when converting from Unit A to Unit B and back to Unit A. To guarantee mathematical reversibility and zero cumulative drift, this calculator implements a <strong>two-stage base-pivot architecture</strong>:</p>
                 <ol>
-                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value x in source unit U<sub>from</sub> is first converted to the category's fundamental SI base unit B using an exact scaling factor k<sub>from</sub> (or an affine offset function for non-linear scales).</li>
-                    <li><strong>Projection to the Target Unit:</strong> The canonical base value B is then divided by the exact scaling factor k<sub>to</sub> of the target unit U<sub>to</sub>.</li>
+                    <li><strong>Normalization to the SI Canonical Base Unit:</strong> Any user input value <var>x</var> in source unit <var>U</var><sub>from</sub> is first converted to the category's fundamental SI base unit <var>B</var> using an exact scaling factor <var>k</var><sub>from</sub> (or an affine offset function for non-linear scales).</li>
+                    <li><strong>Projection to the Target Unit:</strong> The canonical base value <var>B</var> is then divided by the exact scaling factor <var>k</var><sub>to</sub> of the target unit <var>U</var><sub>to</sub>.</li>
                 </ol>
 
                 <div class="auc-formula-card">
-                    Linear Pivot Formula:   y = x × ( k_from / k_to )<br>
+                    Linear Pivot Formula:   y = x &times; ( k_from / k_to )<br>
                     Affine Offset Formula:  y = f_to⁻¹( f_from(x) )
                 </div>
 
-                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing x × (k<sub>from</sub> / k<sub>to</sub>) internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
+                <p>Because IEEE 754 64-bit floating-point arithmetic maintains 53 bits of significand precision (roughly 15 to 17 significant decimal digits), computing <var>x</var> × (<var>k</var><sub>from</sub> / <var>k</var><sub>to</sub>) internally before formatting the output ensures that round-trip conversions remain exact up to your selected decimal threshold.</p>
 
                 <h3>Affine Offset Transformations in Thermodynamic Temperature Scales</h3>
                 <p>Unlike length, mass, or pressure—where zero marks the complete absence of the physical quantity—everyday temperature scales use arbitrary historical zero points. Converting between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) requires adjusting both the scale slope and the zero intercept via Kelvin as the absolute thermodynamic pivot:</p>
 
                 <div class="auc-formula-card">
-                    Celsius to Kelvin:      T(K) = T(°C) + 273.15<br>
-                    Fahrenheit to Kelvin:   T(K) = (T(°F) + 459.67) × (5 / 9)<br>
-                    Rankine to Kelvin:      T(K) = T(°R) × (5 / 9)<br>
-                    Kelvin to Fahrenheit:   T(°F) = T(K) × (9 / 5) - 459.67
+                    Celsius to Kelvin:      T(K) = T(&deg;C) + 273.15<br>
+                    Fahrenheit to Kelvin:   T(K) = (T(&deg;F) + 459.67) &times; (5 / 9)<br>
+                    Rankine to Kelvin:      T(K) = T(&deg;R) &times; (5 / 9)<br>
+                    Kelvin to Fahrenheit:   T(&deg;F) = T(K) &times; (9 / 5) - 459.67
                 </div>
 
                 <div class="auc-surface-box">
-                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero (0 K, -273.15 °C, -459.67 °F, or 0 °R). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
+                    <strong>Physical Boundary Enforcement:</strong> By the Third Law of Thermodynamics, classical thermal energy cannot drop below absolute zero (0 K, −273.15 °C, −459.67 °F, or 0 °R). If you enter a value below absolute zero in the Temperature category, the engine halts calculation and explains which physical boundary was violated rather than displaying an invalid number.
                 </div>
 
                 <h2>Critical Engineering and Digital Distinctions</h2>
@@ -629,8 +1207,8 @@
                 <h3>1. Decimal SI Storage (MB, GB, TB) vs. Binary IEC Storage (MiB, GiB, TiB)</h3>
                 <p>One of the most persistent sources of confusion in computer science is the discrepancy between base-10 decimal prefixes standardized by the <a href="https://www.bipm.org/en/measurement-units/si-prefixes" target="_blank" rel="noopener">International Bureau of Weights and Measures (BIPM)</a> and base-2 binary prefixes standardized by the International Electrotechnical Commission (IEC 80000-13):</p>
                 <ul>
-                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of 10³ = 1,000. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly 1,000,000,000,000 bytes (10¹² B).</li>
-                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of 2¹⁰ = 1,024. RAM modules and operating system file managers calculate a Gibibyte (GiB) as 1,024³ = 1,073,741,824 bytes (2³⁰ B).</li>
+                    <li><strong>Decimal Prefixes (kB, MB, GB, TB):</strong> Scale by powers of 10<sup>3</sup> = 1,000. Solid-state drive (SSD) and hard drive manufacturers label a 1 Terabyte drive as exactly 1,000,000,000,000 bytes (10<sup>12</sup> B).</li>
+                    <li><strong>Binary Prefixes (KiB, MiB, GiB, TiB):</strong> Scale by powers of 2<sup>10</sup> = 1,024. RAM modules and operating system file managers calculate a Gibibyte (GiB) as 1,024<sup>3</sup> = 1,073,741,824 bytes (2<sup>30</sup> B).</li>
                     <li><strong>Bits vs. Bytes in Network Throughput:</strong> Data transfer rates across fiber, Ethernet, and cellular links are quoted in decimal bits per second (Mbps, Gbps), while local disk write speeds are measured in Bytes per second (MB/s) or Mebibytes per second (MiB/s). Because 1 Byte = 8 bits, dividing your network bit rate by 8 yields the raw byte transfer ceiling.</li>
                 </ul>
 
@@ -638,11 +1216,11 @@
                 <p>In hydraulic and pipeline engineering, fluid viscosity is expressed in two fundamentally different dimensional forms that cannot be directly converted without knowing the fluid's mass density (ρ):</p>
                 <ul>
                     <li><strong>Dynamic (Absolute) Viscosity (μ):</strong> Quantifies internal shear stress per unit velocity gradient (Pa·s or N·s/m²). In CGS laboratory tables, it is widely cited in Poise (P) and centipoise (cP), where 1 cP = 0.001 Pa·s (approx. the viscosity of water at 20 °C).</li>
-                    <li><strong>Kinematic Viscosity (ν):</strong> Defined as ν = μ / ρ, with dimensions of L²·T⁻¹ (m²/s). In petroleum and lubrication testing, it is measured in Stokes (St) and centistokes (cSt), where 1 cSt = 1 mm²/s = 10⁻⁶ m²/s.</li>
+                    <li><strong>Kinematic Viscosity (ν):</strong> Defined as ν = μ / ρ, with dimensions of L²·T⁻¹ (m²/s). In petroleum and lubrication testing, it is measured in Stokes (St) and centistokes (cSt), where 1 cSt = 1 mm²/s = 10<sup>−6</sup> m²/s.</li>
                 </ul>
 
                 <h3>3. Mass (lb, kg) vs. Mechanical Force (lbf, N) and Torque (N·m, lbf·ft)</h3>
-                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass (1 lb = 0.45359237 kg) exerts a downward force of one pound-force (1 lbf) only under standard Earth gravitational acceleration (g₀ = 9.80665 m/s²). Multiplying 0.45359237 kg × 9.80665 m/s² yields the exact definition 1 lbf = 4.4482216152605 N. Similarly, although <strong>Torque</strong> (N·m) and <strong>Energy/Work</strong> (J) share the base dimensional product kg·m²/s², torque is a vector cross-product (r × F) whereas energy is a scalar dot-product (F · d), so they are kept in separate categories to prevent semantic errors.</p>
+                <p>In geotechnical and structural calculations, mixing mass and weight-force causes grave errors when gravity is omitted. One avoirdupois pound-mass (1 lb = 0.45359237 kg) exerts a downward force of one pound-force (1 lbf) only under standard Earth gravitational acceleration (<var>g</var><sub>0</sub> = 9.80665 m/s²). Multiplying 0.45359237 kg × 9.80665 m/s² yields the exact definition 1 lbf = 4.4482216152605 N. Similarly, although <strong>Torque</strong> (N·m) and <strong>Energy/Work</strong> (J) share the base dimensional product kg·m²/s², torque is a vector cross-product (<strong>r</strong> × <strong>F</strong>) whereas energy is a scalar dot-product (<strong>F</strong> · <strong>d</strong>), so they are kept in separate categories to prevent semantic errors.</p>
 
                 <h2>Authoritative Reference Table of Exact Conversion Constants</h2>
                 <p>The table below summarizes the canonical SI base units and exact reference conversion constants implemented inside the calculator engine:</p>
@@ -719,7 +1297,7 @@
                                 <td>Energy &amp; Thermal</td>
                                 <td>Energy / Work</td>
                                 <td>Joule (J)</td>
-                                <td>IT British Thermal Unit (BTU_IT)</td>
+                                <td>IT British Thermal Unit (BTU<sub>IT</sub>)</td>
                                 <td class="num">1055.05585262 J (exact)</td>
                             </tr>
                             <tr>
@@ -766,20 +1344,20 @@
                 <p>A cloud server administrator installs a drive marketed as 2 TB decimal capacity and wants to verify the exact binary GiB capacity reported by the Linux kernel:</p>
                 <ol>
                     <li><strong>Select Category &amp; Inputs:</strong> Choose <em>Digital &rarr; Data Storage</em>, enter <code>2</code>, set From Unit to <em>Terabyte (TB - Decimal)</em>, and To Unit to <em>Gibibyte (GiB - Binary)</em>.</li>
-                    <li><strong>Convert to Base Bytes:</strong> 2 TB × 10¹² B/TB = 2,000,000,000,000 Bytes.</li>
-                    <li><strong>Project to Binary GiB:</strong> Divide by 2³⁰ Bytes/GiB (1,073,741,824 B):
-                        <br><code>2,000,000,000,000 / 1,073,741,824 = 1,862.645149 GiB</code>
+                    <li><strong>Convert to Base Bytes:</strong> 2 TB × 10<sup>12</sup> B/TB = 2,000,000,000,000 Bytes.</li>
+                    <li><strong>Project to Binary GiB:</strong> Divide by 2<sup>30</sup> Bytes/GiB (1,073,741,824 B):
+                        <div class="auc-formula-card">2,000,000,000,000 / 1,073,741,824 = 1,862.645149 GiB</div>
                     </li>
                 </ol>
 
                 <h2>Assumptions, Limitations, and Practical Tips</h2>
                 <ul>
-                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force kgf and pound-force lbf) assume standard sea-level acceleration g₀ = 9.80665 m/s². Local gravitational acceleration varies by latitude and altitude.</li>
-                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions (1 cal_IT = 4.1868 J and 1 BTU_IT = 1,055.05585262 J).</li>
-                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as 365.2425 days (31,556,952 seconds) and an average month as 1/12 of a mean Gregorian year (30.436875 days).</li>
+                    <li><strong>Standard Gravity Assumption:</strong> Force-to-mass bridge equivalents (such as kilogram-force (kgf) and pound-force (lbf)) assume standard sea-level acceleration <var>g</var><sub>0</sub> = 9.80665 m/s². Local gravitational acceleration varies by latitude and altitude (roughly 9.78 m/s² at the equator to 9.83 m/s² at the poles).</li>
+                    <li><strong>Thermochemical vs. International Table (IT) Calories &amp; BTUs:</strong> Following modern mechanical engineering practice, this converter uses the International Steam Table (IT) definitions (1 cal<sub>IT</sub> = 4.1868 J and 1 BTU<sub>IT</sub> = 1,055.05585262 J). Chemical thermodynamics papers occasionally use the thermochemical calorie (4.184 J).</li>
+                    <li><strong>Calendar Month &amp; Year Approximations:</strong> In the Time category, a standard mean Gregorian year is defined as 365.2425 days (31,556,952 seconds) and an average month as 1/12 of a mean Gregorian year (30.436875 days). For exact calendar-date intervals accounting for specific leap years, use a dedicated date-interval calculator.</li>
                 </ul>
 
-                <!-- Visible FAQ Section Matching FAQPage Schema Exactly -->
+                <!-- Visible FAQ Section Matching FAQPage Schema Exactly (8 FAQs, Zero Inline Microdata) -->
                 <h2>Frequently Asked Questions (FAQs)</h2>
                 <div class="auc-faq-list">
                     <details class="auc-faq-item" open>
@@ -825,15 +1403,18 @@
             </article>
         </main>
 
+        <!-- Empty Sidebar Placeholder for Global Script Injection (P5) -->
         <aside class="sidebar"></aside>
     </div>
 
-    <!-- Scoped Page-Specific Conversion Engine Script -->
+    <!-- Scoped Page-Specific Conversion Engine (IIFE to avoid Global Pollution) -->
     <script>
     (function () {
         "use strict";
 
+        // Centralized 28-Category Conversion Database (Exact NIST / BIPM / IEC Factors)
         const REGISTRY = {
+            // ==================== 1. EVERYDAY ====================
             length: {
                 group: "Everyday", name: "Length & Distance", base: "m",
                 units: {
@@ -963,6 +1544,8 @@
                     yr:  { name: "Mean Gregorian Year (yr)", factor: 31556952 }
                 }
             },
+
+            // ==================== 2. MOTION ====================
             speed: {
                 group: "Motion", name: "Speed & Velocity", base: "m/s",
                 units: {
@@ -1015,6 +1598,8 @@
                     rpm: { name: "Cycles per minute (CPM / RPM)", factor: 1 / 60 }
                 }
             },
+
+            // ==================== 3. ENGINEERING ====================
             pressure: {
                 group: "Engineering", name: "Pressure & Stress", base: "Pa",
                 units: {
@@ -1100,6 +1685,8 @@
                     ft2s: { name: "Square foot per second (ft²/s)", factor: 0.09290304 }
                 }
             },
+
+            // ==================== 4. ENERGY & THERMAL ====================
             energy: {
                 group: "Energy & Thermal", name: "Energy & Work", base: "J",
                 units: {
@@ -1149,6 +1736,8 @@
                     calscmC: { name: "Calorie/(s·cm·°C)", factor: 418.68 }
                 }
             },
+
+            // ==================== 5. DIGITAL ====================
             data_storage: {
                 group: "Digital", name: "Digital Data Storage", base: "B",
                 units: {
@@ -1182,6 +1771,8 @@
                     MiBps:{ name: "Mebibyte per second (MiB/s)", factor: 8388608 }
                 }
             },
+
+            // ==================== 6. ELECTRICAL ====================
             current: {
                 group: "Electrical", name: "Electric Current", base: "A",
                 units: {
@@ -1244,6 +1835,8 @@
                     nH: { name: "Nanohenry (nH)", factor: 1e-9 }
                 }
             },
+
+            // ==================== 7. SCIENTIFIC ====================
             molar_mass: {
                 group: "Scientific", name: "Molar Mass", base: "kg/mol",
                 units: {
@@ -1287,6 +1880,7 @@
             }
         };
 
+        // DOM References
         const elCategory = document.getElementById("auc-category");
         const elSearch = document.getElementById("auc-search");
         const elInputVal = document.getElementById("auc-input-val");
@@ -1328,11 +1922,15 @@
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 return raw ? JSON.parse(raw) : DEFAULT_PRESETS;
-            } catch (e) { return DEFAULT_PRESETS; }
+            } catch (e) {
+                return DEFAULT_PRESETS;
+            }
         }
 
         function saveFavorites(list) {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10))); } catch (e) {}
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
+            } catch (e) { /* Ignore storage quota errors */ }
         }
 
         let favorites = loadFavorites();
@@ -1342,18 +1940,39 @@
             return checked ? checked.value : "auto";
         }
 
+        function toSuperscript(str) {
+            var map = { "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","-":"⁻","+":"" };
+            return String(str).split("").map(function (c) { return map[c] !== undefined ? map[c] : c; }).join("");
+        }
+
+        function formatScientific(num, decimals) {
+            var parts = num.toExponential(Math.min(decimals, 8)).split("e");
+            var mantissa = parts[0];
+            if (mantissa.indexOf(".") !== -1) mantissa = mantissa.replace(/0+$/, "").replace(/\.$/, "");
+            return mantissa + " × 10" + toSuperscript(parseInt(parts[1], 10));
+        }
+
         function formatNumber(num, decimals, mode) {
             if (!Number.isFinite(num)) return "Undefined";
             if (Object.is(num, -0) || Math.abs(num) < 1e-15) num = 0;
             if (num === 0) return "0";
 
             const abs = Math.abs(num);
-            if (mode === "scientific" || (mode === "auto" && (abs >= 1e9 || abs < 1e-5))) {
-                return num.toExponential(Math.min(decimals, 8)).replace(/\.?0+e/, "e");
+            const roundsToZero = abs < Math.pow(10, -decimals) / 2;
+            if (mode === "scientific" || abs >= 1e15 || roundsToZero) {
+                return formatScientific(num, decimals);
             }
-            const factor = Math.pow(10, decimals);
-            const rounded = Math.round((num + Number.EPSILON) * factor) / factor;
-            return rounded.toLocaleString("en-US", { maximumFractionDigits: decimals, useGrouping: mode === "standard" || mode === "auto" });
+            return num.toLocaleString("en-US", {
+                maximumFractionDigits: decimals,
+                useGrouping: true
+            });
+        }
+
+        // Short display symbol, e.g. "Square Kilometer (km²)" -> "km²"
+        function unitSymbol(unitObj, key) {
+            var m = unitObj.name.match(/\(([^()]+)\)\s*$/);
+            if (m && m[1].length <= 14 && m[1].indexOf(" ") === -1) return m[1];
+            return key;
         }
 
         function populateCategories(filterText) {
@@ -1368,279 +1987,7 @@
                 const cat = REGISTRY[catKey];
                 if (activeGroup !== "all" && cat.group !== activeGroup) return;
 
+                // Match category name or any unit inside category
                 const catMatch = cat.name.toLowerCase().indexOf(query) !== -1 || cat.group.toLowerCase().indexOf(query) !== -1;
                 const unitMatch = Object.keys(cat.units).some(function (uKey) {
-                    return uKey.toLowerCase().indexOf(query) !== -1 || cat.units[uKey].name.toLowerCase().indexOf(query) !== -1;
-                });
-
-                if (!query || catMatch || unitMatch) {
-                    if (!grouped[cat.group]) grouped[cat.group] = [];
-                    grouped[cat.group].push({ key: catKey, name: cat.name });
-                    matchCount++;
-                }
-            });
-
-            Object.keys(grouped).forEach(function (grpName) {
-                const optgroup = document.createElement("optgroup");
-                optgroup.label = grpName;
-                grouped[grpName].forEach(function (item) {
-                    const opt = document.createElement("option");
-                    opt.value = item.key;
-                    opt.textContent = item.name;
-                    optgroup.appendChild(opt);
-                });
-                elCategory.appendChild(optgroup);
-            });
-
-            elCatCount.textContent = matchCount + (matchCount === 1 ? " domain" : " domains");
-
-            if (elCategory.querySelector('option[value="' + currentCat + '"]')) {
-                elCategory.value = currentCat;
-            } else if (elCategory.options.length > 0) {
-                elCategory.selectedIndex = 0;
-            }
-            populateUnitSelectors(query);
-        }
-
-        function populateUnitSelectors(unitFilterQuery) {
-            const catKey = elCategory.value;
-            if (!catKey || !REGISTRY[catKey]) return;
-
-            const cat = REGISTRY[catKey];
-            const prevFrom = elFromUnit.value;
-            const prevTo = elToUnit.value;
-
-            elFromUnit.innerHTML = "";
-            elToUnit.innerHTML = "";
-
-            const unitKeys = Object.keys(cat.units);
-            unitKeys.forEach(function (uKey) {
-                const uObj = cat.units[uKey];
-                elFromUnit.add(new Option(uObj.name, uKey));
-                elToUnit.add(new Option(uObj.name, uKey));
-            });
-
-            if (unitFilterQuery) {
-                const matchedKey = unitKeys.find(function (k) {
-                    return cat.units[k].name.toLowerCase().indexOf(unitFilterQuery) !== -1;
-                });
-                if (matchedKey) elFromUnit.value = matchedKey;
-            } else if (unitKeys.indexOf(prevFrom) !== -1) {
-                elFromUnit.value = prevFrom;
-            }
-
-            if (unitKeys.indexOf(prevTo) !== -1 && prevTo !== elFromUnit.value) {
-                elToUnit.value = prevTo;
-            } else if (unitKeys.length > 1) {
-                elToUnit.selectedIndex = elFromUnit.selectedIndex === 0 ? 1 : 0;
-            }
-
-            elBaseIndicator.textContent = "Base: " + cat.base;
-            calculate();
-        }
-
-        function showError(msg) {
-            if (!msg) {
-                elError.textContent = "";
-                elError.classList.remove("visible");
-                return;
-            }
-            elError.textContent = msg;
-            elError.classList.add("visible");
-        }
-
-        function calculate() {
-            const catKey = elCategory.value;
-            if (!catKey || !REGISTRY[catKey]) return;
-
-            const cat = REGISTRY[catKey];
-            const rawText = elInputVal.value.trim();
-            const decimals = parseInt(elPrecision.value, 10) || 6;
-            const mode = getNotationMode();
-            const fromKey = elFromUnit.value;
-            const toKey = elToUnit.value;
-
-            if (rawText === "") {
-                showError("Enter a numeric value above to calculate the conversion.");
-                elPrimaryOutput.textContent = "—";
-                elFullEquation.textContent = "Awaiting numeric input...";
-                return;
-            }
-
-            const val = Number(rawText);
-            if (!Number.isFinite(val)) {
-                showError("Please enter a valid finite number.");
-                elPrimaryOutput.textContent = "Invalid Input";
-                return;
-            }
-
-            const fromObj = cat.units[fromKey];
-            const toObj = cat.units[toKey];
-            let baseVal = 0;
-            let result = 0;
-            let reverseOne = 0;
-            let formulaDisplay = "";
-
-            if (cat.affine) {
-                baseVal = fromObj.toBase(val);
-                if (baseVal < -1e-9) {
-                    showError("Physical Boundary Error: " + val + " " + fromKey + " is below absolute zero.");
-                    elPrimaryOutput.textContent = "Below Absolute Zero";
-                    return;
-                }
-                result = toObj.fromBase(baseVal);
-                reverseOne = fromObj.fromBase(toObj.toBase(1));
-                formulaDisplay = fromObj.formulaTo(toKey);
-            } else {
-                baseVal = val * fromObj.factor;
-                result = baseVal / toObj.factor;
-                const scaleFactor = fromObj.factor / toObj.factor;
-                reverseOne = toObj.factor / fromObj.factor;
-                formulaDisplay = "y = x × " + formatNumber(scaleFactor, 8, "auto");
-            }
-
-            showError("");
-
-            const formattedMain = formatNumber(result, decimals, mode);
-            const formattedIn = formatNumber(val, decimals, "Standard");
-
-            elResCategoryTag.textContent = cat.group + " • " + cat.name;
-            elPrimaryOutput.textContent = formattedMain + " " + toKey;
-            elFullEquation.textContent = formattedIn + " " + fromObj.name + " = " + formattedMain + " " + toObj.name;
-            elReverseText.textContent = "1 " + toKey + " = " + formatNumber(reverseOne, decimals, mode) + " " + fromKey;
-            elBaseEquiv.textContent = formatNumber(baseVal, decimals, mode) + " " + cat.base;
-            elFormulaText.textContent = formulaDisplay;
-
-            const allKeys = Object.keys(cat.units);
-            elAllUnitsCount.textContent = allKeys.length + " units";
-            elAllUnitsGrid.innerHTML = "";
-            allKeys.forEach(function (uKey) {
-                const u = cat.units[uKey];
-                const eqVal = cat.affine ? u.fromBase(baseVal) : (baseVal / u.factor);
-                const row = document.createElement("div");
-                row.className = "auc-unit-row";
-                const nameSpan = document.createElement("span");
-                nameSpan.textContent = u.name;
-                const valStrong = document.createElement("strong");
-                valStrong.textContent = formatNumber(eqVal, decimals, mode) + " " + uKey;
-                row.appendChild(nameSpan);
-                row.appendChild(valStrong);
-                elAllUnitsGrid.appendChild(row);
-            });
-
-            updateFavButtonState();
-        }
-
-        function isCurrentPairSaved() {
-            const cat = elCategory.value;
-            const from = elFromUnit.value;
-            const to = elToUnit.value;
-            return favorites.some(function (f) { return f.cat === cat && f.from === from && f.to === to; });
-        }
-
-        function updateFavButtonState() {
-            if (isCurrentPairSaved()) {
-                elFavToggle.textContent = "★ Saved";
-                elFavToggle.classList.add("saved");
-            } else {
-                elFavToggle.textContent = "☆ Save Pair";
-                elFavToggle.classList.remove("saved");
-            }
-        }
-
-        function renderFavoriteChips() {
-            elQuickPairs.innerHTML = "";
-            favorites.forEach(function (pair) {
-                if (!REGISTRY[pair.cat]) return;
-                const chip = document.createElement("button");
-                chip.type = "button";
-                chip.className = "auc-chip";
-                chip.textContent = pair.label || (pair.from + " → " + pair.to);
-                chip.addEventListener("click", function () {
-                    activeGroup = "all";
-                    groupTabs.forEach(function (t) {
-                        t.classList.toggle("active", t.dataset.group === "all");
-                        t.setAttribute("aria-selected", t.dataset.group === "all" ? "true" : "false");
-                    });
-                    elSearch.value = "";
-                    populateCategories("");
-                    elCategory.value = pair.cat;
-                    populateUnitSelectors("");
-                    elFromUnit.value = pair.from;
-                    elToUnit.value = pair.to;
-                    calculate();
-                });
-                elQuickPairs.appendChild(chip);
-            });
-        }
-
-        groupTabs.forEach(function (tab) {
-            tab.addEventListener("click", function () {
-                activeGroup = tab.dataset.group;
-                groupTabs.forEach(function (t) {
-                    const isAct = t === tab;
-                    t.classList.toggle("active", isAct);
-                    t.setAttribute("aria-selected", isAct ? "true" : "false");
-                });
-                populateCategories(elSearch.value);
-            });
-        });
-
-        elSearch.addEventListener("input", function () { populateCategories(elSearch.value); });
-        elCategory.addEventListener("change", function () { populateUnitSelectors(""); });
-        elInputVal.addEventListener("input", calculate);
-        elPrecision.addEventListener("change", calculate);
-        elFromUnit.addEventListener("change", calculate);
-        elToUnit.addEventListener("change", calculate);
-        elCalcBtn.addEventListener("click", calculate);
-
-        document.querySelectorAll('input[name="auc-notation"]').forEach(function (radio) {
-            radio.addEventListener("change", calculate);
-        });
-
-        elSwapBtn.addEventListener("click", function () {
-            const temp = elFromUnit.value;
-            elFromUnit.value = elToUnit.value;
-            elToUnit.value = temp;
-            calculate();
-        });
-
-        elResetBtn.addEventListener("click", function () {
-            activeGroup = "all";
-            groupTabs.forEach(function (t) {
-                const isAll = t.dataset.group === "all";
-                t.classList.toggle("active", isAll);
-                t.setAttribute("aria-selected", isAll ? "true" : "false");
-            });
-            elSearch.value = "";
-            elInputVal.value = "1";
-            elPrecision.value = "6";
-            const autoRadio = document.querySelector('input[name="auc-notation"][value="auto"]');
-            if (autoRadio) autoRadio.checked = true;
-            populateCategories("");
-            elCategory.value = "length";
-            populateUnitSelectors("");
-        });
-
-        elFavToggle.addEventListener("click", function () {
-            const cat = elCategory.value;
-            const from = elFromUnit.value;
-            const to = elToUnit.value;
-            if (isCurrentPairSaved()) {
-                favorites = favorites.filter(function (f) { return !(f.cat === cat && f.from === from && f.to === to); });
-            } else {
-                favorites.unshift({ cat: cat, from: from, to: to, label: from + " → " + to });
-            }
-            saveFavorites(favorites);
-            updateFavButtonState();
-            renderFavoriteChips();
-        });
-
-        populateCategories("");
-        renderFavoriteChips();
-    })();
-    </script>
-
-    <script src="/navigation.js" defer></script>
-</body>
-</html>
+                    return uKey.toLowerCase().indexOf(qu
