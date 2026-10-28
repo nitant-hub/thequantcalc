@@ -132,21 +132,12 @@
 :root{
   --bg:#eef2f7;--text:#1e293b;--muted:#475569;--head:#0f172a;--line:#d5deea;--card:#ffffff;--soft:#f4f7fb;
   --accent:#0f766e;--accent2:#4f46e5;--link:#1d4ed8;
-  --article-bg:#f0fdf4;--article-soft:#ecfdf5;
+  --article-bg:#f1f5f9;--article-soft:#f8fafc;
 }
 :root[data-theme="dark"]{
   --bg:#0b1220;--text:#d3dbe8;--muted:#a3b0c4;--head:#f1f5f9;--line:#25324a;--card:#111a2e;--soft:#0f1829;
   --accent:#5eead4;--accent2:#a5b4fc;--link:#93c5fd;
-  --article-bg:#0a1f18;--article-soft:#0c241c;
-}
-/* Health category surface tokens – subtle professional green undertone */
-html[data-category="health"]{
-  --article-bg:#f0fdf4;
-  --article-soft:#ecfdf5;
-}
-html[data-category="health"][data-theme="dark"]{
-  --article-bg:#0a1f18;
-  --article-soft:#0c241c;
+  --article-bg:#0f172a;--article-soft:#1e293b;
 }
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.58}
@@ -160,7 +151,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .breadcrumb a:hover{text-decoration:underline}
 .outside-title,.primary-title{margin:0 0 12px;font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;line-height:1.25;letter-spacing:-0.035em;color:var(--head);text-align:left}
 
-/* ========== Dark Jade & Cyber Mint Calculator (kept + slightly larger text) ========== */
+/* ========== Dark Jade & Cyber Mint Calculator ========== */
 .calculator-ui-box{
   width:min(100%,500px);max-width:500px;margin:0 auto 26px auto;align-self:center;
   background:linear-gradient(165deg,#030E09 0%,#061A14 55%,#071F17 100%);
@@ -242,7 +233,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,B
 .tile-val{margin:0;font-size:15px;font-weight:700;color:#F0FDF4}
 @media (max-width:380px){.tiles{grid-template-columns:1fr}}
 
-/* Article – improved health-category surfaces + better typography density */
+/* Article – soft neutral background matching screenshot */
 article{
   background:var(--article-bg);
   border-radius:16px;
@@ -256,9 +247,6 @@ article h3{margin:1.2em 0 0.4em;font-size:clamp(1.08rem,2.2vw,1.22rem);font-weig
 article p{margin:0 0 0.85em;font-size:16.5px;line-height:1.62;color:var(--text)}
 article ul,article ol{margin:0 0 1em;padding-left:1.35em;font-size:16.5px;line-height:1.55}
 article li{margin-bottom:0.35em}
-article table{width:100%;border-collapse:collapse;font-size:15px;margin:1em 0}
-article th,article td{padding:9px 11px;border:1px solid var(--line);text-align:left}
-article th{background:var(--article-soft);font-weight:650;color:var(--head)}
 .formula-box{
   background:var(--article-soft);border:1px solid var(--line);border-radius:12px;
   padding:14px 16px;margin:1em 0;font-size:15.5px;line-height:1.5;
@@ -272,22 +260,51 @@ article th{background:var(--article-soft);font-weight:650;color:var(--head)}
   flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;
 }
-details.faq{border-bottom:1px solid var(--line);padding:12px 0}
-details.faq:last-child{border-bottom:none}
+
+/* FAQ – clean numbered cards matching screenshot style */
+.faq-list{display:flex;flex-direction:column;gap:10px;margin:1.2em 0 0.5em}
+details.faq{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  overflow:hidden;
+}
+:root[data-theme="dark"] details.faq{
+  background:#1e293b;
+  border-color:#334155;
+}
 details.faq summary{
-  cursor:pointer;font-weight:650;font-size:16px;color:var(--head);list-style:none;
-  padding:2px 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:15.5px;
+  color:var(--head);
+  list-style:none;
+  padding:14px 16px;
+  margin:0;
+  user-select:none;
 }
 details.faq summary::-webkit-details-marker{display:none}
-details.faq summary::before{
-  content:"+ ";
-  font-weight:700;
-  color:var(--accent);
-  margin-right:6px;
+details.faq summary::marker{display:none;content:""}
+details.faq summary .faq-icon{
+  flex-shrink:0;
+  font-size:12px;
+  color:var(--muted);
+  transition:transform 0.2s ease;
 }
-details.faq[open] summary::before{content:"− "}
-details.faq[open] summary{margin-bottom:8px}
-details.faq p{margin:0;font-size:15.5px;line-height:1.58;color:var(--text)}
+details.faq[open] summary .faq-icon{
+  transform:rotate(90deg);
+}
+details.faq .faq-answer{
+  padding:0 16px 14px 38px;
+  font-size:15px;
+  line-height:1.58;
+  color:var(--text);
+}
+details.faq .faq-answer p{margin:0}
+
 .sidebar{min-height:40px}
 @media (max-width:900px){.sidebar{display:none}}
 </style>
@@ -425,37 +442,55 @@ details.faq p{margin:0;font-size:15.5px;line-height:1.58;color:var(--text)}
 
       <h2>Frequently Asked Questions</h2>
 
-      **Summary:**
-How is the next period date calculated?
-        <p>The next period start date is calculated by adding your average cycle length (in days) to the first day of your last menstrual period (LMP). For example, if your last period began on 1 March and your cycle length is 28 days, the next period is expected on 29 March.</p>
+      <div class="faq-list">
+        **Summary:**
+<span class="faq-icon">▶</span> 1. How is the next period date calculated?
+          <div class="faq-answer">
+            <p>The next period start date is calculated by adding your average cycle length (in days) to the first day of your last menstrual period (LMP). For example, if your last period began on 1 March and your cycle length is 28 days, the next period is expected on 29 March.</p>
+          </div>
 
-      **Summary:**
-What is a normal menstrual cycle length?
-        <p>A normal cycle length is usually between 21 and 35 days, measured from the first day of one period to the first day of the next. The commonly cited average is 28 days, but only a minority of people have an exactly 28-day cycle. Consistency matters more than matching the textbook number.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 2. What is a normal menstrual cycle length?
+          <div class="faq-answer">
+            <p>A normal cycle length is usually between 21 and 35 days, measured from the first day of one period to the first day of the next. The commonly cited average is 28 days, but only a minority of people have an exactly 28-day cycle. Consistency matters more than matching the textbook number.</p>
+          </div>
 
-      **Summary:**
-How is ovulation estimated?
-        <p>Ovulation is estimated by subtracting a typical luteal-phase length of 14 days from the cycle length. On a 28-day cycle this places ovulation around day 14. The fertile window is then approximated as the five days before ovulation plus the day of ovulation itself, because sperm can survive several days.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 3. How is ovulation estimated?
+          <div class="faq-answer">
+            <p>Ovulation is estimated by subtracting a typical luteal-phase length of 14 days from the cycle length. On a 28-day cycle this places ovulation around day 14. The fertile window is then approximated as the five days before ovulation plus the day of ovulation itself, because sperm can survive several days.</p>
+          </div>
 
-      **Summary:**
-Can this calculator be used as contraception?
-        <p>No. Calendar-based predictions have a relatively high typical-use failure rate and are not reliable enough to prevent pregnancy on their own. Always use a proven method of contraception if pregnancy prevention is your goal, and consult a healthcare professional for personal advice.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 4. Can this calculator be used as contraception?
+          <div class="faq-answer">
+            <p>No. Calendar-based predictions have a relatively high typical-use failure rate and are not reliable enough to prevent pregnancy on their own. Always use a proven method of contraception if pregnancy prevention is your goal, and consult a healthcare professional for personal advice.</p>
+          </div>
 
-      **Summary:**
-Why do my cycles vary from month to month?
-        <p>Stress, travel, illness, significant weight change, intense exercise, sleep disruption and hormonal fluctuations can all shift cycle length. Variation of up to about seven days is common. Larger or persistent changes should be discussed with a doctor.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 5. Why do my cycles vary from month to month?
+          <div class="faq-answer">
+            <p>Stress, travel, illness, significant weight change, intense exercise, sleep disruption and hormonal fluctuations can all shift cycle length. Variation of up to about seven days is common. Larger or persistent changes should be discussed with a doctor.</p>
+          </div>
 
-      **Summary:**
-How many cycles should I track for a reliable average?
-        <p>Track at least three consecutive cycles for a useful average. Six or more cycles give a more stable personal average and better reveal your usual range of variation.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 6. How many cycles should I track for a reliable average?
+          <div class="faq-answer">
+            <p>Track at least three consecutive cycles for a useful average. Six or more cycles give a more stable personal average and better reveal your usual range of variation.</p>
+          </div>
 
-      **Summary:**
-What is the difference between cycle length and period duration?
-        <p>Cycle length is the number of days from the first day of one period to the first day of the next period. Period duration is simply how many days the bleeding lasts (typically 3–7 days). They are separate measurements.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 7. What is the difference between cycle length and period duration?
+          <div class="faq-answer">
+            <p>Cycle length is the number of days from the first day of one period to the first day of the next period. Period duration is simply how many days the bleeding lasts (typically 3–7 days). They are separate measurements.</p>
+          </div>
 
-      **Summary:**
-Does the calculator store my data?
-        <p>No. All calculations run entirely in your browser. The dates and numbers you enter are not sent to any server and are not stored by TheQuantCalc.</p>
+        **Summary:**
+<span class="faq-icon">▶</span> 8. Does the calculator store my data?
+          <div class="faq-answer">
+            <p>No. All calculations run entirely in your browser. The dates and numbers you enter are not sent to any server and are not stored by TheQuantCalc.</p>
+          </div>
+      </div>
 
       <h2>Sources and Further Reading</h2>
       <p>Guidance on normal cycle ranges and fertility awareness draws on publicly available information from the American College of Obstetricians and Gynecologists (ACOG), the UK National Health Service (NHS), and peer-reviewed summaries of menstrual-cycle characteristics. Always prefer personalised medical advice over any online calculator when health decisions are involved.</p>
