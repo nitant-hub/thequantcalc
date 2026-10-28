@@ -54,6 +54,13 @@ function metaContent(html, name) {
   const m = html.match(new RegExp("<meta[^>]+name=[\"']" + name + "[\"'][^>]+content=[\"']([^\"']*)[\"']", "i"));
   return m ? m[1].trim() : "";
 }
+
+// Added helper to extract data-category from <html> tag
+function dataCategory(html) {
+  const m = html.match(/<html[^>]+data-category=["']([^"']+)["']/i);
+  return m ? mapCat(m[1]) : "";
+}
+
 function walk(dir) {
   let files = [];
   fs.readdirSync(dir, { withFileTypes: true }).forEach(e => {
@@ -85,10 +92,13 @@ SCAN_FOLDERS.forEach(folder => {
       }
     }
     const folderCat = folder !== "tools" ? mapCat(folder) : "";
-    const category = schemaCat || mapCat(metaContent(html, "category")) || folderCat || "utility";
+    
+    // Updated category priority chain to include dataCategory(html)
+    const category = schemaCat || dataCategory(html) || mapCat(metaContent(html, "category")) || folderCat || "utility";
+    
     const title = schemaName || pretty(file.replace(/\.html$/i, ""));
     const text = metaContent(html, "description") || "Open this free tool to calculate instantly.";
-        const p = "/" + rel;
+    const p = "/" + rel;
     if (seen[p.toLowerCase()]) return;
     seen[p.toLowerCase()] = 1;
     
