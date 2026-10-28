@@ -16,241 +16,143 @@
   <style>
     :root {
       color-scheme: light;
-      --page-bg: #f4f7fb;
-      --surface: #ffffff;
-      --surface-soft: #f7fafc;
-      --text: #172435;
-      --muted: #526174;
-      --border: #d8e1eb;
-      --accent: #087f69;
-      --accent-strong: #056653;
-      --accent-soft: #e0f7ef;
-      --focus: #087f69;
-      --shadow: 0 14px 38px rgba(12, 32, 54, .09);
-      --danger: #b42318;
-      --danger-bg: #fff0ee;
-      --info-bg: #eaf4ff;
-      --info-text: #173e65;
+      --page-bg:#f4f7fb; --surface:#fff; --surface-soft:#f7fafc;
+      --text:#172435; --muted:#526174; --border:#d8e1eb;
+      --accent:#087f69; --accent-strong:#056653; --accent-soft:#e0f7ef;
+      --focus:#087f69; --shadow:0 14px 38px rgba(12,32,54,.09);
+      --info-bg:#eaf4ff; --info-text:#173e65;
     }
     html[data-theme="dark"] {
-      color-scheme: dark;
-      --page-bg: #08111e;
-      --surface: #101d2c;
-      --surface-soft: #142436;
-      --text: #edf5ff;
-      --muted: #bdcbd9;
-      --border: #2c4054;
-      --accent: #52f0c0;
-      --accent-strong: #8af8d7;
-      --accent-soft: #12382f;
-      --focus: #52f0c0;
-      --shadow: 0 16px 42px rgba(0, 0, 0, .25);
-      --danger: #ffb4aa;
-      --danger-bg: #421e21;
-      --info-bg: #152d46;
-      --info-text: #d5eaff;
+      color-scheme:dark;
+      --page-bg:#08111e; --surface:#101d2c; --surface-soft:#142436;
+      --text:#edf5ff; --muted:#bdcbd9; --border:#2c4054;
+      --accent:#52f0c0; --accent-strong:#8af8d7; --accent-soft:#12382f;
+      --focus:#52f0c0; --shadow:0 16px 42px rgba(0,0,0,.25);
+      --info-bg:#152d46; --info-text:#d5eaff;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--page-bg);
-      color: var(--text);
-      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--page-bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--accent-strong);text-underline-offset:3px}
+    :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+    .tqc-page-grid{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(250px,.95fr);gap:24px;width:min(1240px,calc(100% - 32px));margin:24px auto 56px;align-items:start}
+    .main-body,.sidebar{min-width:0}.sidebar{min-height:1px}
+    .breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px;color:var(--muted);font-size:.88rem}
+    .breadcrumbs a{color:inherit}.breadcrumbs [aria-current="page"]{color:var(--text);font-weight:700}
+    .crumb-separator{opacity:.65}
+    .page-heading{margin:0 0 8px;font-size:clamp(1.65rem,3.2vw,2.25rem);line-height:1.2;letter-spacing:-.035em}
+    .page-intro{max-width:75ch;margin:0 0 22px;color:var(--muted)}
+    .tool-suite{margin-bottom:26px}
+    .calculator-ui-box{
+      --preg-navy:#071a2f;--preg-navy-mid:#0b2138;
+      position:relative;isolation:isolate;overflow:hidden;width:min(550px,100%);margin-inline:auto;
+      border:1px solid rgba(82,240,192,.42);border-radius:24px;padding:clamp(18px,3vw,28px);
+      background:radial-gradient(ellipse at 8% 0%,rgba(0,168,255,.18),transparent 42%),radial-gradient(ellipse at 100% 12%,rgba(0,212,170,.17),transparent 38%),linear-gradient(145deg,var(--preg-navy),var(--preg-navy-mid) 48%,#061221);
+      color:#f4fbff;box-shadow:0 18px 45px rgba(0,18,35,.24),inset 0 1px 0 rgba(255,255,255,.09)
     }
-    a { color: var(--accent-strong); text-underline-offset: 3px; }
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, .table-scroll:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
-    }
-    .tqc-page-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.15fr) minmax(250px, .95fr);
-      gap: 24px;
-      width: min(1240px, calc(100% - 32px));
-      margin: 24px auto 56px;
-      align-items: start;
-    }
-    .main-body { min-width: 0; }
-    .sidebar { min-width: 0; min-height: 1px; }
-    .breadcrumbs { color: var(--muted); font-size: .88rem; margin: 0 0 16px; }
-    .breadcrumbs a { color: inherit; }
-    .page-heading {
-      margin: 0 0 8px;
-      font-size: clamp(1.65rem, 3.2vw, 2.25rem);
-      line-height: 1.2;
-      letter-spacing: -.035em;
-    }
-    .page-intro { color: var(--muted); margin: 0 0 22px; max-width: 75ch; }
-    .tool-suite { margin-bottom: 26px; }
-
-    /* Calculator-only visual theme: all colors are scoped to this post's calculator. */
-    .calculator-ui-box {
-      --preg-navy: #071a2f;
-      --preg-navy-mid: #0b2138;
-      --preg-mint: #52f0c0;
-      --preg-blue: #00a8ff;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      width: min(550px, 100%);
-      max-width: 550px;
-      margin-inline: auto;
-      border: 1px solid rgba(82, 240, 192, .42);
-      border-radius: 24px;
-      padding: clamp(18px, 3vw, 28px);
-      background:
-        radial-gradient(ellipse at 8% 0%, rgba(0, 168, 255, .18), transparent 42%),
-        radial-gradient(ellipse at 100% 12%, rgba(0, 212, 170, .17), transparent 38%),
-        linear-gradient(145deg, var(--preg-navy) 0%, var(--preg-navy-mid) 48%, #061221 100%);
-      color: #f4fbff;
-      box-shadow: 0 18px 45px rgba(0, 18, 35, .24), inset 0 1px 0 rgba(255,255,255,.09);
-    }
-    .calculator-ui-box::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(120deg, rgba(255,255,255,.035), transparent 36%, rgba(82,240,192,.035));
-    }
-    .calc-eyebrow { margin: 0 0 5px; color: #8df5d7; font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-    .calc-title { margin: 0; color: #fff; font-size: clamp(1.35rem, 2.8vw, 1.8rem); line-height: 1.2; letter-spacing: -.025em; }
-    .calc-subtitle { margin: 9px 0 22px; color: #d3e3ef; font-size: .95rem; }
-    .calc-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; padding: 5px; margin: 0 0 19px; border: 1px solid #344c61; border-radius: 14px; background: rgba(0,0,0,.18); }
-    .calc-tab { min-height: 43px; padding: 9px 10px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #d3e3ef; font: inherit; font-size: .88rem; font-weight: 750; cursor: pointer; }
-    .calc-tab[aria-selected="true"] { background: linear-gradient(135deg, #6ff5cf, #19d5a5); color: #06251e; box-shadow: 0 5px 15px rgba(0,212,170,.14); }
-    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .field { min-width: 0; }
-    .field label { display: block; margin-bottom: 7px; color: #f4fbff; font-size: .9rem; font-weight: 700; }
-    .field input, .field select {
-      width: 100%; min-width: 0; min-height: 48px;
-      border: 1px solid #50657a; border-radius: 12px; padding: 11px 12px;
-      background: #f8fbff; color: #142336; font: inherit;
-    }
-    .field small { display: block; margin-top: 6px; color: #c6d6e4; font-size: .8rem; line-height: 1.4; }
-    .field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #ff8d83; box-shadow: 0 0 0 2px rgba(255,141,131,.18); }
-    .calc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-    .calc-btn {
-      display: inline-flex; align-items: center; justify-content: center; min-height: 46px;
-      padding: 11px 18px; border: 1px solid transparent; border-radius: 12px;
-      font: inherit; font-weight: 800; cursor: pointer;
-      transition: transform .15s ease, filter .15s ease, background .15s ease;
-    }
-    .calc-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
-    .calc-btn:active { transform: translateY(0); }
-    .calc-btn-primary { background: linear-gradient(135deg, #6ff5cf, #19d5a5); color: #06251e; box-shadow: 0 7px 20px rgba(0,212,170,.18); }
-    .calc-btn-secondary { background: rgba(255,255,255,.07); border-color: #53677b; color: #f5fbff; }
-    .calc-error { margin: 14px 0 0; padding: 11px 13px; border: 1px solid #ff8d83; border-radius: 10px; background: #421e21; color: #ffe7e3; }
-    [hidden] { display: none !important; }
-    .result-panel { margin-top: 22px; padding-top: 21px; border-top: 1px solid rgba(214,239,248,.2); }
-    .result-heading { margin: 0 0 14px; color: #fff; font-size: 1.12rem; }
-    .result-hero { margin-bottom: 13px; border: 1px solid rgba(82,240,192,.38); border-radius: 17px; padding: 18px; background: linear-gradient(135deg, rgba(82,240,192,.13), rgba(0,168,255,.08)); }
-    .result-hero-label { display: block; margin-bottom: 5px; color: #d4e5ef; font-size: .83rem; font-weight: 750; }
-    .result-hero-value { display: block; color: #8df5d7; font-size: clamp(1.6rem, 4vw, 2.15rem); line-height: 1.2; font-weight: 900; overflow-wrap: anywhere; }
-    .result-hero-detail { display: block; margin-top: 7px; color: #d3e3ef; font-size: .84rem; }
-    .result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .result-card { min-width: 0; border: 1px solid rgba(126,161,180,.42); border-radius: 15px; padding: 15px; background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.035)); box-shadow: inset 0 1px 0 rgba(255,255,255,.045); }
-    .result-label { display: block; margin-bottom: 6px; color: #d4e5ef; font-size: .79rem; font-weight: 700; }
-    .result-value { display: block; overflow-wrap: anywhere; color: #8df5d7; font-size: clamp(1.05rem, 2.2vw, 1.3rem); font-weight: 850; line-height: 1.3; }
-    .result-detail { display: block; margin-top: 5px; color: #d3e3ef; font-size: .81rem; }
-    .trimester-wrap { margin-top: 15px; border: 1px solid rgba(126,161,180,.42); border-radius: 15px; padding: 15px; background: rgba(255,255,255,.045); }
-    .trimester-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; color: #eaf5fb; font-size: .85rem; }
-    .progress-track { height: 11px; overflow: hidden; border-radius: 999px; background: #34495b; }
-    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #00a8ff, #52f0c0); transition: width .25s ease; }
-    .trimester-milestones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-top: 13px; }
-    .milestone { min-width: 0; border: 1px solid rgba(126,161,180,.35); border-radius: 10px; padding: 9px 7px; text-align: center; background: rgba(255,255,255,.035); }
-    .milestone strong { display: block; color: #f4fbff; font-size: .78rem; }
-    .milestone span { display: block; margin-top: 3px; color: #c6d6e4; font-size: .72rem; line-height: 1.35; }
-    .milestone.active { border-color: #52f0c0; background: rgba(82,240,192,.12); }
-    .milestone.active strong { color: #8df5d7; }
-    .countdown-note { margin: 13px 0 0; color: #d3e3ef; font-size: .82rem; }
-    .disclaimer-in-card { margin: 15px 0 0; color: #c9d9e5; font-size: .8rem; }
-    .article-card { padding: clamp(19px, 3vw, 30px); border: 1px solid var(--border); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); min-width: 0; }
-    .article-card h2 { margin: 1.65em 0 .55em; padding-bottom: 10px; border-bottom: 1px solid var(--border); font-size: clamp(1.25rem, 2.4vw, 1.55rem); line-height: 1.39; letter-spacing: -.02em; }
-    .article-card h2:first-child { margin-top: 0; padding-bottom: 0; border-bottom: none; }
-    .article-card h3 { margin: 1.25em 0 .4em; font-size: 1.08rem; line-height: 1.35; }
-    .article-card p, .article-card li { color: var(--text); }
-    .article-card p { margin: .7em 0; }
-    .article-card ul, .article-card ol { padding-left: 1.35rem; }
-    .note-box { margin: 18px 0; padding: 14px 16px; border-left: 4px solid var(--accent); border-radius: 10px; background: var(--accent-soft); }
-    .note-box p { margin: 0; }
-    .medical-note { background: var(--info-bg); color: var(--info-text); border-left-color: #4295e8; }
-    .medical-note p { color: var(--info-text); }
-    .faq-list details { margin: 10px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-soft); }
-    .faq-list summary { padding: 14px 16px; cursor: pointer; font-weight: 750; line-height: 1.4; }
-    .faq-answer { padding: 0 16px 14px; color: var(--muted); }
-    .faq-answer p { margin: 0; color: inherit; }
-    .sources-list li { margin: 9px 0; }
-    .last-updated { color: var(--muted); font-size: .86rem; }
-    .table-scroll { width: 100%; max-width: 100%; margin: 18px 0; overflow-x: auto; overscroll-behavior-x: contain; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); -webkit-overflow-scrolling: touch; }
-    .reference-table { width: 100%; min-width: 520px; border-collapse: collapse; text-align: left; font-size: .9rem; line-height: 1.5; }
-    .reference-table th, .reference-table td { padding: 13px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-    .reference-table thead th { background: var(--surface-soft); color: var(--text); font-weight: 800; }
-    .reference-table tbody th { color: var(--text); font-weight: 750; }
-    .reference-table tbody td { color: var(--muted); }
-    .reference-table tbody tr:last-child th, .reference-table tbody tr:last-child td { border-bottom: 0; }
-    .table-note { color: var(--muted) !important; font-size: .86rem; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-    @media (max-width: 820px) {
-      .tqc-page-grid { grid-template-columns: minmax(0, 1fr); width: min(760px, calc(100% - 24px)); gap: 18px; margin-top: 18px; }
-      .sidebar { display: none; }
-    }
-    @media (max-width: 520px) {
-      .tqc-page-grid { width: calc(100% - 20px); margin-top: 14px; }
-      .calculator-ui-box { width: 100%; max-width: 550px; border-radius: 19px; padding: 17px; }
-      .form-grid, .result-grid { grid-template-columns: minmax(0, 1fr); }
-      .calc-actions { display: grid; grid-template-columns: 1fr 1fr; }
-      .calc-btn { padding: 10px 12px; }
-      .article-card { padding: 18px; border-radius: 16px; }
-      .article-card h2 { padding-bottom: 8px; margin-bottom: 12px; }
-      .trimester-top { flex-direction: column; gap: 3px; }
-      .trimester-milestones { gap: 5px; }
-      .milestone { padding: 8px 4px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-    }
+    .calculator-ui-box:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 36%,rgba(82,240,192,.035))}
+    .calc-eyebrow{margin:0 0 5px;color:#8df5d7;font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .calc-title{margin:0;color:#fff;font-size:clamp(1.35rem,2.8vw,1.8rem);line-height:1.2;letter-spacing:-.025em}
+    .calc-subtitle{margin:9px 0 22px;color:#d3e3ef;font-size:.95rem}
+    .calc-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px;margin:0 0 19px;border:1px solid #344c61;border-radius:14px;background:rgba(0,0,0,.18)}
+    .calc-tab{min-height:44px;padding:9px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:#d3e3ef;font:inherit;font-size:.88rem;font-weight:750;cursor:pointer}
+    .calc-tab[aria-selected="true"]{background:linear-gradient(135deg,#6ff5cf,#19d5a5);color:#06251e;box-shadow:0 5px 15px rgba(0,212,170,.14)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .field{min-width:0}.field label{display:block;margin-bottom:7px;color:#f4fbff;font-size:.9rem;font-weight:700}
+    .field input{width:100%;min-width:0;min-height:48px;border:1px solid #50657a;border-radius:12px;padding:11px 12px;background:#f8fbff;color:#142336;font:inherit}
+    .field small{display:block;margin-top:6px;color:#c6d6e4;font-size:.8rem;line-height:1.4}
+    .field input[aria-invalid="true"]{border-color:#ff8d83;box-shadow:0 0 0 2px rgba(255,141,131,.18)}
+    .calc-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .calc-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 18px;border:1px solid transparent;border-radius:12px;font:inherit;font-weight:800;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+    .calc-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}.calc-btn:active{transform:translateY(0)}
+    .calc-btn-primary{background:linear-gradient(135deg,#6ff5cf,#19d5a5);color:#06251e;box-shadow:0 7px 20px rgba(0,212,170,.18)}
+    .calc-btn-secondary{background:rgba(255,255,255,.07);border-color:#53677b;color:#f5fbff}
+    .calc-error{margin:14px 0 0;padding:11px 13px;border:1px solid #ff8d83;border-radius:10px;background:#421e21;color:#ffe7e3}
+    [hidden]{display:none!important}
+    .result-panel{margin-top:22px;padding-top:21px;border-top:1px solid rgba(214,239,248,.2)}
+    .result-heading{margin:0 0 14px;color:#fff;font-size:1.12rem}
+    .result-hero{margin-bottom:13px;border:1px solid rgba(82,240,192,.38);border-radius:17px;padding:18px;background:linear-gradient(135deg,rgba(82,240,192,.13),rgba(0,168,255,.08))}
+    .result-hero-label{display:block;margin-bottom:5px;color:#d4e5ef;font-size:.83rem;font-weight:750}
+    .result-hero-value{display:block;color:#8df5d7;font-size:clamp(1.6rem,4vw,2.15rem);line-height:1.2;font-weight:900;overflow-wrap:anywhere}
+    .result-hero-detail{display:block;margin-top:7px;color:#d3e3ef;font-size:.84rem}
+    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .result-card{min-width:0;border:1px solid rgba(126,161,180,.42);border-radius:15px;padding:15px;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+    .result-label{display:block;margin-bottom:6px;color:#d4e5ef;font-size:.79rem;font-weight:700}
+    .result-value{display:block;overflow-wrap:anywhere;color:#8df5d7;font-size:clamp(1.05rem,2.2vw,1.3rem);font-weight:850;line-height:1.3}
+    .result-detail{display:block;margin-top:5px;color:#d3e3ef;font-size:.81rem}
+    .trimester-wrap{margin-top:15px;border:1px solid rgba(126,161,180,.42);border-radius:15px;padding:15px;background:rgba(255,255,255,.045)}
+    .trimester-top{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#eaf5fb;font-size:.85rem}
+    .progress-track{height:11px;overflow:hidden;border-radius:999px;background:#34495b}
+    .progress-fill{width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#00a8ff,#52f0c0);transition:width .25s ease}
+    .trimester-milestones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:13px}
+    .milestone{min-width:0;border:1px solid rgba(126,161,180,.35);border-radius:10px;padding:9px 7px;text-align:center;background:rgba(255,255,255,.035)}
+    .milestone strong{display:block;color:#f4fbff;font-size:.78rem}.milestone span{display:block;margin-top:3px;color:#c6d6e4;font-size:.72rem;line-height:1.35}
+    .milestone.active{border-color:#52f0c0;background:rgba(82,240,192,.12)}.milestone.active strong{color:#8df5d7}
+    .countdown-note{margin:13px 0 0;color:#d3e3ef;font-size:.82rem}
+    .disclaimer-in-card{margin:15px 0 0;color:#c9d9e5;font-size:.8rem}
+    .article-card{min-width:0;padding:clamp(19px,3vw,30px);border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}
+    .article-card h2{margin:1.65em 0 .55em;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:clamp(1.25rem,2.4vw,1.55rem);line-height:1.39;letter-spacing:-.02em}
+    .article-card h2:first-child{margin-top:0;padding-bottom:0;border-bottom:0}
+    .article-card h3{margin:1.25em 0 .4em;font-size:1.08rem;line-height:1.35}
+    .article-card p,.article-card li{color:var(--text)}.article-card p{margin:.7em 0}
+    .article-card ul,.article-card ol{padding-left:1.35rem}
+    .note-box{margin:18px 0;padding:14px 16px;border-left:4px solid var(--accent);border-radius:10px;background:var(--accent-soft)}
+    .note-box p{margin:0}.medical-note{background:var(--info-bg);color:var(--info-text);border-left-color:#4295e8}.medical-note p{color:var(--info-text)}
+    .faq-list details{margin:10px 0;border:1px solid var(--border);border-radius:12px;background:var(--surface-soft)}
+    .faq-list summary{padding:14px 16px;cursor:pointer;font-weight:750;line-height:1.4}
+    .faq-answer{padding:0 16px 14px;color:var(--muted)}.faq-answer p{margin:0;color:inherit}
+    .sources-list li{margin:9px 0}.last-updated{color:var(--muted);font-size:.86rem}
+    .table-scroll{width:100%;max-width:100%;margin:18px 0;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid var(--border);border-radius:12px;background:var(--surface);-webkit-overflow-scrolling:touch}
+    .reference-table{width:100%;min-width:520px;border-collapse:collapse;text-align:left;font-size:.9rem;line-height:1.5}
+    .reference-table th,.reference-table td{padding:13px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+    .reference-table thead th{background:var(--surface-soft);color:var(--text);font-weight:800}
+    .reference-table tbody th{color:var(--text);font-weight:750}.reference-table tbody td{color:var(--muted)}
+    .reference-table tbody tr:last-child th,.reference-table tbody tr:last-child td{border-bottom:0}
+    .table-note{color:var(--muted)!important;font-size:.86rem}
+    @media(max-width:820px){.tqc-page-grid{grid-template-columns:minmax(0,1fr);width:min(760px,calc(100% - 24px));gap:18px;margin-top:18px}.sidebar{display:none}}
+    @media(max-width:520px){.tqc-page-grid{width:calc(100% - 20px);margin-top:14px}.calculator-ui-box{width:100%;border-radius:19px;padding:17px}.form-grid,.result-grid{grid-template-columns:minmax(0,1fr)}.calc-actions{display:grid;grid-template-columns:1fr 1fr}.calc-btn{padding:10px 12px}.article-card{padding:18px;border-radius:16px}.article-card h2{padding-bottom:8px;margin-bottom:12px}.trimester-top{flex-direction:column;gap:3px}.trimester-milestones{gap:5px}.milestone{padding:8px 4px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
   </style>
+
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Pregnancy Calculator and Trimester Countdown Tracker",
-    "url": "https://thequantcal.pages.dev/pregnancy-calculator/",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "browserRequirements": "Requires JavaScript",
-    "description": "A free browser-based tool that estimates pregnancy due date, gestational age, trimester progress and countdown from pregnancy dating information.",
-    "isAccessibleForFree": true,
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "publisher": { "@type": "Organization", "name": "TheQuantCalc", "url": "https://thequantcal.pages.dev/" }
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Pregnancy Calculator and Trimester Countdown Tracker",
+    "url":"https://thequantcal.pages.dev/pregnancy-calculator/",
+    "applicationCategory":"HealthApplication",
+    "operatingSystem":"Any",
+    "browserRequirements":"Requires JavaScript",
+    "description":"A free browser-based tool that estimates pregnancy due date, gestational age, trimester progress and countdown from pregnancy dating information.",
+    "isAccessibleForFree":true,
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "publisher":{"@type":"Organization","name":"TheQuantCalc","url":"https://thequantcal.pages.dev/"}
   }
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thequantcal.pages.dev/" },
-      { "@type": "ListItem", "position": 2, "name": "Pregnancy Calculator", "item": "https://thequantcal.pages.dev/pregnancy-calculator/" }
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://thequantcal.pages.dev/"},
+      {"@type":"ListItem","position":2,"name":"Health","item":"https://thequantcal.pages.dev/health/"},
+      {"@type":"ListItem","position":3,"name":"Pregnancy Calculator","item":"https://thequantcal.pages.dev/pregnancy-calculator/"}
     ]
   }
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "How is my estimated due date calculated?", "acceptedAnswer": { "@type": "Answer", "text": "When using the last menstrual period method, the calculator estimates the due date as 280 days (40 weeks) from the first day of the last menstrual period. This assumes a typical 28-day cycle and may not match clinical dating." } },
-      { "@type": "Question", "name": "How many weeks pregnant am I?", "acceptedAnswer": { "@type": "Answer", "text": "Gestational age is commonly counted from the first day of the last menstrual period, approximately two weeks before conception in a typical cycle. The calculator estimates completed weeks and days from the selected date." } },
-      { "@type": "Question", "name": "When does each trimester begin?", "acceptedAnswer": { "@type": "Answer", "text": "Trimester boundaries vary slightly by source. This calculator uses weeks 1–13 for the first trimester, weeks 14–27 for the second, and week 28 onward for the third as a simplified guide." } },
-      { "@type": "Question", "name": "Can this calculator confirm pregnancy?", "acceptedAnswer": { "@type": "Answer", "text": "No. It estimates dates only and cannot confirm pregnancy, assess fetal health or replace a pregnancy test or clinician's assessment." } },
-      { "@type": "Question", "name": "Is the estimated due date exact?", "acceptedAnswer": { "@type": "Answer", "text": "No. A due date is an estimate, and many babies are born before or after it. A healthcare professional may adjust dating using clinical information and ultrasound." } },
-      { "@type": "Question", "name": "What if I do not know my last period date?", "acceptedAnswer": { "@type": "Answer", "text": "If you know a due date supplied by a healthcare professional, use the due-date option. If you are unsure of dates, ask a healthcare professional about appropriate pregnancy dating." } },
-      { "@type": "Question", "name": "Does this calculator save my pregnancy information?", "acceptedAnswer": { "@type": "Answer", "text": "The calculator runs its calculations in your browser and does not include code to send or store the entered dates. Your browser, extensions or the wider website may have their own behavior." } },
-      { "@type": "Question", "name": "When should I contact a healthcare professional?", "acceptedAnswer": { "@type": "Answer", "text": "Arrange prenatal care to confirm dating and discuss your health. Seek urgent medical advice for severe pain, heavy bleeding, fainting or other severe or worrying symptoms during pregnancy." } }
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"How is my estimated due date calculated?","acceptedAnswer":{"@type":"Answer","text":"The last-period method estimates a due date 280 days from the first day of the last menstrual period, adjusted by the difference between the entered cycle length and 28 days. A clinician may revise the estimate."}},
+      {"@type":"Question","name":"How many weeks pregnant am I?","acceptedAnswer":{"@type":"Answer","text":"Gestational age is commonly counted from the first day of the last menstrual period. This calculator estimates completed weeks and extra days from the last-period date or a known due date."}},
+      {"@type":"Question","name":"When does each trimester begin?","acceptedAnswer":{"@type":"Answer","text":"This calculator uses a simplified guide: weeks 1–13 for the first trimester, weeks 14–27 for the second, and week 28 onward for the third. Clinical conventions can vary."}},
+      {"@type":"Question","name":"Can this calculator confirm pregnancy?","acceptedAnswer":{"@type":"Answer","text":"No. It estimates dates only and cannot confirm pregnancy, assess fetal health or replace a pregnancy test or clinician's assessment."}},
+      {"@type":"Question","name":"Is the estimated due date exact?","acceptedAnswer":{"@type":"Answer","text":"No. A due date is an estimate. A healthcare professional may adjust pregnancy dating using clinical information and ultrasound."}},
+      {"@type":"Question","name":"What if I do not know my last period date?","acceptedAnswer":{"@type":"Answer","text":"If you know a due date supplied by a healthcare professional, use the known due-date option. If you are unsure of dates, ask a healthcare professional about appropriate pregnancy dating."}},
+      {"@type":"Question","name":"Does this calculator save my pregnancy information?","acceptedAnswer":{"@type":"Answer","text":"This page's calculator code performs calculations in your browser and does not send or store entered dates. Your browser, extensions or the wider website may have their own behavior."}},
+      {"@type":"Question","name":"When should I contact a healthcare professional?","acceptedAnswer":{"@type":"Answer","text":"Arrange prenatal care to confirm dating and discuss your health. Seek urgent medical advice for severe pain, heavy bleeding, fainting or other severe or worrying symptoms during pregnancy."}}
     ]
   }
   </script>
@@ -258,32 +160,13 @@
 <body>
   <div class="tqc-page-grid">
     <main class="main-body">
-      <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://thequantcal.pages.dev/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Health",
-      "item": "https://thequantcal.pages.dev/health/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Pregnancy Calculator",
-      "item": "https://thequantcal.pages.dev/pregnancy-calculator/"
-    }
-  ]
-}
-</script>
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="https://thequantcal.pages.dev/">Home</a>
+        <span class="crumb-separator" aria-hidden="true">›</span>
+        <a href="https://thequantcal.pages.dev/health/">Health</a>
+        <span class="crumb-separator" aria-hidden="true">›</span>
+        <span aria-current="page">Pregnancy Calculator</span>
+      </nav>
 
       <header>
         <h1 class="page-heading">Pregnancy Calculator &amp; Trimester Countdown Tracker</h1>
@@ -294,11 +177,11 @@
         <div class="calculator-ui-box">
           <p class="calc-eyebrow">TheQuantCalc · Health tool</p>
           <h2 class="calc-title" id="calc-heading">Your pregnancy timeline</h2>
-          <p class="calc-subtitle">Choose a dating method to estimate your pregnancy week and follow your trimester milestones. No date entered here can confirm pregnancy or fetal health.</p>
+          <p class="calc-subtitle">Choose a dating method to estimate your pregnancy week and follow trimester milestones. This tool cannot confirm pregnancy or fetal health.</p>
 
           <div class="calc-tabs" role="tablist" aria-label="Pregnancy dating method">
-            <button class="calc-tab" id="lmpTab" type="button" role="tab" aria-selected="true" aria-controls="lmpPanel">Last period date</button>
-            <button class="calc-tab" id="dueTab" type="button" role="tab" aria-selected="false" aria-controls="duePanel">Known due date</button>
+            <button class="calc-tab" id="lmpTab" type="button" role="tab" aria-selected="true" aria-controls="lmpPanel" tabindex="0">Last period date</button>
+            <button class="calc-tab" id="dueTab" type="button" role="tab" aria-selected="false" aria-controls="duePanel" tabindex="-1">Known due date</button>
           </div>
 
           <form id="pregnancyForm" novalidate>
@@ -312,7 +195,7 @@
                 <div class="field">
                   <label for="cycleLength">Usual cycle length (days)</label>
                   <input id="cycleLength" name="cycleLength" type="number" min="20" max="45" step="1" value="28" required inputmode="numeric" aria-describedby="cycleLengthHelp">
-                  <small id="cycleLengthHelp">Used to adjust the basic estimate for cycles longer or shorter than 28 days.</small>
+                  <small id="cycleLengthHelp">Adjusts the due-date estimate only; it does not change elapsed gestational age.</small>
                 </div>
               </div>
             </div>
@@ -321,7 +204,7 @@
                 <div class="field">
                   <label for="dueDate">Estimated due date</label>
                   <input id="dueDate" name="dueDate" type="date" autocomplete="off" aria-describedby="dueDateHelp">
-                  <small id="dueDateHelp">Enter the due date given by your healthcare professional, if known.</small>
+                  <small id="dueDateHelp">Enter the estimated due date given by your healthcare professional, if known.</small>
                 </div>
               </div>
             </div>
@@ -340,35 +223,14 @@
               <span id="gestationalDetail" class="result-hero-detail"></span>
             </div>
             <div class="result-grid">
-              <div class="result-card">
-                <span class="result-label">Estimated due date</span>
-                <strong id="dueDateResult" class="result-value">—</strong>
-                <span id="dueDateDetail" class="result-detail"></span>
-              </div>
-              <div class="result-card">
-                <span class="result-label">Current trimester</span>
-                <strong id="trimesterResult" class="result-value">—</strong>
-                <span id="trimesterDetail" class="result-detail"></span>
-              </div>
-              <div class="result-card">
-                <span class="result-label">Time until due date</span>
-                <strong id="countdownResult" class="result-value">—</strong>
-                <span id="countdownDetail" class="result-detail"></span>
-              </div>
-              <div class="result-card">
-                <span class="result-label">Pregnancy progress</span>
-                <strong id="progressResult" class="result-value">—</strong>
-                <span class="result-detail">Based on a 280-day pregnancy dating estimate</span>
-              </div>
+              <div class="result-card"><span class="result-label">Estimated due date</span><strong id="dueDateResult" class="result-value">—</strong><span id="dueDateDetail" class="result-detail"></span></div>
+              <div class="result-card"><span class="result-label">Current trimester</span><strong id="trimesterResult" class="result-value">—</strong><span id="trimesterDetail" class="result-detail"></span></div>
+              <div class="result-card"><span class="result-label">Time until due date</span><strong id="countdownResult" class="result-value">—</strong><span id="countdownDetail" class="result-detail"></span></div>
+              <div class="result-card"><span class="result-label">Pregnancy progress</span><strong id="progressResult" class="result-value">—</strong><span class="result-detail">Based on a 280-day pregnancy dating estimate</span></div>
             </div>
             <div class="trimester-wrap">
-              <div class="trimester-top">
-                <strong>Trimester countdown tracker</strong>
-                <span id="weekSummary">—</span>
-              </div>
-              <div class="progress-track" role="progressbar" id="pregnancyProgress" aria-label="Estimated pregnancy progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div id="progressFill" class="progress-fill"></div>
-              </div>
+              <div class="trimester-top"><strong>Trimester countdown tracker</strong><span id="weekSummary">—</span></div>
+              <div class="progress-track" role="progressbar" id="pregnancyProgress" aria-label="Estimated pregnancy progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
               <div class="trimester-milestones" aria-label="Trimester milestones">
                 <div class="milestone" id="milestone1"><strong>1st trimester</strong><span id="milestone1Text">Weeks 1–13</span></div>
                 <div class="milestone" id="milestone2"><strong>2nd trimester</strong><span id="milestone2Text">Weeks 14–27</span></div>
@@ -384,86 +246,58 @@
       <article class="article-card">
         <h2>How to use the pregnancy calculator</h2>
         <ol>
-          <li>Choose <strong>Last period date</strong> if you know the first day of your last menstrual period, or choose <strong>Known due date</strong> if a healthcare professional has already given you an estimated due date.</li>
-          <li>If using the last-period method, enter your usual cycle length. The default is 28 days.</li>
+          <li>Choose <strong>Last period date</strong> if you know the first day of your last menstrual period, or <strong>Known due date</strong> if your healthcare professional has given you an estimated due date.</li>
+          <li>For the last-period method, enter your usual cycle length. The default is 28 days.</li>
           <li>Select <strong>Calculate pregnancy timeline</strong> to view your estimated gestational age, due date, trimester, progress and countdown.</li>
-          <li>Use the trimester tracker as a general calendar guide, not as a clinical assessment of pregnancy development.</li>
+          <li>Use the tracker as a general calendar guide, not as a clinical assessment of pregnancy development.</li>
         </ol>
-        <div class="note-box medical-note">
-          <p><strong>Important health note:</strong> This calculator cannot confirm pregnancy, determine whether a pregnancy is progressing normally, diagnose a condition or assess the health of a baby. Contact a qualified healthcare professional for pregnancy confirmation, dating and prenatal care. Seek urgent care for severe or worrying symptoms.</p>
-        </div>
+        <div class="note-box medical-note"><p><strong>Important health note:</strong> This calculator cannot confirm pregnancy, determine whether a pregnancy is progressing normally, diagnose a condition or assess fetal health. Contact a qualified healthcare professional for pregnancy confirmation, dating and prenatal care. Seek urgent care for severe or worrying symptoms.</p></div>
 
         <h2>How is the estimated due date calculated?</h2>
         <p>Pregnancy is commonly dated as approximately 40 weeks (280 days) from the first day of the last menstrual period. This is a dating convention, not a statement that conception occurred on that day. In a typical 28-day cycle, ovulation and conception often occur around two weeks after the period begins, but timing varies.</p>
-        <p>When you select the last-period method, this calculator adds 280 days to the date you enter and adjusts the estimate by the difference between your selected cycle length and 28 days. This simple adjustment may be unsuitable for irregular cycles or uncertain dates. A clinician may revise the estimated due date using your history and ultrasound findings.</p>
-        <p>If you choose the known due-date method, the calculator uses the date you provide to estimate the current gestational age. Use the date from your clinician if available.</p>
+        <p>With the last-period method, this calculator adds 280 days to the entered date and adjusts the due-date estimate by the difference between your cycle length and 28 days. Gestational age is calculated separately from the last-period date, so changing cycle length does not change the elapsed gestational age. This simplified method may be unsuitable for irregular cycles or uncertain dates.</p>
+        <p>If you choose the known due-date method, the calculator estimates gestational age by counting backward from the due date using a 280-day dating convention. A clinician may revise the estimate using your history and ultrasound findings.</p>
 
         <h2>What is gestational age?</h2>
-        <p>Gestational age is usually expressed in completed weeks and days counted from the first day of the last menstrual period. For example, 10 weeks and 3 days means ten complete weeks and three additional days have elapsed according to that dating method. It does not mean that conception happened ten weeks ago.</p>
-        <p>The estimate shown here is calculated from calendar dates. It may differ from the gestational age assigned by your healthcare professional, particularly when periods are irregular, the last-period date is unknown or ultrasound measurements suggest a different date.</p>
+        <p>Gestational age is usually expressed in completed weeks and days counted from the first day of the last menstrual period. For example, 10 weeks and 3 days means ten complete weeks and three additional days have elapsed according to that dating method. It does not mean conception happened ten weeks ago.</p>
+        <p>This estimate may differ from the gestational age assigned by your healthcare professional, particularly when periods are irregular, the last-period date is unknown or ultrasound measurements suggest a different date.</p>
 
         <h2>Understanding the trimester countdown</h2>
-        <p>Pregnancy is commonly discussed in three trimesters. Boundaries are described slightly differently across medical resources, so this tool uses a simplified convention for a clear timeline: first trimester through week 13, second trimester from week 14 through week 27, and third trimester from week 28 onward.</p>
+        <p>Trimester boundaries vary slightly among resources. This tool uses a simplified convention: first trimester through week 13, second trimester from week 14 through week 27, and third trimester from week 28 onward.</p>
         <div class="table-scroll" role="region" aria-label="Pregnancy trimester reference table" tabindex="0">
           <table class="reference-table">
-            <thead>
-              <tr><th scope="col">Stage</th><th scope="col">Approximate timing used here</th><th scope="col">Tracker meaning</th></tr>
-            </thead>
+            <thead><tr><th scope="col">Stage</th><th scope="col">Approximate timing used here</th><th scope="col">Tracker meaning</th></tr></thead>
             <tbody>
               <tr><th scope="row">First trimester</th><td>Weeks 1–13</td><td>Early pregnancy dating period; routine prenatal guidance is important.</td></tr>
               <tr><th scope="row">Second trimester</th><td>Weeks 14–27</td><td>The middle portion of pregnancy by this simplified convention.</td></tr>
-              <tr><th scope="row">Third trimester</th><td>Week 28 to estimated due date</td><td>The final stage before the estimated due date; individual care and timing vary.</td></tr>
+              <tr><th scope="row">Third trimester</th><td>Week 28 onward</td><td>The final stage before the estimated due date; individual care and timing vary.</td></tr>
             </tbody>
           </table>
         </div>
         <p class="table-note">Trimester labels are a general guide. Follow the dating and care plan provided by your maternity team.</p>
 
         <h2>How should I interpret the countdown?</h2>
-        <p>The countdown is the number of calendar days between today and the estimated due date. It is not a prediction of the exact day labour will begin. A pregnancy may continue beyond the estimated due date or end before it, and your care team can advise you about appropriate monitoring and next steps.</p>
+        <p>The countdown is the number of calendar days between today and the estimated due date. It does not predict the exact day labour will begin. A pregnancy may continue beyond the estimated due date or end before it; your care team can advise you about appropriate monitoring and next steps.</p>
         <p>The progress percentage is a simple visual comparison against a 280-day dating period. It is capped at 100% for display and is not a measurement of fetal growth, health or readiness for birth.</p>
 
         <h2>When is this calculator less reliable?</h2>
-        <p>Calendar calculations may be less reliable if your periods are irregular, you do not remember the first day of your last period, you recently stopped hormonal contraception, you have recently been pregnant or given birth, or you are unsure of the date used by your clinician. Cycle length alone cannot establish the exact date of ovulation or conception.</p>
-        <p>If you think you may be pregnant, consider an appropriate pregnancy test and arrange care with a qualified healthcare professional. Seek prompt medical advice for concerns such as bleeding or persistent pain, and urgent care for severe pain, heavy bleeding, fainting or other severe symptoms.</p>
+        <p>Calendar calculations may be less reliable if your periods are irregular, you do not remember the first day of your last period, you recently stopped hormonal contraception, you have recently been pregnant or given birth, or you are unsure which date your clinician used. Cycle length alone cannot establish the exact date of ovulation or conception.</p>
+        <p>If you think you may be pregnant, consider an appropriate pregnancy test and arrange care with a qualified healthcare professional. Seek prompt medical advice for bleeding or persistent pain, and urgent care for severe pain, heavy bleeding, fainting or other severe symptoms.</p>
 
         <h2>Frequently asked questions</h2>
         <div class="faq-list">
-          <details>
-            <summary>How is my estimated due date calculated?</summary>
-            <div class="faq-answer"><p>With the last-period method, the estimate is 280 days (40 weeks) from the first day of your last menstrual period, adjusted here for your selected cycle length. A clinician may use other information to confirm or revise the date.</p></div>
-          </details>
-          <details>
-            <summary>How many weeks pregnant am I?</summary>
-            <div class="faq-answer"><p>Gestational age is commonly counted from the first day of the last menstrual period. This calculator estimates completed weeks and extra days from the date you enter or from a known due date.</p></div>
-          </details>
-          <details>
-            <summary>When does each trimester begin?</summary>
-            <div class="faq-answer"><p>This tool uses weeks 1–13 for the first trimester, weeks 14–27 for the second, and week 28 onward for the third as a simplified guide. Your clinician may describe boundaries differently.</p></div>
-          </details>
-          <details>
-            <summary>Can this calculator confirm pregnancy?</summary>
-            <div class="faq-answer"><p>No. It estimates dates only and cannot confirm pregnancy, assess fetal health or replace a pregnancy test or clinical assessment.</p></div>
-          </details>
-          <details>
-            <summary>Is the estimated due date exact?</summary>
-            <div class="faq-answer"><p>No. A due date is an estimate, and babies may be born before or after it. Your healthcare professional may adjust dating based on clinical information and ultrasound.</p></div>
-          </details>
-          <details>
-            <summary>What if I do not know my last period date?</summary>
-            <div class="faq-answer"><p>If you know a due date supplied by a healthcare professional, select the known due-date option. If you are unsure of your dates, ask a healthcare professional about appropriate pregnancy dating.</p></div>
-          </details>
-          <details>
-            <summary>Does this calculator save my pregnancy information?</summary>
-            <div class="faq-answer"><p>The calculator runs its calculations in your browser and does not include code to send or store the entered dates. Your browser, extensions or the wider website may have their own behavior, so avoid entering private information on a device you do not trust.</p></div>
-          </details>
-          <details>
-            <summary>When should I contact a healthcare professional?</summary>
-            <div class="faq-answer"><p>Arrange prenatal care to confirm dating and discuss your health. Seek urgent medical advice for severe pain, heavy bleeding, fainting or other severe or worrying symptoms during pregnancy.</p></div>
-          </details>
+          <details><summary>How is my estimated due date calculated?</summary><div class="faq-answer"><p>With the last-period method, the estimate is 280 days from the first day of your last menstrual period, adjusted here for your selected cycle length. A clinician may use other information to confirm or revise the date.</p></div></details>
+          <details><summary>How many weeks pregnant am I?</summary><div class="faq-answer"><p>Gestational age is commonly counted from the first day of the last menstrual period. This calculator estimates completed weeks and extra days from the last-period date or a known due date.</p></div></details>
+          <details><summary>When does each trimester begin?</summary><div class="faq-answer"><p>This tool uses weeks 1–13 for the first trimester, weeks 14–27 for the second, and week 28 onward for the third as a simplified guide. Your clinician may describe boundaries differently.</p></div></details>
+          <details><summary>Can this calculator confirm pregnancy?</summary><div class="faq-answer"><p>No. It estimates dates only and cannot confirm pregnancy, assess fetal health or replace a pregnancy test or clinical assessment.</p></div></details>
+          <details><summary>Is the estimated due date exact?</summary><div class="faq-answer"><p>No. A due date is an estimate, and babies may be born before or after it. Your healthcare professional may adjust dating based on clinical information and ultrasound.</p></div></details>
+          <details><summary>What if I do not know my last period date?</summary><div class="faq-answer"><p>If you know a due date supplied by a healthcare professional, select the known due-date option. If you are unsure of your dates, ask a healthcare professional about appropriate pregnancy dating.</p></div></details>
+          <details><summary>Does this calculator save my pregnancy information?</summary><div class="faq-answer"><p>This page's calculator code performs calculations in your browser and does not send or store entered dates. Your browser, extensions or the wider website may have their own behavior, so avoid entering private information on a device you do not trust.</p></div></details>
+          <details><summary>When should I contact a healthcare professional?</summary><div class="faq-answer"><p>Arrange prenatal care to confirm dating and discuss your health. Seek urgent medical advice for severe pain, heavy bleeding, fainting or other severe or worrying symptoms during pregnancy.</p></div></details>
         </div>
 
         <h2>Sources and further reading</h2>
-        <p>These trusted health resources provide general information about pregnancy dating and prenatal care. They are not a substitute for personal medical advice.</p>
+        <p>These health resources provide general information about pregnancy dating and prenatal care. They are not a substitute for personal medical advice.</p>
         <ul class="sources-list">
           <li><a href="https://www.acog.org/womens-health/faqs/how-your-fetus-grows-during-pregnancy" target="_blank" rel="noopener noreferrer">American College of Obstetricians and Gynecologists (ACOG) — How Your Fetus Grows During Pregnancy</a></li>
           <li><a href="https://www.nhs.uk/pregnancy/" target="_blank" rel="noopener noreferrer">NHS — Pregnancy</a></li>
@@ -477,229 +311,242 @@
   </div>
 
   <script>
-    (() => {
-      "use strict";
+  (() => {
+    "use strict";
 
-      const form = document.getElementById("pregnancyForm");
-      const lmpTab = document.getElementById("lmpTab");
-      const dueTab = document.getElementById("dueTab");
-      const lmpPanel = document.getElementById("lmpPanel");
-      const duePanel = document.getElementById("duePanel");
-      const lastPeriodInput = document.getElementById("lastPeriod");
-      const cycleLengthInput = document.getElementById("cycleLength");
-      const dueDateInput = document.getElementById("dueDate");
-      const errorBox = document.getElementById("formError");
-      const result = document.getElementById("result");
-      const DAY_MS = 86400000;
-      let method = "lmp";
+    const $ = (id) => document.getElementById(id);
+    const form = $("pregnancyForm");
+    const lmpTab = $("lmpTab");
+    const dueTab = $("dueTab");
+    const lmpPanel = $("lmpPanel");
+    const duePanel = $("duePanel");
+    const lmpInput = $("lastPeriod");
+    const cycleInput = $("cycleLength");
+    const dueInput = $("dueDate");
+    const errorBox = $("formError");
+    const result = $("result");
+    const DAY_MS = 86400000;
+    const MAX_GESTATION_DAYS = 315; // 45 weeks: a validation guard, not a clinical limit.
+    let method = "lmp";
 
-      const localDateString = (date) => {
-        const y = date.getFullYear();
-        const m = String(date.getMonth() + 1).padStart(2, "0");
-        const d = String(date.getDate()).padStart(2, "0");
-        return `${y}-${m}-${d}`;
-      };
-      const parseLocalDate = (value) => {
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
-        const [year, month, day] = value.split("-").map(Number);
-        const date = new Date(year, month - 1, day, 12, 0, 0, 0);
-        if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
-        return date;
-      };
-      const addDays = (date, days) => {
-        const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
-        copy.setDate(copy.getDate() + days);
-        return copy;
-      };
-      const dayDifference = (later, earlier) => {
-        const a = Date.UTC(later.getFullYear(), later.getMonth(), later.getDate());
-        const b = Date.UTC(earlier.getFullYear(), earlier.getMonth(), earlier.getDate());
-        return Math.round((a - b) / DAY_MS);
-      };
-      const formatDate = (date) => new Intl.DateTimeFormat(undefined, {
-        weekday: "short", year: "numeric", month: "short", day: "numeric"
-      }).format(date);
-      const formatShortDate = (date) => new Intl.DateTimeFormat(undefined, {
-        month: "short", day: "numeric", year: "numeric"
-      }).format(date);
-
-      function showError(message, inputToFocus) {
-        errorBox.textContent = message;
-        errorBox.hidden = false;
-        result.hidden = true;
-        if (inputToFocus) {
-          inputToFocus.setAttribute("aria-invalid", "true");
-          inputToFocus.focus();
-        }
+    function localToday() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+    }
+    function dateToInputValue(date) {
+      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+    }
+    function parseLocalDate(value) {
+      if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return null;
+      const [year, month, day] = value.split("-").map(Number);
+      const date = new Date(year, month-1, day, 12);
+      return date.getFullYear() === year && date.getMonth() === month-1 && date.getDate() === day ? date : null;
+    }
+    function addDays(date, days) {
+      const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+      copy.setDate(copy.getDate() + days);
+      return copy;
+    }
+    function dayDifference(later, earlier) {
+      return Math.round((Date.UTC(later.getFullYear(),later.getMonth(),later.getDate()) -
+        Date.UTC(earlier.getFullYear(),earlier.getMonth(),earlier.getDate())) / DAY_MS);
+    }
+    function formatDate(date) {
+      return new Intl.DateTimeFormat(undefined,{weekday:"short",year:"numeric",month:"short",day:"numeric"}).format(date);
+    }
+    function plural(value, singular, pluralForm = singular + "s") {
+      return `${value} ${value === 1 ? singular : pluralForm}`;
+    }
+    function showError(message, input) {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+      result.hidden = true;
+      if (input) {
+        input.setAttribute("aria-invalid","true");
+        input.focus();
       }
-      function clearErrors() {
+    }
+    function clearErrors() {
+      errorBox.hidden = true;
+      errorBox.textContent = "";
+      [lmpInput,cycleInput,dueInput].forEach(input => input.removeAttribute("aria-invalid"));
+    }
+    function setMethod(nextMethod, moveFocus = false) {
+      method = nextMethod;
+      const isLmp = method === "lmp";
+      lmpTab.setAttribute("aria-selected",String(isLmp));
+      dueTab.setAttribute("aria-selected",String(!isLmp));
+      lmpTab.tabIndex = isLmp ? 0 : -1;
+      dueTab.tabIndex = isLmp ? -1 : 0;
+      lmpPanel.hidden = !isLmp;
+      duePanel.hidden = isLmp;
+      lmpInput.required = isLmp;
+      cycleInput.required = isLmp;
+      dueInput.required = !isLmp;
+      clearErrors();
+      result.hidden = true;
+      if (moveFocus) (isLmp ? lmpTab : dueTab).focus();
+    }
+    function readCycleLength() {
+      const raw = cycleInput.value.trim();
+      const value = Number(raw);
+      if (!raw || !Number.isInteger(value) || value < 20 || value > 45) {
+        throw {message:"Usual cycle length must be a whole number from 20 to 45 days.",input:cycleInput};
+      }
+      return value;
+    }
+    function trimesterFor(gestationalDays) {
+      if (gestationalDays < 13*7) return 1;
+      if (gestationalDays < 27*7) return 2;
+      return 3;
+    }
+    function trimesterName(number) {
+      return number === 1 ? "First trimester" : number === 2 ? "Second trimester" : "Third trimester";
+    }
+    function setMilestone(id, active, label) {
+      const node = $(id);
+      node.classList.toggle("active",active);
+      node.querySelector("span").textContent = label;
+    }
+    function calculate() {
+      clearErrors();
+      try {
+        const today = localToday();
+        let dueDate;
+        let gestationalDays;
+        let sourceInput;
+
+        if (method === "lmp") {
+          const lmp = parseLocalDate(lmpInput.value);
+          sourceInput = lmpInput;
+          if (!lmp) throw {message:"Enter a valid first day of your last menstrual period.",input:lmpInput};
+          gestationalDays = dayDifference(today,lmp);
+          if (gestationalDays < 0) throw {message:"The last-period date cannot be in the future.",input:lmpInput};
+          if (gestationalDays > MAX_GESTATION_DAYS) {
+            throw {message:"This date is more than 45 weeks ago. Check the date or consult your healthcare professional for accurate dating.",input:lmpInput};
+          }
+          const cycleLength = readCycleLength();
+          dueDate = addDays(lmp,280 + (cycleLength - 28));
+        } else {
+          dueDate = parseLocalDate(dueInput.value);
+          sourceInput = dueInput;
+          if (!dueDate) throw {message:"Enter a valid estimated due date.",input:dueInput};
+          const daysUntilDue = dayDifference(dueDate,today);
+          gestationalDays = 280 - daysUntilDue;
+          if (gestationalDays < 0) {
+            throw {message:"That due date is more than 280 days away, so the standard dating estimate would place gestational age before zero. Check the date.",input:dueInput};
+          }
+          if (gestationalDays > MAX_GESTATION_DAYS) {
+            throw {message:"That due date is more than 35 days in the past. Check the date or contact your healthcare professional for guidance.",input:dueInput};
+          }
+        }
+
+        const daysUntilDue = dayDifference(dueDate,today);
+        const weeks = Math.floor(gestationalDays/7);
+        const days = gestationalDays%7;
+        const trimester = trimesterFor(gestationalDays);
+        const progress = Math.min(100,Math.max(0,(gestationalDays/280)*100));
+        const daysToTrimesterEnd = trimester === 1
+          ? Math.max(0,91-gestationalDays)
+          : trimester === 2 ? Math.max(0,189-gestationalDays) : Math.max(0,280-gestationalDays);
+        const weeksToTrimesterEnd = Math.floor(daysToTrimesterEnd/7);
+        const extraDaysToTrimesterEnd = daysToTrimesterEnd%7;
+
+        $("gestationalAge").textContent = `${weeks} weeks, ${days} days`;
+        $("gestationalDetail").textContent = `Approximately ${gestationalDays} days of gestational dating elapsed`;
+        $("dueDateResult").textContent = formatDate(dueDate);
+        $("dueDateDetail").textContent = daysUntilDue > 0
+          ? `${plural(daysUntilDue,"calendar day")} from today`
+          : daysUntilDue === 0 ? "Estimated due date is today" : `${plural(Math.abs(daysUntilDue),"day")} past the estimate`;
+        $("trimesterResult").textContent = trimesterName(trimester);
+        $("trimesterDetail").textContent = `Week ${weeks+1} by this simplified convention`;
+        $("countdownResult").textContent = daysUntilDue > 0
+          ? plural(daysUntilDue,"day")
+          : daysUntilDue === 0 ? "Due date today" : `${plural(Math.abs(daysUntilDue),"day")} past`;
+        $("countdownDetail").textContent = daysUntilDue < 0
+          ? "The due date is an estimate; contact your care team for guidance."
+          : "The actual birth date may be earlier or later.";
+        $("progressResult").textContent = `${progress.toFixed(1)}%`;
+        $("weekSummary").textContent = `Week ${weeks+1} · day ${days+1} of this week`;
+        $("progressFill").style.width = `${progress}%`;
+        $("pregnancyProgress").setAttribute("aria-valuenow",String(Math.round(progress)));
+        $("pregnancyProgress").setAttribute("aria-valuetext",`${progress.toFixed(1)} percent of the 280-day estimate`);
+
+        setMilestone("milestone1",trimester===1,trimester===1
+          ? `${Math.max(0,91-gestationalDays)} days until week 14` : "Weeks 1–13");
+        setMilestone("milestone2",trimester===2,trimester===2
+          ? `${Math.max(0,189-gestationalDays)} days until week 28` : "Weeks 14–27");
+        setMilestone("milestone3",trimester===3,trimester===3
+          ? "Current trimester" : "Week 28 onward");
+
+        let note;
+        if (daysUntilDue > 0) {
+          const trimesterText = daysToTrimesterEnd > 0
+            ? `${plural(weeksToTrimesterEnd,"week")}${extraDaysToTrimesterEnd ? ` and ${plural(extraDaysToTrimesterEnd,"day")}` : ""} until the end of the current trimester estimate. `
+            : "";
+          note = `${trimesterText}${plural(daysUntilDue,"day")} until the estimated due date.`;
+        } else if (daysUntilDue === 0) {
+          note = "Today is the estimated due date. Contact your maternity team for guidance about your individual care.";
+        } else {
+          note = "The estimated due date has passed. This calculator cannot assess your pregnancy; contact your maternity team for personalized guidance.";
+        }
+        $("countdownNote").textContent = note;
+        result.hidden = false;
+        result.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block:"nearest"
+        });
+      } catch (error) {
+        showError(error && error.message ? error.message : "Check your entries and try again.",error && error.input);
+      }
+    }
+
+    lmpTab.addEventListener("click",() => setMethod("lmp"));
+    dueTab.addEventListener("click",() => setMethod("due"));
+    [lmpTab,dueTab].forEach(tab => tab.addEventListener("keydown",event => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft" || event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        const next = event.key === "Home" ? lmpTab : event.key === "End" ? dueTab : tab === lmpTab ? dueTab : lmpTab;
+        setMethod(next === lmpTab ? "lmp" : "due");
+        next.focus();
+      }
+    }));
+    form.addEventListener("submit",event => {
+      event.preventDefault();
+      calculate();
+    });
+    form.addEventListener("input",event => {
+      if (event.target && event.target.hasAttribute("aria-invalid")) event.target.removeAttribute("aria-invalid");
+      if (!errorBox.hidden) {
         errorBox.hidden = true;
         errorBox.textContent = "";
-        [lastPeriodInput, cycleLengthInput, dueDateInput].forEach((input) => input.removeAttribute("aria-invalid"));
       }
-      function setMethod(nextMethod) {
-        method = nextMethod;
-        const useLmp = method === "lmp";
-        lmpTab.setAttribute("aria-selected", String(useLmp));
-        dueTab.setAttribute("aria-selected", String(!useLmp));
-        lmpPanel.hidden = !useLmp;
-        duePanel.hidden = useLmp;
-        lastPeriodInput.required = useLmp;
-        cycleLengthInput.required = useLmp;
-        dueDateInput.required = !useLmp;
+    });
+    form.addEventListener("reset",() => {
+      // Let the browser restore input defaults first, then restore the calculator's default state.
+      window.setTimeout(() => {
+        setMethod("lmp");
         clearErrors();
         result.hidden = true;
-      }
-      function readInteger(input, min, max, label) {
-        const raw = input.value.trim();
-        const value = Number(raw);
-        if (raw === "" || !Number.isInteger(value) || value < min || value > max) {
-          throw { message: `${label} must be a whole number from ${min} to ${max}.`, input };
-        }
-        return value;
-      }
-      function getTrimester(week) {
-        if (week < 14) return 1;
-        if (week < 28) return 2;
-        return 3;
-      }
-      function trimesterName(number) {
-        return number === 1 ? "First trimester" : number === 2 ? "Second trimester" : "Third trimester";
-      }
-      function setMilestone(id, active, text) {
-        const node = document.getElementById(id);
-        node.classList.toggle("active", active);
-        if (text) node.querySelector("span").textContent = text;
-      }
+        lmpInput.value = "";
+        cycleInput.value = "28";
+        dueInput.value = "";
+        $("progressFill").style.width = "0%";
+        $("pregnancyProgress").setAttribute("aria-valuenow","0");
+        $("pregnancyProgress").setAttribute("aria-valuetext","0 percent of the 280-day estimate");
+        [ "milestone1","milestone2","milestone3" ].forEach(id => $(id).classList.remove("active"));
+      },0);
+    });
 
-      function calculate() {
-        clearErrors();
-        try {
-          const today = parseLocalDate(localDateString(new Date()));
-          let dueDate;
-
-          if (method === "lmp") {
-            const lastPeriod = parseLocalDate(lastPeriodInput.value);
-            if (!lastPeriod) throw { message: "Enter a valid first day of your last menstrual period.", input: lastPeriodInput };
-            if (dayDifference(today, lastPeriod) < 0) throw { message: "The last-period date cannot be in the future.", input: lastPeriodInput };
-            const cycleLength = readInteger(cycleLengthInput, 20, 45, "Usual cycle length");
-            // Standard 280-day estimate, adjusted by the difference from a 28-day cycle.
-            dueDate = addDays(lastPeriod, 280 + (cycleLength - 28));
-          } else {
-            dueDate = parseLocalDate(dueDateInput.value);
-            if (!dueDate) throw { message: "Enter a valid estimated due date.", input: dueDateInput };
-            // Permit a past due date for late-pregnancy/post-due-date estimates, but reject implausibly distant dates.
-            const daysFromToday = dayDifference(dueDate, today);
-            if (daysFromToday > 315 || daysFromToday < -120) {
-              throw { message: "Enter a due date within 315 days in the future or 120 days in the past.", input: dueDateInput };
-            }
-          }
-
-          const daysUntilDue = dayDifference(dueDate, today);
-          const gestationalDays = 280 - daysUntilDue;
-          if (gestationalDays < 0) {
-            throw { message: "The selected dates place the pregnancy before the estimated start of gestational dating. Check the dates and try again.", input: method === "lmp" ? lastPeriodInput : dueDateInput };
-          }
-          if (gestationalDays > 330) {
-            throw { message: "The selected dates are unusually far beyond the estimated due date. Please check the dates or consult a healthcare professional.", input: method === "lmp" ? lastPeriodInput : dueDateInput };
-          }
-
-          const weeks = Math.floor(gestationalDays / 7);
-          const days = gestationalDays % 7;
-          const trimester = getTrimester(weeks + 1);
-          const progress = Math.min(100, Math.max(0, (gestationalDays / 280) * 100));
-          const daysRemaining = Math.max(0, daysUntilDue);
-          const completedWeeks = weeks;
-          const trimesterStartDays = trimester === 1 ? 0 : trimester === 2 ? 13 * 7 : 27 * 7;
-          const trimesterEndDays = trimester === 1 ? 13 * 7 : trimester === 2 ? 27 * 7 : 40 * 7;
-          const daysToTrimesterEnd = Math.max(0, trimesterEndDays - gestationalDays);
-          const weeksToTrimesterEnd = Math.floor(daysToTrimesterEnd / 7);
-          const extraDaysToTrimesterEnd = daysToTrimesterEnd % 7;
-
-          document.getElementById("gestationalAge").textContent = `${weeks} weeks, ${days} days`;
-          document.getElementById("gestationalDetail").textContent =
-            `Approximately ${gestationalDays} days of gestational dating elapsed`;
-          document.getElementById("dueDateResult").textContent = formatDate(dueDate);
-          document.getElementById("dueDateDetail").textContent = daysUntilDue > 0
-            ? `${daysUntilDue} calendar day${daysUntilDue === 1 ? "" : "s"} from today`
-            : daysUntilDue === 0 ? "Estimated due date is today" : `${Math.abs(daysUntilDue)} day${Math.abs(daysUntilDue) === 1 ? "" : "s"} past the estimate`;
-          document.getElementById("trimesterResult").textContent = trimesterName(trimester);
-          document.getElementById("trimesterDetail").textContent = `Week ${weeks + 1} by this simplified convention`;
-          document.getElementById("countdownResult").textContent = daysUntilDue > 0
-            ? `${daysRemaining} day${daysRemaining === 1 ? "" : "s"}`
-            : daysUntilDue === 0 ? "Due date today" : `${Math.abs(daysUntilDue)} days past`;
-          document.getElementById("countdownDetail").textContent = daysUntilDue < 0
-            ? "The due date is an estimate; contact your care team for guidance."
-            : "The actual birth date may be earlier or later.";
-          document.getElementById("progressResult").textContent = `${progress.toFixed(1)}%`;
-          document.getElementById("weekSummary").textContent = `Week ${weeks + 1} · day ${days + 1} of this week`;
-          document.getElementById("progressFill").style.width = `${progress}%`;
-          document.getElementById("pregnancyProgress").setAttribute("aria-valuenow", String(Math.round(progress)));
-          document.getElementById("pregnancyProgress").setAttribute("aria-valuetext", `${progress.toFixed(1)} percent of the 280-day estimate`);
-          setMilestone("milestone1", trimester === 1, trimester === 1 ? `${Math.max(0, 13 - weeks)} weeks to week 14` : "Weeks 1–13");
-          setMilestone("milestone2", trimester === 2, trimester === 2 ? `${Math.max(0, 27 - weeks)} weeks to week 28` : "Weeks 14–27");
-          setMilestone("milestone3", trimester === 3, trimester === 3 ? "Current trimester" : "Week 28 onward");
-
-          let note;
-          if (daysUntilDue > 0) {
-            note = `${weeksToTrimesterEnd} week${weeksToTrimesterEnd === 1 ? "" : "s"}${extraDaysToTrimesterEnd ? ` and ${extraDaysToTrimesterEnd} day${extraDaysToTrimesterEnd === 1 ? "" : "s"}` : ""} until the end of the current trimester estimate. ${daysRemaining} day${daysRemaining === 1 ? "" : "s"} until the estimated due date.`;
-          } else if (daysUntilDue === 0) {
-            note = "Today is the estimated due date. Contact your maternity team for guidance about your individual care.";
-          } else {
-            note = "The estimated due date has passed. This calculator cannot assess your pregnancy; contact your maternity team for personalized guidance.";
-          }
-          document.getElementById("countdownNote").textContent = note;
-
-          result.hidden = false;
-          result.scrollIntoView({
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-            block: "nearest"
-          });
-        } catch (error) {
-          showError(error && error.message ? error.message : "Check your entries and try again.", error && error.input);
-        }
-      }
-
-      lmpTab.addEventListener("click", () => setMethod("lmp"));
-      dueTab.addEventListener("click", () => setMethod("due"));
-      [lmpTab, dueTab].forEach((tab) => tab.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-          event.preventDefault();
-          const next = tab === lmpTab ? dueTab : lmpTab;
-          setMethod(next === lmpTab ? "lmp" : "due");
-          next.focus();
-        }
-      }));
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        calculate();
-      });
-      form.addEventListener("input", (event) => {
-        if (event.target && event.target.hasAttribute("aria-invalid")) event.target.removeAttribute("aria-invalid");
-        if (!errorBox.hidden) {
-          errorBox.hidden = true;
-          errorBox.textContent = "";
-        }
-      });
-      form.addEventListener("reset", () => {
-        window.setTimeout(() => {
-          setMethod("lmp");
-          clearErrors();
-          result.hidden = true;
-          lastPeriodInput.value = "";
-          cycleLengthInput.value = "28";
-          dueDateInput.value = "";
-        }, 0);
-      });
-
-      // Start with no personal dates prefilled.
-      lastPeriodInput.value = "";
-      dueDateInput.value = "";
-      setMethod("lmp");
-    })();
+    // Do not prefill personal dates.
+    lmpInput.value = "";
+    dueInput.value = "";
+    cycleInput.value = "28";
+    setMethod("lmp");
+  })();
   </script>
 
-  <!-- Shared site integration: navigation.js injects the site's common navigation and sidebar features. -->
+  <!-- Shared site integration: navigation.js supplies common navigation and sidebar features. -->
   <script src="/navigation.js" defer></script>
 </body>
 </html>
