@@ -464,6 +464,26 @@
             color: #F8FAFC;
         }
 
+        /* Defensive: keep calculator text visible even if a global stylesheet restyles form fields */
+        .calculator-ui-box select.auc-select,
+        .calculator-ui-box input.auc-input {
+            color: #F8FAFC !important;
+            -webkit-text-fill-color: #F8FAFC !important;
+            background-color: #111827 !important;
+            background-image: linear-gradient(180deg, #111827 0%, #1E293B 100%) !important;
+            opacity: 1 !important;
+        }
+        .calculator-ui-box select.auc-select option,
+        .calculator-ui-box select.auc-select optgroup {
+            color: #F8FAFC !important;
+            -webkit-text-fill-color: #F8FAFC !important;
+            background-color: #0F172A !important;
+        }
+        .calculator-ui-box input.auc-input::placeholder {
+            color: #64748B !important;
+            -webkit-text-fill-color: #64748B !important;
+        }
+
         /* Group Pill Filter Strip */
         .auc-group-tabs {
             display: flex;
@@ -1971,23 +1991,4 @@
         // Short display symbol, e.g. "Square Kilometer (km²)" -> "km²"
         function unitSymbol(unitObj, key) {
             var m = unitObj.name.match(/\(([^()]+)\)\s*$/);
-            if (m && m[1].length <= 14 && m[1].indexOf(" ") === -1) return m[1];
-            return key;
-        }
-
-        function populateCategories(filterText) {
-            const currentCat = elCategory.value || "length";
-            elCategory.innerHTML = "";
-            const query = (filterText || "").trim().toLowerCase();
-
-            const grouped = {};
-            let matchCount = 0;
-
-            Object.keys(REGISTRY).forEach(function (catKey) {
-                const cat = REGISTRY[catKey];
-                if (activeGroup !== "all" && cat.group !== activeGroup) return;
-
-                // Match category name or any unit inside category
-                const catMatch = cat.name.toLowerCase().indexOf(query) !== -1 || cat.group.toLowerCase().indexOf(query) !== -1;
-                const unitMatch = Object.keys(cat.units).some(function (uKey) {
-                    return uKey.toLowerCase().indexOf(qu
+            
