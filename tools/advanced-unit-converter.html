@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <script>try{document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light";}catch(e){}</script>
-    <!-- Opt out of browser auto dark mode / forced darkening on mobile -->
-    <meta name="supported-color-schemes" content="light">
+    <script>
+      try {
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
     <title>Advanced Unit Converter — Engineering, Scientific & Everyday Units | TheQuantCalc</title>
     <meta name="description" content="Convert over 210 units across 28 measurement categories including length, mass, temperature, pressure, torque, viscosity, digital storage, electrical, and scientific units with adjustable precision.">
     <link rel="canonical" href="https://thequantcal.pages.dev/tools/advanced-unit-converter">
@@ -149,7 +152,6 @@
         :root,
         html[data-theme="light"] {
             color-scheme: light;
-            color-scheme: light;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
@@ -168,7 +170,6 @@
         }
 
         html[data-theme="dark"] {
-            color-scheme: dark;
             color-scheme: dark;
             /* Neutral Dark Baseline (only used if a user manually picks dark via the site toggle) */
             --surface-page: #050811;
@@ -266,31 +267,32 @@
            P5 & MASTER PROMPT: PAGE GRID CONTRACT
            ========================================================================== */
         .tqc-page-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 28px;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 18px 16px 56px;
+            width: min(1180px, calc(100% - 32px));
+            margin: 22px auto 55px;
         }
 
-        @media (min-width: 1024px) {
-            .tqc-page-grid {
-                grid-template-columns: minmax(0, 71%) minmax(0, 29%);
-                padding: 24px 28px 64px;
-            }
-        }
-
-        .main-body {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+        .main-body,
+        .dyn-left-split,
+        .tool-suite {
             min-width: 0;
+            width: 100%;
         }
 
         .sidebar {
-            width: 100%;
             min-width: 0;
+        }
+
+        @media (min-width: 900px) {
+            .tqc-page-grid {
+                width: min(1240px, calc(100% - 48px));
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tqc-page-grid {
+                width: calc(100% - 24px);
+                margin-top: 16px;
+            }
         }
 
         /* ==========================================================================
@@ -1045,17 +1047,17 @@
 <body>
     <div class="tqc-page-grid">
         <main class="main-body">
+            <div class="dyn-left-split">
+                <div class="tool-suite">
             <!-- Visible Accessible Breadcrumb (P5) -->
             <nav class="breadcrumb-trail" aria-label="Breadcrumb">
                 <a href="https://thequantcal.pages.dev/">Home</a>
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">/</span>
                 <a href="https://thequantcal.pages.dev/#utility">Utility</a>
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">/</span>
                 <span class="bc-current" aria-current="page">Advanced Unit Converter</span>
             </nav>
 
-            <!-- Calculator Suite Section -->
-            <section class="tool-suite" aria-labelledby="calc-main-title">
                 <h1 id="calc-main-title" class="primary-title">Advanced Unit Converter</h1>
 
                 <div class="calculator-ui-box">
@@ -1186,7 +1188,7 @@
                     <!-- Saved Favorites & Recent Pairs Strip -->
                     <div id="auc-quick-pairs" class="auc-chip-bar" aria-label="Favorite and quick conversion pairs"></div>
                 </div>
-            </section>
+                </div>
 
             <!-- Comprehensive Educational Article (plain HTML — no LaTeX) -->
             <article class="auc-article">
@@ -1421,10 +1423,10 @@
                     </details>
                 </div>
             </article>
-        </main>
+            </div>
 
-        <!-- Empty Sidebar Placeholder for Global Script Injection (P5) -->
-        <aside class="sidebar"></aside>
+            <aside class="sidebar" aria-label="Related tools and advertisements"></aside>
+        </main>
     </div>
 
     <!-- Scoped Page-Specific Conversion Engine (IIFE to avoid Global Pollution) -->
@@ -1991,4 +1993,11 @@
         // Short display symbol, e.g. "Square Kilometer (km²)" -> "km²"
         function unitSymbol(unitObj, key) {
             var m = unitObj.name.match(/\(([^()]+)\)\s*$/);
-            
+            if (m && m[1].length <= 14 && m[1].indexOf(" ") === -1) return m[1];
+            return key;
+        }
+
+        function populateCategories(filterText) {
+            const currentCat = elCategory.value || "length";
+            elCategory.innerHTML = "";
+            const query = (filt
