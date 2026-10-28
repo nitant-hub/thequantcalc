@@ -9,10 +9,13 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://thequantcal.pages.dev/period-and-cycle-tracker/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheQuantCalc">
   <meta property="og:title" content="Period and Cycle Tracker | TheQuantCalc">
-  <meta property="og:description" content="Estimate your next period, ovulation date and fertile window from your cycle details.">
+  <meta property="og:description" content="Estimate your next period, ovulation date, fertile window and upcoming 3-cycle forecast from your cycle details.">
   <meta property="og:url" content="https://thequantcal.pages.dev/period-and-cycle-tracker/">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Period and Cycle Tracker | TheQuantCalc">
+  <meta name="twitter:description" content="Estimate your next period, ovulation date, fertile window and upcoming 3-cycle forecast from your cycle details.">
   <style>
     :root {
       color-scheme: light;
@@ -76,11 +79,23 @@
     .main-body { min-width: 0; }
     .sidebar { min-width: 0; min-height: 1px; }
     .breadcrumbs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
       color: var(--muted);
       font-size: .88rem;
       margin: 0 0 16px;
     }
-    .breadcrumbs a { color: inherit; }
+    .breadcrumbs a {
+      color: inherit;
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+    .breadcrumbs a:hover {
+      color: var(--accent-strong);
+      text-decoration: underline;
+    }
     .page-heading {
       margin: 0 0 8px;
       font-size: clamp(1.65rem, 3.2vw, 2.25rem);
@@ -93,18 +108,20 @@
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      width: min(550px, 100%);
-      max-width: 550px;
+      width: min(560px, 100%);
+      max-width: 560px;
       margin-inline: auto;
       border: 1px solid rgba(82, 240, 192, .42);
       border-radius: 24px;
       padding: clamp(18px, 3vw, 28px);
       background:
-        radial-gradient(ellipse at 8% 0%, rgba(0, 168, 255, .16), transparent 42%),
-        radial-gradient(ellipse at 100% 12%, rgba(0, 212, 170, .15), transparent 38%),
-        linear-gradient(145deg, #071a2f 0%, #09192c 48%, #061221 100%);
+        radial-gradient(ellipse at 8% 0%, rgba(0, 168, 255, .18), transparent 44%),
+        radial-gradient(ellipse at 100% 12%, rgba(0, 212, 170, .16), transparent 40%),
+        linear-gradient(145deg, rgba(7, 26, 47, .96) 0%, rgba(9, 25, 44, .95) 48%, rgba(6, 18, 33, .98) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       color: #f4fbff;
-      box-shadow: 0 18px 45px rgba(0, 18, 35, .24), inset 0 1px 0 rgba(255,255,255,.09);
+      box-shadow: 0 20px 48px rgba(0, 18, 35, .28), inset 0 1px 0 rgba(255,255,255,.12);
     }
     .calculator-ui-box::before {
       content: "";
@@ -112,7 +129,7 @@
       z-index: -1;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(120deg, rgba(255,255,255,.035), transparent 36%, rgba(82,240,192,.035));
+      background: linear-gradient(120deg, rgba(255,255,255,.04), transparent 36%, rgba(82,240,192,.04));
     }
     .calc-eyebrow { margin: 0 0 5px; color: #8df5d7; font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
     .calc-title { margin: 0; color: #fff; font-size: clamp(1.35rem, 2.8vw, 1.8rem); line-height: 1.2; letter-spacing: -.025em; }
@@ -152,33 +169,74 @@
     .calc-btn-primary { background: linear-gradient(135deg, #6ff5cf, #19d5a5); color: #06251e; box-shadow: 0 7px 20px rgba(0,212,170,.18); }
     .calc-btn-secondary { background: rgba(255,255,255,.07); border-color: #53677b; color: #f5fbff; }
     .calc-error { margin: 14px 0 0; padding: 11px 13px; border: 1px solid #ff8d83; border-radius: 10px; background: #421e21; color: #ffe7e3; }
+    .calc-notice { margin: 0 0 14px; padding: 10px 13px; border: 1px solid rgba(255, 209, 102, .45); border-radius: 11px; background: rgba(255, 209, 102, .11); color: #ffe9b0; font-size: .83rem; line-height: 1.45; }
     [hidden] { display: none !important; }
     .result-panel { margin-top: 22px; padding-top: 21px; border-top: 1px solid rgba(214,239,248,.2); }
     .result-heading { margin: 0 0 14px; color: #fff; font-size: 1.12rem; }
+    
+    /* Asymmetrical Bento Grid for Results */
     .result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .result-card {
       min-width: 0;
-      border: 1px solid rgba(126,161,180,.42);
-      border-radius: 15px;
+      border: 1px solid rgba(126,161,180,.38);
+      border-radius: 16px;
       padding: 15px;
-      background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.045);
+      background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
-    .result-label { display: block; margin-bottom: 6px; color: #d4e5ef; font-size: .79rem; font-weight: 700; }
+    .result-card-hero {
+      grid-column: 1 / -1;
+      border-color: rgba(82, 240, 192, .5);
+      background: linear-gradient(135deg, rgba(82, 240, 192, .15), rgba(255, 255, 255, .04));
+    }
+    .result-label { display: block; margin-bottom: 6px; color: #d4e5ef; font-size: .79rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
     .result-value { display: block; overflow-wrap: anywhere; color: #8df5d7; font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 850; line-height: 1.3; }
+    .result-card-hero .result-value { font-size: clamp(1.25rem, 2.8vw, 1.55rem); color: #ffffff; }
     .result-detail { display: block; margin-top: 5px; color: #d3e3ef; font-size: .81rem; }
-    .phase-wrap { margin-top: 16px; border: 1px solid rgba(126,161,180,.42); border-radius: 15px; padding: 15px; background: rgba(255,255,255,.045); }
+
+    .phase-wrap { margin-top: 14px; border: 1px solid rgba(126,161,180,.38); border-radius: 16px; padding: 15px; background: rgba(255,255,255,.045); }
     .phase-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; color: #eaf5fb; font-size: .85rem; }
-    .phase-track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
-    .phase-segment { min-height: 12px; border-radius: 999px; background: #34495b; }
+    .phase-track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .phase-segment { min-height: 12px; border-radius: 999px; background: #34495b; opacity: .55; transition: opacity .2s ease, transform .2s ease; }
     .phase-segment.period { background: #ff7b88; }
     .phase-segment.follicular { background: #5bb6ff; }
     .phase-segment.fertile { background: #62e6b5; }
     .phase-segment.luteal { background: #bd9cff; }
-    .phase-segment.current { outline: 2px solid #fff; outline-offset: 2px; }
+    .phase-segment.current { opacity: 1; outline: 2px solid #fff; outline-offset: 2px; }
     .phase-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: #d3e3ef; font-size: .78rem; }
     .legend-item { display: inline-flex; align-items: center; gap: 6px; }
     .legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: 0 0 auto; }
+
+    /* 3-Cycle Forecast Bento Box */
+    .forecast-wrap {
+      margin-top: 14px;
+      border: 1px solid rgba(126,161,180,.38);
+      border-radius: 16px;
+      padding: 14px 15px;
+      background: rgba(255,255,255,.035);
+    }
+    .forecast-title {
+      margin: 0 0 10px;
+      color: #eaf5fb;
+      font-size: .85rem;
+      font-weight: 750;
+    }
+    .forecast-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+      color: #d3e3ef;
+    }
+    .forecast-table th, .forecast-table td {
+      padding: 7px 6px;
+      text-align: left;
+      border-bottom: 1px solid rgba(214,239,248,.12);
+    }
+    .forecast-table th { color: #8df5d7; font-weight: 700; }
+    .forecast-table tbody tr:last-child td { border-bottom: 0; }
+
     .disclaimer-in-card { margin: 15px 0 0; color: #c9d9e5; font-size: .8rem; }
     .article-card {
       padding: clamp(19px, 3vw, 30px);
@@ -260,7 +318,7 @@
     }
     @media (max-width: 520px) {
       .tqc-page-grid { width: calc(100% - 20px); margin-top: 14px; }
-      .calculator-ui-box { width: 100%; max-width: 550px; border-radius: 19px; padding: 17px; }
+      .calculator-ui-box { width: 100%; max-width: 560px; border-radius: 19px; padding: 17px; }
       .form-grid, .result-grid { grid-template-columns: minmax(0, 1fr); }
       .calc-actions { display: grid; grid-template-columns: 1fr 1fr; }
       .calc-btn { padding: 10px 12px; }
@@ -268,6 +326,7 @@
       .article-card h2 { padding-bottom: 8px; margin-bottom: 12px; }
       .phase-top { flex-direction: column; gap: 3px; }
       .cycle-reference-table th, .cycle-reference-table td { padding: 11px 12px; }
+      .forecast-table th, .forecast-table td { font-size: .75rem; padding: 6px 4px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -283,7 +342,7 @@
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript",
-    "description": "A free browser-based tool that estimates the next period, ovulation date and fertile window from cycle details.",
+    "description": "A free browser-based tool that estimates the next period, ovulation date, fertile window and 3-cycle forecast from cycle details.",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": { "@type": "Organization", "name": "TheQuantCalc", "url": "https://thequantcal.pages.dev/" }
@@ -294,8 +353,24 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thequantcal.pages.dev/" },
-      { "@type": "ListItem", "position": 2, "name": "Period and Cycle Tracker", "item": "https://thequantcal.pages.dev/period-and-cycle-tracker/" }
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://thequantcal.pages.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Health",
+        "item": "https://thequantcal.pages.dev/health/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Period and Cycle Tracker",
+        "item": "https://thequantcal.pages.dev/period-and-cycle-tracker/"
+      }
     ]
   }
   </script>
@@ -309,7 +384,7 @@
       { "@type": "Question", "name": "What is the fertile window?", "acceptedAnswer": { "@type": "Answer", "text": "The fertile window is commonly described as the five days before ovulation and the day of ovulation. Calendar estimates cannot reliably confirm fertile days or prevent pregnancy." } },
       { "@type": "Question", "name": "Can this tracker be used as birth control?", "acceptedAnswer": { "@type": "Answer", "text": "No. Calendar predictions are not reliable contraception and should not be used to avoid pregnancy." } },
       { "@type": "Question", "name": "What if my cycles are irregular?", "acceptedAnswer": { "@type": "Answer", "text": "Predictions may be less accurate when cycle lengths vary. Tracking several cycles and discussing significant changes with a healthcare professional may help." } },
-      { "@type": "Question", "name": "What counts as the first day of a period?", "acceptedAnswer": { "@type": "Answer", "text": "Cycle day 1 is generally the first day of menstrual bleeding, rather than the day before bleeding starts." } },
+      { "@type": "Question", "name": "What counts as the first day of a period?", "acceptedAnswer": { "@type": "Answer", "text": "Cycle day 1 is generally the first day of menstrual bleeding, rather than spotting or the day before bleeding starts." } },
       { "@type": "Question", "name": "Does the tracker save my cycle information?", "acceptedAnswer": { "@type": "Answer", "text": "This page calculates in your browser and does not include code to send or store the entered cycle details. Your browser or extensions may still have their own behavior." } },
       { "@type": "Question", "name": "When should I seek medical advice?", "acceptedAnswer": { "@type": "Answer", "text": "Consider medical advice for a missed period with possible pregnancy, very heavy bleeding, severe pain, bleeding between periods, or a major persistent change in your cycle." } }
     ]
@@ -320,42 +395,45 @@
   <div class="tqc-page-grid">
     <main class="main-body">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="https://thequantcal.pages.dev/">Home</a> <span aria-hidden="true">›</span>
+        <a href="https://thequantcal.pages.dev/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="https://thequantcal.pages.dev/health/">Health</a>
+        <span aria-hidden="true">›</span>
         <span aria-current="page">Period and Cycle Tracker</span>
       </nav>
 
       <header>
         <h1 class="page-heading">Period and Cycle Tracker</h1>
-        <p class="page-intro">Estimate your next period, ovulation date, fertile window, cycle day and current cycle phase. Enter your usual cycle details to get a calendar-based estimate—not a medical diagnosis.</p>
+        <p class="page-intro">Estimate your next period, ovulation date, fertile window, cycle day and current cycle phase. Enter your usual cycle details to get a calendar-based estimate and a 3-cycle lookahead—not a medical diagnosis.</p>
       </header>
 
       <section class="tool-suite" aria-labelledby="calc-heading">
         <div class="calculator-ui-box">
           <p class="calc-eyebrow">TheQuantCalc · Health tool</p>
           <h2 class="calc-title" id="calc-heading">Track your menstrual cycle</h2>
-          <p class="calc-subtitle">Your entries are processed in this page's browser code. Estimates may be less accurate if your cycles are irregular.</p>
+          <p class="calc-subtitle">Your entries are processed locally in your browser. Estimates may be less accurate if your cycles vary from month to month.</p>
 
           <form id="cycleForm" novalidate>
             <div class="form-grid">
               <div class="field">
                 <label for="lastPeriod">First day of last period</label>
                 <input id="lastPeriod" name="lastPeriod" type="date" required autocomplete="off" aria-describedby="lastPeriodHelp">
-                <small id="lastPeriodHelp">Use the first day menstrual bleeding began.</small>
+                <small id="lastPeriodHelp">Use the first day full menstrual bleeding began.</small>
               </div>
               <div class="field">
                 <label for="cycleLength">Usual cycle length (days)</label>
                 <input id="cycleLength" name="cycleLength" type="number" min="21" max="45" step="1" value="28" required inputmode="numeric" aria-describedby="cycleLengthHelp">
-                <small id="cycleLengthHelp">Count from the first day of one period to the first day of the next. Typical adult cycles often vary.</small>
+                <small id="cycleLengthHelp">Count from day 1 of one period to day 1 of the next (21–45 days).</small>
               </div>
               <div class="field">
                 <label for="periodLength">Period duration (days)</label>
                 <input id="periodLength" name="periodLength" type="number" min="1" max="10" step="1" value="5" required inputmode="numeric" aria-describedby="periodLengthHelp">
-                <small id="periodLengthHelp">Your usual number of bleeding days.</small>
+                <small id="periodLengthHelp">Your usual number of bleeding days (1–10 days).</small>
               </div>
               <div class="field">
                 <label for="lutealLength">Estimated luteal phase (days)</label>
                 <input id="lutealLength" name="lutealLength" type="number" min="10" max="17" step="1" value="14" required inputmode="numeric" aria-describedby="lutealLengthHelp">
-                <small id="lutealLengthHelp">Often around 12–14 days, but it varies. Keep the estimate within 10–17 days.</small>
+                <small id="lutealLengthHelp">Days between ovulation and your next period (typically 12–14 days).</small>
               </div>
             </div>
             <div class="calc-actions">
@@ -367,8 +445,10 @@
 
           <section id="result" class="result-panel tqc-result-box" data-tqc-result aria-labelledby="result-heading" aria-live="polite" aria-atomic="true" hidden>
             <h3 id="result-heading" class="result-heading">Your cycle estimate</h3>
+            <p id="multiCycleNotice" class="calc-notice" hidden></p>
+
             <div class="result-grid">
-              <div class="result-card">
+              <div class="result-card result-card-hero">
                 <span class="result-label">Estimated next period</span>
                 <strong id="nextPeriod" class="result-value">—</strong>
                 <span id="nextPeriodDetail" class="result-detail"></span>
@@ -381,14 +461,20 @@
               <div class="result-card">
                 <span class="result-label">Estimated fertile window</span>
                 <strong id="fertileWindow" class="result-value">—</strong>
-                <span class="result-detail">Five days before estimated ovulation through ovulation day</span>
+                <span class="result-detail">5 days before ovulation + ovulation day</span>
               </div>
               <div class="result-card">
                 <span class="result-label">Cycle day today</span>
                 <strong id="cycleDay" class="result-value">—</strong>
                 <span id="phaseText" class="result-detail"></span>
               </div>
+              <div class="result-card">
+                <span class="result-label">Expected bleeding window</span>
+                <strong id="bleedingWindow" class="result-value">—</strong>
+                <span id="bleedingDetail" class="result-detail"></span>
+              </div>
             </div>
+
             <div class="phase-wrap">
               <div class="phase-top">
                 <strong>Estimated cycle phase</strong>
@@ -403,10 +489,26 @@
               <div class="phase-legend" aria-label="Phase legend">
                 <span class="legend-item"><i class="legend-dot" style="background:#ff7b88"></i>Period</span>
                 <span class="legend-item"><i class="legend-dot" style="background:#5bb6ff"></i>Follicular</span>
-                <span class="legend-item"><i class="legend-dot" style="background:#62e6b5"></i>Estimated fertile window</span>
+                <span class="legend-item"><i class="legend-dot" style="background:#62e6b5"></i>Fertile window</span>
                 <span class="legend-item"><i class="legend-dot" style="background:#bd9cff"></i>Luteal</span>
               </div>
             </div>
+
+            <div class="forecast-wrap">
+              <h4 class="forecast-title">Upcoming 3-cycle projection</h4>
+              <table class="forecast-table" aria-label="Upcoming 3-cycle projection">
+                <thead>
+                  <tr>
+                    <th scope="col">Cycle</th>
+                    <th scope="col">Period start</th>
+                    <th scope="col">Fertile window</th>
+                    <th scope="col">Ovulation</th>
+                  </tr>
+                </thead>
+                <tbody id="forecastBody"></tbody>
+              </table>
+            </div>
+
             <p class="disclaimer-in-card">These are calendar-based estimates, not confirmation of ovulation or fertility. They should not be used as contraception.</p>
           </section>
         </div>
@@ -415,10 +517,10 @@
       <article class="article-card">
         <h2>How to use this period tracker</h2>
         <ol>
-          <li>Choose the first day of your most recent period.</li>
+          <li>Choose the first day of your most recent menstrual period.</li>
           <li>Enter your usual cycle length, counted from the first day of one period to the first day of the next.</li>
           <li>Enter your typical period duration and, if known, your estimated luteal-phase length.</li>
-          <li>Select <strong>Calculate</strong> to see your estimated next period, ovulation date, fertile window and cycle day.</li>
+          <li>Select <strong>Calculate</strong> to see your estimated next period, ovulation date, fertile window, current cycle day and 3-cycle forecast.</li>
         </ol>
         <p>The calculator uses the information you enter for this calculation. If you are unsure of your usual cycle length, predictions may be less useful; tracking several cycles can help you understand your own pattern.</p>
 
@@ -428,20 +530,20 @@
 
         <h2>How are the dates estimated?</h2>
         <h3>Next period</h3>
-        <p>The estimated next period is calculated by adding your selected cycle length to the first day of your last period. For example, a 28-day cycle estimate places the next period about 28 days after the previous period began. Real cycles do not always follow an exact calendar pattern.</p>
+        <p>The estimated next period is calculated by adding your selected cycle length to the first day of your last period. For example, a 28-day cycle estimate places the next period 28 days after the previous period began. Real cycles do not always follow an exact calendar pattern.</p>
 
         <h3>Ovulation date</h3>
-        <p>Ovulation is estimated by counting backward from the predicted next period using the luteal-phase length you enter. The calculation is an approximation: ovulation does not always occur on the same cycle day, and a calendar estimate cannot confirm that ovulation happened.</p>
+        <p>Ovulation is estimated by counting backward from the predicted next period using the luteal-phase length you enter (for example, in a 28-day cycle with a 14-day luteal phase, ovulation is estimated around cycle day 14). The calculation is an approximation: ovulation does not always occur on the same cycle day, and a calendar estimate cannot confirm that ovulation happened.</p>
 
         <h3>Fertile window</h3>
-        <p>The fertile window is commonly described as the five days before ovulation and the day of ovulation. This estimate can be wrong when ovulation timing changes. Do not rely on a period-tracking calendar as a method of contraception.</p>
+        <p>The fertile window is commonly described as the five days before ovulation and the day of ovulation, reflecting the typical lifespan of sperm in the reproductive tract and the 12–24 hour lifespan of an egg after release. Because ovulation timing can shift unexpectedly, do not rely on a period-tracking calendar as a method of contraception.</p>
 
         <h2>Understanding the menstrual cycle</h2>
         <ul>
-          <li><strong>Menstrual phase:</strong> the days when menstrual bleeding occurs.</li>
-          <li><strong>Follicular phase:</strong> begins on the first day of the period and continues until ovulation; its length can vary.</li>
-          <li><strong>Ovulation:</strong> an ovary releases an egg. The exact date can vary, even in people whose cycles usually seem regular.</li>
-          <li><strong>Luteal phase:</strong> the phase after ovulation and before the next period. Its duration also varies.</li>
+          <li><strong>Menstrual phase:</strong> the days when the uterine lining sheds and menstrual bleeding occurs.</li>
+          <li><strong>Follicular phase:</strong> begins on the first day of the period and continues until ovulation; its length is the most variable part of the cycle.</li>
+          <li><strong>Ovulation:</strong> an ovary releases a mature egg. The exact date can vary, even in people whose cycles usually seem regular.</li>
+          <li><strong>Luteal phase:</strong> the phase after ovulation and before the next period starts, typically lasting 10 to 17 days.</li>
         </ul>
         <p>These phase descriptions overlap in timing—for example, the follicular phase begins on cycle day 1, during menstruation. The timeline shown by this tool is simplified to make the estimate easier to read, not to represent every biological change.</p>
 
@@ -465,17 +567,17 @@
               <tr>
                 <th scope="row">Follicular</th>
                 <td>Day 1 until ovulation</td>
-                <td>Follicles develop, and the uterine lining begins to build up.</td>
+                <td>Follicles develop in the ovary, and the uterine lining begins to rebuild.</td>
               </tr>
               <tr>
                 <th scope="row">Ovulation</th>
-                <td>Varies by cycle</td>
-                <td>An ovary releases an egg.</td>
+                <td>Cycle length minus luteal phase</td>
+                <td>A surge in luteinizing hormone (LH) triggers an ovary to release an egg.</td>
               </tr>
               <tr>
                 <th scope="row">Luteal</th>
                 <td>After ovulation until the next period</td>
-                <td>Hormonal changes prepare the uterine lining for a possible pregnancy.</td>
+                <td>Progesterone rises to prepare the uterine lining for a possible pregnancy.</td>
               </tr>
             </tbody>
           </table>
@@ -483,8 +585,8 @@
         <p class="table-note">These phases can overlap in timing: the follicular phase begins on the first day of menstruation. This table is a general reference, not a prediction of your hormone levels.</p>
 
         <h2>When calendar estimates may be less accurate</h2>
-        <p>Predictions may be less reliable during adolescence, around perimenopause, after pregnancy, while breastfeeding, after stopping hormonal contraception, or when cycles are irregular. Stress, illness, travel, changes in weight and some health conditions can also affect cycle timing.</p>
-        <p>Consider speaking with a healthcare professional if your periods become persistently irregular, you miss periods and pregnancy is possible, you have severe pain, bleeding between periods, or bleeding that is unusually heavy for you. Seek urgent care for severe symptoms such as fainting or intense, sudden pelvic pain.</p>
+        <p>Predictions may be less reliable during adolescence, around perimenopause, after pregnancy, while breastfeeding, after stopping hormonal contraception, or when cycles are naturally irregular. Stress, illness, travel, changes in weight, intense athletic training and conditions like polycystic ovary syndrome (PCOS) or thyroid disorders can also affect cycle timing.</p>
+        <p>Consider speaking with a healthcare professional if your periods become persistently irregular, you miss periods and pregnancy is possible, you have severe pain, bleeding between periods, or bleeding that is unusually heavy for you. Seek urgent care for severe symptoms such as fainting, dizziness, or intense, sudden pelvic pain.</p>
 
         <h2>Frequently asked questions</h2>
         <div class="faq-list">
@@ -510,7 +612,7 @@
           </details>
           <details>
             <summary>What counts as the first day of a period?</summary>
-            <div class="faq-answer"><p>Cycle day 1 is generally the first day of menstrual bleeding, rather than the day before bleeding starts.</p></div>
+            <div class="faq-answer"><p>Cycle day 1 is generally the first day of full menstrual bleeding, rather than light spotting before the period begins.</p></div>
           </details>
           <details>
             <summary>Does this tracker save my cycle information?</summary>
@@ -546,7 +648,9 @@
       const periodLengthInput = document.getElementById("periodLength");
       const lutealLengthInput = document.getElementById("lutealLength");
       const errorBox = document.getElementById("formError");
+      const multiCycleNotice = document.getElementById("multiCycleNotice");
       const result = document.getElementById("result");
+      const forecastBody = document.getElementById("forecastBody");
 
       const DAY_MS = 86400000;
       const localDateString = (date) => {
@@ -576,6 +680,9 @@
         weekday: "short", year: "numeric", month: "short", day: "numeric"
       }).format(date);
       const formatShortDate = (date) => new Intl.DateTimeFormat(undefined, {
+        month: "short", day: "numeric"
+      }).format(date);
+      const formatMediumDate = (date) => new Intl.DateTimeFormat(undefined, {
         month: "short", day: "numeric", year: "numeric"
       }).format(date);
 
@@ -594,6 +701,8 @@
       function clearErrors() {
         errorBox.hidden = true;
         errorBox.textContent = "";
+        multiCycleNotice.hidden = true;
+        multiCycleNotice.textContent = "";
         [lastPeriodInput, cycleLengthInput, periodLengthInput, lutealLengthInput].forEach((input) => {
           input.removeAttribute("aria-invalid");
         });
@@ -633,7 +742,32 @@
           span.setAttribute("aria-hidden", "true");
           track.appendChild(span);
         });
-        track.setAttribute("aria-label", `Illustrative timeline for a ${cycleLength}-day cycle. Current cycle day: ${cycleDay}. Current phase: ${determinePhase(cycleDay, periodLength, ovulationDay, cycleLength)}.`);
+        track.setAttribute(
+          "aria-label",
+          `Illustrative timeline for a ${cycleLength}-day cycle. Current cycle day: ${cycleDay}. Current phase: ${determinePhase(cycleDay, periodLength, ovulationDay, cycleLength)}.`
+        );
+      }
+
+      function renderForecast(currentCycleStart, cycleLength, ovulationDay) {
+        forecastBody.replaceChildren();
+        for (let i = 1; i <= 3; i++) {
+          const start = addDays(currentCycleStart, i * cycleLength);
+          const ov = addDays(start, ovulationDay - 1);
+          const fStart = addDays(ov, -5);
+
+          const tr = document.createElement("tr");
+          const tdCycle = document.createElement("td");
+          tdCycle.textContent = `Cycle +${i}`;
+          const tdPeriod = document.createElement("td");
+          tdPeriod.textContent = formatMediumDate(start);
+          const tdFertile = document.createElement("td");
+          tdFertile.textContent = `${formatShortDate(fStart)} – ${formatShortDate(ov)}`;
+          const tdOv = document.createElement("td");
+          tdOv.textContent = formatShortDate(ov);
+
+          tr.append(tdCycle, tdPeriod, tdFertile, tdOv);
+          forecastBody.appendChild(tr);
+        }
       }
 
       function calculate() {
@@ -647,56 +781,71 @@
           if (!lastPeriod) {
             throw { message: "Enter a valid first day of your last period.", input: lastPeriodInput };
           }
-          if (dayDifference(todayLocal, lastPeriod) < 0) {
+          const daysSinceStart = dayDifference(todayLocal, lastPeriod);
+          if (daysSinceStart < 0) {
             throw { message: "The last-period date cannot be in the future.", input: lastPeriodInput };
+          }
+          if (daysSinceStart > 365) {
+            throw { message: "Please enter a last-period date within the past 12 months for a meaningful projection.", input: lastPeriodInput };
           }
 
           const cycleLength = readInteger(cycleLengthInput, 21, 45, "Usual cycle length");
           const periodLength = readInteger(periodLengthInput, 1, 10, "Period duration");
           const lutealLength = readInteger(lutealLengthInput, 10, 17, "Luteal phase");
 
-          if (periodLength >= cycleLength) {
-            throw { message: "Period duration must be shorter than the cycle length.", input: periodLengthInput };
-          }
-          if (lutealLength >= cycleLength) {
-            throw { message: "Luteal phase must be shorter than the cycle length.", input: lutealLengthInput };
-          }
-
-          const ovulationDay = cycleLength - lutealLength + 1;
-          if (ovulationDay < 6) {
+          if (periodLength + lutealLength >= cycleLength) {
             throw {
-              message: "These cycle and luteal-phase lengths produce a fertile-window estimate before cycle day 1. Adjust the cycle length or luteal-phase estimate.",
+              message: "Your combined period duration and luteal phase must be shorter than the total cycle length.",
               input: lutealLengthInput
             };
           }
 
-          const daysSinceStart = dayDifference(todayLocal, lastPeriod);
+          // Standard clinical calendar countback: Day 28 - 14 luteal days = Day 14 ovulation.
+          const ovulationDay = cycleLength - lutealLength;
+          if (ovulationDay < 6) {
+            throw {
+              message: "These cycle and luteal-phase lengths place the fertile window before cycle day 1. Adjust the cycle length or luteal-phase estimate.",
+              input: lutealLengthInput
+            };
+          }
+
           const cyclesElapsed = Math.floor(daysSinceStart / cycleLength);
           const cycleDay = (daysSinceStart % cycleLength) + 1;
           const currentCycleStart = addDays(lastPeriod, cyclesElapsed * cycleLength);
           const nextPeriod = addDays(currentCycleStart, cycleLength);
+          const nextPeriodEnd = addDays(nextPeriod, periodLength - 1);
           const ovulation = addDays(currentCycleStart, ovulationDay - 1);
           const fertileStart = addDays(ovulation, -5);
           const fertileEnd = ovulation;
           const phase = determinePhase(cycleDay, periodLength, ovulationDay, cycleLength);
+
+          if (cyclesElapsed >= 1) {
+            multiCycleNotice.textContent = `Note: The date entered was ${daysSinceStart} days ago (${cyclesElapsed} full ${cyclesElapsed === 1 ? "cycle" : "cycles"} elapsed). Showing projections rolled forward to your current estimated cycle. If your period is late, calendar projections may not apply.`;
+            multiCycleNotice.hidden = false;
+          }
 
           document.getElementById("nextPeriod").textContent = formatDate(nextPeriod);
           const daysToNext = dayDifference(nextPeriod, todayLocal);
           document.getElementById("nextPeriodDetail").textContent =
             daysToNext === 0 ? "Estimated for today" :
             daysToNext === 1 ? "About 1 day from today" :
-            daysToNext > 1 ? `About ${daysToNext} days from today` :
-            "This estimate is in the past; cycle timing may have shifted.";
+            `About ${daysToNext} days from today`;
 
           document.getElementById("ovulationDate").textContent = formatDate(ovulation);
           document.getElementById("ovulationDetail").textContent =
-            `Approximately cycle day ${ovulationDay} of the current estimated cycle`;
+            `Cycle day ${ovulationDay} of ${cycleLength}`;
           document.getElementById("fertileWindow").textContent =
-            `${formatShortDate(fertileStart)} – ${formatShortDate(fertileEnd)}`;
+            `${formatShortDate(fertileStart)} – ${formatMediumDate(fertileEnd)}`;
           document.getElementById("cycleDay").textContent = `Day ${cycleDay} of ${cycleLength}`;
           document.getElementById("phaseText").textContent = phase;
-          document.getElementById("phaseSummary").textContent = `${phase} · day ${cycleDay}`;
+          document.getElementById("bleedingWindow").textContent =
+            `${formatShortDate(nextPeriod)} – ${formatShortDate(nextPeriodEnd)}`;
+          document.getElementById("bleedingDetail").textContent =
+            `Based on a ${periodLength}-day period duration`;
+
+          document.getElementById("phaseSummary").textContent = `${phase} · Day ${cycleDay}`;
           renderTimeline(cycleDay, periodLength, ovulationDay, cycleLength);
+          renderForecast(currentCycleStart, cycleLength, ovulationDay);
 
           result.hidden = false;
           result.scrollIntoView({
@@ -735,7 +884,6 @@
         }, 0);
       });
 
-      // Start blank rather than assuming the user's most recent period date.
       lastPeriodInput.value = "";
     })();
   </script>
