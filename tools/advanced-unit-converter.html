@@ -141,7 +141,7 @@ html[data-theme="dark"][data-category="utility"]{--surface-page:#060913;--articl
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surface-page);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .tqc-page-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:1280px;margin:0 auto;padding:18px 16px 56px}
-@media (min-width:1024px){.tqc-page-grid{grid-template-columns:minmax(0,71%) minmax(0,29%);padding:24px 28px 64px}}
+@media (min-width:768px){.tqc-page-grid{grid-template-columns:minmax(0,69%) minmax(250px,30%);justify-content:space-between;gap:8px;max-width:100%;margin:0;padding:24px 4px 64px 2px}.main-body{padding:0 8px}}
 .main-body{display:flex;flex-direction:column;width:100%;min-width:0}
 .sidebar{width:100%;min-width:0}
 .breadcrumb-trail{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:0.88rem;line-height:1.4;color:var(--text-muted);margin:0 0 10px 0}
@@ -233,6 +233,8 @@ details.auc-faq-item summary::-webkit-details-marker{display:none}
 details.auc-faq-item summary::after{content:"+";font-weight:700;color:#10B981;font-size:1.2rem;line-height:1}
 details.auc-faq-item[open] summary::after{content:"−"}
 .auc-faq-body{margin-top:10px;padding-top:10px;border-top:1px solid var(--surface-border);font-size:0.95rem;line-height:1.62;color:var(--text-body)}
+body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81 50%,#0f172a 100%);background-size:100% 50px;background-repeat:no-repeat}
+@media (min-width:768px){body{padding-top:60px;background-size:100% 60px}}
 </style>
 </head>
 <body>
@@ -264,7 +266,7 @@ details.auc-faq-item[open] summary::after{content:"−"}
 <span>Measurement Category</span>
 <span class="auc-label-accent" id="auc-cat-count">34 domains</span>
 </label>
-<select id="auc-category" class="auc-select" aria-label="Select measurement category"></select>
+<select id="auc-category" class="auc-select" aria-label="Select measurement category"><option>Length &amp; Distance</option></select>
 </div>
 <div class="auc-field-group">
 <label class="auc-label" for="auc-search">
@@ -299,14 +301,14 @@ details.auc-faq-item[open] summary::after{content:"−"}
 <div class="auc-unit-bridge">
 <div class="auc-field-group">
 <label class="auc-label" for="auc-from-unit">From Unit</label>
-<select id="auc-from-unit" class="auc-select"></select>
+<select id="auc-from-unit" class="auc-select"><option>Meter (m)</option></select>
 </div>
 <div class="auc-swap-wrap">
 <button type="button" id="auc-swap-btn" class="auc-swap-btn" aria-label="Swap From and To units" title="Swap units">&#8646;</button>
 </div>
 <div class="auc-field-group">
 <label class="auc-label" for="auc-to-unit">To Unit</label>
-<select id="auc-to-unit" class="auc-select"></select>
+<select id="auc-to-unit" class="auc-select"><option>Foot (ft)</option></select>
 </div>
 </div>
 <div class="auc-options-bar">
@@ -356,6 +358,7 @@ details.auc-faq-item[open] summary::after{content:"−"}
 <div id="auc-quick-pairs" class="auc-chip-bar" aria-label="Favorite and quick conversion pairs"></div>
 </div>
 </section>
+<div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
 <article class="auc-article">
 <h2>Understanding Dimensional Analysis and High-Precision Unit Conversion</h2>
 <p>Every physical measurement consists of two inseparable parts: a numerical magnitude and a standardized reference unit. When engineers, software architects, laboratory researchers, or construction teams exchange specifications across international boundaries, discrepancies in measurement systems can halt production or compromise structural safety. A notorious aerospace example occurred in 1999 when NASA's Mars Climate Orbiter burned up in the Martian atmosphere because one ground software module transmitted thruster impulse data in English pound-force seconds (lbf·s) while the spacecraft's navigation algorithm expected metric Newton-seconds (N·s) without executing a conversion factor of 4.448221615.</p>
