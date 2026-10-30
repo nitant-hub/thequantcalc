@@ -10,14 +10,32 @@ function renderCards() {
   if (rawInput.length > 0) {
     resultsContainer.innerHTML = ''; // Clear old results
 
-    // Clean up the input text to extract only the product keywords
-    let cleanQuery = rawInput
+    // Smart cleaning: remove promotional phrases and long URL parameters if a URL was pasted
+    let cleanQuery = rawInput;
+    
+    // If it's a URL, try to pull a readable search slug or fallback to cleaning text
+    if (rawInput.includes('http')) {
+      try {
+        const urlObj = new URL(rawInput);
+        // Extract meaningful path segments if possible, or use standard text cleanup
+        const segments = urlObj.pathname.split('/').filter(Boolean);
+        const textSegment = segments.find(seg => seg.length > 10 && !seg.includes('dp') && !seg.includes('p')) || '';
+        cleanQuery = textSegment ? textSegment.replace(/[-_]/g, ' ') : rawInput;
+      } catch (e) {
+        cleanQuery = rawInput;
+      }
+    }
+
+    // Clean up conversational filler words
+    cleanQuery = cleanQuery
       .replace(/take a look at this|check out|buy online|on flipkart|on amazon|price in india/gi, '')
-      .replace(/[^\w\s]/gi, '') // Remove symbols
+      .replace(/https?:\/\/[^\s]+/gi, '') // remove raw URLs if mixed in
+      .replace(/[^\w\s]/gi, ' ') // Replace symbols with spaces
       .trim();
 
-    // Fallback if cleaning leaves it empty
-    if (!cleanQuery) cleanQuery = rawInput;
+    if (!cleanQuery || cleanQuery.length < 3) {
+      cleanQuery = rawInput.replace(/https?:\/\/[^\s]+/gi, '').trim() || "electronics";
+    }
 
     const encodedQuery = encodeURIComponent(cleanQuery);
 
