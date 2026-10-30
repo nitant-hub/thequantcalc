@@ -10,14 +10,10 @@ function renderCards() {
   if (rawInput.length > 0) {
     resultsContainer.innerHTML = ''; // Clear old results
 
-    // Smart cleaning: remove promotional phrases and long URL parameters if a URL was pasted
     let cleanQuery = rawInput;
-    
-    // If it's a URL, try to pull a readable search slug or fallback to cleaning text
     if (rawInput.includes('http')) {
       try {
         const urlObj = new URL(rawInput);
-        // Extract meaningful path segments if possible, or use standard text cleanup
         const segments = urlObj.pathname.split('/').filter(Boolean);
         const textSegment = segments.find(seg => seg.length > 10 && !seg.includes('dp') && !seg.includes('p')) || '';
         cleanQuery = textSegment ? textSegment.replace(/[-_]/g, ' ') : rawInput;
@@ -26,11 +22,10 @@ function renderCards() {
       }
     }
 
-    // Clean up conversational filler words
     cleanQuery = cleanQuery
       .replace(/take a look at this|check out|buy online|on flipkart|on amazon|price in india/gi, '')
-      .replace(/https?:\/\/[^\s]+/gi, '') // remove raw URLs if mixed in
-      .replace(/[^\w\s]/gi, ' ') // Replace symbols with spaces
+      .replace(/https?:\/\/[^\s]+/gi, '')
+      .replace(/[^\w\s]/gi, ' ')
       .trim();
 
     if (!cleanQuery || cleanQuery.length < 3) {
@@ -42,8 +37,8 @@ function renderCards() {
     stores.forEach(store => {
       const card = document.createElement('div');
       card.style.cssText = `
-        min-width: 140px;
-        padding: 16px;
+        min-width: 150px;
+        padding: 14px;
         background: #ffffff;
         border: 2px solid #cbd5e1;
         border-radius: 12px;
@@ -59,15 +54,16 @@ function renderCards() {
       } else if (store === 'Flipkart') {
         storeUrl = `https://www.flipkart.com/search?q=${encodedQuery}`;
       } else if (store === 'Croma') {
-        storeUrl = `https://www.croma.com/searchB?q=${encodedQuery}`;
+        storeUrl = `https://www.croma.com/search/?text=${encodedQuery}`; // Fixed Croma search query string
       } else {
         storeUrl = `https://www.google.com/search?q=${encodeURIComponent(store + ' ' + cleanQuery)}`;
       }
       
       card.innerHTML = `
-        <div style="font-weight: bold; margin-bottom: 8px; color: #0f172a; font-size: 1rem;">${store}</div>
-        <div style="color: #16a34a; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px;">₹---</div>
-        <a href="${storeUrl}" target="_blank" style="background: #2563eb; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; display: inline-block; font-weight: 500;">View Deal</a>
+        <div style="width: 100%; height: 70px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 0.75rem; color: #64748b; font-weight: 600;">Product View</div>
+        <div style="font-weight: bold; margin-bottom: 6px; color: #0f172a; font-size: 0.95rem;">${store}</div>
+        <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px;">₹---</div>
+        <a href="${storeUrl}" target="_blank" style="background: #2563eb; color: white; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 0.8rem; display: inline-block; font-weight: 500;">View Deal</a>
       `;
       
       resultsContainer.appendChild(card);
