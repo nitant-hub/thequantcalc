@@ -5,10 +5,21 @@ const resultsContainer = document.getElementById('price-results');
 const stores = ['Amazon', 'Flipkart', 'Croma', 'Tata Neu'];
 
 function renderCards() {
-  const pastedUrl = searchBox.value.trim();
+  const rawInput = searchBox.value.trim();
 
-  if (pastedUrl.length > 0) {
+  if (rawInput.length > 0) {
     resultsContainer.innerHTML = ''; // Clear old results
+
+    // Clean up the input text to extract only the product keywords
+    let cleanQuery = rawInput
+      .replace(/take a look at this|check out|buy online|on flipkart|on amazon|price in india/gi, '')
+      .replace(/[^\w\s]/gi, '') // Remove symbols
+      .trim();
+
+    // Fallback if cleaning leaves it empty
+    if (!cleanQuery) cleanQuery = rawInput;
+
+    const encodedQuery = encodeURIComponent(cleanQuery);
 
     stores.forEach(store => {
       const card = document.createElement('div');
@@ -24,10 +35,7 @@ function renderCards() {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       `;
 
-      // Generate a smart deep-link search fallback URL for each store
       let storeUrl = "#";
-      const encodedQuery = encodeURIComponent(pastedUrl);
-      
       if (store === 'Amazon') {
         storeUrl = `https://www.amazon.in/s?k=${encodedQuery}`;
       } else if (store === 'Flipkart') {
@@ -35,7 +43,7 @@ function renderCards() {
       } else if (store === 'Croma') {
         storeUrl = `https://www.croma.com/searchB?q=${encodedQuery}`;
       } else {
-        storeUrl = `https://www.google.com/search?q=${encodeURIComponent(store + ' ' + pastedUrl)}`;
+        storeUrl = `https://www.google.com/search?q=${encodeURIComponent(store + ' ' + cleanQuery)}`;
       }
       
       card.innerHTML = `
@@ -49,12 +57,10 @@ function renderCards() {
   }
 }
 
-// Trigger when clicking the button
 if (compareBtn) {
   compareBtn.addEventListener('click', renderCards);
 }
 
-// Also trigger when pressing Enter on mobile keyboard
 if (searchBox) {
   searchBox.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
