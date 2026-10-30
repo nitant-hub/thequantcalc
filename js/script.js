@@ -1,10 +1,7 @@
-// 1. Fetch regional stores using Cloudflare Geo-Location backend
 async function initializeStores() {
   try {
     const response = await fetch('/location');
     const data = await response.json();
-    console.log("User Country:", data.country);
-    console.log("Active Stores:", data.stores);
     return data.stores;
   } catch (error) {
     console.error("Location API failed, falling back to default.", error);
@@ -12,10 +9,8 @@ async function initializeStores() {
   }
 }
 
-// Execute location check on load
 initializeStores();
 
-// 2. Listen for link paste input and render Bento cards
 const searchBox = document.getElementById('link-input-a');
 const resultsContainer = document.getElementById('price-results');
 
@@ -23,32 +18,30 @@ if (searchBox && resultsContainer) {
   searchBox.addEventListener('input', async (event) => {
     const pastedUrl = event.target.value.trim();
 
-    // Trigger when a valid URL is pasted
     if (pastedUrl.includes('http')) {
-      resultsContainer.innerHTML = ''; // Clear old results
+      resultsContainer.innerHTML = ''; 
 
-      // Get active stores for the user's region
       const stores = await initializeStores();
 
-      // Create a clean dark-mode Bento card for each store
       stores.forEach(store => {
         const card = document.createElement('div');
+        // Added solid background, strong border, and clear text color
         card.style.cssText = `
           min-width: 140px;
           padding: 16px;
-          background: #1e293b;
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          background: #ffffff;
+          border: 2px solid #cbd5e1;
           border-radius: 12px;
           text-align: center;
           flex-shrink: 0;
-          color: #ffffff;
+          color: #0f172a;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         `;
         
         card.innerHTML = `
-          <div style="font-weight: bold; margin-bottom: 8px; color: #ffffff;">${store}</div>
-          <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;">₹---</div>
-          <a href="#" style="background: #3b82f6; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; display: inline-block;">View Deal</a>
+          <div style="font-weight: bold; margin-bottom: 8px; color: #0f172a; font-size: 1rem;">${store}</div>
+          <div style="color: #16a34a; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px;">₹---</div>
+          <a href="#" style="background: #2563eb; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; display: inline-block; font-weight: 500;">View Deal</a>
         `;
         
         resultsContainer.appendChild(card);
