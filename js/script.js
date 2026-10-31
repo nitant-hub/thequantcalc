@@ -8,7 +8,7 @@
   const MAX_WORDS = 12;
 
   const SHORT_HOSTS = /(^|\.)(amzn\.in|amzn\.to|a\.co|dl\.flipkart\.com|fkrt\.it|fkrt\.cc)$/i;
-  const NOISE = /take a look at this|check out|buy online|buy now|on flipkart|on amazon|flipkart\.com|amazon\.in|price in india|best price|online at/gi;
+  const NOISE = /take a look at this|check out this|check out|buy online|buy now|on flipkart(\.com)?|on amazon(\.in|\.com)?|flipkart\.com|amazon\.in|price in india|best price|online at|at best price/gi;
 
   // Croma's own search page is a JS app that often renders blank from outside links,
   // so it goes through a Google site: search, which always loads.
@@ -25,7 +25,7 @@
     { name: 'Google Shopping', domain: 'google.com', url: q => `https://www.google.com/search?tbm=shop&q=${q}` }
   ];
 
-  const COLORS = new Set(['black','white','blue','red','green','yellow','pink','purple','orange','grey','gray','silver','gold','golden','titanium','midnight','starlight','graphite','natural','desert','cream','violet','lavender','mint','teal','navy','beige','brown','bronze','phantom','onyx','obsidian']);
+  const COLORS = new Set(['black','white','blue','red','green','yellow','pink','purple','orange','grey','gray','silver','gold','golden','titanium','midnight','starlight','graphite','desert','violet','lavender','teal','navy','beige','brown','bronze','phantom','onyx','obsidian']);
   const FILLER = new Set(['smartphone','mobile','phone','phones','latest','new','with','and','for','the','ram','rom','storage','gb','tb','mb','upto','off','sale','deal','buy','online','original','genuine']);
 
   // Keeps brand + model, drops colour / storage / filler so stores find the same product.
@@ -38,6 +38,7 @@
       if (/^\d+$/.test(w) && /^(gb|tb|mb)$/.test(next)) { i++; continue; }
       if (/^\d+(gb|tb|mb)$/.test(w)) continue;
       if (COLORS.has(w) || FILLER.has(w)) continue;
+      if (w.length === 1 && /[a-z]/.test(w)) continue;
       kept.push(words[i]);
     }
     const core = kept.slice(0, 7).join(' ').trim();
