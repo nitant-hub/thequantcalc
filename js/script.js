@@ -99,11 +99,15 @@
     }
 
     const segments = url.pathname.split('/').filter(Boolean).map(safeDecode);
-    const slug = segments.find(seg =>
+    const slugs = segments.filter(seg =>
       seg.includes('-') && seg.length > 8 && !/^[A-Z0-9]{10}$/.test(seg) && !/^itm[a-z0-9]+$/i.test(seg)
     );
+    const slug = slugs.sort((a, b) => b.length - a.length)[0];
     if (slug) {
-      const q = coreQuery(clean(slug));
+      let tokens = clean(slug).split(' ');
+      const last = tokens[tokens.length - 1] || '';
+      if (tokens.length >= 4 && /^(?=.*\d)(?=.*[a-z])[a-z0-9]{6,}$/i.test(last)) tokens = tokens.slice(0, -1);
+      const q = coreQuery(tokens.join(' '));
       if (q.length >= 2) return { query: q, asin };
     }
 
