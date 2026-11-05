@@ -3956,6 +3956,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             function secureEvaluate(expr) {
                 let s = String(expr);
                 if (s.length > 5000) { throw new Error("Invalid Input"); }
+                s = bqPctAdd(s);
                 s = s.replace(/%(?=\s*(?:[-+*\/)%^]|$))/g, '*0.01');
                 s = bqFixExpr(s);
                 let pos = 0;
@@ -4958,6 +4959,21 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                         if (m < 0 || /[(+\-*,]/.test(s[m])) { s = s.slice(0, k) + '-1*' + s.slice(k + 1); from = i + 4; continue; }
                     }
                     from = i + 2;
+                }
+                return s;
+            }
+            /* "100+10%" = 110, "100-10%" = 90 (percent of the running total, like pocket calculators) */
+            function bqPctAdd(s) {
+                const re = /([+-])\s*(\d+\.?\d*|\.\d+|\([^()]*\))\s*%(?=\s*(?:$|[)+\-]))/;
+                let guard = 0, m;
+                while ((m = re.exec(s)) && guard++ < 20) {
+                    let k = m.index - 1;
+                    while (k >= 0 && s[k] === ' ') { k--; }
+                    if (k < 0 || !/[0-9A-Za-z_.)]/.test(s[k])) { s = s.slice(0, m.index) + m[1] + m[2] + '*0.01' + s.slice(m.index + m[0].length); continue; }
+                    let d = 0, start = 0;
+                    for (let i = m.index - 1; i >= 0; i--) { if (s[i] === ')') { d++; } else if (s[i] === '(') { if (d === 0) { start = i + 1; break; } d--; } }
+                    const L = s.slice(start, m.index);
+                    s = s.slice(0, start) + '(' + L + ')*(1' + m[1] + '(' + m[2] + ')/100)' + s.slice(m.index + m[0].length);
                 }
                 return s;
             }
