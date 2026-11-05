@@ -2604,7 +2604,7 @@ function fmtNum(x, st) {
   }
   if (f.type === 'sci') return sciStr(expParts(x, f.n === 0 ? 10 : f.n));
   const p = expParts(x, 10);
-  const lo = f.type === 'norm2' ? -10 : -3;
+  const lo = f.type === 'norm2' ? -9 : -2;
   if (p.e >= 10 || p.e < lo) return sciStr(p);
   return plainStr(p);
 }
