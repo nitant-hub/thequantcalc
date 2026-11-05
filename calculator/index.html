@@ -1912,7 +1912,7 @@
             <button class="bc-btn" onclick="BloggerCalc.op('**3')">x³</button>
             <button class="bc-btn" onclick="BloggerCalc.op('**2')">x²</button>
             <button class="bc-btn" onclick="BloggerCalc.func('Math.exp')">eˣ</button>
-            <button class="bc-btn" onclick="BloggerCalc.op('*10**')">10ˣ</button>
+            <button class="bc-btn" onclick="BloggerCalc.op('10**')">10ˣ</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('1')">1</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('2')">2</button>
             <button class="bc-btn bc-btn-num" onclick="BloggerCalc.num('3')">3</button>
@@ -3957,6 +3957,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 let s = String(expr);
                 if (s.length > 5000) { throw new Error("Invalid Input"); }
                 s = s.replace(/%(?=\s*(?:[-+*\/)%^]|$))/g, '*0.01');
+                s = bqFixExpr(s);
                 let pos = 0;
                 while (pos < s.length) {
                     BQ_TOKEN.lastIndex = pos;
@@ -3972,7 +3973,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
             window.bcTrig = {
                 sin: (x) => isDegree ? Math.sin(x * Math.PI / 180) : Math.sin(x),
                 cos: (x) => isDegree ? Math.cos(x * Math.PI / 180) : Math.cos(x),
-                tan: (x) => isDegree ? Math.tan(x * Math.PI / 180) : Math.tan(x),
+                tan: (x) => { if (isDegree ? Math.abs((((x % 180) + 180) % 180) - 90) < 1e-9 : Math.abs(Math.cos(x)) < 1e-12) { return NaN; } return isDegree ? Math.tan(x * Math.PI / 180) : Math.tan(x); },
                 asin: (x) => isDegree ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
                 acos: (x) => isDegree ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
                 atan: (x) => isDegree ? Math.atan(x) * 180 / Math.PI : Math.atan(x)
@@ -4862,7 +4863,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 /* real phone orientation (the page may be inside a short iframe, so media queries can't tell) */
                 function land() {
                     let isL = false;
-                    try { isL = (screen.orientation && /landscape/.test(screen.orientation.type)) || (!screen.orientation && screen.width > screen.height); } catch (e) {}
+                    try { const ot = screen.orientation && screen.orientation.type; isL = /iPhone|iPad|iPod/.test(navigator.userAgent) ? (ot ? /landscape/.test(ot) : Math.abs(window.orientation) === 90) : (screen.width > screen.height && (!ot || /landscape/.test(ot))); } catch (e) {}
                     const touch = window.matchMedia('(pointer: coarse)').matches;
                     const on = isL && touch && screen.width <= 1100 && Math.min(screen.width, screen.height) <= 600;
                     if (root.classList.contains('bq-land') !== on) { root.classList.toggle('bq-land', on); try { bqFitScroll(); } catch (e) {} }
@@ -4929,6 +4930,37 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 mh.querySelector('.bq-mx').onclick = function(ev) { ev.stopPropagation(); bqMoreClose(true); };
                 document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !more.hidden) { bqMoreClose(true); } });
             })();
+            /* ===== v27: evaluator fixes ===== */
+            let bqEqFlag = false;
+            function bqNum(x) { return Number(Number(x).toPrecision(14)); }
+            function bqFixExpr(s) {
+                let prev;
+                do { prev = s; s = s.replace(/--/g, '+').replace(/\+-/g, '-').replace(/-\+/g, '-').replace(/\+\+/g, '+'); } while (s !== prev);
+                let from = 0, i;
+                while ((i = s.indexOf('**', from)) >= 0) {
+                    let j = i - 1;
+                    while (j >= 0 && s[j] === ' ') { j--; }
+                    if (s[j] === ')') {
+                        let d = 0;
+                        for (; j >= 0; j--) { if (s[j] === ')') { d++; } else if (s[j] === '(') { d--; if (d === 0) { break; } } }
+                    } else {
+                        while (j >= 0 && /[A-Za-z0-9_.]/.test(s[j])) { j--; }
+                        j++;
+                    }
+                    if (j < 0) { from = i + 2; continue; }
+                    let b = j;
+                    while (b > 0 && /[A-Za-z0-9_.]/.test(s[b - 1])) { b--; }
+                    let k = b - 1;
+                    while (k >= 0 && s[k] === ' ') { k--; }
+                    if (k >= 0 && s[k] === '-') {
+                        let m = k - 1;
+                        while (m >= 0 && s[m] === ' ') { m--; }
+                        if (m < 0 || /[(+\-*,]/.test(s[m])) { s = s.slice(0, k) + '-1*' + s.slice(k + 1); from = i + 4; continue; }
+                    }
+                    from = i + 2;
+                }
+                return s;
+            }
             function bqMark() {
                 const box = document.getElementById('bc-output-box');
                 const txt = (bcLiveOut.innerText || '').trim();
@@ -4967,7 +4999,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                         try {
                             let result = secureEvaluate(calcInput);
                             if (isFinite(result) && !isNaN(result)) {
-                                result = Math.round(result * 1e12) / 1e12; 
+                                result = bqNum(result); 
                                 bcLiveOut.innerText = cleanBloggerEntities('= ' + result);
                             } else { bcLiveOut.innerText = ''; }
                         } catch (e) { bcLiveOut.innerText = ''; }
@@ -6480,6 +6512,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                 },
                 num: function(val) {
                     if (fxActive()) { return; }
+                    if (bqEqFlag) { bqEqFlag = false; if (/^[0-9.]/.test(val) && finStaleValue === null && document.querySelector('.bc-tab-pane.active').id !== 'bc-fin') { bcInput = ''; } }
                     if (finShiftOn && document.querySelector('.bc-tab-pane.active').id === 'bc-fin') {
                         finSetShift(false);
                         if (!/^[0-9]$/.test(val)) { finShow('f cancelled'); }
@@ -6500,17 +6533,17 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                     else { bcInput += val; }
                     bcUpdate();
                 },
-                op: function(operator) { if (fxActive()) { return; } bcInput += operator; bcUpdate(); },
-                func: function(functionCall) { if (fxActive()) { return; } bcInput += functionCall; bcUpdate(); },
+                op: function(operator) { if (fxActive()) { return; } bqEqFlag = false; bcInput += operator; bcUpdate(); },
+                func: function(functionCall) { if (fxActive()) { return; } bqEqFlag = false; bcInput += functionCall; bcUpdate(); },
                 ans: function() { if (fxActive()) { fx.key('Ans'); return; } this.num(lastAnswer.toString()); },
                 toggleSign: function() {
                     if(bcInput.startsWith('(-')) bcInput = bcInput.substring(2);
                     else bcInput = '(-' + bcInput; bcUpdate();
                 },
-                clear: function() { if (fxActive()) { fx.key('ac'); return; } bcInput = ''; bcDisp.textContent = '0'; bcLiveOut.innerText = ''; document.getElementById('bc-output-box').classList.remove('bq-error'); },
+                clear: function() { if (fxActive()) { fx.key('ac'); return; } bqEqFlag = false; bcInput = ''; bcDisp.textContent = '0'; bcLiveOut.innerText = ''; document.getElementById('bc-output-box').classList.remove('bq-error'); },
                 back: function() {
                     if (fxActive()) { fx.key('del'); return; }
-                    bcInput = bcInput.toString().slice(0, -1);
+                    bqEqFlag = false; bcInput = bcInput.toString().slice(0, -1);
                     if(bcInput === '') bcDisp.textContent = '0'; else bcUpdate();
                 },
                 mem: function(action) {
@@ -6683,7 +6716,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                             /* Plain number maths (e.g. sqrt(49)) uses the built-in evaluator: instant, exact and works offline */
                             try {
                                 const nv = secureEvaluate(calcInput);
-                                if (typeof nv === 'number' && isFinite(nv)) { result = Math.round(nv * 1e12) / 1e12; advNumeric = true; }
+                                if (typeof nv === 'number' && isFinite(nv)) { result = bqNum(nv); advNumeric = true; }
                             } catch (numErr) { advNumeric = false; }
                         }
                         if (advNumeric) { /* result already set */ }
@@ -6721,7 +6754,7 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                         else {
                             result = secureEvaluate(calcInput);
                             if(!isFinite(result) || isNaN(result)) throw new Error("Math Error");
-                            result = Math.round(result * 1e12) / 1e12; 
+                            result = bqNum(result); 
                         }
                         
                         lastAnswer = result; 
@@ -6731,11 +6764,11 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = FXEngine
                         bcHistList.innerHTML = '<div class="hist-entry" data-expr="' + encodeURIComponent(rawExpr) + '" data-res="' + encodeURIComponent(cleanResStr) + '" data-tab="' + activeTab + '" title="Tap row to load expression, or tap result to load answer"><span class="hist-content">' + oldVisual + ' = <strong title="Tap to load result">' + cleanResStr + '</strong></span><button type="button" class="hist-del-btn" aria-label="Delete History Entry" title="Delete this entry">×</button></div>' + bcHistList.innerHTML;
                         saveHistoryToStorage();
                         
-                        bcInput = result.toString();
+                        bcInput = result.toString(); bqEqFlag = true;
                         bcUpdate(); 
                         bcLiveOut.innerText = '= ' + cleanResStr;
                     } catch (e) {
-                        bcLiveOut.innerText = (e.message === "Loading") ? "Wait: Loading Engines..." : (e.message === "Retrying") ? "Engine download retrying - wait, then tap = again" : "Syntax Error";
+                        bcLiveOut.innerText = (e.message === "Loading") ? "Wait: Loading Engines..." : (e.message === "Retrying") ? "Engine download retrying - wait, then tap = again" : (e.message === "Math Error") ? "Math Error" : "Syntax Error";
                     }
                 }
             };
