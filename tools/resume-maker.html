@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Resume Maker – 60 Styles, ATS Check, PDF Download</title>
+<title>Free Resume Maker – 60 Styles, ATS Check, PDF Download | TheQuantCalc</title>
 <meta name="description" content="Build a resume online with 60 ready-made styles and 50+ options: layouts, colours, fonts and headings. Live preview, ATS health check, PDF download. No sign-up.">
 <link rel="canonical" href="https://thequantcal.pages.dev/tools/resume-maker">
 <meta property="og:title" content="Free Resume Maker – 60 Styles, ATS Check, PDF Download">
@@ -403,7 +403,6 @@ body>*:not(#rsm-print-root){display:none !important}
 }
 .ctc-drawer-body{padding:14px;border-top:1px solid #1E293B}
 .ctc-note{font-size:0.8125rem;color:#A8B5C8;line-height:1.45;margin:6px 0 0}
-
 </style>
 </head>
 <body>
@@ -1157,6 +1156,26 @@ function tqcBoot() {
     });
   });
 
+  /* ---------- Local Storage Persistance ---------- */
+  function persist() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ data: DATA, style: STYLE }));
+    } catch (e) { /* LocalStorage disabled or quota exceeded */ }
+  }
+
+  function loadStorage() {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && parsed.data && parsed.style) {
+          DATA = parsed.data;
+          STYLE = parsed.style;
+        }
+      }
+    } catch (e) { /* Error reading LocalStorage */ }
+  }
+
   /* ---------- Export / import ---------- */
   function status(msg) { var el = $("rsm-status"); el.textContent = msg; }
   function download(name, text, type) {
@@ -1176,11 +1195,96 @@ function tqcBoot() {
   }
   window.__tqcRsmPrep = preparePrint;
   $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
+  
   $("rsm-copy-btn").addEventListener("click", function () {
     var t = plainText();
     try { navigator.clipboard.writeText(t).then(function () { status("Plain-text version copied. Paste it into an online application form."); }, function () { status("Copy was blocked by the browser."); }); }
     catch (e) { status("Copy is not available in this browser."); }
   });
+  
+  /* This is the line that was cut off in your code */
   $("rsm-json-btn").addEventListener("click", function () {
     download("resume-data.json", JSON.stringify({ app: "TheQuantCalc Resume Maker", v: 1, data: DATA, style: STYLE }, null, 2), "application/json");
-    status("Backup file downloaded. Keep it safe; it contains
+    status("Backup file downloaded. Keep it safe; it contains your data and style choices.");
+  });
+
+  /* Restore from Backup JSON */
+  $("rsm-json-file").addEventListener("change", function(e) {
+    var f = e.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var parsed = JSON.parse(evt.target.result);
+        if (parsed && parsed.data && parsed.style) {
+          DATA = parsed.data;
+          STYLE = parsed.style;
+          initUI();
+          status("Backup loaded successfully.");
+        } else {
+          status("Invalid backup file format.");
+        }
+      } catch (err) {
+        status("Error parsing backup file.");
+      }
+    };
+    reader.readAsText(f);
+    this.value = ""; // Reset the input so the same file can be selected again if needed
+  });
+
+  /* Load Sample Resume */
+  $("rsm-sample-btn").addEventListener("click", function() {
+    DATA = clone(SAMPLE);
+    STYLE = clone(DEFAULT_STYLE);
+    initUI();
+    status("Sample resume loaded. You can now edit the content.");
+  });
+
+  /* Clear Everything */
+  $("rsm-clear-btn").addEventListener("click", function() {
+    if (!confirm("Are you sure you want to clear all data? This cannot be undone.")) return;
+    DATA = {
+      name: "", title: "", email: "", phone: "", location: "", links: "", summary: "", skills: "", certs: "", languages: "", photo: "",
+      exp: [], edu: [], proj: [], order: clone(SAMPLE.order), hidden: {}
+    };
+    STYLE = clone(DEFAULT_STYLE);
+    initUI();
+    status("All data cleared. You are starting fresh.");
+  });
+
+  /* Reset Style Only */
+  var resetBtn = $("rsm-style-reset");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function() {
+        STYLE = clone(DEFAULT_STYLE);
+        syncControls();
+        render();
+        renderGallery();
+        status("Style reset to default. Your content remains intact.");
+    });
+  }
+
+  /* ---------- Initialization ---------- */
+  function initUI() {
+    fillSimple();
+    ["exp", "edu", "proj"].forEach(renderList);
+    renderOrder();
+    buildControls();
+    syncControls();
+    renderGallery();
+    render(); 
+  }
+
+  // Run boot sequence
+  loadStorage();
+  initUI();
+
+}
+
+// Start the application
+tqcBoot();
+</script>
+<!-- Site header, sidebar and footer script -->
+<script src="/navigation.js" defer></script>
+</body>
+</html>
