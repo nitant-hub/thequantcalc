@@ -371,23 +371,34 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-health li span{flex:0 0 auto;font-weight:800}
 .rsm-health li.ok span{color:#34D399}
 .rsm-health li.warn span{color:#FBBF24}
+
+/* 🌟 SINGLE-LINE HORIZONTAL SCROLLING PREVIEW HEADER 🌟 */
 .rsm-preview-head{
   display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center;
-  gap:8px 12px; margin:0 0 5px; min-height:0; line-height:1;
+  gap:12px; margin:0 0 5px; min-height:0; line-height:1;
+  overflow-x:auto; scrollbar-width:none; padding-bottom:2px;
 }
-.rsm-preview-head h2{margin:0;font-size:0.88rem;font-weight:700;color:#10B981;letter-spacing:0.01em}
-.rsm-preview-tools{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.rsm-preview-head::-webkit-scrollbar { display:none; }
+.rsm-preview-head h2{
+  margin:0; font-size:0.88rem; font-weight:700; color:#10B981;
+  letter-spacing:0.01em; white-space:nowrap; flex:0 0 auto;
+}
+.rsm-preview-tools{
+  display:inline-flex; align-items:center; gap:6px;
+  flex-wrap:nowrap; justify-content:flex-end; flex:0 0 auto;
+}
 .rsm-pill{
   display:inline-block; padding:2px 9px; border-radius:999px;
   border:1px solid rgba(16,185,129,0.35); background:rgba(16,185,129,0.12);
   color:#6EE7B7; font-size:0.72rem; font-weight:600; line-height:1.35;
+  white-space:nowrap;
 }
 .rsm-zoom-btn{
   display:inline-flex; align-items:center; gap:4px;
   padding:2px 10px; border-radius:999px;
   border:1px solid rgba(245,158,11,0.45); background:rgba(15,23,42,0.85);
   color:#FDE68A; font-size:0.72rem; font-weight:700; line-height:1.35;
-  cursor:pointer; transition:all 0.15s ease;
+  cursor:pointer; transition:all 0.15s ease; white-space:nowrap;
 }
 .rsm-zoom-btn:hover{border-color:#F59E0B;background:#1E293B;color:#FFF}
 .rsm-zoom-btn:disabled{opacity:0.5;cursor:not-allowed;border-color:rgba(255,255,255,0.1);color:#94A3B8;background:transparent}
@@ -1739,14 +1750,13 @@ function tqcBoot() {
     undoBtnEl.addEventListener("click", function() {
         if (stateHistory.length <= 1) return;
         isUndoing = true;
-        stateHistory.pop(); // Remove the current state
+        stateHistory.pop(); 
         var prevStateStr = stateHistory[stateHistory.length - 1];
         var prevState = JSON.parse(prevStateStr);
         
         DATA = prevState.data;
         STYLE = prevState.style;
         
-        // Re-render UI
         populateDocTypeDropdown();
         renderDynamicStyleOptions(); 
         syncControls();
@@ -1754,7 +1764,6 @@ function tqcBoot() {
         renderGallery();
         render(); 
         
-        // Update button appearance
         this.disabled = stateHistory.length <= 1;
         this.style.opacity = stateHistory.length <= 1 ? "0.5" : "1";
         this.style.cursor = stateHistory.length <= 1 ? "not-allowed" : "pointer";
@@ -1774,13 +1783,14 @@ function tqcBoot() {
   }
 
   /* Universal Drag-to-Expand Helper for Mobile Touch & Desktop Mouse */
-  function bindDragResizer(handleId, getTargetsFn, minH, onResizeCb) {
+  function bindDragResizer(handleId, getTargetsFn, minH, maxH, onResizeCb) {
     var handle = $(handleId);
     if (!handle) return;
     var startY = 0, startH = 0, activeTargets = [];
     function onMove(clientY) {
       if (!activeTargets.length) return;
-      var newH = Math.max(minH, startH + (clientY - startY));
+      // Added maxH ceiling to prevent unlimited drag downward
+      var newH = Math.max(minH, Math.min(maxH, startH + (clientY - startY)));
       activeTargets.forEach(function (el) {
         el.style.height = newH + "px";
         el.style.maxHeight = "none";
@@ -1824,13 +1834,14 @@ function tqcBoot() {
     }, { passive: true });
   }
 
-  bindDragResizer("rsm-stage-handle", function () { return [stage]; }, 200, layoutPreview);
+  /* Capped Drag Handles */
+  bindDragResizer("rsm-stage-handle", function () { return [stage]; }, 200, 1200, layoutPreview);
 
   bindDragResizer("rsm-panel-handle", function () {
     var vis = document.querySelector(".rsm-panel:not([hidden])");
     var all = Array.prototype.slice.call(document.querySelectorAll(".rsm-panel"));
     return vis ? [vis].concat(all.filter(function (p) { return p !== vis; })) : all;
-  }, 220);
+  }, 220, 800);
 
   /* ---------- Document Health ---------- */
   function renderHealth() {
@@ -2216,7 +2227,6 @@ function tqcBoot() {
     try { 
         localStorage.setItem(STORE, JSON.stringify({ data: DATA, style: STYLE })); 
         
-        // 🌟 Track state history for Undo feature 🌟
         if (!isUndoing) {
             var currentState = JSON.stringify({ data: DATA, style: STYLE });
             if (stateHistory.length === 0 || stateHistory[stateHistory.length - 1] !== currentState) {
