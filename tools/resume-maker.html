@@ -18,6 +18,73 @@ document.documentElement.setAttribute("data-theme", "dark");
 }
 } catch (e) {}
 </script>
+<!-- Single JSON-LD @graph -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Free Resume Maker with 60 Styles and 50+ Options",
+      "url": "https://thequantcal.pages.dev/tools/resume-maker",
+      "description": "A client-side resume builder with 60 preset styles, six layouts, sixteen accent colours, ten system font stacks, a live A4 or Letter preview, a resume health check and print-to-PDF export. All data stays in the browser.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many resume styles and options does this resume maker have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 26 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my resume data private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thequantcal.pages.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Utility",
+          "item": "https://thequantcal.pages.dev/#utility"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Free Resume Maker",
+          "item": "https://thequantcal.pages.dev/tools/resume-maker"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 :root,html[data-theme="light"]{--font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;--surface-page:#F1F5F9;--article-bg:#FFFFFF;--article-soft:#F8FAFC;--surface-card:#FFFFFF;--surface-inset:#F1F5F9;--surface-border:#E2E8F0;--text-main:#0F172A;--text-body:#334155;--text-muted:#64748B;--link-color:#059669;--table-stripe:#F8FAFC}
 html[data-theme="dark"]{--surface-page:#050811;--article-bg:#0B1120;--article-soft:#111827;--surface-card:#0F172A;--surface-inset:#070A12;--surface-border:#1E293B;--text-main:#F8FAFC;--text-body:#CBD5E1;--text-muted:#94A3B8;--link-color:#34D399;--table-stripe:#0F172A}
@@ -119,6 +186,9 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-btn-secondary:hover{background:rgba(30,41,59,0.9);border-color:#F59E0B}
 
 /* --- 🌟 DISTINCT PREMIUM PANEL BACKGROUNDS & WIDER X-INPUT 🌟 --- */
+/* CRITICAL FIX: The !important lock forces inactive tabs to stay hidden */
+.rsm-panel[hidden] { display: none !important; }
+
 .rsm-panel {
     max-height: 52vh;
     min-height: 250px;
@@ -133,7 +203,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 @media (min-width:768px){
     .rsm-panel { 
         height: 38vh; 
-        max-height: 380px; /* HARD LOCK for desktop forces scroll inside panel */
+        max-height: 380px; 
     }
 }
 .rsm-panel::-webkit-scrollbar { width: 6px; }
@@ -701,7 +771,7 @@ function tqcBoot() {
               renderDynamicForm();
               render();
           } else {
-              e.target.value = DATA.docType; // Revert
+              e.target.value = DATA.docType; 
           }
       });
   }
@@ -751,7 +821,6 @@ function tqcBoot() {
           formHTML += '</div></details>';
       });
 
-      // Section Order Drawer
       formHTML += `<details class="auc-sub-drawer">
       <summary><span>Section Order & Visibility</span><span class="auc-label-accent">Reorder</span></summary>
       <div class="ctc-drawer-body"><ul id="rsm-order" class="rsm-ord-list"></ul></div>
@@ -759,7 +828,6 @@ function tqcBoot() {
 
       $("rsm-dynamic-form").innerHTML = formHTML;
       
-      // Bind basic text inputs
       document.querySelectorAll(".ctc-bind").forEach(function(el) {
           el.addEventListener("input", function() {
               DATA[this.getAttribute("data-prop")] = this.value;
@@ -767,13 +835,11 @@ function tqcBoot() {
           });
       });
 
-      // Bind Photo events
       $("rsm-photo-file").addEventListener("change", handlePhotoUpload);
       $("rsm-photo-remove").addEventListener("click", function () { DATA.photo = ""; STYLE.photo = false; syncPhotoUI(); render(); });
       $("rsm-photo-on").addEventListener("change", function () { STYLE.photo = this.checked && !!DATA.photo; if (this.checked && !DATA.photo) status("Upload a photo first."); syncPhotoUI(); render(); });
       syncPhotoUI();
 
-      // Render Lists
       activeSections.forEach(function(secKey) {
           if (SECTION_DEFS[secKey] && SECTION_DEFS[secKey].type === 'list') {
               renderList(secKey);
@@ -782,7 +848,6 @@ function tqcBoot() {
       renderOrder(activeSections);
   }
 
-  /* ---------- List Rendering (Zebra Striped Automatically) ---------- */
   function renderList(key) {
     var def = SECTION_DEFS[key];
     var box = $("rsm-list-" + key);
@@ -802,7 +867,6 @@ function tqcBoot() {
     box.innerHTML = html || '<p class="ctc-note">Nothing here yet. Click below to add.</p>';
   }
 
-  // Delegate events for dynamic list interactions
   $("rsm-dynamic-form").addEventListener("input", function(e) {
       if(e.target.hasAttribute("data-f")) {
           var item = e.target.closest(".rsm-item");
@@ -811,10 +875,10 @@ function tqcBoot() {
           scheduleRender();
       }
   });
+  
   $("rsm-dynamic-form").addEventListener("click", function(e) {
       var b = e.target.closest("button[data-act]");
       if (!b) {
-          // Check for Add button
           var addBtn = e.target.closest("button[data-add]");
           if (addBtn) {
               var akey = addBtn.getAttribute("data-add");
@@ -982,7 +1046,6 @@ function tqcBoot() {
   
   function getActiveOrder() {
       var base = DOC_TYPES[DATA.docType].sections || [];
-      // If formatting strategy is functional, push skills/certs to the top automatically
       if (STYLE.docFormat === 'functional') {
           var functionalFirst = ['summary', 'objective', 'skills', 'skills_tech', 'certs'];
           var reordered = [];
@@ -1041,7 +1104,6 @@ function tqcBoot() {
     paper.style.cssText = "--ac:" + (isATS() ? "#0F172A" : S.accent) + ";--ac-soft:rgba(" + rgb.join(",") + ",0.10);--ac-mid:rgba(" + rgb.join(",") + ",0.38);--rf:" + (FONTS[S.font] || FONTS.sys)[1] + ";--rfs:" + S.fs + "pt;--rlh:" + dn[0] + ";--gap:" + dn[1] + "px;--pw:" + P.w + ";--ph:" + P.h + ";--pad:" + pad + "mm";
     paper.innerHTML = buildHTML() + '<div class="rs-breaks" aria-hidden="true"></div>';
     
-    /* FIX EXACT PAGE COUNT */
     if (S.pageLimit && S.pageLimit !== "auto") {
         var forcedHeight = P.hpx * Number(S.pageLimit);
         paper.style.height = forcedHeight + "px";
@@ -1171,12 +1233,15 @@ function tqcBoot() {
     document.querySelectorAll(".rsm-swatch").forEach(function (b) { var on = b.getAttribute("data-color").toLowerCase() === STYLE.accent.toLowerCase(); b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
   }
 
-  /* ---------- Tabs ---------- */
+  /* ---------- Tabs (CRITICAL VISIBILITY TOGGLE) ---------- */
   document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (t) {
     t.addEventListener("click", function () {
       var id = t.getAttribute("data-tab");
       document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
+      
+      // Forces HTML hidden attribute update (CSS !important handles the visual lock)
       document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
+      
       setTimeout(window.__tqcRsmLayout, 10);
     });
   });
@@ -1188,8 +1253,7 @@ function tqcBoot() {
       var raw = localStorage.getItem(STORE);
       if (raw) {
         var p = JSON.parse(raw);
-        if (p && p.data && p.style) {
-            // Merge backwards compatibility for old backups 
+        if (p && p.data && p.style) { 
             Object.keys(p.data).forEach(function(k){ DATA[k] = p.data[k]; });
             Object.keys(p.style).forEach(function(k){ STYLE[k] = p.style[k]; });
             if (!STYLE.pageLimit) STYLE.pageLimit = "auto";
@@ -1209,7 +1273,7 @@ function tqcBoot() {
     var old = $("rsm-print-root"); if (old) old.remove();
     var root = document.createElement("div"); root.id = "rsm-print-root";
     var c = paper.cloneNode(true); c.removeAttribute("id");
-    c.style.height = "auto"; c.style.overflow = "visible"; // Print full regardless of page limits
+    c.style.height = "auto"; c.style.overflow = "visible"; 
     var br = c.querySelector(".rs-breaks"); if (br) br.remove();
     root.appendChild(c); document.body.appendChild(root);
     var P = PAPERS[STYLE.paper] || PAPERS.a4, pad = { narrow: 10, normal: 15, wide: 20 }[STYLE.margin] || 15;
