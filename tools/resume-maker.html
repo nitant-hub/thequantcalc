@@ -419,6 +419,7 @@ body>*:not(#rsm-print-root){display:none !important}
 <section class="tool-suite" aria-labelledby="calc-main-title">
 <h1 id="calc-main-title" class="primary-title">Free Resume Maker with 60 Styles and 50+ Options</h1>
 <div class="calculator-ui-box rsm-box">
+<div id="rsm-fatal" class="auc-error-banner visible" role="alert" style="display:none"></div>
 <div class="auc-group-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
 <button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style (60 presets + 50 options)</button>
@@ -431,7 +432,7 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="ctc-drawer-body"><div class="rsm-fields">
 <label class="auc-field-group"><span class="auc-label">Full name</span><input type="text" id="rsm-name" class="auc-input" autocomplete="off" placeholder="e.g. Aarav Sharma" maxlength="80"></label>
 <label class="auc-field-group"><span class="auc-label">Professional title</span><input type="text" id="rsm-title" class="auc-input" autocomplete="off" placeholder="e.g. Senior Software Engineer" maxlength="100"></label>
-<label class="auc-field-group"><span class="auc-label">Email</span><input type="text" id="rsm-email" class="auc-input" autocomplete="off" placeholder="name@example.com" maxlength="120" inputmode="email"></label>
+<label class="auc-field-group"><span class="auc-label">Email</span><input type="text" id="rsm-email" class="auc-input" autocomplete="off" placeholder="name&#64;example.com" maxlength="120" inputmode="email"></label>
 <label class="auc-field-group"><span class="auc-label">Phone</span><input type="text" id="rsm-phone" class="auc-input" autocomplete="off" placeholder="+91 98765 43210" maxlength="40" inputmode="tel"></label>
 <label class="auc-field-group"><span class="auc-label">Location</span><input type="text" id="rsm-location" class="auc-input" autocomplete="off" placeholder="City, Country" maxlength="100"></label>
 <label class="auc-field-group rsm-wide"><span class="auc-label">Links (one per line: LinkedIn, portfolio, GitHub)</span><textarea id="rsm-links" class="auc-input rsm-ta" rows="3" placeholder="linkedin.com/in/yourname"></textarea></label>
@@ -670,8 +671,16 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
 <aside class="sidebar"></aside>
 </div>
 <script>
-(function () {
+function tqcBoot() {
   "use strict";
+  function reportError(e) {
+    try {
+      var el = document.getElementById("rsm-status"), msg = "Resume Maker error: " + (e && e.message ? e.message : e);
+      if (el) { el.textContent = msg; el.style.color = "#FCA5A5"; }
+      var box = document.getElementById("rsm-fatal"); if (box) { box.textContent = msg; box.style.display = "block"; }
+    } catch (x) { /* nothing more to do */ }
+  }
+  window.addEventListener("error", function (ev) { if (ev && ev.filename === "" || (ev && /resume/i.test(String(ev.message)))) reportError(ev.error || ev.message); });
   var STORE = "tqc_resume_maker_v1";
   var $ = function (id) { return document.getElementById(id); };
 
@@ -737,7 +746,7 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
   var DEFAULT_STYLE = { layout: "modern", accent: "#0369A1", font: "calibri", fs: 10.5, density: "normal", heading: "bar", bullet: "square", skills: "chips", dates: "right", align: "left", nameStyle: "normal", margin: "normal", paper: "a4", tone: "light", photo: false, shape: "circle" };
   var STYLE = clone(DEFAULT_STYLE);
   var SAMPLE = {
-    name: "Aarav Sharma", title: "Senior Software Engineer", email: "aarav.sharma@example.com", phone: "+91 98765 43210", location: "Bengaluru, India",
+    name: "Aarav Sharma", title: "Senior Software Engineer", email: ["aarav.sharma", "example.com"].join(String.fromCharCode(64)), phone: "+91 98765 43210", location: "Bengaluru, India",
     links: "linkedin.com/in/aarav-sharma-sample\ngithub.com/aarav-sample",
     summary: "Software engineer with 6+ years of experience building reliable web platforms and internal tools. Led a team of four to cut API latency by 38% and shipped a billing service used by 200,000 customers. Comfortable across the stack and focused on clear, maintainable code.",
     skills: "Languages: JavaScript, TypeScript, Python, SQL\nFrameworks: React, Node.js, Django\nTools: Git, Docker, AWS, PostgreSQL, CI/CD",
@@ -846,7 +855,7 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
   }
   function contactItems() {
     var D = DATA, out = [];
-    if (D.email.trim()) out.push('<a href="mailto:' + esc(D.email.trim()) + '">' + brk(esc(D.email.trim())) + "</a>");
+    if (D.email.trim()) out.push('<a href="' + "mail" + "to:" + esc(D.email.trim()) + '">' + brk(esc(D.email.trim())) + "</a>");
     if (D.phone.trim()) out.push(esc(D.phone.trim()));
     if (D.location.trim()) out.push(esc(D.location.trim()));
     lines(D.links).forEach(function (l) { out.push(link(l)); });
@@ -920,7 +929,8 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
     paper.setAttribute("data-pages", String(pages));
   }
   if (window.ResizeObserver) new ResizeObserver(function () { layoutPreview(); }).observe(stage);
-  window.addEventListener("resize", layoutPreview);
+  window.__tqcRsmLayout = layoutPreview;
+  if (!window.__tqcRsmWin) { window.__tqcRsmWin = true; window.addEventListener("resize", function () { window.__tqcRsmLayout(); }); window.addEventListener("beforeprint", function () { window.__tqcRsmPrep(); }); }
 
   /* ---------- Resume health check (shown in the result box) ---------- */
   function plainText() {
@@ -1164,7 +1174,7 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
     var st = $("rsm-page-style"); if (!st) { st = document.createElement("style"); st.id = "rsm-page-style"; document.head.appendChild(st); }
     st.textContent = "@page{size:" + P.css + " portrait;margin:" + (isBleed() ? 0 : pad) + "mm}";
   }
-  window.addEventListener("beforeprint", preparePrint);
+  window.__tqcRsmPrep = preparePrint;
   $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
   $("rsm-copy-btn").addEventListener("click", function () {
     var t = plainText();
@@ -1173,21 +1183,4 @@ Bullet = Action verb + Task or scope + Result (number, %, time, money)
   });
   $("rsm-json-btn").addEventListener("click", function () {
     download("resume-data.json", JSON.stringify({ app: "TheQuantCalc Resume Maker", v: 1, data: DATA, style: STYLE }, null, 2), "application/json");
-    status("Backup file downloaded. Keep it safe; it contains everything you typed.");
-  });
-  $("rsm-json-file").addEventListener("change", function () {
-    var f = this.files && this.files[0], input = this;
-    if (!f) return;
-    if (f.size > 6 * 1024 * 1024) { status("That file is too large to be a resume backup."); return; }
-    var rd = new FileReader();
-    rd.onload = function () {
-      try { applyImported(JSON.parse(rd.result)); status("Backup loaded."); } catch (e) { status("That file is not a valid resume backup."); }
-      input.value = "";
-    };
-    rd.readAsText(f);
-  });
-  function applyImported(o, silent) {
-    if (!o || typeof o !== "object" || !o.data || typeof o.data !== "object") throw new Error("bad");
-    var d = o.data, base = clone(SAMPLE);
-    Object.keys(SIMPLE).forEach(function (k) { base[k] = typeof d[k] === "string" ? d[k].slice(0, 5000) : ""; });
-    base.photo = (typeof d.photo === "string" && /^data:image\/(jpeg|p
+    status("Backup file downloaded. Keep it safe; it contains ever
