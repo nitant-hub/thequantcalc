@@ -138,6 +138,7 @@ article.auc-article{background-color:var(--article-bg);border:1px solid var(--su
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
 article.auc-article h2:first-of-type{margin-top:0}
+article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
 article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
 article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
 article.auc-article li{margin-bottom:7px;line-height:1.6}
@@ -152,13 +153,14 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
 .calculator-ui-box.rsm-box{width:100%;max-width:820px}
 .rsm-panel[hidden]{display:none}
 
-/* --- THE NEW Y-OVERFLOW FOR TABS --- */
+/* --- THE NEW Y-OVERFLOW FOR TABS & FLEX FIX --- */
 .rsm-panel {
-    max-height: 48vh;
-    min-height: 350px;
-    overflow-y: auto;
+    max-height: 52vh;
+    min-height: 250px;
+    overflow-y: auto !important;
     overflow-x: hidden;
     padding-right: 8px;
+    padding-bottom: 12px;
     margin-top: 14px;
     scrollbar-width: thin;
     scrollbar-color: #334155 transparent;
@@ -166,7 +168,11 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
 .rsm-panel::-webkit-scrollbar { width: 6px; }
 .rsm-panel::-webkit-scrollbar-track { background: transparent; }
 .rsm-panel::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 10px; }
-/* ----------------------------------- */
+
+/* Critical: Prevents Flexbox from squishing elements to 0px height */
+.rsm-stack { display:flex; flex-direction:column; gap:12px; }
+.rsm-stack > * { flex-shrink: 0; }
+/* ---------------------------------------------- */
 
 .rsm-note{font-size:0.8125rem;color:#A8B5C8;line-height:1.45;margin:2px 0 0}
 .rsm-fields{display:grid;grid-template-columns:1fr;gap:12px}
@@ -180,7 +186,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-del:hover,.rsm-del:focus-visible{border-color:#F87171;color:#FCA5A5}
 .rsm-add{width:100%;padding:11px 14px;border-radius:12px;border:1px dashed rgba(16,185,129,0.55);background:transparent;color:#34D399;font-weight:600;font-size:0.9375rem;cursor:pointer}
 .rsm-add:hover{background:rgba(16,185,129,0.1)}
-.rsm-stack{display:flex;flex-direction:column;gap:12px}
 .rsm-ord-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .rsm-ord{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border:1px solid #1E293B;border-radius:10px;background:rgba(17,24,39,0.6);color:#E2E8F0;font-size:0.9375rem}
 .rsm-ord-l{display:inline-flex;align-items:center;gap:8px;cursor:pointer;flex-wrap:wrap}
