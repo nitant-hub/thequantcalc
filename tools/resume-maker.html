@@ -110,6 +110,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-field-group{display:flex;flex-direction:column;gap:6px;min-width:0}
 .auc-label{font-size:0.9375rem;font-weight:600;color:#E2E8F0;letter-spacing:0.01em;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .auc-label-accent{color:#F59E0B;font-size:0.8125rem;font-weight:500;white-space:nowrap}
+/* Tighter dropdown boxes */
 .auc-input,.auc-select{width:100%;min-height:42px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:8px 12px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;text-overflow:ellipsis}
 .auc-input::placeholder{color:#7C8CA3}
 .auc-input:focus,.auc-select:focus{border-color:#10B981;box-shadow:inset 0 2px 5px rgba(0,0,0,0.7),0 0 0 3px rgba(16,185,129,0.25),0 0 12px rgba(245,158,11,0.2)}
@@ -144,6 +145,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     white-space: nowrap; 
     line-height: 1.2;
 }
+/* Explicit Distinct Inactive Text Colors */
 .rsm-main-tabs .auc-group-tab[data-tab="content"] { color: #34D399; } 
 .rsm-main-tabs .auc-group-tab[data-tab="style"] { color: #818CF8; }   
 .rsm-main-tabs .auc-group-tab[data-tab="export"] { color: #FBBF24; }  
@@ -186,7 +188,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-btn-secondary:hover{background:rgba(30,41,59,0.9);border-color:#F59E0B}
 
 /* --- 🌟 DISTINCT PREMIUM PANEL BACKGROUNDS & WIDER X-INPUT 🌟 --- */
-/* CRITICAL FIX: The !important lock forces inactive tabs to stay hidden */
 .rsm-panel[hidden] { display: none !important; }
 
 .rsm-panel {
@@ -277,6 +278,10 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-file-btn input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .rsm-filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;scrollbar-width:none;}
 .rsm-filters::-webkit-scrollbar { display:none; }
+.auc-group-tab{flex:0 0 auto;background:#111827;color:#A8B5C8;border:1px solid #1E293B;border-radius:999px;padding:8px 15px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:all 0.15s ease}
+.auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
+.auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
+.auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
 .rsm-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:190px;overflow-y:auto;padding:2px}
 .rsm-preset{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 10px;border-radius:10px;border:1px solid #1E293B;background:#111827;color:#E2E8F0;cursor:pointer;min-width:0}
 .rsm-preset:hover{border-color:rgba(245,158,11,0.55)}
@@ -483,27 +488,22 @@ body>*:not(#rsm-print-root){display:none !important}
 <!-- PANEL: 2. STYLE (Deep Indigo Background) -->
 <div class="rsm-panel" id="rsm-tab-style" hidden>
     
-<div class="rsm-setup-box" style="border-color: #818CF8; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);">
+<div class="rsm-setup-box" style="border-color: #818CF8; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);" id="rsm-format-container">
     <div class="auc-field-group" style="margin:0;">
         <label class="auc-label" for="rsm-doc-format"><span style="color:#E0E7FF">Document Format Strategy</span></label>
         <select id="rsm-doc-format" class="auc-select" style="border-color:#818CF8; background: #020617;">
-            <option value="chrono">Reverse Chronological (Standard)</option>
-            <option value="functional">Functional / Skills-Based</option>
-            <option value="ats">Strict ATS Text (No columns/colors)</option>
+            <!-- Dynamically Populated by JS -->
         </select>
     </div>
 </div>
 
 <div class="auc-label" style="margin-bottom:8px"><span>Ready-made styles</span><span class="auc-label-accent" id="rsm-gallery-count">60 of 60 styles</span></div>
-<div class="rsm-filters" role="group" aria-label="Filter styles by layout">
-<button type="button" class="auc-group-tab active" data-pf="all" aria-pressed="true">All</button>
-<button type="button" class="auc-group-tab" data-pf="ats" aria-pressed="false">ATS-safe</button>
-<button type="button" class="auc-group-tab" data-pf="classic" aria-pressed="false">Classic</button>
-<button type="button" class="auc-group-tab" data-pf="modern" aria-pressed="false">Modern</button>
-<button type="button" class="auc-group-tab" data-pf="banner" aria-pressed="false">Banner</button>
-<button type="button" class="auc-group-tab" data-pf="sidebar" aria-pressed="false">Sidebar</button>
-<button type="button" class="auc-group-tab" data-pf="timeline" aria-pressed="false">Timeline</button>
+
+<!-- 🌟 DYNAMIC STYLE FILTERS (Varies by Category) 🌟 -->
+<div class="rsm-filters" role="group" aria-label="Filter styles by layout" id="rsm-style-filters">
+    <!-- Populated by JS -->
 </div>
+
 <div class="auc-field-group" style="margin-bottom:12px"><label class="auc-label" for="rsm-preset-search"><span>Search styles</span></label><input type="search" id="rsm-preset-search" class="auc-input" placeholder="e.g. Navy, Executive, Timeline" autocomplete="off"></div>
 <div id="rsm-gallery" class="rsm-gallery"></div>
 <div class="auc-label" style="margin:18px 0 8px"><span>Accent colour</span><span class="auc-label-accent">16 + custom</span></div>
@@ -710,8 +710,7 @@ function tqcBoot() {
   var DEFAULT_STYLE = { layout: "modern", accent: "#0369A1", font: "calibri", fs: 10.5, density: "normal", heading: "bar", bullet: "square", skills: "chips", dates: "right", align: "left", nameStyle: "normal", margin: "normal", paper: "a4", tone: "light", photo: false, shape: "circle", pageLimit: "auto", docFormat: "chrono" };
   var STYLE = clone(DEFAULT_STYLE);
   
-  // Extended unified data model holding ALL possible fields to avoid breaking across types
-  var DATA = {
+  var SAMPLE = {
     docType: "job_standard",
     name: "Aarav Sharma", title: "Senior Software Engineer", email: "aarav.sharma@example.com", phone: "+91 98765 43210", location: "Bengaluru, India", links: "linkedin.com/in/aarav-sharma-sample\ngithub.com/aarav-sample",
     summary: "Software engineer with 6+ years of experience building reliable web platforms and internal tools. Led a team of four to cut API latency by 38% and shipped a billing service used by 200,000 customers. Comfortable across the stack and focused on clear, maintainable code.",
@@ -732,7 +731,7 @@ function tqcBoot() {
     },
     hidden: {}
   };
-  
+  var DATA = clone(SAMPLE);
   var presetFilter = "all", presetQuery = "";
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
@@ -767,8 +766,9 @@ function tqcBoot() {
           if (confirm("Changing Document Type will adapt the fields below. Existing text won't be deleted, but irrelevant fields will be hidden. Proceed?")) {
               DATA.docType = e.target.value;
               STYLE.docFormat = DOC_TYPES[DATA.docType].defaultFormat || "chrono";
-              $("rsm-doc-format").value = STYLE.docFormat;
+              renderDynamicStyleOptions(); // Adapt style tabs/filters contextually
               renderDynamicForm();
+              renderGallery(); // Re-render gallery labels based on new context
               render();
           } else {
               e.target.value = DATA.docType; 
@@ -796,6 +796,7 @@ function tqcBoot() {
       <label class="ctc-inline" style="display:inline-flex;align-items:center;gap:7px;color:#E2E8F0;font-size:0.9375rem"><input type="checkbox" id="rsm-photo-on" disabled> Show photo</label>
       <button type="button" id="rsm-photo-remove" class="rsm-mini" style="width:auto;padding:0 12px;display:none">Remove</button>
       </div>
+      <p class="rsm-note">Photos stay in your browser. Many employers prefer resumes without a photo, and applicant tracking systems cannot read it.</p>
       </div>
       </details>`;
 
@@ -1152,7 +1153,94 @@ function tqcBoot() {
     $("rsm-health-pages").textContent = pages + (pages === 1 ? " page" : " pages") + " • " + (STYLE.docFormat === 'ats' ? 'ATS Mode' : (PAPERS[STYLE.paper] || PAPERS.a4).css);
   }
 
-  /* ---------- Style Tab Engine ---------- */
+  /* ---------- 🌟 DYNAMIC STYLE TAB ENGINE 🌟 ---------- */
+  function renderDynamicStyleOptions() {
+      var cat = DOC_TYPES[DATA.docType] ? DOC_TYPES[DATA.docType].cat : 'job';
+      var filters = [];
+      var isMarriage = (cat === 'biodata_marriage' || cat === 'biodata_personal');
+      var isGovt = (cat === 'biodata_govt');
+      var isOther = (cat === 'other');
+      
+      // 1. Dynamic Layout Filters based on Category Context
+      if (isMarriage) {
+          filters = [
+              { val: "all", label: "All" }, 
+              { val: "classic", label: "Traditional" }, 
+              { val: "modern", label: "Modern" }, 
+              { val: "banner", label: "Elegant" }, 
+              { val: "sidebar", label: "Premium" }
+          ];
+      } else if (isGovt) {
+          filters = [
+              { val: "all", label: "All" }, 
+              { val: "classic", label: "Official Format" }, 
+              { val: "modern", label: "Clean" }, 
+              { val: "sidebar", label: "Detailed" }
+          ];
+      } else if (isOther) {
+          filters = [
+              { val: "all", label: "All" }, 
+              { val: "classic", label: "Minimal" }, 
+              { val: "modern", label: "Contemporary" }, 
+              { val: "banner", label: "Creative" }, 
+              { val: "sidebar", label: "Portfolio" }
+          ];
+      } else {
+          filters = [
+              { val: "all", label: "All" }, 
+              { val: "ats", label: "ATS-safe" }, 
+              { val: "classic", label: "Classic" }, 
+              { val: "modern", label: "Modern" }, 
+              { val: "banner", label: "Banner" }, 
+              { val: "sidebar", label: "Sidebar" }, 
+              { val: "timeline", label: "Timeline" }
+          ];
+      }
+      
+      var isValid = false;
+      filters.forEach(function(f) { if (f.val === presetFilter) isValid = true; });
+      if (!isValid) presetFilter = "all";
+      
+      var filterHtml = "";
+      filters.forEach(function(f) {
+          var active = (f.val === presetFilter);
+          filterHtml += '<button type="button" class="auc-group-tab' + (active ? ' active' : '') + '" data-pf="' + f.val + '" aria-pressed="' + active + '">' + f.label + '</button>';
+      });
+      var filterBox = $("rsm-style-filters");
+      if(filterBox) filterBox.innerHTML = filterHtml;
+      
+      // 2. Hide ATS/Functional Format Strategy for Non-Jobs
+      var formatContainer = $("rsm-format-container");
+      var formatBox = $("rsm-doc-format");
+      
+      if (isMarriage || isGovt || isOther) {
+          if (formatContainer) formatContainer.style.display = "none";
+          STYLE.docFormat = "chrono"; // Force standard format
+      } else {
+          if (formatContainer) formatContainer.style.display = "block";
+          var formatHtml = '<option value="chrono">Reverse Chronological (Standard)</option>';
+          formatHtml += '<option value="functional">Functional / Skills-Based</option>';
+          formatHtml += '<option value="ats">Strict ATS Text (No columns/colors)</option>';
+          if (formatBox) {
+              var prevFormat = STYLE.docFormat;
+              formatBox.innerHTML = formatHtml;
+              var formatValid = false;
+              for(var i=0; i<formatBox.options.length; i++) { if(formatBox.options[i].value === prevFormat) formatValid = true; }
+              STYLE.docFormat = formatValid ? prevFormat : "chrono";
+              formatBox.value = STYLE.docFormat;
+          }
+      }
+  }
+
+  // Bind dynamic style filter clicks
+  $("rsm-style-filters").addEventListener("click", function(e) {
+      var b = e.target.closest("[data-pf]");
+      if (!b) return;
+      presetFilter = b.getAttribute("data-pf");
+      renderDynamicStyleOptions(); // Re-render to swap active class
+      renderGallery();
+  });
+
   function thumb(layout, color) {
     var c = color, g = "#CBD5E1", s = '<svg viewBox="0 0 40 52" width="32" height="42" aria-hidden="true"><rect width="40" height="52" rx="3" fill="#fff" stroke="#CBD5E1"/>';
     if (layout === "banner") s += '<rect width="40" height="14" rx="3" fill="' + c + '"/>';
@@ -1167,6 +1255,37 @@ function tqcBoot() {
     return s + "</svg>";
   }
   
+  function getDynamicLayoutLabel(layout, ats) {
+      var cat = DOC_TYPES[DATA.docType] ? DOC_TYPES[DATA.docType].cat : 'job';
+      var isMarriage = (cat === 'biodata_marriage' || cat === 'biodata_personal');
+      var isGovt = (cat === 'biodata_govt');
+      var isOther = (cat === 'other');
+      
+      if (isMarriage) {
+          if (layout === "classic") return "Traditional";
+          if (layout === "modern") return "Modern";
+          if (layout === "banner") return "Elegant";
+          if (layout.indexOf("sidebar") > -1) return "Premium";
+          return "Standard";
+      }
+      if (isGovt) {
+          if (layout === "classic") return "Official Format";
+          if (layout === "modern") return "Clean";
+          if (layout.indexOf("sidebar") > -1) return "Detailed";
+          return "Standard";
+      }
+      if (isOther) {
+          if (layout === "classic") return "Minimal";
+          if (layout === "modern") return "Contemporary";
+          if (layout === "banner") return "Creative";
+          if (layout.indexOf("sidebar") > -1) return "Portfolio";
+          return "Standard";
+      }
+      
+      var defaultLbl = { classic: "Classic", modern: "Modern", banner: "Banner", sidebarL: "Sidebar", sidebarR: "Sidebar", timeline: "Timeline" }[layout] || layout;
+      return defaultLbl + (ats ? " • ATS-safe" : "");
+  }
+
   function renderGallery() {
     var html = "", n = 0, q = presetQuery.toLowerCase();
     PRESETS.forEach(function (p, idx) {
@@ -1174,25 +1293,23 @@ function tqcBoot() {
       if (!okF || (q && p.name.toLowerCase().indexOf(q) < 0)) return;
       n++;
       var active = JSON.stringify([p.style.layout, p.style.accent, p.style.font, p.style.heading]) === JSON.stringify([STYLE.layout, STYLE.accent, STYLE.font, STYLE.heading]);
+      
+      var subtitle = getDynamicLayoutLabel(p.layout, p.ats);
+      
       html += '<button type="button" class="rsm-preset' + (active ? " is-active" : "") + '" data-p="' + idx + '" aria-pressed="' + active + '">' + thumb(p.layout, p.style.accent) +
-        '<span class="rsm-preset-t"><strong>' + esc(p.name) + "</strong><small>" + p.layout + (p.ats ? " • ATS-safe" : "") + "</small></span></button>";
+        '<span class="rsm-preset-t"><strong>' + esc(p.name) + "</strong><small>" + subtitle + "</small></span></button>";
     });
     $("rsm-gallery").innerHTML = html || '<p class="ctc-note">No styles match.</p>';
     $("rsm-gallery-count").textContent = n + " of " + PRESETS.length + " styles";
   }
+  
   $("rsm-gallery").addEventListener("click", function (e) {
     var b = e.target.closest(".rsm-preset"); if (!b) return;
     var p = PRESETS[Number(b.getAttribute("data-p"))];
     Object.keys(p.style).forEach(function (k) { STYLE[k] = p.style[k]; });
     syncControls(); render(); renderGallery();
   });
-  document.querySelectorAll("[data-pf]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      presetFilter = b.getAttribute("data-pf");
-      document.querySelectorAll("[data-pf]").forEach(function (x) { var on = x === b; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
-      renderGallery();
-    });
-  });
+  
   $("rsm-preset-search").addEventListener("input", function () { presetQuery = this.value; renderGallery(); });
 
   function buildControls() {
@@ -1207,9 +1324,13 @@ function tqcBoot() {
       STYLE[k] = e.target.value; render(); renderGallery();
     });
     
-    $("rsm-doc-format").addEventListener("change", function(e) {
-        STYLE.docFormat = e.target.value; render(); renderGallery();
-    });
+    var formatBox = $("rsm-doc-format");
+    if(formatBox) {
+        formatBox.addEventListener("change", function(e) {
+            STYLE.docFormat = e.target.value; render(); renderGallery();
+        });
+    }
+    
     $("rsm-page-limit").addEventListener("change", function(e) {
         STYLE.pageLimit = e.target.value; render();
     });
@@ -1228,7 +1349,8 @@ function tqcBoot() {
     CONTROLS.forEach(function (c) { var el = $("rsm-c-" + c.key); if (el) el.value = STYLE[c.key]; });
     $("rsm-fs").value = STYLE.fs; $("rsm-fs-out").textContent = STYLE.fs + " pt";
     $("rsm-page-limit").value = STYLE.pageLimit || "auto";
-    $("rsm-doc-format").value = STYLE.docFormat || "chrono";
+    var formatBox = $("rsm-doc-format");
+    if (formatBox) formatBox.value = STYLE.docFormat || "chrono";
     $("rsm-custom-color").value = /^#[0-9a-f]{6}$/i.test(STYLE.accent) ? STYLE.accent : "#0369A1";
     document.querySelectorAll(".rsm-swatch").forEach(function (b) { var on = b.getAttribute("data-color").toLowerCase() === STYLE.accent.toLowerCase(); b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
   }
@@ -1239,7 +1361,6 @@ function tqcBoot() {
       var id = t.getAttribute("data-tab");
       document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
       
-      // Forces HTML hidden attribute update (CSS !important handles the visual lock)
       document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
       
       setTimeout(window.__tqcRsmLayout, 10);
@@ -1351,6 +1472,7 @@ function tqcBoot() {
   function initUI() {
     populateDocTypeDropdown();
     buildControls();
+    renderDynamicStyleOptions(); // 🌟 Initializes Context-Aware Style Engine 🌟
     syncControls();
     renderDynamicForm();
     renderGallery();
