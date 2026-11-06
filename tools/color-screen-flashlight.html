@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-category="utility">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Screen Flashlight – Multicolour & Strobe | TheQuantCalc</title>
+<meta name="description" content="Turn your phone or computer screen into a bright, customizable multicolour flashlight. Features solid colors, custom hex pickers, and adjustable strobe effects.">
+<link rel="canonical" href="https://thequantcal.pages.dev/tools/color-screen-flashlight">
+<meta property="og:title" content="Color Screen Flashlight – Multicolour & Strobe | TheQuantCalc">
+<meta property="og:description" content="Turn your device's screen into a bright, customizable multicolour flashlight with solid or strobe effects. No installation required.">
+<meta property="og:url" content="https://thequantcal.pages.dev/tools/color-screen-flashlight">
+<meta property="og:type" content="website">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- Apply the visitor's saved theme before first paint (same "theme" key the site header uses). Default = light. -->
+<script>
+try {
+if (localStorage.getItem("theme") === "dark") {
+document.documentElement.setAttribute("data-theme", "dark");
+}
+} catch (e) {}
+</script>
+
+<!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "WebApplication",
+"name": "Color Screen Flashlight",
+"url": "https://thequantcal.pages.dev/tools/color-screen-flashlight",
+"description": "A client-side utility that transforms any device screen into a customizable multicolour flashlight utilizing the HTML5 Fullscreen API and Wake Lock API.",
+"applicationCategory": "UtilityApplication",
+"operatingSystem": "All",
+"browserRequirements": "Requires JavaScript and Fullscreen API support",
+"isAccessibleForFree": true,
+"author": {
+"@type": "Organization",
+"name": "TheQuantCalc",
+"url": "https://thequantcal.pages.dev/"
+}
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Can this app change the color of my phone's camera LED flash?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "No. The physical LED flashlight on the back of smartphones consists of white light-emitting diodes (LEDs), meaning their hardware cannot change colors. This tool uses your device's high-resolution screen to emit colored light instead."
+}
+},
+{
+"@type": "Question",
+"name": "Why is the screen flashlight not bright enough?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Web browsers cannot automatically control your device's hardware brightness for security reasons. To get the maximum flashlight effect, you must manually swipe down your phone's notification panel (or use your laptop's brightness keys) and turn the screen brightness to 100%."
+}
+},
+{
+"@type": "Question",
+"name": "Will leaving the screen flashlight on cause my phone to go to sleep?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "No. This tool utilizes the modern Screen Wake Lock API to prevent your device from turning off the screen while the flashlight mode is actively running."
+}
+}
+]
+},
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://thequantcal.pages.dev/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Utility",
+"item": "https://thequantcal.pages.dev/#utility"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "Color Screen Flashlight",
+"item": "https://thequantcal.pages.dev/tools/color-screen-flashlight"
+}
+]
+}
+]
+}
+</script>
+
+<style>
+:root,html[data-theme="light"]{--font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;--surface-page:#F1F5F9;--article-bg:#FFFFFF;--article-soft:#F8FAFC;--surface-card:#FFFFFF;--surface-inset:#F1F5F9;--surface-border:#E2E8F0;--text-main:#0F172A;--text-body:#334155;--text-muted:#64748B;--link-color:#059669;--table-stripe:#F8FAFC}
+html[data-theme="dark"]{--surface-page:#050811;--article-bg:#0B1120;--article-soft:#111827;--surface-card:#0F172A;--surface-inset:#070A12;--surface-border:#1E293B;--text-main:#F8FAFC;--text-body:#CBD5E1;--text-muted:#94A3B8;--link-color:#34D399;--table-stripe:#0F172A}
+html[data-theme="light"][data-category="utility"],html:not([data-theme])[data-category="utility"]{--surface-page:#F0F4F8;--article-bg:#FAFBFD;--article-soft:#F1F5F9;--surface-card:#FFFFFF;--surface-border:#CBD5E1}
+html[data-theme="dark"][data-category="utility"]{--surface-page:#060913;--article-bg:#0B1120;--article-soft:#131C31;--surface-card:#0F172A;--surface-border:#1E293B}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surface-page);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.tqc-page-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:1280px;margin:0 auto;padding:18px 16px 56px}
+@media (min-width:768px){.tqc-page-grid{grid-template-columns:minmax(0,69%) minmax(250px,30%);justify-content:space-between;gap:8px;max-width:100%;margin:0;padding:24px 4px 64px 2px}.main-body{padding:0 8px}}
+.main-body{display:flex;flex-direction:column;width:100%;min-width:0}
+.sidebar{width:100%;min-width:0}
+
+/* Breadcrumbs */
+.breadcrumb-trail{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:0.88rem;line-height:1.4;color:var(--text-muted);margin:0 0 10px 0}
+.breadcrumb-trail a{color:var(--text-muted);text-decoration:none;transition:color 0.15s ease}
+.breadcrumb-trail a:hover,.breadcrumb-trail a:focus-visible{color:var(--link-color);text-decoration:underline}
+.breadcrumb-trail .bc-current{color:var(--text-main);font-weight:500}
+
+.primary-title{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:700;line-height:1.25;letter-spacing:-0.035em;text-align:left;color:var(--text-main);margin:0 0 12px 0}
+
+/* UI Box inherited from Advanced Unit Converter */
+.calculator-ui-box{width:min(100%,600px);max-width:600px;align-self:center !important;margin:0 auto 26px auto !important;padding:22px 18px 24px;border-radius:20px;background:linear-gradient(165deg,#07070B 0%,#0B1120 48%,#0F172A 100%) padding-box,linear-gradient(135deg,#F59E0B 0%,#10B981 52%,#F59E0B 100%) border-box;border:1.5px solid transparent;box-shadow:0 24px 48px -12px rgba(2,6,23,0.85),0 0 28px -6px rgba(16,185,129,0.22),0 0 18px -6px rgba(245,158,11,0.16),inset 0 1px 1px rgba(248,250,252,0.12);color:#F8FAFC;position:relative}
+@media (min-width:640px){.calculator-ui-box{padding:28px 30px 30px}}
+.calculator-ui-box::after{content:"";position:absolute;left:12%;right:12%;bottom:-8px;height:8px;background:radial-gradient(ellipse at center,rgba(16,185,129,0.38) 0%,rgba(245,158,11,0.18) 50%,transparent 78%);filter:blur(4px);pointer-events:none}
+
+.auc-field-group{display:flex;flex-direction:column;gap:6px;min-width:0;margin-bottom:16px;}
+.auc-label{font-size:0.9375rem;font-weight:600;color:#E2E8F0;letter-spacing:0.01em;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.auc-label-accent{color:#F59E0B;font-size:0.8125rem;font-weight:500;white-space:nowrap}
+
+/* Color Presets Grid */
+.color-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.preset-btn {
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+.preset-btn:hover { transform: translateY(-2px); }
+.preset-btn.active { border-color: #F8FAFC; box-shadow: 0 0 12px rgba(255,255,255,0.4); }
+
+/* Custom Inputs */
+.auc-input, .auc-select{width:100%;min-height:46px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:11px 14px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;}
+.auc-input[type="color"] { padding: 4px; cursor: pointer; height: 50px; }
+.auc-input[type="range"] { padding: 0; background: transparent; box-shadow: none; border: none; cursor: pointer; }
+
+/* Buttons */
+.auc-action-row{display:flex;gap:12px;margin-bottom:18px;margin-top:24px;}
+.auc-btn-primary{width:100%;padding:16px 20px;border-radius:999px;border:1px solid rgba(16,185,129,0.65);background:linear-gradient(180deg,#10B981 0%,#059669 100%);color:#04130E;font-weight:700;font-size:1.15rem;letter-spacing:0.01em;cursor:pointer;box-shadow:0 6px 18px rgba(16,185,129,0.38),inset 0 1px 1px rgba(255,255,255,0.45);transition:transform 0.12s ease,filter 0.15s ease}
+.auc-btn-primary:hover{filter:brightness(1.08)}
+.auc-btn-primary:active{transform:translateY(1px)}
+
+/* Info & Warning Banners */
+.info-banner { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4); color: #7DD3FC; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; display: flex; gap: 10px; align-items: center; margin-bottom: 20px; line-height: 1.4;}
+.strobe-warning { margin-top: 10px; font-size: 0.85rem; color: #FCA5A5; background: rgba(239,68,68,0.1); border: 1px solid rgba(248,113,113,0.3); padding: 8px 12px; border-radius: 8px; line-height: 1.4; }
+
+/* Fullscreen Overlay */
+#flashlight-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999999;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+#flashlight-overlay.active {
+    display: flex;
+}
+.exit-text {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Article Styling */
+article.auc-article{background-color:var(--article-bg);border:1px solid var(--surface-border);border-radius:18px;padding:24px 20px;color:var(--text-body);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+@media (min-width:768px){article.auc-article{padding:34px 36px}}
+article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
+article.auc-article h2:first-of-type{margin-top:0}
+article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
+article.auc-article ul{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
+article.auc-article li{margin-bottom:7px;line-height:1.6}
+
+/* FAQs */
+.auc-faq-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+details.auc-faq-item{background-color:var(--article-soft);border:1px solid var(--surface-border);border-radius:12px;padding:13px 16px}
+details.auc-faq-item summary{font-weight:600;font-size:1rem;color:var(--text-main);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.auc-faq-item summary::-webkit-details-marker{display:none}
+details.auc-faq-item summary::after{content:"+";font-weight:700;color:#10B981;font-size:1.2rem;line-height:1}
+details.auc-faq-item[open] summary::after{content:"−"}
+.auc-faq-body{margin-top:10px;padding-top:10px;border-top:1px solid var(--surface-border);font-size:0.95rem;line-height:1.62;color:var(--text-body)}
+
+/* Global Background */
+body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81 50%,#0f172a 100%);background-size:100% 50px;background-repeat:no-repeat}
+@media (min-width:768px){body{padding-top:60px;background-size:100% 60px}}
+</style>
+</head>
+<body>
+
+<!-- Hidden overlay that activates the full screen light -->
+<div id="flashlight-overlay">
+    <div class="exit-text">Tap anywhere to exit</div>
+</div>
+
+<div class="tqc-page-grid">
+<main class="main-body">
+<nav class="breadcrumb-trail" aria-label="Breadcrumb">
+<a href="https://thequantcal.pages.dev/">Home</a>
+<span aria-hidden="true">&rarr;</span>
+<a href="https://thequantcal.pages.dev/#utility">Utility</a>
+<span aria-hidden="true">&rarr;</span>
+<span class="bc-current" aria-current="page">Color Screen Flashlight</span>
+</nav>
+
+<section class="tool-suite" aria-labelledby="calc-main-title">
+<h1 id="calc-main-title" class="primary-title">Color Screen Flashlight</h1>
+
+<div class="calculator-ui-box">
+    <div class="info-banner">
+        <span>💡</span>
+        <span><strong>Tip:</strong> For maximum brightness, ensure your device's screen brightness slider is turned all the way up!</span>
+    </div>
+
+    <div class="auc-field-group">
+        <label class="auc-label">Quick Color Presets</label>
+        <div class="color-presets-grid" id="preset-container">
+            <button class="preset-btn active" style="background-color: #FFFFFF;" data-color="#FFFFFF" aria-label="White"></button>
+            <button class="preset-btn" style="background-color: #FF0000;" data-color="#FF0000" aria-label="Red"></button>
+            <button class="preset-btn" style="background-color: #00FF00;" data-color="#00FF00" aria-label="Green"></button>
+            <button class="preset-btn" style="background-color: #0000FF;" data-color="#0000FF" aria-label="Blue"></button>
+            <button class="preset-btn" style="background-color: #FFFF00;" data-color="#FFFF00" aria-label="Yellow"></button>
+            <button class="preset-btn" style="background-color: #FF00FF;" data-color="#FF00FF" aria-label="Purple"></button>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="auc-field-group">
+            <label class="auc-label" for="custom-color">Custom Color</label>
+            <input type="color" id="custom-color" class="auc-input" value="#FFFFFF">
+        </div>
+        <div class="auc-field-group">
+            <label class="auc-label" for="light-mode">Light Mode</label>
+            <select id="light-mode" class="auc-select">
+                <option value="solid">Solid Light</option>
+                <option value="strobe">Strobe / Flashing</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="auc-field-group" id="strobe-speed-group" style="display: none;">
+        <label class="auc-label" for="strobe-speed">
+            <span>Strobe Speed</span>
+            <span class="auc-label-accent" id="strobe-speed-display">Fast</span>
+        </label>
+        <input type="range" id="strobe-speed" class="auc-input" min="50" max="1000" step="50" value="200" style="direction: rtl;">
+        <div class="strobe-warning">
+            ⚠️ <strong>Warning:</strong> Flashing lights may trigger seizures for people with photosensitive epilepsy.
+        </div>
+    </div>
+
+    <div class="auc-action-row">
+        <button type="button" id="launch-btn" class="auc-btn-primary">Launch Flashlight</button>
+    </div>
+</div>
+</section>
+
+<div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
+
+<article class="auc-article">
+<h2>How to Use the Multicolour Screen Flashlight</h2>
+<p>Unlike the physical camera LED on the back of your smartphone, which is restricted to a single white color temperature, your device's high-resolution display is capable of outputting millions of colors. The <strong>Color Screen Flashlight</strong> utilizes the HTML5 Fullscreen API to safely transform your entire display into a powerful, customizable light source.</p>
+<ul>
+    <li><strong>Solid Light Mode:</strong> Emits a steady, continuous beam of light. Perfect for reading in the dark without straining your eyes (use warm colors like red or orange) or illuminating a room when the power goes out.</li>
+    <li><strong>Strobe & Flashing Mode:</strong> Rapidly alternates the screen between your selected color and total blackness. This is highly useful for emergencies, grabbing attention on the side of a road, or creating dynamic lighting effects.</li>
+    <li><strong>Custom Hex Selection:</strong> Use the built-in color picker to find the exact hue and saturation you need for photography lighting or mood setting.</li>
+</ul>
+
+<h2>Why Use a Screen Flashlight Instead of the LED?</h2>
+<p>While the hardware camera LED is extremely bright and focused, it produces a harsh, blinding spotlight effect that causes heavy shadows. A screen flashlight provides a <strong>diffused, soft-box effect</strong>. Because the light is emitted evenly across a large 6-inch surface area rather than a tiny 3mm bulb, it creates much softer shadows.</p>
+<p>This makes screen flashlights ideal for macro photography, lighting up a tent without blinding your camping partners, or preserving night vision (by utilizing a pure red screen color).</p>
+
+<h2>Frequently Asked Questions (FAQs)</h2>
+<div class="auc-faq-list">
+<details class="auc-faq-item" open>
+<summary>Can this app change the color of my phone's camera LED flash?</summary>
+<div class="auc-faq-body">No. The physical LED flashlight on the back of smartphones consists of standard white light-emitting diodes, meaning their hardware cannot physically change colors. This tool circumvents that hardware limitation by using your device's screen to emit colored light instead.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Why is the screen flashlight not bright enough?</summary>
+<div class="auc-faq-body">Web browsers cannot automatically control your device's hardware brightness due to modern sandboxing and security restrictions. To get the maximum flashlight effect, you must manually swipe down your phone's notification panel (or use your laptop's brightness keys) and turn the screen brightness to 100%.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Will leaving the screen flashlight on cause my phone to go to sleep?</summary>
+<div class="auc-faq-body">No. This tool utilizes the modern Screen Wake Lock API to prevent your device from turning off the screen while the flashlight mode is actively running. As soon as you exit the flashlight mode, normal screen timeout settings resume.</div>
+</details>
+</div>
+</article>
+</main>
+<!-- Empty sidebar: the site navigation script fills it with search, ads and related tools -->
+<aside class="sidebar"></aside>
+</div>
+
+<script>
+(function () {
+    "use strict";
+    
+    const overlay = document.getElementById("flashlight-overlay");
+    const launchBtn = document.getElementById("launch-btn");
+    const customColorInput = document.getElementById("custom-color");
+    const modeSelect = document.getElementById("light-mode");
+    const strobeGroup = document.getElementById("strobe-speed-group");
+    const strobeSpeedInput = document.getElementById("strobe-speed");
+    const speedDisplay = document.getElementById("strobe-speed-display");
+    const presetBtns = document.querySelectorAll(".preset-btn");
+
+    let currentColor = "#FFFFFF";
+    let strobeIntervalId = null;
+    let isStrobeOn = false;
+    let wakeLock = null; // Variable to hold the Wake Lock reference
+
+    // Function to request screen to stay awake
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+            }
+        } catch (err) {
+            console.log("Wake Lock failed or unsupported:", err.message);
+        }
+    }
+
+    // Function to release screen wake lock
+    function releaseWakeLock() {
+        if (wakeLock !== null) {
+            wakeLock.release().then(() => {
+                wakeLock = null;
+            });
+        }
+    }
+
+    // Update Presets
+    presetBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            presetBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentColor = btn.getAttribute("data-color");
+            customColorInput.value = currentColor;
+        });
+    });
+
+    // Custom Color Input Listener
+    customColorInput.addEventListener("input", (e) => {
+        currentColor = e.target.value;
+        presetBtns.forEach(b => b.classList.remove("active"));
+    });
+
+    // Mode Selection (Solid vs Strobe)
+    modeSelect.addEventListener("change", (e) => {
+        if (e.target.value === "strobe") {
+            strobeGroup.style.display = "flex";
+        } else {
+            strobeGroup.style.display = "none";
+        }
+    });
+
+    // Update Speed Text
+    strobeSpeedInput.addEventListener("input", (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (val <= 100) speedDisplay.textContent = "Very Fast";
+        else if (val <= 300) speedDisplay.textContent = "Fast";
+        else if (val <= 600) speedDisplay.textContent = "Medium";
+        else speedDisplay.textContent = "Slow";
+    });
+
+    function startFlashlight() {
+        overlay.classList.add("active");
+        
+        // Keep screen awake
+        requestWakeLock();
+        
+        // Request Fullscreen
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(err => console.log(err));
+        }
+
+        if (modeSelect.value === "strobe") {
+            const speed = parseInt(strobeSpeedInput.value, 10);
+            strobeIntervalId = setInterval(() => {
+                isStrobeOn = !isStrobeOn;
+                overlay.style.backgroundColor = isStrobeOn ? currentColor : "#000000";
+            }, speed);
+        } else {
+            overlay.style.backgroundColor = currentColor;
+        }
+    }
+
+    function stopFlashlight() {
+        overlay.classList.remove("active");
+        
+        // Let screen go to sleep normally again
+        releaseWakeLock();
+        
+        // Exit Fullscreen
+        if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen().catch(err => console.log(err));
+        }
+
+        // Clear Strobe
+        if (strobeIntervalId) {
+            clearInterval(strobeIntervalId);
+            strobeIntervalId = null;
+        }
+    }
+
+    // Launch Button
+    launchBtn.addEventListener("click", startFlashlight);
+
+    // Tap Anywhere on Overlay to Exit
+    overlay.addEventListener("click", stopFlashlight);
+
+    // Listen for ESC key or back button exiting fullscreen natively
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+            stopFlashlight();
+        }
+    });
+
+    // If document gets hidden (user switches tabs), release Wake Lock for battery safety
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden' && wakeLock !== null) {
+            stopFlashlight(); 
+        }
+    });
+
+})();
+</script>
+
+<!-- Site header, sidebar and footer script -->
+<script src="/navigation.js" defer></script>
+</body>
+</html>
