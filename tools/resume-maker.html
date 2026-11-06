@@ -10,7 +10,7 @@
 <meta property="og:description" content="Free private resume builder: choose from 60 styles, 6 layouts, 16 accent colours and 10 fonts, then download a PDF. Your data never leaves your browser.">
 <meta property="og:url" content="https://thequantcal.pages.dev/tools/resume-maker">
 <meta property="og:type" content="website">
-<!-- Apply the visitor's saved theme before first paint (same "theme" key the site header uses). Default = light. -->
+<!-- Apply the visitor's saved theme before first paint -->
 <script>
 try {
 if (localStorage.getItem("theme") === "dark") {
@@ -18,7 +18,7 @@ document.documentElement.setAttribute("data-theme", "dark");
 }
 } catch (e) {}
 </script>
-<!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
+<!-- Single JSON-LD @graph -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,15 +46,7 @@ document.documentElement.setAttribute("data-theme", "dark");
           "name": "How many resume styles and options does this resume maker have?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 10 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes. You can also pick any custom colour and set the font size between 9 and 12 points."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is this resume maker really free, and do I need to sign up?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, it is free to use and there is no sign-up, no watermark and no download limit. The tool runs entirely in your browser, so there is no account to create. You can build, restyle and save as many resumes as you like."
+            "text": "It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 10 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes."
           }
         },
         {
@@ -62,55 +54,7 @@ document.documentElement.setAttribute("data-theme", "dark");
           "name": "Is my resume data private?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later. Clearing site data, using a private window or switching devices removes them, so download the backup file to keep a copy, and use Clear everything on shared computers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I download my resume as a PDF?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Open the Download tab and select Print / Save as PDF. In the print dialog choose Save as PDF as the destination, set margins to Default and turn off Headers and footers. If your browser offers a background graphics option, enable it so banner and sidebar colours appear. The page size follows your A4 or US Letter choice."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Which resume styles are best for applicant tracking systems?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Single-column layouts are generally the safest because applicant tracking systems read them in the correct order. In the gallery, use the ATS-safe filter to see the Executive, Corporate, Academic, Minimal and Compact styles, which use one column, standard fonts and plain section headings. Banner, sidebar and timeline styles look more designed but may be parsed less reliably by older systems, so use them for direct applications and referrals."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long should my resume be?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "One page is usually enough for students and people early in their careers, and two pages suit longer careers with relevant experience. The preview shows a red dashed line where a new page begins and the health check reports the page count, so you can trim older roles or switch to a compact spacing option when you run over."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Should I put a photo on my resume?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "It depends on the country and employer. Many employers in the United States and United Kingdom prefer resumes without a photo, while some other markets expect one. Applicant tracking systems cannot read photos, and the photo takes space from your content. The photo is optional here, stays in your browser and can be removed at any time."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why does the font in my PDF look slightly different from another computer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "To keep the tool fast and private, it uses system fonts already installed on your device instead of downloading web fonts. If a font such as Calibri or Garamond is missing, the browser substitutes a similar one. Georgia, Arial and Times New Roman are the most consistent across Windows, macOS and Android."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I edit my resume later or move it to another device?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Your work is saved automatically in the same browser. To continue on another device or keep a safe copy, use Download backup on the Download tab, then open the page on the other device and choose Load backup. The backup is a small file that contains your content and your style choices."
+            "text": "Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later."
           }
         }
       ]
@@ -133,7 +77,7 @@ document.documentElement.setAttribute("data-theme", "dark");
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Free Resume Maker with 60 Styles and 50+ Options",
+          "name": "Free Resume Maker",
           "item": "https://thequantcal.pages.dev/tools/resume-maker"
         }
       ]
@@ -194,30 +138,36 @@ article.auc-article{background-color:var(--article-bg);border:1px solid var(--su
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
 article.auc-article h2:first-of-type{margin-top:0}
-article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
 article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
 article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
 article.auc-article li{margin-bottom:7px;line-height:1.6}
-article.auc-article a{color:var(--link-color);text-decoration:underline;text-underline-offset:2px}
-.auc-surface-box{background-color:var(--article-soft);border:1px solid var(--surface-border);border-left:4px solid #10B981;border-radius:12px;padding:15px 18px;margin:18px 0}
-.auc-formula-card{background-color:var(--surface-inset);border:1px solid var(--surface-border);border-radius:12px;padding:14px 16px;margin:14px 0;font-family:var(--font-mono);font-size:0.9rem;color:var(--text-main);overflow-x:auto}
 .data-table-wrapper{width:100%;overflow-x:auto;margin:18px 0 22px;border:1px solid var(--surface-border);border-radius:12px}
 .auc-table{width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left}
 .auc-table th,.auc-table td{padding:10px 13px;border-bottom:1px solid var(--surface-border)}
 .auc-table th{background-color:var(--article-soft);color:var(--text-main);font-weight:600;white-space:nowrap}
 .auc-table tr:nth-child(even) td{background-color:var(--table-stripe)}
 .auc-table td.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-.auc-faq-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
-details.auc-faq-item{background-color:var(--article-soft);border:1px solid var(--surface-border);border-radius:12px;padding:13px 16px}
-details.auc-faq-item summary{font-weight:600;font-size:1rem;color:var(--text-main);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
-details.auc-faq-item summary::-webkit-details-marker{display:none}
-details.auc-faq-item summary::after{content:"+";font-weight:700;color:#10B981;font-size:1.2rem;line-height:1}
-details.auc-faq-item[open] summary::after{content:"−"}
-.auc-faq-body{margin-top:10px;padding-top:10px;border-top:1px solid var(--surface-border);font-size:0.95rem;line-height:1.62;color:var(--text-body)}
 body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81 50%,#0f172a 100%);background-size:100% 50px;background-repeat:no-repeat}
 @media (min-width:768px){body{padding-top:60px;background-size:100% 60px}}
 .calculator-ui-box.rsm-box{width:100%;max-width:820px}
 .rsm-panel[hidden]{display:none}
+
+/* --- THE NEW Y-OVERFLOW FOR TABS --- */
+.rsm-panel {
+    max-height: 48vh;
+    min-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    margin-top: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+}
+.rsm-panel::-webkit-scrollbar { width: 6px; }
+.rsm-panel::-webkit-scrollbar-track { background: transparent; }
+.rsm-panel::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 10px; }
+/* ----------------------------------- */
+
 .rsm-note{font-size:0.8125rem;color:#A8B5C8;line-height:1.45;margin:2px 0 0}
 .rsm-fields{display:grid;grid-template-columns:1fr;gap:12px}
 @media (min-width:560px){.rsm-fields{grid-template-columns:1fr 1fr}.rsm-fields .rsm-wide{grid-column:1/-1}}
@@ -271,8 +221,8 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-preview-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;margin:0 0 10px}
 .rsm-preview-head h2{margin:0;font-size:1.2rem;color:var(--text-main)}
 .rsm-pill{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--surface-border);background:var(--article-soft);color:var(--text-body);font-size:0.8125rem;font-weight:600}
-.rsm-stage{background:#475569;border-radius:16px;padding:14px 4px;overflow-y:auto;display:flex;justify-content:center;max-height:45vh;overscroll-behavior:contain;box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)}
-@media (min-width:768px){.rsm-stage{max-height:65vh}}
+.rsm-stage{background:#475569;border-radius:16px;padding:14px 4px;overflow-y:auto;display:flex;justify-content:center;max-height:40vh;overscroll-behavior:contain;box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)}
+@media (min-width:768px){.rsm-stage{max-height:60vh}}
 .rsm-fit{position:relative}
 .rsm-scaler{transform-origin:top left;position:absolute;left:0;top:0}
 /* ---------- The resume paper ---------- */
@@ -393,20 +343,20 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="calculator-ui-box rsm-box">
 <div id="rsm-fatal" class="auc-error-banner visible" role="alert" style="display:none"></div>
 
-<!-- 🌟 ALWAYS-ON-TOP SPLIT SCREEN PREVIEW 🌟 -->
-<div class="rsm-preview-wrap" style="margin: 0 0 24px; padding-bottom: 24px; border-bottom: 1px dashed rgba(16, 185, 129, 0.4);">
+<!-- 🌟 ALWAYS-ON-TOP LIVE PREVIEW 🌟 -->
+<div class="rsm-preview-wrap" style="margin: 0 0 16px; padding-bottom: 24px; border-bottom: 1px dashed rgba(16, 185, 129, 0.4);">
 <div class="rsm-preview-head" style="margin-bottom: 12px;"><h2 id="rsm-preview-title" style="font-size:1.1rem;color:#10B981;">Live Preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
 </div>
-<!-- END SPLIT SCREEN PREVIEW -->
 
-<!-- TABS ARE NOW MOVED HERE (Underneath the preview) -->
+<!-- TABS (Moved right below the preview) -->
 <div class="auc-group-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
 <button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style (60 presets + 50 options)</button>
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
+<!-- PANEL: 1. CONTENT (Fixed Height + Scrolling) -->
 <div class="rsm-panel rsm-stack" id="rsm-tab-content">
 <details class="auc-sub-drawer" open>
 <summary><span>Personal details</span><span class="auc-label-accent">Required</span></summary>
@@ -456,6 +406,7 @@ body>*:not(#rsm-print-root){display:none !important}
 </details>
 </div>
 
+<!-- PANEL: 2. STYLE (Fixed Height + Scrolling) -->
 <div class="rsm-panel" id="rsm-tab-style" hidden>
 <div class="auc-label" style="margin-bottom:8px"><span>Ready-made styles</span><span class="auc-label-accent" id="rsm-gallery-count">60 of 60 styles</span></div>
 <div class="rsm-filters" role="group" aria-label="Filter styles by layout">
@@ -477,17 +428,21 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="auc-action-row" style="margin:16px 0 0"><button type="button" id="rsm-style-reset" class="auc-btn-secondary">Reset style</button></div>
 </div>
 
+<!-- PANEL: 3. DOWNLOAD (Fixed Height + Scrolling) -->
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
+<!-- 🌟 NEW DOWNLOAD AS IMAGE BUTTON 🌟 -->
+<button type="button" id="rsm-image-btn" class="auc-btn-secondary">Download as Photo (.png)</button>
 <button type="button" id="rsm-copy-btn" class="auc-btn-secondary">Copy plain text (for ATS forms)</button>
 <button type="button" id="rsm-json-btn" class="auc-btn-secondary">Download backup (.json)</button>
 <label class="rsm-file-btn">Load backup (.json)<input type="file" id="rsm-json-file" accept="application/json,.json"></label>
 <button type="button" id="rsm-sample-btn" class="auc-btn-secondary">Load sample resume</button>
-<button type="button" id="rsm-clear-btn" class="auc-btn-secondary">Clear everything</button>
+<button type="button" id="rsm-clear-btn" class="auc-btn-secondary" style="border-color:#F87171; color:#FCA5A5;">Clear everything</button>
 </div>
 <p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Your resume is saved in this browser automatically; nothing is uploaded.</p>
 <div id="rsm-status" class="rsm-status" role="status" aria-live="polite"></div>
+
 <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite" style="margin-top:24px">
 <div class="tqc-result-content">
 <div class="auc-res-header"><span>Resume health check</span><span id="rsm-health-pages">1 page &bull; A4</span></div>
@@ -561,86 +516,6 @@ body>*:not(#rsm-print-root){display:none !important}
 </table>
 </div>
 <p>Because the options combine freely, the number of distinct looks runs into the millions, but the sensible approach is the opposite of maximal variety: choose one readable layout, one font and one accent colour, and spend your time on the words.</p>
-<h2>Applicant Tracking Systems (ATS): What Actually Matters</h2>
-<p>Many employers use an applicant tracking system to collect and search resumes. Parsers differ in quality, so the safest approach is to make your resume easy to read in plain text. In general:</p>
-<ul>
-<li><strong>Prefer a single column.</strong> Older parsers can read two-column layouts in the wrong order, mixing your skills into your job history. The styles tagged ATS-safe use one column.</li>
-<li><strong>Use standard section names</strong> such as Work Experience, Education and Skills. This tool does so for every layout.</li>
-<li><strong>Keep text as text.</strong> Information inside images, including a photo, cannot be read. Skill &ldquo;bars&rdquo; and rating dots convey nothing to a parser, so this tool does not offer them.</li>
-<li><strong>Use the plain-text copy</strong> when an application form asks you to paste your resume. The tool produces a clean version with simple dashes for bullets.</li>
-<li><strong>Match the job description honestly.</strong> Use the same terms the advertisement uses for skills you genuinely have.</li>
-</ul>
-<p>The health check beside the editor warns you when your chosen layout uses columns or includes a photo, so you can decide knowingly instead of guessing.</p>
-<h2>Writing Bullet Points That Get Read</h2>
-<p>Style gets a resume opened; content gets it shortlisted. A reliable pattern for each bullet is <strong>action verb + what you did + measurable result</strong>. Numbers (time saved, money, users, accuracy) make the claim concrete, and if you do not have exact figures, an honest approximation such as &ldquo;about 30 clients&rdquo; is better than a vague statement.</p>
-<div class="auc-formula-card">
-Bullet = Action verb + Task or scope + Result (number, %, time, money)
-</div>
-<h3>Example 1: Turning a Duty Into an Achievement</h3>
-<ol>
-<li><strong>Before:</strong> &ldquo;Responsible for handling customer support tickets.&rdquo; This states a duty, not a result, and many candidates could write it.</li>
-<li><strong>Add scope:</strong> &ldquo;Handled 60+ customer support tickets daily across email and chat.&rdquo;</li>
-<li><strong>Add outcome:</strong> &ldquo;Resolved 60+ tickets daily across email and chat while raising the satisfaction score from 82% to 91%.&rdquo;</li>
-</ol>
-<p>The final line starts with a strong verb, shows volume, and proves quality. Use only figures you can defend in an interview.</p>
-<h3>Example 2: A Fresher Resume With No Work Experience</h3>
-<ol>
-<li><strong>Reorder sections.</strong> Open <em>Section order &amp; visibility</em> on the Content tab and move <em>Education</em> above <em>Experience</em>, with <em>Skills</em> and <em>Projects</em> directly after it. Untick <em>Experience</em> if you have none.</li>
-<li><strong>Use projects as evidence.</strong> Describe one or two academic or personal projects with the tools used and an outcome, such as &ldquo;Built a budgeting web app used by 25 classmates; reduced data entry time by half with CSV import.&rdquo;</li>
-<li><strong>Pick a safe style.</strong> Choose the <em>Corporate</em> or <em>Minimal</em> recipe (both tagged ATS-safe), keep it to one page and check that the health check shows no warnings.</li>
-</ol>
-<h2>Privacy: Where Your Data Lives</h2>
-<p>All processing happens in your browser. Your text and photo are kept in this browser&rsquo;s local storage so you can return later, and they are never sent to a server by this page. Clearing your browser data, using a private window or switching devices will remove them, so use <em>Download backup</em> to keep a copy. If you use a shared computer, choose <em>Clear everything</em> before you leave.</p>
-<h2>Assumptions, Limitations and Practical Tips</h2>
-<ul>
-<li><strong>Fonts are system fonts.</strong> To keep the page fast and private, the tool uses fonts already installed on your device. A font such as Calibri or Garamond falls back to a similar font where it is missing, so the PDF you save on one computer may differ slightly from a PDF saved on another. Georgia, Arial and Times are the most consistent.</li>
-<li><strong>PDF export uses your browser&rsquo;s print dialog.</strong> Choose &ldquo;Save as PDF&rdquo;, set margins to &ldquo;Default&rdquo; and turn off headers and footers. Enable background graphics if your browser shows that option, so banner and sidebar colours print.</li>
-<li><strong>Banner and sidebar layouts are designed for one page.</strong> They run to the page edge, so a second page has no top margin. If your content is longer, use a Classic or Modern layout, which keeps your chosen margins on every page.</li>
-<li><strong>The red dashed lines in the preview</strong> show where a new page starts. They do not appear in the PDF.</li>
-<li><strong>No spell check or grammar check.</strong> Proofread twice and ask someone else to read it. Your browser&rsquo;s spell check underlines errors in the text boxes.</li>
-<li><strong>Region and norms vary.</strong> Photos, date of birth and personal details are customary in some countries and discouraged in others. Follow the norms of the market you are applying in.</li>
-<li><strong>No guarantee of results.</strong> A well-designed resume improves readability but cannot replace relevant experience or a good fit with the role.</li>
-</ul>
-
-<h2>Frequently Asked Questions (FAQs)</h2>
-<div class="auc-faq-list">
-<details class="auc-faq-item" open>
-<summary>How many resume styles and options does this resume maker have?</summary>
-<div class="auc-faq-body">It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 10 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes. You can also pick any custom colour and set the font size between 9 and 12 points.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Is this resume maker really free, and do I need to sign up?</summary>
-<div class="auc-faq-body">Yes, it is free to use and there is no sign-up, no watermark and no download limit. The tool runs entirely in your browser, so there is no account to create. You can build, restyle and save as many resumes as you like.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Is my resume data private?</summary>
-<div class="auc-faq-body">Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later. Clearing site data, using a private window or switching devices removes them, so download the backup file to keep a copy, and use Clear everything on shared computers.</div>
-</details>
-<details class="auc-faq-item">
-<summary>How do I download my resume as a PDF?</summary>
-<div class="auc-faq-body">Open the Download tab and select Print / Save as PDF. In the print dialog choose Save as PDF as the destination, set margins to Default and turn off Headers and footers. If your browser offers a background graphics option, enable it so banner and sidebar colours appear. The page size follows your A4 or US Letter choice.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Which resume styles are best for applicant tracking systems?</summary>
-<div class="auc-faq-body">Single-column layouts are generally the safest because applicant tracking systems read them in the correct order. In the gallery, use the ATS-safe filter to see the Executive, Corporate, Academic, Minimal and Compact styles, which use one column, standard fonts and plain section headings. Banner, sidebar and timeline styles look more designed but may be parsed less reliably by older systems, so use them for direct applications and referrals.</div>
-</details>
-<details class="auc-faq-item">
-<summary>How long should my resume be?</summary>
-<div class="auc-faq-body">One page is usually enough for students and people early in their careers, and two pages suit longer careers with relevant experience. The preview shows a red dashed line where a new page begins and the health check reports the page count, so you can trim older roles or switch to a compact spacing option when you run over.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Should I put a photo on my resume?</summary>
-<div class="auc-faq-body">It depends on the country and employer. Many employers in the United States and United Kingdom prefer resumes without a photo, while some other markets expect one. Applicant tracking systems cannot read photos, and the photo takes space from your content. The photo is optional here, stays in your browser and can be removed at any time.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Why does the font in my PDF look slightly different from another computer?</summary>
-<div class="auc-faq-body">To keep the tool fast and private, it uses system fonts already installed on your device instead of downloading web fonts. If a font such as Calibri or Garamond is missing, the browser substitutes a similar one. Georgia, Arial and Times New Roman are the most consistent across Windows, macOS and Android.</div>
-</details>
-<details class="auc-faq-item">
-<summary>Can I edit my resume later or move it to another device?</summary>
-<div class="auc-faq-body">Yes. Your work is saved automatically in the same browser. To continue on another device or keep a safe copy, use Download backup on the Download tab, then open the page on the other device and choose Load backup. The backup is a small file that contains your content and your style choices.</div>
-</details>
-</div>
 </article>
 </main>
 <!-- Empty sidebar: the site navigation script fills it with search, ads and related tools -->
@@ -693,7 +568,6 @@ function tqcBoot() {
   var SECS = [["summary", "Summary"], ["experience", "Experience"], ["education", "Education"], ["skills", "Skills"], ["projects", "Projects"], ["certs", "Certifications"], ["languages", "Languages"]];
   var SIDE_SET = { skills: 1, certs: 1, languages: 1 };
 
-  /* 12 design recipes x 5 accent colours = 60 ready-made styles */
   var RECIPES = [
     { n: "Executive", layout: "classic", font: "georgia", heading: "underline", bullet: "disc", skills: "inline", align: "center", nameStyle: "upper", density: "normal", tone: "light", ats: true, c: [0, 13, 14, 3, 9] },
     { n: "Corporate", layout: "classic", font: "arial", heading: "caps", bullet: "square", skills: "inline", align: "left", nameStyle: "normal", density: "normal", tone: "light", ats: true, c: [1, 13, 0, 4, 8] },
@@ -1173,6 +1047,53 @@ function tqcBoot() {
   }
   window.__tqcRsmPrep = preparePrint;
   $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
+
+  /* 🌟 PURE VANILLA JS IMAGE DOWNLOADER 🌟 */
+  $("rsm-image-btn").addEventListener("click", function () {
+    status("Generating image... please wait.");
+    var node = $("resume-paper");
+    var w = node.offsetWidth;
+    var h = node.offsetHeight;
+    var clone = node.cloneNode(true);
+    
+    var styleStr = "";
+    document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
+    clone.style.cssText = node.style.cssText + "; margin: 0; box-shadow: none;";
+    
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+              '<style>' + styleStr + '</style>' +
+              '<foreignObject width="100%" height="100%">' +
+              '<div xmlns="http://www.w3.org/1999/xhtml">' + clone.outerHTML + '</div>' +
+              '</foreignObject></svg>';
+              
+    var blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var img = new Image();
+    
+    img.onload = function () {
+      var canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0);
+      
+      var png = canvas.toDataURL("image/png");
+      var a = document.createElement("a");
+      a.href = png;
+      a.download = (DATA.name.trim() || "resume").replace(/\s+/g, '_') + "_resume.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      status("Resume downloaded as Photo (PNG).");
+    };
+    img.onerror = function () {
+      status("Error generating photo in this browser. Please use 'Save as PDF' instead.");
+    };
+    img.src = url;
+  });
   
   $("rsm-copy-btn").addEventListener("click", function () {
     var t = plainText();
