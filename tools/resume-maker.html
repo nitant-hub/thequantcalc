@@ -493,8 +493,16 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="rsm-ctl-grid" id="rsm-controls"></div>
 <div class="auc-field-group"><label class="auc-label" for="rsm-fs"><span>Font size</span><span class="auc-label-accent" id="rsm-fs-out">10.5 pt</span></label><input type="range" id="rsm-fs" class="rsm-range" min="9" max="12" step="0.5" value="10.5"></div>
 <div class="auc-action-row" style="margin:16px 0 0"><button type="button" id="rsm-style-reset" class="auc-btn-secondary">Reset style</button></div>
+
+<!-- LIVE PREVIEW IS NOW INSIDE THE STYLE TAB -->
+<div class="rsm-preview-wrap" style="margin-top: 32px; padding-top: 24px; border-top: 1px dashed rgba(16, 185, 129, 0.4);">
+<div class="rsm-preview-head"><h2 id="rsm-preview-title">Live preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
+<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
 </div>
 
+</div>
+
+<!-- DOWNLOAD AND EXPORT TAB -->
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
@@ -506,9 +514,9 @@ body>*:not(#rsm-print-root){display:none !important}
 </div>
 <p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Your resume is saved in this browser automatically; nothing is uploaded.</p>
 <div id="rsm-status" class="rsm-status" role="status" aria-live="polite"></div>
-</div>
 
-<div id="result" class="tqc-result-box" data-tqc-result aria-live="polite" style="margin-top:18px">
+<!-- HEALTH CHECK MOVED TO EXPORT TAB -->
+<div id="result" class="tqc-result-box" data-tqc-result aria-live="polite" style="margin-top:24px">
 <div class="tqc-result-content">
 <div class="auc-res-header"><span>Resume health check</span><span id="rsm-health-pages">1 page &bull; A4</span></div>
 <div class="auc-primary-figure" id="rsm-words">0 words</div>
@@ -516,9 +524,7 @@ body>*:not(#rsm-print-root){display:none !important}
 </div>
 </div>
 </div>
-<div class="rsm-preview-wrap">
-<div class="rsm-preview-head"><h2 id="rsm-preview-title">Live preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
-<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
+
 </div>
 </section>
 <div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
@@ -1153,6 +1159,11 @@ function tqcBoot() {
       var id = t.getAttribute("data-tab");
       document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
       document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
+      
+      // Force scaling re-calculation if switching to the style tab
+      if (id === "style") {
+        setTimeout(window.__tqcRsmLayout, 10);
+      }
     });
   });
 
@@ -1202,7 +1213,6 @@ function tqcBoot() {
     catch (e) { status("Copy is not available in this browser."); }
   });
   
-  /* This is the line that was cut off in your code */
   $("rsm-json-btn").addEventListener("click", function () {
     download("resume-data.json", JSON.stringify({ app: "TheQuantCalc Resume Maker", v: 1, data: DATA, style: STYLE }, null, 2), "application/json");
     status("Backup file downloaded. Keep it safe; it contains your data and style choices.");
