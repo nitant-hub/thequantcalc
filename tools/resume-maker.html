@@ -114,13 +114,8 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-input::placeholder{color:#7C8CA3}
 .auc-input:focus,.auc-select:focus{border-color:#10B981;box-shadow:inset 0 2px 5px rgba(0,0,0,0.7),0 0 0 3px rgba(16,185,129,0.25),0 0 12px rgba(245,158,11,0.2)}
 .auc-select option,.auc-select optgroup{background-color:#0F172A;color:#F8FAFC}
-.auc-group-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:thin;scrollbar-color:#334155 transparent}
-.auc-group-tab{flex:0 0 auto;background:#111827;color:#A8B5C8;border:1px solid #1E293B;border-radius:999px;padding:8px 15px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:all 0.15s ease}
-.auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
-.auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
-.auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
 
-/* --- 🌟 UPGRADED MAIN TABS 🌟 --- */
+/* --- 🌟 UPGRADED MAIN TABS (Single Line / No Wrap) 🌟 --- */
 .rsm-main-tabs {
     display: flex;
     gap: 8px;
@@ -130,11 +125,14 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
     margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none; /* Hide scrollbar for clean look */
 }
+.rsm-main-tabs::-webkit-scrollbar { display: none; }
 .rsm-main-tabs .auc-group-tab {
-    flex: 1;
+    flex: 1 0 auto;
     text-align: center;
-    padding: 14px 8px;
+    padding: 12px 16px;
     border-radius: 12px;
     font-size: 0.95rem;
     font-weight: 700;
@@ -142,7 +140,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     background: transparent;
     color: #64748B;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: normal;
+    white-space: nowrap; /* PERFECT SINGLE LINE ENFORCEMENT */
     line-height: 1.2;
 }
 .rsm-main-tabs .auc-group-tab:hover {
@@ -188,6 +186,7 @@ article.auc-article{background-color:var(--article-bg);border:1px solid var(--su
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
 article.auc-article h2:first-of-type{margin-top:0}
+article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
 article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
 article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
 article.auc-article li{margin-bottom:7px;line-height:1.6}
@@ -202,35 +201,37 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
 .calculator-ui-box.rsm-box{width:100%;max-width:820px}
 .rsm-panel[hidden]{display:none}
 
-/* --- 🌟 UPGRADED PANELS WITH COLORED BACKGROUNDS 🌟 --- */
+/* --- 🌟 PREMIUM DEEP OBSIDIAN PANELS (Y-Overflow Area) 🌟 --- */
 .rsm-panel {
     max-height: 52vh;
     min-height: 250px;
     overflow-y: auto !important;
     overflow-x: hidden;
-    padding: 14px 12px;
+    padding: 16px 14px;
     margin-top: 14px;
     border-radius: 16px;
     scrollbar-width: thin;
     scrollbar-color: #334155 transparent;
-    border: 1px solid transparent;
 }
 .rsm-panel::-webkit-scrollbar { width: 6px; }
 .rsm-panel::-webkit-scrollbar-track { background: transparent; }
 .rsm-panel::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 10px; }
 
-/* Custom Colors per Panel */
+/* Distinct Premium Backgrounds */
 #rsm-tab-content {
-    background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
-    border-top-color: rgba(16, 185, 129, 0.15);
+    background: radial-gradient(circle at top center, rgba(16, 185, 129, 0.15), transparent 60%), #07070B;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.8), 0 4px 12px rgba(16, 185, 129, 0.05);
 }
 #rsm-tab-style {
-    background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
-    border-top-color: rgba(99, 102, 241, 0.15);
+    background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.15), transparent 60%), #07070B;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.8), 0 4px 12px rgba(99, 102, 241, 0.05);
 }
 #rsm-tab-export {
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
-    border-top-color: rgba(245, 158, 11, 0.15);
+    background: radial-gradient(circle at top center, rgba(245, 158, 11, 0.15), transparent 60%), #07070B;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.8), 0 4px 12px rgba(245, 158, 11, 0.05);
 }
 
 /* Critical Flex fix for Content Panel */
@@ -412,20 +413,20 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="calculator-ui-box rsm-box">
 <div id="rsm-fatal" class="auc-error-banner visible" role="alert" style="display:none"></div>
 
-<!-- 🌟 ALWAYS-ON-TOP LIVE PREVIEW 🌟 -->
-<div class="rsm-preview-wrap" style="margin: 0 0 16px; padding-bottom: 24px; border-bottom: 1px dashed rgba(16, 185, 129, 0.4);">
-<div class="rsm-preview-head" style="margin-bottom: 12px;"><h2 id="rsm-preview-title" style="font-size:1.1rem;color:#10B981;">Live Preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
+<!-- 🌟 ALWAYS-ON-TOP LIVE PREVIEW (Slimmer Header) 🌟 -->
+<div class="rsm-preview-wrap" style="margin: 0 0 10px; padding-bottom: 12px; border-bottom: 1px dashed rgba(16, 185, 129, 0.3);">
+<div class="rsm-preview-head" style="margin-bottom: 8px;"><h2 id="rsm-preview-title" style="font-size:1.05rem;color:#10B981;margin:0;">Live Preview</h2><span class="rsm-pill" id="rsm-pages" style="padding: 2px 10px;">1 page</span></div>
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
 
-<!-- 🌟 UPGRADED TABS 🌟 -->
+<!-- 🌟 UPGRADED TABS (Single Line No-Wrap) 🌟 -->
 <div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
-<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style</button>
+<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style (60 presets + 50 options)</button>
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
-<!-- PANEL: 1. CONTENT (Fixed Height + Scrolling) -->
+<!-- PANEL: 1. CONTENT -->
 <div class="rsm-panel rsm-stack" id="rsm-tab-content">
 <details class="auc-sub-drawer" open>
 <summary><span>Personal details</span><span class="auc-label-accent">Required</span></summary>
@@ -475,7 +476,7 @@ body>*:not(#rsm-print-root){display:none !important}
 </details>
 </div>
 
-<!-- PANEL: 2. STYLE (Fixed Height + Scrolling) -->
+<!-- PANEL: 2. STYLE -->
 <div class="rsm-panel" id="rsm-tab-style" hidden>
 <div class="auc-label" style="margin-bottom:8px"><span>Ready-made styles</span><span class="auc-label-accent" id="rsm-gallery-count">60 of 60 styles</span></div>
 <div class="rsm-filters" role="group" aria-label="Filter styles by layout">
@@ -497,7 +498,7 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="auc-action-row" style="margin:16px 0 0"><button type="button" id="rsm-style-reset" class="auc-btn-secondary">Reset style</button></div>
 </div>
 
-<!-- PANEL: 3. DOWNLOAD (Fixed Height + Scrolling) -->
+<!-- PANEL: 3. DOWNLOAD -->
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
@@ -1125,16 +1126,13 @@ function tqcBoot() {
     var w = node.offsetWidth;
     var h = node.offsetHeight;
     
-    // Create a strict clone and force the XHTML namespace so mobile browsers render it
     var clone = node.cloneNode(true);
     clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
     
-    // Inject all page CSS directly into the clone
     var styleStr = "";
     document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
     clone.style.cssText = node.style.cssText + "; margin: 0; box-shadow: none; overflow: hidden;";
     
-    // Use XMLSerializer to enforce strict self-closing tags (critical for SVG rendering on Safari/Mobile)
     var serializer = new XMLSerializer();
     var htmlStr = serializer.serializeToString(clone);
     
@@ -1144,7 +1142,6 @@ function tqcBoot() {
               htmlStr +
               '</foreignObject></svg>';
               
-    // Base64 encoding bypasses Blob security strictness on iOS Safari
     var svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     var img = new Image();
     
