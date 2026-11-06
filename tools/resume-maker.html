@@ -110,7 +110,8 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-field-group{display:flex;flex-direction:column;gap:6px;min-width:0}
 .auc-label{font-size:0.9375rem;font-weight:600;color:#E2E8F0;letter-spacing:0.01em;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .auc-label-accent{color:#F59E0B;font-size:0.8125rem;font-weight:500;white-space:nowrap}
-.auc-input,.auc-select{width:100%;min-height:46px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:11px 14px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;text-overflow:ellipsis}
+/* Tighter dropdown boxes */
+.auc-input,.auc-select{width:100%;min-height:42px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:8px 12px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;text-overflow:ellipsis}
 .auc-input::placeholder{color:#7C8CA3}
 .auc-input:focus,.auc-select:focus{border-color:#10B981;box-shadow:inset 0 2px 5px rgba(0,0,0,0.7),0 0 0 3px rgba(16,185,129,0.25),0 0 12px rgba(245,158,11,0.2)}
 .auc-select option,.auc-select optgroup{background-color:#0F172A;color:#F8FAFC}
@@ -140,7 +141,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     letter-spacing: 0.05em;
     border: 1px solid transparent;
     background: transparent;
-    color: #94A3B8; /* Muted inactive text */
+    color: #94A3B8; 
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap; 
     line-height: 1.2;
@@ -152,9 +153,9 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .rsm-main-tabs .auc-group-tab.active {
     font-size: 1.02rem;
     font-weight: 900;
-    color: #FFFFFF; /* Bright white text for active tab */
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6); /* Premium text glow */
-    transform: scale(1.02); /* Slight pop effect */
+    color: #FFFFFF;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    transform: scale(1.02);
 }
 .rsm-main-tabs .auc-group-tab[data-tab="content"].active {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
@@ -213,7 +214,7 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
     min-height: 250px;
     overflow-y: auto !important;
     overflow-x: hidden;
-    padding: 16px 6px; /* Drastically reduced left/right padding to widen inputs */
+    padding: 16px 6px; 
     margin-top: 14px;
     border-radius: 16px;
     scrollbar-width: thin;
@@ -240,11 +241,10 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
     box-shadow: inset 0 4px 20px rgba(0,0,0,0.6), 0 4px 12px rgba(245, 158, 11, 0.1);
 }
 
-/* Reduces internal padding so inputs stretch fully horizontally */
 .ctc-drawer-body { padding: 14px 6px; border-top: 1px solid rgba(255,255,255,0.08); }
 .rsm-item { border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:12px 8px; background:rgba(0,0,0,0.25); margin-bottom:12px; }
 
-/* Critical Flex fix for Content Panel */
+/* Flex fix for Content Panel */
 .rsm-stack { display:flex; flex-direction:column; gap:12px; }
 .rsm-stack > * { flex-shrink: 0; }
 /* ---------------------------------------------- */
@@ -270,7 +270,10 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-file-btn:hover,.rsm-file-btn:focus-within{border-color:#F59E0B}
 .rsm-file-btn input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .rsm-filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}
-.rsm-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px;max-height:360px;overflow-y:auto;padding:2px}
+
+/* 🌟 SLIMMED DOWN GALLERY (Fixes huge fixed space issue) 🌟 */
+.rsm-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:190px;overflow-y:auto;padding:2px}
+
 .rsm-preset{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 10px;border-radius:10px;border:1px solid #1E293B;background:#111827;color:#E2E8F0;cursor:pointer;min-width:0}
 .rsm-preset:hover{border-color:rgba(245,158,11,0.55)}
 .rsm-preset:focus-visible{outline:2px solid #10B981;outline-offset:2px}
@@ -279,14 +282,14 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-preset-t{display:flex;flex-direction:column;min-width:0;line-height:1.25}
 .rsm-preset-t strong{font-size:0.875rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rsm-preset-t small{font-size:0.75rem;color:#A8B5C8}
-.rsm-swatches{display:flex;flex-wrap:wrap;gap:8px}
-.rsm-swatch{width:30px;height:30px;border-radius:999px;border:2px solid rgba(248,250,252,0.25);cursor:pointer;padding:0}
+.rsm-swatches{display:flex;flex-wrap:wrap;gap:6px}
+.rsm-swatch{width:28px;height:28px;border-radius:999px;border:2px solid rgba(248,250,252,0.25);cursor:pointer;padding:0}
 .rsm-swatch.is-on{border-color:#F8FAFC;box-shadow:0 0 0 3px rgba(16,185,129,0.6)}
 .rsm-swatch:focus-visible{outline:2px solid #F8FAFC;outline-offset:2px}
 .rsm-color-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:0.9375rem;color:#E2E8F0}
 .rsm-color-row input[type="color"]{width:46px;height:34px;border:1px solid #334155;border-radius:8px;background:#111827;padding:2px;cursor:pointer}
 .rsm-range{width:100%;accent-color:#10B981}
-.rsm-ctl-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0}
+.rsm-ctl-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0}
 @media (min-width:560px){.rsm-ctl-grid{grid-template-columns:1fr 1fr}}
 .rsm-export-grid{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:560px){.rsm-export-grid{grid-template-columns:1fr 1fr}}
@@ -431,7 +434,7 @@ body>*:not(#rsm-print-root){display:none !important}
 <!-- 🌟 PREMIUM BOLD SINGLE-LINE TABS 🌟 -->
 <div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
-<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style</button>
+<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style (60 presets + 50 options)</button>
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
@@ -485,7 +488,7 @@ body>*:not(#rsm-print-root){display:none !important}
 </details>
 </div>
 
-<!-- PANEL: 2. STYLE (Deep Indigo Background) -->
+<!-- PANEL: 2. STYLE (Deep Indigo Background, Slimmer Gallery) -->
 <div class="rsm-panel" id="rsm-tab-style" hidden>
 <div class="auc-label" style="margin-bottom:8px"><span>Ready-made styles</span><span class="auc-label-accent" id="rsm-gallery-count">60 of 60 styles</span></div>
 <div class="rsm-filters" role="group" aria-label="Filter styles by layout">
