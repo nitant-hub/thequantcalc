@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" data-category="education">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Countdown &amp; Study Hours Allocator (Free Planner)</title>
+<meta name="description" content="Enter your exam dates, difficulty and confidence to get a live countdown and a day-by-day study timetable that splits your daily hours across subjects.">
+<link rel="canonical" href="https://thequantcal.pages.dev/tools/exam-countdown-study-planner">
+<meta property="og:title" content="Exam Countdown &amp; Study Hours Allocator (Free Planner)">
+<meta property="og:description" content="Free exam countdown timer and study planner: live countdown per exam, smart hour allocation by difficulty and urgency, weekly plan and CSV download.">
+<meta property="og:url" content="https://thequantcal.pages.dev/tools/exam-countdown-study-planner">
+<meta property="og:type" content="website">
+<!-- Apply the visitor's saved theme before first paint (same "theme" key the site header uses). Default = light. -->
+<script>
+try {
+if (localStorage.getItem("theme") === "dark") {
+document.documentElement.setAttribute("data-theme", "dark");
+}
+} catch (e) {}
+</script>
+<!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Exam Countdown & Study Hours Allocator",
+      "url": "https://thequantcal.pages.dev/tools/exam-countdown-study-planner",
+      "description": "A client-side exam countdown and study timetable calculator that allocates daily study hours across multiple subjects using difficulty, current confidence and days remaining, with a live countdown, weekly plan and CSV export.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the study hours allocator decide how much time each subject gets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each subject gets a priority weight equal to its difficulty (1 to 5) multiplied by 6 minus your confidence (1 to 5). Each day, that weight is multiplied by an urgency boost of 1 plus 7 divided by the days left until that exam, and your available hours are shared in proportion to the resulting scores. Harder subjects, weaker confidence and nearer exams therefore receive more time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why not simply split my study time equally between subjects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An equal split gives the same time to a subject you already know well and one you find difficult, and it ignores which exam comes first. Weighting by difficulty, confidence and urgency moves hours to where they raise your marks the most. If you prefer an equal split, set the same difficulty and confidence for every subject and the same exam date."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the difficulty and confidence ratings mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Difficulty (1 easy to 5 very hard) is how demanding the subject is for you. Confidence (1 very weak to 5 strong) is how well you know the material right now. A hard subject you feel weak in scores highest and gets the most time. Re-rate your confidence every week or two so the plan follows your progress."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the plan include study time on the day of the exam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A subject receives hours up to the day before its exam, and after that its time is shared among the remaining subjects. If you want to study on the morning of an exam, treat that as extra time on top of the plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the Short by or On track message mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you enter the total hours you think a subject needs, the calculator compares it with the hours planned for that subject. On track means the plan covers your target and shows the spare time. Short by means the plan falls below your target by that amount. To fix a shortfall, add study hours, remove a rest day or lower the target."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the countdown calculated, and which time zone does it use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The countdown subtracts the current time on your device from the exam date and start time you entered, and it updates every second. It uses your device's time zone, so if you travel or change your clock settings the countdown changes. Always confirm exam dates and times with your institution's official timetable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this for competitive exams or university semester exams?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It works for any set of dated exams, including school boards, university semesters and competitive tests, with up to 12 subjects and exams up to a year away. For very large syllabi, split a subject into separate rows such as Physics Mechanics and Physics Optics, each with its own date and difficulty."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my study plan saved, and can I take it with me?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your subjects and study-hour settings are saved automatically in your browser so they are there when you return on the same device. Nothing is sent to a server. To take the schedule elsewhere, use the Download schedule button in the day-by-day section to get a CSV file that opens in Excel, Google Sheets or similar apps."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thequantcal.pages.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Education",
+          "item": "https://thequantcal.pages.dev/#education"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Exam Countdown & Study Hours Allocator",
+          "item": "https://thequantcal.pages.dev/tools/exam-countdown-study-planner"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root,html[data-theme="light"]{--font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;--surface-page:#F1F5F9;--article-bg:#FFFFFF;--article-soft:#F8FAFC;--surface-card:#FFFFFF;--surface-inset:#F1F5F9;--surface-border:#E2E8F0;--text-main:#0F172A;--text-body:#334155;--text-muted:#64748B;--link-color:#059669;--table-stripe:#F8FAFC}
+html[data-theme="dark"]{--surface-page:#050811;--article-bg:#0B1120;--article-soft:#111827;--surface-card:#0F172A;--surface-inset:#070A12;--surface-border:#1E293B;--text-main:#F8FAFC;--text-body:#CBD5E1;--text-muted:#94A3B8;--link-color:#34D399;--table-stripe:#0F172A}
+html[data-theme="light"][data-category="utility"],html:not([data-theme])[data-category="utility"]{--surface-page:#F0F4F8;--article-bg:#FAFBFD;--article-soft:#F1F5F9;--surface-card:#FFFFFF;--surface-border:#CBD5E1}
+html[data-theme="dark"][data-category="utility"]{--surface-page:#060913;--article-bg:#0B1120;--article-soft:#131C31;--surface-card:#0F172A;--surface-border:#1E293B}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surface-page);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.tqc-page-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:1280px;margin:0 auto;padding:18px 16px 56px}
+@media (min-width:768px){.tqc-page-grid{grid-template-columns:minmax(0,69%) minmax(250px,30%);justify-content:space-between;gap:8px;max-width:100%;margin:0;padding:24px 4px 64px 2px}.main-body{padding:0 8px}}
+.main-body{display:flex;flex-direction:column;width:100%;min-width:0}
+.sidebar{width:100%;min-width:0}
+.breadcrumb-trail{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:0.88rem;line-height:1.4;color:var(--text-muted);margin:0 0 10px 0}
+.breadcrumb-trail a{color:var(--text-muted);text-decoration:none;transition:color 0.15s ease}
+.breadcrumb-trail a:hover,.breadcrumb-trail a:focus-visible{color:var(--link-color);text-decoration:underline}
+.breadcrumb-trail .bc-current{color:var(--text-main);font-weight:500}
+.tool-suite{display:flex;flex-direction:column;width:100%}
+.primary-title{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:700;line-height:1.25;letter-spacing:-0.035em;text-align:left;color:var(--text-main);margin:0 0 12px 0}
+.calculator-ui-box{width:min(100%,600px);max-width:600px;align-self:center !important;margin:0 auto 26px auto !important;padding:22px 18px 24px;border-radius:20px;background:linear-gradient(165deg,#07070B 0%,#0B1120 48%,#0F172A 100%) padding-box,linear-gradient(135deg,#F59E0B 0%,#10B981 52%,#F59E0B 100%) border-box;border:1.5px solid transparent;box-shadow:0 24px 48px -12px rgba(2,6,23,0.85),0 0 28px -6px rgba(16,185,129,0.22),0 0 18px -6px rgba(245,158,11,0.16),inset 0 1px 1px rgba(248,250,252,0.12);color:#F8FAFC;position:relative}
+@media (min-width:640px){.calculator-ui-box{padding:28px 30px 30px}}
+.calculator-ui-box::after{content:"";position:absolute;left:12%;right:12%;bottom:-8px;height:8px;background:radial-gradient(ellipse at center,rgba(16,185,129,0.38) 0%,rgba(245,158,11,0.18) 50%,transparent 78%);filter:blur(4px);pointer-events:none}
+.auc-top-bar{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
+@media (min-width:520px){.auc-top-bar{grid-template-columns:1.15fr 1fr}}
+.auc-field-group{display:flex;flex-direction:column;gap:6px;min-width:0}
+.auc-label{font-size:0.9375rem;font-weight:600;color:#E2E8F0;letter-spacing:0.01em;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.auc-label-accent{color:#F59E0B;font-size:0.8125rem;font-weight:500;white-space:nowrap}
+.auc-input,.auc-select{width:100%;min-height:46px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:11px 14px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;text-overflow:ellipsis}
+.auc-input::placeholder{color:#7C8CA3}
+.auc-input:focus,.auc-select:focus{border-color:#10B981;box-shadow:inset 0 2px 5px rgba(0,0,0,0.7),0 0 0 3px rgba(16,185,129,0.25),0 0 12px rgba(245,158,11,0.2)}
+.auc-select option,.auc-select optgroup{background-color:#0F172A;color:#F8FAFC}
+.auc-group-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:thin;scrollbar-color:#334155 transparent}
+.auc-group-tab{flex:0 0 auto;background:#111827;color:#A8B5C8;border:1px solid #1E293B;border-radius:999px;padding:8px 15px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:all 0.15s ease}
+.auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
+.auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
+.auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
+.auc-value-row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
+@media (min-width:520px){.auc-value-row{grid-template-columns:1.4fr 1fr}}
+.auc-num-input{font-variant-numeric:tabular-nums;font-weight:600;font-size:1.1875rem}
+.auc-unit-bridge{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px}
+@media (max-width:520px){.auc-unit-bridge{grid-template-columns:1fr}
+.auc-swap-wrap{display:flex;justify-content:center;margin:2px 0}}
+.auc-swap-btn{width:46px;height:46px;border-radius:999px;border:1px solid rgba(245,158,11,0.45);background:linear-gradient(145deg,#1E293B,#0F172A);color:#F8FAFC;font-size:1.35rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.45),inset 0 1px 1px rgba(255,255,255,0.12);transition:transform 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease}
+.auc-swap-btn:hover,.auc-swap-btn:focus-visible{border-color:#10B981;color:#34D399;transform:rotate(180deg);box-shadow:0 0 14px rgba(16,185,129,0.4);outline:none}
+.auc-options-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:rgba(17,24,39,0.75);border:1px solid #1E293B;margin-bottom:16px;font-size:0.9375rem;color:#E2E8F0}
+.auc-format-radios{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.auc-format-radios label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.auc-format-radios input[type="radio"]{accent-color:#10B981;width:17px;height:17px}
+.auc-error-banner{display:none;background:rgba(239,68,68,0.14);border:1px solid rgba(248,113,113,0.5);color:#FCA5A5;padding:11px 14px;border-radius:12px;font-size:0.9375rem;line-height:1.45;margin-bottom:14px}
+.auc-error-banner.visible{display:block}
+.auc-action-row{display:flex;gap:12px;margin-bottom:18px}
+.auc-btn-primary{flex:2;padding:13px 20px;border-radius:999px;border:1px solid rgba(16,185,129,0.65);background:linear-gradient(180deg,#10B981 0%,#059669 100%);color:#04130E;font-weight:700;font-size:1.0625rem;letter-spacing:0.01em;cursor:pointer;box-shadow:0 6px 18px rgba(16,185,129,0.38),inset 0 1px 1px rgba(255,255,255,0.45);transition:transform 0.12s ease,filter 0.15s ease}
+.auc-btn-primary:hover{filter:brightness(1.08)}
+.auc-btn-primary:active{transform:translateY(1px)}
+.auc-btn-secondary{flex:1;padding:13px 16px;border-radius:999px;border:1px solid rgba(245,158,11,0.32);background:rgba(17,24,39,0.72);color:#E2E8F0;font-weight:600;font-size:1rem;cursor:pointer;box-shadow:inset 0 1px 1px rgba(255,255,255,0.08);transition:background 0.15s ease,border-color 0.15s ease}
+.auc-btn-secondary:hover{background:rgba(30,41,59,0.9);border-color:#F59E0B}
+#result.tqc-result-box{border-radius:16px;padding:20px 18px;background:radial-gradient(circle at top right,rgba(245,158,11,0.16),transparent 60%),radial-gradient(circle at bottom left,rgba(16,185,129,0.2),transparent 65%),linear-gradient(180deg,#09131C 0%,#050B11 100%);border:1px solid rgba(16,185,129,0.45);box-shadow:inset 0 2px 6px rgba(0,0,0,0.75),inset 0 0 0 1px rgba(245,158,11,0.18),0 10px 24px -8px rgba(0,0,0,0.7)}
+.tqc-result-content{display:flex;flex-direction:column;gap:12px}
+.auc-res-header{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:0.8125rem;text-transform:uppercase;letter-spacing:0.06em;color:#A8B5C8}
+.auc-fav-btn{background:transparent;border:1px solid rgba(245,158,11,0.4);color:#F59E0B;border-radius:999px;padding:6px 13px;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.auc-fav-btn.saved{background:rgba(245,158,11,0.2);color:#FDE68A}
+.auc-primary-figure{font-size:clamp(1.9rem,5.2vw,2.5rem);font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums;background:linear-gradient(95deg,#34D399 0%,#10B981 45%,#F59E0B 100%);-webkit-background-clip:text;background-clip:text;color:transparent;word-break:break-word}
+.auc-equation-line{font-size:1rem;line-height:1.5;color:#E2E8F0;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-word}
+.auc-meta-grid{display:grid;grid-template-columns:1fr;gap:8px;padding-top:12px;border-top:1px solid rgba(148,163,184,0.16);font-size:0.9375rem;color:#D5DEEA}
+.auc-meta-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
+.auc-meta-row code{font-family:var(--font-mono);color:#FCD34D;font-size:0.875rem;word-break:break-word}
+.auc-sub-drawer{margin-top:12px;background:rgba(15,23,42,0.7);border:1px solid #1E293B;border-radius:12px;overflow:hidden}
+.auc-sub-drawer summary{padding:12px 14px;font-size:0.9375rem;font-weight:600;color:#E2E8F0;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.auc-sub-drawer summary:hover{color:#34D399}
+.auc-all-units-list{max-height:280px;overflow-y:auto;padding:8px 14px 12px;border-top:1px solid #1E293B;display:grid;grid-template-columns:1fr;gap:6px;font-size:0.9rem}
+.auc-unit-row{display:flex;justify-content:space-between;gap:12px;padding:6px 9px;border-radius:8px;background:rgba(17,24,39,0.6);font-variant-numeric:tabular-nums;color:#D5DEEA}
+.auc-unit-row.is-target{outline:1px solid rgba(16,185,129,0.55);background:rgba(16,185,129,0.12)}
+.auc-unit-row span{min-width:0}
+.auc-unit-row strong{color:#34D399;text-align:right;word-break:break-word}
+.auc-chip-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.auc-chip{background:#111827;border:1px solid #1E293B;color:#D5DEEA;border-radius:999px;padding:7px 14px;font-size:0.875rem;cursor:pointer;transition:border-color 0.15s ease}
+.auc-chip:hover{border-color:#F59E0B;color:#F8FAFC}
+.auc-chip.is-fav{border-color:rgba(245,158,11,0.5);color:#FDE68A}
+article.auc-article{background-color:var(--article-bg);border:1px solid var(--surface-border);border-radius:18px;padding:24px 20px;color:var(--text-body);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+@media (min-width:768px){article.auc-article{padding:34px 36px}}
+article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
+article.auc-article h2:first-of-type{margin-top:0}
+article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
+article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
+article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
+article.auc-article li{margin-bottom:7px;line-height:1.6}
+article.auc-article a{color:var(--link-color);text-decoration:underline;text-underline-offset:2px}
+.auc-surface-box{background-color:var(--article-soft);border:1px solid var(--surface-border);border-left:4px solid #10B981;border-radius:12px;padding:15px 18px;margin:18px 0}
+.auc-formula-card{background-color:var(--surface-inset);border:1px solid var(--surface-border);border-radius:12px;padding:14px 16px;margin:14px 0;font-family:var(--font-mono);font-size:0.9rem;color:var(--text-main);overflow-x:auto}
+.data-table-wrapper{width:100%;overflow-x:auto;margin:18px 0 22px;border:1px solid var(--surface-border);border-radius:12px}
+.auc-table{width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left}
+.auc-table th,.auc-table td{padding:10px 13px;border-bottom:1px solid var(--surface-border)}
+.auc-table th{background-color:var(--article-soft);color:var(--text-main);font-weight:600;white-space:nowrap}
+.auc-table tr:nth-child(even) td{background-color:var(--table-stripe)}
+.auc-table td.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.auc-faq-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+details.auc-faq-item{background-color:var(--article-soft);border:1px solid var(--surface-border);border-radius:12px;padding:13px 16px}
+details.auc-faq-item summary{font-weight:600;font-size:1rem;color:var(--text-main);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.auc-faq-item summary::-webkit-details-marker{display:none}
+details.auc-faq-item summary::after{content:"+";font-weight:700;color:#10B981;font-size:1.2rem;line-height:1}
+details.auc-faq-item[open] summary::after{content:"−"}
+.auc-faq-body{margin-top:10px;padding-top:10px;border-top:1px solid var(--surface-border);font-size:0.95rem;line-height:1.62;color:var(--text-body)}
+body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81 50%,#0f172a 100%);background-size:100% 50px;background-repeat:no-repeat}
+@media (min-width:768px){body{padding-top:60px;background-size:100% 60px}}
+.exm-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px;align-items:end}
+@media (min-width:520px){.exm-grid{grid-template-columns:1fr 1fr}}
+.exm-row{border:1px solid #1E293B;border-radius:12px;padding:12px;background:rgba(17,24,39,0.6);margin-bottom:12px}
+.exm-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:#E2E8F0;font-size:0.9375rem}
+.exm-mini{width:34px;height:34px;border-radius:8px;border:1px solid rgba(245,158,11,0.35);background:#111827;color:#E2E8F0;cursor:pointer;line-height:1}
+.exm-mini:hover,.exm-mini:focus-visible{border-color:#F87171;color:#FCA5A5;outline:none}
+.exm-fields{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:520px){.exm-fields{grid-template-columns:1fr 1fr}.exm-fields .exm-wide{grid-column:1/-1}}
+.exm-add{width:100%;padding:11px 14px;border-radius:12px;border:1px dashed rgba(16,185,129,0.55);background:transparent;color:#34D399;font-weight:600;font-size:0.9375rem;cursor:pointer;margin-bottom:16px}
+.exm-add:hover{background:rgba(16,185,129,0.1)}
+.exm-cds{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:0 0 16px}
+.exm-cd-card{border:1px solid rgba(16,185,129,0.35);border-radius:12px;padding:12px;background:rgba(16,185,129,0.07)}
+.exm-cd-name{font-weight:700;color:#F8FAFC;font-size:0.95rem;overflow-wrap:anywhere}
+.exm-cd-time{font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:800;color:#34D399;margin:4px 0}
+.exm-cd-time.over{font-size:0.95rem;color:#FBBF24}
+.exm-cd-date{font-size:0.8125rem;color:#A8B5C8}
+.exm-wrap{max-height:420px;overflow:auto;border-top:1px solid #1E293B}
+.exm-table{width:100%;border-collapse:collapse;font-size:0.9rem;color:#D5DEEA}
+.exm-table th{font-size:0.75rem;color:#A8B5C8;text-align:left;padding:8px 12px;position:sticky;top:0;background:#0F172A;white-space:nowrap}
+.exm-table td{padding:7px 12px;border-bottom:1px solid rgba(30,41,59,0.8);vertical-align:top}
+.exm-table td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.exm-table td.ok{color:#34D399}.exm-table td.warn{color:#FBBF24}
+.exm-sub{font-size:0.78rem;color:#A8B5C8;font-weight:400}
+.exm-flag{font-size:0.78rem;color:#FBBF24;margin-top:2px}
+.exm-barwrap{height:5px;background:#0B1120;border-radius:999px;margin-top:4px;overflow:hidden}
+.exm-barwrap span{display:block;height:100%;background:#10B981}
+.exm-today{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:8px}
+.exm-today li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:10px 12px;border:1px solid #1E293B;border-radius:10px;background:rgba(17,24,39,0.6);color:#E2E8F0}
+.exm-today li span{flex:1 1 140px;font-weight:600}
+.exm-today li strong{color:#FDE68A;font-variant-numeric:tabular-nums}
+.exm-today li em{font-style:normal;font-size:0.8125rem;color:#A8B5C8}
+.exm-msg{margin:0;padding:0 2px;color:#D5DEEA;font-size:0.9375rem}
+.exm-pad{padding:12px 14px 14px;border-top:1px solid #1E293B}
+.exm-warnline{color:#FBBF24;font-size:0.9rem;margin:0 0 12px}
+.exm-sect{font-size:0.8125rem;text-transform:uppercase;letter-spacing:0.06em;color:#34D399;font-weight:700;margin:4px 0 8px}
+.exm-drawer-body{padding:14px;border-top:1px solid #1E293B}
+
+</style>
+</head>
+<body>
+<div class="tqc-page-grid">
+<main class="main-body">
+<nav class="breadcrumb-trail" aria-label="Breadcrumb">
+<a href="https://thequantcal.pages.dev/">Home</a>
+<span aria-hidden="true">&rarr;</span>
+<a href="https://thequantcal.pages.dev/#education">Education</a>
+<span aria-hidden="true">&rarr;</span>
+<span class="bc-current" aria-current="page">Exam Countdown &amp; Study Hours Allocator</span>
+</nav>
+<section class="tool-suite" aria-labelledby="calc-main-title">
+<h1 id="calc-main-title" class="primary-title">Exam Countdown &amp; Study Hours Allocator</h1>
+<div class="calculator-ui-box">
+<div class="exm-grid">
+<div class="auc-field-group"><label class="auc-label" for="exm-start"><span>Plan starts on</span></label><input type="date" id="exm-start" class="auc-input"></div>
+<div class="auc-field-group"><label class="auc-label" for="exm-rest"><span>Weekly rest day</span></label>
+<select id="exm-rest" class="auc-select"><option value="-1" selected>No rest day</option><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select></div>
+<div class="auc-field-group"><label class="auc-label" for="exm-weekday"><span>Study hours on weekdays</span><span class="auc-label-accent">Mon&ndash;Fri</span></label><input type="number" id="exm-weekday" class="auc-input auc-num-input" value="4" min="0" max="16" step="0.25" inputmode="decimal"></div>
+<div class="auc-field-group"><label class="auc-label" for="exm-weekend"><span>Study hours on weekends</span><span class="auc-label-accent">Sat&ndash;Sun</span></label><input type="number" id="exm-weekend" class="auc-input auc-num-input" value="6" min="0" max="16" step="0.25" inputmode="decimal"></div>
+</div>
+<div class="auc-label" style="margin-bottom:8px"><span>Your exams</span><span class="auc-label-accent">Up to 12 subjects</span></div>
+<div id="exm-rows"></div>
+<button type="button" id="exm-add" class="exm-add">+ Add subject</button>
+<div id="exm-error" class="auc-error-banner" role="alert" aria-live="assertive"></div>
+<div class="auc-action-row">
+<button type="button" id="exm-calc-btn" class="auc-btn-primary">Build My Study Plan</button>
+<button type="button" id="exm-reset-btn" class="auc-btn-secondary">Reset</button>
+</div>
+<div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
+<div class="tqc-result-content">
+<div class="auc-res-header"><span id="exm-tag">Study plan</span><button type="button" id="exm-copy-btn" class="auc-fav-btn" title="Copy a summary of this plan">&#128203; Copy</button></div>
+<div id="exm-primary" class="auc-primary-figure">&mdash;</div>
+<div id="exm-equation" class="auc-equation-line">Add your subjects and exam dates to build a plan.</div>
+<div class="exm-sect">Countdown</div>
+<div id="exm-countdowns" class="exm-cds"></div>
+<details class="auc-sub-drawer" open>
+<summary><span>Today&rsquo;s study plan</span><span class="auc-label-accent">Focus</span></summary>
+<div class="exm-pad"><div id="exm-today"></div></div>
+</details>
+<details class="auc-sub-drawer" open>
+<summary><span>Hours per subject</span><span class="auc-label-accent">Allocation</span></summary>
+<div class="exm-pad"><p id="exm-warn" class="exm-warnline"></p></div>
+<div class="exm-wrap"><table class="exm-table"><thead><tr><th>Subject</th><th>Planned</th><th>Share</th><th>Avg / day</th><th>Vs. your target</th></tr></thead><tbody id="exm-alloc"></tbody></table></div>
+</details>
+<details class="auc-sub-drawer">
+<summary><span>Week-by-week plan</span><span class="auc-label-accent">Table</span></summary>
+<div class="exm-wrap"><table class="exm-table" id="exm-weekly"></table></div>
+</details>
+<details class="auc-sub-drawer">
+<summary><span>Day-by-day schedule</span><span class="auc-label-accent">Table</span></summary>
+<div class="exm-wrap"><table class="exm-table" id="exm-daily"></table></div>
+<div class="exm-pad"><button type="button" id="exm-csv-btn" class="auc-btn-secondary" style="width:100%">Download schedule (CSV)</button></div>
+</details>
+</div>
+</div>
+</div>
+</section>
+<div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
+<article class="auc-article">
+<h2>Turn Your Exam Dates Into a Daily Study Timetable</h2>
+<p>When several exams are coming, the hardest part is not studying; it is deciding <em>what to study today</em>. Most students either split time equally across subjects or study whatever feels most urgent, and both approaches waste hours. The <strong>Exam Countdown &amp; Study Hours Allocator</strong> solves this with a transparent rule. You enter each exam date, how difficult the subject is and how confident you feel now, plus the hours you can study on weekdays and weekends. The calculator then shows a live countdown for every exam and a day-by-day timetable that splits your hours across subjects.</p>
+<p>It runs in your browser, needs no account and saves your inputs on your device so the countdown is waiting when you return.</p>
+<h2>How the Hours Are Allocated</h2>
+<p>Each study day, the calculator divides that day&rsquo;s available time among the subjects whose exams are still ahead. A subject receives a larger share when it is harder, when you are less confident in it and when its exam is closer.</p>
+<div class="auc-formula-card">
+Priority weight = Difficulty &times; (6 &minus; Confidence)<br>
+Urgency boost = 1 + 7 &divide; (days left until that exam)<br>
+Daily score = Priority weight &times; Urgency boost<br>
+Subject&rsquo;s share of the day = Daily score &divide; Sum of all active scores
+</div>
+<ol>
+<li><strong>Weight.</strong> Difficulty and confidence are each rated 1 to 5. A hard subject (4) you feel weak in (2) gets 4 &times; 4 = 16. An easy subject (2) you feel good about (4) gets 2 &times; 2 = 4.</li>
+<li><strong>Urgency.</strong> The boost grows as an exam approaches: &times;1.23 with 30 days left, &times;1.5 with 14 days left, &times;2 with 7 days left and &times;8 on the last day. This pushes the nearest exam up the queue without ignoring later ones.</li>
+<li><strong>Daily split.</strong> Each day&rsquo;s time is divided in proportion to the scores and rounded to 5-minute units using the largest-remainder method, so the subjects always add up exactly to your available hours.</li>
+<li><strong>Exam day.</strong> A subject stops receiving time after the day before its exam, and its hours flow to the remaining subjects.</li>
+</ol>
+<p>The constant 7 is a design choice, not a law of learning. It means that one week before an exam, urgency doubles a subject&rsquo;s score. You can see the effect immediately by changing the inputs.</p>
+<h3>Priority Weight Table</h3>
+<p>The weight depends only on the two ratings you choose.</p>
+<div class="data-table-wrapper">
+<table class="auc-table">
+<thead>
+<tr><th>Difficulty \ Confidence</th><th>1 Very weak</th><th>2 Weak</th><th>3 Average</th><th>4 Good</th><th>5 Strong</th></tr>
+</thead>
+<tbody>
+<tr><td>1 Easy</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
+<tr><td>2 Fairly easy</td><td class="num">10</td><td class="num">8</td><td class="num">6</td><td class="num">4</td><td class="num">2</td></tr>
+<tr><td>3 Medium</td><td class="num">15</td><td class="num">12</td><td class="num">9</td><td class="num">6</td><td class="num">3</td></tr>
+<tr><td>4 Hard</td><td class="num">20</td><td class="num">16</td><td class="num">12</td><td class="num">8</td><td class="num">4</td></tr>
+<tr><td>5 Very hard</td><td class="num">25</td><td class="num">20</td><td class="num">15</td><td class="num">10</td><td class="num">5</td></tr>
+</tbody>
+</table>
+</div>
+<p>The weight ranges from 1 to 25. The result page labels a subject <em>High</em> priority at 16 or above, <em>Medium</em> from 8 to 15 and <em>Low</em> below 8.</p>
+<h2>How to Use the Calculator</h2>
+<ol>
+<li>Set the start date (today by default), your weekday and weekend study hours and an optional weekly rest day.</li>
+<li>Add each subject with its exam date and start time, difficulty and confidence. Rate honestly: an overconfident rating reduces the time a weak subject receives.</li>
+<li>Optionally enter the total hours you think a subject needs. The tool then tells you whether your available time covers it.</li>
+<li>Read <em>Today&rsquo;s study plan</em>, then open the weekly and daily tables. Download the CSV to import the schedule into a spreadsheet or calendar.</li>
+</ol>
+<h2>Step-by-Step Worked Examples</h2>
+<h3>Example 1: Three Exams, 20 Study Days</h3>
+<p>Start date Tuesday 1 December 2026, with 4 hours on weekdays, 6 hours on weekends and no rest day. Maths is on 15 December (difficulty 4, confidence 2), Physics on 18 December (3, 3) and English on 21 December (2, 4).</p>
+<ol>
+<li><strong>Weights:</strong> Maths 4 &times; 4 = 16; Physics 3 &times; 3 = 9; English 2 &times; 2 = 4.</li>
+<li><strong>Available time:</strong> 1 to 20 December has 14 weekdays and 6 weekend days: 14 &times; 4 + 6 &times; 6 = 92 hours over 20 study days.</li>
+<li><strong>Day 1 scores (1 December):</strong> days left are 14, 17 and 20, so urgency is 1.5, 1.412 and 1.35. Scores: Maths 24.0, Physics 12.71, English 5.4; the total is 42.11.</li>
+<li><strong>Day 1 split of 4 hours (48 five-minute units):</strong> exact shares are 27.4, 14.5 and 6.2 units. After rounding with the largest remainder: Maths <strong>2h 15m</strong>, Physics <strong>1h 15m</strong>, English <strong>30m</strong>.</li>
+<li><strong>Day 14 (14 December, the day before Maths):</strong> Maths receives 3h 10m, Physics 40m and English 10m. On 15 December, Maths drops out and the 4 hours go to Physics (3h 05m) and English (55m).</li>
+</ol>
+<div class="data-table-wrapper">
+<table class="auc-table">
+<thead>
+<tr><th>Subject</th><th>Exam date</th><th>Total planned</th><th>Share of all hours</th></tr>
+</thead>
+<tbody>
+<tr><td>Maths</td><td>15 Dec</td><td class="num">39h 55m</td><td class="num">43.4%</td></tr>
+<tr><td>Physics</td><td>18 Dec</td><td class="num">27h 10m</td><td class="num">29.5%</td></tr>
+<tr><td>English</td><td>21 Dec</td><td class="num">24h 55m</td><td class="num">27.1%</td></tr>
+<tr><td><strong>Total</strong></td><td>&nbsp;</td><td class="num"><strong>92h 00m</strong></td><td class="num"><strong>100%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p>Notice that English, the easiest subject, still gets more than a quarter of the time because its exam is last and it keeps receiving hours after the others finish.</p>
+<h3>Example 2: Checking Whether Your Time Is Enough</h3>
+<p>In the same plan, suppose you estimate that Physics needs 30 hours and English needs 20 hours. The calculator compares each target with the planned time:</p>
+<ol>
+<li><strong>Physics:</strong> 30h &minus; 27h 10m = a shortfall of <strong>2h 50m</strong>, shown as &ldquo;Short by 2h 50m&rdquo;.</li>
+<li><strong>English:</strong> 24h 55m &minus; 20h = <strong>4h 55m</strong> of spare time, shown as &ldquo;On track (+4h 55m)&rdquo;.</li>
+<li><strong>What to do:</strong> add study hours, convert a rest day into a study day, or lower the Physics target. Extra hours are shared across all subjects by priority, so add a little more than the gap. The warning disappears once every target is covered.</li>
+</ol>
+<h2>Making the Plan Work in Real Life</h2>
+<ul>
+<li><strong>Use focus blocks.</strong> The plan converts each subject&rsquo;s time into 25-minute blocks. Short, focused blocks with a five-minute break are a popular way to stay concentrated.</li>
+<li><strong>Revise rather than only read.</strong> Practice questions and past papers show what you do not know. Spend the last days before an exam on them.</li>
+<li><strong>Protect rest.</strong> A weekly rest day and enough sleep help memory and focus. A plan that assumes 12 hours a day every day is rarely followed.</li>
+<li><strong>Re-plan when things change.</strong> If you fall behind, change the start date to today and update your confidence ratings. The plan is rebuilt for the days that remain.</li>
+</ul>
+<h2>Assumptions and Limitations</h2>
+<ul>
+<li><strong>A heuristic, not a guarantee.</strong> The method is a transparent rule of thumb. It cannot know your syllabus size, your learning speed or the weight of each paper, so use the optional &ldquo;hours needed&rdquo; field when you have a firm estimate.</li>
+<li><strong>Whole days.</strong> Hours are set per day type (weekday or weekend), not per date. A day with a holiday or a trip can be handled by adjusting the weekly rest day or the start date.</li>
+<li><strong>Exam day excluded.</strong> The plan assumes no studying for a subject on its own exam day. If two exams fall on the same day, both stop receiving time the day before.</li>
+<li><strong>Countdown uses your device clock.</strong> Each countdown is calculated in your device&rsquo;s time zone from the exam start time you enter. Check the official timetable and report-in time from your institution.</li>
+<li><strong>Limits.</strong> Up to 12 subjects, exams within 366 days and up to 16 study hours a day.</li>
+<li><strong>Privacy.</strong> Your subjects and settings are stored only in this browser&rsquo;s local storage and are never uploaded.</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQs)</h2>
+<div class="auc-faq-list">
+<details class="auc-faq-item" open>
+<summary>How does the study hours allocator decide how much time each subject gets?</summary>
+<div class="auc-faq-body">Each subject gets a priority weight equal to its difficulty (1 to 5) multiplied by 6 minus your confidence (1 to 5). Each day, that weight is multiplied by an urgency boost of 1 plus 7 divided by the days left until that exam, and your available hours are shared in proportion to the resulting scores. Harder subjects, weaker confidence and nearer exams therefore receive more time.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Why not simply split my study time equally between subjects?</summary>
+<div class="auc-faq-body">An equal split gives the same time to a subject you already know well and one you find difficult, and it ignores which exam comes first. Weighting by difficulty, confidence and urgency moves hours to where they raise your marks the most. If you prefer an equal split, set the same difficulty and confidence for every subject and the same exam date.</div>
+</details>
+<details class="auc-faq-item">
+<summary>What do the difficulty and confidence ratings mean?</summary>
+<div class="auc-faq-body">Difficulty (1 easy to 5 very hard) is how demanding the subject is for you. Confidence (1 very weak to 5 strong) is how well you know the material right now. A hard subject you feel weak in scores highest and gets the most time. Re-rate your confidence every week or two so the plan follows your progress.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Does the plan include study time on the day of the exam?</summary>
+<div class="auc-faq-body">No. A subject receives hours up to the day before its exam, and after that its time is shared among the remaining subjects. If you want to study on the morning of an exam, treat that as extra time on top of the plan.</div>
+</details>
+<details class="auc-faq-item">
+<summary>What does the Short by or On track message mean?</summary>
+<div class="auc-faq-body">If you enter the total hours you think a subject needs, the calculator compares it with the hours planned for that subject. On track means the plan covers your target and shows the spare time. Short by means the plan falls below your target by that amount. To fix a shortfall, add study hours, remove a rest day or lower the target.</div>
+</details>
+<details class="auc-faq-item">
+<summary>How is the countdown calculated, and which time zone does it use?</summary>
+<div class="auc-faq-body">The countdown subtracts the current time on your device from the exam date and start time you entered, and it updates every second. It uses your device's time zone, so if you travel or change your clock settings the countdown changes. Always confirm exam dates and times with your institution's official timetable.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Can I use this for competitive exams or university semester exams?</summary>
+<div class="auc-faq-body">Yes. It works for any set of dated exams, including school boards, university semesters and competitive tests, with up to 12 subjects and exams up to a year away. For very large syllabi, split a subject into separate rows such as Physics Mechanics and Physics Optics, each with its own date and difficulty.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Is my study plan saved, and can I take it with me?</summary>
+<div class="auc-faq-body">Your subjects and study-hour settings are saved automatically in your browser so they are there when you return on the same device. Nothing is sent to a server. To take the schedule elsewhere, use the Download schedule button in the day-by-day section to get a CSV file that opens in Excel, Google Sheets or similar apps.</div>
+</details>
+</div>
+</article>
+</main>
+<!-- Empty sidebar: the site navigation script fills it with search, ads and related tools -->
+<aside class="sidebar"></aside>
+</div>
+<script>
+(function () {
+  "use strict";
+  var STORE = "tqc_exam_planner_v1";
+  var UNIT = 5;              /* minutes per allocation unit */
+  var URGENCY_DAYS = 7;      /* urgency boost = 1 + 7 / days left */
+  var MAX_SUBJECTS = 12, MAX_HORIZON = 366;
+  var $ = function (id) { return document.getElementById(id); };
+  var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var DIFF = [["1", "1 – Easy"], ["2", "2 – Fairly easy"], ["3", "3 – Medium"], ["4", "4 – Hard"], ["5", "5 – Very hard"]];
+  var CONF = [["1", "1 – Very weak"], ["2", "2 – Weak"], ["3", "3 – Average"], ["4", "4 – Good"], ["5", "5 – Strong"]];
+
+  /* ---------- Date helpers (calendar-day arithmetic, no DST problems) ---------- */
+  function parseYMD(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || "");
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3], t = Date.UTC(y, mo - 1, d);
+    var chk = new Date(t);
+    if (chk.getUTCFullYear() !== y || chk.getUTCMonth() !== mo - 1 || chk.getUTCDate() !== d) return null;
+    return t / 86400000;
+  }
+  function dayToDate(n) { return new Date(n * 86400000); }
+  function ymd(n) { var d = dayToDate(n); return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); }
+  function dow(n) { return dayToDate(n).getUTCDay(); }
+  function pad(x) { return (x < 10 ? "0" : "") + x; }
+  function label(n) { var d = dayToDate(n); return DOW[d.getUTCDay()] + ", " + d.getUTCDate() + " " + MON[d.getUTCMonth()] + (d.getUTCFullYear() !== todayYear() ? " " + d.getUTCFullYear() : ""); }
+  function todayDayNumber() { var t = new Date(); return Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / 86400000; }
+  function todayYear() { return new Date().getFullYear(); }
+  function fmtUnits(u) {
+    var m = u * UNIT, h = Math.floor(m / 60), r = m % 60;
+    if (h === 0) return r + "m";
+    return r === 0 ? h + "h" : h + "h " + r + "m";
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+  /* ---------- Planning engine ---------- */
+  /* subjects: [{name, exam (day number), diff 1-5, conf 1-5, need (hours or 0)}]
+     opts: {start, weekday, weekend, rest (-1 for none)} */
+  function plan(subjects, opts) {
+    var last = 0, i, d;
+    subjects.forEach(function (s) { if (s.exam > last) last = s.exam; });
+    var weights = subjects.map(function (s) { return s.diff * (6 - s.conf); });
+    var days = [], totals = subjects.map(function () { return 0; });
+    for (d = opts.start; d < last; d++) {
+      var wd = dow(d), hours = (wd === 0 || wd === 6) ? opts.weekend : opts.weekday;
+      if (wd === opts.rest) hours = 0;
+      var U = Math.round(hours * 60 / UNIT);
+      var active = [];
+      for (i = 0; i < subjects.length; i++) if (subjects[i].exam > d) active.push(i);
+      var alloc = subjects.map(function () { return 0; });
+      if (U > 0 && active.length) {
+        var scores = active.map(function (k) { return weights[k] * (1 + URGENCY_DAYS / (subjects[k].exam - d)); });
+        var sum = scores.reduce(function (a, b) { return a + b; }, 0);
+        var exact = scores.map(function (sc) { return sc / sum * U; });
+        var fl = exact.map(Math.floor), used = fl.reduce(function (a, b) { return a + b; }, 0);
+        var order = active.map(function (k, j) { return j; }).sort(function (a, b) {
+          var fa = exact[a] - fl[a], fb = exact[b] - fl[b];
+          if (Math.abs(fa - fb) > 1e-9) return fb - fa;
+          if (scores[a] !== scores[b]) return scores[b] - scores[a];
+          return a - b;
+        });
+        for (var r = 0; r < U - used; r++) fl[order[r % order.length]]++;
+        active.forEach(function (k, j) { alloc[k] = fl[j]; totals[k] += fl[j]; });
+      }
+      days.push({ day: d, units: alloc, total: alloc.reduce(function (a, b) { return a + b; }, 0), hours: hours });
+    }
+    return { days: days, totals: totals, weights: weights, last: last };
+  }
+
+  /* ---------- Inputs ---------- */
+  var rows = [];
+  var errEl = $("exm-error");
+  function addRow(r) {
+    rows.push(r || { name: "", date: "", time: "09:00", diff: "3", conf: "3", need: "" });
+  }
+  function defaultRows() {
+    var t = todayDayNumber();
+    return [
+      { name: "Mathematics", date: ymd(t + 21), time: "09:30", diff: "4", conf: "2", need: "" },
+      { name: "Physics", date: ymd(t + 24), time: "09:30", diff: "3", conf: "3", need: "" },
+      { name: "English", date: ymd(t + 28), time: "14:00", diff: "2", conf: "4", need: "" }
+    ];
+  }
+  function opt(list, sel) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === sel ? " selected" : "") + ">" + o[1] + "</option>"; }).join(""); }
+  function renderRows() {
+    var html = "";
+    rows.forEach(function (r, i) {
+      html += '<div class="exm-row" data-i="' + i + '"><div class="exm-row-head"><strong>Subject ' + (i + 1) + '</strong><button type="button" class="exm-mini" data-act="del" aria-label="Remove subject ' + (i + 1) + '">✕</button></div><div class="exm-fields">' +
+        '<label class="auc-field-group exm-wide"><span class="auc-label">Subject name</span><input type="text" class="auc-input" data-f="name" maxlength="60" value="' + esc(r.name) + '" placeholder="e.g. Chemistry" autocomplete="off"></label>' +
+        '<label class="auc-field-group"><span class="auc-label">Exam date</span><input type="date" class="auc-input" data-f="date" value="' + esc(r.date) + '"></label>' +
+        '<label class="auc-field-group"><span class="auc-label">Exam start time</span><input type="time" class="auc-input" data-f="time" value="' + esc(r.time) + '"></label>' +
+        '<label class="auc-field-group"><span class="auc-label">Difficulty</span><select class="auc-select" data-f="diff">' + opt(DIFF, r.diff) + "</select></label>" +
+        '<label class="auc-field-group"><span class="auc-label">Your confidence now</span><select class="auc-select" data-f="conf">' + opt(CONF, r.conf) + "</select></label>" +
+        '<label class="auc-field-group exm-wide"><span class="auc-label">Hours you think you need <span class="auc-label-accent">Optional</span></span><input type="number" class="auc-input" data-f="need" min="0" step="any" inputmode="decimal" value="' + esc(r.need) + '" placeholder="e.g. 40"></label>' +
+        "</div></div>";
+    });
+    $("exm-rows").innerHTML = html;
+  }
+  $("exm-rows").addEventListener("input", function (e) {
+    var t = e.target, row = t.closest(".exm-row");
+    if (!row || !t.getAttribute("data-f")) return;
+    rows[+row.getAttribute("data-i")][t.getAttribute("data-f")] = t.value;
+    calculate();
+  });
+  $("exm-rows").addEventListener("change", function (e) {
+    var t = e.target, row = t.closest(".exm-row");
+    if (!row || !t.getAttribute("data-f")) return;
+    rows[+row.getAttribute("data-i")][t.getAttribute("data-f")] = t.value;
+    calculate();
+  });
+  $("exm-rows").addEventListener("click", function (e) {
+    var b = e.target.closest('button[data-act="del"]');
+    if (!b) return;
+    rows.splice(+b.closest(".exm-row").getAttribute("data-i"), 1);
+    renderRows(); calculate();
+  });
+  $("exm-add").addEventListener("click", function () {
+    if (rows.length >= MAX_SUBJECTS) { showError("You can add up to " + MAX_SUBJECTS + " subjects."); return; }
+    addRow(); renderRows(); calculate();
+    var inputs = $("exm-rows").querySelectorAll(".exm-row:last-child input"); if (inputs[0]) inputs[0].focus();
+  });
+  ["exm-start", "exm-weekday", "exm-weekend", "exm-rest"].forEach(function (id) {
+    $(id).addEventListener("input", calculate); $(id).addEventListener("change", calculate);
+  });
+
+  function showError(m) { errEl.textContent = m; errEl.classList.add("visible"); }
+  function clearError() { errEl.textContent = ""; errEl.classList.remove("visible"); }
+
+  function collect() {
+    var start = parseYMD($("exm-start").value);
+    if (start === null) return { error: "Choose a valid start date." };
+    var wd = Number($("exm-weekday").value), we = Number($("exm-weekend").value);
+    if ($("exm-weekday").value.trim() === "" || !isFinite(wd) || wd < 0 || wd > 16) return { error: "Weekday study hours must be between 0 and 16." };
+    if ($("exm-weekend").value.trim() === "" || !isFinite(we) || we < 0 || we > 16) return { error: "Weekend study hours must be between 0 and 16." };
+    var rest = Number($("exm-rest").value);
+    var subs = [], k;
+    for (k = 0; k < rows.length; k++) {
+      var r = rows[k], name = r.name.trim(), n = k + 1;
+      if (!name && !r.date) continue;
+      if (!name) return { error: "Subject " + n + ": enter a subject name." };
+      var ex = parseYMD(r.date);
+      if (ex === null) return { error: "Subject " + n + " (" + name + "): choose an exam date." };
+      if (ex <= start) return { error: "Subject " + n + " (" + name + "): the exam date must be after the start date." };
+      if (ex - start > MAX_HORIZON) return { error: "Subject " + n + " (" + name + "): the exam is more than a year away. Plan again closer to the date." };
+      var need = r.need.toString().trim() === "" ? 0 : Number(r.need);
+      if (!isFinite(need) || need < 0 || need > 2000) return { error: "Subject " + n + " (" + name + "): hours needed must be between 0 and 2000." };
+      var tm = /^(\d{2}):(\d{2})$/.exec(r.time || "") ? r.time : "09:00";
+      subs.push({ name: name, exam: ex, time: tm, diff: Number(r.diff) || 3, conf: Number(r.conf) || 3, need: need });
+    }
+    if (!subs.length) return { error: "Add at least one subject with a name and an exam date." };
+    if (wd === 0 && we === 0) return { error: "Enter some study hours for weekdays or weekends." };
+    return { subs: subs, opts: { start: start, weekday: wd, weekend: we, rest: rest } };
+  }
+
+  /* ---------- Rendering ---------- */
+  var lastText = "", lastCsv = "", cards = [];
+  function calculate() {
+    var c = collect();
+    if (c.error) { showError(c.error); blank("Fix the highlighted input to see your plan."); persist(); return; }
+    clearError();
+    var res = plan(c.subs, c.opts), subs = c.subs, S = subs.length, i;
+    var totalUnits = res.totals.reduce(function (a, b) { return a + b; }, 0);
+    var studyDays = res.days.filter(function (x) { return x.total > 0; }).length;
+    var sorted = subs.map(function (s, idx) { return idx; }).sort(function (a, b) { return subs[a].exam - subs[b].exam || a - b; });
+
+    $("exm-tag").textContent = "Study plan • " + S + (S === 1 ? " subject" : " subjects");
+    var next = sorted[0];
+    $("exm-primary").textContent = totalUnits ? fmtUnits(totalUnits) + " of study" : "No study time";
+    $("exm-equation").textContent = "Across " + studyDays + " study " + (studyDays === 1 ? "day" : "days") + " from " + label(c.opts.start) + " until the day before your last exam (" + label(res.last - 1) + ").";
+
+    /* countdown cards */
+    cards = sorted.map(function (idx) {
+      var s = subs[idx], t = examTimestamp(s);
+      return { name: s.name, ts: t };
+    });
+    var ch = "";
+    cards.forEach(function (cd, k) {
+      ch += '<div class="exm-cd-card" data-k="' + k + '"><div class="exm-cd-name">' + esc(cd.name) + '</div><div class="exm-cd-time" data-cd="' + k + '">—</div><div class="exm-cd-date">' + esc(new Date(cd.ts).toLocaleString(undefined, { weekday: "short", day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })) + "</div></div>";
+    });
+    $("exm-countdowns").innerHTML = ch;
+    tick();
+
+    /* allocation table */
+    var maxU = Math.max.apply(null, res.totals.concat([1]));
+    var tb = "";
+    var warn = 0;
+    sorted.forEach(function (idx) {
+      var s = subs[idx], u = res.totals[idx], dl = s.exam - c.opts.start;
+      var share = totalUnits ? (u / totalUnits * 100) : 0;
+      var pr = res.weights[idx] >= 16 ? "High" : (res.weights[idx] >= 8 ? "Medium" : "Low");
+      var avg = dl > 0 ? (u * UNIT / 60 / dl) : 0;
+      var need = "—", cls = "";
+      if (s.need > 0) {
+        var planned = u * UNIT / 60;
+        if (planned + 1e-9 >= s.need) { need = "On track (+" + fmtUnits(Math.round((planned - s.need) * 60 / UNIT)) + ")"; cls = "ok"; }
+        else { need = "Short by " + fmtUnits(Math.round((s.need - planned) * 60 / UNIT)); cls = "warn"; warn++; }
+      }
+      tb += "<tr><td><strong>" + esc(s.name) + '</strong><div class="exm-sub">' + pr + " priority • " + dl + (dl === 1 ? " day" : " days") + ' left</div></td><td class="num">' + fmtUnits(u) + '</td><td class="num">' + share.toFixed(1) + '%<div class="exm-barwrap"><span style="width:' + (u / maxU * 100).toFixed(1) + '%"></span></div></td><td class="num">' + avg.toFixed(1) + ' h</td><td class="' + cls + '">' + need + "</td></tr>";
+    });
+    $("exm-alloc").innerHTML = tb;
+
+    /* today */
+    var today = todayDayNumber(), th = "";
+    var entry = res.days.filter(function (x) { return x.day === today; })[0];
+    if (today < c.opts.start) th = "<p class=\"exm-msg\">Your plan starts on <strong>" + label(c.opts.start) + "</strong>.</p>";
+    else if (!entry) th = "<p class=\"exm-msg\">No study days are left in this plan (the last day was " + label(res.last - 1) + ").</p>";
+    else if (entry.total === 0) th = "<p class=\"exm-msg\">Today is a rest day. Enjoy the break.</p>";
+    else {
+      th = '<ul class="exm-today">';
+      entry.units.forEach(function (u, k) { if (u > 0) th += "<li><span>" + esc(subs[k].name) + "</span><strong>" + fmtUnits(u) + '</strong><em>' + Math.max(1, Math.round(u * UNIT / 25)) + " × 25-min focus blocks</em></li>"; });
+      th += "</ul><p class=\"exm-msg\">Total today: <strong>" + fmtUnits(entry.total) + "</strong></p>";
+    }
+    $("exm-today").innerHTML = th;
+    $("exm-warn").textContent = warn ? warn + (warn === 1 ? " subject is" : " subjects are") + " short of the hours you said you need. Add study time, move a rest day, or lower the target." : "";
+
+    /* weekly table */
+    var weeks = {}, order = [];
+    res.days.forEach(function (x) {
+      var w = x.day - ((dow(x.day) + 6) % 7);
+      if (!weeks[w]) { weeks[w] = subs.map(function () { return 0; }); order.push(w); }
+      x.units.forEach(function (u, k) { weeks[w][k] += u; });
+    });
+    var wh = "<tr><th>Week starting</th>" + subs.map(function (s) { return "<th>" + esc(s.name) + "</th>"; }).join("") + "<th>Total</th></tr>";
+    order.forEach(function (w) {
+      var t = weeks[w].reduce(function (a, b) { return a + b; }, 0);
+      wh += "<tr><td>" + label(w) + "</td>" + weeks[w].map(function (u) { return '<td class="num">' + (u ? fmtUnits(u) : "–") + "</td>"; }).join("") + '<td class="num"><strong>' + fmtUnits(t) + "</strong></td></tr>";
+    });
+    $("exm-weekly").innerHTML = wh;
+
+    /* daily table + csv + text */
+    var dh = "<tr><th>Date</th><th>Plan</th><th>Total</th></tr>", csv = "Date,Weekday,Subject,Minutes\n";
+    res.days.forEach(function (x) {
+      var parts = [], notes = [];
+      x.units.forEach(function (u, k) { if (u > 0) { parts.push(esc(subs[k].name) + " " + fmtUnits(u)); csv += ymd(x.day) + "," + DOW[dow(x.day)] + ',"' + subs[k].name.replace(/"/g, '""') + '",' + (u * UNIT) + "\n"; } });
+      subs.forEach(function (s) { if (s.exam === x.day + 1) notes.push(esc(s.name) + " exam tomorrow"); });
+      dh += "<tr><td>" + label(x.day) + "</td><td>" + (parts.length ? parts.join(" • ") : '<span class="exm-sub">Rest day</span>') + (notes.length ? '<div class="exm-flag">' + notes.join(", ") + "</div>" : "") + '</td><td class="num">' + (x.total ? fmtUnits(x.total) : "–") + "</td></tr>";
+    });
+    $("exm-daily").innerHTML = dh;
+    lastCsv = csv;
+    lastText = "Exam study plan\n" + sorted.map(function (idx) { var s = subs[idx]; return s.name + ": exam " + ymd(s.exam) + ", " + fmtUnits(res.totals[idx]) + " planned (" + (totalUnits ? (res.totals[idx] / totalUnits * 100).toFixed(1) : 0) + "%)"; }).join("\n") +
+      "\nTotal: " + fmtUnits(totalUnits) + "\nSource: https://thequantcal.pages.dev/tools/exam-countdown-study-planner";
+    persist();
+    window.__tqcExamLast = res;
+  }
+  function examTimestamp(s) {
+    var d = dayToDate(s.exam), p = s.time.split(":");
+    return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), +p[0], +p[1], 0).getTime();
+  }
+  function blank(msg) {
+    $("exm-tag").textContent = "Study plan";
+    $("exm-primary").textContent = "—";
+    $("exm-equation").textContent = msg;
+    ["exm-countdowns", "exm-alloc", "exm-today", "exm-weekly", "exm-daily"].forEach(function (id) { $(id).innerHTML = ""; });
+    $("exm-warn").textContent = "";
+    cards = []; lastText = ""; lastCsv = "";
+  }
+  function tick() {
+    var now = Date.now();
+    cards.forEach(function (cd, k) {
+      var el = document.querySelector('[data-cd="' + k + '"]');
+      if (!el) return;
+      var ms = cd.ts - now;
+      if (ms <= 0) { el.textContent = "Exam time has passed"; el.classList.add("over"); return; }
+      el.classList.remove("over");
+      var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+      el.textContent = d + "d " + pad(h) + "h " + pad(m) + "m " + pad(sec) + "s";
+    });
+  }
+  setInterval(tick, 1000);
+
+  /* ---------- Actions ---------- */
+  $("exm-calc-btn").addEventListener("click", calculate);
+  $("exm-reset-btn").addEventListener("click", function () {
+    $("exm-start").value = ymd(todayDayNumber()); $("exm-weekday").value = "4"; $("exm-weekend").value = "6"; $("exm-rest").value = "-1";
+    rows = defaultRows(); renderRows(); calculate();
+  });
+  $("exm-copy-btn").addEventListener("click", function () {
+    var btn = $("exm-copy-btn");
+    if (!lastText) return;
+    function done(ok) { btn.textContent = ok ? "✓ Copied" : "Copy failed"; setTimeout(function () { btn.innerHTML = "&#128203; Copy"; }, 1600); }
+    try { navigator.clipboard.writeText(lastText).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  });
+  $("exm-csv-btn").addEventListener("click", function () {
+    if (!lastCsv) return;
+    var blob = new Blob([lastCsv], { type: "text/csv" }), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "study-plan.csv"; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+
+  /* ---------- Persistence ---------- */
+  function persist() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ rows: rows, start: $("exm-start").value, weekday: $("exm-weekday").value, weekend: $("exm-weekend").value, rest: $("exm-rest").value }));
+    } catch (e) { /* storage unavailable */ }
+  }
+  function restore() {
+    try {
+      var o = JSON.parse(localStorage.getItem(STORE) || "null");
+      if (!o || !Array.isArray(o.rows)) return false;
+      rows = o.rows.slice(0, MAX_SUBJECTS).map(function (r) {
+        function s(v, d) { return typeof v === "string" ? v.slice(0, 60) : d; }
+        return { name: s(r.name, ""), date: s(r.date, ""), time: s(r.time, "09:00"), diff: /^[1-5]$/.test(r.diff) ? r.diff : "3", conf: /^[1-5]$/.test(r.conf) ? r.conf : "3", need: s(String(r.need == null ? "" : r.need), "") };
+      });
+      if (typeof o.weekday === "string") $("exm-weekday").value = o.weekday;
+      if (typeof o.weekend === "string") $("exm-weekend").value = o.weekend;
+      if (/^-?[0-6]$/.test(o.rest)) $("exm-rest").value = o.rest;
+      return rows.length > 0;
+    } catch (e) { return false; }
+  }
+
+  $("exm-start").value = ymd(todayDayNumber());
+  if (!restore()) rows = defaultRows();
+  renderRows();
+  calculate();
+  window.__tqcExam = { plan: plan, parseYMD: parseYMD, ymd: ymd };
+})();
+</script>
+<!-- Site header, sidebar and footer script -->
+<script src="/navigation.js" defer></script>
+</body>
+</html>
