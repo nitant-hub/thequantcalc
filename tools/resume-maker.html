@@ -336,19 +336,43 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-health li span{flex:0 0 auto;font-weight:800}
 .rsm-health li.ok span{color:#34D399}
 .rsm-health li.warn span{color:#FBBF24}
-.rsm-preview-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;margin:0 0 10px}
-.rsm-preview-head h2{margin:0;font-size:1.2rem;color:var(--text-main)}
-.rsm-pill{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--surface-border);background:var(--article-soft);color:var(--text-body);font-size:0.8125rem;font-weight:600}
+.rsm-preview-head{
+  display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center;
+  gap:8px 12px; margin:0 0 3px; min-height:0; line-height:1;
+}
+.rsm-preview-head h2{margin:0;font-size:0.88rem;font-weight:700;color:#10B981;letter-spacing:0.01em}
+.rsm-pill{
+  display:inline-block; padding:1px 9px; border-radius:999px;
+  border:1px solid rgba(16,185,129,0.35); background:rgba(16,185,129,0.12);
+  color:#6EE7B7; font-size:0.72rem; font-weight:600; line-height:1.35;
+}
+.rsm-preview-wrap{
+  margin:0 0 4px !important; padding-bottom:3px !important;
+  border-bottom:1px dashed rgba(16,185,129,0.22) !important;
+}
+
+/* Dim empty / default inputs until user types real content */
+.auc-input.is-empty, .auc-select.is-empty, textarea.auc-input.is-empty {
+  color: #64748B !important; opacity: 0.72;
+}
+.auc-input:not(.is-empty), textarea.auc-input:not(.is-empty) {
+  color: #F8FAFC; opacity: 1;
+}
+.auc-input::placeholder { color: #64748B; opacity: 0.85; }
+
+/* Live preview: dim placeholder-looking content */
+.rs-paper .rs-placeholder { color: #94A3B8 !important; font-weight: 500 !important; opacity: 0.75; }
+.rs-paper .rs-name.rs-placeholder { color: #94A3B8 !important; }
 
 /* --- 🌟 DESKTOP/MOBILE STRICT Y-SCROLL LOCK 🌟 --- */
 .rsm-stage {
-    background:#475569; border-radius:16px; padding:14px 4px;
+    background:#475569; border-radius:14px; padding:8px 3px;
     overflow-y:auto; display:flex; justify-content:center;
-    height: 35vh; min-height: 250px; max-height: 350px; 
+    height: 32vh; min-height: 220px; max-height: 320px; 
     overscroll-behavior:contain; box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)
 }
 @media (min-width:768px){
-    .rsm-stage { height: 40vh; max-height: 450px; } 
+    .rsm-stage { height: 38vh; max-height: 420px; } 
 }
 /* --------------------------------------------------------- */
 
@@ -536,19 +560,145 @@ body>*:not(#rsm-print-root){display:none !important}
     content: ""; flex: 0 0 14px;
 }
 
+/* Indigo variant (Format Strategy) */
+.rsm-dd-indigo .rsm-dd-trigger {
+    border-color: rgba(129, 140, 248, 0.45);
+}
+.rsm-dd-indigo .rsm-dd-trigger:hover, .rsm-dd-indigo .rsm-dd-trigger:focus-visible {
+    border-color: #818CF8;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.55), 0 0 0 3px rgba(99,102,241,0.22);
+}
+.rsm-dd-indigo .rsm-dd-trigger[aria-expanded="true"] {
+    border-color: #6366F1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.28);
+}
+.rsm-dd-indigo .rsm-dd-chevron { color: #818CF8; }
+.rsm-dd-indigo .rsm-dd-menu {
+    border-color: rgba(129, 140, 248, 0.35);
+    box-shadow: 0 20px 40px -8px rgba(0,0,0,0.75), 0 0 24px -4px rgba(99,102,241,0.15);
+}
+.rsm-dd-indigo .rsm-dd-group { color: #A5B4FC; }
+.rsm-dd-indigo .rsm-dd-option:hover, .rsm-dd-indigo .rsm-dd-option:focus-visible {
+    background: rgba(99, 102, 241, 0.14); color: #FFFFFF;
+}
+.rsm-dd-indigo .rsm-dd-option[aria-selected="true"] {
+    background: rgba(99, 102, 241, 0.2); color: #C7D2FE;
+}
+.rsm-dd-indigo .rsm-dd-option[aria-selected="true"]::before { color: #818CF8; }
+
+/* Amber variant (Page Count) */
+.rsm-dd-amber .rsm-dd-trigger {
+    border-color: rgba(251, 191, 36, 0.4);
+}
+.rsm-dd-amber .rsm-dd-trigger:hover, .rsm-dd-amber .rsm-dd-trigger:focus-visible {
+    border-color: #FBBF24;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.55), 0 0 0 3px rgba(245,158,11,0.22);
+}
+.rsm-dd-amber .rsm-dd-trigger[aria-expanded="true"] {
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.28);
+}
+.rsm-dd-amber .rsm-dd-chevron { color: #FBBF24; }
+.rsm-dd-amber .rsm-dd-menu {
+    border-color: rgba(251, 191, 36, 0.35);
+    box-shadow: 0 20px 40px -8px rgba(0,0,0,0.75), 0 0 24px -4px rgba(245,158,11,0.15);
+}
+.rsm-dd-amber .rsm-dd-group { color: #FCD34D; }
+.rsm-dd-amber .rsm-dd-option:hover, .rsm-dd-amber .rsm-dd-option:focus-visible {
+    background: rgba(245, 158, 11, 0.14); color: #FFFFFF;
+}
+.rsm-dd-amber .rsm-dd-option[aria-selected="true"] {
+    background: rgba(245, 158, 11, 0.2); color: #FDE68A;
+}
+.rsm-dd-amber .rsm-dd-option[aria-selected="true"]::before { color: #FBBF24; }
+
+/* Professional photo upload card */
+.rsm-photo-card {
+    margin-top: 14px; padding: 14px; border-radius: 14px;
+    background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(52, 211, 153, 0.25);
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+.rsm-photo-preview {
+    width: 72px; height: 72px; border-radius: 12px; object-fit: cover;
+    border: 2px solid rgba(52, 211, 153, 0.4); background: #0F172A;
+    display: none;
+}
+.rsm-photo-preview.has-photo { display: block; }
+.rsm-photo-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; flex: 1; min-width: 0; }
+.rsm-file-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 999px;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    background: linear-gradient(180deg, #0F172A 0%, #111827 100%);
+    color: #E2E8F0; font-weight: 600; font-size: 0.9375rem; cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+.rsm-file-btn:hover, .rsm-file-btn:focus-within {
+    border-color: #34D399; background: rgba(16, 185, 129, 0.1); color: #6EE7B7;
+}
+.rsm-file-btn input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
 /* 🌟 UPGRADED ARTICLE TYPOGRAPHY 🌟 */
 article.auc-article {
     background-color: var(--article-bg); border: 1px solid var(--surface-border);
     border-radius: 18px; padding: 24px 20px; color: var(--text-body); box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
-article.auc-article h2 { font-size: clamp(1.3125rem, 2.2vw, 1.65rem); line-height: 1.22; font-weight: 700; color: var(--text-main); margin: 36px 0 16px 0; letter-spacing: -0.02em; }
+
+/* ── Professional title + horizontal boundary lines ── */
+article.auc-article h2 {
+    font-size: clamp(1.3125rem, 2.2vw, 1.65rem); line-height: 1.28; font-weight: 700;
+    color: var(--text-main); margin: 42px 0 18px 0; letter-spacing: -0.02em;
+    padding-bottom: 14px; position: relative;
+    border-bottom: 1px solid var(--surface-border);
+}
+article.auc-article h2::after {
+    content: ""; position: absolute; left: 0; bottom: -1px;
+    width: 72px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, #10B981 0%, #059669 60%, transparent 100%);
+}
 article.auc-article h2:first-of-type { margin-top: 0; }
-article.auc-article h3 { font-size: clamp(1.125rem, 1.8vw, 1.32rem); line-height: 1.28; font-weight: 600; color: var(--text-main); margin: 26px 0 10px 0; }
+article.auc-article h2:nth-of-type(2)::after {
+    background: linear-gradient(90deg, #6366F1 0%, #4F46E5 60%, transparent 100%);
+}
+article.auc-article h2:nth-of-type(3)::after {
+    background: linear-gradient(90deg, #F59E0B 0%, #D97706 60%, transparent 100%);
+}
+article.auc-article h2:nth-of-type(4)::after {
+    background: linear-gradient(90deg, #0EA5E9 0%, #0284C7 60%, transparent 100%);
+}
+article.auc-article h2:nth-of-type(5)::after {
+    background: linear-gradient(90deg, #EC4899 0%, #DB2777 60%, transparent 100%);
+}
+article.auc-article h2:nth-of-type(6)::after {
+    background: linear-gradient(90deg, #8B5CF6 0%, #7C3AED 60%, transparent 100%);
+}
+article.auc-article h2:nth-of-type(7)::after {
+    background: linear-gradient(90deg, #14B8A6 0%, #0D9488 60%, transparent 100%);
+}
+
+article.auc-article h3 {
+    font-size: clamp(1.125rem, 1.8vw, 1.32rem); line-height: 1.3; font-weight: 600;
+    color: var(--text-main); margin: 28px 0 12px 0;
+    padding: 0 0 10px 14px; position: relative;
+    border-bottom: 1px dashed var(--surface-border);
+}
+article.auc-article h3::before {
+    content: ""; position: absolute; left: 0; top: 0.15em;
+    width: 4px; height: 1.1em; border-radius: 2px;
+    background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+}
+
 article.auc-article p { font-size: 1.02rem; line-height: 1.66; margin: 0 0 16px 0; max-width: 76ch; }
 article.auc-article ul, article.auc-article ol { margin: 0 0 20px 0; padding-left: 22px; max-width: 76ch; }
 article.auc-article li { margin-bottom: 8px; line-height: 1.6; }
 article.auc-article a { color: var(--link-color); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Soft full-width section separator */
+article.auc-article hr {
+    border: none; height: 1px; margin: 36px 0;
+    background: linear-gradient(90deg, transparent 0%, var(--surface-border) 20%, var(--surface-border) 80%, transparent 100%);
+}
 .auc-surface-box { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-left: 4px solid #10B981; border-radius: 12px; padding: 16px 20px; margin: 24px 0; }
 .data-table-wrapper { width: 100%; overflow-x: auto; margin: 24px 0; border: 1px solid var(--surface-border); border-radius: 12px; }
 .auc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
@@ -581,8 +731,8 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div id="rsm-fatal" class="auc-error-banner visible" role="alert" style="display:none"></div>
 
 <!-- 🌟 SLIMMER ALWAYS-ON-TOP LIVE PREVIEW 🌟 -->
-<div class="rsm-preview-wrap" style="margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px dashed rgba(16, 185, 129, 0.3);">
-<div class="rsm-preview-head" style="margin-bottom: 6px;"><h2 id="rsm-preview-title" style="font-size:1.05rem;color:#10B981;margin:0;line-height:1;">Live Preview</h2><span class="rsm-pill" id="rsm-pages" style="padding: 2px 10px;">1 page</span></div>
+<div class="rsm-preview-wrap">
+<div class="rsm-preview-head"><h2 id="rsm-preview-title">Live Preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
 
@@ -621,10 +771,15 @@ details.auc-faq-item[open] summary::after { content: "−"; }
     
 <div class="rsm-setup-box" style="border-color: #818CF8; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);" id="rsm-format-container">
     <div class="auc-field-group" style="margin:0;">
-        <label class="auc-label" for="rsm-doc-format"><span style="color:#E0E7FF">Document Format Strategy</span></label>
-        <select id="rsm-doc-format" class="auc-select" style="border-color:#818CF8; background: #020617;">
-            <!-- Dynamically Populated by JS -->
-        </select>
+        <label class="auc-label"><span style="color:#E0E7FF">Document Format Strategy</span></label>
+        <div class="rsm-dd rsm-dd-indigo" id="rsm-doc-format-dd">
+            <button type="button" class="rsm-dd-trigger" id="rsm-doc-format-btn" aria-haspopup="listbox" aria-expanded="false">
+                <span class="rsm-dd-value" id="rsm-doc-format-label">Reverse Chronological (Standard)</span>
+                <span class="rsm-dd-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="rsm-dd-menu" id="rsm-doc-format-menu" role="listbox" hidden></div>
+        </div>
+        <select id="rsm-doc-format" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true"></select>
     </div>
 </div>
 
@@ -649,8 +804,15 @@ details.auc-faq-item[open] summary::after { content: "−"; }
         <input type="range" id="rsm-fs" class="rsm-range" min="9" max="12" step="0.5" value="10.5" style="margin-top: 10px;">
     </div>
     <div class="auc-field-group">
-        <label class="auc-label" for="rsm-page-limit"><span>Fix Page Count</span><span class="auc-label-accent">Manual</span></label>
-        <select id="rsm-page-limit" class="auc-select">
+        <label class="auc-label"><span>Fix Page Count</span><span class="auc-label-accent">Manual</span></label>
+        <div class="rsm-dd rsm-dd-amber" id="rsm-page-limit-dd">
+            <button type="button" class="rsm-dd-trigger" id="rsm-page-limit-btn" aria-haspopup="listbox" aria-expanded="false">
+                <span class="rsm-dd-value" id="rsm-page-limit-label">Auto (Fit to content)</span>
+                <span class="rsm-dd-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="rsm-dd-menu" id="rsm-page-limit-menu" role="listbox" hidden></div>
+        </div>
+        <select id="rsm-page-limit" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true">
             <option value="auto">Auto (Fit to content)</option>
             <option value="1">Exactly 1 Page</option>
             <option value="2">Exactly 2 Pages</option>
@@ -1098,10 +1260,13 @@ function tqcBoot() {
       <label class="auc-field-group"><span class="auc-label">Location <em style="color:#94A3B8;font-weight:500;font-size:0.8em;">(optional)</em></span><input type="text" class="auc-input ctc-bind" data-prop="location" value="`+esc(DATA.location)+`" placeholder="City, Country"></label>
       <label class="auc-field-group rsm-wide"><span class="auc-label">Links <em style="color:#94A3B8;font-weight:500;font-size:0.8em;">(optional, one per line)</em></span><textarea class="auc-input rsm-ta ctc-bind" data-prop="links" placeholder="linkedin.com/in/yourname&#10;github.com/yourname">`+esc(DATA.links)+`</textarea></label>
       </div>
-      <div class="rsm-photo-row" style="margin-top:14px">
-      <label class="rsm-file-btn">Upload photo <em style="opacity:0.8;">(optional)</em><input type="file" id="rsm-photo-file" accept="image/*"></label>
-      <label class="ctc-inline" style="display:inline-flex;align-items:center;gap:7px;color:#E2E8F0;font-size:0.9375rem"><input type="checkbox" id="rsm-photo-on" disabled> Show photo</label>
-      <button type="button" id="rsm-photo-remove" class="rsm-mini" style="width:auto;padding:0 12px;display:none">Remove</button>
+      <div class="rsm-photo-card">
+        <img id="rsm-photo-preview" class="rsm-photo-preview" alt="Photo preview">
+        <div class="rsm-photo-actions">
+          <label class="rsm-file-btn">📷 Upload photo <em style="opacity:0.75;font-weight:500;">(optional)</em><input type="file" id="rsm-photo-file" accept="image/*"></label>
+          <label class="ctc-inline" style="display:inline-flex;align-items:center;gap:7px;color:#E2E8F0;font-size:0.9375rem"><input type="checkbox" id="rsm-photo-on" disabled> Show on document</label>
+          <button type="button" id="rsm-photo-remove" class="rsm-mini" style="width:auto;padding:0 12px;display:none">Remove</button>
+        </div>
       </div>
       <p class="rsm-note">Photos stay in your browser only. Many employers prefer resumes without a photo; ATS systems cannot read images.</p>
       </div>
@@ -1139,8 +1304,13 @@ function tqcBoot() {
       $("rsm-dynamic-form").innerHTML = formHTML;
       
       document.querySelectorAll(".ctc-bind").forEach(function(el) {
+          // Dim until user types real content
+          if (!(el.value || "").trim()) el.classList.add("is-empty");
+          else el.classList.remove("is-empty");
           el.addEventListener("input", function() {
               DATA[this.getAttribute("data-prop")] = this.value;
+              if (!(this.value || "").trim()) this.classList.add("is-empty");
+              else this.classList.remove("is-empty");
               scheduleRender();
           });
       });
@@ -1238,6 +1408,9 @@ function tqcBoot() {
     if (!f) return;
     if (!/^image\//.test(f.type)) { status("Please choose an image file (JPG or PNG)."); return; }
     if (f.size > 8 * 1024 * 1024) { status("That image is larger than 8 MB. Choose a smaller photo."); return; }
+    // Keep user in the Content panel — prevent scroll jump to article
+    var panel = $("rsm-tab-content");
+    var scrollTop = panel ? panel.scrollTop : 0;
     var rd = new FileReader();
     rd.onload = function () {
       var img = new Image();
@@ -1245,7 +1418,9 @@ function tqcBoot() {
         var s = Math.min(img.width, img.height), c = document.createElement("canvas");
         c.width = c.height = 320;
         c.getContext("2d").drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 320, 320);
-        DATA.photo = c.toDataURL("image/jpeg", 0.88); STYLE.photo = true; syncPhotoUI(); render(); status("Photo added.");
+        DATA.photo = c.toDataURL("image/jpeg", 0.88); STYLE.photo = true;
+        syncPhotoUI(); render(); status("Photo added.");
+        if (panel) panel.scrollTop = scrollTop;
       };
       img.src = rd.result;
     };
@@ -1255,8 +1430,18 @@ function tqcBoot() {
   function syncPhotoUI() { 
       var onCb = $("rsm-photo-on"); 
       var rmBtn = $("rsm-photo-remove");
-      if(onCb) { onCb.checked = !!STYLE.photo; onCb.disabled = !DATA.photo; }
-      if(rmBtn) rmBtn.style.display = DATA.photo ? "" : "none"; 
+      var prev = $("rsm-photo-preview");
+      if (onCb) { onCb.checked = !!STYLE.photo; onCb.disabled = !DATA.photo; }
+      if (rmBtn) rmBtn.style.display = DATA.photo ? "" : "none";
+      if (prev) {
+        if (DATA.photo) {
+          prev.src = DATA.photo;
+          prev.classList.add("has-photo");
+        } else {
+          prev.removeAttribute("src");
+          prev.classList.remove("has-photo");
+        }
+      }
   }
 
   /* ---------- HTML rendering for Paper ---------- */
@@ -1352,7 +1537,15 @@ function tqcBoot() {
     return (STYLE.photo && DATA.photo) ? '<img class="rs-photo rs-photo-' + STYLE.shape + '" src="' + esc(DATA.photo) + '" alt="Profile photo">' : "";
   }
   function nameBlock() {
-    return '<div class="rs-name">' + esc((DATA.name || "").trim() || "Your Name") + "</div>" + ((DATA.title || "").trim() ? '<div class="rs-title">' + esc(DATA.title.trim()) + "</div>" : "");
+    var nm = (DATA.name || "").trim();
+    var ti = (DATA.title || "").trim();
+    var nameHtml = nm
+      ? '<div class="rs-name">' + esc(nm) + '</div>'
+      : '<div class="rs-name rs-placeholder">Your Name</div>';
+    var titleHtml = ti
+      ? '<div class="rs-title">' + esc(ti) + '</div>'
+      : '<div class="rs-title rs-placeholder">Professional title</div>';
+    return nameHtml + titleHtml;
   }
   
   function getActiveOrder() {
@@ -1555,25 +1748,38 @@ function tqcBoot() {
         filterBox.setAttribute("data-cat", cat);
       }
       
-      // 2. Hide ATS/Functional Format Strategy for Non-Jobs
+      // 2. Format Strategy custom dropdown (hide for non-job categories)
       var formatContainer = $("rsm-format-container");
       var formatBox = $("rsm-doc-format");
+      var formatMenu = $("rsm-doc-format-menu");
+      var formatLabel = $("rsm-doc-format-label");
+      
+      var FORMAT_OPTS = [
+        { v: "chrono", t: "Reverse Chronological (Standard)" },
+        { v: "functional", t: "Functional / Skills-Based" },
+        { v: "ats", t: "Strict ATS Text (No columns/colors)" }
+      ];
       
       if (isMarriage || isGovt || isOther) {
           if (formatContainer) formatContainer.style.display = "none";
-          STYLE.docFormat = "chrono"; // Force standard format
+          STYLE.docFormat = "chrono";
       } else {
           if (formatContainer) formatContainer.style.display = "block";
-          var formatHtml = '<option value="chrono">Reverse Chronological (Standard)</option>';
-          formatHtml += '<option value="functional">Functional / Skills-Based</option>';
-          formatHtml += '<option value="ats">Strict ATS Text (No columns/colors)</option>';
+          var prevFormat = STYLE.docFormat || "chrono";
+          var valid = FORMAT_OPTS.some(function(o){ return o.v === prevFormat; });
+          STYLE.docFormat = valid ? prevFormat : "chrono";
           if (formatBox) {
-              var prevFormat = STYLE.docFormat;
-              formatBox.innerHTML = formatHtml;
-              var formatValid = false;
-              for(var i=0; i<formatBox.options.length; i++) { if(formatBox.options[i].value === prevFormat) formatValid = true; }
-              STYLE.docFormat = formatValid ? prevFormat : "chrono";
-              formatBox.value = STYLE.docFormat;
+            formatBox.innerHTML = FORMAT_OPTS.map(function(o){ return '<option value="'+o.v+'">'+o.t+'</option>'; }).join("");
+            formatBox.value = STYLE.docFormat;
+          }
+          if (formatMenu) {
+            formatMenu.innerHTML = FORMAT_OPTS.map(function(o){
+              return '<button type="button" class="rsm-dd-option" role="option" data-value="'+o.v+'" aria-selected="'+(o.v===STYLE.docFormat?'true':'false')+'">'+esc(o.t)+'</button>';
+            }).join("");
+          }
+          if (formatLabel) {
+            var cur = FORMAT_OPTS.filter(function(o){ return o.v === STYLE.docFormat; })[0];
+            formatLabel.textContent = cur ? cur.t : "Reverse Chronological (Standard)";
           }
       }
   }
@@ -1658,38 +1864,132 @@ function tqcBoot() {
   
   $("rsm-preset-search").addEventListener("input", function () { presetQuery = this.value; renderGallery(); });
 
+  /* Reusable professional dropdown helper */
+  function bindCustomDropdown(cfg) {
+    var btn = $(cfg.btnId), menu = $(cfg.menuId), label = $(cfg.labelId), hidden = cfg.hiddenId ? $(cfg.hiddenId) : null;
+    if (!btn || !menu) return;
+    function close() { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+    function open() { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); }
+    btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      // Close other open menus
+      document.querySelectorAll(".rsm-dd-menu:not([hidden])").forEach(function(m) {
+        if (m !== menu) { m.hidden = true; var b = m.parentElement && m.parentElement.querySelector(".rsm-dd-trigger"); if (b) b.setAttribute("aria-expanded","false"); }
+      });
+      if (menu.hidden) open(); else close();
+    });
+    menu.addEventListener("click", function(e) {
+      var opt = e.target.closest(".rsm-dd-option");
+      if (!opt) return;
+      var val = opt.getAttribute("data-value");
+      var text = opt.textContent.replace(/^✓\s*/, "").trim();
+      if (label) label.textContent = text;
+      if (hidden) hidden.value = val;
+      menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
+        o.setAttribute("aria-selected", o.getAttribute("data-value") === val ? "true" : "false");
+      });
+      close();
+      if (cfg.onChange) cfg.onChange(val, text);
+    });
+    document.addEventListener("click", function(e) {
+      if (!menu.hidden && !e.target.closest("#" + (cfg.ddId || ""))) close();
+    });
+  }
+
+  var PAGE_LIMIT_OPTS = [
+    { v: "auto", t: "Auto (Fit to content)" },
+    { v: "1", t: "Exactly 1 Page" }, { v: "2", t: "Exactly 2 Pages" },
+    { v: "3", t: "Exactly 3 Pages" }, { v: "4", t: "Exactly 4 Pages" },
+    { v: "5", t: "Exactly 5 Pages" }, { v: "6", t: "Exactly 6 Pages" },
+    { v: "7", t: "Exactly 7 Pages" }, { v: "8", t: "Exactly 8 Pages" },
+    { v: "9", t: "Exactly 9 Pages" }, { v: "10", t: "Exactly 10 Pages" },
+    { v: "custom", t: "Custom number…" }
+  ];
+
   var _controlsBound = false;
   function buildControls() {
+    // Style control dropdowns (professional)
     var html = "";
     CONTROLS.forEach(function (c) {
-      html += '<div class="auc-field-group"><label class="auc-label" for="rsm-c-' + c.key + '"><span>' + c.label + '</span></label><select id="rsm-c-' + c.key + '" class="auc-select" data-key="' + c.key + '">' +
-        c.opts.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + "</option>"; }).join("") + "</select></div>";
+      var curVal = STYLE[c.key];
+      var curLabel = (c.opts.filter(function(o){ return o[0] === curVal; })[0] || c.opts[0])[1];
+      html += '<div class="auc-field-group"><label class="auc-label"><span>' + c.label + '</span></label>';
+      html += '<div class="rsm-dd" id="rsm-dd-' + c.key + '">';
+      html += '<button type="button" class="rsm-dd-trigger" id="rsm-c-' + c.key + '-btn" aria-haspopup="listbox" aria-expanded="false">';
+      html += '<span class="rsm-dd-value" id="rsm-c-' + c.key + '-label">' + esc(curLabel) + '</span><span class="rsm-dd-chevron">▾</span></button>';
+      html += '<div class="rsm-dd-menu" id="rsm-c-' + c.key + '-menu" role="listbox" hidden>';
+      c.opts.forEach(function(o) {
+        html += '<button type="button" class="rsm-dd-option" role="option" data-value="' + o[0] + '" aria-selected="' + (o[0]===curVal?'true':'false') + '">' + esc(o[1]) + '</button>';
+      });
+      html += '</div></div>';
+      html += '<select id="rsm-c-' + c.key + '" class="auc-select" data-key="' + c.key + '" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true">';
+      html += c.opts.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + "</option>"; }).join("") + "</select></div>";
     });
     $("rsm-controls").innerHTML = html;
 
+    // Page limit menu
+    var plMenu = $("rsm-page-limit-menu");
+    if (plMenu) {
+      plMenu.innerHTML = PAGE_LIMIT_OPTS.map(function(o){
+        return '<button type="button" class="rsm-dd-option" role="option" data-value="'+o.v+'" aria-selected="'+(o.v===(STYLE.pageLimit||'auto')?'true':'false')+'">'+esc(o.t)+'</button>';
+      }).join("");
+    }
+    var plLabel = $("rsm-page-limit-label");
+    if (plLabel) {
+      var curPL = PAGE_LIMIT_OPTS.filter(function(o){ return o.v === (STYLE.pageLimit||'auto'); })[0];
+      plLabel.textContent = curPL ? curPL.t : "Auto (Fit to content)";
+    }
+
     if (!_controlsBound) {
       _controlsBound = true;
-      $("rsm-controls").addEventListener("change", function (e) {
-        var k = e.target.getAttribute("data-key"); if (!k) return;
-        STYLE[k] = e.target.value; render(); renderGallery();
+
+      // Bind each style control dropdown
+      CONTROLS.forEach(function(c) {
+        bindCustomDropdown({
+          ddId: "rsm-dd-" + c.key,
+          btnId: "rsm-c-" + c.key + "-btn",
+          menuId: "rsm-c-" + c.key + "-menu",
+          labelId: "rsm-c-" + c.key + "-label",
+          hiddenId: "rsm-c-" + c.key,
+          onChange: function(val) {
+            STYLE[c.key] = val;
+            var sel = $("rsm-c-" + c.key); if (sel) sel.value = val;
+            render(); renderGallery();
+          }
+        });
       });
-      
-      var formatBox = $("rsm-doc-format");
-      if (formatBox) {
-          formatBox.addEventListener("change", function(e) {
-              STYLE.docFormat = e.target.value; render(); renderGallery();
-          });
-      }
-      
-      $("rsm-page-limit").addEventListener("change", function(e) {
-          STYLE.pageLimit = e.target.value;
+
+      // Format strategy dropdown
+      bindCustomDropdown({
+        ddId: "rsm-doc-format-dd",
+        btnId: "rsm-doc-format-btn",
+        menuId: "rsm-doc-format-menu",
+        labelId: "rsm-doc-format-label",
+        hiddenId: "rsm-doc-format",
+        onChange: function(val) {
+          STYLE.docFormat = val;
+          render(); renderGallery();
+        }
+      });
+
+      // Page limit dropdown
+      bindCustomDropdown({
+        ddId: "rsm-page-limit-dd",
+        btnId: "rsm-page-limit-btn",
+        menuId: "rsm-page-limit-menu",
+        labelId: "rsm-page-limit-label",
+        hiddenId: "rsm-page-limit",
+        onChange: function(val) {
+          STYLE.pageLimit = val;
           var wrap = $("rsm-custom-pages-wrap");
-          if (wrap) wrap.style.display = (STYLE.pageLimit === "custom") ? "block" : "none";
-          if (STYLE.pageLimit === "custom" && $("rsm-custom-pages")) {
+          if (wrap) wrap.style.display = (val === "custom") ? "block" : "none";
+          if (val === "custom" && $("rsm-custom-pages")) {
             STYLE.customPages = parseInt($("rsm-custom-pages").value, 10) || 3;
           }
           render();
+        }
       });
+
       if ($("rsm-custom-pages")) {
         $("rsm-custom-pages").addEventListener("input", function() {
           STYLE.customPages = parseInt(this.value, 10) || 1;
@@ -1710,12 +2010,30 @@ function tqcBoot() {
     $("rsm-swatches").innerHTML = sw;
   }
   function syncControls() {
-    CONTROLS.forEach(function (c) { var el = $("rsm-c-" + c.key); if (el) el.value = STYLE[c.key]; });
+    CONTROLS.forEach(function (c) {
+      var el = $("rsm-c-" + c.key); if (el) el.value = STYLE[c.key];
+      var lab = $("rsm-c-" + c.key + "-label");
+      if (lab) {
+        var found = c.opts.filter(function(o){ return o[0] === STYLE[c.key]; })[0];
+        lab.textContent = found ? found[1] : c.opts[0][1];
+      }
+      var menu = $("rsm-c-" + c.key + "-menu");
+      if (menu) {
+        menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
+          o.setAttribute("aria-selected", o.getAttribute("data-value") === STYLE[c.key] ? "true" : "false");
+        });
+      }
+    });
     $("rsm-fs").value = STYLE.fs; $("rsm-fs-out").textContent = STYLE.fs + " pt";
     $("rsm-page-limit").value = STYLE.pageLimit || "auto";
     var wrap = $("rsm-custom-pages-wrap");
     if (wrap) wrap.style.display = (STYLE.pageLimit === "custom") ? "block" : "none";
     if ($("rsm-custom-pages") && STYLE.customPages) $("rsm-custom-pages").value = STYLE.customPages;
+    var plLab = $("rsm-page-limit-label");
+    if (plLab) {
+      var curPL = PAGE_LIMIT_OPTS.filter(function(o){ return o.v === (STYLE.pageLimit||'auto'); })[0];
+      plLab.textContent = curPL ? curPL.t : "Auto (Fit to content)";
+    }
     var formatBox = $("rsm-doc-format");
     if (formatBox) formatBox.value = STYLE.docFormat || "chrono";
     $("rsm-custom-color").value = /^#[0-9a-f]{6}$/i.test(STYLE.accent) ? STYLE.accent : "#0369A1";
