@@ -102,8 +102,8 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .breadcrumb-trail .bc-current{color:var(--text-main);font-weight:500}
 .tool-suite{display:flex;flex-direction:column;width:100%}
 .primary-title{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:700;line-height:1.25;letter-spacing:-0.035em;text-align:left;color:var(--text-main);margin:0 0 12px 0}
-.calculator-ui-box{width:min(100%,600px);max-width:600px;align-self:center !important;margin:0 auto 26px auto !important;padding:22px 18px 24px;border-radius:20px;background:linear-gradient(165deg,#07070B 0%,#0B1120 48%,#0F172A 100%) padding-box,linear-gradient(135deg,#F59E0B 0%,#10B981 52%,#F59E0B 100%) border-box;border:1.5px solid transparent;box-shadow:0 24px 48px -12px rgba(2,6,23,0.85),0 0 28px -6px rgba(16,185,129,0.22),0 0 18px -6px rgba(245,158,11,0.16),inset 0 1px 1px rgba(248,250,252,0.12);color:#F8FAFC;position:relative}
-@media (min-width:640px){.calculator-ui-box{padding:28px 30px 30px}}
+.calculator-ui-box{width:min(100%,600px);max-width:600px;align-self:center !important;margin:0 auto 26px auto !important;padding:8px 14px 24px !important;border-radius:20px;background:linear-gradient(165deg,#07070B 0%,#0B1120 48%,#0F172A 100%) padding-box,linear-gradient(135deg,#F59E0B 0%,#10B981 52%,#F59E0B 100%) border-box;border:1.5px solid transparent;box-shadow:0 24px 48px -12px rgba(2,6,23,0.85),0 0 28px -6px rgba(16,185,129,0.22),0 0 18px -6px rgba(245,158,11,0.16),inset 0 1px 1px rgba(248,250,252,0.12);color:#F8FAFC;position:relative}
+@media (min-width:640px){.calculator-ui-box{padding:12px 24px 30px !important}}
 .calculator-ui-box::after{content:"";position:absolute;left:12%;right:12%;bottom:-8px;height:8px;background:radial-gradient(ellipse at center,rgba(16,185,129,0.38) 0%,rgba(245,158,11,0.18) 50%,transparent 78%);filter:blur(4px);pointer-events:none}
 .auc-top-bar{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
 @media (min-width:520px){.auc-top-bar{grid-template-columns:1.15fr 1fr}}
@@ -376,7 +376,7 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   gap:8px 12px; margin:0 0 5px; min-height:0; line-height:1;
 }
 .rsm-preview-head h2{margin:0;font-size:0.88rem;font-weight:700;color:#10B981;letter-spacing:0.01em}
-.rsm-preview-tools{display:inline-flex;align-items:center;gap:6px}
+.rsm-preview-tools{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
 .rsm-pill{
   display:inline-block; padding:2px 9px; border-radius:999px;
   border:1px solid rgba(16,185,129,0.35); background:rgba(16,185,129,0.12);
@@ -390,6 +390,7 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   cursor:pointer; transition:all 0.15s ease;
 }
 .rsm-zoom-btn:hover{border-color:#F59E0B;background:#1E293B;color:#FFF}
+.rsm-zoom-btn:disabled{opacity:0.5;cursor:not-allowed;border-color:rgba(255,255,255,0.1);color:#94A3B8;background:transparent}
 .rsm-preview-wrap{
   margin:0 0 8px !important; padding-bottom:6px !important;
   border-bottom:1px dashed rgba(16,185,129,0.22) !important;
@@ -779,6 +780,7 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div class="rsm-preview-head">
   <h2 id="rsm-preview-title">Live Preview</h2>
   <div class="rsm-preview-tools">
+    <button type="button" class="rsm-zoom-btn" id="rsm-undo-btn" title="Undo last change" disabled>↩ Undo</button>
     <button type="button" class="rsm-zoom-btn" id="rsm-zoom-toggle" title="Switch between Whole Page view and Fit Width zoom">🔍 Whole Page</button>
     <span class="rsm-pill" id="rsm-pages">1 page</span>
   </div>
@@ -1197,8 +1199,11 @@ function tqcBoot() {
   var SAMPLE = clone(DATA);
   
   var presetFilter = "all", presetQuery = "";
-  /* Default to Whole-Page fit so the user sees the entire page interface at once */
   var previewFitMode = "page";
+  
+  /* --- 🌟 UNDO STATE MANAGEMENT 🌟 --- */
+  var stateHistory = [];
+  var isUndoing = false;
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
@@ -1221,7 +1226,6 @@ function tqcBoot() {
       var btn = $("rsm-doc-type-btn");
       if (!sel || !menu || !labelEl || !btn) return;
 
-      // Keep hidden native select in sync (for any legacy reads)
       var nativeHtml = "";
       Object.keys(DOC_CATEGORIES).forEach(function(catKey) {
           nativeHtml += '<optgroup label="' + DOC_CATEGORIES[catKey] + '">';
@@ -1235,7 +1239,6 @@ function tqcBoot() {
       sel.innerHTML = nativeHtml;
       sel.value = DATA.docType || "job_standard";
 
-      // Build professional custom menu
       var menuHtml = "";
       Object.keys(DOC_CATEGORIES).forEach(function(catKey) {
           menuHtml += '<div class="rsm-dd-group" role="presentation">' + esc(DOC_CATEGORIES[catKey]) + '</div>';
@@ -1248,7 +1251,6 @@ function tqcBoot() {
       });
       menu.innerHTML = menuHtml;
 
-      // Update visible label
       var current = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
       labelEl.textContent = current.title || "Select document type";
 
@@ -1280,7 +1282,6 @@ function tqcBoot() {
               sel.value = newVal;
               STYLE.docFormat = (DOC_TYPES[DATA.docType] && DOC_TYPES[DATA.docType].defaultFormat) || "chrono";
               labelEl.textContent = DOC_TYPES[DATA.docType].title;
-              // Update selected state
               menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
                 o.setAttribute("aria-selected", o.getAttribute("data-value") === newVal ? "true" : "false");
               });
@@ -1294,11 +1295,9 @@ function tqcBoot() {
           }
         });
 
-        // Close on outside click
         document.addEventListener("click", function(e) {
           if (!menu.hidden && !e.target.closest("#rsm-doc-type-dd")) closeMenu();
         });
-        // Close on Escape
         document.addEventListener("keydown", function(e) {
           if (e.key === "Escape" && !menu.hidden) closeMenu();
         });
@@ -1367,7 +1366,6 @@ function tqcBoot() {
       $("rsm-dynamic-form").innerHTML = formHTML;
       
       document.querySelectorAll(".ctc-bind").forEach(function(el) {
-          // Dim until user types real content
           if (!(el.value || "").trim()) el.classList.add("is-empty");
           else el.classList.remove("is-empty");
           el.addEventListener("input", function() {
@@ -1471,7 +1469,6 @@ function tqcBoot() {
     if (!f) return;
     if (!/^image\//.test(f.type)) { status("Please choose an image file (JPG or PNG)."); return; }
     if (f.size > 8 * 1024 * 1024) { status("That image is larger than 8 MB. Choose a smaller photo."); return; }
-    // Keep user in the Content panel — prevent scroll jump to article
     var panel = $("rsm-tab-content");
     var scrollTop = panel ? panel.scrollTop : 0;
     var rd = new FileReader();
@@ -1681,7 +1678,6 @@ function tqcBoot() {
     paper.style.cssText = "--ac:" + (isATS() ? "#0F172A" : S.accent) + ";--ac-soft:rgba(" + rgb.join(",") + ",0.10);--ac-mid:rgba(" + rgb.join(",") + ",0.38);--rf:" + (FONTS[S.font] || FONTS.sys)[1] + ";--rfs:" + S.fs + "pt;--rlh:" + dn[0] + ";--gap:" + dn[1] + "px;--pw:" + P.w + ";--ph:" + P.h + ";--pad:" + pad + "mm";
     paper.innerHTML = buildHTML() + '<div class="rs-breaks" aria-hidden="true"></div>';
     
-    // Measure natural height first so health check can detect clipping
     paper.style.height = "auto";
     paper.style.overflow = "visible";
     var naturalHeight = paper.offsetHeight;
@@ -1690,9 +1686,18 @@ function tqcBoot() {
     var limitN = getPageLimitNumber();
     if (limitN) {
         var forcedHeight = P.hpx * limitN;
+        var currentFs = S.fs;
+        var minFs = 7;
+        
+        // 🌟 Auto-Shrink Font Size to fit exactly without cutting 🌟
+        while (paper.offsetHeight > forcedHeight + 2 && currentFs > minFs) {
+            currentFs -= 0.5;
+            paper.style.setProperty("--rfs", currentFs + "pt");
+        }
+        
         paper.style.height = forcedHeight + "px";
         paper.style.overflow = "hidden";
-        paper.setAttribute("data-clipped", naturalHeight > forcedHeight + 2 ? "1" : "0");
+        paper.setAttribute("data-clipped", paper.offsetHeight > forcedHeight + 2 ? "1" : "0");
     } else {
         paper.style.height = "auto";
         paper.style.overflow = "visible";
@@ -1727,6 +1732,36 @@ function tqcBoot() {
   if (window.ResizeObserver) new ResizeObserver(function () { layoutPreview(); }).observe(stage);
   window.__tqcRsmLayout = layoutPreview;
   if (!window.__tqcRsmWin) { window.__tqcRsmWin = true; window.addEventListener("resize", function () { window.__tqcRsmLayout(); }); window.addEventListener("beforeprint", function () { window.__tqcRsmPrep(); }); }
+
+  /* --- Undo History Hooks --- */
+  var undoBtnEl = $("rsm-undo-btn");
+  if (undoBtnEl) {
+    undoBtnEl.addEventListener("click", function() {
+        if (stateHistory.length <= 1) return;
+        isUndoing = true;
+        stateHistory.pop(); // Remove the current state
+        var prevStateStr = stateHistory[stateHistory.length - 1];
+        var prevState = JSON.parse(prevStateStr);
+        
+        DATA = prevState.data;
+        STYLE = prevState.style;
+        
+        // Re-render UI
+        populateDocTypeDropdown();
+        renderDynamicStyleOptions(); 
+        syncControls();
+        renderDynamicForm();
+        renderGallery();
+        render(); 
+        
+        // Update button appearance
+        this.disabled = stateHistory.length <= 1;
+        this.style.opacity = stateHistory.length <= 1 ? "0.5" : "1";
+        this.style.cursor = stateHistory.length <= 1 ? "not-allowed" : "pointer";
+        
+        setTimeout(function() { isUndoing = false; }, 50);
+    });
+  }
 
   /* Whole-Page vs Zoom-In Toggle Button */
   var zoomToggleBtn = $("rsm-zoom-toggle");
@@ -1789,10 +1824,8 @@ function tqcBoot() {
     }, { passive: true });
   }
 
-  /* Bind Live Preview Drag Handle */
   bindDragResizer("rsm-stage-handle", function () { return [stage]; }, 200, layoutPreview);
 
-  /* Bind Workspace Panel Below Header Tabs Drag Handle (Syncs across Content, Style & Download panels) */
   bindDragResizer("rsm-panel-handle", function () {
     var vis = document.querySelector(".rsm-panel:not([hidden])");
     var all = Array.prototype.slice.call(document.querySelectorAll(".rsm-panel"));
@@ -1808,7 +1841,7 @@ function tqcBoot() {
     function add(ok, good, bad) { checks.push('<li class="' + (ok ? "ok" : "warn") + '"><span aria-hidden="true">' + (ok ? "✓" : "!") + "</span> " + (ok ? good : bad) + "</li>"); }
     
     if (clipped) {
-      add(false, "", "Content is clipped by the fixed page limit. Switch to Auto or increase page count.");
+      add(false, "", "Content still exceeds fixed limit even after font shrink. Consider trimming.");
     } else {
       add(pages <= 3, "Length is " + pages + (pages === 1 ? " page" : " pages") + ".", "Document runs to " + pages + " pages. Consider trimming or changing format.");
     }
@@ -1834,7 +1867,6 @@ function tqcBoot() {
       var isGovt = (cat === 'biodata_govt');
       var isOther = (cat === 'other');
       
-      // 1. Dynamic Layout Filters based on Category Context
       if (isMarriage) {
           filters = [
               { val: "all", label: "✦ All Styles" }, 
@@ -1885,7 +1917,6 @@ function tqcBoot() {
         filterBox.setAttribute("data-cat", cat);
       }
       
-      // 2. Format Strategy custom dropdown (hide for non-job categories)
       var formatContainer = $("rsm-format-container");
       var formatBox = $("rsm-doc-format");
       var formatMenu = $("rsm-doc-format-menu");
@@ -1921,12 +1952,11 @@ function tqcBoot() {
       }
   }
 
-  // Bind dynamic style filter clicks
   $("rsm-style-filters").addEventListener("click", function(e) {
       var b = e.target.closest("[data-pf]");
       if (!b) return;
       presetFilter = b.getAttribute("data-pf");
-      renderDynamicStyleOptions(); // Re-render to swap active class
+      renderDynamicStyleOptions(); 
       renderGallery();
   });
 
@@ -2001,7 +2031,6 @@ function tqcBoot() {
   
   $("rsm-preset-search").addEventListener("input", function () { presetQuery = this.value; renderGallery(); });
 
-  /* Reusable professional dropdown helper */
   function bindCustomDropdown(cfg) {
     var btn = $(cfg.btnId), menu = $(cfg.menuId), label = $(cfg.labelId), hidden = cfg.hiddenId ? $(cfg.hiddenId) : null;
     if (!btn || !menu) return;
@@ -2009,7 +2038,6 @@ function tqcBoot() {
     function open() { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); }
     btn.addEventListener("click", function(e) {
       e.stopPropagation();
-      // Close other open menus
       document.querySelectorAll(".rsm-dd-menu:not([hidden])").forEach(function(m) {
         if (m !== menu) { m.hidden = true; var b = m.parentElement && m.parentElement.querySelector(".rsm-dd-trigger"); if (b) b.setAttribute("aria-expanded","false"); }
       });
@@ -2045,7 +2073,6 @@ function tqcBoot() {
 
   var _controlsBound = false;
   function buildControls() {
-    // Style control dropdowns (professional)
     var html = "";
     CONTROLS.forEach(function (c) {
       var curVal = STYLE[c.key];
@@ -2064,7 +2091,6 @@ function tqcBoot() {
     });
     $("rsm-controls").innerHTML = html;
 
-    // Page limit menu
     var plMenu = $("rsm-page-limit-menu");
     if (plMenu) {
       plMenu.innerHTML = PAGE_LIMIT_OPTS.map(function(o){
@@ -2080,7 +2106,6 @@ function tqcBoot() {
     if (!_controlsBound) {
       _controlsBound = true;
 
-      // Bind each style control dropdown
       CONTROLS.forEach(function(c) {
         bindCustomDropdown({
           ddId: "rsm-dd-" + c.key,
@@ -2096,7 +2121,6 @@ function tqcBoot() {
         });
       });
 
-      // Format strategy dropdown
       bindCustomDropdown({
         ddId: "rsm-doc-format-dd",
         btnId: "rsm-doc-format-btn",
@@ -2109,7 +2133,6 @@ function tqcBoot() {
         }
       });
 
-      // Page limit dropdown
       bindCustomDropdown({
         ddId: "rsm-page-limit-dd",
         btnId: "rsm-page-limit-btn",
@@ -2183,15 +2206,33 @@ function tqcBoot() {
       var id = t.getAttribute("data-tab");
       document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
       
-      // Forces HTML hidden attribute update (CSS !important handles the visual lock)
       document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
-      
       setTimeout(window.__tqcRsmLayout, 10);
     });
   });
 
   /* ---------- Storage & Export ---------- */
-  function persist() { try { localStorage.setItem(STORE, JSON.stringify({ data: DATA, style: STYLE })); } catch (e) {} }
+  function persist() { 
+    try { 
+        localStorage.setItem(STORE, JSON.stringify({ data: DATA, style: STYLE })); 
+        
+        // 🌟 Track state history for Undo feature 🌟
+        if (!isUndoing) {
+            var currentState = JSON.stringify({ data: DATA, style: STYLE });
+            if (stateHistory.length === 0 || stateHistory[stateHistory.length - 1] !== currentState) {
+                stateHistory.push(currentState);
+                if (stateHistory.length > 50) stateHistory.shift();
+            }
+            var undoBtn = $("rsm-undo-btn");
+            if (undoBtn) {
+                undoBtn.disabled = stateHistory.length <= 1;
+                undoBtn.style.opacity = stateHistory.length <= 1 ? "0.5" : "1";
+                undoBtn.style.cursor = stateHistory.length <= 1 ? "not-allowed" : "pointer";
+            }
+        }
+    } catch (e) {} 
+  }
+  
   function loadStorage() {
     try {
       var raw = localStorage.getItem(STORE);
