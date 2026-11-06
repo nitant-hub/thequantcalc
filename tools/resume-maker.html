@@ -10,7 +10,7 @@
 <meta property="og:description" content="Free private resume builder: choose from 60 styles, 6 layouts, 16 accent colours and 10 fonts, then download a PDF. Your data never leaves your browser.">
 <meta property="og:url" content="https://thequantcal.pages.dev/tools/resume-maker">
 <meta property="og:type" content="website">
-<!-- Apply the visitor's saved theme before first paint (same "theme" key the site header uses). Default = light. -->
+<!-- Apply the visitor's saved theme before first paint -->
 <script>
 try {
 if (localStorage.getItem("theme") === "dark") {
@@ -18,7 +18,7 @@ document.documentElement.setAttribute("data-theme", "dark");
 }
 } catch (e) {}
 </script>
-<!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
+<!-- Single JSON-LD @graph -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,15 +46,7 @@ document.documentElement.setAttribute("data-theme", "dark");
           "name": "How many resume styles and options does this resume maker have?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 10 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes. You can also pick any custom colour and set the font size between 9 and 12 points."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is this resume maker really free, and do I need to sign up?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, it is free to use and there is no sign-up, no watermark and no download limit. The tool runs entirely in your browser, so there is no account to create. You can build, restyle and save as many resumes as you like."
+            "text": "It has 60 ready-made styles, made from 12 design recipes in 5 accent colours each, plus 67 individual choices that you can mix freely: 6 layouts, 16 accent colours, 10 fonts, 6 heading styles, 5 bullet styles, 3 skills displays, 3 date positions, 2 header alignments, 3 name styles, 2 banner or sidebar tones, 3 spacing levels, 3 margin sizes, 2 paper sizes and 3 photo shapes."
           }
         },
         {
@@ -62,55 +54,7 @@ document.documentElement.setAttribute("data-theme", "dark");
           "name": "Is my resume data private?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later. Clearing site data, using a private window or switching devices removes them, so download the backup file to keep a copy, and use Clear everything on shared computers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I download my resume as a PDF?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Open the Download tab and select Print / Save as PDF. In the print dialog choose Save as PDF as the destination, set margins to Default and turn off Headers and footers. If your browser offers a background graphics option, enable it so banner and sidebar colours appear. The page size follows your A4 or US Letter choice."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Which resume styles are best for applicant tracking systems?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Single-column layouts are generally the safest because applicant tracking systems read them in the correct order. In the gallery, use the ATS-safe filter to see the Executive, Corporate, Academic, Minimal and Compact styles, which use one column, standard fonts and plain section headings. Banner, sidebar and timeline styles look more designed but may be parsed less reliably by older systems, so use them for direct applications and referrals."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long should my resume be?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "One page is usually enough for students and people early in their careers, and two pages suit longer careers with relevant experience. The preview shows a red dashed line where a new page begins and the health check reports the page count, so you can trim older roles or switch to a compact spacing option when you run over."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Should I put a photo on my resume?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "It depends on the country and employer. Many employers in the United States and United Kingdom prefer resumes without a photo, while some other markets expect one. Applicant tracking systems cannot read photos, and the photo takes space from your content. The photo is optional here, stays in your browser and can be removed at any time."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why does the font in my PDF look slightly different from another computer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "To keep the tool fast and private, it uses system fonts already installed on your device instead of downloading web fonts. If a font such as Calibri or Garamond is missing, the browser substitutes a similar one. Georgia, Arial and Times New Roman are the most consistent across Windows, macOS and Android."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I edit my resume later or move it to another device?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Your work is saved automatically in the same browser. To continue on another device or keep a safe copy, use Download backup on the Download tab, then open the page on the other device and choose Load backup. The backup is a small file that contains your content and your style choices."
+            "text": "Your text and photo are processed in your browser and are not sent to any server by this page. They are saved in your browser's local storage so you can come back later."
           }
         }
       ]
@@ -133,7 +77,7 @@ document.documentElement.setAttribute("data-theme", "dark");
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Free Resume Maker with 60 Styles and 50+ Options",
+          "name": "Free Resume Maker",
           "item": "https://thequantcal.pages.dev/tools/resume-maker"
         }
       ]
@@ -175,18 +119,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
 .auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
 .auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
-.auc-value-row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
-@media (min-width:520px){.auc-value-row{grid-template-columns:1.4fr 1fr}}
-.auc-num-input{font-variant-numeric:tabular-nums;font-weight:600;font-size:1.1875rem}
-.auc-unit-bridge{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px}
-@media (max-width:520px){.auc-unit-bridge{grid-template-columns:1fr}
-.auc-swap-wrap{display:flex;justify-content:center;margin:2px 0}}
-.auc-swap-btn{width:46px;height:46px;border-radius:999px;border:1px solid rgba(245,158,11,0.45);background:linear-gradient(145deg,#1E293B,#0F172A);color:#F8FAFC;font-size:1.35rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.45),inset 0 1px 1px rgba(255,255,255,0.12);transition:transform 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease}
-.auc-swap-btn:hover,.auc-swap-btn:focus-visible{border-color:#10B981;color:#34D399;transform:rotate(180deg);box-shadow:0 0 14px rgba(16,185,129,0.4);outline:none}
-.auc-options-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:rgba(17,24,39,0.75);border:1px solid #1E293B;margin-bottom:16px;font-size:0.9375rem;color:#E2E8F0}
-.auc-format-radios{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.auc-format-radios label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
-.auc-format-radios input[type="radio"]{accent-color:#10B981;width:17px;height:17px}
 .auc-error-banner{display:none;background:rgba(239,68,68,0.14);border:1px solid rgba(248,113,113,0.5);color:#FCA5A5;padding:11px 14px;border-radius:12px;font-size:0.9375rem;line-height:1.45;margin-bottom:14px}
 .auc-error-banner.visible{display:block}
 .auc-action-row{display:flex;gap:12px;margin-bottom:18px}
@@ -198,25 +130,10 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 #result.tqc-result-box{border-radius:16px;padding:20px 18px;background:radial-gradient(circle at top right,rgba(245,158,11,0.16),transparent 60%),radial-gradient(circle at bottom left,rgba(16,185,129,0.2),transparent 65%),linear-gradient(180deg,#09131C 0%,#050B11 100%);border:1px solid rgba(16,185,129,0.45);box-shadow:inset 0 2px 6px rgba(0,0,0,0.75),inset 0 0 0 1px rgba(245,158,11,0.18),0 10px 24px -8px rgba(0,0,0,0.7)}
 .tqc-result-content{display:flex;flex-direction:column;gap:12px}
 .auc-res-header{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:0.8125rem;text-transform:uppercase;letter-spacing:0.06em;color:#A8B5C8}
-.auc-fav-btn{background:transparent;border:1px solid rgba(245,158,11,0.4);color:#F59E0B;border-radius:999px;padding:6px 13px;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap}
-.auc-fav-btn.saved{background:rgba(245,158,11,0.2);color:#FDE68A}
 .auc-primary-figure{font-size:clamp(1.9rem,5.2vw,2.5rem);font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums;background:linear-gradient(95deg,#34D399 0%,#10B981 45%,#F59E0B 100%);-webkit-background-clip:text;background-clip:text;color:transparent;word-break:break-word}
-.auc-equation-line{font-size:1rem;line-height:1.5;color:#E2E8F0;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-word}
-.auc-meta-grid{display:grid;grid-template-columns:1fr;gap:8px;padding-top:12px;border-top:1px solid rgba(148,163,184,0.16);font-size:0.9375rem;color:#D5DEEA}
-.auc-meta-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
-.auc-meta-row code{font-family:var(--font-mono);color:#FCD34D;font-size:0.875rem;word-break:break-word}
 .auc-sub-drawer{margin-top:12px;background:rgba(15,23,42,0.7);border:1px solid #1E293B;border-radius:12px;overflow:hidden}
 .auc-sub-drawer summary{padding:12px 14px;font-size:0.9375rem;font-weight:600;color:#E2E8F0;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .auc-sub-drawer summary:hover{color:#34D399}
-.auc-all-units-list{max-height:280px;overflow-y:auto;padding:8px 14px 12px;border-top:1px solid #1E293B;display:grid;grid-template-columns:1fr;gap:6px;font-size:0.9rem}
-.auc-unit-row{display:flex;justify-content:space-between;gap:12px;padding:6px 9px;border-radius:8px;background:rgba(17,24,39,0.6);font-variant-numeric:tabular-nums;color:#D5DEEA}
-.auc-unit-row.is-target{outline:1px solid rgba(16,185,129,0.55);background:rgba(16,185,129,0.12)}
-.auc-unit-row span{min-width:0}
-.auc-unit-row strong{color:#34D399;text-align:right;word-break:break-word}
-.auc-chip-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.auc-chip{background:#111827;border:1px solid #1E293B;color:#D5DEEA;border-radius:999px;padding:7px 14px;font-size:0.875rem;cursor:pointer;transition:border-color 0.15s ease}
-.auc-chip:hover{border-color:#F59E0B;color:#F8FAFC}
-.auc-chip.is-fav{border-color:rgba(245,158,11,0.5);color:#FDE68A}
 article.auc-article{background-color:var(--article-bg);border:1px solid var(--surface-border);border-radius:18px;padding:24px 20px;color:var(--text-body);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
@@ -295,11 +212,11 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-health li span{flex:0 0 auto;font-weight:800}
 .rsm-health li.ok span{color:#34D399}
 .rsm-health li.warn span{color:#FBBF24}
-.rsm-preview-wrap{margin:8px 0 26px}
 .rsm-preview-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;margin:0 0 10px}
 .rsm-preview-head h2{margin:0;font-size:1.2rem;color:var(--text-main)}
 .rsm-pill{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--surface-border);background:var(--article-soft);color:var(--text-body);font-size:0.8125rem;font-weight:600}
-.rsm-stage{background:#475569;border-radius:16px;padding:14px 4px;overflow:hidden;display:flex;justify-content:center}
+.rsm-stage{background:#475569;border-radius:16px;padding:14px 4px;overflow-y:auto;display:flex;justify-content:center;max-height:45vh;overscroll-behavior:contain;box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)}
+@media (min-width:768px){.rsm-stage{max-height:65vh}}
 .rsm-fit{position:relative}
 .rsm-scaler{transform-origin:top left;position:absolute;left:0;top:0}
 /* ---------- The resume paper ---------- */
@@ -425,6 +342,13 @@ body>*:not(#rsm-print-root){display:none !important}
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
+<!-- 🌟 ALWAYS-ON-TOP SPLIT SCREEN PREVIEW 🌟 -->
+<div class="rsm-preview-wrap" style="margin: 16px 0 24px; padding-bottom: 24px; border-bottom: 1px dashed rgba(16, 185, 129, 0.4);">
+<div class="rsm-preview-head" style="margin-bottom: 12px;"><h2 id="rsm-preview-title" style="font-size:1.1rem;color:#10B981;">Live Preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
+<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
+</div>
+<!-- END SPLIT SCREEN PREVIEW -->
+
 <div class="rsm-panel rsm-stack" id="rsm-tab-content">
 <details class="auc-sub-drawer" open>
 <summary><span>Personal details</span><span class="auc-label-accent">Required</span></summary>
@@ -493,16 +417,8 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="rsm-ctl-grid" id="rsm-controls"></div>
 <div class="auc-field-group"><label class="auc-label" for="rsm-fs"><span>Font size</span><span class="auc-label-accent" id="rsm-fs-out">10.5 pt</span></label><input type="range" id="rsm-fs" class="rsm-range" min="9" max="12" step="0.5" value="10.5"></div>
 <div class="auc-action-row" style="margin:16px 0 0"><button type="button" id="rsm-style-reset" class="auc-btn-secondary">Reset style</button></div>
-
-<!-- LIVE PREVIEW IS NOW INSIDE THE STYLE TAB -->
-<div class="rsm-preview-wrap" style="margin-top: 32px; padding-top: 24px; border-top: 1px dashed rgba(16, 185, 129, 0.4);">
-<div class="rsm-preview-head"><h2 id="rsm-preview-title">Live preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
-<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
 </div>
 
-</div>
-
-<!-- DOWNLOAD AND EXPORT TAB -->
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
@@ -514,8 +430,6 @@ body>*:not(#rsm-print-root){display:none !important}
 </div>
 <p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Your resume is saved in this browser automatically; nothing is uploaded.</p>
 <div id="rsm-status" class="rsm-status" role="status" aria-live="polite"></div>
-
-<!-- HEALTH CHECK MOVED TO EXPORT TAB -->
 <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite" style="margin-top:24px">
 <div class="tqc-result-content">
 <div class="auc-res-header"><span>Resume health check</span><span id="rsm-health-pages">1 page &bull; A4</span></div>
@@ -524,7 +438,6 @@ body>*:not(#rsm-print-root){display:none !important}
 </div>
 </div>
 </div>
-
 </div>
 </section>
 <div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
@@ -1159,11 +1072,7 @@ function tqcBoot() {
       var id = t.getAttribute("data-tab");
       document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
       document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
-      
-      // Force scaling re-calculation if switching to the style tab
-      if (id === "style") {
-        setTimeout(window.__tqcRsmLayout, 10);
-      }
+      setTimeout(window.__tqcRsmLayout, 10);
     });
   });
 
@@ -1239,7 +1148,7 @@ function tqcBoot() {
       }
     };
     reader.readAsText(f);
-    this.value = ""; // Reset the input so the same file can be selected again if needed
+    this.value = ""; 
   });
 
   /* Load Sample Resume */
@@ -1288,7 +1197,6 @@ function tqcBoot() {
   // Run boot sequence
   loadStorage();
   initUI();
-
 }
 
 // Start the application
