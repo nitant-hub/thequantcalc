@@ -119,6 +119,56 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
 .auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
 .auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
+
+/* --- 🌟 UPGRADED MAIN TABS 🌟 --- */
+.rsm-main-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(11, 17, 32, 0.7);
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+    margin-bottom: 0;
+}
+.rsm-main-tabs .auc-group-tab {
+    flex: 1;
+    text-align: center;
+    padding: 14px 8px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #64748B;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: normal;
+    line-height: 1.2;
+}
+.rsm-main-tabs .auc-group-tab:hover {
+    color: #CBD5E1;
+    background: rgba(30, 41, 59, 0.4);
+}
+.rsm-main-tabs .auc-group-tab[data-tab="content"].active {
+    background: linear-gradient(145deg, #064E3B 0%, #047857 100%);
+    border-color: #10B981;
+    color: #D1FAE5;
+    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+}
+.rsm-main-tabs .auc-group-tab[data-tab="style"].active {
+    background: linear-gradient(145deg, #312E81 0%, #4338CA 100%);
+    border-color: #6366F1;
+    color: #E0E7FF;
+    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+}
+.rsm-main-tabs .auc-group-tab[data-tab="export"].active {
+    background: linear-gradient(145deg, #78350F 0%, #B45309 100%);
+    border-color: #F59E0B;
+    color: #FEF3C7;
+    box-shadow: 0 4px 12px rgba(180, 83, 9, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+}
+/* --------------------------------- */
+
 .auc-error-banner{display:none;background:rgba(239,68,68,0.14);border:1px solid rgba(248,113,113,0.5);color:#FCA5A5;padding:11px 14px;border-radius:12px;font-size:0.9375rem;line-height:1.45;margin-bottom:14px}
 .auc-error-banner.visible{display:block}
 .auc-action-row{display:flex;gap:12px;margin-bottom:18px}
@@ -138,7 +188,6 @@ article.auc-article{background-color:var(--article-bg);border:1px solid var(--su
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
 article.auc-article h2:first-of-type{margin-top:0}
-article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
 article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
 article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
 article.auc-article li{margin-bottom:7px;line-height:1.6}
@@ -153,23 +202,38 @@ body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81
 .calculator-ui-box.rsm-box{width:100%;max-width:820px}
 .rsm-panel[hidden]{display:none}
 
-/* --- THE NEW Y-OVERFLOW FOR TABS & FLEX FIX --- */
+/* --- 🌟 UPGRADED PANELS WITH COLORED BACKGROUNDS 🌟 --- */
 .rsm-panel {
     max-height: 52vh;
     min-height: 250px;
     overflow-y: auto !important;
     overflow-x: hidden;
-    padding-right: 8px;
-    padding-bottom: 12px;
+    padding: 14px 12px;
     margin-top: 14px;
+    border-radius: 16px;
     scrollbar-width: thin;
     scrollbar-color: #334155 transparent;
+    border: 1px solid transparent;
 }
 .rsm-panel::-webkit-scrollbar { width: 6px; }
 .rsm-panel::-webkit-scrollbar-track { background: transparent; }
 .rsm-panel::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 10px; }
 
-/* Critical: Prevents Flexbox from squishing elements to 0px height */
+/* Custom Colors per Panel */
+#rsm-tab-content {
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
+    border-top-color: rgba(16, 185, 129, 0.15);
+}
+#rsm-tab-style {
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+    border-top-color: rgba(99, 102, 241, 0.15);
+}
+#rsm-tab-export {
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+    border-top-color: rgba(245, 158, 11, 0.15);
+}
+
+/* Critical Flex fix for Content Panel */
 .rsm-stack { display:flex; flex-direction:column; gap:12px; }
 .rsm-stack > * { flex-shrink: 0; }
 /* ---------------------------------------------- */
@@ -231,18 +295,18 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-fit{position:relative}
 .rsm-scaler{transform-origin:top left;position:absolute;left:0;top:0}
 /* ---------- The resume paper ---------- */
-.rs-paper{background:#fff;color:#1F2937;width:var(--pw);min-height:var(--ph);padding:var(--pad);font-family:var(--rf);font-size:var(--rfs);line-height:var(--rlh);box-sizing:border-box;position:relative;box-shadow:0 12px 34px rgba(0,0,0,0.35);-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-wrap:break-word;text-align:left}
+.rs-paper{background:#fff;color:#1F2937;width:var(--pw);min-height:var(--ph);padding:var(--pad);font-family:var(--rf);font-size:var(--rfs);line-height:var(--rlh);box-sizing:border-box;position:relative;box-shadow:0 18px 42px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.25);-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-wrap:break-word;text-align:left}
 .rs-paper *{box-sizing:border-box}
 .rs-paper a{color:inherit;text-decoration:none}
 .rs-paper h1,.rs-paper h2{margin:0}
 .rs-paper p{margin:0}
 .rs-paper.rs-bleed{padding:0}
-.rs-name{font-size:2.15em;line-height:1.12;font-weight:800;color:#0F172A;letter-spacing:-0.01em}
-.rn-upper .rs-name{text-transform:uppercase;letter-spacing:0.05em;font-size:1.9em}
-.rn-smallcaps .rs-name{font-variant:small-caps;letter-spacing:0.03em}
-.rs-title{font-size:1.15em;color:var(--ac);font-weight:600;margin-top:2px}
+.rs-name{font-size:2.25em;line-height:1.1;font-weight:800;color:#0F172A;letter-spacing:-0.02em}
+.rn-upper .rs-name{text-transform:uppercase;letter-spacing:0.04em;font-size:1.9em}
+.rn-smallcaps .rs-name{font-variant:small-caps;letter-spacing:0.02em}
+.rs-title{font-size:1.15em;color:var(--ac);font-weight:600;margin-top:4px}
 .rs-head{margin-bottom:calc(var(--gap) * 0.9)}
-.rs-contact{display:flex;flex-wrap:wrap;gap:2px 0;margin-top:6px;font-size:0.92em;color:#475569}
+.rs-contact{display:flex;flex-wrap:wrap;gap:2px 0;margin-top:6px;font-size:0.92em;color:#475569;font-weight:500;}
 .rs-sep{margin:0 8px;color:var(--ac-mid)}
 .rs-photo{width:92px;height:92px;object-fit:cover;flex:0 0 auto}
 .rs-photo-circle{border-radius:50%}
@@ -254,7 +318,7 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .ra-center .rs-contact{justify-content:center}
 .rl-modern .rs-head{padding-bottom:10px;border-bottom:3px solid var(--ac)}
 .rl-classic .rs-head{padding-bottom:8px}
-.rl-banner .rs-head.rs-band{margin:0 0 var(--gap);padding:var(--pad);background:var(--ac);color:#fff}
+.rl-banner .rs-head.rs-band{margin:0 0 var(--gap);padding:var(--pad);background:linear-gradient(135deg, var(--ac) 0%, var(--ac) 100%);color:#fff}
 .rl-banner.rt-light .rs-head.rs-band{background:var(--ac-soft);color:#0F172A;border-bottom:3px solid var(--ac)}
 .rl-banner .rs-band .rs-name{color:#fff}.rl-banner .rs-band .rs-title{color:rgba(255,255,255,0.92)}.rl-banner .rs-band .rs-contact{color:rgba(255,255,255,0.92)}.rl-banner .rs-band .rs-sep{color:rgba(255,255,255,0.5)}
 .rl-banner.rt-light .rs-band .rs-name{color:#0F172A}.rl-banner.rt-light .rs-band .rs-title{color:var(--ac)}.rl-banner.rt-light .rs-band .rs-contact{color:#475569}.rl-banner.rt-light .rs-band .rs-sep{color:var(--ac-mid)}
@@ -294,7 +358,7 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rb-none .rs-ul{padding-left:0}.rb-none .rs-ul li{list-style:none}
 .rs-ul li::marker{color:var(--ac)}
 .rs-sg{margin-bottom:5px}
-.rs-sgl{display:block;font-size:0.92em;color:#0F172A;margin-bottom:2px}
+.rs-sgl{display:block;font-size:0.92em;color:#0F172A;margin-bottom:2px;font-weight:600}
 .rs-chip{display:inline-block;padding:1px 9px;margin:2px 4px 2px 0;border:1px solid var(--ac-mid);background:var(--ac-soft);border-radius:999px;font-size:0.92em;color:#0F172A}
 .rs-skl{margin:0;padding-left:1.1em;columns:2;column-gap:18px}
 .rs-skl li{break-inside:avoid;margin-bottom:1px}
@@ -351,13 +415,13 @@ body>*:not(#rsm-print-root){display:none !important}
 <!-- 🌟 ALWAYS-ON-TOP LIVE PREVIEW 🌟 -->
 <div class="rsm-preview-wrap" style="margin: 0 0 16px; padding-bottom: 24px; border-bottom: 1px dashed rgba(16, 185, 129, 0.4);">
 <div class="rsm-preview-head" style="margin-bottom: 12px;"><h2 id="rsm-preview-title" style="font-size:1.1rem;color:#10B981;">Live Preview</h2><span class="rsm-pill" id="rsm-pages">1 page</span></div>
-<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper"></div></div></div></div>
+<div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
 
-<!-- TABS (Moved right below the preview) -->
-<div class="auc-group-tabs" role="group" aria-label="Resume maker sections">
+<!-- 🌟 UPGRADED TABS 🌟 -->
+<div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
-<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style (60 presets + 50 options)</button>
+<button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style</button>
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
@@ -437,13 +501,14 @@ body>*:not(#rsm-print-root){display:none !important}
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
-<!-- 🌟 NEW DOWNLOAD AS IMAGE BUTTON 🌟 -->
+<!-- 🌟 NEW SHARE AND IMAGE BUTTONS 🌟 -->
 <button type="button" id="rsm-image-btn" class="auc-btn-secondary">Download as Photo (.png)</button>
-<button type="button" id="rsm-copy-btn" class="auc-btn-secondary">Copy plain text (for ATS forms)</button>
+<button type="button" id="rsm-share-btn" class="auc-btn-secondary">Share this tool</button>
+<button type="button" id="rsm-copy-btn" class="auc-btn-secondary">Copy plain text (for ATS)</button>
 <button type="button" id="rsm-json-btn" class="auc-btn-secondary">Download backup (.json)</button>
 <label class="rsm-file-btn">Load backup (.json)<input type="file" id="rsm-json-file" accept="application/json,.json"></label>
 <button type="button" id="rsm-sample-btn" class="auc-btn-secondary">Load sample resume</button>
-<button type="button" id="rsm-clear-btn" class="auc-btn-secondary" style="border-color:#F87171; color:#FCA5A5;">Clear everything</button>
+<button type="button" id="rsm-clear-btn" class="auc-btn-secondary" style="border-color:rgba(248,113,113,0.5); color:#FCA5A5;">Clear everything</button>
 </div>
 <p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Your resume is saved in this browser automatically; nothing is uploaded.</p>
 <div id="rsm-status" class="rsm-status" role="status" aria-live="polite"></div>
@@ -1053,26 +1118,34 @@ function tqcBoot() {
   window.__tqcRsmPrep = preparePrint;
   $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
 
-  /* 🌟 PURE VANILLA JS IMAGE DOWNLOADER 🌟 */
+  /* 🌟 UPGRADED VANILLA JS IMAGE DOWNLOADER 🌟 */
   $("rsm-image-btn").addEventListener("click", function () {
-    status("Generating image... please wait.");
+    status("Generating high-quality photo... please wait.");
     var node = $("resume-paper");
     var w = node.offsetWidth;
     var h = node.offsetHeight;
-    var clone = node.cloneNode(true);
     
+    // Create a strict clone and force the XHTML namespace so mobile browsers render it
+    var clone = node.cloneNode(true);
+    clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+    
+    // Inject all page CSS directly into the clone
     var styleStr = "";
     document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
-    clone.style.cssText = node.style.cssText + "; margin: 0; box-shadow: none;";
+    clone.style.cssText = node.style.cssText + "; margin: 0; box-shadow: none; overflow: hidden;";
+    
+    // Use XMLSerializer to enforce strict self-closing tags (critical for SVG rendering on Safari/Mobile)
+    var serializer = new XMLSerializer();
+    var htmlStr = serializer.serializeToString(clone);
     
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
-              '<style>' + styleStr + '</style>' +
+              '<style><![CDATA[' + styleStr + ']]></style>' +
               '<foreignObject width="100%" height="100%">' +
-              '<div xmlns="http://www.w3.org/1999/xhtml">' + clone.outerHTML + '</div>' +
+              htmlStr +
               '</foreignObject></svg>';
               
-    var blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-    var url = URL.createObjectURL(blob);
+    // Base64 encoding bypasses Blob security strictness on iOS Safari
+    var svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     var img = new Image();
     
     img.onload = function () {
@@ -1091,13 +1164,29 @@ function tqcBoot() {
       document.body.appendChild(a);
       a.click();
       a.remove();
-      URL.revokeObjectURL(url);
       status("Resume downloaded as Photo (PNG).");
     };
     img.onerror = function () {
-      status("Error generating photo in this browser. Please use 'Save as PDF' instead.");
+      status("Error generating photo on this specific browser. Please use 'Save as PDF' instead.");
     };
-    img.src = url;
+    img.src = svgData;
+  });
+  
+  /* 🌟 NEW NATIVE MOBILE SHARE BUTTON 🌟 */
+  $("rsm-share-btn").addEventListener("click", function () {
+      if (navigator.share) {
+          navigator.share({
+              title: 'Free Resume Maker',
+              text: 'Build a professional resume for free, completely in your browser!',
+              url: window.location.href
+          }).then(function() {
+              status("Thanks for sharing!");
+          }).catch(function(error) {
+              console.log('Error sharing:', error);
+          });
+      } else {
+          status("Native sharing is not supported on this device/browser. Please copy the URL directly.");
+      }
   });
   
   $("rsm-copy-btn").addEventListener("click", function () {
