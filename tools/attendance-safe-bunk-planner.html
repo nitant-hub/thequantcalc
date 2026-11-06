@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" data-category="education">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Calculator &amp; Safe Bunk Planner (75% Rule)</title>
+<meta name="description" content="Find your attendance percentage, how many classes you can safely skip, and how many you must attend to reach 75% or any limit. Subject-wise, free, no sign-up.">
+<link rel="canonical" href="https://thequantcal.pages.dev/tools/attendance-safe-bunk-planner">
+<meta property="og:title" content="Attendance Calculator &amp; Safe Bunk Planner (75% Rule)">
+<meta property="og:description" content="Free attendance calculator: current %, safe bunks left, classes to attend to reach the required percentage, subject-wise and overall, with semester projection.">
+<meta property="og:url" content="https://thequantcal.pages.dev/tools/attendance-safe-bunk-planner">
+<meta property="og:type" content="website">
+<!-- Apply the visitor's saved theme before first paint (same "theme" key the site header uses). Default = light. -->
+<script>
+try {
+if (localStorage.getItem("theme") === "dark") {
+document.documentElement.setAttribute("data-theme", "dark");
+}
+} catch (e) {}
+</script>
+<!-- Single JSON-LD @graph with WebApplication, FAQPage, and BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "College Attendance & Safe Bunk Planner",
+      "url": "https://thequantcal.pages.dev/tools/attendance-safe-bunk-planner",
+      "description": "A client-side college attendance calculator that shows current attendance, how many classes can be missed while staying above a required percentage, and how many consecutive classes must be attended to recover, per subject and overall.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "TheQuantCalc",
+        "url": "https://thequantcal.pages.dev/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I calculate how many classes I can bunk with 75% attendance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Divide the classes you attended by 0.75, subtract the classes held so far, and round down. For example, with 32 attended out of 40 held, 32 divided by 0.75 is 42.67, minus 40 gives 2.67, so you can skip 2 classes right now and stay at or above 75%. After skipping 2 you would have 32 out of 42, which is 76.19%, while skipping a third class drops you to 74.42%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many classes do I need to attend to reach 75% attendance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the formula n equals (0.75 times classes held minus classes attended) divided by 0.25, rounded up. With 25 attended out of 36 held, that is (27 minus 25) divided by 0.25, which is 8 classes in a row. After attending 8 you have 33 out of 44, exactly 75%, while 7 classes would leave you at 74.42%. The planner calculates this for every subject."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between safe skips now and safe skips in the semester?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Safe skips now is how many classes you could miss starting today, with no further attendance, before you drop below the limit. Safe skips in the semester uses the total number of classes planned and counts how many you can miss across the whole remaining term while still finishing at or above the required percentage. The semester figure is usually higher and is the one to plan with. Enter the total classes for the semester to see it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does medical leave or duty leave count as attendance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on your college. Many institutions count approved medical leave, sports duty or similar leave as present, and some require a minimum number of days actually attended. Enter those classes in the medical or duty leave field only if your college counts them, and keep your certificates. The official record is the attendance shown on your college portal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My college rounds attendance to the nearest whole number. How does that change the result?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If your college rounds 74.5% up to 75%, the effective limit is 74.5%, so you may be allowed slightly more skips. Tick the rounding option to lower the limit by half a percentage point. For example, 149 attended out of 200 held is 74.5%: under the strict rule you must attend 4 more classes in a row, while under the rounding rule you are exactly at the limit with no spare classes. Only use this option if your college rule says so."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is attendance calculated overall or subject by subject?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both are used in different institutions. Many require the minimum in every subject, so a strong overall percentage can hide a subject that is below the limit. The planner shows each subject with its own status and also an overall figure. If one subject has a different requirement, such as a practical course, type that percentage in the per-subject override field."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the required attendance is 100 percent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At a 100 percent requirement you cannot skip any class, and if you have already missed one, attending every remaining class cannot raise you back to 100 percent. The planner shows that recovery is not possible by attending alone. Check whether your college allows condonation or leave for such cases."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the planner save my attendance data or share it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No data is sent to a server. Your subjects, class counts and settings are saved in your browser's local storage so they are there on your next visit on the same device. Clearing your browser data removes them. Always compare the results with the attendance shown on your official college portal."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thequantcal.pages.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Education",
+          "item": "https://thequantcal.pages.dev/#education"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "College Attendance & Safe Bunk Planner",
+          "item": "https://thequantcal.pages.dev/tools/attendance-safe-bunk-planner"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root,html[data-theme="light"]{--font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;--surface-page:#F1F5F9;--article-bg:#FFFFFF;--article-soft:#F8FAFC;--surface-card:#FFFFFF;--surface-inset:#F1F5F9;--surface-border:#E2E8F0;--text-main:#0F172A;--text-body:#334155;--text-muted:#64748B;--link-color:#059669;--table-stripe:#F8FAFC}
+html[data-theme="dark"]{--surface-page:#050811;--article-bg:#0B1120;--article-soft:#111827;--surface-card:#0F172A;--surface-inset:#070A12;--surface-border:#1E293B;--text-main:#F8FAFC;--text-body:#CBD5E1;--text-muted:#94A3B8;--link-color:#34D399;--table-stripe:#0F172A}
+html[data-theme="light"][data-category="utility"],html:not([data-theme])[data-category="utility"]{--surface-page:#F0F4F8;--article-bg:#FAFBFD;--article-soft:#F1F5F9;--surface-card:#FFFFFF;--surface-border:#CBD5E1}
+html[data-theme="dark"][data-category="utility"]{--surface-page:#060913;--article-bg:#0B1120;--article-soft:#131C31;--surface-card:#0F172A;--surface-border:#1E293B}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surface-page);color:var(--text-main);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.tqc-page-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:1280px;margin:0 auto;padding:18px 16px 56px}
+@media (min-width:768px){.tqc-page-grid{grid-template-columns:minmax(0,69%) minmax(250px,30%);justify-content:space-between;gap:8px;max-width:100%;margin:0;padding:24px 4px 64px 2px}.main-body{padding:0 8px}}
+.main-body{display:flex;flex-direction:column;width:100%;min-width:0}
+.sidebar{width:100%;min-width:0}
+.breadcrumb-trail{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:0.88rem;line-height:1.4;color:var(--text-muted);margin:0 0 10px 0}
+.breadcrumb-trail a{color:var(--text-muted);text-decoration:none;transition:color 0.15s ease}
+.breadcrumb-trail a:hover,.breadcrumb-trail a:focus-visible{color:var(--link-color);text-decoration:underline}
+.breadcrumb-trail .bc-current{color:var(--text-main);font-weight:500}
+.tool-suite{display:flex;flex-direction:column;width:100%}
+.primary-title{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:700;line-height:1.25;letter-spacing:-0.035em;text-align:left;color:var(--text-main);margin:0 0 12px 0}
+.calculator-ui-box{width:min(100%,600px);max-width:600px;align-self:center !important;margin:0 auto 26px auto !important;padding:22px 18px 24px;border-radius:20px;background:linear-gradient(165deg,#07070B 0%,#0B1120 48%,#0F172A 100%) padding-box,linear-gradient(135deg,#F59E0B 0%,#10B981 52%,#F59E0B 100%) border-box;border:1.5px solid transparent;box-shadow:0 24px 48px -12px rgba(2,6,23,0.85),0 0 28px -6px rgba(16,185,129,0.22),0 0 18px -6px rgba(245,158,11,0.16),inset 0 1px 1px rgba(248,250,252,0.12);color:#F8FAFC;position:relative}
+@media (min-width:640px){.calculator-ui-box{padding:28px 30px 30px}}
+.calculator-ui-box::after{content:"";position:absolute;left:12%;right:12%;bottom:-8px;height:8px;background:radial-gradient(ellipse at center,rgba(16,185,129,0.38) 0%,rgba(245,158,11,0.18) 50%,transparent 78%);filter:blur(4px);pointer-events:none}
+.auc-top-bar{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
+@media (min-width:520px){.auc-top-bar{grid-template-columns:1.15fr 1fr}}
+.auc-field-group{display:flex;flex-direction:column;gap:6px;min-width:0}
+.auc-label{font-size:0.9375rem;font-weight:600;color:#E2E8F0;letter-spacing:0.01em;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.auc-label-accent{color:#F59E0B;font-size:0.8125rem;font-weight:500;white-space:nowrap}
+.auc-input,.auc-select{width:100%;min-height:46px;background:linear-gradient(180deg,#111827 0%,#1E293B 100%);color:#F8FAFC;border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:11px 14px;font-size:1.0625rem;font-family:var(--font-sans);box-shadow:inset 0 2px 5px rgba(0,0,0,0.65),inset 0 0 0 1px rgba(16,185,129,0.12),0 1px 0 rgba(255,255,255,0.05);transition:border-color 0.18s ease,box-shadow 0.18s ease;outline:none;text-overflow:ellipsis}
+.auc-input::placeholder{color:#7C8CA3}
+.auc-input:focus,.auc-select:focus{border-color:#10B981;box-shadow:inset 0 2px 5px rgba(0,0,0,0.7),0 0 0 3px rgba(16,185,129,0.25),0 0 12px rgba(245,158,11,0.2)}
+.auc-select option,.auc-select optgroup{background-color:#0F172A;color:#F8FAFC}
+.auc-group-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:thin;scrollbar-color:#334155 transparent}
+.auc-group-tab{flex:0 0 auto;background:#111827;color:#A8B5C8;border:1px solid #1E293B;border-radius:999px;padding:8px 15px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:all 0.15s ease}
+.auc-group-tab:hover{color:#F8FAFC;border-color:rgba(245,158,11,0.45)}
+.auc-group-tab:focus-visible{outline:2px solid #10B981;outline-offset:2px}
+.auc-group-tab.active{background:linear-gradient(135deg,rgba(16,185,129,0.22),rgba(245,158,11,0.22));color:#F8FAFC;border-color:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.25)}
+.auc-value-row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px}
+@media (min-width:520px){.auc-value-row{grid-template-columns:1.4fr 1fr}}
+.auc-num-input{font-variant-numeric:tabular-nums;font-weight:600;font-size:1.1875rem}
+.auc-unit-bridge{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px}
+@media (max-width:520px){.auc-unit-bridge{grid-template-columns:1fr}
+.auc-swap-wrap{display:flex;justify-content:center;margin:2px 0}}
+.auc-swap-btn{width:46px;height:46px;border-radius:999px;border:1px solid rgba(245,158,11,0.45);background:linear-gradient(145deg,#1E293B,#0F172A);color:#F8FAFC;font-size:1.35rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.45),inset 0 1px 1px rgba(255,255,255,0.12);transition:transform 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease}
+.auc-swap-btn:hover,.auc-swap-btn:focus-visible{border-color:#10B981;color:#34D399;transform:rotate(180deg);box-shadow:0 0 14px rgba(16,185,129,0.4);outline:none}
+.auc-options-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:rgba(17,24,39,0.75);border:1px solid #1E293B;margin-bottom:16px;font-size:0.9375rem;color:#E2E8F0}
+.auc-format-radios{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.auc-format-radios label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.auc-format-radios input[type="radio"]{accent-color:#10B981;width:17px;height:17px}
+.auc-error-banner{display:none;background:rgba(239,68,68,0.14);border:1px solid rgba(248,113,113,0.5);color:#FCA5A5;padding:11px 14px;border-radius:12px;font-size:0.9375rem;line-height:1.45;margin-bottom:14px}
+.auc-error-banner.visible{display:block}
+.auc-action-row{display:flex;gap:12px;margin-bottom:18px}
+.auc-btn-primary{flex:2;padding:13px 20px;border-radius:999px;border:1px solid rgba(16,185,129,0.65);background:linear-gradient(180deg,#10B981 0%,#059669 100%);color:#04130E;font-weight:700;font-size:1.0625rem;letter-spacing:0.01em;cursor:pointer;box-shadow:0 6px 18px rgba(16,185,129,0.38),inset 0 1px 1px rgba(255,255,255,0.45);transition:transform 0.12s ease,filter 0.15s ease}
+.auc-btn-primary:hover{filter:brightness(1.08)}
+.auc-btn-primary:active{transform:translateY(1px)}
+.auc-btn-secondary{flex:1;padding:13px 16px;border-radius:999px;border:1px solid rgba(245,158,11,0.32);background:rgba(17,24,39,0.72);color:#E2E8F0;font-weight:600;font-size:1rem;cursor:pointer;box-shadow:inset 0 1px 1px rgba(255,255,255,0.08);transition:background 0.15s ease,border-color 0.15s ease}
+.auc-btn-secondary:hover{background:rgba(30,41,59,0.9);border-color:#F59E0B}
+#result.tqc-result-box{border-radius:16px;padding:20px 18px;background:radial-gradient(circle at top right,rgba(245,158,11,0.16),transparent 60%),radial-gradient(circle at bottom left,rgba(16,185,129,0.2),transparent 65%),linear-gradient(180deg,#09131C 0%,#050B11 100%);border:1px solid rgba(16,185,129,0.45);box-shadow:inset 0 2px 6px rgba(0,0,0,0.75),inset 0 0 0 1px rgba(245,158,11,0.18),0 10px 24px -8px rgba(0,0,0,0.7)}
+.tqc-result-content{display:flex;flex-direction:column;gap:12px}
+.auc-res-header{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:0.8125rem;text-transform:uppercase;letter-spacing:0.06em;color:#A8B5C8}
+.auc-fav-btn{background:transparent;border:1px solid rgba(245,158,11,0.4);color:#F59E0B;border-radius:999px;padding:6px 13px;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.auc-fav-btn.saved{background:rgba(245,158,11,0.2);color:#FDE68A}
+.auc-primary-figure{font-size:clamp(1.9rem,5.2vw,2.5rem);font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums;background:linear-gradient(95deg,#34D399 0%,#10B981 45%,#F59E0B 100%);-webkit-background-clip:text;background-clip:text;color:transparent;word-break:break-word}
+.auc-equation-line{font-size:1rem;line-height:1.5;color:#E2E8F0;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-word}
+.auc-meta-grid{display:grid;grid-template-columns:1fr;gap:8px;padding-top:12px;border-top:1px solid rgba(148,163,184,0.16);font-size:0.9375rem;color:#D5DEEA}
+.auc-meta-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
+.auc-meta-row code{font-family:var(--font-mono);color:#FCD34D;font-size:0.875rem;word-break:break-word}
+.auc-sub-drawer{margin-top:12px;background:rgba(15,23,42,0.7);border:1px solid #1E293B;border-radius:12px;overflow:hidden}
+.auc-sub-drawer summary{padding:12px 14px;font-size:0.9375rem;font-weight:600;color:#E2E8F0;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.auc-sub-drawer summary:hover{color:#34D399}
+.auc-all-units-list{max-height:280px;overflow-y:auto;padding:8px 14px 12px;border-top:1px solid #1E293B;display:grid;grid-template-columns:1fr;gap:6px;font-size:0.9rem}
+.auc-unit-row{display:flex;justify-content:space-between;gap:12px;padding:6px 9px;border-radius:8px;background:rgba(17,24,39,0.6);font-variant-numeric:tabular-nums;color:#D5DEEA}
+.auc-unit-row.is-target{outline:1px solid rgba(16,185,129,0.55);background:rgba(16,185,129,0.12)}
+.auc-unit-row span{min-width:0}
+.auc-unit-row strong{color:#34D399;text-align:right;word-break:break-word}
+.auc-chip-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.auc-chip{background:#111827;border:1px solid #1E293B;color:#D5DEEA;border-radius:999px;padding:7px 14px;font-size:0.875rem;cursor:pointer;transition:border-color 0.15s ease}
+.auc-chip:hover{border-color:#F59E0B;color:#F8FAFC}
+.auc-chip.is-fav{border-color:rgba(245,158,11,0.5);color:#FDE68A}
+article.auc-article{background-color:var(--article-bg);border:1px solid var(--surface-border);border-radius:18px;padding:24px 20px;color:var(--text-body);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+@media (min-width:768px){article.auc-article{padding:34px 36px}}
+article.auc-article h2{font-size:clamp(1.3125rem,2.2vw,1.65rem);line-height:1.22;font-weight:700;color:var(--text-main);margin:30px 0 12px 0;letter-spacing:-0.02em}
+article.auc-article h2:first-of-type{margin-top:0}
+article.auc-article h3{font-size:clamp(1.125rem,1.8vw,1.32rem);line-height:1.28;font-weight:600;color:var(--text-main);margin:22px 0 8px 0}
+article.auc-article p{font-size:1.02rem;line-height:1.66;margin:0 0 14px 0;max-width:76ch}
+article.auc-article ul,article.auc-article ol{margin:0 0 16px 0;padding-left:22px;max-width:76ch}
+article.auc-article li{margin-bottom:7px;line-height:1.6}
+article.auc-article a{color:var(--link-color);text-decoration:underline;text-underline-offset:2px}
+.auc-surface-box{background-color:var(--article-soft);border:1px solid var(--surface-border);border-left:4px solid #10B981;border-radius:12px;padding:15px 18px;margin:18px 0}
+.auc-formula-card{background-color:var(--surface-inset);border:1px solid var(--surface-border);border-radius:12px;padding:14px 16px;margin:14px 0;font-family:var(--font-mono);font-size:0.9rem;color:var(--text-main);overflow-x:auto}
+.data-table-wrapper{width:100%;overflow-x:auto;margin:18px 0 22px;border:1px solid var(--surface-border);border-radius:12px}
+.auc-table{width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left}
+.auc-table th,.auc-table td{padding:10px 13px;border-bottom:1px solid var(--surface-border)}
+.auc-table th{background-color:var(--article-soft);color:var(--text-main);font-weight:600;white-space:nowrap}
+.auc-table tr:nth-child(even) td{background-color:var(--table-stripe)}
+.auc-table td.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.auc-faq-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+details.auc-faq-item{background-color:var(--article-soft);border:1px solid var(--surface-border);border-radius:12px;padding:13px 16px}
+details.auc-faq-item summary{font-weight:600;font-size:1rem;color:var(--text-main);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.auc-faq-item summary::-webkit-details-marker{display:none}
+details.auc-faq-item summary::after{content:"+";font-weight:700;color:#10B981;font-size:1.2rem;line-height:1}
+details.auc-faq-item[open] summary::after{content:"−"}
+.auc-faq-body{margin-top:10px;padding-top:10px;border-top:1px solid var(--surface-border);font-size:0.95rem;line-height:1.62;color:var(--text-body)}
+body{padding-top:50px;background-image:linear-gradient(145deg,#164e63 0%,#312e81 50%,#0f172a 100%);background-size:100% 50px;background-repeat:no-repeat}
+@media (min-width:768px){body{padding-top:60px;background-size:100% 60px}}
+.att-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px;align-items:end}
+@media (min-width:520px){.att-grid{grid-template-columns:1fr 1fr}}
+.att-row{border:1px solid #1E293B;border-radius:12px;padding:12px;background:rgba(17,24,39,0.6);margin-bottom:12px}
+.att-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:#E2E8F0;font-size:0.9375rem}
+.att-mini{width:34px;height:34px;border-radius:8px;border:1px solid rgba(245,158,11,0.35);background:#111827;color:#E2E8F0;cursor:pointer;line-height:1}
+.att-mini:hover,.att-mini:focus-visible{border-color:#F87171;color:#FCA5A5;outline:none}
+.att-fields{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:520px){.att-fields{grid-template-columns:1fr 1fr}.att-fields .att-wide{grid-column:1/-1}}
+.att-add{width:100%;padding:11px 14px;border-radius:12px;border:1px dashed rgba(16,185,129,0.55);background:transparent;color:#34D399;font-weight:600;font-size:0.9375rem;cursor:pointer;margin-bottom:16px}
+.att-add:hover{background:rgba(16,185,129,0.1)}
+.att-check{display:flex;align-items:flex-start;gap:9px;margin:0 0 16px;color:#E2E8F0;font-size:0.9375rem;line-height:1.4;cursor:pointer}
+.att-check input{accent-color:#10B981;width:18px;height:18px;margin-top:2px;flex:0 0 auto}
+.att-wrap{max-height:460px;overflow:auto;border-top:1px solid #1E293B}
+.att-tbl{width:100%;border-collapse:collapse;font-size:0.9rem;color:#D5DEEA;min-width:640px}
+.att-tbl th{font-size:0.75rem;color:#A8B5C8;text-align:left;padding:8px 12px;position:sticky;top:0;background:#0F172A;white-space:nowrap}
+.att-tbl td{padding:8px 12px;border-bottom:1px solid rgba(30,41,59,0.8);vertical-align:top}
+.att-tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.att-tbl td.att-ok{color:#34D399;font-weight:700;white-space:nowrap}
+.att-tbl td.att-edge{color:#FBBF24;font-weight:700;white-space:nowrap}
+.att-tbl td.att-bad{color:#F87171;font-weight:700;white-space:nowrap}
+.att-sub{font-size:0.78rem;color:#A8B5C8;font-weight:400}
+.att-note{padding:12px 14px;border-top:1px solid #1E293B;font-size:0.8125rem;color:#A8B5C8;line-height:1.45}
+
+</style>
+</head>
+<body>
+<div class="tqc-page-grid">
+<main class="main-body">
+<nav class="breadcrumb-trail" aria-label="Breadcrumb">
+<a href="https://thequantcal.pages.dev/">Home</a>
+<span aria-hidden="true">&rarr;</span>
+<a href="https://thequantcal.pages.dev/#education">Education</a>
+<span aria-hidden="true">&rarr;</span>
+<span class="bc-current" aria-current="page">College Attendance &amp; Safe Bunk Planner</span>
+</nav>
+<section class="tool-suite" aria-labelledby="calc-main-title">
+<h1 id="calc-main-title" class="primary-title">College Attendance &amp; Safe Bunk Planner</h1>
+<div class="calculator-ui-box">
+<div class="att-grid">
+<div class="auc-field-group"><label class="auc-label" for="att-req"><span>Required attendance (%)</span><span class="auc-label-accent">Default for all</span></label><input type="number" id="att-req" class="auc-input auc-num-input" value="75" min="1" max="100" step="any" inputmode="decimal"></div>
+<div class="auc-field-group"><label class="auc-label" for="att-k"><span>What if I miss the next ___ classes?</span></label><input type="number" id="att-k" class="auc-input auc-num-input" value="3" min="0" step="1" inputmode="numeric"></div>
+</div>
+<label class="att-check"><input type="checkbox" id="att-round"> <span>My college rounds attendance to the nearest whole number (so 74.5% counts as 75%)</span></label>
+<div class="auc-label" style="margin-bottom:8px"><span>Your subjects</span><span class="auc-label-accent">Up to 15</span></div>
+<div id="att-rows"></div>
+<button type="button" id="att-add" class="att-add">+ Add subject</button>
+<div id="att-error" class="auc-error-banner" role="alert" aria-live="assertive"></div>
+<div class="auc-action-row">
+<button type="button" id="att-calc-btn" class="auc-btn-primary">Calculate Safe Bunks</button>
+<button type="button" id="att-reset-btn" class="auc-btn-secondary">Reset</button>
+</div>
+<div id="result" class="tqc-result-box" data-tqc-result aria-live="polite">
+<div class="tqc-result-content">
+<div class="auc-res-header"><span id="att-tag">Attendance planner</span><button type="button" id="att-copy-btn" class="auc-fav-btn" title="Copy a summary of this result">&#128203; Copy</button></div>
+<div id="att-primary" class="auc-primary-figure">&mdash;</div>
+<div id="att-equation" class="auc-equation-line">Enter your classes held and attended to see how many you can safely skip.</div>
+<div class="auc-meta-grid">
+<div class="auc-meta-row"><span>Overall attendance:</span><code id="att-overall-line">&mdash;</code></div>
+<div class="auc-meta-row"><span>Overall status:</span><code id="att-overall-status">&mdash;</code></div>
+<div class="auc-meta-row"><span>Overall safe skips / to recover:</span><code id="att-overall-skip">&mdash;</code></div>
+<div class="auc-meta-row"><span>End of semester outlook:</span><code id="att-overall-final">&mdash;</code></div>
+</div>
+<details class="auc-sub-drawer" open>
+<summary><span>Subject-wise plan</span><span class="auc-label-accent">Table</span></summary>
+<div class="att-wrap"><table class="att-tbl"><thead><tr><th>Subject</th><th>Now</th><th>Status</th><th>Safe skips</th><th>To recover</th><th>After missing <span id="att-k-label">3</span></th></tr></thead><tbody id="att-table"></tbody></table></div>
+<div class="att-note"><strong>Safe skips now</strong> is how many classes you could miss starting today before you fall below the limit. <strong>In semester</strong> uses your total planned classes, so it is the number of classes you can miss in the whole remainder of the term.</div>
+</details>
+</div>
+</div>
+</div>
+</section>
+<div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
+<article class="auc-article">
+<h2>Know Exactly How Many Classes You Can Miss</h2>
+<p>Most colleges and universities require a minimum attendance, commonly 75%, to sit the semester exams, and falling just short can mean a condonation fee, a debarment or a repeated course. The <strong>College Attendance &amp; Safe Bunk Planner</strong> replaces guesswork with arithmetic. Enter the classes held and attended for each subject and it shows your current percentage, how many classes you can still skip while staying above the limit (your &ldquo;safe bunks&rdquo;), and, if you are already below, exactly how many classes in a row you must attend to recover.</p>
+<p>The planner works for any required percentage, handles several subjects at once, supports colleges that round attendance, and can project the whole semester when you know the total number of classes.</p>
+<h2>The Formulas Behind the Results</h2>
+<p>Let <em>c</em> be the classes held so far, <em>A</em> the classes counted as attended (including any medical or duty leave your college counts as present), <em>r</em> the required fraction (75% = 0.75) and <em>T</em> the total classes planned for the semester.</p>
+<div class="auc-formula-card">
+Attendance % = A &divide; c &times; 100<br>
+Safe skips now = floor(A &divide; r &minus; c)<br>
+Classes to attend in a row = ceil((r &times; c &minus; A) &divide; (1 &minus; r))<br>
+Attended needed by semester end = ceil(r &times; T)<br>
+Safe skips left in semester = (T &minus; c) &minus; max(0, ceil(r &times; T) &minus; A)
+</div>
+<ol>
+<li><strong>Safe skips now.</strong> If you miss <em>x</em> classes from today, your attendance becomes A &divide; (c + x). Setting that equal to r and solving gives x = A &divide; r &minus; c. You round down because a fraction of a class cannot be skipped.</li>
+<li><strong>Classes to attend in a row.</strong> If you attend <em>n</em> classes in a row, attendance becomes (A + n) &divide; (c + n). Setting (A + n) &divide; (c + n) equal to r and solving gives n = (r&middot;c &minus; A) &divide; (1 &minus; r), rounded up. At a 100% requirement, recovery by attending is impossible once you have missed any class.</li>
+<li><strong>Semester view.</strong> When you know <em>T</em>, the cleanest question is: how many classes must I attend in total? That is ceil(r &times; T). Subtract what you have already attended to see how many of the remaining classes you must attend. Whatever is left over is your budget of skips for the rest of the term.</li>
+</ol>
+<h3>Safe Skips &ldquo;Now&rdquo; and Safe Skips &ldquo;In Semester&rdquo; Are Different</h3>
+<p>&ldquo;Now&rdquo; assumes you start skipping immediately and never attend again, so it measures how far you are from the line today. &ldquo;In semester&rdquo; counts your real budget across all remaining classes, including the ones you will attend, and is the number to plan with. It is usually higher than the &ldquo;now&rdquo; figure, because attending future classes also raises your percentage. Enter the total classes per subject to see both.</p>
+<h2>Reference: Maximum Skips for a Whole Semester</h2>
+<p>These figures show the most classes you could miss over a full semester without falling below the required percentage, assuming you attend everything else. They equal T &minus; ceil(r &times; T).</p>
+<div class="data-table-wrapper">
+<table class="auc-table">
+<thead>
+<tr><th>Required attendance</th><th>48 classes</th><th>60 classes</th><th>100 classes</th></tr>
+</thead>
+<tbody>
+<tr><td>60%</td><td class="num">19</td><td class="num">24</td><td class="num">40</td></tr>
+<tr><td>65%</td><td class="num">16</td><td class="num">21</td><td class="num">35</td></tr>
+<tr><td>70%</td><td class="num">14</td><td class="num">18</td><td class="num">30</td></tr>
+<tr><td>75%</td><td class="num">12</td><td class="num">15</td><td class="num">25</td></tr>
+<tr><td>80%</td><td class="num">9</td><td class="num">12</td><td class="num">20</td></tr>
+<tr><td>85%</td><td class="num">7</td><td class="num">9</td><td class="num">15</td></tr>
+<tr><td>90%</td><td class="num">4</td><td class="num">6</td><td class="num">10</td></tr>
+</tbody>
+</table>
+</div>
+<p>Because the figure is rounded down, a 48-class course at 75% allows 12 misses, not 12.5. Count this budget across the whole semester, not just the classes you have left.</p>
+<h2>Step-by-Step Worked Examples</h2>
+<h3>Example 1: A Safe Student Planning Bunks (Mathematics)</h3>
+<p>Required 75%. Classes held: 40. Attended: 32. Total planned: 60.</p>
+<ol>
+<li><strong>Current attendance:</strong> 32 &divide; 40 = <strong>80%</strong>.</li>
+<li><strong>Safe skips now:</strong> 32 &divide; 0.75 &minus; 40 = 2.67, rounded down to <strong>2</strong>. Check: 32 &divide; 42 = 76.19% (safe), but 32 &divide; 43 = 74.42% (below the limit).</li>
+<li><strong>Semester target:</strong> ceil(0.75 &times; 60) = 45 classes must be attended in total, so 45 &minus; 32 = 13 of the remaining 20 classes.</li>
+<li><strong>Skips left in semester:</strong> 20 &minus; 13 = <strong>7</strong>. Attending 13 and skipping 7 ends at 45 &divide; 60 = 75% exactly.</li>
+</ol>
+<p>So this student can miss 2 classes right away, but has a real budget of 7 across the rest of the term as long as they attend the other 13.</p>
+<h3>Example 2: Recovering From a Shortage (Physics)</h3>
+<p>Required 75%. Classes held: 36. Attended: 25. Total planned: 54.</p>
+<ol>
+<li><strong>Current attendance:</strong> 25 &divide; 36 = <strong>69.44%</strong>, below 75%, so safe skips now = 0.</li>
+<li><strong>Classes to attend in a row:</strong> (0.75 &times; 36 &minus; 25) &divide; 0.25 = 8. Check: (25 + 8) &divide; (36 + 8) = 33 &divide; 44 = 75% exactly, while 7 in a row gives 32 &divide; 43 = 74.42%.</li>
+<li><strong>Semester view:</strong> ceil(0.75 &times; 54) = 41 classes must be attended in total. That means 41 &minus; 25 = 16 of the remaining 18 classes, leaving a budget of only <strong>2</strong> skips.</li>
+</ol>
+<p>If the student attends all 18 remaining classes, the final figure is 43 &divide; 54 = 79.63%. Every skip after the second costs real risk.</p>
+<h3>Example 3: When Your College Rounds the Percentage</h3>
+<p>Classes held: 200. Attended: 149 (74.5%). Required 75%.</p>
+<ol>
+<li><strong>Strict rule:</strong> 74.5% is below 75%. The student must attend (0.75 &times; 200 &minus; 149) &divide; 0.25 = <strong>4</strong> classes in a row to reach 153 &divide; 204 = 75%.</li>
+<li><strong>Rounding rule:</strong> if the college rounds to the nearest whole number, 74.5% counts as 75% and the effective limit becomes 74.5%. The student is exactly at the line with <strong>0</strong> safe skips: status &ldquo;Borderline&rdquo;.</li>
+</ol>
+<p>Tick the rounding box only if your college states that rule in writing. When in doubt, plan with the strict figure.</p>
+<h2>Using Overall and Subject-Wise Attendance</h2>
+<ul>
+<li><strong>Subject-wise rules are common.</strong> Many institutions require the minimum in every subject as well as overall. A high overall percentage can hide one weak subject, so check the status column for each row.</li>
+<li><strong>Per-subject requirement.</strong> Some courses, such as practicals, need a higher percentage. Use the per-subject override field for those.</li>
+<li><strong>Medical and duty leave.</strong> If your college counts approved leave as present, add those classes in the medical or duty leave field. Keep the certificates; the planner cannot verify them.</li>
+<li><strong>What-if box.</strong> The last column shows your percentage after missing the next few classes and, in small text, after attending them, so you can check a planned trip before you commit to it.</li>
+</ul>
+<h2>Assumptions and Limitations</h2>
+<ul>
+<li><strong>Your college&rsquo;s rules win.</strong> Condonation, grace marks, leave policies and the way classes are counted (per hour, per day or per subject) differ. This planner applies the simple percentage rule you enter.</li>
+<li><strong>Every class counts equally.</strong> Labs, tutorials and lectures of different lengths are treated as one class each. If your college weights them, enter weighted counts.</li>
+<li><strong>The projection assumes the planned total.</strong> If classes are cancelled or added, update the total classes field.</li>
+<li><strong>Estimates are only as good as your records.</strong> Check the attendance shown on your college portal, which is the official record.</li>
+<li><strong>Not advice to skip class.</strong> Attendance is only a minimum, and exams, internal marks and learning depend on being present. Use the safe-bunk figures to handle emergencies and avoid penalties, not to plan to miss lessons.</li>
+<li><strong>Privacy.</strong> Your numbers are saved only in your browser and are never uploaded.</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQs)</h2>
+<div class="auc-faq-list">
+<details class="auc-faq-item" open>
+<summary>How do I calculate how many classes I can bunk with 75% attendance?</summary>
+<div class="auc-faq-body">Divide the classes you attended by 0.75, subtract the classes held so far, and round down. For example, with 32 attended out of 40 held, 32 divided by 0.75 is 42.67, minus 40 gives 2.67, so you can skip 2 classes right now and stay at or above 75%. After skipping 2 you would have 32 out of 42, which is 76.19%, while skipping a third class drops you to 74.42%.</div>
+</details>
+<details class="auc-faq-item">
+<summary>How many classes do I need to attend to reach 75% attendance?</summary>
+<div class="auc-faq-body">Use the formula n equals (0.75 times classes held minus classes attended) divided by 0.25, rounded up. With 25 attended out of 36 held, that is (27 minus 25) divided by 0.25, which is 8 classes in a row. After attending 8 you have 33 out of 44, exactly 75%, while 7 classes would leave you at 74.42%. The planner calculates this for every subject.</div>
+</details>
+<details class="auc-faq-item">
+<summary>What is the difference between safe skips now and safe skips in the semester?</summary>
+<div class="auc-faq-body">Safe skips now is how many classes you could miss starting today, with no further attendance, before you drop below the limit. Safe skips in the semester uses the total number of classes planned and counts how many you can miss across the whole remaining term while still finishing at or above the required percentage. The semester figure is usually higher and is the one to plan with. Enter the total classes for the semester to see it.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Does medical leave or duty leave count as attendance?</summary>
+<div class="auc-faq-body">It depends on your college. Many institutions count approved medical leave, sports duty or similar leave as present, and some require a minimum number of days actually attended. Enter those classes in the medical or duty leave field only if your college counts them, and keep your certificates. The official record is the attendance shown on your college portal.</div>
+</details>
+<details class="auc-faq-item">
+<summary>My college rounds attendance to the nearest whole number. How does that change the result?</summary>
+<div class="auc-faq-body">If your college rounds 74.5% up to 75%, the effective limit is 74.5%, so you may be allowed slightly more skips. Tick the rounding option to lower the limit by half a percentage point. For example, 149 attended out of 200 held is 74.5%: under the strict rule you must attend 4 more classes in a row, while under the rounding rule you are exactly at the limit with no spare classes. Only use this option if your college rule says so.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Is attendance calculated overall or subject by subject?</summary>
+<div class="auc-faq-body">Both are used in different institutions. Many require the minimum in every subject, so a strong overall percentage can hide a subject that is below the limit. The planner shows each subject with its own status and also an overall figure. If one subject has a different requirement, such as a practical course, type that percentage in the per-subject override field.</div>
+</details>
+<details class="auc-faq-item">
+<summary>What if the required attendance is 100 percent?</summary>
+<div class="auc-faq-body">At a 100 percent requirement you cannot skip any class, and if you have already missed one, attending every remaining class cannot raise you back to 100 percent. The planner shows that recovery is not possible by attending alone. Check whether your college allows condonation or leave for such cases.</div>
+</details>
+<details class="auc-faq-item">
+<summary>Does the planner save my attendance data or share it?</summary>
+<div class="auc-faq-body">No data is sent to a server. Your subjects, class counts and settings are saved in your browser's local storage so they are there on your next visit on the same device. Clearing your browser data removes them. Always compare the results with the attendance shown on your official college portal.</div>
+</details>
+</div>
+</article>
+</main>
+<!-- Empty sidebar: the site navigation script fills it with search, ads and related tools -->
+<aside class="sidebar"></aside>
+</div>
+<script>
+(function () {
+  "use strict";
+  var STORE = "tqc_attendance_planner_v1";
+  var MAX_ROWS = 15, EPS = 1e-9;
+  var $ = function (id) { return document.getElementById(id); };
+  var rows = [];
+
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+  function num(v) { return v == null || String(v).trim() === "" ? NaN : Number(v); }
+  function isCount(x) { return isFinite(x) && x >= 0 && Math.floor(x) === x && x <= 100000; }
+  function pctText(x) { return Number(x.toFixed(2)) + "%"; }
+
+  /* ---------- Engine ----------
+     c = classes held, A = classes counted as attended, T = total classes planned (0 if unknown),
+     req = required % (e.g. 75), rounding = college rounds % to nearest whole number */
+  function analyse(c, A, T, req, rounding, k) {
+    var tp = (rounding ? req - 0.5 : req) / 100;
+    var out = { c: c, A: A, T: T, tp: tp, pct: c > 0 ? A / c * 100 : 0 };
+    out.ok = A / c >= tp - 1e-12;
+    out.safeNow = out.ok ? Math.max(0, Math.floor(A / tp - c + EPS)) : 0;
+    if (out.ok) out.needNow = 0;
+    else if (tp >= 1) out.needNow = Infinity;
+    else out.needNow = Math.max(1, Math.ceil((tp * c - A) / (1 - tp) - EPS));
+    out.status = !out.ok ? "short" : (out.safeNow === 0 ? "edge" : "safe");
+    out.afterSkip = A / (c + k) * 100;
+    out.afterAttend = (A + k) / (c + k) * 100;
+    if (T > 0) {
+      var R = T - c, needTotal = Math.ceil(tp * T - EPS), still = Math.max(0, needTotal - A);
+      out.R = R; out.needTotal = needTotal; out.still = still;
+      out.canReach = still <= R;
+      out.skipsLeft = out.canReach ? R - still : -1;
+      out.finalBest = (A + R) / T * 100;
+      out.finalWorst = A / T * 100;
+    }
+    return out;
+  }
+
+  /* ---------- Rows UI ---------- */
+  function defaults() {
+    return [
+      { name: "Mathematics", cond: "40", att: "32", med: "0", total: "60", req: "" },
+      { name: "Physics", cond: "36", att: "25", med: "0", total: "54", req: "" },
+      { name: "Chemistry", cond: "30", att: "27", med: "0", total: "50", req: "" }
+    ];
+  }
+  function field(i, f, label, val, extra, ph) {
+    return '<label class="auc-field-group"><span class="auc-label">' + label + '</span><input type="' + (f === "name" ? "text" : "number") + '" class="auc-input" data-f="' + f + '" value="' + esc(val) + '"' + (f === "name" ? ' maxlength="60" autocomplete="off"' : ' min="0" step="any" inputmode="decimal"') + (ph ? ' placeholder="' + ph + '"' : "") + (extra || "") + "></label>";
+  }
+  function renderRows() {
+    var html = "";
+    rows.forEach(function (r, i) {
+      html += '<div class="att-row" data-i="' + i + '"><div class="att-row-head"><strong>Subject ' + (i + 1) + '</strong><button type="button" class="att-mini" data-act="del" aria-label="Remove subject ' + (i + 1) + '">✕</button></div><div class="att-fields">' +
+        '<div class="att-wide">' + field(i, "name", "Subject name", r.name, "", "e.g. Biology") + "</div>" +
+        field(i, "cond", "Classes held so far", r.cond, "", "e.g. 40") +
+        field(i, "att", "Classes you attended", r.att, "", "e.g. 32") +
+        field(i, "med", 'Medical / duty leave counted <span class="auc-label-accent">Optional</span>', r.med, "", "0") +
+        field(i, "total", 'Total classes this semester <span class="auc-label-accent">Optional</span>', r.total, "", "e.g. 60") +
+        '<div class="att-wide">' + field(i, "req", 'Required % for this subject <span class="auc-label-accent">Blank = default</span>', r.req, "", "Use default") + "</div>" +
+        "</div></div>";
+    });
+    $("att-rows").innerHTML = html;
+  }
+  $("att-rows").addEventListener("input", function (e) {
+    var t = e.target, row = t.closest(".att-row");
+    if (!row || !t.getAttribute("data-f")) return;
+    rows[+row.getAttribute("data-i")][t.getAttribute("data-f")] = t.value;
+    calculate();
+  });
+  $("att-rows").addEventListener("click", function (e) {
+    var b = e.target.closest('button[data-act="del"]'); if (!b) return;
+    rows.splice(+b.closest(".att-row").getAttribute("data-i"), 1); renderRows(); calculate();
+  });
+  $("att-add").addEventListener("click", function () {
+    if (rows.length >= MAX_ROWS) { showError("You can add up to " + MAX_ROWS + " subjects."); return; }
+    rows.push({ name: "", cond: "", att: "", med: "", total: "", req: "" }); renderRows(); calculate();
+    var f = $("att-rows").querySelector(".att-row:last-child input"); if (f) f.focus();
+  });
+  ["att-req", "att-k", "att-round"].forEach(function (id) { $(id).addEventListener("input", calculate); $(id).addEventListener("change", calculate); });
+
+  var errEl = $("att-error");
+  function showError(m) { errEl.textContent = m; errEl.classList.add("visible"); }
+  function clearError() { errEl.textContent = ""; errEl.classList.remove("visible"); }
+
+  /* ---------- Calculate ---------- */
+  var lastText = "";
+  function collect() {
+    var req = num($("att-req").value), k = num($("att-k").value);
+    if (!isFinite(req) || req < 1 || req > 100) return { error: "Required attendance must be between 1 and 100 percent." };
+    if (!isCount(k)) return { error: "“What if” classes must be a whole number of 0 or more." };
+    var rounding = $("att-round").checked, subs = [], i;
+    for (i = 0; i < rows.length; i++) {
+      var r = rows[i], n = i + 1, name = r.name.trim();
+      var empty = !name && !String(r.cond).trim() && !String(r.att).trim();
+      if (empty) continue;
+      var label = "Subject " + n + (name ? " (" + name + ")" : "");
+      var c = num(r.cond), a = num(r.att), m = String(r.med).trim() === "" ? 0 : num(r.med), T = String(r.total).trim() === "" ? 0 : num(r.total);
+      if (!name) return { error: "Subject " + n + ": enter a subject name." };
+      if (!isCount(c) || c < 1) return { error: label + ": enter the classes held so far (a whole number, at least 1)." };
+      if (!isCount(a)) return { error: label + ": enter the classes you attended (a whole number, 0 or more)." };
+      if (!isCount(m)) return { error: label + ": medical or duty leave must be a whole number, 0 or more." };
+      if (a + m > c) return { error: label + ": attended classes plus leave counted (" + (a + m) + ") cannot be more than classes held (" + c + ")." };
+      if (!isCount(T)) return { error: label + ": total classes this semester must be a whole number." };
+      if (T > 0 && T < c) return { error: label + ": total classes this semester (" + T + ") cannot be less than classes already held (" + c + ")." };
+      var rq = String(r.req).trim() === "" ? req : num(r.req);
+      if (!isFinite(rq) || rq < 1 || rq > 100) return { error: label + ": required % must be between 1 and 100." };
+      subs.push({ name: name, c: c, A: a + m, T: T, req: rq });
+    }
+    if (!subs.length) return { error: "Add at least one subject with classes held and classes attended." };
+    return { subs: subs, req: req, k: k, rounding: rounding };
+  }
+  var STATUS = { safe: ["✓ Safe", "ok"], edge: ["! Borderline", "edge"], short: ["✕ Below limit", "bad"] };
+  function calculate() {
+    var inp = collect();
+    if (inp.error) { showError(inp.error); blank("Fix the highlighted input to see your attendance plan."); persist(); return; }
+    clearError();
+    var res = inp.subs.map(function (s) { return { s: s, a: analyse(s.c, s.A, s.T, s.req, inp.rounding, inp.k) }; });
+    var sc = 0, sa = 0, st = 0, allT = true;
+    inp.subs.forEach(function (s) { sc += s.c; sa += s.A; st += s.T; if (!(s.T > 0)) allT = false; });
+    var overall = analyse(sc, sa, allT ? st : 0, inp.req, inp.rounding, inp.k);
+    var below = res.filter(function (x) { return x.a.status === "short"; });
+    var risky = res.filter(function (x) { return x.a.status === "edge"; });
+
+    $("att-tag").textContent = "Attendance planner • " + inp.req + "% required" + (inp.rounding ? " (rounded)" : "");
+    $("att-primary").textContent = pctText(overall.pct) + " overall";
+    var eq;
+    if (below.length) {
+      var worst = below.slice().sort(function (x, y) { return y.a.needNow - x.a.needNow; })[0];
+      eq = below.length + (below.length === 1 ? " subject is" : " subjects are") + " below the limit. Hardest to recover: " + worst.s.name + " (attend " + (isFinite(worst.a.needNow) ? worst.a.needNow + " classes in a row" : "all remaining classes; the limit cannot be reached by attending alone") + ").";
+    } else if (risky.length) {
+      eq = "All subjects meet the limit, but " + risky.map(function (x) { return x.s.name; }).join(", ") + (risky.length === 1 ? " has" : " have") + " no spare classes. Do not skip.";
+    } else {
+      eq = "All subjects are above the limit. You can skip " + overall.safeNow + " classes overall right now and stay at or above " + inp.req + "%.";
+    }
+    $("att-equation").textContent = eq;
+    $("att-overall-line").textContent = pctText(overall.pct) + " (" + sa + " of " + sc + " classes)";
+    $("att-overall-status").textContent = STATUS[overall.status][0];
+    $("att-overall-skip").textContent = overall.ok ? overall.safeNow + " classes" : "Attend " + (isFinite(overall.needNow) ? overall.needNow : "all") + " in a row";
+    $("att-overall-final").textContent = allT && overall.T > 0 ? (overall.canReach ? "Best case " + pctText(overall.finalBest) + ", worst case " + pctText(overall.finalWorst) + ". Skips left: " + overall.skipsLeft : "Cannot reach " + inp.req + "% even if you attend every remaining class (best case " + pctText(overall.finalBest) + ")") : "Add total classes for every subject to see this";
+
+    var tb = "", lines = [];
+    res.forEach(function (x) {
+      var a = x.a, s = x.s, st2 = STATUS[a.status];
+      var skip = (a.ok ? a.safeNow : 0) + " now";
+      if (s.T > 0) skip += a.canReach ? " \u2022 " + a.skipsLeft + " in semester" : " \u2022 cannot reach";
+      var need = a.ok ? "Nothing needed now" : (isFinite(a.needNow) ? "Attend " + a.needNow + " in a row" : "Cannot recover by attending");
+      if (s.T > 0 && a.canReach) need += '<div class="att-sub">To finish at the limit: attend at least ' + a.still + " of the next " + a.R + "</div>";
+      tb += "<tr><td><strong>" + esc(s.name) + '</strong><div class="att-sub">' + s.A + " of " + s.c + " attended" + (s.req !== inp.req ? " • needs " + s.req + "%" : "") + '</div></td><td class="num">' + pctText(a.pct) + '</td><td class="att-' + st2[1] + '">' + st2[0] + "</td><td>" + skip + "</td><td>" + need + '</td><td class="num">' + pctText(a.afterSkip) + '<div class="att-sub">attend: ' + pctText(a.afterAttend) + "</div></td></tr>";
+      lines.push(s.name + ": " + pctText(a.pct) + " (" + st2[0].replace(/^\S+\s/, "") + "), safe skips now " + (a.ok ? a.safeNow : 0) + (a.ok ? "" : ", attend " + (isFinite(a.needNow) ? a.needNow : "all") + " in a row"));
+    });
+    $("att-table").innerHTML = tb;
+    $("att-k-label").textContent = inp.k;
+    lastText = "Attendance plan (" + inp.req + "% required" + (inp.rounding ? ", rounded" : "") + ")\n" + lines.join("\n") + "\nOverall: " + pctText(overall.pct) + "\nSource: https://thequantcal.pages.dev/tools/attendance-safe-bunk-planner";
+    persist();
+    window.__tqcAtt = { analyse: analyse };
+  }
+  function blank(msg) {
+    $("att-tag").textContent = "Attendance planner";
+    $("att-primary").textContent = "—";
+    $("att-equation").textContent = msg;
+    ["att-overall-line", "att-overall-status", "att-overall-skip", "att-overall-final"].forEach(function (id) { $(id).textContent = "—"; });
+    $("att-table").innerHTML = ""; lastText = "";
+  }
+
+  /* ---------- Actions + persistence ---------- */
+  $("att-calc-btn").addEventListener("click", calculate);
+  $("att-reset-btn").addEventListener("click", function () {
+    $("att-req").value = "75"; $("att-k").value = "3"; $("att-round").checked = false; rows = defaults(); renderRows(); calculate();
+  });
+  $("att-copy-btn").addEventListener("click", function () {
+    var btn = $("att-copy-btn"); if (!lastText) return;
+    function done(ok) { btn.textContent = ok ? "✓ Copied" : "Copy failed"; setTimeout(function () { btn.innerHTML = "&#128203; Copy"; }, 1600); }
+    try { navigator.clipboard.writeText(lastText).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  });
+  function persist() {
+    try { localStorage.setItem(STORE, JSON.stringify({ rows: rows, req: $("att-req").value, k: $("att-k").value, round: $("att-round").checked })); } catch (e) { /* storage unavailable */ }
+  }
+  function restore() {
+    try {
+      var o = JSON.parse(localStorage.getItem(STORE) || "null");
+      if (!o || !Array.isArray(o.rows) || !o.rows.length) return false;
+      function s(v) { return typeof v === "string" || typeof v === "number" ? String(v).slice(0, 60) : ""; }
+      rows = o.rows.slice(0, MAX_ROWS).map(function (r) { return { name: s(r.name), cond: s(r.cond), att: s(r.att), med: s(r.med), total: s(r.total), req: s(r.req) }; });
+      if (typeof o.req === "string") $("att-req").value = o.req.slice(0, 6);
+      if (typeof o.k === "string") $("att-k").value = o.k.slice(0, 6);
+      $("att-round").checked = o.round === true;
+      return true;
+    } catch (e) { return false; }
+  }
+  if (!restore()) rows = defaults();
+  renderRows();
+  calculate();
+})();
+</script>
+<!-- Site header, sidebar and footer script -->
+<script src="/navigation.js" defer></script>
+</body>
+</html>
