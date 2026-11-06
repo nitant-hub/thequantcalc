@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-category="career">
+<html lang="en" data-category="utility">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -127,8 +127,8 @@ document.documentElement.setAttribute("data-theme", "dark");
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Career",
-          "item": "https://thequantcal.pages.dev/#career"
+          "name": "Utility",
+          "item": "https://thequantcal.pages.dev/#utility"
         },
         {
           "@type": "ListItem",
@@ -412,7 +412,7 @@ body>*:not(#rsm-print-root){display:none !important}
 <nav class="breadcrumb-trail" aria-label="Breadcrumb">
 <a href="https://thequantcal.pages.dev/">Home</a>
 <span aria-hidden="true">&rarr;</span>
-<a href="https://thequantcal.pages.dev/#career">Career</a>
+<a href="https://thequantcal.pages.dev/#utility">Utility</a>
 <span aria-hidden="true">&rarr;</span>
 <span class="bc-current" aria-current="page">Free Resume Maker with 60 Styles and 50+ Options</span>
 </nav>
@@ -1183,4 +1183,4 @@ function tqcBoot() {
   });
   $("rsm-json-btn").addEventListener("click", function () {
     download("resume-data.json", JSON.stringify({ app: "TheQuantCalc Resume Maker", v: 1, data: DATA, style: STYLE }, null, 2), "application/json");
-    status("Backup file downloaded. Keep it safe; it contains ever
+    status("Backup file downloaded. Keep it safe; it contains
