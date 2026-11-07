@@ -283,9 +283,57 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     box-shadow: inset 0 4px 20px rgba(0,0,0,0.6), 0 4px 12px rgba(245, 158, 11, 0.1);
 }
 
-.ctc-drawer-body { padding: 14px 6px; border-top: 1px solid rgba(255,255,255,0.08); }
+/* --- 🌟 FAQ-STYLE DRAWER ACCORDIONS FOR CONTENT SECTIONS 🌟 --- */
+.auc-sub-drawer {
+    margin-top: 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.auc-sub-drawer summary {
+    padding: 14px 16px;
+    background: linear-gradient(180deg, #111827 0%, #0B1220 100%);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #FFFFFF; /* High contrast text color distinct from body */
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.auc-sub-drawer summary::-webkit-details-marker { display: none; }
+.auc-sub-drawer summary .auc-label-accent {
+    margin-left: auto;
+    margin-right: 12px;
+    color: #FCD34D;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+/* FAQ Plus/Minus Icon Generation */
+.auc-sub-drawer summary::after {
+    content: "+";
+    font-weight: 900;
+    color: #10B981;
+    font-size: 1.5rem;
+    line-height: 1;
+    flex: 0 0 auto;
+    transition: transform 0.2s;
+}
+.auc-sub-drawer[open] summary::after {
+    content: "−";
+    color: #F43F5E;
+}
+.ctc-drawer-body {
+    padding: 16px 12px;
+    background: rgba(2, 6, 23, 0.4); /* Distinct body background */
+    border-top: 1px solid rgba(52, 211, 153, 0.15);
+}
 
-/* Zebra-Striped Fields */
+/* Zebra-Striped Fields in Drawers */
 .ctc-drawer-body .auc-field-group:nth-child(odd) .auc-input { 
     border-color: rgba(16, 185, 129, 0.25); 
     background: linear-gradient(180deg, #111827 0%, rgba(16,185,129,0.04) 100%); 
@@ -309,7 +357,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 }
 
 /* Flex fix for Content Panel */
-.rsm-stack { display:flex; flex-direction:column; gap:12px; }
+.rsm-stack { display:flex; flex-direction:column; gap:8px; }
 .rsm-stack > * { flex-shrink: 0; }
 /* ---------------------------------------------- */
 
@@ -494,15 +542,15 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 }
 
 /* --- 🌟 DESKTOP/MOBILE WHOLE-PAGE LIVE PREVIEW STAGE 🌟 --- */
-/* The dark box where the generated resume HTML renders. Height is fixed as requested. */
+/* The dark box where the generated resume HTML renders. Height is fixed (Smaller size to show workspace). */
 .rsm-stage {
     background:#475569; border-radius:14px; padding:8px 4px;
     overflow-y:auto; overflow-x:hidden; display:flex; justify-content:center; align-items:flex-start;
-    height: 360px; min-height: 220px;
+    height: 260px; min-height: 180px; /* Reduced to leave room for tabs below */
     overscroll-behavior:contain; box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)
 }
 @media (min-width:768px){
-    .rsm-stage { height: 430px; } 
+    .rsm-stage { height: 320px; } /* Reduced for desktop visibility */
 }
 /* --------------------------------------------------------- */
 
@@ -640,20 +688,6 @@ body>*:not(#rsm-print-root){display:none !important}
 #rsm-print-root .rs-grid{min-height:calc(var(--ph) - 2mm)}
 #rsm-print-root .rs-entry{break-inside:avoid}
 }
-
-/* Accordion Drawers for UI settings */
-.auc-sub-drawer{margin-top:12px;background:rgba(15,23,42,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
-.auc-sub-drawer summary{padding:12px 10px;background:rgba(0,0,0,0.2);font-size:0.9375rem;font-weight:600;color:#E2E8F0;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.auc-sub-drawer summary:hover{color:#34D399}
-.ctc-drawer-body{padding:14px 6px;border-top:1px solid rgba(255,255,255,0.08)}
-.ctc-note{font-size:0.8125rem;color:#A8B5C8;line-height:1.45;margin:6px 0 0}
-
-/* 🌟 DYNAMIC FORM RENDERER CSS 🌟 */
-.rsm-setup-box {
-    background: rgba(11, 17, 32, 0.9); border: 1px solid #34D399; border-radius: 12px;
-    padding: 14px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(52, 211, 153, 0.15);
-}
-.rsm-setup-box label { color: #D1FAE5; margin-bottom: 8px; font-weight: 700; }
 
 /* ── Custom Professional Dropdown Components ── */
 .rsm-dd { position: relative; width: 100%; }
@@ -919,21 +953,23 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <!-- PANEL: 1. CONTENT (Deep Emerald Background) -->
 <div class="rsm-panel rsm-stack" id="rsm-tab-content">
     
-    <!-- DYNAMIC DOCUMENT TYPE SELECTOR (Custom Professional Dropdown) -->
-    <div class="rsm-setup-box">
-        <div class="auc-field-group" style="margin:0;">
-            <label class="auc-label"><span>Document Category & Type</span></label>
-            <div class="rsm-dd" id="rsm-doc-type-dd">
-                <button type="button" class="rsm-dd-trigger" id="rsm-doc-type-btn" aria-haspopup="listbox" aria-expanded="false">
-                    <span class="rsm-dd-value" id="rsm-doc-type-label">Standard Professional Resume</span>
-                    <span class="rsm-dd-chevron" aria-hidden="true">▾</span>
-                </button>
-                <div class="rsm-dd-menu" id="rsm-doc-type-menu" role="listbox" hidden></div>
+    <!-- 🌟 DYNAMIC DOCUMENT TYPE SELECTOR (Wrapped in FAQ Accordion) 🌟 -->
+    <details class="auc-sub-drawer" open>
+        <summary><span>Document Category & Type</span><span class="auc-label-accent">Setup</span></summary>
+        <div class="ctc-drawer-body">
+            <div class="auc-field-group" style="margin:0;">
+                <div class="rsm-dd" id="rsm-doc-type-dd">
+                    <button type="button" class="rsm-dd-trigger" id="rsm-doc-type-btn" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="rsm-dd-value" id="rsm-doc-type-label">Standard Professional Resume</span>
+                        <span class="rsm-dd-chevron" aria-hidden="true">▾</span>
+                    </button>
+                    <div class="rsm-dd-menu" id="rsm-doc-type-menu" role="listbox" hidden></div>
+                </div>
+                <!-- Hidden native select kept for compatibility / form value -->
+                <select id="rsm-doc-type" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true"></select>
             </div>
-            <!-- Hidden native select kept for compatibility / form value -->
-            <select id="rsm-doc-type" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true"></select>
         </div>
-    </div>
+    </details>
 
     <!-- DYNAMIC FORM CONTAINER (Populated by JS based on Document Type) -->
     <div id="rsm-dynamic-form" class="rsm-stack"></div>
@@ -963,8 +999,7 @@ details.auc-faq-item[open] summary::after { content: "−"; }
     <!-- Populated by JS -->
 </div>
 
-<!-- Preset Search and Gallery -->
-<div class="auc-field-group" style="margin-bottom:12px"><label class="auc-label" for="rsm-preset-search"><span>Search styles</span></label><input type="search" id="rsm-preset-search" class="auc-input" placeholder="e.g. Navy, Executive, Timeline" autocomplete="off"></div>
+<!-- Preset Gallery (Search option completely removed as requested) -->
 <div id="rsm-gallery" class="rsm-gallery"></div>
 
 <!-- Accent Color Picker -->
@@ -1356,7 +1391,7 @@ function tqcBoot() {
   
   var SAMPLE = clone(DATA); // Reference sample to restore upon user request
   
-  var presetFilter = "all", presetQuery = "";
+  var presetFilter = "all"; // Search string feature removed
   var previewFitMode = "page";
   
   /* --- 🌟 ADVANCED UNDO & REDO STATE MANAGEMENT 🌟 --- */
@@ -1470,7 +1505,7 @@ function tqcBoot() {
       }
   }
 
-  // Parses definitions to dynamically create input HTML fields
+  // Parses definitions to dynamically create input HTML fields (Wrapped in FAQ Accordions)
   function renderDynamicForm() {
       var activeType = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
       var activeSections = activeType.sections;
@@ -2323,12 +2358,12 @@ function tqcBoot() {
       return defaultLbl + (ats ? " • ATS-safe" : "");
   }
 
-  // Iterates RECIPES list into clickable visual presets
+  // Iterates RECIPES list into clickable visual presets (Search eliminated)
   function renderGallery() {
-    var html = "", n = 0, q = presetQuery.toLowerCase();
+    var html = "", n = 0; // Search logic variable removed
     PRESETS.forEach(function (p, idx) {
       var okF = presetFilter === "all" || (presetFilter === "ats" ? p.ats : (presetFilter === "sidebar" ? (p.layout === "sidebarL" || p.layout === "sidebarR") : p.layout === presetFilter));
-      if (!okF || (q && p.name.toLowerCase().indexOf(q) < 0)) return;
+      if (!okF) return; // Note: Search condition deleted here
       n++;
       var active = JSON.stringify([p.style.layout, p.style.accent, p.style.font, p.style.heading]) === JSON.stringify([STYLE.layout, STYLE.accent, STYLE.font, STYLE.heading]);
       
@@ -2348,8 +2383,6 @@ function tqcBoot() {
     Object.keys(p.style).forEach(function (k) { STYLE[k] = p.style[k]; });
     syncControls(); render(); renderGallery();
   });
-  
-  $("rsm-preset-search").addEventListener("input", function () { presetQuery = this.value; renderGallery(); });
 
   // Custom Dropdown Builder Component function
   function bindCustomDropdown(cfg) {
@@ -2742,4 +2775,3 @@ tqcBoot(); // Launch builder instance
 <script src="/navigation.js" defer></script>
 </body>
 </html>
-
