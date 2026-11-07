@@ -437,14 +437,17 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   white-space:nowrap;
 }
 
-/* Premium Icon Buttons for Undo/Redo */
+/* Premium SVG Icon Buttons for Undo/Redo */
 .rsm-icon-btn {
-  font-size: 1.15rem !important;
-  font-weight: 900 !important;
-  padding: 0 10px !important;
+  padding: 4px 12px !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+.rsm-icon-btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
 }
 
 .rsm-zoom-btn{
@@ -473,6 +476,22 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 /* Live preview: dim placeholder-looking content on the rendered page */
 .rs-paper .rs-placeholder { color: #94A3B8 !important; font-weight: 500 !important; opacity: 0.75; }
 .rs-paper .rs-name.rs-placeholder { color: #94A3B8 !important; }
+
+/* 🌟 CLICK-TO-EDIT INTERACTIVE HIGHLIGHT EFFECTS 🌟 */
+.rs-paper [data-edit] { 
+  cursor: pointer; 
+  border-radius: 4px; 
+  transition: background-color 0.2s ease, box-shadow 0.2s ease; 
+}
+.rs-paper [data-edit]:hover { 
+  background-color: rgba(16, 185, 129, 0.08) !important; 
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.08); 
+  z-index: 10; 
+}
+/* Ensure hover effect doesn't break printing */
+@media print { 
+  .rs-paper [data-edit]:hover { background-color: transparent !important; box-shadow: none !important; } 
+}
 
 /* --- 🌟 DESKTOP/MOBILE WHOLE-PAGE LIVE PREVIEW STAGE 🌟 --- */
 /* The dark box where the generated resume HTML renders. Height is fixed as requested. */
@@ -874,11 +893,14 @@ details.auc-faq-item[open] summary::after { content: "−"; }
   <h2 id="rsm-preview-title">Live Preview</h2>
   <div class="rsm-preview-tools">
     <div style="display:inline-flex; gap: 4px;">
-      <!-- Premium Textless Undo/Redo Icons -->
-      <button type="button" class="rsm-zoom-btn rsm-icon-btn" id="rsm-undo-btn" title="Undo" disabled>⟲</button>
-      <button type="button" class="rsm-zoom-btn rsm-icon-btn" id="rsm-redo-btn" title="Redo" disabled>⟳</button>
+      <!-- Premium SVG Undo/Redo Icons -->
+      <button type="button" class="rsm-zoom-btn rsm-icon-btn" id="rsm-undo-btn" title="Undo" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button type="button" class="rsm-zoom-btn rsm-icon-btn" id="rsm-redo-btn" title="Redo" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+      </button>
     </div>
-    <!-- Whole Page Button with 🔍 icon removed -->
     <button type="button" class="rsm-zoom-btn" id="rsm-zoom-toggle" title="Switch between Whole Page view and Fit Width zoom">Whole Page</button>
     <span class="rsm-pill" id="rsm-pages">1 page</span>
   </div>
@@ -1000,7 +1022,8 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
 <button type="button" id="rsm-image-btn" class="auc-btn-secondary">Download as Photo (.png)</button>
-<button type="button" id="rsm-share-btn" class="auc-btn-secondary">Share this tool</button>
+<!-- Updated Share Button -->
+<button type="button" id="rsm-share-btn" class="auc-btn-secondary">Share Resume (Image)</button>
 <button type="button" id="rsm-copy-btn" class="auc-btn-secondary">Copy plain text (for ATS)</button>
 <button type="button" id="rsm-json-btn" class="auc-btn-secondary">Download backup (.json)</button>
 <label class="rsm-file-btn">Load backup (.json)<input type="file" id="rsm-json-file" accept="application/json,.json"></label>
@@ -1691,8 +1714,12 @@ function tqcBoot() {
     return '<div class="rs-entry"><div class="rs-eh">' + left + (date ? '<div class="rs-ed">' + date + "</div>" : "") + "</div>" + body + "</div>";
   }
   
-  // Wraps a block of content in an HTML section with a heading
-  function sec(title, inner) { return '<section class="rs-sec"><div class="rs-h"><span>' + esc(title) + "</span></div>" + inner + "</section>"; }
+  // Wraps a block of content in an HTML section with a heading and data-edit attribute 🌟
+  function sec(id, inner) { 
+    var def = SECTION_DEFS[id];
+    if (!def) return "";
+    return '<section class="rs-sec" data-edit="' + id + '"><div class="rs-h"><span>' + esc(def.label) + "</span></div>" + inner + "</section>"; 
+  }
   
   // Special rendering format for comma separated generic skills
   function renderGenericSkills(text) {
@@ -1736,12 +1763,12 @@ function tqcBoot() {
     
     if (def.type === 'textarea') {
         inner = (id === 'skills' || id === 'skills_tech') ? renderGenericSkills(DATA[id]) : lines(DATA[id]).length ? '<p class="rs-p">' + esc(DATA[id].trim()).replace(/\n/g,"<br>") + "</p>" : "";
-        return inner ? sec(def.label, inner) : "";
+        return inner ? sec(id, inner) : "";
     }
     
     if (def.type === 'basic_ext') {
         inner = renderExtendedBasic(def.fields);
-        return inner ? sec(def.label, inner) : "";
+        return inner ? sec(id, inner) : "";
     }
     
     if (def.type === 'list') {
@@ -1752,34 +1779,38 @@ function tqcBoot() {
             var t2 = e.company || e.school || e.link;
             return entry("<strong class=\"rs-et\">" + esc(t1) + "</strong>", [t2, e.loc].filter(Boolean).map(esc).join(" · "), dateText(e), bullets(e.bullets || e.desc) + (e.detail ? '<p class="rs-p rs-pd">'+esc(e.detail)+'</p>' : ''));
         }).join("");
-        return sec(def.label, inner);
+        return sec(id, inner);
     }
     return "";
   }
 
-  // Assembles header links and contacts
+  // Assembles header links and contacts 🌟 (Wrapped with data-edits)
   function contactItems() {
     var out = [];
-    if ((DATA.email || "").trim()) out.push('<a href="' + "mail" + "to:" + esc(DATA.email.trim()) + '">' + brk(esc(DATA.email.trim())) + "</a>");
-    if ((DATA.phone || "").trim()) out.push(esc(DATA.phone.trim()));
-    if ((DATA.location || "").trim()) out.push(esc(DATA.location.trim()));
-    lines(DATA.links).forEach(function (l) { out.push(link(l)); });
+    if ((DATA.email || "").trim()) out.push('<span data-edit="email"><a href="mailto:' + esc(DATA.email.trim()) + '">' + brk(esc(DATA.email.trim())) + '</a></span>');
+    if ((DATA.phone || "").trim()) out.push('<span data-edit="phone">' + esc(DATA.phone.trim()) + '</span>');
+    if ((DATA.location || "").trim()) out.push('<span data-edit="location">' + esc(DATA.location.trim()) + '</span>');
+    if ((DATA.links || "").trim()) {
+        var ls = lines(DATA.links).map(function (l) { return link(l); }).join(", ");
+        out.push('<span data-edit="links">' + ls + '</span>');
+    }
     return out;
   }
   
   function photoHTML() {
-    return (STYLE.photo && DATA.photo) ? '<img class="rs-photo rs-photo-' + STYLE.shape + '" src="' + esc(DATA.photo) + '" alt="Profile photo">' : "";
+    return (STYLE.photo && DATA.photo) ? '<img class="rs-photo rs-photo-' + STYLE.shape + '" src="' + esc(DATA.photo) + '" alt="Profile photo" data-edit="photo">' : "";
   }
   
+  // 🌟 Wrapped in data-edit for click interaction
   function nameBlock() {
     var nm = (DATA.name || "").trim();
     var ti = (DATA.title || "").trim();
     var nameHtml = nm
-      ? '<div class="rs-name">' + esc(nm) + '</div>'
-      : '<div class="rs-name rs-placeholder">Your Name</div>';
+      ? '<div class="rs-name" data-edit="name">' + esc(nm) + '</div>'
+      : '<div class="rs-name rs-placeholder" data-edit="name">Your Name</div>';
     var titleHtml = ti
-      ? '<div class="rs-title">' + esc(ti) + '</div>'
-      : '<div class="rs-title rs-placeholder">Professional title</div>';
+      ? '<div class="rs-title" data-edit="title">' + esc(ti) + '</div>'
+      : '<div class="rs-title rs-placeholder" data-edit="title">Professional title</div>';
     return nameHtml + titleHtml;
   }
   
@@ -1808,7 +1839,7 @@ function tqcBoot() {
     // Complex layout: CSS Grid Sidebars
     if (L === "sidebarL" || L === "sidebarR") {
       var side = '<aside class="rs-side">' + photoHTML();
-      if (contacts.length) side += '<section class="rs-sec"><div class="rs-h"><span>Contact</span></div><ul class="rs-cl">' + contacts.map(function (c) { return "<li>" + c + "</li>"; }).join("") + "</ul></section>";
+      if (contacts.length) side += '<section class="rs-sec" data-edit="email"><div class="rs-h"><span>Contact</span></div><ul class="rs-cl">' + contacts.map(function (c) { return "<li>" + c + "</li>"; }).join("") + "</ul></section>";
       order.forEach(function (id) { if (SIDE_SET_EXTENDED[id]) side += sectionHTML(id); });
       side += "</aside>";
       var main = '<div class="rs-main"><header class="rs-head">' + nameBlock() + "</header>";
@@ -2006,6 +2037,48 @@ function tqcBoot() {
       layoutPreview();
     });
   }
+
+  /* 🌟 Click-to-Edit Functionality (Maps clicks on Live Preview to Form Fields) 🌟 */
+  $("resume-paper").addEventListener("click", function(e) {
+      var editTarget = e.target.closest("[data-edit]");
+      if (!editTarget) return;
+      
+      var prop = editTarget.getAttribute("data-edit");
+      
+      // Switch to Content tab automatically
+      var contentTab = document.querySelector('.auc-group-tab[data-tab="content"]');
+      if (contentTab && !contentTab.classList.contains("active")) {
+          contentTab.click();
+      }
+
+      // Find the specific input, list container, or photo section to open
+      var input = document.querySelector('[data-prop="' + prop + '"]');
+      var listContainer = document.getElementById('rsm-list-' + prop); 
+      var targetEl = input || listContainer;
+      
+      if (prop === 'photo') targetEl = document.querySelector('.rsm-photo-card');
+
+      if (targetEl) {
+          // Open parent accordion if closed
+          var details = targetEl.closest("details");
+          if (details && !details.open) details.open = true;
+          
+          // Scroll the field into view safely inside the workspace panel
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Focus the input and apply a brief highlighting pulse
+          if (input) {
+              setTimeout(function() { input.focus(); }, 300);
+              input.style.transition = "box-shadow 0.3s";
+              input.style.boxShadow = "0 0 0 4px rgba(16,185,129,0.5)";
+              setTimeout(function(){ input.style.boxShadow = ""; }, 1200);
+          } else if (targetEl) {
+              targetEl.style.transition = "box-shadow 0.3s";
+              targetEl.style.boxShadow = "0 0 0 4px rgba(16,185,129,0.5)";
+              setTimeout(function(){ targetEl.style.boxShadow = ""; }, 1200);
+          }
+      }
+  });
 
   /* Universal Drag-to-Expand Helper for Mobile Touch & Desktop Mouse */
   // Allows users to expand the workspace vertically via the drag grip
@@ -2532,34 +2605,65 @@ function tqcBoot() {
   window.__tqcRsmPrep = preparePrint;
   $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
 
+  /* 🌟 High-Quality Photo Generation Extraction (Used for Download & Share) 🌟 */
+  function generateResumeImage(callback) {
+      status("Generating resume image... please wait.");
+      var tempH = paper.style.height, tempO = paper.style.overflow;
+      paper.style.height = "auto"; paper.style.overflow = "visible";
+      var w = paper.offsetWidth, h = paper.offsetHeight;
+      
+      var clone = paper.cloneNode(true);
+      clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+      paper.style.height = tempH; paper.style.overflow = tempO;
+      
+      var styleStr = ""; document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
+      clone.style.cssText = paper.style.cssText + "; margin: 0; box-shadow: none; overflow: hidden;";
+      var serializer = new XMLSerializer();
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><style><![CDATA[' + styleStr + ']]></style><foreignObject width="100%" height="100%">' + serializer.serializeToString(clone) + '</foreignObject></svg>';
+      
+      var img = new Image();
+      img.onload = function () {
+        var canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext("2d"); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0);
+        callback(canvas);
+      };
+      img.onerror = function () { status("Error generating photo on this browser."); callback(null); };
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+
   // Exporter: Captures the DOM visually directly into a local image canvas (PNG)
   $("rsm-image-btn").addEventListener("click", function () {
-    status("Generating photo... please wait.");
-    var tempH = paper.style.height, tempO = paper.style.overflow;
-    paper.style.height = "auto"; paper.style.overflow = "visible";
-    var w = paper.offsetWidth, h = paper.offsetHeight;
-    var clone = paper.cloneNode(true);
-    clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
-    paper.style.height = tempH; paper.style.overflow = tempO;
-    var styleStr = ""; document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
-    clone.style.cssText = paper.style.cssText + "; margin: 0; box-shadow: none; overflow: hidden;";
-    var serializer = new XMLSerializer();
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><style><![CDATA[' + styleStr + ']]></style><foreignObject width="100%" height="100%">' + serializer.serializeToString(clone) + '</foreignObject></svg>';
-    var img = new Image();
-    img.onload = function () {
-      var canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
-      var ctx = canvas.getContext("2d"); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0);
-      var a = document.createElement("a"); a.href = canvas.toDataURL("image/png"); a.download = (DATA.name.trim() || "document").replace(/\s+/g, '_') + ".png";
-      document.body.appendChild(a); a.click(); a.remove(); status("Photo Downloaded.");
-    };
-    img.onerror = function () { status("Error generating photo on this browser."); };
-    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      generateResumeImage(function(canvas) {
+          if (!canvas) return;
+          var a = document.createElement("a"); 
+          a.href = canvas.toDataURL("image/png"); 
+          a.download = (DATA.name.trim() || "document").replace(/\s+/g, '_') + ".png";
+          document.body.appendChild(a); a.click(); a.remove(); 
+          status("Photo Downloaded.");
+      });
   });
   
-  // Standard share API interface (OS dependent)
+  // 🌟 Advanced Image Share Logic 🌟
   $("rsm-share-btn").addEventListener("click", function () {
-      if (navigator.share) { navigator.share({ title: 'Free Document Maker', url: window.location.href }).then(function(){status("Thanks for sharing!");}); } 
-      else { status("Share directly via URL."); }
+      if (navigator.share && navigator.canShare) {
+          generateResumeImage(function(canvas) {
+              if(!canvas) return;
+              canvas.toBlob(function(blob) {
+                  var file = new File([blob], (DATA.name.trim() || "resume").replace(/\s+/g, '_') + ".png", { type: "image/png" });
+                  if (navigator.canShare({ files: [file] })) {
+                      navigator.share({
+                          title: DATA.name.trim() + " Resume",
+                          text: "Here is my generated document.",
+                          files: [file]
+                      }).then(function(){ status("Resume shared successfully!"); }).catch(function(){ status(""); });
+                  } else {
+                      status("Your browser does not support sharing this file directly. Please use the Download Photo button instead.");
+                  }
+              }, 'image/png');
+          });
+      } else {
+          status("Sharing files is not supported on this device. Please use the Download Photo button.");
+      }
   });
   
   // Extracts raw string texts for ATS compatibility purposes
@@ -2638,3 +2742,4 @@ tqcBoot(); // Launch builder instance
 <script src="/navigation.js" defer></script>
 </body>
 </html>
+
