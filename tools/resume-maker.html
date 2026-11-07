@@ -529,6 +529,13 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rs-paper .rs-contact a{text-decoration:underline;text-decoration-color:rgba(100,116,139,0.45);text-underline-offset:2px}
 @media print { .rs-edit { display:none !important; } }
 
+/* Full-screen preview (phone friendly) */
+.rsm-stage.is-full{position:fixed;inset:0;z-index:1000;height:100vh !important;max-height:none;border-radius:0;padding:56px 6px 16px;box-shadow:none}
+#rsm-full-close{display:none;position:fixed;top:10px;right:10px;z-index:1001;flex:none;padding:10px 18px;background:#0F172A;color:#FDE68A;border-color:#F59E0B}
+body.rsm-full-on #rsm-full-close{display:inline-flex}
+body.rsm-full-on{overflow:hidden}
+.rsm-ord .rsm-item-btns .rsm-mini{width:30px;height:30px}
+
 /* --- 🌟 DESKTOP/MOBILE WHOLE-PAGE LIVE PREVIEW STAGE 🌟 --- */
 .rsm-stage {
     background:#475569; border-radius:14px; padding:8px 4px;
@@ -898,12 +905,15 @@ details.auc-faq-item[open] summary::after { content: "−"; }
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
       </button>
     </div>
+    <button type="button" class="rsm-zoom-btn" id="rsm-full-btn" title="Full screen preview">⤢ Full</button>
     <button type="button" class="rsm-zoom-btn" id="rsm-zoom-toggle" title="Switch between Zoom In (Width) and Whole Page view">Zoom In (Width)</button>
     <span class="rsm-pill" id="rsm-pages">1 page</span>
   </div>
 </div>
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
+
+<button type="button" id="rsm-full-close" class="auc-btn-secondary">✕ Close preview</button>
 
 <!-- TABS -->
 <div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
@@ -1305,7 +1315,8 @@ function tqcBoot() {
       proj: [{ name: "Open-source CSV Validator", link: "github.com/aarav-sample/csv-validator", desc: "Command-line tool that validates large CSV files against a schema; used by 1,200+ developers." }],
       ventures: [], research: [], portfolio: [], pubs: []
     },
-    hidden: {}
+    hidden: {},
+    order: {}
   };
   
   var SAMPLE = clone(DATA);
@@ -1456,7 +1467,7 @@ function tqcBoot() {
       formHTML += `<details class="auc-sub-drawer">
       <summary><span>Section Visibility</span><span class="auc-label-accent">Show / Hide</span></summary>
       <div class="ctc-drawer-body"><ul id="rsm-order" class="rsm-ord-list"></ul>
-      <p class="rsm-note" style="margin-top:8px">Drag-to-reorder is not available yet. Use Document Format Strategy (chronological / functional) for major reordering.</p></div>
+      <p class="rsm-note" style="margin-top:8px">Use the ↑ ↓ buttons to change the order of sections in your document. Once you set your own order, it overrides the Functional format's automatic ordering.</p></div>
       </details>`;
 
       $("rsm-dynamic-form").innerHTML = formHTML;
@@ -1482,7 +1493,7 @@ function tqcBoot() {
               renderList(secKey);
           }
       });
-      renderOrder(activeSections);
+      renderOrder(getBaseOrder());
   }
 
   function renderList(key) {
@@ -1542,11 +1553,24 @@ function tqcBoot() {
       renderList(key); render();
   });
 
+  $("rsm-dynamic-form").addEventListener("click", function (e) {
+    var ob = e.target.closest("button[data-ord]");
+    if (!ob) return;
+    var id = ob.closest(".rsm-ord").getAttribute("data-id");
+    var arr = getBaseOrder(), i = arr.indexOf(id);
+    var j = ob.getAttribute("data-ord") === "up" ? i - 1 : i + 1;
+    if (i < 0 || j < 0 || j >= arr.length) return;
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    if (!DATA.order) DATA.order = {};
+    DATA.order[DATA.docType] = arr;
+    renderOrder(arr); render();
+  });
+
   function renderOrder(activeSections) {
       var html = "";
       activeSections.forEach(function (id, i) {
           var label = SECTION_DEFS[id] ? SECTION_DEFS[id].label : id;
-          html += '<li class="rsm-ord" data-id="' + id + '"><label class="rsm-ord-l"><input type="checkbox" class="rsm-vis-cb"' + (DATA.hidden[id] ? "" : " checked") + '> ' + label + (SIDE_SET_EXTENDED[id] ? ' <em class="rsm-ord-note">(sidebar)</em>' : "") + '</label></li>';
+          html += '<li class="rsm-ord" data-id="' + id + '"><label class="rsm-ord-l"><input type="checkbox" class="rsm-vis-cb"' + (DATA.hidden[id] ? "" : " checked") + '> ' + label + (SIDE_SET_EXTENDED[id] ? ' <em class="rsm-ord-note">(sidebar)</em>' : "") + '</label><span class="rsm-item-btns"><button type="button" class="rsm-mini" data-ord="up" aria-label="Move section up">↑</button><button type="button" class="rsm-mini" data-ord="down" aria-label="Move section down">↓</button></span></li>';
       });
       var ordBox = $("rsm-order");
       if(ordBox) ordBox.innerHTML = html;
@@ -1731,10 +1755,22 @@ function tqcBoot() {
     return nameHtml + titleHtml;
   }
   
+  // Section order: the document type's default, or the user's own order (set with the ↑ ↓ buttons)
+  function getBaseOrder() {
+      var type = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
+      var def = type.sections.slice();
+      var saved = (DATA.order || {})[DATA.docType];
+      if (!saved || !saved.length) return def;
+      var out = saved.filter(function (s) { return def.indexOf(s) > -1; });
+      def.forEach(function (s) { if (out.indexOf(s) < 0) out.push(s); });
+      return out;
+  }
+  function hasCustomOrder() { var s = (DATA.order || {})[DATA.docType]; return !!(s && s.length); }
+
   function getActiveOrder() {
       var type = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
-      var base = (type && type.sections) ? type.sections.slice() : [];
-      if (STYLE.docFormat === 'functional') {
+      var base = getBaseOrder();
+      if (STYLE.docFormat === 'functional' && !hasCustomOrder()) {
           var functionalFirst = ['summary', 'objective', 'skills', 'skills_tech', 'certs'];
           var reordered = [];
           functionalFirst.forEach(function(s) { if(base.indexOf(s) > -1) reordered.push(s); });
@@ -1923,6 +1959,17 @@ function tqcBoot() {
     });
   }
 
+  /* Full-screen preview (easier to review on a phone) */
+  function setFull(on) {
+    stage.classList.toggle("is-full", on);
+    document.body.classList.toggle("rsm-full-on", on);
+    var fb = $("rsm-full-btn"); if (fb) fb.textContent = on ? "Exit" : "⤢ Full";
+    layoutPreview();
+  }
+  $("rsm-full-btn").addEventListener("click", function () { setFull(!stage.classList.contains("is-full")); });
+  $("rsm-full-close").addEventListener("click", function () { setFull(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && stage.classList.contains("is-full")) setFull(false); });
+
   /* Zoom toggle: default "Zoom In (Width)"; touching switches to "Whole Page" (and back) */
   var zoomToggleBtn = $("rsm-zoom-toggle");
   if (zoomToggleBtn) {
@@ -1943,6 +1990,7 @@ function tqcBoot() {
       if (!btn) return;
       e.preventDefault();
       var prop = btn.getAttribute("data-edit-btn");
+      if (stage.classList.contains("is-full")) setFull(false);
       
       var contentTab = document.querySelector('.auc-group-tab[data-tab="content"]');
       if (contentTab && !contentTab.classList.contains("active")) {
@@ -2055,6 +2103,11 @@ function tqcBoot() {
       add(!!((DATA.email || "").trim() && (DATA.phone || "").trim()), "Contact info present.", "Add both email and phone number.");
     }
     
+    var em = (DATA.email || "").trim();
+    if (em) add(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em), "Email address looks valid.", "Email address does not look valid.");
+    var phDigits = (DATA.phone || "").replace(/\D/g, "");
+    if (phDigits) add(phDigits.length >= 8 && phDigits.length <= 15, "Phone number looks valid.", "Phone number should have 8–15 digits.");
+
     $("rsm-health").innerHTML = checks.join("");
     $("rsm-words").textContent = words + " words";
     $("rsm-health-pages").textContent = pages + (pages === 1 ? " page" : " pages") + " • " + (STYLE.docFormat === 'ats' ? 'ATS Mode' : (PAPERS[STYLE.paper] || PAPERS.a4).css);
@@ -2577,6 +2630,7 @@ function tqcBoot() {
     DATA.docType = keepDocType;
     DATA.lists = {exp:[], edu:[], proj:[], pubs:[], research:[], ventures:[], portfolio:[]};
     DATA.hidden = {};
+    DATA.order = {};
     STYLE = clone(DEFAULT_STYLE);
     initUI();
     status("Cleared.");
