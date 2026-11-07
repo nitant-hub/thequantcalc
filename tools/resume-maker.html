@@ -530,9 +530,13 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 @media print { .rs-edit { display:none !important; } }
 
 /* Full-screen preview (phone friendly) */
-.rsm-stage.is-full{position:fixed;inset:0;z-index:1000;height:100vh !important;max-height:none;border-radius:0;padding:56px 6px 16px;box-shadow:none}
-#rsm-full-close{display:none;position:fixed;top:10px;right:10px;z-index:1001;flex:none;padding:10px 18px;background:#0F172A;color:#FDE68A;border-color:#F59E0B}
-body.rsm-full-on #rsm-full-close{display:inline-flex}
+.rsm-stage.is-full{position:fixed;inset:0;z-index:2147483000;height:100vh !important;height:100dvh !important;max-height:none;border-radius:0;padding:64px 6px 16px;box-shadow:none}
+/* Floating bar: always on top of the site header while in full screen */
+#rsm-full-bar{display:none;position:fixed;top:8px;left:8px;right:8px;z-index:2147483600;gap:10px;justify-content:space-between;align-items:center}
+body.rsm-full-on #rsm-full-bar{display:flex}
+#rsm-full-bar button{flex:1;padding:11px 14px;border-radius:999px;border:1.5px solid #F59E0B;background:#0F172A;color:#FDE68A;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.5)}
+#rsm-full-bar button:active{transform:translateY(1px)}
+#rsm-full-bar #rsm-full-close{border-color:#F87171;color:#FCA5A5}
 body.rsm-full-on{overflow:hidden}
 .rsm-ord .rsm-item-btns .rsm-mini{width:30px;height:30px}
 
@@ -913,7 +917,10 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
 
-<button type="button" id="rsm-full-close" class="auc-btn-secondary">✕ Close preview</button>
+<div id="rsm-full-bar">
+  <button type="button" id="rsm-full-close">✕ Back</button>
+  <button type="button" id="rsm-full-zoom">Zoom In (Width)</button>
+</div>
 
 <!-- TABS -->
 <div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
@@ -1964,8 +1971,16 @@ function tqcBoot() {
     stage.classList.toggle("is-full", on);
     document.body.classList.toggle("rsm-full-on", on);
     var fb = $("rsm-full-btn"); if (fb) fb.textContent = on ? "Exit" : "⤢ Full";
+    var fz = $("rsm-full-zoom"), zt = $("rsm-zoom-toggle");
+    if (fz && zt) fz.textContent = zt.textContent;
     layoutPreview();
+    if (on) { try { stage.scrollTop = 0; } catch (e) {} }
   }
+  $("rsm-full-zoom").addEventListener("click", function () {
+    var zt = $("rsm-zoom-toggle");
+    zt.click();
+    this.textContent = zt.textContent;
+  });
   $("rsm-full-btn").addEventListener("click", function () { setFull(!stage.classList.contains("is-full")); });
   $("rsm-full-close").addEventListener("click", function () { setFull(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && stage.classList.contains("is-full")) setFull(false); });
