@@ -131,7 +131,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-select option,.auc-select optgroup{background-color:#0F172A;color:#F8FAFC}
 
 /* --- 🌟 BOLD COLOR-CODED PREMIUM HEADER TABS 🌟 --- */
-/* These control switching between Content, Style, and Download sections */
 .rsm-main-tabs {
     display: flex;
     gap: 8px;
@@ -160,17 +159,14 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     white-space: nowrap; 
     line-height: 1.2;
 }
-/* Explicit Distinct Inactive Text Colors */
 .rsm-main-tabs .auc-group-tab[data-tab="content"] { color: #34D399; } 
 .rsm-main-tabs .auc-group-tab[data-tab="style"] { color: #818CF8; }   
 .rsm-main-tabs .auc-group-tab[data-tab="export"] { color: #FBBF24; }  
 
-/* Tab Hover States */
 .rsm-main-tabs .auc-group-tab[data-tab="content"]:hover { background: rgba(16, 185, 129, 0.1); color: #6EE7B7; }
 .rsm-main-tabs .auc-group-tab[data-tab="style"]:hover { background: rgba(99, 102, 241, 0.1); color: #A5B4FC; }
 .rsm-main-tabs .auc-group-tab[data-tab="export"]:hover { background: rgba(245, 158, 11, 0.1); color: #FCD34D; }
 
-/* Tab Active States (Color Coded by Context) */
 .rsm-main-tabs .auc-group-tab.active {
     font-size: 1.02rem;
     font-weight: 900;
@@ -206,10 +202,8 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 .auc-btn-secondary:hover{background:rgba(30,41,59,0.9);border-color:#F59E0B}
 
 /* --- 🌟 DISTINCT PREMIUM PANEL BACKGROUNDS & MANUAL EXPANSION 🌟 --- */
-/* CRITICAL FIX: The !important lock forces inactive tabs to stay hidden */
 .rsm-panel[hidden] { display: none !important; }
 
-/* Main Panels where user enters data, styles, or exports */
 .rsm-panel {
     height: 52vh;
     min-height: 250px;
@@ -226,14 +220,13 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 @media (min-width:768px){
     .rsm-panel { 
         height: 380px; 
-        max-height: none; /* Allows manual expansion on desktop */
+        max-height: none;
     }
 }
 .rsm-panel::-webkit-scrollbar { width: 6px; }
 .rsm-panel::-webkit-scrollbar-track { background: transparent; }
 .rsm-panel::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 10px; }
 
-/* Manual Drag Handle Bar for Mobile & Desktop Expansion */
 .rsm-expand-handle {
     display: flex;
     align-items: center;
@@ -266,7 +259,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     opacity: 0.75;
 }
 
-/* Distinct Colors per Panel */
 #rsm-tab-content {
     background: linear-gradient(165deg, #064E3B 0%, #020617 100%);
     border: 1px solid #10B981;
@@ -289,7 +281,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(52, 211, 153, 0.35);
     border-radius: 12px;
-    overflow: visible; /* Fixed dropdown clipping */
+    overflow: visible;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .auc-sub-drawer summary {
@@ -297,7 +289,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     background: linear-gradient(180deg, #111827 0%, #0B1220 100%);
     font-size: 1.02rem;
     font-weight: 700;
-    color: #FFFFFF; /* High contrast text color distinct from body */
+    color: #FFFFFF;
     cursor: pointer;
     user-select: none;
     display: flex;
@@ -317,7 +309,8 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     font-size: 0.85rem;
     font-weight: 600;
 }
-/* FAQ Plus/Minus Icon Generation */
+/* Document type: selected value shown in header, can wrap on small screens */
+#rsm-doc-type-label { white-space: normal; text-align: right; max-width: 55%; line-height: 1.25; }
 .auc-sub-drawer summary::after {
     content: "+";
     font-weight: 900;
@@ -338,13 +331,11 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     border-radius: 0 0 11px 11px;
 }
 
-/* 🌟 DISTINCT INNER TEXT COLOR 🌟 */
-.ctc-drawer-body .auc-label { color: #94A3B8 !important; } /* Distinct slate blue/gray for inner labels */
+.ctc-drawer-body .auc-label { color: #94A3B8 !important; }
 .ctc-drawer-body .rsm-item-head strong { color: #94A3B8 !important; }
 .ctc-drawer-body .rsm-ord-l { color: #94A3B8 !important; }
-.ctc-drawer-body .auc-input, .ctc-drawer-body .auc-select { color: #E2E8F0; } /* Off-white for typed text */
+.ctc-drawer-body .auc-input, .ctc-drawer-body .auc-select { color: #E2E8F0; }
 
-/* Zebra-Striped Fields in Drawers */
 .ctc-drawer-body .auc-field-group:nth-child(odd) .auc-input { 
     border-color: rgba(16, 185, 129, 0.25); 
     background: linear-gradient(180deg, #111827 0%, rgba(16,185,129,0.04) 100%); 
@@ -354,7 +345,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     background: linear-gradient(180deg, #111827 0%, rgba(99,102,241,0.04) 100%); 
 }
 
-/* Repeated items in lists (e.g. Work Experience, Education) */
 .rsm-item { border-radius:12px; padding:12px 8px; margin-bottom:12px; }
 .rsm-item:nth-child(odd) {
     background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(0,0,0,0.3) 100%);
@@ -367,7 +357,6 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     border-left: 3px solid #6366F1;
 }
 
-/* Flex fix for Content Panel */
 .rsm-stack { display:flex; flex-direction:column; gap:8px; }
 .rsm-stack > * { flex-shrink: 0; }
 /* ---------------------------------------------- */
@@ -380,23 +369,19 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-item-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;color:#E2E8F0;font-size:0.9375rem}
 .rsm-item-btns{display:inline-flex;gap:6px}
 
-/* Mini buttons (Up/Down/Delete arrows for list items) */
 .rsm-mini{width:34px;height:34px;border-radius:8px;border:1px solid rgba(245,158,11,0.35);background:#111827;color:#E2E8F0;cursor:pointer;font-size:0.95rem;line-height:1}
 .rsm-mini:hover,.rsm-mini:focus-visible{border-color:#10B981;color:#34D399;outline:none}
 .rsm-del:hover,.rsm-del:focus-visible{border-color:#F87171;color:#FCA5A5}
 
-/* Add Item Button */
 .rsm-add{width:100%;padding:11px 14px;border-radius:12px;border:1px dashed rgba(16,185,129,0.55);background:transparent;color:#34D399;font-weight:600;font-size:0.9375rem;cursor:pointer}
 .rsm-add:hover{background:rgba(16,185,129,0.1)}
 
-/* Section Visibility Toggles (Checkboxes) */
 .rsm-ord-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .rsm-ord{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border:1px solid #1E293B;border-radius:10px;background:rgba(17,24,39,0.6);color:#E2E8F0;font-size:0.9375rem}
 .rsm-ord-l{display:inline-flex;align-items:center;gap:8px;cursor:pointer;flex-wrap:wrap}
 .rsm-ord input[type="checkbox"],.rsm-photo-row input[type="checkbox"]{accent-color:#10B981;width:17px;height:17px}
 .rsm-ord-note{font-style:normal;color:#A8B5C8;font-size:0.8125rem}
 
-/* Photo Upload Elements */
 .rsm-photo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .rsm-file-btn{display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;border:1px solid rgba(245,158,11,0.32);background:rgba(17,24,39,0.72);color:#E2E8F0;font-weight:600;font-size:0.9375rem;cursor:pointer}
 .rsm-file-btn:hover,.rsm-file-btn:focus-within{border-color:#F59E0B}
@@ -426,7 +411,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   color:#FFFFFF; border-color:#818CF8;
   box-shadow:0 4px 14px rgba(67,56,202,0.45), inset 0 1px 1px rgba(255,255,255,0.25);
 }
-/* Marriage / biodata filters – more elegant & prominent */
 .rsm-filters[data-cat="biodata_marriage"] .auc-group-tab.active,
 .rsm-filters[data-cat="biodata_govt"] .auc-group-tab.active{
   background:linear-gradient(135deg,#BE123C 0%,#9D174D 100%);
@@ -456,17 +440,14 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rsm-color-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:0.9375rem;color:#E2E8F0}
 .rsm-color-row input[type="color"]{width:46px;height:34px;border:1px solid #334155;border-radius:8px;background:#111827;padding:2px;cursor:pointer}
 
-/* Range input for Font Size */
 .rsm-range{width:100%;accent-color:#10B981}
 
-/* Grid Layouts for Controls & Exports */
 .rsm-ctl-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0}
 @media (min-width:560px){.rsm-ctl-grid{grid-template-columns:1fr 1fr}}
 .rsm-export-grid{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:560px){.rsm-export-grid{grid-template-columns:1fr 1fr}}
 .rsm-export-grid .auc-btn-primary,.rsm-export-grid .auc-btn-secondary,.rsm-export-grid .rsm-file-btn{flex:none;width:100%;justify-content:center;text-align:center}
 
-/* Status Indicators */
 .rsm-status{min-height:1.4em;margin-top:12px;font-size:0.9rem;color:#FDE68A}
 .rsm-health{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:0.9375rem;color:#D5DEEA}
 .rsm-health li{display:flex;gap:9px;line-height:1.45}
@@ -496,7 +477,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   white-space:nowrap;
 }
 
-/* Premium SVG Icon Buttons for Undo/Redo */
 .rsm-icon-btn {
   padding: 4px 12px !important;
   display: inline-flex;
@@ -523,7 +503,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
   border-bottom:1px dashed rgba(16,185,129,0.22) !important;
 }
 
-/* Dim empty / default inputs until user types real content */
 .auc-input.is-empty, .auc-select.is-empty, textarea.auc-input.is-empty {
   color: #64748B !important; opacity: 0.72;
 }
@@ -532,45 +511,40 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 }
 .auc-input::placeholder { color: #64748B; opacity: 0.85; }
 
-/* Live preview: dim placeholder-looking content on the rendered page */
 .rs-paper .rs-placeholder { color: #94A3B8 !important; font-weight: 500 !important; opacity: 0.75; }
 .rs-paper .rs-name.rs-placeholder { color: #94A3B8 !important; }
 
-/* 🌟 CLICK-TO-EDIT INTERACTIVE HIGHLIGHT EFFECTS 🌟 */
-.rs-paper [data-edit] { 
-  cursor: pointer; 
-  border-radius: 4px; 
-  transition: background-color 0.2s ease, box-shadow 0.2s ease; 
+/* 🌟 EDIT PENCIL BUTTONS (shown in live preview only, never in PDF / PNG / print) 🌟 */
+.rs-paper .rs-edit{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:20px; height:20px; margin:-4px 0 -4px 8px; padding:0;
+  border-radius:50%; border:1px solid #10B981; background:#ECFDF5; color:#047857;
+  cursor:pointer; vertical-align:middle; flex:0 0 auto; position:relative; z-index:5;
+  font-size:0; line-height:0; box-shadow:0 1px 3px rgba(0,0,0,0.25);
+  transform:scale(var(--inv,1)); transform-origin:left center;
+  text-transform:none; letter-spacing:0;
 }
-.rs-paper [data-edit]:hover { 
-  background-color: rgba(16, 185, 129, 0.08) !important; 
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.08); 
-  z-index: 10; 
-}
-/* Ensure hover effect doesn't break printing */
-@media print { 
-  .rs-paper [data-edit]:hover { background-color: transparent !important; box-shadow: none !important; } 
-}
+.rs-paper .rs-edit svg{width:11px;height:11px;pointer-events:none;display:block}
+.rs-paper .rs-edit:hover,.rs-paper .rs-edit:focus-visible{background:#10B981;color:#fff;outline:none}
+.rs-paper .rs-contact a{text-decoration:underline;text-decoration-color:rgba(100,116,139,0.45);text-underline-offset:2px}
+@media print { .rs-edit { display:none !important; } }
 
 /* --- 🌟 DESKTOP/MOBILE WHOLE-PAGE LIVE PREVIEW STAGE 🌟 --- */
-/* The dark box where the generated resume HTML renders. Height is fixed (Smaller size to show workspace). */
 .rsm-stage {
     background:#475569; border-radius:14px; padding:8px 4px;
     overflow-y:auto; overflow-x:hidden; display:flex; justify-content:center; align-items:flex-start;
-    height: 260px; min-height: 180px; /* Reduced to leave room for tabs below */
+    height: 260px; min-height: 180px;
     overscroll-behavior:contain; box-shadow:inset 0 4px 12px rgba(0,0,0,0.25)
 }
 @media (min-width:768px){
-    .rsm-stage { height: 320px; } /* Reduced for desktop visibility */
+    .rsm-stage { height: 320px; }
 }
 /* --------------------------------------------------------- */
 
-/* Preview Scaling wrappers */
 .rsm-fit{position:relative;margin:0 auto}
 .rsm-scaler{transform-origin:top left;position:absolute;left:0;top:0}
 
 /* ---------- THE ACTUAL RESUME PAPER (rendered document) ---------- */
-/* These classes (prefixed with .rs-) apply ONLY to the generated resume preview and PDF */
 .rs-paper{background:#fff;color:#1F2937;width:var(--pw);min-height:var(--ph);padding:var(--pad);font-family:var(--rf);font-size:var(--rfs);line-height:var(--rlh);box-sizing:border-box;position:relative;box-shadow:0 18px 42px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.25);-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-wrap:break-word;text-align:left}
 .rs-paper *{box-sizing:border-box}
 .rs-paper a{color:inherit;text-decoration:none}
@@ -582,7 +556,7 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rn-smallcaps .rs-name{font-variant:small-caps;letter-spacing:0.02em}
 .rs-title{font-size:1.15em;color:var(--ac);font-weight:600;margin-top:4px}
 .rs-head{margin-bottom:calc(var(--gap) * 0.9)}
-.rs-contact{display:flex;flex-wrap:wrap;gap:2px 0;margin-top:6px;font-size:0.92em;color:#475569;font-weight:500;}
+.rs-contact{display:flex;flex-wrap:wrap;gap:2px 0;margin-top:6px;font-size:0.92em;color:#475569;font-weight:500;align-items:center}
 .rs-sep{margin:0 8px;color:var(--ac-mid)}
 .rs-photo{width:92px;height:92px;object-fit:cover;flex:0 0 auto}
 .rs-photo-circle{border-radius:50%}
@@ -593,7 +567,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .ra-center .rs-head{flex-direction:column;text-align:center}
 .ra-center .rs-contact{justify-content:center}
 
-/* Layout Specific Heading Styles */
 .rl-modern .rs-head{padding-bottom:10px;border-bottom:3px solid var(--ac)}
 .rl-classic .rs-head{padding-bottom:8px}
 .rl-banner .rs-head.rs-band{margin:0 0 var(--gap);padding:var(--pad);background:linear-gradient(135deg, var(--ac) 0%, var(--ac) 100%);color:#fff}
@@ -603,7 +576,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rl-banner .rs-sec,.rl-banner>.rs-sec{margin-left:var(--pad);margin-right:var(--pad)}
 .rl-banner{padding-bottom:var(--pad)}
 
-/* Section Headings (.rs-h) */
 .rs-sec{margin-top:var(--gap)}
 .rs-sec:first-of-type{margin-top:0}
 .rs-h{font-size:1em;font-weight:700;margin-bottom:6px;break-after:avoid;color:var(--ac)}
@@ -616,7 +588,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rh-dot .rs-h::after{content:"";flex:1;border-top:1px solid var(--ac-mid)}
 .rh-plain .rs-h{color:#0F172A;font-size:1.08em}
 
-/* Paragraphs & Entries */
 .rs-p{margin:0 0 3px}
 .rs-pd{color:#475569}
 .rs-entry{margin-bottom:calc(var(--gap) * 0.65);break-inside:avoid}
@@ -628,13 +599,11 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rs-ed{white-space:nowrap;color:#475569;font-size:0.92em;font-variant-numeric:tabular-nums}
 .rs-ed2{color:#475569;font-size:0.92em;font-weight:400}
 
-/* Timeline Layout Elements */
 .rs-tl{display:grid;grid-template-columns:24% 1fr;gap:0 14px;position:relative}
 .rs-tld{color:var(--ac);font-weight:600;font-size:0.92em;text-align:right;padding-top:1px}
 .rs-tlc{border-left:2px solid var(--ac-mid);padding-left:14px;position:relative}
 .rs-tlc::before{content:"";position:absolute;left:-6px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--ac)}
 
-/* Lists & Bullets */
 .rs-ul{margin:3px 0 0;padding-left:1.2em}
 .rs-ul li{margin-bottom:2px}
 .rb-disc .rs-ul li{list-style:disc}
@@ -644,7 +613,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rb-none .rs-ul{padding-left:0}.rb-none .rs-ul li{list-style:none}
 .rs-ul li::marker{color:var(--ac)}
 
-/* Skills layouts */
 .rs-sg{margin-bottom:5px}
 .rs-sgl{display:block;font-size:0.92em;color:#0F172A;margin-bottom:2px;font-weight:600}
 .rs-chip{display:inline-block;padding:1px 9px;margin:2px 4px 2px 0;border:1px solid var(--ac-mid);background:var(--ac-soft);border-radius:999px;font-size:0.92em;color:#0F172A}
@@ -652,7 +620,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rs-skl li{break-inside:avoid;margin-bottom:1px}
 .rs-skin b{color:#0F172A}
 
-/* Sidebar layouts */
 .rs-grid{display:grid;grid-template-columns:33% 1fr;min-height:var(--ph)}
 .rl-sidebarR .rs-grid{grid-template-columns:1fr 33%}
 .rs-side{padding:var(--pad) calc(var(--pad) * 0.7);display:flex;flex-direction:column;gap:0}
@@ -662,7 +629,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rs-side .rs-sec:first-of-type{margin-top:0}
 .rs-cl{list-style:none;margin:0;padding:0;font-size:0.88em;display:flex;flex-direction:column;gap:5px;overflow-wrap:break-word}
 
-/* Sidebar Tones */
 .rt-solid.rl-sidebarL .rs-side,.rt-solid.rl-sidebarR .rs-side{background:var(--ac);color:#fff}
 .rt-light.rl-sidebarL .rs-side,.rt-light.rl-sidebarR .rs-side{background:var(--ac-soft);color:#1F2937}
 .rt-solid .rs-side .rs-h{color:#fff;border-color:rgba(255,255,255,0.55)}
@@ -672,7 +638,6 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 .rt-solid .rs-side .rs-chip{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.45);color:#fff}
 .rt-solid .rs-side .rs-ul li::marker{color:#fff}
 
-/* Basic Fields Label/Value styling (For Biodatas) */
 .rs-basic-label{color:#0F172A;font-weight:700}
 .rs-basic-value{color:#475569}
 .rt-solid .rs-side .rs-basic-label{color:#fff}
@@ -682,13 +647,11 @@ textarea.auc-input.rsm-ta{min-height:92px;resize:vertical;line-height:1.45;font-
 
 .rl-sidebarL .rs-main .rs-head,.rl-sidebarR .rs-main .rs-head{display:block;border-bottom:3px solid var(--ac);padding-bottom:10px}
 
-/* Page Break Indicators inside Live Preview */
 .rs-breaks{position:absolute;left:0;right:0;top:0;height:0;pointer-events:none}
 .rs-pb{position:absolute;left:0;right:0;border-top:2px dashed #EF4444;z-index:5}
 .rs-pb span{position:absolute;right:8px;top:2px;font:600 11px/1 -apple-system,Segoe UI,Arial,sans-serif;color:#B91C1C;background:rgba(255,255,255,0.9);padding:2px 6px;border-radius:4px}
 
 /* --- PRINT MEDIA CSS --- */
-/* Completely hides the UI and renders only the generated Resume for printing */
 #rsm-print-root{display:none}
 @media print{
 html,body{background:#fff !important;background-image:none !important;margin:0 !important;padding:0 !important;overflow:visible !important}
@@ -698,6 +661,7 @@ body>*:not(#rsm-print-root){display:none !important}
 #rsm-print-root .rs-paper:not(.rs-bleed){padding:0 !important}
 #rsm-print-root .rs-grid{min-height:calc(var(--ph) - 2mm)}
 #rsm-print-root .rs-entry{break-inside:avoid}
+#rsm-print-root .rs-edit{display:none !important}
 }
 
 /* ── Custom Professional Dropdown Components ── */
@@ -738,6 +702,10 @@ body>*:not(#rsm-print-root){display:none !important}
 .rsm-dd-menu::-webkit-scrollbar { width: 6px; }
 .rsm-dd-menu::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
+/* Document type list: options shown directly inside the drawer (no sub-dropdown) */
+.rsm-dd-static { display: flex; flex-direction: column; gap: 2px; }
+.rsm-dd-static .rsm-dd-option { border-radius: 10px; }
+
 .rsm-dd-option {
     display: flex; align-items: center; gap: 12px; width: 100%;
     padding: 11px 16px 11px 20px; border: none; background: transparent;
@@ -757,7 +725,6 @@ body>*:not(#rsm-print-root){display:none !important}
     content: ""; flex: 0 0 14px;
 }
 
-/* Custom Dropdown: Indigo variant (For Format Strategy) */
 .rsm-dd-indigo .rsm-dd-trigger {
     border-color: rgba(129, 140, 248, 0.45);
 }
@@ -782,7 +749,6 @@ body>*:not(#rsm-print-root){display:none !important}
 }
 .rsm-dd-indigo .rsm-dd-option[aria-selected="true"]::before { color: #818CF8; }
 
-/* Custom Dropdown: Amber variant (For Page Count) */
 .rsm-dd-amber .rsm-dd-trigger {
     border-color: rgba(251, 191, 36, 0.4);
 }
@@ -807,7 +773,6 @@ body>*:not(#rsm-print-root){display:none !important}
 }
 .rsm-dd-amber .rsm-dd-option[aria-selected="true"]::before { color: #FBBF24; }
 
-/* Professional photo upload card UI */
 .rsm-photo-card {
     margin-top: 14px; padding: 14px; border-radius: 14px;
     background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(52, 211, 153, 0.25);
@@ -828,7 +793,6 @@ article.auc-article {
 }
 @media (min-width:768px){article.auc-article{padding:34px 36px}}
 
-/* ── Professional title + horizontal boundary lines ── */
 article.auc-article h2 {
     font-size: clamp(1.3125rem, 2.2vw, 1.65rem); line-height: 1.28; font-weight: 700;
     color: var(--text-main); margin: 42px 0 18px 0; letter-spacing: -0.02em;
@@ -877,13 +841,11 @@ article.auc-article ul, article.auc-article ol { margin: 0 0 20px 0; padding-lef
 article.auc-article li { margin-bottom: 8px; line-height: 1.6; }
 article.auc-article a { color: var(--link-color); text-decoration: underline; text-underline-offset: 2px; }
 
-/* Soft full-width section separator */
 article.auc-article hr {
     border: none; height: 1px; margin: 36px 0;
     background: linear-gradient(90deg, transparent 0%, var(--surface-border) 20%, var(--surface-border) 80%, transparent 100%);
 }
 
-/* Article UI Components (Boxes, Tables, FAQs) */
 .auc-surface-box { background-color: var(--article-soft); border: 1px solid var(--surface-border); border-left: 4px solid #10B981; border-radius: 12px; padding: 16px 20px; margin: 24px 0; }
 .data-table-wrapper { width: 100%; overflow-x: auto; margin: 24px 0; border: 1px solid var(--surface-border); border-radius: 12px; }
 .auc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
@@ -923,13 +885,12 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <!-- Error display container -->
 <div id="rsm-fatal" class="auc-error-banner visible" role="alert" style="display:none"></div>
 
-<!-- 🌟 SLIMMER ALWAYS-ON-TOP LIVE PREVIEW (WHOLE-PAGE FIT FIXED HEIGHT) 🌟 -->
+<!-- LIVE PREVIEW -->
 <div class="rsm-preview-wrap">
 <div class="rsm-preview-head">
   <h2 id="rsm-preview-title">Live Preview</h2>
   <div class="rsm-preview-tools">
     <div style="display:inline-flex; gap: 4px;">
-      <!-- Premium SVG Undo/Redo Icons -->
       <button type="button" class="rsm-zoom-btn rsm-icon-btn" id="rsm-undo-btn" title="Undo" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
       </button>
@@ -937,47 +898,37 @@ details.auc-faq-item[open] summary::after { content: "−"; }
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
       </button>
     </div>
-    <button type="button" class="rsm-zoom-btn" id="rsm-zoom-toggle" title="Switch between Whole Page view and Fit Width zoom">Whole Page</button>
+    <button type="button" class="rsm-zoom-btn" id="rsm-zoom-toggle" title="Switch between Zoom In (Width) and Whole Page view">Zoom In (Width)</button>
     <span class="rsm-pill" id="rsm-pages">1 page</span>
   </div>
 </div>
-<!-- The stage where the generated HTML document is injected (Drag handle removed, size fixed) -->
 <div class="rsm-stage" id="rsm-stage" aria-labelledby="rsm-preview-title"><div class="rsm-fit" id="rsm-fit"><div class="rsm-scaler" id="rsm-scaler"><div id="resume-paper" class="rs-paper" xmlns="http://www.w3.org/1999/xhtml"></div></div></div></div>
 </div>
 
-<!-- 🌟 PREMIUM BOLD SINGLE-LINE TABS 🌟 -->
+<!-- TABS -->
 <div class="rsm-main-tabs" role="group" aria-label="Resume maker sections">
 <button type="button" class="auc-group-tab active" data-tab="content" aria-pressed="true">1. Content</button>
 <button type="button" class="auc-group-tab" data-tab="style" aria-pressed="false">2. Style</button>
 <button type="button" class="auc-group-tab" data-tab="export" aria-pressed="false">3. Download</button>
 </div>
 
-<!-- PANEL: 1. CONTENT (Deep Emerald Background) -->
+<!-- PANEL: 1. CONTENT -->
 <div class="rsm-panel rsm-stack" id="rsm-tab-content">
     
-    <!-- 🌟 DYNAMIC DOCUMENT TYPE SELECTOR (Wrapped in FAQ Accordion) 🌟 -->
-    <details class="auc-sub-drawer" open>
-        <summary><span>Document Category & Type</span><span class="auc-label-accent">Setup</span></summary>
-        <div class="ctc-drawer-body">
-            <div class="auc-field-group" style="margin:0;">
-                <div class="rsm-dd" id="rsm-doc-type-dd">
-                    <button type="button" class="rsm-dd-trigger" id="rsm-doc-type-btn" aria-haspopup="listbox" aria-expanded="false">
-                        <span class="rsm-dd-value" id="rsm-doc-type-label">Standard Professional Resume</span>
-                        <span class="rsm-dd-chevron" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="rsm-dd-menu" id="rsm-doc-type-menu" role="listbox" hidden></div>
-                </div>
-                <!-- Hidden native select kept for compatibility / form value -->
-                <select id="rsm-doc-type" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true"></select>
-            </div>
+    <!-- DOCUMENT TYPE: closed by default; touching the header shows the options directly -->
+    <details class="auc-sub-drawer" id="rsm-doc-type-details">
+        <summary><span>Document Category &amp; Type</span><span class="auc-label-accent" id="rsm-doc-type-label">Standard Professional Resume</span></summary>
+        <div class="ctc-drawer-body" style="padding:8px 6px;">
+            <div class="rsm-dd-static" id="rsm-doc-type-menu" role="listbox"></div>
+            <select id="rsm-doc-type" class="auc-select" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true"></select>
         </div>
     </details>
 
-    <!-- DYNAMIC FORM CONTAINER (Populated by JS based on Document Type) -->
+    <!-- DYNAMIC FORM CONTAINER -->
     <div id="rsm-dynamic-form" class="rsm-stack"></div>
 </div>
 
-<!-- PANEL: 2. STYLE (Deep Indigo Background) -->
+<!-- PANEL: 2. STYLE -->
 <div class="rsm-panel" id="rsm-tab-style" hidden>
     
 <div class="rsm-setup-box" style="border-color: #818CF8; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);" id="rsm-format-container">
@@ -996,30 +947,22 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 
 <div class="auc-label" style="margin-bottom:8px"><span>Ready-made styles</span><span class="auc-label-accent" id="rsm-gallery-count">60 of 60 styles</span></div>
 
-<!-- 🌟 DYNAMIC STYLE FILTERS (Varies by Category) 🌟 -->
 <div class="rsm-filters" role="group" aria-label="Filter styles by layout" id="rsm-style-filters">
-    <!-- Populated by JS -->
 </div>
 
-<!-- Preset Gallery (Search option completely removed as requested) -->
 <div id="rsm-gallery" class="rsm-gallery"></div>
 
-<!-- Accent Color Picker -->
 <div class="auc-label" style="margin:18px 0 8px"><span>Accent colour</span><span class="auc-label-accent">16 + custom</span></div>
 <div id="rsm-swatches" class="rsm-swatches"></div>
 <div class="rsm-color-row"><label for="rsm-custom-color">Custom colour</label><input type="color" id="rsm-custom-color" value="#0369A1"></div>
 
-<!-- Dropdowns for fine-grained style controls (Populated by JS) -->
 <div class="rsm-ctl-grid" id="rsm-controls"></div>
 
-<!-- 🌟 FIX PAGES OPTION 🌟 -->
 <div class="rsm-ctl-grid" style="margin-top:0;">
-    <!-- Font Size Slider -->
     <div class="auc-field-group">
         <label class="auc-label" for="rsm-fs"><span>Font size</span><span class="auc-label-accent" id="rsm-fs-out">10.5 pt</span></label>
         <input type="range" id="rsm-fs" class="rsm-range" min="9" max="12" step="0.5" value="10.5" style="margin-top: 10px;">
     </div>
-    <!-- Manual Page Constraints -->
     <div class="auc-field-group">
         <label class="auc-label"><span>Fix Page Count</span><span class="auc-label-accent">Manual</span></label>
         <div class="rsm-dd rsm-dd-amber" id="rsm-page-limit-dd">
@@ -1044,7 +987,6 @@ details.auc-faq-item[open] summary::after { content: "−"; }
             <option value="custom">Custom number…</option>
         </select>
     </div>
-    <!-- Custom Page Count Input (Shown if Custom is selected) -->
     <div class="auc-field-group" id="rsm-custom-pages-wrap" style="display:none; margin-top:8px;">
         <label class="auc-label" for="rsm-custom-pages"><span>Custom page count</span></label>
         <input type="number" id="rsm-custom-pages" class="auc-input" min="1" max="30" value="3" placeholder="e.g. 12">
@@ -1054,12 +996,11 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div class="auc-action-row" style="margin:16px 0 0"><button type="button" id="rsm-style-reset" class="auc-btn-secondary">Reset style</button></div>
 </div>
 
-<!-- PANEL: 3. DOWNLOAD (Deep Amber Background) -->
+<!-- PANEL: 3. DOWNLOAD -->
 <div class="rsm-panel" id="rsm-tab-export" hidden>
 <div class="rsm-export-grid">
 <button type="button" id="rsm-print-btn" class="auc-btn-primary">Print / Save as PDF</button>
 <button type="button" id="rsm-image-btn" class="auc-btn-secondary">Download as Photo (.png)</button>
-<!-- Updated Share Button -->
 <button type="button" id="rsm-share-btn" class="auc-btn-secondary">Share Resume (Image)</button>
 <button type="button" id="rsm-copy-btn" class="auc-btn-secondary">Copy plain text (for ATS)</button>
 <button type="button" id="rsm-json-btn" class="auc-btn-secondary">Download backup (.json)</button>
@@ -1067,11 +1008,9 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <button type="button" id="rsm-sample-btn" class="auc-btn-secondary">Load sample resume</button>
 <button type="button" id="rsm-clear-btn" class="auc-btn-secondary" style="border-color:rgba(248,113,113,0.5); color:#FCA5A5;">Clear everything</button>
 </div>
-<p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Your resume is saved in this browser automatically; nothing is uploaded.</p>
-<!-- Status Message Container -->
+<p class="rsm-note" style="margin-top:12px">In the print dialog choose &ldquo;Save as PDF&rdquo; as the destination, set margins to &ldquo;Default&rdquo; and untick &ldquo;Headers and footers&rdquo;. Email, phone and website links stay clickable in the PDF. Your resume is saved in this browser automatically; nothing is uploaded.</p>
 <div id="rsm-status" class="rsm-status" role="status" aria-live="polite"></div>
 
-<!-- Document Health Check -->
 <div id="result" class="tqc-result-box" data-tqc-result aria-live="polite" style="margin-top:24px; box-shadow: none; border: 1px solid rgba(255,255,255,0.1);">
 <div class="tqc-result-content">
 <div class="auc-res-header"><span>Document health check</span><span id="rsm-health-pages">1 page &bull; A4</span></div>
@@ -1081,7 +1020,6 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 </div>
 </div>
 
-<!-- 🌟 MANUAL EXPAND HANDLE FOR WORKSPACE HEIGHT (Limited to 550px max) 🌟 -->
 <div class="rsm-expand-handle" id="rsm-panel-handle" title="Drag down or up to expand workspace height">
   <span class="rsm-expand-grip" aria-hidden="true"></span>
   <span>Drag to expand workspace</span>
@@ -1093,7 +1031,6 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <!-- AdSense Placeholder -->
 <div id="dynInContentAd" style="margin:2rem auto;width:100%;text-align:center;max-width:728px;min-height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background-color:rgba(148,163,184,0.05);border:1px dashed var(--border-color,#e2e8f0);border-radius:8px;"><span style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;position:absolute;z-index:0;">- Advertisement -</span></div>
 
-<!-- 🌟 UPGRADED FULL-LENGTH ARTICLE (For SEO/Context) 🌟 -->
 <article class="auc-article">
 <h2>An All-in-One Document Builder That Gives You Real Design Choice, Privately</h2>
 <p>A resume has two readers: a person who skims it for about a minute, and, increasingly, software that parses it before a person sees it. But today, you don't just need a standard job resume. You might need a highly detailed Academic CV, a structured Government Application Biodata, or a beautifully formatted Marriage Profile. The <strong>All-in-One Resume & Biodata Builder</strong> on this page is built for all of these scenarios.</p>
@@ -1111,7 +1048,7 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 
 <h2>How to Build Your Document in Three Steps</h2>
 <ol>
-<li><strong>Content.</strong> Choose your document type first. Fill in your details, work experience, education, skills, and optional projects. Add, delete, and reorder entries with the arrow buttons. The preview updates with every keystroke.</li>
+<li><strong>Content.</strong> Choose your document type first. Fill in your details, work experience, education, skills, and optional projects. Add, delete, and reorder entries with the arrow buttons. The preview updates with every keystroke. Tap the small pencil icon next to any heading in the preview to jump straight to that section.</li>
 <li><strong>Style.</strong> Pick a ready-made style from the gallery (filter by layout type like &ldquo;ATS-safe&rdquo; or &ldquo;Premium&rdquo;), then fine-tune any option: colour, font, heading style, bullets, spacing, margins, page limits, and paper size.</li>
 <li><strong>Download.</strong> Use <em>Print / Save as PDF</em> for a perfect vector document, use <em>Download as Photo (.png)</em> to share an image directly on WhatsApp or social media, or copy a clean plain-text version for online application forms.</li>
 </ol>
@@ -1165,7 +1102,7 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 <div class="auc-faq-list">
 <details class="auc-faq-item" open>
 <summary>Can I build a Marriage Biodata or Academic CV here?</summary>
-<div class="auc-faq-body">Yes! This is an all-in-one document builder. Select "Marriage & Personal Biodata" or "Educational & Academic CV" from the dropdown in the Content tab, and the builder will instantly load specialized fields like Family Background, Partner Preferences, Research Experience, and Publications.</div>
+<div class="auc-faq-body">Yes! This is an all-in-one document builder. Select "Marriage & Personal Biodata" or "Educational & Academic CV" from the Document Category & Type section in the Content tab, and the builder will instantly load specialized fields like Family Background, Partner Preferences, Research Experience, and Publications.</div>
 </details>
 <details class="auc-faq-item">
 <summary>Is this resume maker really free, and do I need to sign up?</summary>
@@ -1200,7 +1137,6 @@ details.auc-faq-item[open] summary::after { content: "−"; }
 function tqcBoot() {
   "use strict";
 
-  // --- Basic Error Reporting ---
   function reportError(e) {
     try {
       var el = document.getElementById("rsm-status"), msg = "Builder error: " + (e && e.message ? e.message : e);
@@ -1210,15 +1146,10 @@ function tqcBoot() {
   }
   window.addEventListener("error", function (ev) { if (ev && ev.filename === "" || (ev && /resume/i.test(String(ev.message)))) reportError(ev.error || ev.message); });
   
-  // Local storage key definition
   var STORE = "tqc_resume_maker_v2";
-  
-  // Helper for selecting elements by ID
   var $ = function (id) { return document.getElementById(id); };
 
-  /* --- 🌟 APP CONFIGURATION DATA 🌟 --- */
-  
-  // Font Definitions Map
+  /* --- APP CONFIGURATION DATA --- */
   var FONTS = {
     sys: ["System Default", '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif'],
     arial: ["Arial", 'Arial,Helvetica,sans-serif'],
@@ -1248,13 +1179,10 @@ function tqcBoot() {
     mono: ["System Monospace", 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace']
   };
   
-  // Available color palettes (Name, Hex Code)
   var COLORS = [["Navy", "#1E3A8A"], ["Royal Blue", "#2563EB"], ["Ocean", "#0369A1"], ["Teal", "#0F766E"], ["Emerald", "#047857"], ["Forest", "#166534"], ["Olive", "#4D7C0F"], ["Amber", "#B45309"], ["Orange", "#C2410C"], ["Crimson", "#BE123C"], ["Berry", "#9D174D"], ["Plum", "#7E22CE"], ["Indigo", "#4338CA"], ["Slate", "#334155"], ["Charcoal", "#111827"], ["Brown", "#78350F"]];
   
-  // Page size settings and measurements
   var PAPERS = { a4: { w: "210mm", h: "297mm", wpx: 793.7, hpx: 1122.5, css: "A4" }, letter: { w: "215.9mm", h: "279.4mm", wpx: 816, hpx: 1056, css: "letter" } };
   
-  // Style Dropdown configuration logic
   var CONTROLS = [
     { key: "layout", label: "Layout", opts: [["classic", "Classic (single column)"], ["modern", "Modern (accent header)"], ["banner", "Banner header"], ["sidebarL", "Sidebar left"], ["sidebarR", "Sidebar right"], ["timeline", "Timeline dates"]] },
     { key: "font", label: "Font family", opts: Object.keys(FONTS).map(function (k) { return [k, FONTS[k][0]]; }) },
@@ -1271,9 +1199,6 @@ function tqcBoot() {
     { key: "shape", label: "Photo shape", opts: [["circle", "Circle"], ["rounded", "Rounded square"], ["square", "Square"]] }
   ];
 
-  /* 🌟 THE ALL-IN-ONE ENGINE CONFIGURATION 🌟 */
-  
-  // Document Categories (Major Groupings)
   var DOC_CATEGORIES = {
       academic: "Educational & Academic CV",
       job: "Job & Career Resume",
@@ -1284,7 +1209,6 @@ function tqcBoot() {
       other: "Creative & Other Profiles"
   };
 
-  // Specific Document Types & which data sections they load
   var DOC_TYPES = {
       job_standard: { cat: "job", title: "Standard Professional Resume", defaultFormat: "chrono", sections: ["summary", "exp", "edu", "skills", "proj", "certs", "languages"] },
       job_fresher: { cat: "job", title: "Fresher / Entry-Level Resume", defaultFormat: "chrono", sections: ["objective", "edu", "proj", "skills", "certs", "exp", "languages"] },
@@ -1296,7 +1220,6 @@ function tqcBoot() {
       creative_artist: { cat: "other", title: "Creative / Artist Portfolio Resume", defaultFormat: "chrono", sections: ["summary", "portfolio", "exp", "edu", "skills"] }
   };
 
-  // UI Definitions for each individual data section
   var SECTION_DEFS = {
       summary: { label: "Professional Summary", type: "textarea", note: "2-3 lines", prompt: "Your role, strengths and one measurable result." },
       objective: { label: "Career Objective", type: "textarea", note: "For freshers", prompt: "A brief statement outlining your career goals." },
@@ -1327,10 +1250,8 @@ function tqcBoot() {
       declaration: { label: "Declaration", type: "textarea", note: "For official use", prompt: "I hereby declare that the information given above is true..." }
   };
   
-  // Fields assigned to the sidebar by default in specific layouts
   var SIDE_SET_EXTENDED = { skills: 1, skills_tech: 1, certs: 1, languages: 1, biodata_personal: 1, biodata_official: 1, biodata_partner: 1 };
 
-  // Theme combination recipes used to generate the 60 preset styles
   var RECIPES = [
     { n: "Executive", layout: "classic", font: "georgia", heading: "underline", bullet: "disc", skills: "inline", align: "center", nameStyle: "upper", density: "normal", tone: "light", ats: true, c: [0, 13, 14, 3, 9] },
     { n: "Corporate", layout: "classic", font: "arial", heading: "caps", bullet: "square", skills: "inline", align: "left", nameStyle: "normal", density: "normal", tone: "light", ats: true, c: [1, 13, 0, 4, 8] },
@@ -1346,7 +1267,6 @@ function tqcBoot() {
     { n: "Creative", layout: "banner", font: "trebuchet", heading: "box", bullet: "arrow", skills: "chips", align: "center", nameStyle: "smallcaps", density: "normal", tone: "solid", ats: false, c: [9, 11, 8, 10, 2] }
   ];
   
-  // Generating Preset list from recipes
   var PRESETS = [];
   RECIPES.forEach(function (r) {
     r.c.forEach(function (ci) {
@@ -1363,12 +1283,9 @@ function tqcBoot() {
     hobbies: "Hobbies", nationality: "Nationality", maritalStatus: "Marital status", category: "Category"
   };
   
-  // Default Style state
   var DEFAULT_STYLE = { layout: "modern", accent: "#0369A1", font: "calibri", fs: 10.5, density: "normal", heading: "bar", bullet: "square", skills: "chips", dates: "right", align: "left", nameStyle: "normal", margin: "normal", paper: "a4", tone: "light", photo: false, shape: "circle", pageLimit: "auto", customPages: 3, docFormat: "chrono" };
   var STYLE = clone(DEFAULT_STYLE);
   
-  // Extended unified data model holding ALL possible fields to avoid breaking across types
-  // This stores user data and the example data initially loaded.
   var DATA = {
     docType: "job_standard",
     name: "Aarav Sharma", title: "Senior Software Engineer", email: "aarav.sharma@example.com", phone: "+91 98765 43210", location: "Bengaluru, India", links: "linkedin.com/in/aarav-sharma-sample\ngithub.com/aarav-sample",
@@ -1388,15 +1305,15 @@ function tqcBoot() {
       proj: [{ name: "Open-source CSV Validator", link: "github.com/aarav-sample/csv-validator", desc: "Command-line tool that validates large CSV files against a schema; used by 1,200+ developers." }],
       ventures: [], research: [], portfolio: [], pubs: []
     },
-    hidden: {} // Tracks user-hidden sections
+    hidden: {}
   };
   
-  var SAMPLE = clone(DATA); // Reference sample to restore upon user request
+  var SAMPLE = clone(DATA);
   
-  var presetFilter = "all"; // Search string feature removed
-  var previewFitMode = "page";
+  var presetFilter = "all";
+  // DEFAULT: "width" = Zoom In (Width). Touching the button switches to "page" = Whole Page.
+  var previewFitMode = "width";
   
-  /* --- 🌟 ADVANCED UNDO & REDO STATE MANAGEMENT 🌟 --- */
   var stateHistory = [];
   var historyIndex = -1;
   var isHistoryAction = false;
@@ -1406,12 +1323,14 @@ function tqcBoot() {
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
   function lines(s) { return String(s || "").split(/\r?\n/).map(function (t) { return t.trim(); }).filter(Boolean); }
   function hexToRgb(h) { var m = /^#([0-9a-f]{6})$/i.exec(h) || [0, "0369A1"]; var n = parseInt(m[1], 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
-  function brk(escaped) { return escaped.replace(/([@\/])/g, "$1<wbr>"); } // Allows breaking long strings in HTML safely
+  function brk(escaped) { return escaped.replace(/([@\/])/g, "$1<wbr>"); }
   
-  // Format URLs automatically into anchor tags
+  // Format URLs / emails automatically into clickable anchor tags (kept clickable in the PDF)
   function link(u) {
     var t = String(u).trim();
+    if (/^mailto:/i.test(t)) return '<a href="' + esc(t) + '">' + brk(esc(t.replace(/^mailto:/i, ""))) + "</a>";
     if (/^https?:\/\//i.test(t)) return '<a href="' + esc(t) + '">' + brk(esc(t.replace(/^https?:\/\/(www\.)?/i, "").replace(/\/$/, ""))) + "</a>";
+    if (/^[^\s@\/]+@[^\s@\/]+\.[a-z]{2,}$/i.test(t)) return '<a href="mailto:' + esc(t) + '">' + brk(esc(t)) + "</a>";
     if (/^[\w.-]+\.[a-z]{2,}(\/\S*)?$/i.test(t)) return '<a href="https://' + esc(t) + '">' + brk(esc(t)) + "</a>";
     return esc(t);
   }
@@ -1419,13 +1338,12 @@ function tqcBoot() {
   /* ---------- DYNAMIC FORM ENGINE ---------- */
   
   var _docTypeBound = false;
-  // Constructs the custom dropdown for document type (Job, Biodata, CV, etc.)
+  // Document type list: options are shown directly inside the "Document Category & Type" drawer
   function populateDocTypeDropdown() {
       var sel = $("rsm-doc-type");
       var menu = $("rsm-doc-type-menu");
       var labelEl = $("rsm-doc-type-label");
-      var btn = $("rsm-doc-type-btn");
-      if (!sel || !menu || !labelEl || !btn) return;
+      if (!sel || !menu || !labelEl) return;
 
       var nativeHtml = "";
       Object.keys(DOC_CATEGORIES).forEach(function(catKey) {
@@ -1440,7 +1358,6 @@ function tqcBoot() {
       sel.innerHTML = nativeHtml;
       sel.value = DATA.docType || "job_standard";
 
-      // Flattened list for the custom dropdown menu without subcategory groupings
       var menuHtml = "";
       Object.keys(DOC_CATEGORIES).forEach(function(catKey) {
           Object.keys(DOC_TYPES).forEach(function(typeKey) {
@@ -1455,29 +1372,14 @@ function tqcBoot() {
       var current = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
       labelEl.textContent = current.title || "Select document type";
 
-      // Bind events only once
       if (!_docTypeBound) {
         _docTypeBound = true;
-
-        function closeMenu() {
-          menu.hidden = true;
-          btn.setAttribute("aria-expanded", "false");
-        }
-        function openMenu() {
-          menu.hidden = false;
-          btn.setAttribute("aria-expanded", "true");
-        }
-
-        btn.addEventListener("click", function(e) {
-          e.stopPropagation();
-          if (menu.hidden) openMenu(); else closeMenu();
-        });
-
         menu.addEventListener("click", function(e) {
           var opt = e.target.closest(".rsm-dd-option");
           if (!opt) return;
           var newVal = opt.getAttribute("data-value");
-          if (newVal === DATA.docType) { closeMenu(); return; }
+          var drawer = $("rsm-doc-type-details");
+          if (newVal === DATA.docType) { if (drawer) drawer.open = false; return; }
 
           if (confirm("Changing Document Type will adapt the fields below. Existing text won't be deleted, but irrelevant fields will be hidden. Proceed?")) {
               DATA.docType = newVal;
@@ -1487,27 +1389,17 @@ function tqcBoot() {
               menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
                 o.setAttribute("aria-selected", o.getAttribute("data-value") === newVal ? "true" : "false");
               });
-              closeMenu();
-              // Re-render UI entirely to adapt to new category
+              if (drawer) drawer.open = false;
               renderDynamicStyleOptions();
               renderDynamicForm();
               renderGallery();
               render();
-          } else {
-              closeMenu();
           }
-        });
-
-        document.addEventListener("click", function(e) {
-          if (!menu.hidden && !e.target.closest("#rsm-doc-type-dd")) closeMenu();
-        });
-        document.addEventListener("keydown", function(e) {
-          if (e.key === "Escape" && !menu.hidden) closeMenu();
         });
       }
   }
 
-  // Parses definitions to dynamically create input HTML fields (Wrapped in FAQ Accordions)
+  // Builds the content form. ALL drawers are closed by default; touching the + icon on a header opens it.
   function renderDynamicForm() {
       var activeType = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
       var activeSections = activeType.sections;
@@ -1515,9 +1407,8 @@ function tqcBoot() {
       var isBiodata = (cat === "biodata_marriage" || cat === "biodata_govt");
       var titleLabel = isBiodata ? "Headline / Status" : "Professional title";
       
-      // Top Personal Details section
       var formHTML = `
-      <details class="auc-sub-drawer" open>
+      <details class="auc-sub-drawer" data-section="personal">
       <summary><span>Personal Details</span><span class="auc-label-accent">Core</span></summary>
       <div class="ctc-drawer-body"><div class="rsm-fields">
       <label class="auc-field-group"><span class="auc-label">Full name <em style="color:#F59E0B;font-weight:500;font-size:0.8em;">(required)</em></span><input type="text" class="auc-input ctc-bind" data-prop="name" value="`+esc(DATA.name)+`" placeholder="e.g. Aarav Sharma"></label>
@@ -1539,12 +1430,11 @@ function tqcBoot() {
       </div>
       </details>`;
 
-      // Loop through dynamic sections required for current type
       activeSections.forEach(function(secKey) {
           var def = SECTION_DEFS[secKey];
           if (!def) return;
           
-          formHTML += '<details class="auc-sub-drawer"' + (def.type === 'list' ? '' : ' open') + '>';
+          formHTML += '<details class="auc-sub-drawer" data-section="' + secKey + '">';
           formHTML += '<summary><span>' + def.label + '</span><span class="auc-label-accent">' + (def.note || '') + '</span></summary>';
           formHTML += '<div class="ctc-drawer-body">';
           
@@ -1563,7 +1453,6 @@ function tqcBoot() {
           formHTML += '</div></details>';
       });
 
-      // Show/Hide section options
       formHTML += `<details class="auc-sub-drawer">
       <summary><span>Section Visibility</span><span class="auc-label-accent">Show / Hide</span></summary>
       <div class="ctc-drawer-body"><ul id="rsm-order" class="rsm-ord-list"></ul>
@@ -1572,7 +1461,6 @@ function tqcBoot() {
 
       $("rsm-dynamic-form").innerHTML = formHTML;
       
-      // Bind base fields to DATA model
       document.querySelectorAll(".ctc-bind").forEach(function(el) {
           if (!(el.value || "").trim()) el.classList.add("is-empty");
           else el.classList.remove("is-empty");
@@ -1584,13 +1472,11 @@ function tqcBoot() {
           });
       });
 
-      // Photo upload bindings
       $("rsm-photo-file").addEventListener("change", handlePhotoUpload);
       $("rsm-photo-remove").addEventListener("click", function () { DATA.photo = ""; STYLE.photo = false; syncPhotoUI(); render(); });
       $("rsm-photo-on").addEventListener("change", function () { STYLE.photo = this.checked && !!DATA.photo; if (this.checked && !DATA.photo) status("Upload a photo first."); syncPhotoUI(); render(); });
       syncPhotoUI();
 
-      // Render inner list html
       activeSections.forEach(function(secKey) {
           if (SECTION_DEFS[secKey] && SECTION_DEFS[secKey].type === 'list') {
               renderList(secKey);
@@ -1599,7 +1485,6 @@ function tqcBoot() {
       renderOrder(activeSections);
   }
 
-  // HTML generator for repeatable lists (like Experience and Education entries)
   function renderList(key) {
     var def = SECTION_DEFS[key];
     var box = $("rsm-list-" + key);
@@ -1619,7 +1504,6 @@ function tqcBoot() {
     box.innerHTML = html || '<p class="ctc-note">Nothing here yet. Click below to add.</p>';
   }
 
-  // Handle live inputs in repeatable lists (delegated event)
   $("rsm-dynamic-form").addEventListener("input", function(e) {
       if(e.target.hasAttribute("data-f")) {
           var item = e.target.closest(".rsm-item");
@@ -1629,7 +1513,6 @@ function tqcBoot() {
       }
   });
   
-  // Handle Add/Up/Down/Delete for repeatable lists
   $("rsm-dynamic-form").addEventListener("click", function(e) {
       var b = e.target.closest("button[data-act]");
       if (!b) {
@@ -1650,9 +1533,8 @@ function tqcBoot() {
       var key = item.getAttribute("data-key");
       var i = Number(item.getAttribute("data-i"));
       var arr = DATA.lists[key], act = b.getAttribute("data-act"), j;
-      if (act === "del") arr.splice(i, 1); // delete item
+      if (act === "del") arr.splice(i, 1);
       else { 
-          // Move item up or down
           j = act === "up" ? i - 1 : i + 1; 
           if (j < 0 || j >= arr.length) return; 
           var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp; 
@@ -1660,7 +1542,6 @@ function tqcBoot() {
       renderList(key); render();
   });
 
-  // Render the checklist to turn sections on/off
   function renderOrder(activeSections) {
       var html = "";
       activeSections.forEach(function (id, i) {
@@ -1671,7 +1552,6 @@ function tqcBoot() {
       if(ordBox) ordBox.innerHTML = html;
   }
   
-  // Save section visibility state
   $("rsm-dynamic-form").addEventListener("change", function (e) {
     if (e.target.classList.contains("rsm-vis-cb")) {
         var id = e.target.closest(".rsm-ord").getAttribute("data-id");
@@ -1680,7 +1560,6 @@ function tqcBoot() {
     }
   });
 
-  // Convert uploaded photo to data URL for preview and PDF
   function handlePhotoUpload(e) {
     var f = e.target.files && e.target.files[0];
     if (!f) return;
@@ -1692,7 +1571,6 @@ function tqcBoot() {
     rd.onload = function () {
       var img = new Image();
       img.onload = function () {
-        // Draw the image to a canvas to standardize dimensions & cropping
         var s = Math.min(img.width, img.height), c = document.createElement("canvas");
         c.width = c.height = 320;
         c.getContext("2d").drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 320, 320);
@@ -1706,7 +1584,6 @@ function tqcBoot() {
     e.target.value = "";
   }
   
-  // Updates UI states associated with the photo section
   function syncPhotoUI() { 
       var onCb = $("rsm-photo-on"); 
       var rmBtn = $("rsm-photo-remove");
@@ -1726,7 +1603,13 @@ function tqcBoot() {
 
   /* ---------- HTML RENDERING FOR THE ACTUAL RESUME ---------- */
   
-  // Format date range
+  // Small pencil button shown in the live preview next to each section. Opens that section for editing.
+  // It is removed from PDF / PNG / print output.
+  var PENCIL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+  function editBtn(prop) {
+    return '<button type="button" class="rs-edit" data-edit-btn="' + prop + '" aria-label="Edit this section" title="Edit">' + PENCIL_SVG + '</button>';
+  }
+
   function dateText(e) {
     var s = (e.start || "").trim(), n = (e.end || "").trim();
     if (!s && !n) return "";
@@ -1735,14 +1618,12 @@ function tqcBoot() {
     return esc(s) + " – " + esc(n);
   }
   
-  // Generate HTML for generic bullet points
   function bullets(text) {
     var ls = lines(text).map(function (l) { return l.replace(/^[•\-*–]\s*/, ""); }).filter(Boolean);
     if (!ls.length) return "";
     return '<ul class="rs-ul">' + ls.map(function (l) { return "<li>" + esc(l) + "</li>"; }).join("") + "</ul>";
   }
   
-  // Generate standard list entry (Experience/Education) respecting layout style
   function entry(title, sub, date, body) {
     var left = '<div class="rs-el">' + title + (sub ? '<span class="rs-es">' + sub + "</span>" : "") + "</div>";
     if (STYLE.layout === "timeline") return '<div class="rs-entry rs-tl"><div class="rs-tld">' + date + '</div><div class="rs-tlc">' + left + body + "</div></div>";
@@ -1751,14 +1632,13 @@ function tqcBoot() {
     return '<div class="rs-entry"><div class="rs-eh">' + left + (date ? '<div class="rs-ed">' + date + "</div>" : "") + "</div>" + body + "</div>";
   }
   
-  // Wraps a block of content in an HTML section with a heading and data-edit attribute 🌟
+  // Section wrapper: heading + pencil edit button
   function sec(id, inner) { 
     var def = SECTION_DEFS[id];
     if (!def) return "";
-    return '<section class="rs-sec" data-edit="' + id + '"><div class="rs-h"><span>' + esc(def.label) + "</span></div>" + inner + "</section>"; 
+    return '<section class="rs-sec"><div class="rs-h"><span>' + esc(def.label) + "</span>" + editBtn(id) + "</div>" + inner + "</section>"; 
   }
   
-  // Special rendering format for comma separated generic skills
   function renderGenericSkills(text) {
       if (!text) return "";
       var out = "";
@@ -1767,1013 +1647,4 @@ function tqcBoot() {
         return { g: m ? m[1] : "", items: (m ? m[2] : l).split(/\s*[,;|•]\s*/).filter(Boolean) };
       }).forEach(function (g) {
         if (STYLE.skills === "chips") {
-          out += '<div class="rs-sg">' + (g.g ? '<b class="rs-sgl">' + esc(g.g) + "</b>" : "") + g.items.map(function (i) { return '<span class="rs-chip">' + esc(i) + "</span>"; }).join("") + "</div>";
-        } else if (STYLE.skills === "list") {
-          out += '<div class="rs-sg">' + (g.g ? '<b class="rs-sgl">' + esc(g.g) + "</b>" : "") + '<ul class="rs-skl">' + g.items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul></div>";
-        } else {
-          out += '<p class="rs-p rs-skin">' + (g.g ? "<b>" + esc(g.g) + ":</b> " : "") + g.items.map(esc).join(", ") + "</p>";
-        }
-      });
-      return out;
-  }
-  
-  // Render multiple small key-value strings on Biodata layouts
-  function renderExtendedBasic(keys) {
-      var html = '<div class="rs-basic-grid" style="display:grid; grid-template-columns: 130px 1fr; gap:4px; font-size:0.95em;">';
-      var hasAny = false;
-      keys.forEach(function(k) {
-          if (DATA[k] && DATA[k].trim()) {
-              hasAny = true;
-              var label = FIELD_LABELS[k] || (k.charAt(0).toUpperCase() + k.slice(1));
-              html += '<strong class="rs-basic-label">' + esc(label) + ':</strong><span class="rs-basic-value">' + esc(DATA[k].trim()) + '</span>';
-          }
-      });
-      html += '</div>';
-      return hasAny ? html : "";
-  }
-
-  // Generates complete HTML section depending on config definition
-  function sectionHTML(id) {
-    if (DATA.hidden[id]) return "";
-    var def = SECTION_DEFS[id];
-    var inner = "", items;
-    
-    if (def.type === 'textarea') {
-        inner = (id === 'skills' || id === 'skills_tech') ? renderGenericSkills(DATA[id]) : lines(DATA[id]).length ? '<p class="rs-p">' + esc(DATA[id].trim()).replace(/\n/g,"<br>") + "</p>" : "";
-        return inner ? sec(id, inner) : "";
-    }
-    
-    if (def.type === 'basic_ext') {
-        inner = renderExtendedBasic(def.fields);
-        return inner ? sec(id, inner) : "";
-    }
-    
-    if (def.type === 'list') {
-        items = (DATA.lists[id] || []).filter(function(e) { return e.name || e.role || e.degree; });
-        if (!items.length) return "";
-        inner = items.map(function (e) {
-            var t1 = e.role || e.degree || e.name;
-            var t2 = e.company || e.school || e.link;
-            return entry("<strong class=\"rs-et\">" + esc(t1) + "</strong>", [t2, e.loc].filter(Boolean).map(esc).join(" · "), dateText(e), bullets(e.bullets || e.desc) + (e.detail ? '<p class="rs-p rs-pd">'+esc(e.detail)+'</p>' : ''));
-        }).join("");
-        return sec(id, inner);
-    }
-    return "";
-  }
-
-  // Assembles header links and contacts 🌟 (Wrapped with data-edits)
-  function contactItems() {
-    var out = [];
-    if ((DATA.email || "").trim()) out.push('<span data-edit="email"><a href="mailto:' + esc(DATA.email.trim()) + '">' + brk(esc(DATA.email.trim())) + '</a></span>');
-    if ((DATA.phone || "").trim()) out.push('<span data-edit="phone">' + esc(DATA.phone.trim()) + '</span>');
-    if ((DATA.location || "").trim()) out.push('<span data-edit="location">' + esc(DATA.location.trim()) + '</span>');
-    if ((DATA.links || "").trim()) {
-        var ls = lines(DATA.links).map(function (l) { return link(l); }).join(", ");
-        out.push('<span data-edit="links">' + ls + '</span>');
-    }
-    return out;
-  }
-  
-  function photoHTML() {
-    return (STYLE.photo && DATA.photo) ? '<img class="rs-photo rs-photo-' + STYLE.shape + '" src="' + esc(DATA.photo) + '" alt="Profile photo" data-edit="photo">' : "";
-  }
-  
-  // 🌟 Wrapped in data-edit for click interaction
-  function nameBlock() {
-    var nm = (DATA.name || "").trim();
-    var ti = (DATA.title || "").trim();
-    var nameHtml = nm
-      ? '<div class="rs-name" data-edit="name">' + esc(nm) + '</div>'
-      : '<div class="rs-name rs-placeholder" data-edit="name">Your Name</div>';
-    var titleHtml = ti
-      ? '<div class="rs-title" data-edit="title">' + esc(ti) + '</div>'
-      : '<div class="rs-title rs-placeholder" data-edit="title">Professional title</div>';
-    return nameHtml + titleHtml;
-  }
-  
-  // Sorts sections based on Chronological vs Functional formats
-  function getActiveOrder() {
-      var type = DOC_TYPES[DATA.docType] || DOC_TYPES.job_standard;
-      var base = (type && type.sections) ? type.sections.slice() : [];
-      if (STYLE.docFormat === 'functional') {
-          var functionalFirst = ['summary', 'objective', 'skills', 'skills_tech', 'certs'];
-          var reordered = [];
-          functionalFirst.forEach(function(s) { if(base.indexOf(s) > -1) reordered.push(s); });
-          base.forEach(function(s) { if(functionalFirst.indexOf(s) === -1) reordered.push(s); });
-          return reordered;
-      }
-      return base;
-  }
-
-  function isBleed() { return STYLE.layout === "banner" || STYLE.layout === "sidebarL" || STYLE.layout === "sidebarR"; }
-  function isATS() { return STYLE.docFormat === "ats"; }
-
-  // Orchestrates full document HTML generation
-  function buildHTML() {
-    var order = getActiveOrder(), html = "", contacts = contactItems();
-    var L = isATS() ? "classic" : STYLE.layout;
-    
-    // Complex layout: CSS Grid Sidebars
-    if (L === "sidebarL" || L === "sidebarR") {
-      var side = '<aside class="rs-side">' + photoHTML();
-      if (contacts.length) side += '<section class="rs-sec" data-edit="email"><div class="rs-h"><span>Contact</span></div><ul class="rs-cl">' + contacts.map(function (c) { return "<li>" + c + "</li>"; }).join("") + "</ul></section>";
-      order.forEach(function (id) { if (SIDE_SET_EXTENDED[id]) side += sectionHTML(id); });
-      side += "</aside>";
-      var main = '<div class="rs-main"><header class="rs-head">' + nameBlock() + "</header>";
-      order.forEach(function (id) { if (!SIDE_SET_EXTENDED[id]) main += sectionHTML(id); });
-      main += "</div>";
-      return '<div class="rs-grid">' + (L === "sidebarL" ? side + main : main + side) + "</div>";
-    }
-    
-    // Simpler layouts (Classic, Banner, Modern)
-    var head = '<header class="rs-head' + (L === "banner" ? " rs-band" : "") + '">' + photoHTML() + "<div class=\"rs-hbody\">" + nameBlock() +
-      (contacts.length ? '<div class="rs-contact">' + contacts.join('<span class="rs-sep" aria-hidden="true">|</span>') + "</div>" : "") + "</div></header>";
-    html = head;
-    order.forEach(function (id) { html += sectionHTML(id); });
-    return html;
-  }
-
-  /* ---------- PAPER RENDERING CORE ---------- */
-  var paper = $("resume-paper"), scaler = $("rsm-scaler"), fit = $("rsm-fit"), stage = $("rsm-stage");
-  var renderQueued = false;
-  
-  // Simple requestAnimationFrame debouncer
-  function scheduleRender() {
-    if (renderQueued) return;
-    renderQueued = true;
-    (window.requestAnimationFrame || setTimeout)(function () { renderQueued = false; render(); });
-  }
-  
-  // Resolves the hard page constraint string to an integer
-  function getPageLimitNumber() {
-    if (!STYLE.pageLimit || STYLE.pageLimit === "auto") return null;
-    if (STYLE.pageLimit === "custom") {
-      var n = parseInt(($("rsm-custom-pages") && $("rsm-custom-pages").value) || STYLE.customPages || 3, 10);
-      return (isNaN(n) || n < 1) ? 1 : Math.min(30, n);
-    }
-    var n = parseInt(STYLE.pageLimit, 10);
-    return (isNaN(n) || n < 1) ? null : n;
-  }
-  
-  // Re-evaluates HTML, CSS Variables, and Auto-Shrink layout bounds
-  function render() {
-    var S = STYLE, rgb = hexToRgb(S.accent), P = PAPERS[S.paper] || PAPERS.a4;
-    var pad = { narrow: 10, normal: 15, wide: 20 }[S.margin] || 15;
-    var dn = { compact: [1.28, 9], normal: [1.4, 13], relaxed: [1.55, 18] }[S.density] || [1.4, 13];
-    
-    var applyL = isATS() ? "classic" : S.layout;
-    var applyHeading = isATS() ? "plain" : S.heading;
-    var applyBullet = isATS() ? "disc" : S.bullet;
-    var applyTone = isATS() ? "light" : S.tone;
-    
-    // Inject specific classes into the paper wrapper for scoping CSS
-    paper.className = "rs-paper rl-" + applyL + " rh-" + applyHeading + " rb-" + applyBullet + " rd-" + S.dates + " ra-" + S.align + " rn-" + S.nameStyle + " rt-" + applyTone + ((isBleed() && !isATS()) ? " rs-bleed" : "");
-    paper.style.cssText = "--ac:" + (isATS() ? "#0F172A" : S.accent) + ";--ac-soft:rgba(" + rgb.join(",") + ",0.10);--ac-mid:rgba(" + rgb.join(",") + ",0.38);--rf:" + (FONTS[S.font] || FONTS.sys)[1] + ";--rfs:" + S.fs + "pt;--rlh:" + dn[0] + ";--gap:" + dn[1] + "px;--pw:" + P.w + ";--ph:" + P.h + ";--pad:" + pad + "mm";
-    paper.innerHTML = buildHTML() + '<div class="rs-breaks" aria-hidden="true"></div>';
-    
-    paper.style.height = "auto";
-    paper.style.overflow = "visible";
-    var naturalHeight = paper.offsetHeight;
-    paper.setAttribute("data-natural-height", String(naturalHeight));
-    
-    var limitN = getPageLimitNumber();
-    if (limitN) {
-        var forcedHeight = P.hpx * limitN;
-        var currentFs = S.fs;
-        var minFs = 7;
-        
-        // 🌟 Auto-Shrink Font Size algorithm: shrinks text iteratively to prevent cutting 🌟
-        while (paper.offsetHeight > forcedHeight + 2 && currentFs > minFs) {
-            currentFs -= 0.5;
-            paper.style.setProperty("--rfs", currentFs + "pt");
-        }
-        
-        paper.style.height = forcedHeight + "px";
-        paper.style.overflow = "hidden";
-        paper.setAttribute("data-clipped", paper.offsetHeight > forcedHeight + 2 ? "1" : "0");
-    } else {
-        paper.style.height = "auto";
-        paper.style.overflow = "visible";
-        paper.setAttribute("data-clipped", "0");
-    }
-    
-    layoutPreview();
-    renderHealth();
-    persist();
-  }
-  
-  // Handles the visual scale transform of the live preview area (zoom)
-  function layoutPreview() {
-    var P = PAPERS[STYLE.paper] || PAPERS.a4;
-    var availW = Math.max(240, stage.clientWidth - 12);
-    var availH = Math.max(180, stage.clientHeight - 16);
-    var scaleW = availW / P.wpx;
-    var scaleH = availH / P.hpx;
-    // zoom level depends on fit to height (Whole page) or width (Zoom in)
-    var s = previewFitMode === "page" ? Math.min(1, scaleW, scaleH) : Math.min(1, scaleW);
-    scaler.style.transform = "scale(" + s + ")";
-    fit.style.width = Math.round(P.wpx * s) + "px";
-    fit.style.height = Math.round(paper.offsetHeight * s) + "px";
-    var pages = Math.max(1, Math.ceil((paper.offsetHeight - 2) / P.hpx));
-    
-    // Draw red page break indicators dynamically
-    var br = paper.querySelector(".rs-breaks");
-    if (br) {
-      var h = "";
-      for (var k = 1; k < pages; k++) h += '<div class="rs-pb" style="top:' + (k * P.hpx) + 'px"><span>Page ' + (k + 1) + " starts here</span></div>";
-      br.innerHTML = h;
-    }
-    $("rsm-pages").textContent = pages + (pages === 1 ? " page" : " pages");
-    paper.setAttribute("data-pages", String(pages));
-  }
-  
-  if (window.ResizeObserver) new ResizeObserver(function () { layoutPreview(); }).observe(stage);
-  window.__tqcRsmLayout = layoutPreview;
-  if (!window.__tqcRsmWin) { window.__tqcRsmWin = true; window.addEventListener("resize", function () { window.__tqcRsmLayout(); }); window.addEventListener("beforeprint", function () { window.__tqcRsmPrep(); }); }
-
-  /* --- 🌟 Undo / Redo System Logic 🌟 --- */
-  
-  function updateHistoryButtons() {
-      var undoBtn = $("rsm-undo-btn");
-      var redoBtn = $("rsm-redo-btn");
-      
-      if (undoBtn) {
-          var canUndo = historyIndex > 0;
-          undoBtn.disabled = !canUndo;
-          undoBtn.style.opacity = canUndo ? "1" : "0.5";
-          undoBtn.style.cursor = canUndo ? "pointer" : "not-allowed";
-      }
-      if (redoBtn) {
-          var canRedo = historyIndex < stateHistory.length - 1;
-          redoBtn.disabled = !canRedo;
-          redoBtn.style.opacity = canRedo ? "1" : "0.5";
-          redoBtn.style.cursor = canRedo ? "pointer" : "not-allowed";
-      }
-  }
-
-  var undoBtnEl = $("rsm-undo-btn");
-  if (undoBtnEl) {
-    undoBtnEl.addEventListener("click", function() {
-        if (historyIndex > 0) {
-            isHistoryAction = true;
-            historyIndex--;
-            var prevStateStr = stateHistory[historyIndex];
-            var prevState = JSON.parse(prevStateStr);
-            
-            // Restore exact data and style
-            DATA = prevState.data;
-            STYLE = prevState.style;
-            
-            // Refresh full UI stack
-            populateDocTypeDropdown();
-            renderDynamicStyleOptions(); 
-            syncControls();
-            renderDynamicForm();
-            renderGallery();
-            render(); 
-            
-            updateHistoryButtons();
-            setTimeout(function() { isHistoryAction = false; }, 50);
-        }
-    });
-  }
-  
-  var redoBtnEl = $("rsm-redo-btn");
-  if (redoBtnEl) {
-    redoBtnEl.addEventListener("click", function() {
-        if (historyIndex < stateHistory.length - 1) {
-            isHistoryAction = true;
-            historyIndex++;
-            var nextStateStr = stateHistory[historyIndex];
-            var nextState = JSON.parse(nextStateStr);
-            
-            // Restore exact data and style
-            DATA = nextState.data;
-            STYLE = nextState.style;
-            
-            // Refresh full UI stack
-            populateDocTypeDropdown();
-            renderDynamicStyleOptions(); 
-            syncControls();
-            renderDynamicForm();
-            renderGallery();
-            render(); 
-            
-            updateHistoryButtons();
-            setTimeout(function() { isHistoryAction = false; }, 50);
-        }
-    });
-  }
-
-  /* Whole-Page vs Zoom-In Toggle Button Event Listener */
-  var zoomToggleBtn = $("rsm-zoom-toggle");
-  if (zoomToggleBtn) {
-    zoomToggleBtn.addEventListener("click", function () {
-      previewFitMode = (previewFitMode === "page") ? "width" : "page";
-      this.textContent = (previewFitMode === "page") ? "Whole Page" : "Zoom In (Width)";
-      layoutPreview();
-    });
-  }
-
-  /* 🌟 Click-to-Edit Functionality (Maps clicks on Live Preview to Form Fields) 🌟 */
-  $("resume-paper").addEventListener("click", function(e) {
-      var editTarget = e.target.closest("[data-edit]");
-      if (!editTarget) return;
-      
-      var prop = editTarget.getAttribute("data-edit");
-      
-      // Switch to Content tab automatically
-      var contentTab = document.querySelector('.auc-group-tab[data-tab="content"]');
-      if (contentTab && !contentTab.classList.contains("active")) {
-          contentTab.click();
-      }
-
-      // Find the specific input, list container, or photo section to open
-      var input = document.querySelector('[data-prop="' + prop + '"]');
-      var listContainer = document.getElementById('rsm-list-' + prop); 
-      var targetEl = input || listContainer;
-      
-      if (prop === 'photo') targetEl = document.querySelector('.rsm-photo-card');
-
-      if (targetEl) {
-          // Open parent accordion if closed
-          var details = targetEl.closest("details");
-          if (details && !details.open) details.open = true;
-          
-          // Scroll the field into view safely inside the workspace panel
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          
-          // Focus the input and apply a brief highlighting pulse
-          if (input) {
-              setTimeout(function() { input.focus(); }, 300);
-              input.style.transition = "box-shadow 0.3s";
-              input.style.boxShadow = "0 0 0 4px rgba(16,185,129,0.5)";
-              setTimeout(function(){ input.style.boxShadow = ""; }, 1200);
-          } else if (targetEl) {
-              targetEl.style.transition = "box-shadow 0.3s";
-              targetEl.style.boxShadow = "0 0 0 4px rgba(16,185,129,0.5)";
-              setTimeout(function(){ targetEl.style.boxShadow = ""; }, 1200);
-          }
-      }
-  });
-
-  /* Universal Drag-to-Expand Helper for Mobile Touch & Desktop Mouse */
-  // Allows users to expand the workspace vertically via the drag grip
-  function bindDragResizer(handleId, getTargetsFn, minH, maxH, onResizeCb) {
-    var handle = $(handleId);
-    if (!handle) return;
-    var startY = 0, startH = 0, activeTargets = [];
-    function onMove(clientY) {
-      if (!activeTargets.length) return;
-      // Added maxH ceiling to prevent unlimited drag downward
-      var newH = Math.max(minH, Math.min(maxH, startH + (clientY - startY)));
-      activeTargets.forEach(function (el) {
-        el.style.height = newH + "px";
-        el.style.maxHeight = "none";
-      });
-      if (onResizeCb) onResizeCb();
-    }
-    handle.addEventListener("mousedown", function (e) {
-      e.preventDefault();
-      activeTargets = getTargetsFn();
-      if (!activeTargets.length) return;
-      startY = e.clientY;
-      startH = activeTargets[0].offsetHeight;
-      function mm(ev) { onMove(ev.clientY); }
-      function mu() {
-        document.removeEventListener("mousemove", mm);
-        document.removeEventListener("mouseup", mu);
-        activeTargets = [];
-      }
-      document.addEventListener("mousemove", mm);
-      document.addEventListener("mouseup", mu);
-    });
-    // Touch Events specific hook for iOS/Android consistency
-    handle.addEventListener("touchstart", function (e) {
-      if (!e.touches || !e.touches[0]) return;
-      activeTargets = getTargetsFn();
-      if (!activeTargets.length) return;
-      startY = e.touches[0].clientY;
-      startH = activeTargets[0].offsetHeight;
-      function tm(ev) {
-        if (ev.touches && ev.touches[0]) {
-          ev.preventDefault();
-          onMove(ev.touches[0].clientY);
-        }
-      }
-      function tu() {
-        document.removeEventListener("touchmove", tm);
-        document.removeEventListener("touchend", tu);
-        activeTargets = [];
-      }
-      document.addEventListener("touchmove", tm, { passive: false });
-      document.addEventListener("touchend", tu);
-    }, { passive: true });
-  }
-
-  /* 🌟 Workspace Drag Limit restricted to 550px max Height 🌟 */
-  bindDragResizer("rsm-panel-handle", function () {
-    var vis = document.querySelector(".rsm-panel:not([hidden])");
-    var all = Array.prototype.slice.call(document.querySelectorAll(".rsm-panel"));
-    return vis ? [vis].concat(all.filter(function (p) { return p !== vis; })) : all;
-  }, 220, 550);
-
-  /* ---------- Document Health Calculations ---------- */
-  function renderHealth() {
-    var words = (paper.innerText.match(/\S+/g) || []).length;
-    var pages = Number(paper.getAttribute("data-pages") || 1);
-    var clipped = paper.getAttribute("data-clipped") === "1";
-    var checks = [];
-    function add(ok, good, bad) { checks.push('<li class="' + (ok ? "ok" : "warn") + '"><span aria-hidden="true">' + (ok ? "✓" : "!") + "</span> " + (ok ? good : bad) + "</li>"); }
-    
-    // Truncated limit validation checks
-    if (clipped) {
-      add(false, "", "Content still exceeds fixed limit even after font shrink. Consider trimming.");
-    } else {
-      add(pages <= 3, "Length is " + pages + (pages === 1 ? " page" : " pages") + ".", "Document runs to " + pages + " pages. Consider trimming or changing format.");
-    }
-    
-    var cat = (DOC_TYPES[DATA.docType] && DOC_TYPES[DATA.docType].cat) || "job";
-    var isBiodata = cat === "biodata_marriage" || cat === "biodata_govt";
-    
-    // Core data constraints
-    if (isBiodata) {
-      add(!!((DATA.name || "").trim()), "Name is present.", "Add your full name.");
-    } else {
-      add(!!((DATA.email || "").trim() && (DATA.phone || "").trim()), "Contact info present.", "Add both email and phone number.");
-    }
-    
-    $("rsm-health").innerHTML = checks.join("");
-    $("rsm-words").textContent = words + " words";
-    $("rsm-health-pages").textContent = pages + (pages === 1 ? " page" : " pages") + " • " + (STYLE.docFormat === 'ats' ? 'ATS Mode' : (PAPERS[STYLE.paper] || PAPERS.a4).css);
-  }
-
-  /* ---------- 🌟 DYNAMIC STYLE TAB ENGINE 🌟 ---------- */
-  // Manipulates Style UI features based on Document type selected
-  function renderDynamicStyleOptions() {
-      var cat = DOC_TYPES[DATA.docType] ? DOC_TYPES[DATA.docType].cat : 'job';
-      var filters = [];
-      var isMarriage = (cat === 'biodata_marriage' || cat === 'biodata_personal');
-      var isGovt = (cat === 'biodata_govt');
-      var isOther = (cat === 'other');
-      
-      // Update Filter Tabs Text dynamically based on use case terminology
-      if (isMarriage) {
-          filters = [
-              { val: "all", label: "✦ All Styles" }, 
-              { val: "classic", label: "Traditional" }, 
-              { val: "modern", label: "Modern Classic" }, 
-              { val: "banner", label: "Elegant Banner" }, 
-              { val: "sidebar", label: "Premium Profile" }
-          ];
-      } else if (isGovt) {
-          filters = [
-              { val: "all", label: "All Formats" }, 
-              { val: "classic", label: "Official" }, 
-              { val: "modern", label: "Clean Official" }, 
-              { val: "sidebar", label: "Detailed" }
-          ];
-      } else if (isOther) {
-          filters = [
-              { val: "all", label: "All Styles" }, 
-              { val: "classic", label: "Minimal" }, 
-              { val: "modern", label: "Contemporary" }, 
-              { val: "banner", label: "Creative Banner" }, 
-              { val: "sidebar", label: "Portfolio" }
-          ];
-      } else {
-          filters = [
-              { val: "all", label: "All Styles" }, 
-              { val: "ats", label: "ATS-safe" }, 
-              { val: "classic", label: "Classic" }, 
-              { val: "modern", label: "Modern" }, 
-              { val: "banner", label: "Banner" }, 
-              { val: "sidebar", label: "Sidebar" }, 
-              { val: "timeline", label: "Timeline" }
-          ];
-      }
-      
-      var isValid = false;
-      filters.forEach(function(f) { if (f.val === presetFilter) isValid = true; });
-      if (!isValid) presetFilter = "all";
-      
-      var filterHtml = "";
-      filters.forEach(function(f) {
-          var active = (f.val === presetFilter);
-          filterHtml += '<button type="button" class="auc-group-tab' + (active ? ' active' : '') + '" data-pf="' + f.val + '" aria-pressed="' + active + '">' + f.label + '</button>';
-      });
-      var filterBox = $("rsm-style-filters");
-      if(filterBox) {
-        filterBox.innerHTML = filterHtml;
-        filterBox.setAttribute("data-cat", cat);
-      }
-      
-      var formatContainer = $("rsm-format-container");
-      var formatBox = $("rsm-doc-format");
-      var formatMenu = $("rsm-doc-format-menu");
-      var formatLabel = $("rsm-doc-format-label");
-      
-      var FORMAT_OPTS = [
-        { v: "chrono", t: "Reverse Chronological (Standard)" },
-        { v: "functional", t: "Functional / Skills-Based" },
-        { v: "ats", t: "Strict ATS Text (No columns/colors)" }
-      ];
-      
-      // Hide specific formats (like ATS) for profiles that are mostly visual (Marriage Biodata)
-      if (isMarriage || isGovt || isOther) {
-          if (formatContainer) formatContainer.style.display = "none";
-          STYLE.docFormat = "chrono";
-      } else {
-          if (formatContainer) formatContainer.style.display = "block";
-          var prevFormat = STYLE.docFormat || "chrono";
-          var valid = FORMAT_OPTS.some(function(o){ return o.v === prevFormat; });
-          STYLE.docFormat = valid ? prevFormat : "chrono";
-          if (formatBox) {
-            formatBox.innerHTML = FORMAT_OPTS.map(function(o){ return '<option value="'+o.v+'">'+o.t+'</option>'; }).join("");
-            formatBox.value = STYLE.docFormat;
-          }
-          if (formatMenu) {
-            formatMenu.innerHTML = FORMAT_OPTS.map(function(o){
-              return '<button type="button" class="rsm-dd-option" role="option" data-value="'+o.v+'" aria-selected="'+(o.v===STYLE.docFormat?'true':'false')+'">'+esc(o.t)+'</button>';
-            }).join("");
-          }
-          if (formatLabel) {
-            var cur = FORMAT_OPTS.filter(function(o){ return o.v === STYLE.docFormat; })[0];
-            formatLabel.textContent = cur ? cur.t : "Reverse Chronological (Standard)";
-          }
-      }
-  }
-
-  // Filter functionality bindings
-  $("rsm-style-filters").addEventListener("click", function(e) {
-      var b = e.target.closest("[data-pf]");
-      if (!b) return;
-      presetFilter = b.getAttribute("data-pf");
-      renderDynamicStyleOptions(); 
-      renderGallery();
-  });
-
-  // Generates SVG vector thumbnails dynamically for style presets
-  function thumb(layout, color) {
-    var c = color, g = "#CBD5E1", s = '<svg viewBox="0 0 40 52" width="32" height="42" aria-hidden="true"><rect width="40" height="52" rx="3" fill="#fff" stroke="#CBD5E1"/>';
-    if (layout === "banner") s += '<rect width="40" height="14" rx="3" fill="' + c + '"/>';
-    if (layout === "sidebarL") s += '<rect width="14" height="52" rx="3" fill="' + c + '"/>';
-    if (layout === "sidebarR") s += '<rect x="26" width="14" height="52" rx="3" fill="' + c + '"/>';
-    if (layout === "modern") s += '<rect x="4" y="12" width="32" height="2" fill="' + c + '"/>';
-    if (layout === "classic") s += '<rect x="12" y="6" width="16" height="3" fill="' + c + '"/><rect x="4" y="13" width="32" height="1.5" fill="' + c + '"/>';
-    if (layout === "timeline") s += '<rect x="13" y="16" width="1.5" height="30" fill="' + c + '"/><circle cx="13.8" cy="19" r="2" fill="' + c + '"/><circle cx="13.8" cy="30" r="2" fill="' + c + '"/><circle cx="13.8" cy="41" r="2" fill="' + c + '"/>';
-    var x0 = layout === "sidebarL" ? 18 : layout === "timeline" ? 18 : 6, w = layout === "sidebarL" || layout === "sidebarR" ? 16 : layout === "timeline" ? 18 : 28;
-    var y0 = layout === "banner" ? 20 : layout === "classic" ? 19 : 18;
-    for (var k = 0; k < 5; k++) s += '<rect x="' + x0 + '" y="' + (y0 + k * 6) + '" width="' + (k % 2 ? w - 5 : w) + '" height="2" fill="' + g + '"/>';
-    return s + "</svg>";
-  }
-  
-  // Customizes preset UI names in Gallery view depending on category
-  function getDynamicLayoutLabel(layout, ats) {
-      var cat = DOC_TYPES[DATA.docType] ? DOC_TYPES[DATA.docType].cat : 'job';
-      var isMarriage = (cat === 'biodata_marriage' || cat === 'biodata_personal');
-      var isGovt = (cat === 'biodata_govt');
-      var isOther = (cat === 'other');
-      
-      if (isMarriage) {
-          if (layout === "classic") return "Traditional";
-          if (layout === "modern") return "Modern";
-          if (layout === "banner") return "Elegant";
-          if (layout.indexOf("sidebar") > -1) return "Premium";
-          return "Standard";
-      }
-      if (isGovt) {
-          if (layout === "classic") return "Official Format";
-          if (layout === "modern") return "Clean";
-          if (layout.indexOf("sidebar") > -1) return "Detailed";
-          return "Standard";
-      }
-      if (isOther) {
-          if (layout === "classic") return "Minimal";
-          if (layout === "modern") return "Contemporary";
-          if (layout === "banner") return "Creative";
-          if (layout.indexOf("sidebar") > -1) return "Portfolio";
-          return "Standard";
-      }
-      
-      var defaultLbl = { classic: "Classic", modern: "Modern", banner: "Banner", sidebarL: "Sidebar", sidebarR: "Sidebar", timeline: "Timeline" }[layout] || layout;
-      return defaultLbl + (ats ? " • ATS-safe" : "");
-  }
-
-  // Iterates RECIPES list into clickable visual presets (Search eliminated)
-  function renderGallery() {
-    var html = "", n = 0; // Search logic variable removed
-    PRESETS.forEach(function (p, idx) {
-      var okF = presetFilter === "all" || (presetFilter === "ats" ? p.ats : (presetFilter === "sidebar" ? (p.layout === "sidebarL" || p.layout === "sidebarR") : p.layout === presetFilter));
-      if (!okF) return; // Note: Search condition deleted here
-      n++;
-      var active = JSON.stringify([p.style.layout, p.style.accent, p.style.font, p.style.heading]) === JSON.stringify([STYLE.layout, STYLE.accent, STYLE.font, STYLE.heading]);
-      
-      var subtitle = getDynamicLayoutLabel(p.layout, p.ats);
-      
-      html += '<button type="button" class="rsm-preset' + (active ? " is-active" : "") + '" data-p="' + idx + '" aria-pressed="' + active + '">' + thumb(p.layout, p.style.accent) +
-        '<span class="rsm-preset-t"><strong>' + esc(p.name) + "</strong><small>" + subtitle + "</small></span></button>";
-    });
-    $("rsm-gallery").innerHTML = html || '<p class="ctc-note">No styles match.</p>';
-    $("rsm-gallery-count").textContent = n + " of " + PRESETS.length + " styles";
-  }
-  
-  // Preset Selection Event Listeners
-  $("rsm-gallery").addEventListener("click", function (e) {
-    var b = e.target.closest(".rsm-preset"); if (!b) return;
-    var p = PRESETS[Number(b.getAttribute("data-p"))];
-    Object.keys(p.style).forEach(function (k) { STYLE[k] = p.style[k]; });
-    syncControls(); render(); renderGallery();
-  });
-
-  // Custom Dropdown Builder Component function
-  function bindCustomDropdown(cfg) {
-    var btn = $(cfg.btnId), menu = $(cfg.menuId), label = $(cfg.labelId), hidden = cfg.hiddenId ? $(cfg.hiddenId) : null;
-    if (!btn || !menu) return;
-    function close() { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
-    function open() { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); }
-    btn.addEventListener("click", function(e) {
-      e.stopPropagation();
-      document.querySelectorAll(".rsm-dd-menu:not([hidden])").forEach(function(m) {
-        if (m !== menu) { m.hidden = true; var b = m.parentElement && m.parentElement.querySelector(".rsm-dd-trigger"); if (b) b.setAttribute("aria-expanded","false"); }
-      });
-      if (menu.hidden) open(); else close();
-    });
-    menu.addEventListener("click", function(e) {
-      var opt = e.target.closest(".rsm-dd-option");
-      if (!opt) return;
-      var val = opt.getAttribute("data-value");
-      var text = opt.textContent.replace(/^✓\s*/, "").trim();
-      if (label) label.textContent = text;
-      if (hidden) hidden.value = val;
-      menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
-        o.setAttribute("aria-selected", o.getAttribute("data-value") === val ? "true" : "false");
-      });
-      close();
-      if (cfg.onChange) cfg.onChange(val, text);
-    });
-    document.addEventListener("click", function(e) {
-      if (!menu.hidden && !e.target.closest("#" + (cfg.ddId || ""))) close();
-    });
-  }
-
-  // Page limit choices list
-  var PAGE_LIMIT_OPTS = [
-    { v: "auto", t: "Auto (Fit to content)" },
-    { v: "1", t: "Exactly 1 Page" }, { v: "2", t: "Exactly 2 Pages" },
-    { v: "3", t: "Exactly 3 Pages" }, { v: "4", t: "Exactly 4 Pages" },
-    { v: "5", t: "Exactly 5 Pages" }, { v: "6", t: "Exactly 6 Pages" },
-    { v: "7", t: "Exactly 7 Pages" }, { v: "8", t: "Exactly 8 Pages" },
-    { v: "9", t: "Exactly 9 Pages" }, { v: "10", t: "Exactly 10 Pages" },
-    { v: "custom", t: "Custom number…" }
-  ];
-
-  // Populates the style adjustments panel controls (Dropdowns)
-  var _controlsBound = false;
-  function buildControls() {
-    var html = "";
-    CONTROLS.forEach(function (c) {
-      var curVal = STYLE[c.key];
-      var curLabel = (c.opts.filter(function(o){ return o[0] === curVal; })[0] || c.opts[0])[1];
-      html += '<div class="auc-field-group"><label class="auc-label"><span>' + c.label + '</span></label>';
-      html += '<div class="rsm-dd" id="rsm-dd-' + c.key + '">';
-      html += '<button type="button" class="rsm-dd-trigger" id="rsm-c-' + c.key + '-btn" aria-haspopup="listbox" aria-expanded="false">';
-      html += '<span class="rsm-dd-value" id="rsm-c-' + c.key + '-label">' + esc(curLabel) + '</span><span class="rsm-dd-chevron">▾</span></button>';
-      html += '<div class="rsm-dd-menu" id="rsm-c-' + c.key + '-menu" role="listbox" hidden>';
-      c.opts.forEach(function(o) {
-        html += '<button type="button" class="rsm-dd-option" role="option" data-value="' + o[0] + '" aria-selected="' + (o[0]===curVal?'true':'false') + '">' + esc(o[1]) + '</button>';
-      });
-      html += '</div></div>';
-      html += '<select id="rsm-c-' + c.key + '" class="auc-select" data-key="' + c.key + '" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0;" tabindex="-1" aria-hidden="true">';
-      html += c.opts.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + "</option>"; }).join("") + "</select></div>";
-    });
-    $("rsm-controls").innerHTML = html;
-
-    var plMenu = $("rsm-page-limit-menu");
-    if (plMenu) {
-      plMenu.innerHTML = PAGE_LIMIT_OPTS.map(function(o){
-        return '<button type="button" class="rsm-dd-option" role="option" data-value="'+o.v+'" aria-selected="'+(o.v===(STYLE.pageLimit||'auto')?'true':'false')+'">'+esc(o.t)+'</button>';
-      }).join("");
-    }
-    var plLabel = $("rsm-page-limit-label");
-    if (plLabel) {
-      var curPL = PAGE_LIMIT_OPTS.filter(function(o){ return o.v === (STYLE.pageLimit||'auto'); })[0];
-      plLabel.textContent = curPL ? curPL.t : "Auto (Fit to content)";
-    }
-
-    if (!_controlsBound) {
-      _controlsBound = true;
-
-      CONTROLS.forEach(function(c) {
-        bindCustomDropdown({
-          ddId: "rsm-dd-" + c.key,
-          btnId: "rsm-c-" + c.key + "-btn",
-          menuId: "rsm-c-" + c.key + "-menu",
-          labelId: "rsm-c-" + c.key + "-label",
-          hiddenId: "rsm-c-" + c.key,
-          onChange: function(val) {
-            STYLE[c.key] = val;
-            var sel = $("rsm-c-" + c.key); if (sel) sel.value = val;
-            render(); renderGallery();
-          }
-        });
-      });
-
-      bindCustomDropdown({
-        ddId: "rsm-doc-format-dd",
-        btnId: "rsm-doc-format-btn",
-        menuId: "rsm-doc-format-menu",
-        labelId: "rsm-doc-format-label",
-        hiddenId: "rsm-doc-format",
-        onChange: function(val) {
-          STYLE.docFormat = val;
-          render(); renderGallery();
-        }
-      });
-
-      bindCustomDropdown({
-        ddId: "rsm-page-limit-dd",
-        btnId: "rsm-page-limit-btn",
-        menuId: "rsm-page-limit-menu",
-        labelId: "rsm-page-limit-label",
-        hiddenId: "rsm-page-limit",
-        onChange: function(val) {
-          STYLE.pageLimit = val;
-          var wrap = $("rsm-custom-pages-wrap");
-          if (wrap) wrap.style.display = (val === "custom") ? "block" : "none";
-          if (val === "custom" && $("rsm-custom-pages")) {
-            STYLE.customPages = parseInt($("rsm-custom-pages").value, 10) || 3;
-          }
-          render();
-        }
-      });
-
-      if ($("rsm-custom-pages")) {
-        $("rsm-custom-pages").addEventListener("input", function() {
-          STYLE.customPages = parseInt(this.value, 10) || 1;
-          if (STYLE.pageLimit === "custom") render();
-        });
-      }
-
-      $("rsm-swatches").addEventListener("click", function (e) {
-        var b = e.target.closest(".rsm-swatch"); if (!b) return;
-        STYLE.accent = b.getAttribute("data-color"); syncControls(); render(); renderGallery();
-      });
-      $("rsm-custom-color").addEventListener("input", function () { STYLE.accent = this.value; syncControls(); render(); renderGallery(); });
-      $("rsm-fs").addEventListener("input", function () { STYLE.fs = Number(this.value); syncControls(); render(); });
-    }
-
-    var sw = "";
-    COLORS.forEach(function (c) { sw += '<button type="button" class="rsm-swatch" style="background:' + c[1] + '" data-color="' + c[1] + '" title="' + c[0] + '" aria-label="Accent colour ' + c[0] + '"></button>'; });
-    $("rsm-swatches").innerHTML = sw;
-  }
-  
-  // Connects data structure variable changes back to form state
-  function syncControls() {
-    CONTROLS.forEach(function (c) {
-      var el = $("rsm-c-" + c.key); if (el) el.value = STYLE[c.key];
-      var lab = $("rsm-c-" + c.key + "-label");
-      if (lab) {
-        var found = c.opts.filter(function(o){ return o[0] === STYLE[c.key]; })[0];
-        lab.textContent = found ? found[1] : c.opts[0][1];
-      }
-      var menu = $("rsm-c-" + c.key + "-menu");
-      if (menu) {
-        menu.querySelectorAll(".rsm-dd-option").forEach(function(o) {
-          o.setAttribute("aria-selected", o.getAttribute("data-value") === STYLE[c.key] ? "true" : "false");
-        });
-      }
-    });
-    $("rsm-fs").value = STYLE.fs; $("rsm-fs-out").textContent = STYLE.fs + " pt";
-    $("rsm-page-limit").value = STYLE.pageLimit || "auto";
-    var wrap = $("rsm-custom-pages-wrap");
-    if (wrap) wrap.style.display = (STYLE.pageLimit === "custom") ? "block" : "none";
-    if ($("rsm-custom-pages") && STYLE.customPages) $("rsm-custom-pages").value = STYLE.customPages;
-    var plLab = $("rsm-page-limit-label");
-    if (plLab) {
-      var curPL = PAGE_LIMIT_OPTS.filter(function(o){ return o.v === (STYLE.pageLimit||'auto'); })[0];
-      plLab.textContent = curPL ? curPL.t : "Auto (Fit to content)";
-    }
-    var formatBox = $("rsm-doc-format");
-    if (formatBox) formatBox.value = STYLE.docFormat || "chrono";
-    $("rsm-custom-color").value = /^#[0-9a-f]{6}$/i.test(STYLE.accent) ? STYLE.accent : "#0369A1";
-    document.querySelectorAll(".rsm-swatch").forEach(function (b) { var on = b.getAttribute("data-color").toLowerCase() === STYLE.accent.toLowerCase(); b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
-  }
-
-  /* ---------- Tabs UI (CRITICAL VISIBILITY TOGGLE) ---------- */
-  document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (t) {
-    t.addEventListener("click", function () {
-      var id = t.getAttribute("data-tab");
-      document.querySelectorAll(".auc-group-tab[data-tab]").forEach(function (x) { var on = x === t; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
-      
-      document.querySelectorAll(".rsm-panel").forEach(function (p) { p.hidden = p.id !== "rsm-tab-" + id; });
-      setTimeout(window.__tqcRsmLayout, 10); // re-trigger scaling on panel change to avoid css bugs
-    });
-  });
-
-  /* ---------- Local Storage & Export Options ---------- */
-  // Saves the entire work payload to local storage continually and builds history arrays
-  function persist() { 
-    try { 
-        localStorage.setItem(STORE, JSON.stringify({ data: DATA, style: STYLE })); 
-        
-        if (!isHistoryAction) {
-            var currentState = JSON.stringify({ data: DATA, style: STYLE });
-            
-            // If the user made a new change after undoing, truncate the future (redo) states
-            if (historyIndex < stateHistory.length - 1) {
-                stateHistory = stateHistory.slice(0, historyIndex + 1);
-            }
-            
-            if (stateHistory.length === 0 || stateHistory[stateHistory.length - 1] !== currentState) {
-                stateHistory.push(currentState);
-                historyIndex++;
-                // Keep history capped
-                if (stateHistory.length > 50) {
-                    stateHistory.shift();
-                    historyIndex--;
-                }
-            }
-            updateHistoryButtons();
-        }
-    } catch (e) {} 
-  }
-  
-  // Extracts data from local storage on first load
-  function loadStorage() {
-    try {
-      var raw = localStorage.getItem(STORE);
-      if (raw) {
-        var p = JSON.parse(raw);
-        if (p && p.data && p.style) { 
-            Object.keys(p.data).forEach(function(k){ DATA[k] = p.data[k]; });
-            Object.keys(p.style).forEach(function(k){ STYLE[k] = p.style[k]; });
-            if (!STYLE.pageLimit) STYLE.pageLimit = "auto";
-            if (!STYLE.docFormat) STYLE.docFormat = "chrono";
-            if (!DATA.docType) DATA.docType = "job_standard";
-        }
-      }
-    } catch (e) {}
-  }
-  
-  function status(msg) { var el = $("rsm-status"); el.textContent = msg; }
-  
-  // Downloads arbitrary text blobs (used by JSON exporter)
-  function download(name, text, type) {
-    var blob = new Blob([text], { type: type }), a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
-    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-  }
-  
-  // Re-packages the DOM specifically for printing directly to PDF format
-  function preparePrint() {
-    var old = $("rsm-print-root"); if (old) old.remove();
-    var root = document.createElement("div"); root.id = "rsm-print-root";
-    var c = paper.cloneNode(true); c.removeAttribute("id");
-    c.style.height = "auto"; c.style.overflow = "visible"; 
-    var br = c.querySelector(".rs-breaks"); if (br) br.remove();
-    root.appendChild(c); document.body.appendChild(root);
-    var P = PAPERS[STYLE.paper] || PAPERS.a4, pad = { narrow: 10, normal: 15, wide: 20 }[STYLE.margin] || 15;
-    var st = $("rsm-page-style"); if (!st) { st = document.createElement("style"); st.id = "rsm-page-style"; document.head.appendChild(st); }
-    st.textContent = "@page{size:" + P.css + " portrait;margin:" + (isBleed() && !isATS() ? 0 : pad) + "mm}";
-  }
-  window.__tqcRsmPrep = preparePrint;
-  $("rsm-print-btn").addEventListener("click", function () { preparePrint(); window.print(); });
-
-  /* 🌟 High-Quality Photo Generation Extraction (Used for Download & Share) 🌟 */
-  function generateResumeImage(callback) {
-      status("Generating resume image... please wait.");
-      var tempH = paper.style.height, tempO = paper.style.overflow;
-      paper.style.height = "auto"; paper.style.overflow = "visible";
-      var w = paper.offsetWidth, h = paper.offsetHeight;
-      
-      var clone = paper.cloneNode(true);
-      clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
-      paper.style.height = tempH; paper.style.overflow = tempO;
-      
-      var styleStr = ""; document.querySelectorAll("style").forEach(function(s) { styleStr += s.innerHTML; });
-      clone.style.cssText = paper.style.cssText + "; margin: 0; box-shadow: none; overflow: hidden;";
-      var serializer = new XMLSerializer();
-      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><style><![CDATA[' + styleStr + ']]></style><foreignObject width="100%" height="100%">' + serializer.serializeToString(clone) + '</foreignObject></svg>';
-      
-      var img = new Image();
-      img.onload = function () {
-        var canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
-        var ctx = canvas.getContext("2d"); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0);
-        callback(canvas);
-      };
-      img.onerror = function () { status("Error generating photo on this browser."); callback(null); };
-      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-  }
-
-  // Exporter: Captures the DOM visually directly into a local image canvas (PNG)
-  $("rsm-image-btn").addEventListener("click", function () {
-      generateResumeImage(function(canvas) {
-          if (!canvas) return;
-          var a = document.createElement("a"); 
-          a.href = canvas.toDataURL("image/png"); 
-          a.download = (DATA.name.trim() || "document").replace(/\s+/g, '_') + ".png";
-          document.body.appendChild(a); a.click(); a.remove(); 
-          status("Photo Downloaded.");
-      });
-  });
-  
-  // 🌟 Advanced Image Share Logic 🌟
-  $("rsm-share-btn").addEventListener("click", function () {
-      if (navigator.share && navigator.canShare) {
-          generateResumeImage(function(canvas) {
-              if(!canvas) return;
-              canvas.toBlob(function(blob) {
-                  var file = new File([blob], (DATA.name.trim() || "resume").replace(/\s+/g, '_') + ".png", { type: "image/png" });
-                  if (navigator.canShare({ files: [file] })) {
-                      navigator.share({
-                          title: DATA.name.trim() + " Resume",
-                          text: "Here is my generated document.",
-                          files: [file]
-                      }).then(function(){ status("Resume shared successfully!"); }).catch(function(){ status(""); });
-                  } else {
-                      status("Your browser does not support sharing this file directly. Please use the Download Photo button instead.");
-                  }
-              }, 'image/png');
-          });
-      } else {
-          status("Sharing files is not supported on this device. Please use the Download Photo button.");
-      }
-  });
-  
-  // Extracts raw string texts for ATS compatibility purposes
-  $("rsm-copy-btn").addEventListener("click", function () {
-    try { navigator.clipboard.writeText(paper.innerText).then(function () { status("Text copied."); }); } catch(e){}
-  });
-  
-  // Create downloadable file dump to save application state explicitly
-  $("rsm-json-btn").addEventListener("click", function () {
-    download("resume-data.json", JSON.stringify({ app: "TheQuantCalc Resume Maker", v: 2, data: DATA, style: STYLE }, null, 2), "application/json");
-    status("Backup downloaded.");
-  });
-  
-  // Loads previously explicitly saved JSON file format
-  $("rsm-json-file").addEventListener("change", function(e) {
-    var f = e.target.files[0]; if (!f) return;
-    var reader = new FileReader();
-    reader.onload = function(evt) {
-      try {
-        var p = JSON.parse(evt.target.result);
-        if (p && p.data && p.style) {
-          Object.keys(p.data).forEach(function(k){ DATA[k] = p.data[k]; });
-          Object.keys(p.style).forEach(function(k){ STYLE[k] = p.style[k]; });
-          if (!STYLE.pageLimit) STYLE.pageLimit = "auto";
-          initUI(); status("Backup loaded.");
-        }
-      } catch (err) {}
-    };
-    reader.readAsText(f); this.value = ""; 
-  });
-  
-  // Restore factory dummy data example
-  $("rsm-sample-btn").addEventListener("click", function() {
-    DATA = clone(SAMPLE); STYLE = clone(DEFAULT_STYLE); initUI(); status("Sample loaded.");
-  });
-  
-  // Erases all variables from cache cleanly allowing fresh start
-  $("rsm-clear-btn").addEventListener("click", function() {
-    if (!confirm("Are you sure?")) return;
-    var keepDocType = DATA.docType || "job_standard";
-    DATA = clone(SAMPLE);
-    Object.keys(DATA).forEach(function(k){
-      if (typeof DATA[k] === "string" && k !== "docType") DATA[k] = "";
-    });
-    DATA.docType = keepDocType;
-    DATA.lists = {exp:[], edu:[], proj:[], pubs:[], research:[], ventures:[], portfolio:[]};
-    DATA.hidden = {};
-    STYLE = clone(DEFAULT_STYLE);
-    initUI();
-    status("Cleared.");
-  });
-  
-  // Resets design properties but leaves user data intact
-  $("rsm-style-reset").addEventListener("click", function() {
-      STYLE = clone(DEFAULT_STYLE); syncControls(); render(); renderGallery(); status("Style reset.");
-  });
-
-  /* ---------- Execution Initialization Pipeline ---------- */
-  function initUI() {
-    populateDocTypeDropdown();
-    buildControls();
-    renderDynamicStyleOptions(); 
-    syncControls();
-    renderDynamicForm();
-    renderGallery();
-    render(); 
-  }
-
-  loadStorage();
-  initUI();
-}
-tqcBoot(); // Launch builder instance
-</script>
-
-<!-- Site header, sidebar and footer script -->
-<script src="/navigation.js" defer></script>
-</body>
-</html>
+          out += '<div class="rs-sg">' + (g.g ? '<b class="rs-sgl">' + esc(g.g) + "</b>" : "") + g.items.map(function (i) { return '<span class="rs-chip">' + esc(
