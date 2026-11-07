@@ -289,7 +289,7 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(52, 211, 153, 0.35);
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible; /* Fixed dropdown clipping */
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .auc-sub-drawer summary {
@@ -304,6 +304,10 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
     align-items: center;
     list-style: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 11px;
+}
+.auc-sub-drawer[open] summary {
+    border-radius: 11px 11px 0 0;
 }
 .auc-sub-drawer summary::-webkit-details-marker { display: none; }
 .auc-sub-drawer summary .auc-label-accent {
@@ -329,9 +333,16 @@ body{margin:0;padding:0;font-family:var(--font-sans);background-color:var(--surf
 }
 .ctc-drawer-body {
     padding: 16px 12px;
-    background: rgba(2, 6, 23, 0.4); /* Distinct body background */
+    background: rgba(2, 6, 23, 0.4);
     border-top: 1px solid rgba(52, 211, 153, 0.15);
+    border-radius: 0 0 11px 11px;
 }
+
+/* 🌟 DISTINCT INNER TEXT COLOR 🌟 */
+.ctc-drawer-body .auc-label { color: #94A3B8 !important; } /* Distinct slate blue/gray for inner labels */
+.ctc-drawer-body .rsm-item-head strong { color: #94A3B8 !important; }
+.ctc-drawer-body .rsm-ord-l { color: #94A3B8 !important; }
+.ctc-drawer-body .auc-input, .ctc-drawer-body .auc-select { color: #E2E8F0; } /* Off-white for typed text */
 
 /* Zebra-Striped Fields in Drawers */
 .ctc-drawer-body .auc-field-group:nth-child(odd) .auc-input { 
@@ -727,13 +738,6 @@ body>*:not(#rsm-print-root){display:none !important}
 .rsm-dd-menu::-webkit-scrollbar { width: 6px; }
 .rsm-dd-menu::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
-.rsm-dd-group {
-    padding: 10px 16px 6px; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase; color: #34D399;
-    border-top: 1px solid rgba(255,255,255,0.06); margin-top: 4px;
-}
-.rsm-dd-group:first-child { border-top: none; margin-top: 0; padding-top: 6px; }
-
 .rsm-dd-option {
     display: flex; align-items: center; gap: 12px; width: 100%;
     padding: 11px 16px 11px 20px; border: none; background: transparent;
@@ -770,7 +774,6 @@ body>*:not(#rsm-print-root){display:none !important}
     border-color: rgba(129, 140, 248, 0.35);
     box-shadow: 0 20px 40px -8px rgba(0,0,0,0.75), 0 0 24px -4px rgba(99,102,241,0.15);
 }
-.rsm-dd-indigo .rsm-dd-group { color: #A5B4FC; }
 .rsm-dd-indigo .rsm-dd-option:hover, .rsm-dd-indigo .rsm-dd-option:focus-visible {
     background: rgba(99, 102, 241, 0.14); color: #FFFFFF;
 }
@@ -796,7 +799,6 @@ body>*:not(#rsm-print-root){display:none !important}
     border-color: rgba(251, 191, 36, 0.35);
     box-shadow: 0 20px 40px -8px rgba(0,0,0,0.75), 0 0 24px -4px rgba(245,158,11,0.15);
 }
-.rsm-dd-amber .rsm-dd-group { color: #FCD34D; }
 .rsm-dd-amber .rsm-dd-option:hover, .rsm-dd-amber .rsm-dd-option:focus-visible {
     background: rgba(245, 158, 11, 0.14); color: #FFFFFF;
 }
@@ -1438,9 +1440,9 @@ function tqcBoot() {
       sel.innerHTML = nativeHtml;
       sel.value = DATA.docType || "job_standard";
 
+      // Flattened list for the custom dropdown menu without subcategory groupings
       var menuHtml = "";
       Object.keys(DOC_CATEGORIES).forEach(function(catKey) {
-          menuHtml += '<div class="rsm-dd-group" role="presentation">' + esc(DOC_CATEGORIES[catKey]) + '</div>';
           Object.keys(DOC_TYPES).forEach(function(typeKey) {
               if (DOC_TYPES[typeKey].cat === catKey) {
                   var selected = (typeKey === (DATA.docType || "job_standard"));
